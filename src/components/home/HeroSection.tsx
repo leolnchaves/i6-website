@@ -22,15 +22,15 @@ const HeroSection = () => {
           <div className="text-center max-w-5xl mx-auto">
             <div className="animate-bounce-in">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-                <span className="block text-white font-light text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-4">
+                <span className="block text-white font-light text-2xl sm:text-3xl md:text-4xl lg:text-7xl mb-4">
                   {t('hero.infinite')}
                 </span>
                 <div className="relative inline-block w-full">
-                  <span className="relative block text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl break-words">
+                  <span className="relative block text-white font-bold text-5xl sm:text-6xl md:text-7xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl break-words px-2">
                     {t('hero.possibilities')}
                   </span>
                 </div>
-                <span className="block text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-6 font-light">
+                <span className="block text-white text-xl sm:text-2xl md:text-3xl lg:text-5xl mt-6 font-light">
                   {t('hero.poweredByAI')}
                 </span>
               </h1>
