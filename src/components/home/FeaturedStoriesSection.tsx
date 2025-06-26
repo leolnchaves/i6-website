@@ -89,7 +89,7 @@ const FeaturedStoriesSection = () => {
           {stories.map((story, index) => (
             <Card 
               key={story.id}
-              className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white ${
+              className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white relative ${
                 hoveredCard === index ? 'transform scale-105 z-20' : 'transform scale-100'
               }`}
               onMouseEnter={() => setHoveredCard(index)}
@@ -138,33 +138,29 @@ const FeaturedStoriesSection = () => {
                   </div>
                 </div>
 
-                {/* Content - Fixed height container */}
-                <div className="p-6 relative">
+                {/* Content Container - Always visible */}
+                <div className="p-6 relative min-h-[200px]">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{story.company}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">{story.description}</p>
+                  <p className="text-gray-600 mb-4">{story.description}</p>
                   
-                  {/* Expanded content when hovered - absolute positioned overlay */}
-                  {hoveredCard === index && (
-                    <div className="absolute inset-0 bg-white p-6 z-10 animate-fade-in overflow-y-auto">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{story.company}</h3>
-                      <p className="text-gray-600 mb-4">{story.description}</p>
+                  {/* Conditional Content Based on Hover State */}
+                  {hoveredCard === index ? (
+                    // Expanded content when hovered
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 mb-1">Challenge</h4>
+                        <p className="text-gray-600 text-sm">{story.challenge}</p>
+                      </div>
                       
-                      <div className="space-y-4 mb-4">
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-900 mb-1">Challenge</h4>
-                          <p className="text-gray-600 text-sm">{story.challenge}</p>
-                        </div>
-                        
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-900 mb-1">Solution</h4>
-                          <p className="text-gray-600 text-sm">{story.solution}</p>
-                        </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 mb-1">Solution</h4>
+                        <p className="text-gray-600 text-sm">{story.solution}</p>
+                      </div>
 
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
-                          <Quote className="w-5 h-5 text-blue-600 mb-2" />
-                          <p className="text-gray-800 italic text-sm mb-2">"{story.quote}"</p>
-                          <p className="text-gray-600 text-xs font-medium">— {story.author}</p>
-                        </div>
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
+                        <Quote className="w-5 h-5 text-blue-600 mb-2" />
+                        <p className="text-gray-800 italic text-sm mb-2">"{story.quote}"</p>
+                        <p className="text-gray-600 text-xs font-medium">— {story.author}</p>
                       </div>
                       
                       {/* Results */}
@@ -177,10 +173,8 @@ const FeaturedStoriesSection = () => {
                         ))}
                       </div>
                     </div>
-                  )}
-                  
-                  {/* Default content - Results and Learn More Link */}
-                  {hoveredCard !== index && (
+                  ) : (
+                    // Default content - Results and Learn More Link
                     <>
                       <div className="grid grid-cols-3 gap-2 mb-4">
                         {story.results.map((result, resultIndex) => (
