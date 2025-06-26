@@ -21,31 +21,31 @@ const HeroSection = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-5xl mx-auto">
             <div className="animate-bounce-in">
-              <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 leading-tight">
-                <span className="block text-white font-light text-5xl md:text-7xl mb-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+                <span className="block text-white font-light text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-4">
                   {t('hero.infinite')}
                 </span>
-                <div className="relative inline-block">
-                  <span className="relative block text-white font-bold text-7xl md:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl">
+                <div className="relative inline-block w-full">
+                  <span className="relative block text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl break-words">
                     {t('hero.possibilities')}
                   </span>
                 </div>
-                <span className="block text-white text-4xl md:text-5xl mt-6 font-light">
+                <span className="block text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-6 font-light">
                   {t('hero.poweredByAI')}
                 </span>
               </h1>
             </div>
-            <p className="text-xl md:text-2xl text-white/90 mb-10 animate-slide-in-left font-medium">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-10 animate-slide-in-left font-medium px-4">
               {t('hero.description')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-in-right">
-              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-in-right px-4">
+              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold">
                 {t('hero.startJourney')}
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
               <Button 
                 size="lg" 
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-lg px-8 py-4 rounded-full backdrop-blur-sm font-semibold"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full backdrop-blur-sm font-semibold"
                 onClick={() => setIsVideoModalOpen(true)}
               >
                 {t('hero.watchDemo')}

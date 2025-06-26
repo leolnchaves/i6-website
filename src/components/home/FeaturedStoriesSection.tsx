@@ -90,16 +90,14 @@ const FeaturedStoriesSection = () => {
             <Card 
               key={story.id}
               className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white ${
-                hoveredCard === index ? 'scale-110 z-20' : ''
+                hoveredCard === index ? 'transform scale-105 z-20' : 'transform scale-100'
               }`}
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               <CardContent className="p-0">
                 {/* Video Container with Thumbnail and Video */}
-                <div className={`relative overflow-hidden transition-all duration-500 ${
-                  hoveredCard === index ? 'h-48' : 'h-48'
-                }`}>
+                <div className="relative overflow-hidden h-48">
                   {/* Thumbnail Image */}
                   <img 
                     src={story.videoThumbnail}
@@ -140,50 +138,64 @@ const FeaturedStoriesSection = () => {
                   </div>
                 </div>
 
-                {/* Content - Expanded when hovered */}
-                <div className={`p-6 transition-all duration-500 ${
-                  hoveredCard === index ? 'min-h-[400px]' : ''
-                }`}>
+                {/* Content - Fixed height container */}
+                <div className="p-6 relative">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{story.company}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">{story.description}</p>
                   
-                  {/* Expanded content when hovered */}
+                  {/* Expanded content when hovered - absolute positioned overlay */}
                   {hoveredCard === index && (
-                    <div className="space-y-4 animate-fade-in">
-                      <div>
-                        <h4 className="text-sm font-semibold text-gray-900 mb-1">Challenge</h4>
-                        <p className="text-gray-600 text-sm">{story.challenge}</p>
+                    <div className="absolute inset-0 bg-white p-6 z-10 animate-fade-in overflow-y-auto">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{story.company}</h3>
+                      <p className="text-gray-600 mb-4">{story.description}</p>
+                      
+                      <div className="space-y-4 mb-4">
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-900 mb-1">Challenge</h4>
+                          <p className="text-gray-600 text-sm">{story.challenge}</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-900 mb-1">Solution</h4>
+                          <p className="text-gray-600 text-sm">{story.solution}</p>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
+                          <Quote className="w-5 h-5 text-blue-600 mb-2" />
+                          <p className="text-gray-800 italic text-sm mb-2">"{story.quote}"</p>
+                          <p className="text-gray-600 text-xs font-medium">— {story.author}</p>
+                        </div>
                       </div>
                       
-                      <div>
-                        <h4 className="text-sm font-semibold text-gray-900 mb-1">Solution</h4>
-                        <p className="text-gray-600 text-sm">{story.solution}</p>
-                      </div>
-
-                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
-                        <Quote className="w-5 h-5 text-blue-600 mb-2" />
-                        <p className="text-gray-800 italic text-sm mb-2">"{story.quote}"</p>
-                        <p className="text-gray-600 text-xs font-medium">— {story.author}</p>
+                      {/* Results */}
+                      <div className="grid grid-cols-3 gap-2">
+                        {story.results.map((result, resultIndex) => (
+                          <div key={resultIndex} className="text-center p-2 bg-gray-50 rounded">
+                            <div className="text-sm font-bold text-blue-600">{result.value}</div>
+                            <div className="text-xs text-gray-600">{result.label}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}
                   
-                  {/* Results - Always visible but adjusted spacing */}
-                  <div className={`grid grid-cols-3 gap-2 ${hoveredCard === index ? 'mt-4' : 'mb-4'}`}>
-                    {story.results.map((result, resultIndex) => (
-                      <div key={resultIndex} className="text-center p-2 bg-gray-50 rounded">
-                        <div className="text-sm font-bold text-blue-600">{result.value}</div>
-                        <div className="text-xs text-gray-600">{result.label}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Learn More Link - Only when not hovered */}
+                  {/* Default content - Results and Learn More Link */}
                   {hoveredCard !== index && (
-                    <div className="flex items-center text-blue-600 font-medium text-sm group-hover:text-blue-700 transition-colors">
-                      <span>Learn more</span>
-                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </div>
+                    <>
+                      <div className="grid grid-cols-3 gap-2 mb-4">
+                        {story.results.map((result, resultIndex) => (
+                          <div key={resultIndex} className="text-center p-2 bg-gray-50 rounded">
+                            <div className="text-sm font-bold text-blue-600">{result.value}</div>
+                            <div className="text-xs text-gray-600">{result.label}</div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center text-blue-600 font-medium text-sm group-hover:text-blue-700 transition-colors">
+                        <span>Learn more</span>
+                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </>
                   )}
                 </div>
               </CardContent>
