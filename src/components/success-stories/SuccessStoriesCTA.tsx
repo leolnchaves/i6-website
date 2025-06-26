@@ -21,7 +21,7 @@ const SuccessStoriesCTA = () => {
         <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
           {t('successStories.cta.description')}
         </p>
-        <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300">
+        <Button size="lg" className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300">
           {t('successStories.cta.button')}
           <ArrowRight className="ml-2 w-5 h-5" />
         </Button>

@@ -26,7 +26,7 @@ const Home = () => {
           <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-600">
             {t('cta.description') || 'Ready to revolutionize your business with AI? Let\'s discuss how we can help you achieve your goals.'}
           </p>
-          <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700 text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
+          <Button size="lg" className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
             {t('cta.button') || 'Get Started Now'}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
