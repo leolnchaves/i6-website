@@ -1,39 +1,42 @@
+
 import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const CompactSolutionsSection = () => {
+  const { t } = useLanguage();
+
   const solutions = [
     {
       icon: <Target className="w-6 h-6 text-blue-700" />,
-      title: 'Smart Discovery for Anonymous Visitors',
-      description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.'
+      title: t('solutions.smartDiscovery.title'),
+      description: t('solutions.smartDiscovery.description')
     },
     {
       icon: <Users className="w-6 h-6 text-orange-700" />,
-      title: 'Predictive Personalization for Identified Users',
-      description: 'Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.'
+      title: t('solutions.predictivePersonalization.title'),
+      description: t('solutions.predictivePersonalization.description')
     },
     {
       icon: <Cog className="w-6 h-6 text-blue-700" />,
-      title: 'Industrial Recommendation Intelligence',
-      description: 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.'
+      title: t('solutions.industrialRecommendation.title'),
+      description: t('solutions.industrialRecommendation.description')
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-gray-700" />,
-      title: 'Predictive Campaign Targeting',
-      description: 'Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.'
+      title: t('solutions.predictiveCampaign.title'),
+      description: t('solutions.predictiveCampaign.description')
     },
     {
       icon: <DollarSign className="w-6 h-6 text-orange-700" />,
-      title: 'Smart Price Optimization',
-      description: 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.'
+      title: t('solutions.smartPricing.title'),
+      description: t('solutions.smartPricing.description')
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-blue-700" />,
-      title: 'Adaptive Demand Forecasting',
-      description: 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.'
+      title: t('solutions.demandForecasting.title'),
+      description: t('solutions.demandForecasting.description')
     }
   ];
 
@@ -50,9 +53,9 @@ const CompactSolutionsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 scroll-reveal">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            <span className="block mb-2">AI Solutions That</span>
+            <span className="block mb-2">{t('solutions.hero.title')}</span>
             <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent pb-2">
-              Sells. Scales. Performs.
+              {t('solutions.hero.subtitle')}
             </span>
           </h2>
         </div>
@@ -86,7 +89,7 @@ const CompactSolutionsSection = () => {
             className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105"
             onClick={handleSolutionsClick}
           >
-            Ver Todas as Soluções
+            {t('solutions.viewAllSolutions')}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>

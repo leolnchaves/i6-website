@@ -12,96 +12,96 @@ const Solutions = () => {
   const solutions = [
     {
       icon: <Target className="w-8 h-8 text-blue-700" />,
-      title: 'Smart Discovery for Anonymous Visitors',
-      focus: 'Focus: B2B, B2C',
-      description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.',
+      title: t('solutions.smartDiscovery.title'),
+      focus: t('solutions.smartDiscovery.focus'),
+      description: t('solutions.smartDiscovery.description'),
       features: [
-        'Contextual Affinity Modeling',
-        'Cold-Start Personalization',
-        'Anonymous Visitor Intelligence',
-        'Real-time Recommendations'
+        t('solutions.smartDiscovery.feature1'),
+        t('solutions.smartDiscovery.feature2'),
+        t('solutions.smartDiscovery.feature3'),
+        t('solutions.smartDiscovery.feature4')
       ],
-      outcome: 'Unlocks product discovery and boosts engagement with zero historical data.',
+      outcome: t('solutions.smartDiscovery.outcome'),
       gradient: "from-gray-600/80 to-blue-700/80",
       bgColor: "bg-gray-100/60",
       borderColor: "border-gray-300/60"
     },
     {
       icon: <Users className="w-8 h-8 text-orange-700" />,
-      title: 'Predictive Personalization for Identified Users',
-      focus: 'Focus: B2B, B2C, B2B2C, D2C',
-      description: 'Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.',
+      title: t('solutions.predictivePersonalization.title'),
+      focus: t('solutions.predictivePersonalization.focus'),
+      description: t('solutions.predictivePersonalization.description'),
       features: [
-        'Behavioral Data Analysis',
-        'Omnichannel Personalization',
-        'Cross-sell and Up-sell Intelligence',
-        'Profile Enrichment and Scoring'
+        t('solutions.predictivePersonalization.feature1'),
+        t('solutions.predictivePersonalization.feature2'),
+        t('solutions.predictivePersonalization.feature3'),
+        t('solutions.predictivePersonalization.feature4')
       ],
-      outcome: 'Increases customer lifetime value with intelligent, behavior-based personalization.',
+      outcome: t('solutions.predictivePersonalization.outcome'),
       gradient: "from-orange-600/80 to-red-600/80",
       bgColor: "bg-orange-100/60",
       borderColor: "border-orange-300/60"
     },
     {
       icon: <Cog className="w-8 h-8 text-blue-700" />,
-      title: 'Industrial Recommendation Intelligence',
-      focus: 'Focus: B2B, B2B2C',
-      description: 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.',
+      title: t('solutions.industrialRecommendation.title'),
+      focus: t('solutions.industrialRecommendation.focus'),
+      description: t('solutions.industrialRecommendation.description'),
       features: [
-        'Assortment Optimization',
-        'Dynamic Pricing Integration',
-        'Commercial Target Alignment',
-        'POS Behavioral Forecasting'
+        t('solutions.industrialRecommendation.feature1'),
+        t('solutions.industrialRecommendation.feature2'),
+        t('solutions.industrialRecommendation.feature3'),
+        t('solutions.industrialRecommendation.feature4')
       ],
-      outcome: 'Drives product relevance and sell-out, aligned with revenue and margin goals.',
+      outcome: t('solutions.industrialRecommendation.outcome'),
       gradient: "from-blue-600/80 to-gray-700/80",
       bgColor: "bg-blue-100/60",
       borderColor: "border-blue-300/60"
     },
     {
       icon: <TrendingUp className="w-8 h-8 text-gray-700" />,
-      title: 'Predictive Campaign Targeting',
-      focus: 'Focus: B2C',
-      description: 'Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.',
+      title: t('solutions.predictiveCampaign.title'),
+      focus: t('solutions.predictiveCampaign.focus'),
+      description: t('solutions.predictiveCampaign.description'),
       features: [
-        'Propensity Modeling',
-        'Conversion Likelihood Scoring',
-        'Campaign Audience Refinement',
-        'Lead Activation Strategy'
+        t('solutions.predictiveCampaign.feature1'),
+        t('solutions.predictiveCampaign.feature2'),
+        t('solutions.predictiveCampaign.feature3'),
+        t('solutions.predictiveCampaign.feature4')
       ],
-      outcome: 'Maximizes ROI by targeting the right customer at the right time.',
+      outcome: t('solutions.predictiveCampaign.outcome'),
       gradient: "from-gray-600/80 to-blue-600/80",
       bgColor: "bg-gray-100/60",
       borderColor: "border-gray-300/60"
     },
     {
       icon: <DollarSign className="w-8 h-8 text-orange-700" />,
-      title: 'Smart Price Optimization',
-      focus: 'Focus: B2B, B2C, B2B2C, D2C',
-      description: 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.',
+      title: t('solutions.smartPricing.title'),
+      focus: t('solutions.smartPricing.focus'),
+      description: t('solutions.smartPricing.description'),
       features: [
-        'Behavior-Based Pricing',
-        'Lifecycle-Aware Strategy',
-        'Price Sensitivity Calibration',
-        'Margin Optimization Engine'
+        t('solutions.smartPricing.feature1'),
+        t('solutions.smartPricing.feature2'),
+        t('solutions.smartPricing.feature3'),
+        t('solutions.smartPricing.feature4')
       ],
-      outcome: 'Improves margin, sales velocity, and competitiveness through intelligent pricing.',
+      outcome: t('solutions.smartPricing.outcome'),
       gradient: "from-orange-600/80 to-gray-600/80",
       bgColor: "bg-orange-100/60",
       borderColor: "border-orange-300/60"
     },
     {
       icon: <BarChart3 className="w-8 h-8 text-blue-700" />,
-      title: 'Adaptive Demand Forecasting',
-      focus: 'Focus: B2B, B2C',
-      description: 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.',
+      title: t('solutions.demandForecasting.title'),
+      focus: t('solutions.demandForecasting.focus'),
+      description: t('solutions.demandForecasting.description'),
       features: [
-        'Self-Reinforcing Forecast Model',
-        'Extended Projection (N+M)',
-        'Seasonality and Trend Detection',
-        'Inventory and Supply Chain Alignment'
+        t('solutions.demandForecasting.feature1'),
+        t('solutions.demandForecasting.feature2'),
+        t('solutions.demandForecasting.feature3'),
+        t('solutions.demandForecasting.feature4')
       ],
-      outcome: 'Enhances demand planning accuracy and agility in fast-changing markets.',
+      outcome: t('solutions.demandForecasting.outcome'),
       gradient: "from-blue-600/80 to-gray-700/80",
       bgColor: "bg-blue-100/60",
       borderColor: "border-blue-300/60"
@@ -111,37 +111,37 @@ const Solutions = () => {
   const processSteps = [
     {
       key: "discovery",
-      title: "Discovery & Business Angle Definition",
-      subtitle: "Business Requirement Analysis",
-      description: "Understanding your business needs and defining the optimal approach",
+      title: t('solutions.process.discovery.title'),
+      subtitle: t('solutions.process.discovery.subtitle'),
+      description: t('solutions.process.discovery.description'),
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "data",
-      title: "Data Sample & Anonymization",
-      subtitle: "Secure Data Processing",
-      description: "Collecting and preparing your data with full privacy protection",
+      title: t('solutions.process.data.title'),
+      subtitle: t('solutions.process.data.subtitle'),
+      description: t('solutions.process.data.description'),
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "training",
-      title: "Model Training & Fine-tuning",
-      subtitle: "Business-Oriented Training",
-      description: "Building custom AI models tailored to your specific business context",
+      title: t('solutions.process.training.title'),
+      subtitle: t('solutions.process.training.subtitle'),
+      description: t('solutions.process.training.description'),
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "testing",
-      title: "Performance Evaluation",
-      subtitle: "Precision & Backtest Analysis",
-      description: "Comprehensive testing to ensure optimal performance and accuracy",
+      title: t('solutions.process.testing.title'),
+      subtitle: t('solutions.process.testing.subtitle'),
+      description: t('solutions.process.testing.description'),
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "integration",
-      title: "Integration & Recommendations",
-      subtitle: "Active Digital Channel Integration",
-      description: "Seamless deployment across your digital ecosystem",
+      title: t('solutions.process.integration.title'),
+      subtitle: t('solutions.process.integration.subtitle'),
+      description: t('solutions.process.integration.description'),
       color: "from-amber-600 to-amber-700"
     }
   ];
@@ -153,13 +153,13 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="block mb-2">Business AI Solutions.</span>
+              <span className="block mb-2">{t('solutions.hero.mainTitle')}</span>
               <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-                Built to Perform.
+                {t('solutions.hero.mainSubtitle')}
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Discover how our AI solutions can transform your business operations and drive growth.
+              {t('solutions.hero.description')}
             </p>
           </div>
         </div>
@@ -200,13 +200,13 @@ const Solutions = () => {
                   </div>
                   
                   <div className="bg-white/70 rounded-lg p-3 mt-auto mb-4">
-                    <h4 className="font-semibold text-gray-900 mb-1 text-xs">Business Outcomes:</h4>
+                    <h4 className="font-semibold text-gray-900 mb-1 text-xs">{t('solutions.businessOutcomes')}:</h4>
                     <p className="text-gray-700 text-xs">{solution.outcome}</p>
                   </div>
                 </CardHeader>
                 <CardContent className="px-4 pb-4">
                   <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 text-white transition-all duration-300 shadow-md hover:shadow-lg text-sm py-2`}>
-                    Learn More
+                    {t('solutions.learnMore')}
                     <ArrowRight className="ml-2 w-3 h-3" />
                   </Button>
                 </CardContent>
@@ -221,10 +221,10 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              AI Implementation Journey
+              {t('solutions.process.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-2">
-              Risk-free testing. Concrete potential in 30 days.
+              {t('solutions.process.subtitle')}
             </p>
           </div>
 
@@ -277,22 +277,22 @@ const Solutions = () => {
                   <div className="relative z-10">
                     <div className="text-center mb-6">
                       <h3 className="text-3xl font-bold mb-2">
-                        Sandbox Environment & Consulting Support Included
+                        {t('solutions.sandbox.title')}
                       </h3>
                       <p className="text-orange-100 text-lg">
-                        Complete testing environment with expert guidance throughout your journey
+                        {t('solutions.sandbox.description')}
                       </p>
                     </div>
                     
                     <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
                       <div className="bg-white/10 backdrop-blur-md rounded-xl px-8 py-4 border border-white/20">
-                        <span className="font-bold text-lg">Risk-Free Testing Environment</span>
+                        <span className="font-bold text-lg">{t('solutions.sandbox.feature1')}</span>
                       </div>
                       <div className="bg-white/10 backdrop-blur-md rounded-xl px-8 py-4 border border-white/20">
-                        <span className="font-bold text-lg">Expert Consulting & Support</span>
+                        <span className="font-bold text-lg">{t('solutions.sandbox.feature2')}</span>
                       </div>
                       <div className="bg-white/10 backdrop-blur-md rounded-xl px-8 py-4 border border-white/20">
-                        <span className="font-bold text-lg">30-Day Concrete Results</span>
+                        <span className="font-bold text-lg">{t('solutions.sandbox.feature3')}</span>
                       </div>
                     </div>
                   </div>
@@ -307,13 +307,13 @@ const Solutions = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Transform Your Business Today
+            {t('solutions.cta.title')}
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Ready to revolutionize your business with AI? Let's discuss how we can help you achieve your goals.
+            {t('solutions.cta.description')}
           </p>
           <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
-            Get Started Now
+            {t('solutions.cta.button')}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>
