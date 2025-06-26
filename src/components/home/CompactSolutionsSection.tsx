@@ -37,6 +37,11 @@ const CompactSolutionsSection = () => {
     }
   ];
 
+  const handleSolutionsClick = () => {
+    // Navigate to solutions page and scroll to top
+    window.location.href = '/solutions';
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
       {/* Subtle background elements */}
@@ -76,12 +81,14 @@ const CompactSolutionsSection = () => {
 
         {/* Button to Solutions page */}
         <div className="text-center">
-          <Link to="/solutions">
-            <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105">
-              Ver Todas as Soluções
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </Link>
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105"
+            onClick={handleSolutionsClick}
+          >
+            Ver Todas as Soluções
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
         </div>
       </div>
     </section>

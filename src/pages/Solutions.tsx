@@ -178,7 +178,7 @@ const Solutions = () => {
                       {solution.icon}
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-lg font-bold text-gray-900 mb-2 leading-tight">
+                      <CardTitle className="text-base font-bold text-gray-900 mb-2 leading-tight">
                         {solution.title}
                       </CardTitle>
                       <div className="text-xs text-gray-600 font-medium mb-2 bg-white/60 rounded-full px-2 py-1 inline-block">
