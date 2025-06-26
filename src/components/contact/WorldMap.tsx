@@ -9,19 +9,19 @@ const WorldMap = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
 
-  // Posições responsivas baseadas no tamanho da tela
+  // Posições ajustadas para o novo mapa
   const getResponsivePositions = () => {
     if (isMobile) {
       return {
-        campinas: { top: '75%', left: '28%' },
-        dover: { top: '42%', left: '25%' },
-        milan: { top: '30%', left: '53%' }
+        campinas: { top: '68%', left: '35%' },
+        dover: { top: '35%', left: '25%' },
+        milan: { top: '28%', left: '52%' }
       };
     }
     return {
-      campinas: { top: '72%', left: '30%' },
-      dover: { top: '35%', left: '22%' },
-      milan: { top: '32%', left: '51%' }
+      campinas: { top: '68%', left: '32%' },
+      dover: { top: '32%', left: '22%' },
+      milan: { top: '25%', left: '51%' }
     };
   };
 
@@ -80,11 +80,11 @@ const WorldMap = () => {
         </p>
         
         <TooltipProvider>
-          <div className="relative w-full h-48 sm:h-56 lg:h-64 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+          <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
             <img 
-              src="/lovable-uploads/d9d6ba9c-61ec-4d42-8e89-f0451e01621f.png"
+              src="/lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png"
               alt="World Map"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
             />
             
             {locations.map((location) => (
