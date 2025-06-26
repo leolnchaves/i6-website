@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Search, ChevronRight } from 'lucide-react';
+import { Search, Plus, Minus } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const FAQSection = () => {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -57,6 +58,10 @@ const FAQSection = () => {
     faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleCardClick = (index: number) => {
+    setExpandedCard(expandedCard === index ? null : index);
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,21 +93,34 @@ const FAQSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {filteredFaqs.map((faq, index) => (
-            <Card key={index} className="group border-0 shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white rounded-xl overflow-hidden">
-              <CardContent className="p-0">
-                <div className="p-6 relative">
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ChevronRight className="w-5 h-5 text-blue-500" />
-                  </div>
-                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-600 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-4 pr-8 leading-tight">
+            <Card 
+              key={index} 
+              className="cursor-pointer border-0 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-white rounded-xl overflow-hidden"
+              onClick={() => handleCardClick(index)}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 pr-4 leading-tight flex-1">
                     {faq.question}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {faq.answer}
-                  </p>
+                  <div className="flex-shrink-0 ml-2">
+                    {expandedCard === index ? (
+                      <Minus className="w-5 h-5 text-blue-500" />
+                    ) : (
+                      <Plus className="w-5 h-5 text-blue-500" />
+                    )}
+                  </div>
                 </div>
-                <div className="h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                
+                <div className={`overflow-hidden transition-all duration-300 ${
+                  expandedCard === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}>
+                  <div className="pt-2 border-t border-gray-100 mt-3">
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}

@@ -41,12 +41,6 @@ const ContactForm = () => {
           <p className="text-xl font-semibold text-gray-800">
             Every transformation starts with a conversation.
           </p>
-          <p className="text-gray-600">
-            Let our experts guide you from insight to impact.
-          </p>
-          <p className="text-gray-600">
-            Let's build intelligent growth — together.
-          </p>
         </div>
       </CardHeader>
       <CardContent className="p-8 pt-0">
@@ -156,7 +150,7 @@ const ContactForm = () => {
 
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-3"
+              className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3"
             >
               {t('contact.form.sendMessage')}
               <Send className="ml-2 w-4 h-4" />
