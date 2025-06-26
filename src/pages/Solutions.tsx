@@ -11,7 +11,7 @@ const Solutions = () => {
 
   const solutions = [
     {
-      icon: <Target className="w-12 h-12 text-blue-600" />,
+      icon: <Target className="w-8 h-8 text-blue-600" />,
       title: 'Smart Discovery for Anonymous Visitors',
       focus: 'Focus: B2B, B2C | Segment: All',
       description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.',
@@ -27,7 +27,7 @@ const Solutions = () => {
       borderColor: "border-blue-200"
     },
     {
-      icon: <Users className="w-12 h-12 text-purple-600" />,
+      icon: <Users className="w-8 h-8 text-purple-600" />,
       title: 'Predictive Personalization for Identified Users',
       focus: 'Focus: B2B, B2C, B2B2C, D2C | Segment: All',
       description: 'Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.',
@@ -43,7 +43,7 @@ const Solutions = () => {
       borderColor: "border-purple-200"
     },
     {
-      icon: <Cog className="w-12 h-12 text-green-600" />,
+      icon: <Cog className="w-8 h-8 text-green-600" />,
       title: 'Industrial Recommendation Intelligence',
       focus: 'Focus: B2B, B2B2C | Segment: Industry and Manufacturing',
       description: 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.',
@@ -59,7 +59,7 @@ const Solutions = () => {
       borderColor: "border-green-200"
     },
     {
-      icon: <TrendingUp className="w-12 h-12 text-orange-600" />,
+      icon: <TrendingUp className="w-8 h-8 text-orange-600" />,
       title: 'Predictive Campaign Targeting',
       focus: 'Focus: B2C | Segment: All',
       description: 'Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.',
@@ -75,7 +75,7 @@ const Solutions = () => {
       borderColor: "border-orange-200"
     },
     {
-      icon: <DollarSign className="w-12 h-12 text-red-600" />,
+      icon: <DollarSign className="w-8 h-8 text-red-600" />,
       title: 'Smart Price Optimization',
       focus: 'Focus: B2B, B2C, B2B2C, D2C | Segment: All',
       description: 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.',
@@ -91,7 +91,7 @@ const Solutions = () => {
       borderColor: "border-red-200"
     },
     {
-      icon: <BarChart3 className="w-12 h-12 text-teal-600" />,
+      icon: <BarChart3 className="w-8 h-8 text-teal-600" />,
       title: 'Adaptive Demand Forecasting',
       focus: 'Focus: B2B, B2C | Segment: All',
       description: 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.',
@@ -114,35 +114,35 @@ const Solutions = () => {
       title: "Discovery & Business Angle Definition",
       subtitle: "Business Requirement Analysis",
       description: "Understanding your business needs and defining the optimal approach",
-      color: "from-blue-500 to-blue-600"
+      color: "from-slate-400 to-slate-500"
     },
     {
       key: "data",
       title: "Data Sample & Anonymization",
       subtitle: "Secure Data Processing",
       description: "Collecting and preparing your data with full privacy protection",
-      color: "from-purple-500 to-purple-600"
+      color: "from-slate-400 to-slate-500"
     },
     {
       key: "training",
       title: "Model Training & Fine-tuning",
       subtitle: "Business-Oriented Training",
       description: "Building custom AI models tailored to your specific business context",
-      color: "from-green-500 to-green-600"
+      color: "from-slate-400 to-slate-500"
     },
     {
       key: "testing",
       title: "Performance Evaluation",
       subtitle: "Precision & Backtest Analysis",
       description: "Comprehensive testing to ensure optimal performance and accuracy",
-      color: "from-orange-500 to-orange-600"
+      color: "from-slate-400 to-slate-500"
     },
     {
       key: "integration",
       title: "Integration & Recommendations",
       subtitle: "Active Digital Channel Integration",
       description: "Seamless deployment across your digital ecosystem",
-      color: "from-red-500 to-red-600"
+      color: "from-amber-600 to-amber-700"
     }
   ];
 
@@ -168,46 +168,46 @@ const Solutions = () => {
       {/* Solutions Grid */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {solutions.map((solution, index) => (
-              <Card key={index} className={`border-2 ${solution.borderColor} ${solution.bgColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden`}>
+              <Card key={index} className={`border-2 ${solution.borderColor} ${solution.bgColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden h-full`}>
                 <div className={`h-1 bg-gradient-to-r ${solution.gradient}`}></div>
-                <CardHeader className="p-6">
-                  <div className="flex items-start mb-4">
-                    <div className="mr-4 mt-1">
+                <CardHeader className="p-4">
+                  <div className="flex items-start mb-3">
+                    <div className="mr-3 mt-1">
                       {solution.icon}
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-xl font-bold text-gray-900 mb-2">
+                      <CardTitle className="text-lg font-bold text-gray-900 mb-2 leading-tight">
                         {solution.title}
                       </CardTitle>
-                      <div className="text-sm text-gray-600 font-medium mb-3 bg-white/60 rounded-full px-3 py-1 inline-block">
+                      <div className="text-xs text-gray-600 font-medium mb-2 bg-white/60 rounded-full px-2 py-1 inline-block">
                         {solution.focus}
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-700 text-base leading-relaxed">
+                  <p className="text-gray-700 text-sm leading-relaxed">
                     {solution.description}
                   </p>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
-                  <div className="space-y-2 mb-6">
+                <CardContent className="px-4 pb-4">
+                  <div className="space-y-1 mb-4">
                     {solution.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center">
-                        <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{feature}</span>
+                        <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0" />
+                        <span className="text-gray-700 text-xs">{feature}</span>
                       </div>
                     ))}
                   </div>
                   
-                  <div className="bg-white/70 rounded-lg p-4 mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-2 text-sm">Business Outcomes:</h4>
-                    <p className="text-gray-700 text-sm">{solution.outcome}</p>
+                  <div className="bg-white/70 rounded-lg p-3 mb-4">
+                    <h4 className="font-semibold text-gray-900 mb-1 text-xs">Business Outcomes:</h4>
+                    <p className="text-gray-700 text-xs">{solution.outcome}</p>
                   </div>
                   
-                  <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 text-white transition-all duration-300 shadow-md hover:shadow-lg`}>
+                  <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 text-white transition-all duration-300 shadow-md hover:shadow-lg text-sm py-2`}>
                     Learn More
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 w-3 h-3" />
                   </Button>
                 </CardContent>
               </Card>
@@ -234,28 +234,30 @@ const Solutions = () => {
               {processSteps.map((step, index) => (
                 <div key={step.key} className="flex flex-col items-center relative flex-1">
                   {/* Step Number Circle */}
-                  <div className={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white font-bold text-lg shadow-lg mb-6`}>
+                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white font-bold text-base shadow-lg mb-6`}>
                     {String(index + 1).padStart(2, '0')}
                   </div>
                   
                   {/* Step Card */}
-                  <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100">
-                    <h3 className="font-bold text-gray-900 text-lg mb-2 leading-tight">
-                      {step.title}
-                    </h3>
-                    <div className="text-sm text-gray-600 mb-3 font-medium bg-gray-50 rounded-full px-3 py-1 inline-block">
-                      {step.subtitle}
+                  <div className="bg-white rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 h-40 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-bold text-gray-900 text-base mb-2 leading-tight">
+                        {step.title}
+                      </h3>
+                      <div className="text-xs text-gray-600 mb-2 font-medium bg-gray-50 rounded-full px-2 py-1 inline-block">
+                        {step.subtitle}
+                      </div>
                     </div>
-                    <p className="text-gray-700 text-sm leading-relaxed">
+                    <p className="text-gray-700 text-xs leading-relaxed">
                       {step.description}
                     </p>
                   </div>
                   
                   {/* Arrow (except for last item) */}
                   {index < processSteps.length - 1 && (
-                    <div className="hidden lg:block absolute top-10 -right-8 transform -translate-y-1/2 z-10">
+                    <div className="hidden lg:block absolute top-8 -right-8 transform -translate-y-1/2 z-10">
                       <div className="bg-white rounded-full p-2 shadow-md">
-                        <ChevronRight className="w-6 h-6 text-gray-500" />
+                        <ChevronRight className="w-5 h-5 text-gray-500" />
                       </div>
                     </div>
                   )}
