@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -395,7 +396,7 @@ const Contact = () => {
               {/* Calendly Embed */}
               <div className="bg-white rounded-lg p-4">
                 <iframe
-                  src="https://calendly.com/leo-infinity6"
+                  src="https://calendly.com/leo-infinity6/30min"
                   width="100%"
                   height="600"
                   frameBorder="0"
