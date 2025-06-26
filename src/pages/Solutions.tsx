@@ -82,9 +82,9 @@ const Solutions = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900">
-      {/* Hero Section */}
-      <section className="py-20 text-white relative overflow-hidden">
+    <div className="min-h-screen">
+      {/* Hero Section - Dark Blue Background */}
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
@@ -105,18 +105,12 @@ const Solutions = () => {
         </div>
       </section>
 
-      {/* Solutions Grid */}
-      <section className="py-20 text-white relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 right-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Solutions Grid - Light Background */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {solutions.map((solution, index) => (
-              <Card key={index} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 overflow-hidden bg-white/95 backdrop-blur-sm">
+              <Card key={index} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 overflow-hidden bg-white">
                 <div className={`h-2 bg-gradient-to-r ${solution.gradient}`}></div>
                 <CardHeader className="p-8">
                   <div className="flex items-center mb-4">
@@ -149,32 +143,26 @@ const Solutions = () => {
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="py-20 text-white relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Process Section - Light Background */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
               {t('solutions.process.title')}
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               {t('solutions.process.description')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {processSteps.map((item, index) => (
-              <div key={index} className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20 hover:bg-white/15 transition-all duration-300">
+              <div key={index} className="text-center bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                   {item.step}
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                <p className="text-gray-300">{item.description}</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.description}</p>
               </div>
             ))}
           </div>

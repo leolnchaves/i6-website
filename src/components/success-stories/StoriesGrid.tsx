@@ -55,18 +55,11 @@ const StoriesGrid = () => {
   ];
 
   return (
-    <section className="py-20 text-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-16">
           {stories.map((story, index) => (
-            <Card key={index} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden bg-white/95 backdrop-blur-sm">
+            <Card key={index} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden bg-white">
               <CardContent className="p-0">
                 <div className={`grid grid-cols-1 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   <div className={`p-12 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>

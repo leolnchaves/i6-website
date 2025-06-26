@@ -12,22 +12,16 @@ const MetricsSection = () => {
   ];
 
   return (
-    <section className="py-16 text-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {metrics.map((metric, index) => (
-            <div key={index} className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20 hover:bg-white/15 transition-all duration-300">
-              <div className="flex justify-center text-blue-400 mb-4">
+            <div key={index} className="text-center bg-gray-50 rounded-lg p-8 border border-gray-200 hover:shadow-lg transition-all duration-300">
+              <div className="flex justify-center text-blue-600 mb-4">
                 {metric.icon}
               </div>
-              <div className="text-4xl font-bold text-white mb-2">{metric.value}</div>
-              <div className="text-gray-300">{metric.label}</div>
+              <div className="text-4xl font-bold text-gray-900 mb-2">{metric.value}</div>
+              <div className="text-gray-600">{metric.label}</div>
             </div>
           ))}
         </div>
