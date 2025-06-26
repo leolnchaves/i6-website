@@ -13,7 +13,7 @@ const Solutions = () => {
     {
       icon: <Target className="w-8 h-8 text-blue-700" />,
       title: 'Smart Discovery for Anonymous Visitors',
-      focus: 'Focus: B2B, B2C | Segment: All',
+      focus: 'Focus: B2B, B2C',
       description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.',
       features: [
         'Contextual Affinity Modeling',
@@ -29,7 +29,7 @@ const Solutions = () => {
     {
       icon: <Users className="w-8 h-8 text-orange-700" />,
       title: 'Predictive Personalization for Identified Users',
-      focus: 'Focus: B2B, B2C, B2B2C, D2C | Segment: All',
+      focus: 'Focus: B2B, B2C, B2B2C, D2C',
       description: 'Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.',
       features: [
         'Behavioral Data Analysis',
@@ -45,7 +45,7 @@ const Solutions = () => {
     {
       icon: <Cog className="w-8 h-8 text-blue-700" />,
       title: 'Industrial Recommendation Intelligence',
-      focus: 'Focus: B2B, B2B2C | Segment: Industry and Manufacturing',
+      focus: 'Focus: B2B, B2B2C',
       description: 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.',
       features: [
         'Assortment Optimization',
@@ -61,7 +61,7 @@ const Solutions = () => {
     {
       icon: <TrendingUp className="w-8 h-8 text-gray-700" />,
       title: 'Predictive Campaign Targeting',
-      focus: 'Focus: B2C | Segment: All',
+      focus: 'Focus: B2C',
       description: 'Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.',
       features: [
         'Propensity Modeling',
@@ -77,7 +77,7 @@ const Solutions = () => {
     {
       icon: <DollarSign className="w-8 h-8 text-orange-700" />,
       title: 'Smart Price Optimization',
-      focus: 'Focus: B2B, B2C, B2B2C, D2C | Segment: All',
+      focus: 'Focus: B2B, B2C, B2B2C, D2C',
       description: 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.',
       features: [
         'Behavior-Based Pricing',
@@ -93,7 +93,7 @@ const Solutions = () => {
     {
       icon: <BarChart3 className="w-8 h-8 text-blue-700" />,
       title: 'Adaptive Demand Forecasting',
-      focus: 'Focus: B2B, B2C | Segment: All',
+      focus: 'Focus: B2B, B2C',
       description: 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.',
       features: [
         'Self-Reinforcing Forecast Model',
@@ -170,9 +170,9 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {solutions.map((solution, index) => (
-              <Card key={index} className={`border-2 ${solution.borderColor} ${solution.bgColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden h-full`}>
+              <Card key={index} className={`border-2 ${solution.borderColor} ${solution.bgColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden flex flex-col`}>
                 <div className={`h-1 bg-gradient-to-r ${solution.gradient}`}></div>
-                <CardHeader className="p-4">
+                <CardHeader className="p-4 flex-grow">
                   <div className="flex items-start mb-3">
                     <div className="mr-3 mt-1">
                       {solution.icon}
@@ -186,11 +186,10 @@ const Solutions = () => {
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-700 text-sm leading-relaxed">
+                  <p className="text-gray-700 text-sm leading-relaxed mb-4">
                     {solution.description}
                   </p>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
+                  
                   <div className="space-y-1 mb-4">
                     {solution.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center">
@@ -200,11 +199,12 @@ const Solutions = () => {
                     ))}
                   </div>
                   
-                  <div className="bg-white/70 rounded-lg p-3 mb-4">
+                  <div className="bg-white/70 rounded-lg p-3">
                     <h4 className="font-semibold text-gray-900 mb-1 text-xs">Business Outcomes:</h4>
                     <p className="text-gray-700 text-xs">{solution.outcome}</p>
                   </div>
-                  
+                </CardHeader>
+                <CardContent className="px-4 pb-4 mt-auto">
                   <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 text-white transition-all duration-300 shadow-md hover:shadow-lg text-sm py-2`}>
                     Learn More
                     <ArrowRight className="ml-2 w-3 h-3" />
@@ -239,7 +239,7 @@ const Solutions = () => {
                   </div>
                   
                   {/* Step Card */}
-                  <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 min-h-[200px] flex flex-col justify-between">
+                  <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 h-[240px] flex flex-col justify-between">
                     <div className="flex-1 flex flex-col justify-center">
                       <h3 className="font-bold text-gray-900 text-base mb-3 leading-tight">
                         {step.title}
