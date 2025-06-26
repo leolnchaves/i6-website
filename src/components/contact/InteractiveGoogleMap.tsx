@@ -17,18 +17,25 @@ declare global {
 const InteractiveGoogleMap = () => {
   const { t } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const locations = getMapLocations(t);
 
   const handleMapLoaded = () => {
     setIsLoaded(true);
+    setIsLoading(false);
   };
 
   const initializeMap = () => {
-    setIsLoaded(true);
+    console.log('Inicializando Google Maps...');
+    setTimeout(() => {
+      setIsLoaded(true);
+      setIsLoading(false);
+    }, 500);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     loadGoogleMapsScript(initializeMap);
   }, []);
 
@@ -41,7 +48,15 @@ const InteractiveGoogleMap = () => {
             {t('contact.map.title')}
           </h3>
         </div>
-        <div className="h-96 rounded-lg overflow-hidden border border-gray-200">
+        <div className="h-96 rounded-lg overflow-hidden border border-gray-200 relative">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                <p className="text-sm text-gray-600">Carregando mapa...</p>
+              </div>
+            </div>
+          )}
           <GoogleMapContainer 
             locations={locations} 
             onMapLoaded={handleMapLoaded}
