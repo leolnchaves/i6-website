@@ -8,44 +8,65 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center gradient-primary overflow-hidden">
-      {/* Enhanced Animated Background Stripes */}
+      {/* Enhanced Animated Background Stripes - Larger and More */}
       <div className="absolute inset-0">
-        {/* Large diagonal stripes covering full width */}
+        {/* Multiple large diagonal stripes covering full width and height */}
         <div 
-          className="absolute top-10 -left-20 w-[120vw] h-32 bg-white/10 blur-2xl animate-float transform -rotate-12"
+          className="absolute -top-20 -left-32 w-[150vw] h-48 bg-white/12 blur-3xl animate-float transform -rotate-12"
           style={{ transform: `translateY(${scrollY * 0.1}px) rotate(-12deg)` }}
         ></div>
         <div 
-          className="absolute top-40 -left-20 w-[120vw] h-24 bg-white/15 blur-3xl animate-float transform -rotate-12"
+          className="absolute top-20 -left-32 w-[150vw] h-40 bg-white/18 blur-2xl animate-float transform -rotate-12"
           style={{ 
             transform: `translateY(${scrollY * -0.08}px) rotate(-12deg)`,
             animationDelay: '1s'
           }}
         ></div>
         <div 
-          className="absolute top-72 -left-20 w-[120vw] h-40 bg-white/8 blur-2xl animate-float transform -rotate-12"
+          className="absolute top-60 -left-32 w-[150vw] h-56 bg-white/10 blur-3xl animate-float transform -rotate-12"
           style={{ 
             transform: `translateY(${scrollY * 0.12}px) rotate(-12deg)`,
             animationDelay: '0.5s'
           }}
         ></div>
         <div 
-          className="absolute bottom-40 -left-20 w-[120vw] h-28 bg-white/12 blur-3xl animate-float transform -rotate-12"
+          className="absolute top-96 -left-32 w-[150vw] h-44 bg-white/15 blur-2xl animate-float transform -rotate-12"
+          style={{ 
+            transform: `translateY(${scrollY * -0.06}px) rotate(-12deg)`,
+            animationDelay: '2.5s'
+          }}
+        ></div>
+        <div 
+          className="absolute bottom-80 -left-32 w-[150vw] h-52 bg-white/14 blur-3xl animate-float transform -rotate-12"
           style={{ 
             transform: `translateY(${scrollY * -0.15}px) rotate(-12deg)`,
             animationDelay: '2s'
           }}
         ></div>
         <div 
-          className="absolute bottom-10 -left-20 w-[120vw] h-36 bg-white/10 blur-2xl animate-float transform -rotate-12"
+          className="absolute bottom-40 -left-32 w-[150vw] h-48 bg-white/12 blur-2xl animate-float transform -rotate-12"
           style={{ 
             transform: `translateY(${scrollY * 0.05}px) rotate(-12deg)`,
             animationDelay: '1.5s'
           }}
         ></div>
         <div 
-          className="absolute top-1/2 -left-20 w-[120vw] h-20 bg-white/5 blur-xl animate-pulse transform -rotate-12"
+          className="absolute -bottom-20 -left-32 w-[150vw] h-56 bg-white/16 blur-3xl animate-float transform -rotate-12"
+          style={{ 
+            transform: `translateY(${scrollY * 0.08}px) rotate(-12deg)`,
+            animationDelay: '3s'
+          }}
+        ></div>
+        <div 
+          className="absolute top-1/3 -left-32 w-[150vw] h-36 bg-white/8 blur-xl animate-pulse transform -rotate-12"
           style={{ transform: `translate(0, -50%) translateY(${scrollY * 0.05}px) rotate(-12deg)` }}
+        ></div>
+        <div 
+          className="absolute top-2/3 -left-32 w-[150vw] h-40 bg-white/10 blur-xl animate-pulse transform -rotate-12"
+          style={{ 
+            transform: `translate(0, -50%) translateY(${scrollY * -0.07}px) rotate(-12deg)`,
+            animationDelay: '1.5s'
+          }}
         ></div>
       </div>
 
