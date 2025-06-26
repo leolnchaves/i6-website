@@ -170,9 +170,9 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {solutions.map((solution, index) => (
-              <Card key={index} className={`border-2 ${solution.borderColor} ${solution.bgColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden flex flex-col`}>
+              <Card key={index} className={`border-2 ${solution.borderColor} ${solution.bgColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden h-full flex flex-col`}>
                 <div className={`h-1 bg-gradient-to-r ${solution.gradient}`}></div>
-                <CardHeader className="p-4 flex-grow">
+                <CardHeader className="p-4 flex-1 flex flex-col">
                   <div className="flex items-start mb-3">
                     <div className="mr-3 mt-1">
                       {solution.icon}
@@ -190,7 +190,7 @@ const Solutions = () => {
                     {solution.description}
                   </p>
                   
-                  <div className="space-y-1 mb-4">
+                  <div className="space-y-1 mb-4 flex-1">
                     {solution.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center">
                         <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0" />
@@ -199,12 +199,12 @@ const Solutions = () => {
                     ))}
                   </div>
                   
-                  <div className="bg-white/70 rounded-lg p-3">
+                  <div className="bg-white/70 rounded-lg p-3 mt-auto mb-4">
                     <h4 className="font-semibold text-gray-900 mb-1 text-xs">Business Outcomes:</h4>
                     <p className="text-gray-700 text-xs">{solution.outcome}</p>
                   </div>
                 </CardHeader>
-                <CardContent className="px-4 pb-4 mt-auto">
+                <CardContent className="px-4 pb-4">
                   <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 text-white transition-all duration-300 shadow-md hover:shadow-lg text-sm py-2`}>
                     Learn More
                     <ArrowRight className="ml-2 w-3 h-3" />
