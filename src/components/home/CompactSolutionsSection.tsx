@@ -1,9 +1,13 @@
+
 import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const CompactSolutionsSection = () => {
+  const { t } = useLanguage();
+
   const solutions = [
     {
       icon: <Target className="w-6 h-6 text-blue-700" />,
@@ -45,9 +49,9 @@ const CompactSolutionsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 scroll-reveal">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            <span className="block mb-2">AI Solutions That</span>
+            <span className="block mb-2">{t('solutions.hero.title')}</span>
             <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent pb-2">
-              Sells. Scales. Performs.
+              {t('solutions.hero.subtitle')}
             </span>
           </h2>
         </div>
@@ -78,7 +82,7 @@ const CompactSolutionsSection = () => {
         <div className="text-center">
           <Link to="/solutions">
             <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105">
-              Ver Todas as Soluções
+              {t('solutions.learnMore')}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>

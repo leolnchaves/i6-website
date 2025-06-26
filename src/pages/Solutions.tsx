@@ -12,14 +12,14 @@ const Solutions = () => {
   const solutions = [
     {
       icon: <Target className="w-8 h-8 text-blue-700" />,
-      title: 'Smart Discovery for Anonymous Visitors',
+      titleKey: 'solutions.aiAnalytics.title',
       focus: 'Focus: B2B, B2C',
-      description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.',
+      descriptionKey: 'solutions.aiAnalytics.description',
       features: [
-        'Contextual Affinity Modeling',
-        'Cold-Start Personalization',
-        'Anonymous Visitor Intelligence',
-        'Real-time Recommendations'
+        t('solutions.aiAnalytics.feature1'),
+        t('solutions.aiAnalytics.feature2'),
+        t('solutions.aiAnalytics.feature3'),
+        t('solutions.aiAnalytics.feature4')
       ],
       outcome: 'Unlocks product discovery and boosts engagement with zero historical data.',
       gradient: "from-gray-600/80 to-blue-700/80",
@@ -28,14 +28,14 @@ const Solutions = () => {
     },
     {
       icon: <Users className="w-8 h-8 text-orange-700" />,
-      title: 'Predictive Personalization for Identified Users',
+      titleKey: 'solutions.processAutomation.title',
       focus: 'Focus: B2B, B2C, B2B2C, D2C',
-      description: 'Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.',
+      descriptionKey: 'solutions.processAutomation.description',
       features: [
-        'Behavioral Data Analysis',
-        'Omnichannel Personalization',
-        'Cross-sell and Up-sell Intelligence',
-        'Profile Enrichment and Scoring'
+        t('solutions.processAutomation.feature1'),
+        t('solutions.processAutomation.feature2'),
+        t('solutions.processAutomation.feature3'),
+        t('solutions.processAutomation.feature4')
       ],
       outcome: 'Increases customer lifetime value with intelligent, behavior-based personalization.',
       gradient: "from-orange-600/80 to-red-600/80",
@@ -44,14 +44,14 @@ const Solutions = () => {
     },
     {
       icon: <Cog className="w-8 h-8 text-blue-700" />,
-      title: 'Industrial Recommendation Intelligence',
+      titleKey: 'solutions.dataIntelligence.title',
       focus: 'Focus: B2B, B2B2C',
-      description: 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.',
+      descriptionKey: 'solutions.dataIntelligence.description',
       features: [
-        'Assortment Optimization',
-        'Dynamic Pricing Integration',
-        'Commercial Target Alignment',
-        'POS Behavioral Forecasting'
+        t('solutions.dataIntelligence.feature1'),
+        t('solutions.dataIntelligence.feature2'),
+        t('solutions.dataIntelligence.feature3'),
+        t('solutions.dataIntelligence.feature4')
       ],
       outcome: 'Drives product relevance and sell-out, aligned with revenue and margin goals.',
       gradient: "from-blue-600/80 to-gray-700/80",
@@ -60,14 +60,14 @@ const Solutions = () => {
     },
     {
       icon: <TrendingUp className="w-8 h-8 text-gray-700" />,
-      title: 'Predictive Campaign Targeting',
+      titleKey: 'solutions.cloudIntegration.title',
       focus: 'Focus: B2C',
-      description: 'Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.',
+      descriptionKey: 'solutions.cloudIntegration.description',
       features: [
-        'Propensity Modeling',
-        'Conversion Likelihood Scoring',
-        'Campaign Audience Refinement',
-        'Lead Activation Strategy'
+        t('solutions.cloudIntegration.feature1'),
+        t('solutions.cloudIntegration.feature2'),
+        t('solutions.cloudIntegration.feature3'),
+        t('solutions.cloudIntegration.feature4')
       ],
       outcome: 'Maximizes ROI by targeting the right customer at the right time.',
       gradient: "from-gray-600/80 to-blue-600/80",
@@ -76,14 +76,14 @@ const Solutions = () => {
     },
     {
       icon: <DollarSign className="w-8 h-8 text-orange-700" />,
-      title: 'Smart Price Optimization',
+      titleKey: 'solutions.cloudIntegration.title',
       focus: 'Focus: B2B, B2C, B2B2C, D2C',
-      description: 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.',
+      descriptionKey: 'solutions.cloudIntegration.description',
       features: [
-        'Behavior-Based Pricing',
-        'Lifecycle-Aware Strategy',
-        'Price Sensitivity Calibration',
-        'Margin Optimization Engine'
+        t('solutions.cloudIntegration.feature1'),
+        t('solutions.cloudIntegration.feature2'),
+        t('solutions.cloudIntegration.feature3'),
+        t('solutions.cloudIntegration.feature4')
       ],
       outcome: 'Improves margin, sales velocity, and competitiveness through intelligent pricing.',
       gradient: "from-orange-600/80 to-gray-600/80",
@@ -92,14 +92,14 @@ const Solutions = () => {
     },
     {
       icon: <BarChart3 className="w-8 h-8 text-blue-700" />,
-      title: 'Adaptive Demand Forecasting',
+      titleKey: 'solutions.cloudIntegration.title',
       focus: 'Focus: B2B, B2C',
-      description: 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.',
+      descriptionKey: 'solutions.cloudIntegration.description',
       features: [
-        'Self-Reinforcing Forecast Model',
-        'Extended Projection (N+M)',
-        'Seasonality and Trend Detection',
-        'Inventory and Supply Chain Alignment'
+        t('solutions.cloudIntegration.feature1'),
+        t('solutions.cloudIntegration.feature2'),
+        t('solutions.cloudIntegration.feature3'),
+        t('solutions.cloudIntegration.feature4')
       ],
       outcome: 'Enhances demand planning accuracy and agility in fast-changing markets.',
       gradient: "from-blue-600/80 to-gray-700/80",
@@ -111,37 +111,37 @@ const Solutions = () => {
   const processSteps = [
     {
       key: "discovery",
-      title: "Discovery & Business Angle Definition",
+      titleKey: "solutions.process.discovery.title",
       subtitle: "Business Requirement Analysis",
-      description: "Understanding your business needs and defining the optimal approach",
+      descriptionKey: "solutions.process.discovery.description",
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "data",
-      title: "Data Sample & Anonymization",
+      titleKey: "solutions.process.strategy.title",
       subtitle: "Secure Data Processing",
-      description: "Collecting and preparing your data with full privacy protection",
+      descriptionKey: "solutions.process.strategy.description",
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "training",
-      title: "Model Training & Fine-tuning",
+      titleKey: "solutions.process.implementation.title",
       subtitle: "Business-Oriented Training",
-      description: "Building custom AI models tailored to your specific business context",
+      descriptionKey: "solutions.process.implementation.description",
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "testing",
-      title: "Performance Evaluation",
+      titleKey: "solutions.process.optimization.title",
       subtitle: "Precision & Backtest Analysis",
-      description: "Comprehensive testing to ensure optimal performance and accuracy",
+      descriptionKey: "solutions.process.optimization.description",
       color: "from-slate-400 to-slate-500"
     },
     {
       key: "integration",
-      title: "Integration & Recommendations",
+      titleKey: "solutions.process.implementation.title",
       subtitle: "Active Digital Channel Integration",
-      description: "Seamless deployment across your digital ecosystem",
+      descriptionKey: "solutions.process.implementation.description",
       color: "from-amber-600 to-amber-700"
     }
   ];
@@ -153,13 +153,13 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="block mb-2">AI Solutions That</span>
+              <span className="block mb-2">{t('solutions.hero.title')}</span>
               <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-                Sells. Scales. Performs.
+                {t('solutions.hero.subtitle')}
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Discover how our AI solutions can transform your business operations and drive growth.
+              {t('solutions.hero.description')}
             </p>
           </div>
         </div>
@@ -179,7 +179,7 @@ const Solutions = () => {
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-lg font-bold text-gray-900 mb-2 leading-tight">
-                        {solution.title}
+                        {t(solution.titleKey)}
                       </CardTitle>
                       <div className="text-xs text-gray-600 font-medium mb-2 bg-white/60 rounded-full px-2 py-1 inline-block">
                         {solution.focus}
@@ -187,7 +187,7 @@ const Solutions = () => {
                     </div>
                   </div>
                   <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                    {solution.description}
+                    {t(solution.descriptionKey)}
                   </p>
                   
                   <div className="space-y-1 mb-4">
@@ -206,7 +206,7 @@ const Solutions = () => {
                 </CardHeader>
                 <CardContent className="px-4 pb-4 mt-auto">
                   <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 text-white transition-all duration-300 shadow-md hover:shadow-lg text-sm py-2`}>
-                    Learn More
+                    {t('solutions.learnMore')}
                     <ArrowRight className="ml-2 w-3 h-3" />
                   </Button>
                 </CardContent>
@@ -221,10 +221,10 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              AI Implementation Journey
+              {t('solutions.process.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-2">
-              Risk-free testing. Concrete potential in 30 days.
+              {t('solutions.process.description')}
             </p>
           </div>
 
@@ -242,13 +242,13 @@ const Solutions = () => {
                   <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 h-[240px] flex flex-col justify-between">
                     <div className="flex-1 flex flex-col justify-center">
                       <h3 className="font-bold text-gray-900 text-base mb-3 leading-tight">
-                        {step.title}
+                        {t(step.titleKey)}
                       </h3>
                       <div className="text-xs text-gray-600 mb-3 font-medium bg-gray-50 rounded-full px-3 py-1 inline-block">
                         {step.subtitle}
                       </div>
                       <p className="text-gray-700 text-sm leading-relaxed">
-                        {step.description}
+                        {t(step.descriptionKey)}
                       </p>
                     </div>
                   </div>
@@ -307,13 +307,13 @@ const Solutions = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Transform Your Business Today
+            {t('solutions.cta.title')}
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Ready to revolutionize your business with AI? Let's discuss how we can help you achieve your goals.
+            {t('solutions.cta.description')}
           </p>
           <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
-            Get Started Now
+            {t('solutions.cta.button')}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>
