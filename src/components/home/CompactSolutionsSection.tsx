@@ -49,9 +49,9 @@ const CompactSolutionsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 scroll-reveal">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            <span className="block mb-2">{t('solutions.hero.title')}</span>
+            <span className="block mb-2">AI Solutions That</span>
             <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent pb-2">
-              {t('solutions.hero.subtitle')}
+              Sells. Scales. Performs.
             </span>
           </h2>
         </div>
