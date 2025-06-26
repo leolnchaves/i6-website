@@ -153,9 +153,9 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="block mb-2">AI Solutions That</span>
+              <span className="block mb-2">Business AI Solutions.</span>
               <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-                Sells. Scales. Performs.
+                Built to Perform.
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
