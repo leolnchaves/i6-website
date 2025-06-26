@@ -13,14 +13,14 @@ const WorldMap = () => {
   const getResponsivePositions = () => {
     if (isMobile) {
       return {
-        campinas: { top: '68%', left: '32%' },
-        dover: { top: '35%', left: '22%' },
+        campinas: { top: '75%', left: '28%' },
+        dover: { top: '42%', left: '25%' },
         milan: { top: '30%', left: '53%' }
       };
     }
     return {
-      campinas: { top: '65%', left: '35%' },
-      dover: { top: '38%', left: '24%' },
+      campinas: { top: '72%', left: '30%' },
+      dover: { top: '35%', left: '22%' },
       milan: { top: '32%', left: '51%' }
     };
   };

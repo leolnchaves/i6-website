@@ -26,7 +26,7 @@ const HeroSection = () => {
                   {t('hero.infinite')}
                 </span>
                 <div className="relative inline-block w-full">
-                  <span className="relative block text-white font-bold text-5xl sm:text-6xl md:text-7xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl break-words px-2">
+                  <span className="relative block text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl px-2 leading-tight">
                     {t('hero.possibilities')}
                   </span>
                 </div>
