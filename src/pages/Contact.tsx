@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -395,30 +394,14 @@ const Contact = () => {
               
               {/* Calendly Embed */}
               <div className="bg-white rounded-lg p-4">
-                <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-gray-600">
-                    <div className="mb-4">
-                      <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-2">Calendly Integration</h4>
-                    <p className="text-gray-500 mb-4">
-                      To complete the Calendly integration, you'll need to:
-                    </p>
-                    <div className="text-left max-w-md mx-auto space-y-2 text-sm">
-                      <p>1. Create a Calendly account at calendly.com</p>
-                      <p>2. Get your Calendly embed URL</p>
-                      <p>3. Replace this placeholder with the actual embed code</p>
-                    </div>
-                    <Button 
-                      className="mt-4 bg-blue-600 text-white hover:bg-blue-700"
-                      onClick={() => window.open('https://calendly.com', '_blank')}
-                    >
-                      Visit Calendly
-                    </Button>
-                  </div>
-                </div>
+                <iframe
+                  src="https://calendly.com/leo-infinity6"
+                  width="100%"
+                  height="600"
+                  frameBorder="0"
+                  title="Schedule a meeting"
+                  className="rounded-lg"
+                ></iframe>
               </div>
             </CardContent>
           </Card>
