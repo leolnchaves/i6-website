@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -58,7 +56,7 @@ const Contact = () => {
       id: 'campinas',
       name: 'Campinas, BR',
       type: 'Headquarters',
-      position: { top: '72%', left: '28%' }, // South America - Brazil
+      position: { top: '68%', left: '30%' }, // South America - Brazil
       address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrazil',
       phone: '+55 19 998197775',
       email: 'infinity6@infinity6.ai'
@@ -67,7 +65,7 @@ const Contact = () => {
       id: 'dover',
       name: 'Dover, DE',
       type: 'Branch Office',
-      position: { top: '32%', left: '22%' }, // North America - East Coast USA
+      position: { top: '38%', left: '24%' }, // North America - East Coast USA
       address: '123 Corporate Blvd\nDover, DE 19901\nUnited States',
       phone: '+1 (302) 555-0123',
       email: 'usa@infinity6.ai'
@@ -76,7 +74,7 @@ const Contact = () => {
       id: 'milan',
       name: 'Milan, IT',
       type: 'Branch Office',
-      position: { top: '30%', left: '52%' }, // Europe - Northern Italy
+      position: { top: '32%', left: '51%' }, // Europe - Northern Italy
       address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItaly',
       phone: '+39 02 1234 5678',
       email: 'italia@infinity6.ai'
@@ -316,45 +314,13 @@ const Contact = () => {
                 </p>
                 
                 <TooltipProvider>
-                  <div className="relative w-full h-96 bg-gradient-to-b from-blue-50 to-blue-100 rounded-lg overflow-hidden border border-gray-200">
-                    {/* World Map SVG */}
-                    <svg viewBox="0 0 1000 500" className="w-full h-full">
-                      {/* North America */}
-                      <path d="M120,120 L160,100 L200,110 L240,120 L280,140 L300,160 L290,180 L270,200 L240,210 L200,200 L160,190 L130,180 L110,160 L105,140 L120,120 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* South America */}
-                      <path d="M220,280 L260,270 L290,290 L300,320 L290,360 L280,400 L270,430 L250,450 L230,440 L210,420 L200,380 L205,340 L210,310 L220,280 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* Europe */}
-                      <path d="M480,140 L520,130 L540,140 L550,160 L540,180 L520,190 L500,185 L480,175 L475,160 L480,140 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* Africa */}
-                      <path d="M480,200 L520,195 L540,210 L550,240 L545,280 L540,320 L530,350 L520,370 L500,375 L480,370 L470,350 L465,320 L470,280 L475,240 L480,200 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* Asia */}
-                      <path d="M560,120 L620,110 L680,120 L720,140 L760,160 L780,180 L770,200 L750,220 L720,230 L680,225 L640,220 L600,210 L570,190 L560,160 L560,120 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* Australia */}
-                      <path d="M700,350 L740,345 L760,355 L755,375 L740,385 L720,380 L700,375 L695,365 L700,350 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* Greenland */}
-                      <path d="M320,60 L350,55 L360,70 L355,85 L340,90 L325,85 L320,70 L320,60 Z" 
-                            fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
-                      
-                      {/* Grid lines for reference */}
-                      <defs>
-                        <pattern id="grid" width="50" height="25" patternUnits="userSpaceOnUse">
-                          <path d="M 50 0 L 0 0 0 25" fill="none" stroke="#e2e8f0" strokeWidth="0.5" opacity="0.3"/>
-                        </pattern>
-                      </defs>
-                      <rect width="100%" height="100%" fill="url(#grid)" />
-                    </svg>
+                  <div className="relative w-full h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+                    {/* World Map Image */}
+                    <img 
+                      src="/lovable-uploads/d9d6ba9c-61ec-4d42-8e89-f0451e01621f.png"
+                      alt="World Map"
+                      className="w-full h-full object-contain"
+                    />
                     
                     {/* Location markers */}
                     {locations.map((location) => (
@@ -442,4 +408,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
