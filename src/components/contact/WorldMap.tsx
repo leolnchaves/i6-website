@@ -91,13 +91,13 @@ const WorldMap = () => {
               <Tooltip key={location.id}>
                 <TooltipTrigger asChild>
                   <button
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-all duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded-lg group"
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-all duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded-lg"
                     style={{
                       top: location.position.top,
                       left: location.position.left,
                     }}
                   >
-                    <div className="bg-white rounded-lg shadow-lg border p-2 min-w-[90px] sm:min-w-[110px] relative">
+                    <div className="bg-white rounded-lg shadow-lg border p-2 min-w-[90px] sm:min-w-[110px]">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-sm">{location.flag}</span>
                         <div className="text-left">
@@ -114,18 +114,6 @@ const WorldMap = () => {
                         <span className="text-xs font-medium text-blue-600">
                           {location.type}
                         </span>
-                      </div>
-                      
-                      {/* Nome da unidade aparece apenas no hover */}
-                      <div className="absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-lg border p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-center">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-gray-900 mb-1">
-                            {location.unitName}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            {location.city}, {location.state}
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </button>
