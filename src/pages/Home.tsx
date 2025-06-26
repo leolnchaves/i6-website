@@ -1,32 +1,34 @@
 
-import { ArrowRight, Zap, Shield, Target, Users } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Target, TrendingUp, Award, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { Link } from 'react-router-dom';
+import ClientCarousel from '@/components/ClientCarousel';
 
 const Home = () => {
   const { scrollY } = useScrollAnimation();
 
-  const features = [
+  const results = [
     {
-      icon: <Zap className="w-8 h-8 text-orange-500" />,
-      title: "Lightning Fast",
-      description: "Process data at unprecedented speeds with our advanced AI algorithms"
+      icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
+      title: "12x Increase in Conversion",
+      description: "Advanced AI algorithms boost conversion rates through intelligent customer behavior analysis and personalized recommendations"
     },
     {
       icon: <Shield className="w-8 h-8 text-blue-500" />,
-      title: "Secure & Reliable",
-      description: "Enterprise-grade security with 99.9% uptime guarantee"
+      title: "57% Reduction in CRM Costs",
+      description: "Streamlined operations and automated processes significantly reduce operational expenses while maintaining service quality"
     },
     {
-      icon: <Target className="w-8 h-8 text-orange-600" />,
-      title: "Precision Driven",
-      description: "Achieve unmatched accuracy in your business operations"
+      icon: <Award className="w-8 h-8 text-orange-600" />,
+      title: "1.7x Proposal Engagement",
+      description: "Data-driven insights and AI-powered personalization dramatically improve proposal success rates"
     },
     {
-      icon: <Users className="w-8 h-8 text-blue-600" />,
-      title: "Team Collaboration",
-      description: "Seamless collaboration tools for distributed teams"
+      icon: <Clock className="w-8 h-8 text-blue-600" />,
+      title: "Concrete Results in Weeks",
+      description: "100% API-first and cloud-native solutions deliver measurable outcomes in weeks, not months"
     }
   ];
 
@@ -57,8 +59,10 @@ const Home = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="animate-bounce-in">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                Infinite Possibilities
-                <span className="block bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent animate-wave">
+                <span className="block bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                  Infinite Possibilities
+                </span>
+                <span className="block text-white text-4xl md:text-5xl mt-4">
                   Powered by AI
                 </span>
               </h1>
@@ -68,11 +72,11 @@ const Home = () => {
               that unlock unlimited potential and drive extraordinary results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-in-right">
-              <Button size="lg" className="bg-white text-orange-500 hover:bg-gray-100 hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl">
+              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl border-0 rounded-full">
                 Start Your Journey
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105">
+              <Button size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-lg px-8 py-4 rounded-full backdrop-blur-sm">
                 Watch Demo
               </Button>
             </div>
@@ -87,7 +91,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Results Section */}
       <section className="py-20 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-72 h-72 gradient-accent opacity-10 rounded-full blur-3xl"></div>
@@ -97,32 +101,26 @@ const Home = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16 scroll-reveal">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Why Choose 
-              <img 
-                src="/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png" 
-                alt="Infinity6" 
-                className="inline-block h-12 ml-2 align-middle"
-              />
-              ?
+              Proven Results That Matter
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our AI-powered platform delivers exceptional results through innovative technology 
-              and seamless user experience.
+              Our AI-powered solutions deliver measurable impact across industries, 
+              transforming businesses with data-driven intelligence and precision.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+            {results.map((result, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-8 text-center">
                   <div className="mb-4 flex justify-center animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
-                    {feature.icon}
+                    {result.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-gray-900">
-                    {feature.title}
+                    {result.title}
                   </h3>
                   <p className="text-gray-600">
-                    {feature.description}
+                    {result.description}
                   </p>
                 </CardContent>
               </Card>
@@ -142,19 +140,24 @@ const Home = () => {
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-12">
             <div className="scroll-reveal">
               <div className="text-5xl font-bold mb-2 animate-bounce-in">500+</div>
               <div className="text-xl opacity-90">Companies Transformed</div>
             </div>
             <div className="scroll-reveal" style={{ animationDelay: '0.2s' }}>
               <div className="text-5xl font-bold mb-2 animate-bounce-in">99.9%</div>
-              <div className="text-xl opacity-90">Uptime Guarantee</div>
+              <div className="text-xl opacity-90">Accuracy Rate</div>
             </div>
             <div className="scroll-reveal" style={{ animationDelay: '0.4s' }}>
               <div className="text-5xl font-bold mb-2 animate-bounce-in">24/7</div>
               <div className="text-xl opacity-90">Expert Support</div>
             </div>
+          </div>
+          
+          {/* Client Carousel */}
+          <div className="mt-12">
+            <ClientCarousel />
           </div>
         </div>
       </section>
@@ -169,18 +172,32 @@ const Home = () => {
               Ready to Transform Your Business?
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join hundreds of companies that have already unlocked their infinite potential with 
-              <img 
-                src="/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png" 
-                alt="Infinity6" 
-                className="inline-block h-6 mx-1 align-middle"
-              />
-              .
+              Join hundreds of companies that have already unlocked their infinite potential.
             </p>
             <Button size="lg" className="gradient-accent hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl">
               Get Started Today
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Links */}
+      <section className="py-8 bg-white border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center space-x-8">
+            <Link 
+              to="/privacy-policy" 
+              className="text-gray-600 hover:text-orange-500 transition-colors duration-300 text-sm font-medium"
+            >
+              Privacy Policy
+            </Link>
+            <Link 
+              to="/ethics-policy" 
+              className="text-gray-600 hover:text-orange-500 transition-colors duration-300 text-sm font-medium"
+            >
+              Ethics Policy
+            </Link>
           </div>
         </div>
       </section>

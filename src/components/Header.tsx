@@ -24,9 +24,9 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
             <img 
-              src="/lovable-uploads/6b931e8f-e382-4984-80d6-7fcf4ebf91d8.png" 
+              src="/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png" 
               alt="Infinity6" 
-              className="h-8 w-auto"
+              className="h-12 w-auto"
             />
           </Link>
 
