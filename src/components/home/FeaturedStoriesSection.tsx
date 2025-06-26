@@ -19,6 +19,7 @@ const FeaturedStoriesSection = () => {
         { icon: <DollarSign className="w-4 h-4" />, value: "$2.3M", label: "Cost Savings" }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
+      videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
       color: "from-blue-500 to-cyan-500"
     },
     {
@@ -31,6 +32,7 @@ const FeaturedStoriesSection = () => {
         { icon: <TrendingUp className="w-4 h-4" />, value: "10x", label: "Processing Speed" }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
+      videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
       color: "from-purple-500 to-pink-500"
     },
     {
@@ -43,6 +45,7 @@ const FeaturedStoriesSection = () => {
         { icon: <Users className="w-4 h-4" />, value: "+60%", label: "Retention" }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop",
+      videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_3mb.mp4",
       color: "from-orange-500 to-red-500"
     }
   ];
@@ -76,22 +79,39 @@ const FeaturedStoriesSection = () => {
               onMouseLeave={() => setHoveredCard(null)}
             >
               <CardContent className="p-0">
-                {/* Video Thumbnail with Play Button */}
+                {/* Video Container with Thumbnail and Video */}
                 <div className="relative h-48 overflow-hidden">
+                  {/* Thumbnail Image */}
                   <img 
                     src={story.videoThumbnail}
                     alt={story.company}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      hoveredCard === index ? 'opacity-0' : 'opacity-100'
+                    }`}
                   />
+                  
+                  {/* Video Element */}
+                  <video 
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                      hoveredCard === index ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    src={story.videoUrl}
+                    muted
+                    loop
+                    autoPlay={hoveredCard === index}
+                  />
+
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
                   <div className={`absolute inset-0 bg-gradient-to-br ${story.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}></div>
                   
-                  {/* Play Button */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={`w-16 h-16 bg-white/90 rounded-full flex items-center justify-center transform transition-all duration-300 ${hoveredCard === index ? 'scale-110' : 'scale-100'} hover:bg-white`}>
-                      <Play className="w-6 h-6 text-gray-800 ml-1" fill="currentColor" />
+                  {/* Play Button - only show when not hovering */}
+                  {hoveredCard !== index && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center transform transition-all duration-300 hover:bg-white hover:scale-110">
+                        <Play className="w-6 h-6 text-gray-800 ml-1" fill="currentColor" />
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Industry Badge */}
                   <div className="absolute top-4 left-4">

@@ -1,28 +1,58 @@
 
-import { TrendingUp, Shield, Award, Clock } from 'lucide-react';
+import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const ResultsSection = () => {
   const results = [
     {
       icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
-      title: "12x Increase in Conversion",
+      title: "Conversion Rate Optimization",
       description: "Advanced AI algorithms boost conversion rates through intelligent customer behavior analysis and personalized recommendations"
     },
     {
       icon: <Shield className="w-8 h-8 text-blue-500" />,
-      title: "57% Reduction in CRM Costs",
+      title: "CRM Cost Reduction", 
       description: "Streamlined operations and automated processes significantly reduce operational expenses while maintaining service quality"
     },
     {
       icon: <Award className="w-8 h-8 text-orange-600" />,
-      title: "1.7x Proposal Engagement",
+      title: "Enhanced Proposal Engagement",
       description: "Data-driven insights and AI-powered personalization dramatically improve proposal success rates"
     },
     {
       icon: <Clock className="w-8 h-8 text-blue-600" />,
-      title: "Concrete Results in Weeks",
-      description: "100% API-first and cloud-native solutions deliver measurable outcomes in weeks, not months"
+      title: "Rapid Implementation",
+      description: "100% API-first and cloud-native AI solutions deliver measurable outcomes in weeks, not months"
+    },
+    {
+      icon: <Target className="w-8 h-8 text-purple-500" />,
+      title: "Market Demand Forecasting",
+      description: "AI-powered forecast precision directing production plans and commercial goals, optimizing stock breaks and turnover"
+    },
+    {
+      icon: <DollarSign className="w-8 h-8 text-green-500" />,
+      title: "Dynamic Pricing Intelligence",
+      description: "Self-reinforcing pricing model adjusting prices based on demand, where adjustments increase either demand or margin, feeding back into the system"
+    },
+    {
+      icon: <Eye className="w-8 h-8 text-red-500" />,
+      title: "Bounce Rate Optimization",
+      description: "Significant reduction of bounce rate in digital funnels through AI-driven user experience optimization"
+    },
+    {
+      icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
+      title: "Average Ticket Enhancement",
+      description: "Substantial increase in average ticket value through AI-guided cross-selling with diversity balancing"
+    },
+    {
+      icon: <Search className="w-8 h-8 text-teal-500" />,
+      title: "Relevant Product Discovery",
+      description: "AI-powered product complementarity discovery based on navigation behavior patterns and user preferences"
+    },
+    {
+      icon: <Users className="w-8 h-8 text-pink-500" />,
+      title: "Real-Time Recommendations",
+      description: "Predictive behavior recommendations with equal precision for logged users (with history) and anonymous users (without history)"
     }
   ];
 
@@ -44,17 +74,17 @@ const ResultsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {results.map((result, index) => (
             <Card key={index} className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass" style={{ animationDelay: `${index * 0.1}s` }}>
-              <CardContent className="p-8 text-center">
+              <CardContent className="p-6 text-center">
                 <div className="mb-4 flex justify-center animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
                   {result.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                <h3 className="text-lg font-semibold mb-3 text-gray-900">
                   {result.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-sm">
                   {result.description}
                 </p>
               </CardContent>

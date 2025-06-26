@@ -8,22 +8,44 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center gradient-primary overflow-hidden">
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background Stripes */}
       <div className="absolute inset-0">
+        {/* Large diagonal stripes covering full width */}
         <div 
-          className="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float"
-          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+          className="absolute top-10 -left-20 w-[120vw] h-32 bg-white/10 blur-2xl animate-float transform -rotate-12"
+          style={{ transform: `translateY(${scrollY * 0.1}px) rotate(-12deg)` }}
         ></div>
         <div 
-          className="absolute bottom-20 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float"
+          className="absolute top-40 -left-20 w-[120vw] h-24 bg-white/15 blur-3xl animate-float transform -rotate-12"
           style={{ 
-            transform: `translateY(${scrollY * -0.15}px)`,
+            transform: `translateY(${scrollY * -0.08}px) rotate(-12deg)`,
+            animationDelay: '1s'
+          }}
+        ></div>
+        <div 
+          className="absolute top-72 -left-20 w-[120vw] h-40 bg-white/8 blur-2xl animate-float transform -rotate-12"
+          style={{ 
+            transform: `translateY(${scrollY * 0.12}px) rotate(-12deg)`,
+            animationDelay: '0.5s'
+          }}
+        ></div>
+        <div 
+          className="absolute bottom-40 -left-20 w-[120vw] h-28 bg-white/12 blur-3xl animate-float transform -rotate-12"
+          style={{ 
+            transform: `translateY(${scrollY * -0.15}px) rotate(-12deg)`,
             animationDelay: '2s'
           }}
         ></div>
         <div 
-          className="absolute top-1/2 left-1/2 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-pulse"
-          style={{ transform: `translate(-50%, -50%) translateY(${scrollY * 0.05}px)` }}
+          className="absolute bottom-10 -left-20 w-[120vw] h-36 bg-white/10 blur-2xl animate-float transform -rotate-12"
+          style={{ 
+            transform: `translateY(${scrollY * 0.05}px) rotate(-12deg)`,
+            animationDelay: '1.5s'
+          }}
+        ></div>
+        <div 
+          className="absolute top-1/2 -left-20 w-[120vw] h-20 bg-white/5 blur-xl animate-pulse transform -rotate-12"
+          style={{ transform: `translate(0, -50%) translateY(${scrollY * 0.05}px) rotate(-12deg)` }}
         ></div>
       </div>
 
