@@ -2,14 +2,17 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const WorldMap = () => {
+  const { t } = useLanguage();
+
   const locations = [
     {
       id: 'campinas',
       name: 'Campinas, BR',
-      type: 'Headquarters',
-      position: { top: '68%', left: '30%' },
+      type: t('contact.map.headquarters'),
+      position: { top: '70%', left: '32%' }, // Fixed coordinates for Campinas, Brazil
       address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrazil',
       phone: '+55 19 998197775',
       email: 'infinity6@infinity6.ai'
@@ -17,7 +20,7 @@ const WorldMap = () => {
     {
       id: 'dover',
       name: 'Dover, DE',
-      type: 'Branch Office',
+      type: t('contact.map.branchOffice'),
       position: { top: '38%', left: '24%' },
       address: '123 Corporate Blvd\nDover, DE 19901\nUnited States',
       phone: '+1 (302) 555-0123',
@@ -26,7 +29,7 @@ const WorldMap = () => {
     {
       id: 'milan',
       name: 'Milan, IT',
-      type: 'Branch Office',
+      type: t('contact.map.branchOffice'),
       position: { top: '32%', left: '51%' },
       address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItaly',
       phone: '+39 02 1234 5678',
@@ -38,10 +41,10 @@ const WorldMap = () => {
     <Card className="border-0 shadow-lg">
       <CardContent className="p-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-4">
-          Our Global Presence
+          {t('contact.map.title')}
         </h3>
         <p className="text-gray-600 mb-6">
-          Find us across three continents. Click on each location to see detailed contact information.
+          {t('contact.map.description')}
         </p>
         
         <TooltipProvider>

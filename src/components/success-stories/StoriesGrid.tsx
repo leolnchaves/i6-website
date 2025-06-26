@@ -1,49 +1,52 @@
 
 import { Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const StoriesGrid = () => {
+  const { t } = useLanguage();
+
   const stories = [
     {
-      company: "TechCorp Industries",
-      industry: "Manufacturing",
-      challenge: "Reducing production downtime and optimizing efficiency",
-      solution: "AI-powered predictive maintenance and quality control",
+      company: t('successStories.stories.techcorp.company'),
+      industry: t('successStories.stories.techcorp.industry'),
+      challenge: t('successStories.stories.techcorp.challenge'),
+      solution: t('successStories.stories.techcorp.solution'),
       results: [
-        { metric: "Downtime Reduction", value: "75%" },
-        { metric: "Cost Savings", value: "$2.3M" },
-        { metric: "Efficiency Increase", value: "40%" }
+        { metric: t('successStories.common.downtimeReduction'), value: "75%" },
+        { metric: t('successStories.common.costSavings'), value: "$2.3M" },
+        { metric: t('successStories.common.efficiencyIncrease'), value: "40%" }
       ],
-      quote: "Infinity6's AI solutions transformed our manufacturing process. We've seen unprecedented efficiency gains and cost reductions.",
-      author: "Sarah Johnson, CTO",
+      quote: t('successStories.stories.techcorp.quote'),
+      author: t('successStories.stories.techcorp.author'),
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
     },
     {
-      company: "FinanceFlow",
-      industry: "Financial Services",
-      challenge: "Fraud detection and risk assessment automation",
-      solution: "Machine learning algorithms for real-time transaction analysis",
+      company: t('successStories.stories.financeflow.company'),
+      industry: t('successStories.stories.financeflow.industry'),
+      challenge: t('successStories.stories.financeflow.challenge'),
+      solution: t('successStories.stories.financeflow.solution'),
       results: [
-        { metric: "Fraud Detection", value: "99.2%" },
-        { metric: "False Positives", value: "-85%" },
-        { metric: "Processing Speed", value: "10x" }
+        { metric: t('successStories.common.fraudDetection'), value: "99.2%" },
+        { metric: t('successStories.common.falsePositives'), value: "-85%" },
+        { metric: t('successStories.common.processingSpeed'), value: "10x" }
       ],
-      quote: "The AI-driven fraud detection system has revolutionized our security operations while improving customer experience.",
-      author: "Michael Chen, VP of Operations",
+      quote: t('successStories.stories.financeflow.quote'),
+      author: t('successStories.stories.financeflow.author'),
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop"
     },
     {
-      company: "RetailMax",
-      industry: "E-commerce",
-      challenge: "Personalizing customer experience and inventory management",
-      solution: "AI recommendation engine and demand forecasting",
+      company: t('successStories.stories.retailmax.company'),
+      industry: t('successStories.stories.retailmax.industry'),
+      challenge: t('successStories.stories.retailmax.challenge'),
+      solution: t('successStories.stories.retailmax.solution'),
       results: [
-        { metric: "Revenue Growth", value: "45%" },
-        { metric: "Customer Retention", value: "+60%" },
-        { metric: "Inventory Turnover", value: "3x" }
+        { metric: t('successStories.common.revenueGrowth'), value: "45%" },
+        { metric: t('successStories.common.customerRetention'), value: "+60%" },
+        { metric: t('successStories.common.inventoryTurnover'), value: "3x" }
       ],
-      quote: "Our customers love the personalized experience, and our inventory management has never been more efficient.",
-      author: "Lisa Rodriguez, CEO",
+      quote: t('successStories.stories.retailmax.quote'),
+      author: t('successStories.stories.retailmax.author'),
       image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop"
     }
   ];
@@ -66,12 +69,12 @@ const StoriesGrid = () => {
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">{story.company}</h2>
                     
                     <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Challenge</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('successStories.common.challenge')}</h3>
                       <p className="text-gray-600">{story.challenge}</p>
                     </div>
                     
                     <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Solution</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('successStories.common.solution')}</h3>
                       <p className="text-gray-600">{story.solution}</p>
                     </div>
 

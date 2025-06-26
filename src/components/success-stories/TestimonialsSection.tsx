@@ -1,21 +1,24 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const TestimonialsSection = () => {
+  const { t } = useLanguage();
+
   const testimonials = [
     {
-      quote: "The AI implementation exceeded our expectations. ROI was achieved within 6 months.",
-      author: "David Kim, CTO at DataTech",
+      quote: t('successStories.testimonials.quote1'),
+      author: t('successStories.testimonials.author1'),
       rating: 5
     },
     {
-      quote: "Incredible support team and cutting-edge technology. Highly recommended.",
-      author: "Emma Watson, CEO at InnovateCorp",
+      quote: t('successStories.testimonials.quote2'),
+      author: t('successStories.testimonials.author2'),
       rating: 5
     },
     {
-      quote: "Game-changing AI solutions that transformed our entire operation.",
-      author: "Robert Taylor, VP at FutureTech",
+      quote: t('successStories.testimonials.quote3'),
+      author: t('successStories.testimonials.author3'),
       rating: 5
     }
   ];
@@ -25,10 +28,10 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            What Our Clients Say
+            {t('successStories.testimonials.title')}
           </h2>
           <p className="text-xl text-gray-600">
-            Hear directly from the leaders who've transformed their businesses with Infinity6.
+            {t('successStories.testimonials.subtitle')}
           </p>
         </div>
 

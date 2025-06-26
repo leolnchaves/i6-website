@@ -1,23 +1,26 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const FAQSection = () => {
+  const { t } = useLanguage();
+
   const faqs = [
     {
-      question: "How long does AI implementation take?",
-      answer: "Implementation time varies by project complexity, typically ranging from 2-6 months for full deployment."
+      question: t('contact.faq.q1'),
+      answer: t('contact.faq.a1')
     },
     {
-      question: "What industries do you serve?",
-      answer: "We serve all industries including manufacturing, finance, healthcare, retail, and technology companies."
+      question: t('contact.faq.q2'),
+      answer: t('contact.faq.a2')
     },
     {
-      question: "Do you provide ongoing support?",
-      answer: "Yes, we offer 24/7 support, maintenance, and continuous optimization services for all our AI solutions."
+      question: t('contact.faq.q3'),
+      answer: t('contact.faq.a3')
     },
     {
-      question: "What's the typical ROI for AI projects?",
-      answer: "Our clients typically see 150% ROI within the first year, with continued improvements over time."
+      question: t('contact.faq.q4'),
+      answer: t('contact.faq.a4')
     }
   ];
 
@@ -26,10 +29,10 @@ const FAQSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
+            {t('contact.faq.title')}
           </h2>
           <p className="text-xl text-gray-600">
-            Common questions about our AI solutions and services.
+            {t('contact.faq.subtitle')}
           </p>
         </div>
 

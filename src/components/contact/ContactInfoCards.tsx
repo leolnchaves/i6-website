@@ -1,26 +1,29 @@
 
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ContactInfoCards = () => {
+  const { t } = useLanguage();
+
   const contactInfo = [
     {
       icon: <Mail className="w-6 h-6" />,
-      title: "Email Us",
+      title: t('contact.info.emailUs'),
       details: "infinity6@infinity6.ai",
-      description: "Send us an email anytime"
+      description: t('contact.info.emailDescription')
     },
     {
       icon: <Phone className="w-6 h-6" />,
-      title: "Call Us",
+      title: t('contact.info.callUs'),
       details: "+55 19 998197775",
-      description: "Mon-Fri from 8am to 6pm"
+      description: t('contact.info.callDescription')
     },
     {
       icon: <MapPin className="w-6 h-6" />,
-      title: "Visit Us",
+      title: t('contact.info.visitUs'),
       details: "Campinas, BR",
-      description: "Come say hello at our headquarters"
+      description: t('contact.info.visitDescription')
     }
   ];
 

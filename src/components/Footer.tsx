@@ -1,8 +1,11 @@
 
 import { Link } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
       <div className="absolute inset-0">
@@ -22,8 +25,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              Transforming businesses with cutting-edge AI solutions. 
-              Unlock infinite possibilities with our innovative technology.
+              {t('footer.description')}
             </p>
             
             {/* Social Media Links */}
@@ -52,31 +54,31 @@ const Footer = () => {
                 to="/privacy-policy" 
                 className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
               >
-                Privacy Policy
+                {t('footer.privacy')}
               </Link>
               <Link 
                 to="/ethics-policy" 
                 className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
               >
-                Ethics Policy
+                {t('footer.ethics')}
               </Link>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Home</Link></li>
-              <li><Link to="/solutions" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Solutions</Link></li>
-              <li><Link to="/success-stories" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Success Stories</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Contact Us</Link></li>
+              <li><Link to="/" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.home')}</Link></li>
+              <li><Link to="/solutions" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.solutions')}</Link></li>
+              <li><Link to="/success-stories" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.successStories')}</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.contact')}</Link></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
             <ul className="space-y-2 text-gray-400">
               <li className="hover:text-orange-400 transition-colors duration-300">hello@infinity6.ai</li>
               <li className="hover:text-orange-400 transition-colors duration-300">+1 (555) 123-4567</li>
@@ -85,7 +87,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Infinity6.ai. All rights reserved.</p>
+          <p>{t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

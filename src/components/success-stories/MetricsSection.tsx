@@ -1,11 +1,14 @@
 
 import { TrendingUp, Users, DollarSign } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const MetricsSection = () => {
+  const { t } = useLanguage();
+
   const metrics = [
-    { icon: <TrendingUp className="w-8 h-8" />, value: "150%", label: "Average ROI" },
-    { icon: <Users className="w-8 h-8" />, value: "500+", label: "Companies Served" },
-    { icon: <DollarSign className="w-8 h-8" />, value: "$50M+", label: "Cost Savings Generated" }
+    { icon: <TrendingUp className="w-8 h-8" />, value: "150%", label: t('successStories.metrics.avgROI') },
+    { icon: <Users className="w-8 h-8" />, value: "500+", label: t('successStories.metrics.companiesServed') },
+    { icon: <DollarSign className="w-8 h-8" />, value: "$50M+", label: t('successStories.metrics.costSavings') }
   ];
 
   return (

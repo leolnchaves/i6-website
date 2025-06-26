@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ContactForm = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,19 +36,19 @@ const ContactForm = () => {
     <Card className="border-0 shadow-2xl">
       <CardHeader className="p-8">
         <CardTitle className="text-2xl font-bold text-gray-900">
-          Send Us a Message
+          {t('contact.form.title')}
         </CardTitle>
         <p className="text-gray-600">
-          Fill out the form below and we'll get back to you within 24 hours.
+          {t('contact.form.subtitle')}
         </p>
       </CardHeader>
       <CardContent className="p-8 pt-0">
         {isSubmitted ? (
           <div className="text-center py-8">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Message Sent!</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('contact.form.messageSent')}</h3>
             <p className="text-gray-600">
-              Thank you for reaching out. We'll get back to you soon.
+              {t('contact.form.thankYou')}
             </p>
           </div>
         ) : (
@@ -54,7 +56,7 @@ const ContactForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name *
+                  {t('contact.form.fullName')} *
                 </label>
                 <input
                   type="text"
@@ -63,12 +65,12 @@ const ContactForm = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="Your full name"
+                  placeholder={t('contact.form.namePlaceholder')}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address *
+                  {t('contact.form.emailAddress')} *
                 </label>
                 <input
                   type="email"
@@ -77,7 +79,7 @@ const ContactForm = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="your@email.com"
+                  placeholder={t('contact.form.emailPlaceholder')}
                 />
               </div>
             </div>
@@ -85,7 +87,7 @@ const ContactForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Company
+                  {t('contact.form.company')}
                 </label>
                 <input
                   type="text"
@@ -93,12 +95,12 @@ const ContactForm = () => {
                   value={formData.company}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="Your company name"
+                  placeholder={t('contact.form.companyPlaceholder')}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
+                  {t('contact.form.phoneNumber')}
                 </label>
                 <input
                   type="tel"
@@ -106,14 +108,14 @@ const ContactForm = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder={t('contact.form.phonePlaceholder')}
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Subject *
+                {t('contact.form.subject')} *
               </label>
               <select
                 name="subject"
@@ -122,17 +124,17 @@ const ContactForm = () => {
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
               >
-                <option value="">Select a subject</option>
-                <option value="general">General Inquiry</option>
-                <option value="demo">Request Demo</option>
-                <option value="partnership">Partnership</option>
-                <option value="support">Technical Support</option>
+                <option value="">{t('contact.form.subjectPlaceholder')}</option>
+                <option value="general">{t('contact.form.subjectGeneral')}</option>
+                <option value="demo">{t('contact.form.subjectDemo')}</option>
+                <option value="partnership">{t('contact.form.subjectPartnership')}</option>
+                <option value="support">{t('contact.form.subjectSupport')}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Message *
+                {t('contact.form.message')} *
               </label>
               <textarea
                 name="message"
@@ -141,7 +143,7 @@ const ContactForm = () => {
                 value={formData.message}
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
-                placeholder="Tell us about your project and how we can help..."
+                placeholder={t('contact.form.messagePlaceholder')}
               />
             </div>
 
@@ -149,7 +151,7 @@ const ContactForm = () => {
               type="submit" 
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-3"
             >
-              Send Message
+              {t('contact.form.sendMessage')}
               <Send className="ml-2 w-4 h-4" />
             </Button>
           </form>

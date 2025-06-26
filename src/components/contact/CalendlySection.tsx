@@ -1,7 +1,10 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const CalendlySection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,11 +12,10 @@ const CalendlySection = () => {
           <CardContent className="p-8">
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold mb-4">
-                Ready to Get Started?
+                {t('contact.calendly.title')}
               </h3>
               <p className="text-lg opacity-90 mb-6">
-                Schedule a free consultation with our AI experts to discuss your project 
-                and explore how we can help transform your business.
+                {t('contact.calendly.description')}
               </p>
             </div>
             
