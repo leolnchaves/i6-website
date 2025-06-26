@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Map, Grid2X2, List } from 'lucide-react';
-import InteractiveWorldMap from './InteractiveWorldMap';
+import InteractiveGoogleMap from './InteractiveGoogleMap';
 import LocationsGrid from './LocationsGrid';
 import LocationsList from './LocationsList';
 
@@ -21,7 +21,7 @@ const MapOptionsDemo = () => {
       id: 'interactive' as const,
       label: 'Mapa Interativo',
       icon: Map,
-      description: 'Mapbox com marcadores clicáveis'
+      description: 'Google Maps com marcadores clicáveis'
     },
     {
       id: 'grid' as const,
@@ -34,7 +34,7 @@ const MapOptionsDemo = () => {
   const renderSelectedComponent = () => {
     switch (selectedOption) {
       case 'interactive':
-        return <InteractiveWorldMap />;
+        return <InteractiveGoogleMap />;
       case 'grid':
         return <LocationsGrid />;
       case 'list':
