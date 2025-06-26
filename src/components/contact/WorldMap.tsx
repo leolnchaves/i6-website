@@ -80,7 +80,7 @@ const WorldMap = () => {
         </p>
         
         <TooltipProvider>
-          <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+          <div className="relative w-full h-48 sm:h-56 lg:h-64 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
             <img 
               src="/lovable-uploads/d9d6ba9c-61ec-4d42-8e89-f0451e01621f.png"
               alt="World Map"
