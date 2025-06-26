@@ -1,3 +1,4 @@
+
 import { CheckCircle, ArrowRight, Cpu, Database, Cloud, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,49 +12,49 @@ const Solutions = () => {
   const solutions = [
     {
       icon: <Brain className="w-12 h-12 text-blue-600" />,
-      title: t('solutions.aiAnalytics.title'),
-      description: t('solutions.aiAnalytics.description'),
+      title: t('solutions.aiAnalytics.title') || 'AI Analytics',
+      description: t('solutions.aiAnalytics.description') || 'Advanced analytics powered by artificial intelligence',
       features: [
-        t('solutions.aiAnalytics.feature1'),
-        t('solutions.aiAnalytics.feature2'),
-        t('solutions.aiAnalytics.feature3'),
-        t('solutions.aiAnalytics.feature4')
+        t('solutions.aiAnalytics.feature1') || 'Real-time data processing',
+        t('solutions.aiAnalytics.feature2') || 'Predictive insights',
+        t('solutions.aiAnalytics.feature3') || 'Custom dashboards',
+        t('solutions.aiAnalytics.feature4') || 'Automated reporting'
       ],
       gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Cpu className="w-12 h-12 text-purple-600" />,
-      title: t('solutions.processAutomation.title'),
-      description: t('solutions.processAutomation.description'),
+      title: t('solutions.processAutomation.title') || 'Process Automation',
+      description: t('solutions.processAutomation.description') || 'Streamline your operations with intelligent automation',
       features: [
-        t('solutions.processAutomation.feature1'),
-        t('solutions.processAutomation.feature2'),
-        t('solutions.processAutomation.feature3'),
-        t('solutions.processAutomation.feature4')
+        t('solutions.processAutomation.feature1') || 'Workflow optimization',
+        t('solutions.processAutomation.feature2') || 'Task automation',
+        t('solutions.processAutomation.feature3') || 'Error reduction',
+        t('solutions.processAutomation.feature4') || 'Cost savings'
       ],
       gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: <Database className="w-12 h-12 text-green-600" />,
-      title: t('solutions.dataIntelligence.title'),
-      description: t('solutions.dataIntelligence.description'),
+      title: t('solutions.dataIntelligence.title') || 'Data Intelligence',
+      description: t('solutions.dataIntelligence.description') || 'Transform raw data into actionable insights',
       features: [
-        t('solutions.dataIntelligence.feature1'),
-        t('solutions.dataIntelligence.feature2'),
-        t('solutions.dataIntelligence.feature3'),
-        t('solutions.dataIntelligence.feature4')
+        t('solutions.dataIntelligence.feature1') || 'Data mining',
+        t('solutions.dataIntelligence.feature2') || 'Pattern recognition',
+        t('solutions.dataIntelligence.feature3') || 'Business intelligence',
+        t('solutions.dataIntelligence.feature4') || 'Decision support'
       ],
       gradient: "from-green-500 to-teal-500"
     },
     {
       icon: <Cloud className="w-12 h-12 text-orange-600" />,
-      title: t('solutions.cloudIntegration.title'),
-      description: t('solutions.cloudIntegration.description'),
+      title: t('solutions.cloudIntegration.title') || 'Cloud Integration',
+      description: t('solutions.cloudIntegration.description') || 'Seamlessly integrate with cloud platforms',
       features: [
-        t('solutions.cloudIntegration.feature1'),
-        t('solutions.cloudIntegration.feature2'),
-        t('solutions.cloudIntegration.feature3'),
-        t('solutions.cloudIntegration.feature4')
+        t('solutions.cloudIntegration.feature1') || 'Multi-cloud support',
+        t('solutions.cloudIntegration.feature2') || 'Scalable infrastructure',
+        t('solutions.cloudIntegration.feature3') || 'Data synchronization',
+        t('solutions.cloudIntegration.feature4') || 'Security compliance'
       ],
       gradient: "from-orange-500 to-red-500"
     }
@@ -62,51 +63,46 @@ const Solutions = () => {
   const processSteps = [
     { 
       step: "01", 
-      title: t('solutions.process.discovery.title'), 
-      description: t('solutions.process.discovery.description')
+      title: t('solutions.process.discovery.title') || 'Discovery', 
+      description: t('solutions.process.discovery.description') || 'Understanding your business needs'
     },
     { 
       step: "02", 
-      title: t('solutions.process.strategy.title'), 
-      description: t('solutions.process.strategy.description')
+      title: t('solutions.process.strategy.title') || 'Strategy', 
+      description: t('solutions.process.strategy.description') || 'Developing the right approach'
     },
     { 
       step: "03", 
-      title: t('solutions.process.implementation.title'), 
-      description: t('solutions.process.implementation.description')
+      title: t('solutions.process.implementation.title') || 'Implementation', 
+      description: t('solutions.process.implementation.description') || 'Building and deploying solutions'
     },
     { 
       step: "04", 
-      title: t('solutions.process.optimization.title'), 
-      description: t('solutions.process.optimization.description')
+      title: t('solutions.process.optimization.title') || 'Optimization', 
+      description: t('solutions.process.optimization.description') || 'Continuous improvement and support'
     }
   ];
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section - Dark Blue Background */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-          }}></div>
-        </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="block mb-2">{t('solutions.hero.title')}</span>
+              <span className="block mb-2">{t('solutions.hero.title') || 'AI Solutions'}</span>
               <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-                {t('solutions.hero.subtitle')}
+                {t('solutions.hero.subtitle') || 'for Modern Business'}
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              {t('solutions.hero.description')}
+              {t('solutions.hero.description') || 'Discover how our AI solutions can transform your business operations and drive growth.'}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Solutions Grid - Light Background */}
+      {/* Solutions Grid */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -134,7 +130,7 @@ const Solutions = () => {
                     ))}
                   </div>
                   <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 transition-opacity`}>
-                    {t('solutions.learnMore')}
+                    {t('solutions.learnMore') || 'Learn More'}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </CardContent>
@@ -144,15 +140,15 @@ const Solutions = () => {
         </div>
       </section>
 
-      {/* Process Section - Light Background */}
+      {/* Process Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              {t('solutions.process.title')}
+              {t('solutions.process.title') || 'Our Process'}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t('solutions.process.description')}
+              {t('solutions.process.description') || 'We follow a proven methodology to deliver exceptional results.'}
             </p>
           </div>
 
@@ -170,21 +166,19 @@ const Solutions = () => {
         </div>
       </section>
 
-      {/* Transform Business CTA - Fixed layering */}
-      <section className="py-20 bg-gray-50 relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
-          <div className="scroll-reveal">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              {t('cta.title') || 'Transform Your Business Today'}
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              {t('cta.description') || 'Ready to revolutionize your business with AI? Let\'s discuss how we can help you achieve your goals.'}
-            </p>
-            <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold relative z-30">
-              {t('cta.button') || 'Get Started Now'}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </div>
+      {/* CTA Section */}
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            {t('cta.title') || 'Transform Your Business Today'}
+          </h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+            {t('cta.description') || 'Ready to revolutionize your business with AI? Let\'s discuss how we can help you achieve your goals.'}
+          </p>
+          <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
+            {t('cta.button') || 'Get Started Now'}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
         </div>
       </section>
     </div>
