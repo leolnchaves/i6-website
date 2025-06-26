@@ -12,7 +12,7 @@ const WorldMap = () => {
       id: 'campinas',
       name: 'Campinas, BR',
       type: t('contact.map.headquarters'),
-      position: { top: '70%', left: '32%' }, // Fixed coordinates for Campinas, Brazil
+      position: { top: '65%', left: '42%' }, // Fixed coordinates for Campinas, Brazil
       address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrazil',
       phone: '+55 19 998197775',
       email: 'infinity6@infinity6.ai'
