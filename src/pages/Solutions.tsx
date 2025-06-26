@@ -11,7 +11,7 @@ const Solutions = () => {
 
   const solutions = [
     {
-      icon: <Target className="w-8 h-8 text-blue-600" />,
+      icon: <Target className="w-8 h-8 text-blue-700" />,
       title: 'Smart Discovery for Anonymous Visitors',
       focus: 'Focus: B2B, B2C | Segment: All',
       description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.',
@@ -22,12 +22,12 @@ const Solutions = () => {
         'Real-time Recommendations'
       ],
       outcome: 'Unlocks product discovery and boosts engagement with zero historical data.',
-      gradient: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200"
+      gradient: "from-gray-600/80 to-blue-700/80",
+      bgColor: "bg-gray-100/60",
+      borderColor: "border-gray-300/60"
     },
     {
-      icon: <Users className="w-8 h-8 text-purple-600" />,
+      icon: <Users className="w-8 h-8 text-orange-700" />,
       title: 'Predictive Personalization for Identified Users',
       focus: 'Focus: B2B, B2C, B2B2C, D2C | Segment: All',
       description: 'Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.',
@@ -38,12 +38,12 @@ const Solutions = () => {
         'Profile Enrichment and Scoring'
       ],
       outcome: 'Increases customer lifetime value with intelligent, behavior-based personalization.',
-      gradient: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-50",
-      borderColor: "border-purple-200"
+      gradient: "from-orange-600/80 to-red-600/80",
+      bgColor: "bg-orange-100/60",
+      borderColor: "border-orange-300/60"
     },
     {
-      icon: <Cog className="w-8 h-8 text-green-600" />,
+      icon: <Cog className="w-8 h-8 text-blue-700" />,
       title: 'Industrial Recommendation Intelligence',
       focus: 'Focus: B2B, B2B2C | Segment: Industry and Manufacturing',
       description: 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.',
@@ -54,12 +54,12 @@ const Solutions = () => {
         'POS Behavioral Forecasting'
       ],
       outcome: 'Drives product relevance and sell-out, aligned with revenue and margin goals.',
-      gradient: "from-green-500 to-green-600",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200"
+      gradient: "from-blue-600/80 to-gray-700/80",
+      bgColor: "bg-blue-100/60",
+      borderColor: "border-blue-300/60"
     },
     {
-      icon: <TrendingUp className="w-8 h-8 text-orange-600" />,
+      icon: <TrendingUp className="w-8 h-8 text-gray-700" />,
       title: 'Predictive Campaign Targeting',
       focus: 'Focus: B2C | Segment: All',
       description: 'Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.',
@@ -70,12 +70,12 @@ const Solutions = () => {
         'Lead Activation Strategy'
       ],
       outcome: 'Maximizes ROI by targeting the right customer at the right time.',
-      gradient: "from-orange-500 to-orange-600",
-      bgColor: "bg-orange-50",
-      borderColor: "border-orange-200"
+      gradient: "from-gray-600/80 to-blue-600/80",
+      bgColor: "bg-gray-100/60",
+      borderColor: "border-gray-300/60"
     },
     {
-      icon: <DollarSign className="w-8 h-8 text-red-600" />,
+      icon: <DollarSign className="w-8 h-8 text-orange-700" />,
       title: 'Smart Price Optimization',
       focus: 'Focus: B2B, B2C, B2B2C, D2C | Segment: All',
       description: 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.',
@@ -86,12 +86,12 @@ const Solutions = () => {
         'Margin Optimization Engine'
       ],
       outcome: 'Improves margin, sales velocity, and competitiveness through intelligent pricing.',
-      gradient: "from-red-500 to-red-600",
-      bgColor: "bg-red-50",
-      borderColor: "border-red-200"
+      gradient: "from-orange-600/80 to-gray-600/80",
+      bgColor: "bg-orange-100/60",
+      borderColor: "border-orange-300/60"
     },
     {
-      icon: <BarChart3 className="w-8 h-8 text-teal-600" />,
+      icon: <BarChart3 className="w-8 h-8 text-blue-700" />,
       title: 'Adaptive Demand Forecasting',
       focus: 'Focus: B2B, B2C | Segment: All',
       description: 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.',
@@ -102,9 +102,9 @@ const Solutions = () => {
         'Inventory and Supply Chain Alignment'
       ],
       outcome: 'Enhances demand planning accuracy and agility in fast-changing markets.',
-      gradient: "from-teal-500 to-teal-600",
-      bgColor: "bg-teal-50",
-      borderColor: "border-teal-200"
+      gradient: "from-blue-600/80 to-gray-700/80",
+      bgColor: "bg-blue-100/60",
+      borderColor: "border-blue-300/60"
     }
   ];
 
@@ -239,18 +239,18 @@ const Solutions = () => {
                   </div>
                   
                   {/* Step Card */}
-                  <div className="bg-white rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 h-40 flex flex-col justify-between">
-                    <div>
-                      <h3 className="font-bold text-gray-900 text-base mb-2 leading-tight">
+                  <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 min-h-[200px] flex flex-col justify-between">
+                    <div className="flex-1 flex flex-col justify-center">
+                      <h3 className="font-bold text-gray-900 text-base mb-3 leading-tight">
                         {step.title}
                       </h3>
-                      <div className="text-xs text-gray-600 mb-2 font-medium bg-gray-50 rounded-full px-2 py-1 inline-block">
+                      <div className="text-xs text-gray-600 mb-3 font-medium bg-gray-50 rounded-full px-3 py-1 inline-block">
                         {step.subtitle}
                       </div>
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {step.description}
+                      </p>
                     </div>
-                    <p className="text-gray-700 text-xs leading-relaxed">
-                      {step.description}
-                    </p>
                   </div>
                   
                   {/* Arrow (except for last item) */}
