@@ -28,30 +28,60 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="text-center max-w-5xl mx-auto">
           <div className="animate-bounce-in">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              <span className="block text-white font-light">
+            <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 leading-tight">
+              <span className="block text-white font-light text-5xl md:text-7xl mb-4">
                 Infinite
               </span>
-              <span className="block text-white font-bold text-6xl md:text-8xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent">
-                Possibilities
-              </span>
-              <span className="block text-white text-3xl md:text-4xl mt-2 font-light">
+              <div className="relative inline-block">
+                {/* Handwritten background effect */}
+                <div className="absolute inset-0 -inset-x-8 -inset-y-4">
+                  <svg 
+                    className="w-full h-full animate-draw-stroke opacity-30" 
+                    viewBox="0 0 400 120" 
+                    fill="none"
+                  >
+                    <path 
+                      d="M10 60 Q50 20, 100 60 T200 60 T300 60 T390 60" 
+                      stroke="rgba(255, 107, 53, 0.8)" 
+                      strokeWidth="6" 
+                      strokeLinecap="round"
+                      strokeDasharray="1000"
+                      strokeDashoffset="1000"
+                      className="animate-draw-line"
+                    />
+                    <path 
+                      d="M15 65 Q55 25, 105 65 T205 65 T305 65 T385 65" 
+                      stroke="rgba(247, 147, 30, 0.6)" 
+                      strokeWidth="4" 
+                      strokeLinecap="round"
+                      strokeDasharray="1000"
+                      strokeDashoffset="1000"
+                      className="animate-draw-line"
+                      style={{ animationDelay: '0.5s' }}
+                    />
+                  </svg>
+                </div>
+                <span className="relative block text-white font-bold text-7xl md:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl">
+                  Possibilities
+                </span>
+              </div>
+              <span className="block text-white text-4xl md:text-5xl mt-6 font-light">
                 Powered by AI
               </span>
             </h1>
           </div>
-          <p className="text-xl md:text-2xl text-white/90 mb-8 animate-slide-in-left">
+          <p className="text-xl md:text-2xl text-white/90 mb-10 animate-slide-in-left font-medium">
             Transform your business with cutting-edge artificial intelligence solutions 
             that unlock unlimited potential and drive extraordinary results.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-in-right">
-            <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl border-0 rounded-full">
+            <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold">
               Start Your Journey
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-lg px-8 py-4 rounded-full backdrop-blur-sm">
+            <Button size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-lg px-8 py-4 rounded-full backdrop-blur-sm font-semibold">
               Watch Demo
             </Button>
           </div>
