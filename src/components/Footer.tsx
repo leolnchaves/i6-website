@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import { Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -24,6 +25,26 @@ const Footer = () => {
               Transforming businesses with cutting-edge AI solutions. 
               Unlock infinite possibilities with our innovative technology.
             </p>
+            
+            {/* Social Media Links */}
+            <div className="flex space-x-4 mb-6">
+              <a 
+                href="https://www.linkedin.com/company/infinity6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-orange-400 transition-colors duration-300 hover:scale-110 transform"
+              >
+                <Linkedin size={24} />
+              </a>
+              <a 
+                href="https://www.youtube.com/@infinity6ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-orange-400 transition-colors duration-300 hover:scale-110 transform"
+              >
+                <Youtube size={24} />
+              </a>
+            </div>
             
             {/* Policy Links */}
             <div className="flex flex-col sm:flex-row gap-4 text-sm">

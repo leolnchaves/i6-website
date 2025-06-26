@@ -15,7 +15,7 @@ const CTASection = () => {
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join hundreds of companies that have already unlocked their infinite potential.
           </p>
-          <Button size="lg" className="gradient-accent hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl">
+          <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold">
             Get Started Today
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -287,17 +288,17 @@ html {
   font-feature-settings: "liga", "kern";
 }
 
-/* New gradient backgrounds based on the provided color scheme */
+/* Darker gradient backgrounds */
 .gradient-primary {
-  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #4A90E2 50%, #2E5BBA 75%, #1A365D 100%);
+  background: linear-gradient(135deg, #D2472B 0%, #E67817 25%, #3A7BC8 50%, #1E4A94 75%, #0F1F36 100%);
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, #4A90E2 0%, #2E5BBA 50%, #1A365D 100%);
+  background: linear-gradient(135deg, #3A7BC8 0%, #1E4A94 50%, #0F1F36 100%);
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #4A90E2 100%);
+  background: linear-gradient(135deg, #D2472B 0%, #E67817 50%, #3A7BC8 100%);
 }
 
 /* Hover effects */

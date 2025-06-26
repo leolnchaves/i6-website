@@ -15,24 +15,9 @@ const ResultsSection = () => {
       description: "Streamlined operations and automated processes significantly reduce operational expenses while maintaining service quality"
     },
     {
-      icon: <Award className="w-8 h-8 text-orange-600" />,
-      title: "Enhanced Proposal Engagement",
-      description: "Data-driven insights and AI-powered personalization dramatically improve proposal success rates"
-    },
-    {
-      icon: <Clock className="w-8 h-8 text-blue-600" />,
-      title: "Rapid Implementation",
-      description: "100% API-first and cloud-native AI solutions deliver measurable outcomes in weeks, not months"
-    },
-    {
-      icon: <Target className="w-8 h-8 text-purple-500" />,
-      title: "Market Demand Forecasting",
-      description: "AI-powered forecast precision directing production plans and commercial goals, optimizing stock breaks and turnover"
-    },
-    {
-      icon: <DollarSign className="w-8 h-8 text-green-500" />,
-      title: "Dynamic Pricing Intelligence",
-      description: "Self-reinforcing pricing model adjusting prices based on demand, where adjustments increase either demand or margin, feeding back into the system"
+      icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
+      title: "Average Ticket Enhancement",
+      description: "Substantial increase in average ticket value through AI-guided cross-selling with diversity balancing"
     },
     {
       icon: <Eye className="w-8 h-8 text-red-500" />,
@@ -40,9 +25,14 @@ const ResultsSection = () => {
       description: "Significant reduction of bounce rate in digital funnels through AI-driven user experience optimization"
     },
     {
-      icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
-      title: "Average Ticket Enhancement",
-      description: "Substantial increase in average ticket value through AI-guided cross-selling with diversity balancing"
+      icon: <Award className="w-8 h-8 text-orange-600" />,
+      title: "Enhanced Proposal Engagement",
+      description: "Data-driven insights and AI-powered personalization dramatically improve proposal success rates"
+    },
+    {
+      icon: <Users className="w-8 h-8 text-pink-500" />,
+      title: "Real-Time Recommendations",
+      description: "Predictive behavior recommendations with equal precision for logged users (with history) and anonymous users (without history)"
     },
     {
       icon: <Search className="w-8 h-8 text-teal-500" />,
@@ -50,9 +40,19 @@ const ResultsSection = () => {
       description: "AI-powered product complementarity discovery based on navigation behavior patterns and user preferences"
     },
     {
-      icon: <Users className="w-8 h-8 text-pink-500" />,
-      title: "Real-Time Recommendations",
-      description: "Predictive behavior recommendations with equal precision for logged users (with history) and anonymous users (without history)"
+      icon: <DollarSign className="w-8 h-8 text-green-500" />,
+      title: "Dynamic Pricing Intelligence",
+      description: "Self-reinforcing pricing model adjusting prices based on demand, where adjustments increase either demand or margin, feeding back into the system"
+    },
+    {
+      icon: <Target className="w-8 h-8 text-purple-500" />,
+      title: "Market Demand Forecasting",
+      description: "AI-powered forecast precision directing production plans and commercial goals, optimizing stock breaks and turnover"
+    },
+    {
+      icon: <Clock className="w-8 h-8 text-blue-600" />,
+      title: "Rapid Implementation",
+      description: "100% API-first and cloud-native AI solutions deliver measurable outcomes in weeks, not months"
     }
   ];
 
@@ -65,13 +65,20 @@ const ResultsSection = () => {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 scroll-reveal">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Proven Results That Matter
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Real AI Impact That Drives Business Growth
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Our AI-powered solutions deliver measurable impact across industries, 
-            transforming businesses with data-driven intelligence and precision.
-          </p>
+          <div className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
+            <p className="mb-4">
+              Chega de soluções GenAI e agentes que não entregam resultado real. 
+              Chega de foco apenas em produtividade de software. 
+              Chega de alta complexidade técnica e longas jornadas de integração.
+            </p>
+            <p>
+              Nossa abordagem única combina inteligência artificial avançada com estratégia de negócios, 
+              entregando impacto mensurável e transformação real para sua empresa.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">

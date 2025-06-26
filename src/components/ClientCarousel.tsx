@@ -43,7 +43,9 @@ const ClientCarousel = () => {
               <img 
                 src={client.logo} 
                 alt={client.name}
-                className="max-h-12 max-w-full object-contain opacity-30 hover:opacity-50 transition-opacity duration-300 filter grayscale brightness-75"
+                className={`object-contain opacity-30 hover:opacity-50 transition-opacity duration-300 filter grayscale brightness-75 ${
+                  client.name === 'NATURA&CO' ? 'max-h-10 max-w-32' : 'max-h-12 max-w-full'
+                }`}
               />
             </div>
           ))}

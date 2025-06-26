@@ -3,7 +3,7 @@ import ClientCarousel from '@/components/ClientCarousel';
 
 const StatsSection = () => {
   return (
-    <section className="py-20 gradient-secondary text-white relative overflow-hidden">
+    <section className="py-12 gradient-secondary text-white relative overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full opacity-20">
           <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-pulse"></div>
@@ -13,7 +13,7 @@ const StatsSection = () => {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
           <div className="scroll-reveal">
             <div className="text-5xl font-bold mb-2 animate-bounce-in">500+</div>
             <div className="text-xl opacity-90">Companies Transformed</div>
@@ -29,7 +29,7 @@ const StatsSection = () => {
         </div>
         
         {/* Client Carousel */}
-        <div className="mt-12">
+        <div className="mt-8">
           <ClientCarousel />
         </div>
       </div>
