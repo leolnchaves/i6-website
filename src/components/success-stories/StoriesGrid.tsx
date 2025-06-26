@@ -34,8 +34,8 @@ const StoriesGrid = () => {
       ],
       quote: t('successStories.stories.financeflow.quote'),
       author: t('successStories.stories.financeflow.author'),
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
-      video: "https://cdn.freepik.com/free-video/work-team-analyzing-comparing-papers-results-meeting-coffee-shop_167239.mp4"
+      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&h=600&fit=crop",
+      video: null
     },
     {
       company: t('successStories.stories.retailmax.company'),
@@ -55,11 +55,18 @@ const StoriesGrid = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 relative overflow-hidden">
+      {/* Background elements similar to contact page */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="space-y-16">
           {stories.map((story, index) => (
-            <Card key={index} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden">
+            <Card key={index} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden bg-white/95 backdrop-blur-sm">
               <CardContent className="p-0">
                 <div className={`grid grid-cols-1 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   <div className={`p-12 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
@@ -83,14 +90,14 @@ const StoriesGrid = () => {
 
                     <div className="grid grid-cols-3 gap-4 mb-8">
                       {story.results.map((result, resultIndex) => (
-                        <div key={resultIndex} className="text-center p-4 bg-white rounded-lg shadow-sm">
+                        <div key={resultIndex} className="text-center p-4 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg shadow-sm border border-blue-100">
                           <div className="text-2xl font-bold text-blue-600 mb-1">{result.value}</div>
                           <div className="text-sm text-gray-600">{result.metric}</div>
                         </div>
                       ))}
                     </div>
 
-                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg mb-6">
+                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg mb-6 border border-blue-100">
                       <Quote className="w-8 h-8 text-blue-600 mb-4" />
                       <p className="text-gray-800 italic mb-4">"{story.quote}"</p>
                       <p className="text-gray-600 font-medium">— {story.author}</p>
@@ -99,21 +106,11 @@ const StoriesGrid = () => {
 
                   <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
                     <div className="h-full min-h-[400px] bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center relative overflow-hidden">
-                      {story.video ? (
-                        <video 
-                          src={story.video}
-                          className="w-full h-full object-cover"
-                          autoPlay
-                          muted
-                          loop
-                        />
-                      ) : (
-                        <img 
-                          src={story.image} 
-                          alt={story.company}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
+                      <img 
+                        src={story.image} 
+                        alt={story.company}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
                 </div>
