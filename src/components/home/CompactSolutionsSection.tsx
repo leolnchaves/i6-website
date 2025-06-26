@@ -1,6 +1,7 @@
-
-import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
+import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const CompactSolutionsSection = () => {
   const solutions = [
@@ -51,7 +52,7 @@ const CompactSolutionsSection = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {solutions.map((solution, index) => (
             <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass bg-white/80 backdrop-blur-sm" style={{ animationDelay: `${index * 0.1}s` }}>
               <CardContent className="p-6">
@@ -71,6 +72,16 @@ const CompactSolutionsSection = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Button to Solutions page */}
+        <div className="text-center">
+          <Link to="/solutions">
+            <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105">
+              Ver Todas as Soluções
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
