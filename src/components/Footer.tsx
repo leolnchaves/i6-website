@@ -54,13 +54,13 @@ const Footer = () => {
                 to="/privacy-policy" 
                 className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
               >
-                {t('privacy.title')}
+                {t('footer.privacy')}
               </Link>
               <Link 
                 to="/ethics-policy" 
                 className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
               >
-                {t('ethics.title')}
+                {t('footer.ethics')}
               </Link>
             </div>
           </div>

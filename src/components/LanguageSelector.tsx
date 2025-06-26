@@ -10,15 +10,15 @@ const LanguageSelector = () => {
   ];
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-2">
       {languages.map((lang) => (
         <button
           key={lang.code}
           onClick={() => setLanguage(lang.code as 'en' | 'pt')}
-          className={`w-6 h-6 rounded-full flex items-center justify-center text-sm transition-all duration-300 hover:scale-110 border ${
+          className={`w-10 h-10 rounded-full flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 border-2 ${
             language === lang.code 
-              ? 'border-orange-500 shadow-md scale-110 bg-orange-50' 
-              : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+              ? 'border-orange-500 shadow-lg scale-110' 
+              : 'border-gray-200 hover:border-orange-300'
           }`}
         >
           {lang.flag}
