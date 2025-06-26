@@ -1,5 +1,5 @@
 
-import { Play, ArrowRight, TrendingUp, Users, DollarSign } from 'lucide-react';
+import { Play, ArrowRight, TrendingUp, Users, DollarSign, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,14 @@ const FeaturedStoriesSection = () => {
       company: "TechCorp Industries",
       industry: "Manufacturing",
       description: "AI-powered predictive maintenance reduced downtime by 75%",
+      challenge: "Reducing production downtime and optimizing efficiency",
+      solution: "AI-powered predictive maintenance and quality control",
+      quote: "Infinity6's AI solutions transformed our manufacturing process. We've seen unprecedented efficiency gains and cost reductions.",
+      author: "Sarah Johnson, CTO",
       results: [
         { icon: <TrendingUp className="w-4 h-4" />, value: "75%", label: "Downtime Reduction" },
-        { icon: <DollarSign className="w-4 h-4" />, value: "$2.3M", label: "Cost Savings" }
+        { icon: <DollarSign className="w-4 h-4" />, value: "$2.3M", label: "Cost Savings" },
+        { icon: <Users className="w-4 h-4" />, value: "40%", label: "Efficiency Increase" }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
@@ -27,9 +32,14 @@ const FeaturedStoriesSection = () => {
       company: "FinanceFlow",
       industry: "Financial Services", 
       description: "Machine learning fraud detection with 99.2% accuracy rate",
+      challenge: "Fraud detection and risk assessment automation",
+      solution: "Machine learning algorithms for real-time transaction analysis",
+      quote: "The AI-driven fraud detection system has revolutionized our security operations while improving customer experience.",
+      author: "Michael Chen, VP of Operations",
       results: [
         { icon: <Users className="w-4 h-4" />, value: "99.2%", label: "Detection Rate" },
-        { icon: <TrendingUp className="w-4 h-4" />, value: "10x", label: "Processing Speed" }
+        { icon: <TrendingUp className="w-4 h-4" />, value: "10x", label: "Processing Speed" },
+        { icon: <DollarSign className="w-4 h-4" />, value: "-85%", label: "False Positives" }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
       videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
@@ -40,9 +50,14 @@ const FeaturedStoriesSection = () => {
       company: "RetailMax",
       industry: "E-commerce",
       description: "AI recommendation engine boosted revenue by 45%",
+      challenge: "Personalizing customer experience and inventory management",
+      solution: "AI recommendation engine and demand forecasting",
+      quote: "Our customers love the personalized experience, and our inventory management has never been more efficient.",
+      author: "Lisa Rodriguez, CEO",
       results: [
         { icon: <DollarSign className="w-4 h-4" />, value: "45%", label: "Revenue Growth" },
-        { icon: <Users className="w-4 h-4" />, value: "+60%", label: "Retention" }
+        { icon: <Users className="w-4 h-4" />, value: "+60%", label: "Retention" },
+        { icon: <TrendingUp className="w-4 h-4" />, value: "3x", label: "Inventory Turnover" }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop",
       videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_3mb.mp4",
@@ -74,13 +89,17 @@ const FeaturedStoriesSection = () => {
           {stories.map((story, index) => (
             <Card 
               key={story.id}
-              className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white"
+              className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white ${
+                hoveredCard === index ? 'scale-110 z-20' : 'hover:scale-105'
+              }`}
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               <CardContent className="p-0">
                 {/* Video Container with Thumbnail and Video */}
-                <div className="relative h-48 overflow-hidden">
+                <div className={`relative overflow-hidden transition-all duration-500 ${
+                  hoveredCard === index ? 'h-48' : 'h-48'
+                }`}>
                   {/* Thumbnail Image */}
                   <img 
                     src={story.videoThumbnail}
@@ -121,29 +140,51 @@ const FeaturedStoriesSection = () => {
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
+                {/* Content - Expanded when hovered */}
+                <div className={`p-6 transition-all duration-500 ${
+                  hoveredCard === index ? 'min-h-[400px]' : ''
+                }`}>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{story.company}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">{story.description}</p>
                   
-                  {/* Results */}
-                  <div className="flex gap-4 mb-4">
+                  {/* Expanded content when hovered */}
+                  {hoveredCard === index && (
+                    <div className="space-y-4 animate-fade-in">
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 mb-1">Challenge</h4>
+                        <p className="text-gray-600 text-sm">{story.challenge}</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 mb-1">Solution</h4>
+                        <p className="text-gray-600 text-sm">{story.solution}</p>
+                      </div>
+
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
+                        <Quote className="w-5 h-5 text-blue-600 mb-2" />
+                        <p className="text-gray-800 italic text-sm mb-2">"{story.quote}"</p>
+                        <p className="text-gray-600 text-xs font-medium">— {story.author}</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Results - Always visible but adjusted spacing */}
+                  <div className={`grid grid-cols-3 gap-2 ${hoveredCard === index ? 'mt-4' : 'mb-4'}`}>
                     {story.results.map((result, resultIndex) => (
-                      <div key={resultIndex} className="flex items-center gap-1">
-                        <div className="text-blue-600">{result.icon}</div>
-                        <div className="text-sm">
-                          <span className="font-bold text-gray-900">{result.value}</span>
-                          <span className="text-gray-600 ml-1">{result.label}</span>
-                        </div>
+                      <div key={resultIndex} className="text-center p-2 bg-gray-50 rounded">
+                        <div className="text-sm font-bold text-blue-600">{result.value}</div>
+                        <div className="text-xs text-gray-600">{result.label}</div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Learn More Link */}
-                  <div className="flex items-center text-blue-600 font-medium text-sm group-hover:text-blue-700 transition-colors">
-                    <span>Learn more</span>
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  {/* Learn More Link - Only when not hovered */}
+                  {hoveredCard !== index && (
+                    <div className="flex items-center text-blue-600 font-medium text-sm group-hover:text-blue-700 transition-colors">
+                      <span>Learn more</span>
+                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

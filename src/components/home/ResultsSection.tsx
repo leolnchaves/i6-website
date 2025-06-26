@@ -1,8 +1,11 @@
 
 import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const ResultsSection = () => {
+  const { scrollY } = useScrollAnimation();
+
   const results = [
     {
       icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
@@ -56,11 +59,96 @@ const ResultsSection = () => {
     }
   ];
 
+  // Random stripe configurations
+  const stripes = [
+    { 
+      width: '140vw', 
+      height: '48px', 
+      top: '-80px', 
+      rotation: '-15deg', 
+      opacity: '0.08',
+      animation: 'animate-snake-slow',
+      delay: '0s'
+    },
+    { 
+      width: '130vw', 
+      height: '32px', 
+      top: '20px', 
+      rotation: '-8deg', 
+      opacity: '0.12',
+      animation: 'animate-wave-fast',
+      delay: '1.2s'
+    },
+    { 
+      width: '150vw', 
+      height: '56px', 
+      top: '140px', 
+      rotation: '-20deg', 
+      opacity: '0.06',
+      animation: 'animate-float-curve',
+      delay: '2.5s'
+    },
+    { 
+      width: '120vw', 
+      height: '40px', 
+      top: '280px', 
+      rotation: '-12deg', 
+      opacity: '0.10',
+      animation: 'animate-slide-curve',
+      delay: '0.8s'
+    },
+    { 
+      width: '160vw', 
+      height: '44px', 
+      top: '420px', 
+      rotation: '-18deg', 
+      opacity: '0.09',
+      animation: 'animate-snake-fast',
+      delay: '3.2s'
+    },
+    { 
+      width: '135vw', 
+      height: '36px', 
+      top: '580px', 
+      rotation: '-10deg', 
+      opacity: '0.11',
+      animation: 'animate-wave-slow',
+      delay: '1.8s'
+    },
+    { 
+      width: '145vw', 
+      height: '52px', 
+      top: '720px', 
+      rotation: '-14deg', 
+      opacity: '0.07',
+      animation: 'animate-drift-curve',
+      delay: '4.1s'
+    }
+  ];
+
   return (
     <section className="py-20 bg-white relative overflow-hidden">
+      {/* Dynamic curved stripes with random movements */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-72 h-72 gradient-accent opacity-10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 gradient-secondary opacity-10 rounded-full blur-3xl"></div>
+        {stripes.map((stripe, index) => (
+          <div
+            key={index}
+            className={`absolute -left-20 bg-white/10 ${stripe.animation}`}
+            style={{
+              width: stripe.width,
+              height: stripe.height,
+              top: stripe.top,
+              transform: `translateY(${scrollY * (0.05 + Math.random() * 0.1)}px) rotate(${stripe.rotation})`,
+              opacity: stripe.opacity,
+              animationDelay: stripe.delay,
+              clipPath: `polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 5% 50%)`
+            }}
+          ></div>
+        ))}
+        
+        {/* Additional flowing elements */}
+        <div className="absolute top-0 right-0 w-72 h-72 gradient-accent opacity-10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 gradient-secondary opacity-10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -70,13 +158,13 @@ const ResultsSection = () => {
           </h2>
           <div className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
             <p className="mb-4">
-              Chega de soluções GenAI e agentes que não entregam resultado real. 
-              Chega de foco apenas em produtividade de software. 
-              Chega de alta complexidade técnica e longas jornadas de integração.
+              No more GenAI solutions and agents that don't deliver real results. 
+              No more focus only on software productivity. 
+              No more high technical complexity and long integration journeys.
             </p>
             <p>
-              Nossa abordagem única combina inteligência artificial avançada com estratégia de negócios, 
-              entregando impacto mensurável e transformação real para sua empresa.
+              Our unique approach combines advanced artificial intelligence with business strategy, 
+              delivering measurable impact and real transformation for your company.
             </p>
           </div>
         </div>
