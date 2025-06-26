@@ -1,4 +1,3 @@
-
 import { Play, ArrowRight, TrendingUp, Users, DollarSign, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -44,7 +43,7 @@ const FeaturedStoriesSection = () => {
         { icon: <DollarSign className="w-4 h-4" />, value: "-85%", label: t('successStories.common.falsePositives') }
       ],
       videoThumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-      videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+      videoUrl: "https://cdn.freepik.com/free-video/work-team-analyzing-comparing-papers-results-meeting-coffee-shop_167239.mp4",
       color: "from-purple-500 to-pink-500"
     },
     {

@@ -19,7 +19,8 @@ const StoriesGrid = () => {
       ],
       quote: t('successStories.stories.techcorp.quote'),
       author: t('successStories.stories.techcorp.author'),
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop",
+      video: null
     },
     {
       company: t('successStories.stories.financeflow.company'),
@@ -33,7 +34,8 @@ const StoriesGrid = () => {
       ],
       quote: t('successStories.stories.financeflow.quote'),
       author: t('successStories.stories.financeflow.author'),
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop"
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
+      video: "https://cdn.freepik.com/free-video/work-team-analyzing-comparing-papers-results-meeting-coffee-shop_167239.mp4"
     },
     {
       company: t('successStories.stories.retailmax.company'),
@@ -47,7 +49,8 @@ const StoriesGrid = () => {
       ],
       quote: t('successStories.stories.retailmax.quote'),
       author: t('successStories.stories.retailmax.author'),
-      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop"
+      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop",
+      video: null
     }
   ];
 
@@ -95,12 +98,22 @@ const StoriesGrid = () => {
                   </div>
 
                   <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                    <div className="h-full min-h-[400px] bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                      <img 
-                        src={story.image} 
-                        alt={story.company}
-                        className="w-full h-full object-cover"
-                      />
+                    <div className="h-full min-h-[400px] bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center relative overflow-hidden">
+                      {story.video ? (
+                        <video 
+                          src={story.video}
+                          className="w-full h-full object-cover"
+                          autoPlay
+                          muted
+                          loop
+                        />
+                      ) : (
+                        <img 
+                          src={story.image} 
+                          alt={story.company}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
