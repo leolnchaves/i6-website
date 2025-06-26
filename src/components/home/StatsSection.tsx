@@ -1,7 +1,10 @@
 
 import ClientCarousel from '@/components/ClientCarousel';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const StatsSection = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-12 gradient-secondary text-white relative overflow-hidden">
       <div className="absolute inset-0">
@@ -16,15 +19,15 @@ const StatsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
           <div className="scroll-reveal">
             <div className="text-5xl font-bold mb-2 animate-bounce-in">500+</div>
-            <div className="text-xl opacity-90">Companies Transformed</div>
+            <div className="text-xl opacity-90">{t('stats.companiesTransformed')}</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.2s' }}>
             <div className="text-5xl font-bold mb-2 animate-bounce-in">99.9%</div>
-            <div className="text-xl opacity-90">Accuracy Rate</div>
+            <div className="text-xl opacity-90">{t('stats.accuracyRate')}</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.4s' }}>
             <div className="text-5xl font-bold mb-2 animate-bounce-in">24/7</div>
-            <div className="text-xl opacity-90">Expert Support</div>
+            <div className="text-xl opacity-90">{t('stats.expertSupport')}</div>
           </div>
         </div>
         

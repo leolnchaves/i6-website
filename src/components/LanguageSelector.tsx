@@ -1,38 +1,30 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
 
   const languages = [
-    { code: 'en', label: 'English', flag: '🇺🇸' },
-    { code: 'pt', label: 'Português', flag: '🇧🇷' }
+    { code: 'en', flag: '🇺🇸' },
+    { code: 'pt', flag: '🇧🇷' }
   ];
 
   return (
-    <Select value={language} onValueChange={(value: 'en' | 'pt') => setLanguage(value)}>
-      <SelectTrigger className="w-[140px] border-gray-200 bg-white/90 backdrop-blur-sm">
-        <SelectValue>
-          <div className="flex items-center space-x-2">
-            <span>{languages.find(lang => lang.code === language)?.flag}</span>
-            <span className="text-sm font-medium">
-              {languages.find(lang => lang.code === language)?.label}
-            </span>
-          </div>
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {languages.map((lang) => (
-          <SelectItem key={lang.code} value={lang.code}>
-            <div className="flex items-center space-x-2">
-              <span>{lang.flag}</span>
-              <span>{lang.label}</span>
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="flex items-center space-x-2">
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          onClick={() => setLanguage(lang.code as 'en' | 'pt')}
+          className={`w-10 h-10 rounded-full flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 border-2 ${
+            language === lang.code 
+              ? 'border-orange-500 shadow-lg scale-110' 
+              : 'border-gray-200 hover:border-orange-300'
+          }`}
+        >
+          {lang.flag}
+        </button>
+      ))}
+    </div>
   );
 };
 

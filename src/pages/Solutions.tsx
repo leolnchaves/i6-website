@@ -2,36 +2,82 @@
 import { CheckCircle, ArrowRight, Cpu, Database, Cloud, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Solutions = () => {
+  const { t } = useLanguage();
+
   const solutions = [
     {
       icon: <Brain className="w-12 h-12 text-blue-600" />,
-      title: "AI Analytics",
-      description: "Transform raw data into actionable insights with our advanced machine learning algorithms.",
-      features: ["Predictive Analytics", "Real-time Processing", "Custom Dashboards", "API Integration"],
+      title: t('solutions.aiAnalytics.title'),
+      description: t('solutions.aiAnalytics.description'),
+      features: [
+        t('solutions.aiAnalytics.feature1'),
+        t('solutions.aiAnalytics.feature2'),
+        t('solutions.aiAnalytics.feature3'),
+        t('solutions.aiAnalytics.feature4')
+      ],
       gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Cpu className="w-12 h-12 text-purple-600" />,
-      title: "Process Automation",
-      description: "Streamline operations and reduce costs with intelligent automation solutions.",
-      features: ["Workflow Automation", "Document Processing", "Quality Control", "Performance Monitoring"],
+      title: t('solutions.processAutomation.title'),
+      description: t('solutions.processAutomation.description'),
+      features: [
+        t('solutions.processAutomation.feature1'),
+        t('solutions.processAutomation.feature2'),
+        t('solutions.processAutomation.feature3'),
+        t('solutions.processAutomation.feature4')
+      ],
       gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: <Database className="w-12 h-12 text-green-600" />,
-      title: "Data Intelligence",
-      description: "Unlock the full potential of your data with comprehensive intelligence solutions.",
-      features: ["Data Mining", "Pattern Recognition", "Anomaly Detection", "Trend Analysis"],
+      title: t('solutions.dataIntelligence.title'),
+      description: t('solutions.dataIntelligence.description'),
+      features: [
+        t('solutions.dataIntelligence.feature1'),
+        t('solutions.dataIntelligence.feature2'),
+        t('solutions.dataIntelligence.feature3'),
+        t('solutions.dataIntelligence.feature4')
+      ],
       gradient: "from-green-500 to-teal-500"
     },
     {
       icon: <Cloud className="w-12 h-12 text-orange-600" />,
-      title: "Cloud Integration",
-      description: "Seamlessly integrate AI capabilities with your existing cloud infrastructure.",
-      features: ["Multi-Cloud Support", "Scalable Architecture", "Security Compliance", "Cost Optimization"],
+      title: t('solutions.cloudIntegration.title'),
+      description: t('solutions.cloudIntegration.description'),
+      features: [
+        t('solutions.cloudIntegration.feature1'),
+        t('solutions.cloudIntegration.feature2'),
+        t('solutions.cloudIntegration.feature3'),
+        t('solutions.cloudIntegration.feature4')
+      ],
       gradient: "from-orange-500 to-red-500"
+    }
+  ];
+
+  const processSteps = [
+    { 
+      step: "01", 
+      title: t('solutions.process.discovery.title'), 
+      description: t('solutions.process.discovery.description')
+    },
+    { 
+      step: "02", 
+      title: t('solutions.process.strategy.title'), 
+      description: t('solutions.process.strategy.description')
+    },
+    { 
+      step: "03", 
+      title: t('solutions.process.implementation.title'), 
+      description: t('solutions.process.implementation.description')
+    },
+    { 
+      step: "04", 
+      title: t('solutions.process.optimization.title'), 
+      description: t('solutions.process.optimization.description')
     }
   ];
 
@@ -47,14 +93,13 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              AI Solutions That
+              {t('solutions.hero.title')}
               <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Drive Results
+                {t('solutions.hero.subtitle')}
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Discover our comprehensive suite of AI-powered solutions designed to 
-              transform your business operations and accelerate growth.
+              {t('solutions.hero.description')}
             </p>
           </div>
         </div>
@@ -88,7 +133,7 @@ const Solutions = () => {
                     ))}
                   </div>
                   <Button className={`w-full bg-gradient-to-r ${solution.gradient} hover:opacity-90 transition-opacity`}>
-                    Learn More
+                    {t('solutions.learnMore')}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </CardContent>
@@ -103,21 +148,15 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Our Implementation Process
+              {t('solutions.process.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We follow a proven methodology to ensure successful AI integration 
-              and maximum return on investment.
+              {t('solutions.process.description')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { step: "01", title: "Discovery", description: "Analyze your current systems and identify opportunities" },
-              { step: "02", title: "Strategy", description: "Develop a customized AI implementation roadmap" },
-              { step: "03", title: "Implementation", description: "Deploy and integrate AI solutions seamlessly" },
-              { step: "04", title: "Optimization", description: "Monitor, refine, and scale for maximum impact" }
-            ].map((item, index) => (
+            {processSteps.map((item, index) => (
               <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                   {item.step}
@@ -134,13 +173,13 @@ const Solutions = () => {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Implement AI Solutions?
+            {t('solutions.cta.title')}
           </h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Contact our experts today to discuss how our AI solutions can transform your business.
+            {t('solutions.cta.description')}
           </p>
           <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4">
-            Schedule Consultation
+            {t('solutions.cta.button')}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>
