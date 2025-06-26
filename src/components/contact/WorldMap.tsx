@@ -35,7 +35,7 @@ const WorldMap = () => {
       country: 'Brasil',
       flag: '🇧🇷',
       type: 'Sede',
-      unitName: 'Infinity6 Latin America',
+      unitName: 'infinity6 LATAM',
       position: positions.campinas,
       address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrasil',
       phone: '+55 19 998197775',
@@ -48,7 +48,7 @@ const WorldMap = () => {
       country: 'Estados Unidos',
       flag: '🇺🇸',
       type: 'Filial',
-      unitName: 'Infinity6 North America',
+      unitName: 'infinity6 NA',
       position: positions.dover,
       address: '123 Corporate Blvd\nDover, DE 19901\nEstados Unidos',
       phone: '+1 (302) 555-0123',
@@ -61,7 +61,7 @@ const WorldMap = () => {
       country: 'Itália',
       flag: '🇮🇹',
       type: 'Filial',
-      unitName: 'Infinity6 Europe & Middle East',
+      unitName: 'infinity6 EMEA',
       position: positions.milan,
       address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItália',
       phone: '+39 02 1234 5678',
@@ -91,32 +91,41 @@ const WorldMap = () => {
               <Tooltip key={location.id}>
                 <TooltipTrigger asChild>
                   <button
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-all duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded-lg"
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-all duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded-lg group"
                     style={{
                       top: location.position.top,
                       left: location.position.left,
                     }}
                   >
-                    <div className="bg-white rounded-lg shadow-lg border p-2 sm:p-3 min-w-[120px] sm:min-w-[160px]">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-lg">{location.flag}</span>
+                    <div className="bg-white rounded-lg shadow-lg border p-2 min-w-[90px] sm:min-w-[110px] relative">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm">{location.flag}</span>
                         <div className="text-left">
-                          <div className="font-semibold text-gray-900 text-xs sm:text-sm">
+                          <div className="font-semibold text-gray-900 text-xs leading-tight">
                             {location.city}
                           </div>
-                          <div className="text-xs text-gray-600">
-                            {location.state}, {location.country}
+                          <div className="text-xs text-gray-600 leading-tight">
+                            {location.state}
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 mt-1">
-                        <Building className="w-3 h-3 text-blue-600" />
+                      <div className="flex items-center gap-1">
+                        <Building className="w-2.5 h-2.5 text-blue-600" />
                         <span className="text-xs font-medium text-blue-600">
                           {location.type}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-700 font-medium mt-1 leading-tight">
-                        {location.unitName}
+                      
+                      {/* Nome da unidade aparece apenas no hover */}
+                      <div className="absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-lg border p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-center">
+                        <div className="text-center">
+                          <div className="text-xs font-bold text-gray-900 mb-1">
+                            {location.unitName}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            {location.city}, {location.state}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </button>
