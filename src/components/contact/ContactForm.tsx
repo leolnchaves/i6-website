@@ -39,7 +39,7 @@ const ContactForm = () => {
         </CardTitle>
         <div className="space-y-2">
           <p className="text-xl font-semibold text-gray-800">
-            Your AI journey starts here!
+            Every transformation starts with a conversation.
           </p>
           <p className="text-gray-600">
             Let our experts guide you from insight to impact.
