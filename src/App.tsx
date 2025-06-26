@@ -13,32 +13,72 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
 import NotFound from "./pages/NotFound";
+import ErrorBoundary from "./components/common/ErrorBoundary";
+import DebugPanel from "./components/debug/DebugPanel";
+import { logger } from "./utils/logger";
 
-const queryClient = new QueryClient();
+// Configure React Query client with error handling
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        logger.warn('Query failed, retrying...', { failureCount, error: error.message }, 'ReactQuery');
+        return failureCount < 3;
+      },
+      onError: (error) => {
+        logger.error('Query error occurred', { message: error.message }, 'ReactQuery');
+      },
+    },
+    mutations: {
+      onError: (error) => {
+        logger.error('Mutation error occurred', { message: error.message }, 'ReactQuery');
+      },
+    },
+  },
+});
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/solutions" element={<Solutions />} />
-              <Route path="/success-stories" element={<SuccessStories />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/ethics-policy" element={<EthicsPolicy />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
-  </QueryClientProvider>
-);
+/**
+ * Main App component with error boundaries and debug tools
+ * Provides the root structure for the entire application
+ */
+const App = () => {
+  // Log app initialization
+  logger.info('App initialized', { 
+    environment: process.env.NODE_ENV,
+    timestamp: new Date().toISOString(),
+    userAgent: navigator.userAgent,
+    viewport: { width: window.innerWidth, height: window.innerHeight }
+  }, 'App');
+
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/solutions" element={<Solutions />} />
+                  <Route path="/success-stories" element={<SuccessStories />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/ethics-policy" element={<EthicsPolicy />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            </BrowserRouter>
+            
+            {/* Debug panel for development */}
+            <DebugPanel />
+          </TooltipProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+};
 
 export default App;

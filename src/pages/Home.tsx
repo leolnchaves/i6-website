@@ -3,35 +3,41 @@ import HeroSection from '@/components/home/HeroSection';
 import ResultsSection from '@/components/home/ResultsSection';
 import StatsSection from '@/components/home/StatsSection';
 import FeaturedStoriesSection from '@/components/home/FeaturedStoriesSection';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
+import CTASection from '@/components/home/CTASection';
+import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
+import { logger } from '@/utils/logger';
 
+/**
+ * Home page component
+ * Main landing page with hero section, results, stats, and featured stories
+ * Optimized for performance and includes comprehensive logging
+ */
 const Home = () => {
-  const { t } = useLanguage();
+  // Performance monitoring for the entire page
+  const metrics = usePerformanceMonitor('HomePage', 50);
+  
+  // Log page visit
+  logger.info('Home page loaded', { 
+    timestamp: new Date().toISOString(),
+    userAgent: navigator.userAgent 
+  }, 'HomePage');
   
   return (
     <div className="min-h-screen">
+      {/* Hero section with main value proposition */}
       <HeroSection />
+      
+      {/* Results showcase section */}
       <ResultsSection />
+      
+      {/* Statistics and metrics section */}
       <StatsSection />
+      
+      {/* Featured success stories section */}
       <FeaturedStoriesSection />
       
-      {/* CTA Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-            {t('cta.title') || 'Transform Your Business Today'}
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-600">
-            {t('cta.description') || 'Ready to revolutionize your business with AI? Let\'s discuss how we can help you achieve your goals.'}
-          </p>
-          <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
-            {t('cta.button') || 'Get Started Now'}
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-        </div>
-      </section>
+      {/* Call-to-action section */}
+      <CTASection />
     </div>
   );
 };
