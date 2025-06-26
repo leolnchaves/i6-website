@@ -12,7 +12,7 @@ const MetricsSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-800 via-blue-800 to-gray-900 relative overflow-hidden">
+    <section className="py-16 text-white relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
