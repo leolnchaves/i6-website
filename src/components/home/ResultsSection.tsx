@@ -59,96 +59,115 @@ const ResultsSection = () => {
     }
   ];
 
-  // Random stripe configurations
-  const stripes = [
-    { 
-      width: '140vw', 
-      height: '48px', 
-      top: '-80px', 
-      rotation: '-15deg', 
-      opacity: '0.08',
-      animation: 'animate-snake-slow',
-      delay: '0s'
-    },
-    { 
-      width: '130vw', 
-      height: '32px', 
-      top: '20px', 
-      rotation: '-8deg', 
+  // 7 diferentes faixas dinâmicas com formatos únicos e movimentos aleatórios
+  const dynamicStripes = [
+    {
+      width: '150vw',
+      height: '60px',
+      top: '-100px',
+      left: '-50px',
+      rotation: '-18deg',
       opacity: '0.12',
+      animation: 'animate-snake-slow',
+      delay: '0s',
+      clipPath: 'polygon(0% 10%, 85% 0%, 100% 30%, 95% 70%, 80% 100%, 0% 90%, 5% 60%, 15% 40%)',
+      color: 'bg-gradient-to-r from-orange-200/20 to-blue-200/20'
+    },
+    {
+      width: '140vw',
+      height: '45px',
+      top: '50px',
+      left: '-30px',
+      rotation: '-25deg',
+      opacity: '0.08',
       animation: 'animate-wave-fast',
-      delay: '1.2s'
+      delay: '1.5s',
+      clipPath: 'polygon(0% 20%, 90% 0%, 100% 40%, 85% 80%, 70% 100%, 0% 80%, 10% 50%)',
+      color: 'bg-gradient-to-r from-purple-200/15 to-pink-200/15'
     },
-    { 
-      width: '150vw', 
-      height: '56px', 
-      top: '140px', 
-      rotation: '-20deg', 
-      opacity: '0.06',
-      animation: 'animate-float-curve',
-      delay: '2.5s'
-    },
-    { 
-      width: '120vw', 
-      height: '40px', 
-      top: '280px', 
-      rotation: '-12deg', 
+    {
+      width: '160vw',
+      height: '75px',
+      top: '180px',
+      left: '-60px',
+      rotation: '-12deg',
       opacity: '0.10',
-      animation: 'animate-slide-curve',
-      delay: '0.8s'
+      animation: 'animate-float-curve',
+      delay: '3s',
+      clipPath: 'polygon(0% 0%, 95% 5%, 100% 35%, 90% 65%, 75% 95%, 0% 100%, 5% 70%, 20% 30%)',
+      color: 'bg-gradient-to-r from-teal-200/20 to-cyan-200/20'
     },
-    { 
-      width: '160vw', 
-      height: '44px', 
-      top: '420px', 
-      rotation: '-18deg', 
+    {
+      width: '135vw',
+      height: '55px',
+      top: '320px',
+      left: '-40px',
+      rotation: '-30deg',
       opacity: '0.09',
-      animation: 'animate-snake-fast',
-      delay: '3.2s'
+      animation: 'animate-slide-curve',
+      delay: '0.8s',
+      clipPath: 'polygon(0% 15%, 80% 0%, 100% 25%, 95% 75%, 85% 100%, 0% 85%, 15% 50%)',
+      color: 'bg-gradient-to-r from-green-200/18 to-emerald-200/18'
     },
-    { 
-      width: '135vw', 
-      height: '36px', 
-      top: '580px', 
-      rotation: '-10deg', 
+    {
+      width: '170vw',
+      height: '65px',
+      top: '480px',
+      left: '-70px',
+      rotation: '-8deg',
       opacity: '0.11',
-      animation: 'animate-wave-slow',
-      delay: '1.8s'
+      animation: 'animate-snake-fast',
+      delay: '2.2s',
+      clipPath: 'polygon(0% 5%, 92% 0%, 100% 45%, 88% 80%, 65% 100%, 0% 95%, 8% 60%, 25% 25%)',
+      color: 'bg-gradient-to-r from-red-200/16 to-orange-200/16'
     },
-    { 
-      width: '145vw', 
-      height: '52px', 
-      top: '720px', 
-      rotation: '-14deg', 
+    {
+      width: '145vw',
+      height: '50px',
+      top: '620px',
+      left: '-35px',
+      rotation: '-22deg',
       opacity: '0.07',
+      animation: 'animate-wave-slow',
+      delay: '4.1s',
+      clipPath: 'polygon(0% 25%, 88% 0%, 100% 50%, 90% 90%, 70% 100%, 0% 75%, 12% 40%)',
+      color: 'bg-gradient-to-r from-indigo-200/14 to-violet-200/14'
+    },
+    {
+      width: '155vw',
+      height: '70px',
+      top: '760px',
+      left: '-55px',
+      rotation: '-15deg',
+      opacity: '0.06',
       animation: 'animate-drift-curve',
-      delay: '4.1s'
+      delay: '1.2s',
+      clipPath: 'polygon(0% 0%, 90% 10%, 100% 60%, 85% 90%, 60% 100%, 0% 90%, 10% 55%, 30% 15%)',
+      color: 'bg-gradient-to-r from-yellow-200/12 to-amber-200/12'
     }
   ];
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
-      {/* Dynamic curved stripes with random movements */}
+      {/* Faixas dinâmicas e curvas ocupando toda a tela */}
       <div className="absolute inset-0">
-        {stripes.map((stripe, index) => (
+        {dynamicStripes.map((stripe, index) => (
           <div
             key={index}
-            className={`absolute -left-20 bg-white/10 ${stripe.animation}`}
+            className={`absolute ${stripe.color} ${stripe.animation}`}
             style={{
               width: stripe.width,
               height: stripe.height,
               top: stripe.top,
-              transform: `translateY(${scrollY * (0.05 + Math.random() * 0.1)}px) rotate(${stripe.rotation})`,
+              left: stripe.left,
+              transform: `translateY(${scrollY * (0.03 + Math.random() * 0.08)}px) rotate(${stripe.rotation})`,
               opacity: stripe.opacity,
               animationDelay: stripe.delay,
-              clipPath: `polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 5% 50%)`
+              clipPath: stripe.clipPath,
+              borderRadius: '20px 40px 30px 10px'
             }}
-          ></div>
+          />
         ))}
-        
-        {/* Additional flowing elements */}
-        <div className="absolute top-0 right-0 w-72 h-72 gradient-accent opacity-10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 gradient-secondary opacity-10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

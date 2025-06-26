@@ -90,7 +90,7 @@ const FeaturedStoriesSection = () => {
             <Card 
               key={story.id}
               className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white ${
-                hoveredCard === index ? 'scale-110 z-20' : 'hover:scale-105'
+                hoveredCard === index ? 'scale-110 z-20' : ''
               }`}
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
