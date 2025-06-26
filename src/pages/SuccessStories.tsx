@@ -6,6 +6,8 @@ import TestimonialsSection from '@/components/success-stories/TestimonialsSectio
 import TransformBusinessCTA from '@/components/shared/TransformBusinessCTA';
 
 const SuccessStories = () => {
+  console.log('SuccessStories page is rendering');
+  
   return (
     <div className="min-h-screen">
       <SuccessStoriesHero />

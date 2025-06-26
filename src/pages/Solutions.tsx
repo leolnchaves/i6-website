@@ -1,4 +1,3 @@
-
 import { CheckCircle, ArrowRight, Cpu, Database, Cloud, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +5,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import TransformBusinessCTA from '@/components/shared/TransformBusinessCTA';
 
 const Solutions = () => {
+  console.log('Solutions page is rendering');
+  
   const { t } = useLanguage();
 
   const solutions = [
