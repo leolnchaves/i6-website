@@ -1,5 +1,5 @@
 
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Building } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -30,28 +30,40 @@ const WorldMap = () => {
   const locations = [
     {
       id: 'campinas',
-      name: 'Campinas, BR',
-      type: t('contact.map.headquarters'),
+      city: 'Campinas',
+      state: 'São Paulo',
+      country: 'Brasil',
+      flag: '🇧🇷',
+      type: 'Sede',
+      unitName: 'Infinity6 Latin America',
       position: positions.campinas,
-      address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrazil',
+      address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrasil',
       phone: '+55 19 998197775',
       email: 'infinity6@infinity6.ai'
     },
     {
       id: 'dover',
-      name: 'Dover, DE',
-      type: t('contact.map.branchOffice'),
+      city: 'Dover',
+      state: 'Delaware',
+      country: 'Estados Unidos',
+      flag: '🇺🇸',
+      type: 'Filial',
+      unitName: 'Infinity6 North America',
       position: positions.dover,
-      address: '123 Corporate Blvd\nDover, DE 19901\nUnited States',
+      address: '123 Corporate Blvd\nDover, DE 19901\nEstados Unidos',
       phone: '+1 (302) 555-0123',
       email: 'usa@infinity6.ai'
     },
     {
       id: 'milan',
-      name: 'Milan, IT',
-      type: t('contact.map.branchOffice'),
+      city: 'Milão',
+      state: 'Lombardia',
+      country: 'Itália',
+      flag: '🇮🇹',
+      type: 'Filial',
+      unitName: 'Infinity6 Europe & Middle East',
       position: positions.milan,
-      address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItaly',
+      address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItália',
       phone: '+39 02 1234 5678',
       email: 'italia@infinity6.ai'
     }
@@ -79,15 +91,33 @@ const WorldMap = () => {
               <Tooltip key={location.id}>
                 <TooltipTrigger asChild>
                   <button
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-125 transition-transform duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-50 rounded-full"
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-all duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded-lg"
                     style={{
                       top: location.position.top,
                       left: location.position.left,
                     }}
                   >
-                    <div className="relative">
-                      <MapPin className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} text-red-500 drop-shadow-lg`} />
-                      <div className={`absolute -bottom-1 left-1/2 transform -translate-x-1/2 ${isMobile ? 'w-1.5 h-1.5' : 'w-2 h-2'} bg-red-500 rounded-full animate-pulse`}></div>
+                    <div className="bg-white rounded-lg shadow-lg border p-2 sm:p-3 min-w-[120px] sm:min-w-[160px]">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-lg">{location.flag}</span>
+                        <div className="text-left">
+                          <div className="font-semibold text-gray-900 text-xs sm:text-sm">
+                            {location.city}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            {location.state}, {location.country}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 mt-1">
+                        <Building className="w-3 h-3 text-blue-600" />
+                        <span className="text-xs font-medium text-blue-600">
+                          {location.type}
+                        </span>
+                      </div>
+                      <div className="text-xs text-gray-700 font-medium mt-1 leading-tight">
+                        {location.unitName}
+                      </div>
                     </div>
                   </button>
                 </TooltipTrigger>
@@ -95,22 +125,36 @@ const WorldMap = () => {
                   side="top" 
                   className="max-w-xs p-3 sm:p-4 bg-white border shadow-xl"
                 >
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div>
-                      <h4 className="font-bold text-gray-900 text-sm sm:text-base">{location.name}</h4>
-                      <p className="text-xs sm:text-sm text-blue-600">{location.type}</p>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg">{location.flag}</span>
+                        <div>
+                          <h4 className="font-bold text-gray-900 text-sm sm:text-base">
+                            {location.city}, {location.state}
+                          </h4>
+                          <p className="text-xs text-gray-600">{location.country}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Building className="w-4 h-4 text-blue-600" />
+                        <span className="text-sm font-medium text-blue-600">{location.type}</span>
+                      </div>
+                      <p className="text-sm font-semibold text-gray-800 mb-3">{location.unitName}</p>
                     </div>
-                    <div className="text-xs sm:text-sm text-gray-600">
-                      <div className="whitespace-pre-line mb-2">{location.address}</div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <Phone className="w-3 h-3 flex-shrink-0" />
-                          <span className="break-all">{location.phone}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Mail className="w-3 h-3 flex-shrink-0" />
-                          <span className="break-all">{location.email}</span>
-                        </div>
+                    
+                    <div className="text-xs sm:text-sm text-gray-600 space-y-2 pt-2 border-t border-gray-100">
+                      <div className="flex items-start gap-2">
+                        <MapPin className="w-3 h-3 flex-shrink-0 mt-0.5 text-gray-400" />
+                        <div className="whitespace-pre-line">{location.address}</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                        <span className="break-all">{location.phone}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                        <span className="break-all">{location.email}</span>
                       </div>
                     </div>
                   </div>
@@ -119,6 +163,10 @@ const WorldMap = () => {
             ))}
           </div>
         </TooltipProvider>
+        
+        <p className="text-sm text-gray-500 mt-4 text-center">
+          Passe o mouse sobre os cards para ver detalhes de contato
+        </p>
       </CardContent>
     </Card>
   );
