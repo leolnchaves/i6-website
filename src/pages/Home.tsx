@@ -1,4 +1,3 @@
-
 import { ArrowRight, Zap, Shield, Target, TrendingUp, Award, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -59,10 +58,13 @@ const Home = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="animate-bounce-in">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                <span className="block bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                  Infinite Possibilities
+                <span className="block text-white font-light">
+                  Infinite
                 </span>
-                <span className="block text-white text-4xl md:text-5xl mt-4">
+                <span className="block text-white font-bold text-6xl md:text-8xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent">
+                  Possibilities
+                </span>
+                <span className="block text-white text-3xl md:text-4xl mt-2 font-light">
                   Powered by AI
                 </span>
               </h1>

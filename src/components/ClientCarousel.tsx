@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 const ClientCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Sample client logos (using text as placeholders for the carousel)
   const clients = [
@@ -20,31 +20,52 @@ const ClientCarousel = () => {
     'FINANCEMAX'
   ];
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % clients.length);
-    }, 2000);
-
-    return () => clearInterval(timer);
-  }, [clients.length]);
+  // Double the array for seamless loop
+  const doubledClients = [...clients, ...clients];
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="flex justify-center">
+      <div 
+        className="flex items-center"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <div 
-          className="flex transition-transform duration-1000 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 200}px)` }}
+          className={`flex animate-marquee ${isHovered ? 'paused' : ''}`}
+          style={{
+            width: `${doubledClients.length * 200}px`,
+            animation: `marquee ${doubledClients.length * 3}s linear infinite`
+          }}
         >
-          {clients.concat(clients).map((client, index) => (
+          {doubledClients.map((client, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-48 h-16 mx-4 flex items-center justify-center text-white/30 text-lg font-semibold"
+              className="flex-shrink-0 w-48 h-16 mx-6 flex items-center justify-center text-white/40 text-lg font-medium hover:text-white/70 transition-colors duration-300 cursor-pointer"
             >
               {client}
             </div>
           ))}
         </div>
       </div>
+      
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        
+        .animate-marquee {
+          animation: marquee linear infinite;
+        }
+        
+        .animate-marquee.paused {
+          animation-play-state: paused;
+        }
+      `}</style>
     </div>
   );
 };

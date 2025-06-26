@@ -20,10 +20,26 @@ const Footer = () => {
                 className="h-8 w-auto"
               />
             </div>
-            <p className="text-gray-400 mb-4 max-w-md">
+            <p className="text-gray-400 mb-6 max-w-md">
               Transforming businesses with cutting-edge AI solutions. 
               Unlock infinite possibilities with our innovative technology.
             </p>
+            
+            {/* Policy Links */}
+            <div className="flex flex-col sm:flex-row gap-4 text-sm">
+              <Link 
+                to="/privacy-policy" 
+                className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
+              >
+                Privacy Policy
+              </Link>
+              <Link 
+                to="/ethics-policy" 
+                className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
+              >
+                Ethics Policy
+              </Link>
+            </div>
           </div>
 
           {/* Quick Links */}
