@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Play, ArrowRight, Quote } from 'lucide-react';
+import { ArrowRight, Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -43,41 +43,16 @@ const FeaturedStoryCard = ({ story, index }: FeaturedStoryCardProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CardContent className="p-0">
-        {/* Video Container with Thumbnail and Video */}
+        {/* Image Container */}
         <div className="relative overflow-hidden h-48">
-          {/* Thumbnail Image */}
           <img 
             src={story.videoThumbnail}
             alt={story.company}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              isHovered ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-          
-          {/* Video Element */}
-          <video 
-            key={isHovered ? 'playing' : 'paused'}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-              isHovered ? 'opacity-100' : 'opacity-0'
-            }`}
-            src={story.videoUrl}
-            muted
-            loop
-            autoPlay={isHovered}
-            playsInline
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
 
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
           <div className={`absolute inset-0 bg-gradient-to-br ${story.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}></div>
-          
-          {/* Play Button - only show when not hovering */}
-          {!isHovered && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center transform transition-all duration-300 hover:bg-white hover:scale-110">
-                <Play className="w-6 h-6 text-gray-800 ml-1" fill="currentColor" />
-              </div>
-            </div>
-          )}
 
           {/* Industry Badge */}
           <div className="absolute top-4 left-4">
