@@ -3,16 +3,19 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Solutions', href: '/solutions' },
-    { name: 'Success Stories', href: '/success-stories' },
-    { name: 'Contact Us', href: '/contact' },
+    { name: t('header.home'), href: '/' },
+    { name: t('header.solutions'), href: '/solutions' },
+    { name: t('header.successStories'), href: '/success-stories' },
+    { name: t('header.contact'), href: '/contact' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -46,10 +49,11 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button - Now with same color as Start Your Journey */}
-          <div className="hidden md:flex">
+          {/* Language Selector and CTA Button */}
+          <div className="hidden md:flex items-center space-x-4">
+            <LanguageSelector />
             <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0 rounded-full font-semibold">
-              Get Started
+              {t('header.getStarted')}
             </Button>
           </div>
 
@@ -66,7 +70,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ease-out ${isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+        <div className={`md:hidden transition-all duration-300 ease-out ${isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t glass">
             {navigation.map((item) => (
               <Link
@@ -80,9 +84,12 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="px-3 py-2 flex items-center justify-between">
+              <LanguageSelector />
+            </div>
             <div className="px-3 py-2">
               <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 border-0 rounded-full font-semibold">
-                Get Started
+                {t('header.getStarted')}
               </Button>
             </div>
           </div>
