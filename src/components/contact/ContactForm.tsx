@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -36,11 +35,19 @@ const ContactForm = () => {
     <Card className="border-0 shadow-2xl">
       <CardHeader className="p-8">
         <CardTitle className="text-2xl font-bold text-gray-900">
-          {t('contact.form.title')}
+          Let's Start a Conversation
         </CardTitle>
-        <p className="text-gray-600">
-          {t('contact.form.subtitle')}
-        </p>
+        <div className="space-y-2">
+          <p className="text-xl font-semibold text-gray-800">
+            Your AI journey starts here!
+          </p>
+          <p className="text-gray-600">
+            Let our experts guide you from insight to impact.
+          </p>
+          <p className="text-gray-600">
+            Let's build intelligent growth — together.
+          </p>
+        </div>
       </CardHeader>
       <CardContent className="p-8 pt-0">
         {isSubmitted ? (

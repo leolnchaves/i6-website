@@ -1,6 +1,5 @@
 
 import ContactHero from '@/components/contact/ContactHero';
-import ContactInfoCards from '@/components/contact/ContactInfoCards';
 import FAQSection from '@/components/contact/FAQSection';
 import ContactForm from '@/components/contact/ContactForm';
 import WorldMap from '@/components/contact/WorldMap';
@@ -10,7 +9,6 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       <ContactHero />
-      <ContactInfoCards />
       <FAQSection />
       
       <section className="py-20 bg-white">
