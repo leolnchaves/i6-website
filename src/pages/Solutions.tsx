@@ -153,9 +153,9 @@ const Solutions = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="block mb-2">AI Solutions</span>
+              <span className="block mb-2">AI Solutions That</span>
               <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-                for Modern Business
+                Sells. Scales. Performs.
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
@@ -217,7 +217,7 @@ const Solutions = () => {
       </section>
 
       {/* Implementation Process Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -229,49 +229,70 @@ const Solutions = () => {
           </div>
 
           {/* Process Flow */}
-          <div className="relative max-w-6xl mx-auto">
-            <div className="flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0 lg:space-x-4">
+          <div className="relative max-w-7xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-6">
               {processSteps.map((step, index) => (
-                <div key={step.key} className="flex flex-col items-center relative">
+                <div key={step.key} className="flex flex-col items-center relative flex-1">
+                  {/* Step Number Circle */}
+                  <div className={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white font-bold text-lg shadow-lg mb-6`}>
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  
                   {/* Step Card */}
-                  <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 max-w-xs text-center border border-gray-200">
+                  <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100">
                     <h3 className="font-bold text-gray-900 text-lg mb-2 leading-tight">
                       {step.title}
                     </h3>
-                    <div className="text-sm text-gray-600 mb-3 font-medium">
-                      ({step.subtitle})
+                    <div className="text-sm text-gray-600 mb-3 font-medium bg-gray-50 rounded-full px-3 py-1 inline-block">
+                      {step.subtitle}
                     </div>
-                  </div>
-                  
-                  {/* Circular Process Icon */}
-                  <div className="my-6">
-                    <div className={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-                      {String(index + 1).padStart(2, '0')}
-                    </div>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {step.description}
+                    </p>
                   </div>
                   
                   {/* Arrow (except for last item) */}
                   {index < processSteps.length - 1 && (
-                    <div className="hidden lg:block absolute top-1/2 -right-8 transform -translate-y-1/2">
-                      <ChevronRight className="w-8 h-8 text-gray-400" />
+                    <div className="hidden lg:block absolute top-10 -right-8 transform -translate-y-1/2 z-10">
+                      <div className="bg-white rounded-full p-2 shadow-md">
+                        <ChevronRight className="w-6 h-6 text-gray-500" />
+                      </div>
                     </div>
                   )}
                 </div>
               ))}
             </div>
             
-            {/* Bottom Section */}
-            <div className="mt-16 text-center">
-              <div className="bg-gradient-to-r from-orange-100 to-orange-50 rounded-xl p-8 border border-orange-200">
-                <h3 className="text-2xl font-bold text-orange-800 mb-4">
-                  Sandbox Environment & Consulting Support Included
-                </h3>
-                <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
-                  <div className="bg-white rounded-full px-6 py-3 border-2 border-orange-300 shadow-md">
-                    <span className="font-semibold text-orange-700">FAST TRACK SCALE</span>
-                  </div>
-                  <div className="bg-white rounded-full px-6 py-3 border-2 border-orange-300 shadow-md">
-                    <span className="font-semibold text-orange-700">API Integration & Model Maturity Enhancement</span>
+            {/* Integrated Sandbox Environment Section */}
+            <div className="mt-20">
+              <div className="relative">
+                {/* Connecting Line */}
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-px h-8 bg-gradient-to-b from-gray-300 to-transparent"></div>
+                
+                {/* Sandbox Environment Card */}
+                <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-8 shadow-2xl text-white relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 backdrop-blur-sm"></div>
+                  <div className="relative z-10">
+                    <div className="text-center mb-6">
+                      <h3 className="text-3xl font-bold mb-2">
+                        Sandbox Environment & Consulting Support Included
+                      </h3>
+                      <p className="text-orange-100 text-lg">
+                        Complete testing environment with expert guidance throughout your journey
+                      </p>
+                    </div>
+                    
+                    <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl px-8 py-4 border border-white/20">
+                        <span className="font-bold text-lg">Risk-Free Testing Environment</span>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl px-8 py-4 border border-white/20">
+                        <span className="font-bold text-lg">Expert Consulting & Support</span>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl px-8 py-4 border border-white/20">
+                        <span className="font-bold text-lg">30-Day Concrete Results</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
