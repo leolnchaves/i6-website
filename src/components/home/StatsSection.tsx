@@ -16,18 +16,22 @@ const StatsSection = () => {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-8">
           <div className="scroll-reveal">
-            <div className="text-5xl font-bold mb-2 animate-bounce-in">500+</div>
-            <div className="text-xl opacity-90">{t('stats.companiesTransformed')}</div>
+            <div className="text-5xl font-bold mb-2 animate-bounce-in">97%</div>
+            <div className="text-xl opacity-90">Top engine accuracy</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.2s' }}>
-            <div className="text-5xl font-bold mb-2 animate-bounce-in">99.9%</div>
-            <div className="text-xl opacity-90">{t('stats.accuracyRate')}</div>
+            <div className="text-5xl font-bold mb-2 animate-bounce-in">0</div>
+            <div className="text-xl opacity-90">Security Issue</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.4s' }}>
-            <div className="text-5xl font-bold mb-2 animate-bounce-in">24/7</div>
-            <div className="text-xl opacity-90">{t('stats.expertSupport')}</div>
+            <div className="text-5xl font-bold mb-2 animate-bounce-in">{'< 1,5'}</div>
+            <div className="text-xl opacity-90">Value capture leadtime (month)</div>
+          </div>
+          <div className="scroll-reveal" style={{ animationDelay: '0.6s' }}>
+            <div className="text-5xl font-bold mb-2 animate-bounce-in">100%</div>
+            <div className="text-xl opacity-90">AI engine explainability</div>
           </div>
         </div>
         

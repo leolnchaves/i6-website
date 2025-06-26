@@ -1,6 +1,7 @@
 
 import HeroSection from '@/components/home/HeroSection';
 import ResultsSection from '@/components/home/ResultsSection';
+import CompactSolutionsSection from '@/components/home/CompactSolutionsSection';
 import StatsSection from '@/components/home/StatsSection';
 import FeaturedStoriesSection from '@/components/home/FeaturedStoriesSection';
 import CTASection from '@/components/home/CTASection';
@@ -29,6 +30,9 @@ const Home = () => {
       
       {/* Results showcase section */}
       <ResultsSection />
+      
+      {/* Compact solutions section */}
+      <CompactSolutionsSection />
       
       {/* Statistics and metrics section */}
       <StatsSection />
