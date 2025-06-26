@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const ClientCarousel = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -34,7 +34,7 @@ const ClientCarousel = () => {
           className={`flex animate-marquee ${isHovered ? 'paused' : ''}`}
           style={{
             width: `${doubledClients.length * 200}px`,
-            animation: `marquee ${doubledClients.length * 3}s linear infinite`
+            animationDuration: `${doubledClients.length * 3}s`
           }}
         >
           {doubledClients.map((client, index) => (
@@ -47,25 +47,6 @@ const ClientCarousel = () => {
           ))}
         </div>
       </div>
-      
-      <style jsx>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        .animate-marquee {
-          animation: marquee linear infinite;
-        }
-        
-        .animate-marquee.paused {
-          animation-play-state: paused;
-        }
-      `}</style>
     </div>
   );
 };
