@@ -70,7 +70,10 @@ const ResultsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 scroll-reveal">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            {t('results.title')}
+            <span className="block">Real AI Impact</span>
+            <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
+              Driving Business Growth
+            </span>
           </h2>
           <div className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
             <p className="mb-4">
