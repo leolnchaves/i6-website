@@ -1,5 +1,5 @@
 
-const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
+const GOOGLE_MAPS_API_KEY = 'AIzaSyDuLm8Nlg1wH4BfG8bXJwXOAkijpLlfnM4';
 
 export const loadGoogleMapsScript = (callback: () => void) => {
   // Verifica se o Google Maps já foi carregado
@@ -18,7 +18,7 @@ export const loadGoogleMapsScript = (callback: () => void) => {
   window.initMap = callback;
 
   const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${AIzaSyDuLm8Nlg1wH4BfG8bXJwXOAkijpLlfnM4}&callback=initMap&libraries=places`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places`;
   script.async = true;
   script.defer = true;
   
