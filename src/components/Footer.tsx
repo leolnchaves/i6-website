@@ -3,16 +3,22 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-gray-900 text-white relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-0 w-64 h-64 gradient-accent opacity-10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 gradient-secondary opacity-10 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">∞6</span>
-              </div>
-              <span className="text-xl font-bold">Infinity6</span>
+              <img 
+                src="/lovable-uploads/fa0e2de0-5d60-4759-bb8f-ae448b70417c.png" 
+                alt="Infinity6" 
+                className="h-8 w-auto"
+              />
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Transforming businesses with cutting-edge AI solutions. 
@@ -24,10 +30,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/solutions" className="text-gray-400 hover:text-white transition-colors">Solutions</Link></li>
-              <li><Link to="/success-stories" className="text-gray-400 hover:text-white transition-colors">Success Stories</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact Us</Link></li>
+              <li><Link to="/" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Home</Link></li>
+              <li><Link to="/solutions" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Solutions</Link></li>
+              <li><Link to="/success-stories" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Success Stories</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -35,8 +41,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>hello@infinity6.ai</li>
-              <li>+1 (555) 123-4567</li>
+              <li className="hover:text-orange-400 transition-colors duration-300">hello@infinity6.ai</li>
+              <li className="hover:text-orange-400 transition-colors duration-300">+1 (555) 123-4567</li>
             </ul>
           </div>
         </div>
