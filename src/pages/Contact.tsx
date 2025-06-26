@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Clock, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -34,26 +35,50 @@ const Contact = () => {
     {
       icon: <Mail className="w-6 h-6" />,
       title: "Email Us",
-      details: "hello@infinity6.ai",
+      details: "infinity6@infinity6.ai",
       description: "Send us an email anytime"
     },
     {
       icon: <Phone className="w-6 h-6" />,
       title: "Call Us",
-      details: "+1 (555) 123-4567",
+      details: "+55 19 998197775",
       description: "Mon-Fri from 8am to 6pm"
     },
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Visit Us",
-      details: "San Francisco, CA",
-      description: "Come say hello at our office"
+      details: "Campinas, BR",
+      description: "Come say hello at our headquarters"
+    }
+  ];
+
+  const locations = [
+    {
+      id: 'campinas',
+      name: 'Campinas, BR',
+      type: 'Headquarters',
+      position: { top: '65%', left: '25%' },
+      address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrazil',
+      phone: '+55 19 998197775',
+      email: 'infinity6@infinity6.ai'
     },
     {
-      icon: <Clock className="w-6 h-6" />,
-      title: "Response Time",
-      details: "< 24 hours",
-      description: "We respond to all inquiries quickly"
+      id: 'dover',
+      name: 'Dover, DE',
+      type: 'Branch Office',
+      position: { top: '35%', left: '45%' },
+      address: '123 Corporate Blvd\nDover, DE 19901\nUnited States',
+      phone: '+1 (302) 555-0123',
+      email: 'usa@infinity6.ai'
+    },
+    {
+      id: 'milan',
+      name: 'Milan, IT',
+      type: 'Branch Office',
+      position: { top: '40%', left: '52%' },
+      address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItaly',
+      phone: '+39 02 1234 5678',
+      email: 'italia@infinity6.ai'
     }
   ];
 
@@ -85,7 +110,7 @@ const Contact = () => {
       {/* Contact Info */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {contactInfo.map((info, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
                 <CardContent className="p-8">
@@ -102,8 +127,54 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Form & Info */}
+      {/* FAQ Section - Moved above contact form */}
       <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-gray-600">
+              Common questions about our AI solutions and services.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {[
+              {
+                question: "How long does AI implementation take?",
+                answer: "Implementation time varies by project complexity, typically ranging from 2-6 months for full deployment."
+              },
+              {
+                question: "What industries do you serve?",
+                answer: "We serve all industries including manufacturing, finance, healthcare, retail, and technology companies."
+              },
+              {
+                question: "Do you provide ongoing support?",
+                answer: "Yes, we offer 24/7 support, maintenance, and continuous optimization services for all our AI solutions."
+              },
+              {
+                question: "What's the typical ROI for AI projects?",
+                answer: "Our clients typically see 150% ROI within the first year, with continued improvements over time."
+              }
+            ].map((faq, index) => (
+              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    {faq.question}
+                  </h3>
+                  <p className="text-gray-600">
+                    {faq.answer}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form & Map */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -233,94 +304,124 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            {/* Additional Info */}
-            <div className="space-y-8">
-              <Card className="border-0 shadow-lg">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    Why Choose Infinity6?
-                  </h3>
-                  <ul className="space-y-4">
-                    {[
-                      "Expert AI consultants with 10+ years experience",
-                      "Custom solutions tailored to your business needs",
-                      "24/7 support and maintenance included",
-                      "Proven track record with 500+ successful projects",
-                      "ROI-focused approach with measurable results"
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{item}</span>
-                      </li>
+            {/* World Map with Office Locations */}
+            <Card className="border-0 shadow-lg">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  Our Global Presence
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Find us across three continents. Click on each location to see detailed contact information.
+                </p>
+                
+                <TooltipProvider>
+                  <div className="relative w-full h-96 bg-gradient-to-b from-blue-50 to-blue-100 rounded-lg overflow-hidden">
+                    {/* Simplified world map background */}
+                    <div className="absolute inset-0 opacity-30">
+                      <svg viewBox="0 0 1000 500" className="w-full h-full">
+                        {/* Simplified continents */}
+                        <path d="M150,200 L300,180 L350,220 L320,280 L200,300 L150,250 Z" fill="#cbd5e1" />
+                        <path d="M400,150 L600,140 L650,200 L600,250 L450,240 L400,200 Z" fill="#cbd5e1" />
+                        <path d="M200,320 L400,310 L450,380 L350,420 L200,400 Z" fill="#cbd5e1" />
+                        <path d="M100,100 L250,90 L300,150 L200,180 L100,160 Z" fill="#cbd5e1" />
+                      </svg>
+                    </div>
+                    
+                    {/* Location markers */}
+                    {locations.map((location) => (
+                      <Tooltip key={location.id}>
+                        <TooltipTrigger asChild>
+                          <button
+                            className="absolute transform -translate-x-1/2 -translate-y-1/2 hover:scale-125 transition-transform duration-200"
+                            style={{
+                              top: location.position.top,
+                              left: location.position.left,
+                            }}
+                          >
+                            <div className="relative">
+                              <MapPin className="w-8 h-8 text-red-500 drop-shadow-lg" />
+                              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                            </div>
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent 
+                          side="top" 
+                          className="max-w-xs p-4 bg-white border shadow-xl"
+                        >
+                          <div className="space-y-2">
+                            <div>
+                              <h4 className="font-bold text-gray-900">{location.name}</h4>
+                              <p className="text-sm text-blue-600">{location.type}</p>
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              <div className="whitespace-pre-line mb-2">{location.address}</div>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-2">
+                                  <Phone className="w-3 h-3" />
+                                  <span>{location.phone}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Mail className="w-3 h-3" />
+                                  <span>{location.email}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
                     ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-4">
-                    Ready to Get Started?
-                  </h3>
-                  <p className="mb-6 opacity-90">
-                    Schedule a free consultation with our AI experts to discuss your project 
-                    and explore how we can help transform your business.
-                  </p>
-                  <Button 
-                    className="bg-white text-blue-600 hover:bg-gray-100 font-semibold"
-                  >
-                    Schedule Free Consultation
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+                  </div>
+                </TooltipProvider>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-white">
+      {/* Ready to Get Started with Calendly */}
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-gray-600">
-              Common questions about our AI solutions and services.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              {
-                question: "How long does AI implementation take?",
-                answer: "Implementation time varies by project complexity, typically ranging from 2-6 months for full deployment."
-              },
-              {
-                question: "What industries do you serve?",
-                answer: "We serve all industries including manufacturing, finance, healthcare, retail, and technology companies."
-              },
-              {
-                question: "Do you provide ongoing support?",
-                answer: "Yes, we offer 24/7 support, maintenance, and continuous optimization services for all our AI solutions."
-              },
-              {
-                question: "What's the typical ROI for AI projects?",
-                answer: "Our clients typically see 150% ROI within the first year, with continued improvements over time."
-              }
-            ].map((faq, index) => (
-              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-600">
-                    {faq.answer}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white max-w-4xl mx-auto">
+            <CardContent className="p-8">
+              <div className="text-center mb-8">
+                <h3 className="text-3xl font-bold mb-4">
+                  Ready to Get Started?
+                </h3>
+                <p className="text-lg opacity-90 mb-6">
+                  Schedule a free consultation with our AI experts to discuss your project 
+                  and explore how we can help transform your business.
+                </p>
+              </div>
+              
+              {/* Calendly Embed */}
+              <div className="bg-white rounded-lg p-4">
+                <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <div className="text-center text-gray-600">
+                    <div className="mb-4">
+                      <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-2">Calendly Integration</h4>
+                    <p className="text-gray-500 mb-4">
+                      To complete the Calendly integration, you'll need to:
+                    </p>
+                    <div className="text-left max-w-md mx-auto space-y-2 text-sm">
+                      <p>1. Create a Calendly account at calendly.com</p>
+                      <p>2. Get your Calendly embed URL</p>
+                      <p>3. Replace this placeholder with the actual embed code</p>
+                    </div>
+                    <Button 
+                      className="mt-4 bg-blue-600 text-white hover:bg-blue-700"
+                      onClick={() => window.open('https://calendly.com', '_blank')}
+                    >
+                      Visit Calendly
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>
