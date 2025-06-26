@@ -1,9 +1,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MapPin, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 declare global {
   interface Window {
@@ -16,8 +15,9 @@ const InteractiveGoogleMap = () => {
   const { t } = useLanguage();
   const mapContainer = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [apiKey, setApiKey] = useState('');
-  const [showApiKeyInput, setShowApiKeyInput] = useState(true);
+
+  // Chave de API do Google Maps - substituir pela chave real
+  const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
 
   const locations = [
     {
@@ -61,7 +61,7 @@ const InteractiveGoogleMap = () => {
     window.initMap = initializeMap;
 
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
     script.async = true;
     script.defer = true;
     script.onerror = () => {
@@ -137,56 +137,11 @@ const InteractiveGoogleMap = () => {
     });
 
     setIsLoaded(true);
-    setShowApiKeyInput(false);
   };
 
-  const handleApiKeySubmit = () => {
-    if (apiKey.trim()) {
-      loadGoogleMapsScript();
-    }
-  };
-
-  if (showApiKeyInput) {
-    return (
-      <Card className="border-0 shadow-lg">
-        <CardContent className="p-4 sm:p-6 lg:p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Globe className="w-6 h-6 text-blue-600" />
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-              {t('contact.map.title')} - Google Maps
-            </h3>
-          </div>
-          <p className="text-gray-600 mb-6 text-sm sm:text-base">
-            Para visualizar o mapa interativo, você precisa inserir sua chave de API do Google Maps.
-          </p>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="google-maps-key" className="block text-sm font-medium text-gray-700 mb-2">
-                Chave de API do Google Maps
-              </label>
-              <input
-                id="google-maps-key"
-                type="text"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="AIza..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <Button onClick={handleApiKeySubmit} className="w-full">
-              Carregar Mapa
-            </Button>
-            <p className="text-xs text-gray-500">
-              Obtenha sua chave de API em{' '}
-              <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                Google Cloud Console
-              </a>
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
+  useEffect(() => {
+    loadGoogleMapsScript();
+  }, []);
 
   return (
     <Card className="border-0 shadow-lg">
@@ -194,7 +149,7 @@ const InteractiveGoogleMap = () => {
         <div className="flex items-center gap-3 mb-6">
           <Globe className="w-6 h-6 text-blue-600" />
           <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-            {t('contact.map.title')} - Google Maps
+            {t('contact.map.title')}
           </h3>
         </div>
         <div className="h-96 rounded-lg overflow-hidden border border-gray-200">
