@@ -20,7 +20,6 @@ export const CMSProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const cmsData = useCMSContent();
 
   useEffect(() => {
-    // Initialize CMS with default content on first load
     const initialize = async () => {
       if (!initialized) {
         console.log('Initializing CMS...');
@@ -28,6 +27,7 @@ export const CMSProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setInitialized(true);
         // Refetch content after initialization
         await cmsData.refetch();
+        console.log('CMS initialization completed');
       }
     };
     

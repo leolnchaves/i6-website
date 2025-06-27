@@ -22,7 +22,7 @@ export const useCMSContent = () => {
 
   const fetchContent = async () => {
     try {
-      console.log('Fetching CMS content...');
+      console.log('Fetching CMS content from database...');
       setLoading(true);
       
       const { data, error } = await supabase
@@ -36,8 +36,10 @@ export const useCMSContent = () => {
         throw error;
       }
       
-      console.log('CMS content fetched:', data?.length || 0, 'items');
-      console.log('First few items:', data?.slice(0, 3));
+      console.log('CMS content fetched successfully:', data?.length || 0, 'items');
+      if (data && data.length > 0) {
+        console.log('Sample content keys:', data.slice(0, 5).map(item => item.key));
+      }
       setContent(data || []);
     } catch (error) {
       console.error('Error fetching CMS content:', error);
@@ -48,17 +50,13 @@ export const useCMSContent = () => {
   };
 
   const getContent = (key: string): string => {
-    console.log(`Looking for content with key: "${key}"`);
-    console.log('Available content keys:', content.map(c => c.key));
-    
     const item = content.find(c => c.key === key);
     if (!item) {
       console.log(`Content not found for key: ${key}`);
-      return ''; // Return empty string instead of the key
+      return '';
     }
     
     const result = language === 'pt' ? item.content_pt : item.content_en;
-    console.log(`Content for key "${key}":`, result);
     return result;
   };
 

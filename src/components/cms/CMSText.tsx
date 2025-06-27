@@ -27,8 +27,8 @@ const CMSText: React.FC<CMSTextProps> = ({
   
   const content = getContent(contentKey);
   
-  // If no content found, use fallback instead of the contentKey
-  const displayContent = content && content !== contentKey ? content : fallback;
+  // If content is found and not empty, use it; otherwise use fallback
+  const displayContent = content && content.trim() !== '' ? content : fallback;
 
   return (
     <Component className={className}>
