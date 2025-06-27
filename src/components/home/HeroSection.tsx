@@ -8,6 +8,7 @@ import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
+import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
 
 /**
  * Hero section component for the home page
@@ -53,6 +54,9 @@ const HeroSection = () => {
         {/* Background gradients for visual appeal */}
         <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 via-transparent to-blue-600/10"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-purple-600/5 via-transparent to-pink-600/5"></div>
+
+        {/* Scroll-based Animation */}
+        <ScrollAnimation />
 
         {/* Main content container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
