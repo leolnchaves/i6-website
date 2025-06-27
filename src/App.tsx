@@ -12,6 +12,7 @@ import SuccessStories from "./pages/SuccessStories";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
+import CMSAdmin from "./pages/CMSAdmin";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
@@ -63,6 +64,7 @@ const App = () => {
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/ethics-policy" element={<EthicsPolicy />} />
+                  <Route path="/cms-admin-i6" element={<CMSAdmin />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
