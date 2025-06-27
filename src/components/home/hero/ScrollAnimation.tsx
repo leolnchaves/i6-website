@@ -29,7 +29,7 @@ const ScrollAnimation = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Layer 1 - Outermost */}
       <div 
-        className="absolute left-8 top-16 w-[600px] h-[600px] opacity-80"
+        className="absolute left-8 top-16 w-[350px] h-[350px] opacity-80"
         style={{
           transform: `translateY(${layer1Transform}px) rotateY(${layer1Rotate}deg)`,
         }}
@@ -39,7 +39,7 @@ const ScrollAnimation = () => {
       
       {/* Layer 2 */}
       <div 
-        className="absolute left-16 top-24 w-[600px] h-[600px] opacity-85"
+        className="absolute left-16 top-24 w-[350px] h-[350px] opacity-85"
         style={{
           transform: `translateY(${layer2Transform}px) rotateY(${layer2Rotate}deg)`,
         }}
@@ -49,7 +49,7 @@ const ScrollAnimation = () => {
       
       {/* Layer 3 - Central layers */}
       <div 
-        className="absolute left-24 top-32 w-[600px] h-[600px] opacity-90"
+        className="absolute left-24 top-32 w-[350px] h-[350px] opacity-90"
         style={{
           transform: `translateY(${layer3Transform}px) rotateY(${layer3Rotate}deg)`,
         }}
@@ -59,7 +59,7 @@ const ScrollAnimation = () => {
       
       {/* Layer 4 */}
       <div 
-        className="absolute left-32 top-40 w-[600px] h-[600px] opacity-85"
+        className="absolute left-32 top-40 w-[350px] h-[350px] opacity-85"
         style={{
           transform: `translateY(${layer4Transform}px) rotateY(${layer4Rotate}deg)`,
         }}
@@ -69,7 +69,7 @@ const ScrollAnimation = () => {
       
       {/* Layer 5 - Innermost */}
       <div 
-        className="absolute left-40 top-48 w-[600px] h-[600px] opacity-80"
+        className="absolute left-40 top-48 w-[350px] h-[350px] opacity-80"
         style={{
           transform: `translateY(${layer5Transform}px) rotateY(${layer5Rotate}deg)`,
         }}
