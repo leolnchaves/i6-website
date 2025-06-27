@@ -37,10 +37,10 @@ export const useCMSContent = () => {
       }
       
       console.log('CMS content fetched:', data?.length || 0, 'items');
+      console.log('First few items:', data?.slice(0, 3));
       setContent(data || []);
     } catch (error) {
       console.error('Error fetching CMS content:', error);
-      // Fallback to empty array instead of showing error toast
       setContent([]);
     } finally {
       setLoading(false);
@@ -48,11 +48,15 @@ export const useCMSContent = () => {
   };
 
   const getContent = (key: string): string => {
+    console.log(`Looking for content with key: "${key}"`);
+    console.log('Available content keys:', content.map(c => c.key));
+    
     const item = content.find(c => c.key === key);
     if (!item) {
       console.log(`Content not found for key: ${key}`);
-      return key; // Return the key as fallback
+      return ''; // Return empty string instead of the key
     }
+    
     const result = language === 'pt' ? item.content_pt : item.content_en;
     console.log(`Content for key "${key}":`, result);
     return result;

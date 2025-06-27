@@ -98,23 +98,30 @@ export const initializeCMS = async () => {
     console.log('Initializing CMS with default content...');
     
     // Check if content already exists
-    const { data: existingContent } = await supabase
+    const { data: existingContent, error: fetchError } = await supabase
       .from('cms_content')
       .select('key')
       .limit(1);
     
-    if (existingContent && existingContent.length > 0) {
-      console.log('CMS already initialized');
+    if (fetchError) {
+      console.error('Error checking existing content:', fetchError);
       return;
     }
     
+    if (existingContent && existingContent.length > 0) {
+      console.log('CMS already initialized with', existingContent.length, 'items');
+      return;
+    }
+    
+    console.log('No existing content found, inserting default content...');
+    
     // Insert default content
-    const { error } = await supabase
+    const { error: insertError } = await supabase
       .from('cms_content')
       .insert(defaultContent);
     
-    if (error) {
-      console.error('Error initializing CMS:', error);
+    if (insertError) {
+      console.error('Error initializing CMS:', insertError);
       return;
     }
     

@@ -20,16 +20,19 @@ const CMSText: React.FC<CMSTextProps> = ({
   if (loading) {
     return (
       <Component className={className}>
-        {fallback || contentKey}
+        {fallback || 'Loading...'}
       </Component>
     );
   }
   
-  const content = getContent(contentKey) || fallback || contentKey;
+  const content = getContent(contentKey);
+  
+  // If no content found, use fallback instead of the contentKey
+  const displayContent = content && content !== contentKey ? content : fallback;
 
   return (
     <Component className={className}>
-      {content}
+      {displayContent || contentKey}
     </Component>
   );
 };
