@@ -1,5 +1,4 @@
 
-
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const ScrollAnimation = () => {
@@ -21,7 +20,7 @@ const ScrollAnimation = () => {
           transform: `translateY(-50%) translateY(${layer1Transform}px) rotateY(${scrollY * 0.1}deg)`,
         }}
       >
-        <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-white/30 to-gray-200/30 rounded-[40%] blur-sm"></div>
+        <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-orange-400/10 to-orange-500/15 rounded-[40%] blur-sm"></div>
       </div>
       
       {/* Layer 2 */}
@@ -31,7 +30,7 @@ const ScrollAnimation = () => {
           transform: `translateY(-50%) translateY(${layer2Transform}px) rotateY(${scrollY * 0.15}deg)`,
         }}
       >
-        <div className="w-full h-full animate-wave-fast bg-gradient-to-br from-white/35 to-gray-300/35 rounded-[35%]"></div>
+        <div className="w-full h-full animate-wave-fast bg-gradient-to-br from-orange-500/12 to-orange-600/15 rounded-[35%]"></div>
       </div>
       
       {/* Layer 3 - Central layers */}
@@ -41,7 +40,7 @@ const ScrollAnimation = () => {
           transform: `translateX(-50%) translateY(-50%) translateY(${layer3Transform}px) rotateY(${scrollY * 0.2}deg)`,
         }}
       >
-        <div className="w-full h-full animate-float-curve bg-gradient-to-br from-white/40 to-gray-400/40 rounded-[30%]"></div>
+        <div className="w-full h-full animate-float-curve bg-gradient-to-br from-orange-600/15 to-orange-700/15 rounded-[30%]"></div>
       </div>
       
       {/* Layer 4 */}
@@ -51,7 +50,7 @@ const ScrollAnimation = () => {
           transform: `translateY(-50%) translateY(${layer4Transform}px) rotateY(${scrollY * 0.25}deg)`,
         }}
       >
-        <div className="w-full h-full animate-slide-curve bg-gradient-to-br from-white/35 to-gray-300/35 rounded-[35%]"></div>
+        <div className="w-full h-full animate-slide-curve bg-gradient-to-br from-orange-500/12 to-orange-600/15 rounded-[35%]"></div>
       </div>
       
       {/* Layer 5 - Outermost right */}
@@ -61,7 +60,7 @@ const ScrollAnimation = () => {
           transform: `translateY(-50%) translateY(${layer5Transform}px) rotateY(${scrollY * 0.3}deg)`,
         }}
       >
-        <div className="w-full h-full animate-drift-curve bg-gradient-to-br from-white/30 to-gray-200/30 rounded-[40%] blur-sm"></div>
+        <div className="w-full h-full animate-drift-curve bg-gradient-to-br from-orange-400/10 to-orange-500/15 rounded-[40%] blur-sm"></div>
       </div>
       
       {/* Central glowing core - Increased opacity */}
@@ -71,7 +70,7 @@ const ScrollAnimation = () => {
           transform: `translateX(-50%) translateY(-50%) translateY(${scrollY * 0.05}px) scale(${1 + scrollY * 0.0005})`,
         }}
       >
-        <div className="w-full h-full bg-gradient-to-br from-white/50 to-gray-300/50 rounded-full blur-md animate-pulse"></div>
+        <div className="w-full h-full bg-gradient-to-br from-orange-300/12 to-orange-400/15 rounded-full blur-md animate-pulse"></div>
       </div>
       
       {/* Additional floating particles */}
@@ -79,7 +78,7 @@ const ScrollAnimation = () => {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-4 h-4 bg-white/30 rounded-full animate-float"
+            className="absolute w-4 h-4 bg-orange-400/12 rounded-full animate-float"
             style={{
               left: `${15 + (i * 7)}%`,
               top: `${20 + (i * 5)}%`,
@@ -94,4 +93,3 @@ const ScrollAnimation = () => {
 };
 
 export default ScrollAnimation;
-
