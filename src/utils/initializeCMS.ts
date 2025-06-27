@@ -3,26 +3,26 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const initializeCMS = async () => {
   try {
-    console.log('Checking CMS initialization...');
+    console.log('Verificando inicialização do CMS...');
     
-    // Check if content already exists
+    // Tentar buscar qualquer conteúdo da tabela
     const { data: existingContent, error: fetchError } = await supabase
       .from('cms_content')
       .select('key')
       .limit(1);
     
     if (fetchError) {
-      console.error('Error checking existing content:', fetchError);
+      console.error('Erro ao verificar conteúdo existente:', fetchError);
       return;
     }
     
     if (existingContent && existingContent.length > 0) {
-      console.log('CMS already initialized with content');
+      console.log('CMS já inicializado com conteúdo');
       return;
     }
     
-    console.log('CMS initialization completed - content should be available from database');
+    console.log('CMS verificado - dados devem estar disponíveis na base de dados');
   } catch (error) {
-    console.error('Error initializing CMS:', error);
+    console.error('Erro ao inicializar CMS:', error);
   }
 };

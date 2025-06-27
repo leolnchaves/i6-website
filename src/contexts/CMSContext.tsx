@@ -22,17 +22,31 @@ export const CMSProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const initialize = async () => {
       if (!initialized) {
-        console.log('Initializing CMS...');
-        await initializeCMS();
+        console.log('Inicializando CMS...');
+        try {
+          await initializeCMS();
+          console.log('CMS inicializado com sucesso');
+        } catch (error) {
+          console.error('Erro ao inicializar CMS:', error);
+        }
         setInitialized(true);
-        // Refetch content after initialization
-        await cmsData.refetch();
-        console.log('CMS initialization completed');
+        
+        // Forçar atualização dos dados após inicialização
+        setTimeout(() => {
+          console.log('Recarregando dados do CMS após inicialização...');
+          cmsData.refetch();
+        }, 1000);
       }
     };
     
     initialize();
   }, [initialized, cmsData.refetch]);
+
+  console.log('CMSProvider estado:', { 
+    initialized, 
+    loading: cmsData.loading, 
+    contentCount: cmsData.content.length 
+  });
 
   return (
     <CMSContext.Provider value={cmsData}>
@@ -44,7 +58,7 @@ export const CMSProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 export const useCMS = () => {
   const context = useContext(CMSContext);
   if (context === undefined) {
-    throw new Error('useCMS must be used within a CMSProvider');
+    throw new Error('useCMS deve ser usado dentro de um CMSProvider');
   }
   return context;
 };

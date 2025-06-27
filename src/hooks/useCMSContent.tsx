@@ -22,41 +22,66 @@ export const useCMSContent = () => {
 
   const fetchContent = async () => {
     try {
-      console.log('Fetching CMS content from database...');
+      console.log('Iniciando busca do conteúdo CMS...');
       setLoading(true);
       
+      // Usar uma query mais simples para evitar problemas de esquema
       const { data, error } = await supabase
         .from('cms_content')
-        .select('*')
-        .order('category', { ascending: true })
-        .order('key', { ascending: true });
+        .select('*');
 
       if (error) {
-        console.error('Supabase error:', error);
+        console.error('Erro do Supabase:', error);
         throw error;
       }
       
-      console.log('CMS content fetched successfully:', data?.length || 0, 'items');
+      console.log('Conteúdo CMS buscado com sucesso:', data?.length || 0, 'itens');
       if (data && data.length > 0) {
-        console.log('Sample content keys:', data.slice(0, 5).map(item => item.key));
+        console.log('Chaves de conteúdo encontradas:', data.map(item => item.key));
       }
       setContent(data || []);
     } catch (error) {
-      console.error('Error fetching CMS content:', error);
-      setContent([]);
+      console.error('Erro ao buscar conteúdo CMS:', error);
+      
+      // Fallback: tentar buscar novamente com uma abordagem diferente
+      try {
+        const response = await fetch(`https://zxuzevjswqjwlmkfzefq.supabase.co/rest/v1/cms_content`, {
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dXpldmpzd3Fqd2xta2Z6ZWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwNTc5NDMsImV4cCI6MjA2NjYzMzk0M30.UYFQREdcLKhfEvIYtxFb0-oPKOhh775s13PgE6k-tLA',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dXpldmpzd3Fqd2xta2Z6ZWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwNTc5NDMsImV4cCI6MjA2NjYzMzk0M30.UYFQREdcLKhfEvIYtxFb0-oPKOhh775s13PgE6k-tLA',
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const fallbackData = await response.json();
+          console.log('Conteúdo obtido via fallback:', fallbackData);
+          setContent(fallbackData || []);
+        } else {
+          console.error('Erro na requisição fallback:', response.status, response.statusText);
+          setContent([]);
+        }
+      } catch (fallbackError) {
+        console.error('Erro no fallback:', fallbackError);
+        setContent([]);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   const getContent = (key: string): string => {
+    console.log(`Buscando conteúdo para chave: ${key}`);
+    console.log('Conteúdo disponível:', content.map(c => c.key));
+    
     const item = content.find(c => c.key === key);
     if (!item) {
-      console.log(`Content not found for key: ${key}`);
+      console.log(`Conteúdo não encontrado para chave: ${key}`);
       return '';
     }
     
     const result = language === 'pt' ? item.content_pt : item.content_en;
+    console.log(`Conteúdo encontrado para ${key}:`, result);
     return result;
   };
 
@@ -75,14 +100,14 @@ export const useCMSContent = () => {
       
       await fetchContent();
       toast({
-        title: "Success",
-        description: "Content updated successfully",
+        title: "Sucesso",
+        description: "Conteúdo atualizado com sucesso",
       });
     } catch (error) {
-      console.error('Error updating content:', error);
+      console.error('Erro ao atualizar conteúdo:', error);
       toast({
-        title: "Error",
-        description: "Failed to update content",
+        title: "Erro",
+        description: "Falhou ao atualizar conteúdo",
         variant: "destructive",
       });
     }
@@ -104,14 +129,14 @@ export const useCMSContent = () => {
       
       await fetchContent();
       toast({
-        title: "Success",
-        description: "Content created successfully",
+        title: "Sucesso",
+        description: "Conteúdo criado com sucesso",
       });
     } catch (error) {
-      console.error('Error creating content:', error);
+      console.error('Erro ao criar conteúdo:', error);
       toast({
-        title: "Error",
-        description: "Failed to create content",
+        title: "Erro",
+        description: "Falhou ao criar conteúdo",
         variant: "destructive",
       });
     }
@@ -128,14 +153,14 @@ export const useCMSContent = () => {
       
       await fetchContent();
       toast({
-        title: "Success",
-        description: "Content deleted successfully",
+        title: "Sucesso",
+        description: "Conteúdo deletado com sucesso",
       });
     } catch (error) {
-      console.error('Error deleting content:', error);
+      console.error('Erro ao deletar conteúdo:', error);
       toast({
-        title: "Error",
-        description: "Failed to delete content",
+        title: "Erro",
+        description: "Falhou ao deletar conteúdo",
         variant: "destructive",
       });
     }
