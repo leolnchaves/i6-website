@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
+import CMSText from '@/components/cms/CMSText';
 
 /**
  * Call-to-Action section component
@@ -30,12 +31,12 @@ const CTASection = () => {
           id="cta-heading"
           className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
         >
-          {t('cta.title')}
+          <CMSText contentKey="cta.title" fallback={t('cta.title')} />
         </h2>
         
         {/* CTA Description */}
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          {t('cta.description')}
+          <CMSText contentKey="cta.description" fallback={t('cta.description')} />
         </p>
         
         {/* CTA Button */}
@@ -45,7 +46,7 @@ const CTASection = () => {
           className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105"
           aria-describedby="cta-description"
         >
-          {t('cta.button')}
+          <CMSText contentKey="cta.button" fallback={t('cta.button')} />
           <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
         </Button>
         

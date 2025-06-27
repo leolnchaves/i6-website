@@ -1,6 +1,7 @@
 
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useEffect } from 'react';
 import { useCMSContent } from '@/hooks/useCMSContent';
+import { initializeCMS } from '@/utils/initializeCMS';
 
 interface CMSContextType {
   getContent: (key: string) => string;
@@ -16,6 +17,11 @@ const CMSContext = createContext<CMSContextType | undefined>(undefined);
 
 export const CMSProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const cmsData = useCMSContent();
+
+  useEffect(() => {
+    // Initialize CMS with default content on first load
+    initializeCMS();
+  }, []);
 
   return (
     <CMSContext.Provider value={cmsData}>

@@ -15,8 +15,17 @@ const CMSText: React.FC<CMSTextProps> = ({
   className = '', 
   as: Component = 'span' 
 }) => {
-  const { getContent } = useCMS();
-  const content = getContent(contentKey) || fallback;
+  const { getContent, loading } = useCMS();
+  
+  if (loading) {
+    return (
+      <Component className={className}>
+        {fallback || contentKey}
+      </Component>
+    );
+  }
+  
+  const content = getContent(contentKey) || fallback || contentKey;
 
   return (
     <Component className={className}>
