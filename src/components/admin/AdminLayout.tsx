@@ -13,9 +13,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const location = useLocation();
 
   const navigationItems = [
-    { path: '/admin-i6', label: 'Dashboard', icon: Settings },
-    { path: '/admin-i6/content', label: 'Content', icon: FileText },
-    { path: '/admin-i6/media', label: 'Media', icon: Image },
+    { path: '/admin', label: 'Dashboard', icon: Settings },
+    { path: '/admin/content', label: 'Content', icon: FileText },
+    { path: '/admin/media', label: 'Media', icon: Image },
   ];
 
   return (
