@@ -17,10 +17,7 @@ const CMSText: React.FC<CMSTextProps> = ({
 }) => {
   const { getContent, loading } = useCMS();
   
-  console.log(`CMSText renderizando para chave: ${contentKey}`);
-  
   if (loading) {
-    console.log(`CMSText ainda carregando para: ${contentKey}`);
     return (
       <Component className={className}>
         {fallback || 'Carregando...'}
@@ -29,12 +26,9 @@ const CMSText: React.FC<CMSTextProps> = ({
   }
   
   const content = getContent(contentKey);
-  console.log(`CMSText conteúdo obtido para ${contentKey}:`, content);
   
-  // Sempre mostrar o fallback se o conteúdo estiver vazio
-  const displayContent = content && content.trim() !== '' ? content : (fallback || contentKey);
-  
-  console.log(`CMSText exibindo para ${contentKey}:`, displayContent);
+  // Se não há conteúdo do CMS, usar o fallback
+  const displayContent = content || fallback || contentKey;
 
   return (
     <Component className={className}>
