@@ -56,19 +56,26 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <Layout>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/solutions" element={<Solutions />} />
-                  <Route path="/success-stories" element={<SuccessStories />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/ethics-policy" element={<EthicsPolicy />} />
-                  <Route path="/cms-admin-i6" element={<CMSAdmin />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Layout>
+              <Routes>
+                {/* CMS Admin routes - without Layout wrapper */}
+                <Route path="/cms-admin-i6/*" element={<CMSAdmin />} />
+                
+                {/* Regular site routes - with Layout wrapper */}
+                <Route path="/*" element={
+                  <Layout>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/solutions" element={<Solutions />} />
+                      <Route path="/success-stories" element={<SuccessStories />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/ethics-policy" element={<EthicsPolicy />} />
+                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Layout>
+                } />
+              </Routes>
             </BrowserRouter>
             
             {/* Debug panel for development */}
