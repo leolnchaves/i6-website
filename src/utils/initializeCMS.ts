@@ -3,26 +3,23 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const initializeCMS = async () => {
   try {
-    console.log('Verificando inicialização do CMS...');
+    console.log('🔧 Verificando inicialização do CMS...');
     
-    // Tentar buscar conteúdo da tabela para verificar se está funcionando
-    const { data: existingContent, error: fetchError } = await supabase
+    // Testar a conexão com o Supabase
+    const { data, error } = await supabase
       .from('cms_content')
-      .select('key, content_en, content_pt')
-      .limit(5);
+      .select('count(*)', { count: 'exact' })
+      .limit(1);
     
-    if (fetchError) {
-      console.error('Erro ao verificar conteúdo existente:', fetchError);
-      return;
+    if (error) {
+      console.error('❌ Erro na conexão com Supabase:', error);
+      return false;
     }
     
-    if (existingContent && existingContent.length > 0) {
-      console.log('CMS já inicializado com conteúdo:', existingContent.map(c => c.key));
-      return;
-    }
-    
-    console.log('CMS inicializado e dados verificados');
+    console.log('✅ CMS conectado com sucesso. Total de registros:', data);
+    return true;
   } catch (error) {
-    console.error('Erro ao inicializar CMS:', error);
+    console.error('❌ Erro ao inicializar CMS:', error);
+    return false;
   }
 };
