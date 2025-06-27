@@ -29,52 +29,52 @@ const ScrollAnimation = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Layer 1 - Outermost */}
       <div 
-        className="absolute left-1/4 top-1/2 w-[500px] h-[500px] opacity-60"
+        className="absolute left-1/4 top-1/2 w-[500px] h-[500px] opacity-80"
         style={{
           transform: `translateY(-50%) translateY(${layer1Transform}px) rotateY(${layer1Rotate}deg)`,
         }}
       >
-        <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-[40%] blur-sm"></div>
+        <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-orange-400/25 to-red-500/25 rounded-[40%]"></div>
       </div>
       
       {/* Layer 2 */}
       <div 
-        className="absolute left-1/3 top-1/2 w-[420px] h-[420px] opacity-70"
+        className="absolute left-1/3 top-1/2 w-[420px] h-[420px] opacity-85"
         style={{
           transform: `translateY(-50%) translateY(${layer2Transform}px) rotateY(${layer2Rotate}deg)`,
         }}
       >
-        <div className="w-full h-full animate-wave-fast bg-gradient-to-br from-orange-500/12 to-red-600/12 rounded-[35%]"></div>
+        <div className="w-full h-full animate-wave-fast bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-[35%]"></div>
       </div>
       
       {/* Layer 3 - Central layers */}
       <div 
-        className="absolute left-1/2 top-1/2 w-[350px] h-[350px] opacity-80"
+        className="absolute left-1/2 top-1/2 w-[350px] h-[350px] opacity-90"
         style={{
           transform: `translateX(-50%) translateY(-50%) translateY(${layer3Transform}px) rotateY(${layer3Rotate}deg)`,
         }}
       >
-        <div className="w-full h-full animate-float-curve bg-gradient-to-br from-orange-600/10 to-red-700/10 rounded-[30%]"></div>
+        <div className="w-full h-full animate-float-curve bg-gradient-to-br from-orange-600/18 to-red-700/18 rounded-[30%]"></div>
       </div>
       
       {/* Layer 4 */}
       <div 
-        className="absolute right-1/3 top-1/2 w-[420px] h-[420px] opacity-70"
+        className="absolute right-1/3 top-1/2 w-[420px] h-[420px] opacity-85"
         style={{
           transform: `translateY(-50%) translateY(${layer4Transform}px) rotateY(${layer4Rotate}deg)`,
         }}
       >
-        <div className="w-full h-full animate-slide-curve bg-gradient-to-br from-orange-500/12 to-red-600/12 rounded-[35%]"></div>
+        <div className="w-full h-full animate-slide-curve bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-[35%]"></div>
       </div>
       
       {/* Layer 5 - Outermost right */}
       <div 
-        className="absolute right-1/4 top-1/2 w-[500px] h-[500px] opacity-60"
+        className="absolute right-1/4 top-1/2 w-[500px] h-[500px] opacity-80"
         style={{
           transform: `translateY(-50%) translateY(${layer5Transform}px) rotateY(${layer5Rotate}deg)`,
         }}
       >
-        <div className="w-full h-full animate-drift-curve bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-[40%] blur-sm"></div>
+        <div className="w-full h-full animate-drift-curve bg-gradient-to-br from-orange-400/25 to-red-500/25 rounded-[40%]"></div>
       </div>
       
       {/* Additional floating particles */}
@@ -82,7 +82,7 @@ const ScrollAnimation = () => {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-orange-400/40 rounded-full animate-float"
+            className="absolute w-2 h-2 bg-orange-400/60 rounded-full animate-float"
             style={{
               left: `${15 + (i * 7)}%`,
               top: `${20 + (i * 5)}%`,
