@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -25,23 +26,21 @@ const CMSLogin = () => {
 
     console.log('=== INÍCIO DO LOGIN ===');
     console.log('Email:', email);
+    console.log('URL do Supabase:', 'https://lwhxacuxkwbdptyjwgds.supabase.co');
 
     try {
-      // Teste de conectividade com Supabase
-      console.log('Testando conectividade com Supabase...');
+      // Primeiro, vamos testar a conectividade básica com uma consulta simples
+      console.log('Testando conectividade básica...');
       
-      const { data: testData, error: testError } = await supabase
+      const { data: healthCheck, error: healthError } = await supabase
         .from('cms_users')
-        .select('count')
-        .limit(1);
+        .select('count', { count: 'exact', head: true });
 
-      console.log('Teste de conectividade - dados:', testData);
-      console.log('Teste de conectividade - erro:', testError);
+      console.log('Health check resultado:', { data: healthCheck, error: healthError });
 
-      if (testError) {
-        console.error('Erro de conectividade:', testError);
-        setError(`Erro de conectividade: ${testError.message}`);
-        return;
+      if (healthError) {
+        console.error('Erro na verificação de conectividade:', healthError);
+        throw new Error(`Falha na conectividade: ${healthError.message}`);
       }
 
       // Buscar usuário por email
@@ -53,24 +52,18 @@ const CMSLogin = () => {
         .eq('email', email.toLowerCase().trim())
         .eq('is_active', true);
 
-      console.log('Resultado da busca:');
-      console.log('- Usuários encontrados:', users);
+      console.log('Resultado da busca por usuário:');
+      console.log('- Dados:', users);
       console.log('- Erro:', fetchError);
-      console.log('- Quantidade de usuários:', users?.length || 0);
+      console.log('- Quantidade:', users?.length || 0);
 
       if (fetchError) {
-        console.error('Erro detalhado na busca:', {
-          message: fetchError.message,
-          details: fetchError.details,
-          hint: fetchError.hint,
-          code: fetchError.code
-        });
-        setError(`Erro na busca: ${fetchError.message}`);
-        return;
+        console.error('Erro detalhado na busca:', fetchError);
+        throw new Error(`Erro na consulta: ${fetchError.message}`);
       }
 
       if (!users || users.length === 0) {
-        console.log('Nenhum usuário encontrado com o email fornecido');
+        console.log('Nenhum usuário encontrado');
         setError('Email ou senha inválidos');
         return;
       }
@@ -125,10 +118,14 @@ const CMSLogin = () => {
       console.error('=== ERRO CAPTURADO ===');
       console.error('Tipo do erro:', typeof err);
       console.error('Erro completo:', err);
-      console.error('Stack trace:', err instanceof Error ? err.stack : 'N/A');
       
-      const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
-      setError(`Erro interno: ${errorMessage}`);
+      if (err instanceof TypeError && err.message.includes('Failed to fetch')) {
+        setError('Erro de conectividade. Verifique sua conexão com a internet e tente novamente.');
+      } else if (err instanceof Error) {
+        setError(`Erro: ${err.message}`);
+      } else {
+        setError('Erro desconhecido. Tente novamente.');
+      }
     } finally {
       setIsLoading(false);
       console.log('=== FIM DO LOGIN ===');
