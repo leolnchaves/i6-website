@@ -1,7 +1,9 @@
 
+import React from 'react';
+
 interface StatCardProps {
   value: string;
-  label: string;
+  label: string | React.ReactNode;
   delay?: string;
 }
 
