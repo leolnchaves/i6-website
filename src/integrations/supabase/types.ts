@@ -9,127 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      cms_page_content: {
-        Row: {
-          content: string | null
-          created_at: string
-          field_key: string
-          id: string
-          language: Database["public"]["Enums"]["supported_language"]
-          page_id: string
-          section: string
-          updated_at: string
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string
-          field_key: string
-          id?: string
-          language: Database["public"]["Enums"]["supported_language"]
-          page_id: string
-          section: string
-          updated_at?: string
-        }
-        Update: {
-          content?: string | null
-          created_at?: string
-          field_key?: string
-          id?: string
-          language?: Database["public"]["Enums"]["supported_language"]
-          page_id?: string
-          section?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "cms_page_content_page_id_fkey"
-            columns: ["page_id"]
-            isOneToOne: false
-            referencedRelation: "cms_pages"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      cms_pages: {
-        Row: {
-          created_at: string
-          description: string | null
-          id: string
-          is_active: boolean
-          name: string
-          slug: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean
-          name: string
-          slug: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean
-          name?: string
-          slug?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      cms_seo_meta: {
-        Row: {
-          canonical_url: string | null
-          created_at: string
-          id: string
-          language: Database["public"]["Enums"]["supported_language"]
-          meta_description: string | null
-          meta_title: string | null
-          page_id: string
-          robots_follow: boolean | null
-          robots_index: boolean | null
-          slug: string | null
-          updated_at: string
-        }
-        Insert: {
-          canonical_url?: string | null
-          created_at?: string
-          id?: string
-          language: Database["public"]["Enums"]["supported_language"]
-          meta_description?: string | null
-          meta_title?: string | null
-          page_id: string
-          robots_follow?: boolean | null
-          robots_index?: boolean | null
-          slug?: string | null
-          updated_at?: string
-        }
-        Update: {
-          canonical_url?: string | null
-          created_at?: string
-          id?: string
-          language?: Database["public"]["Enums"]["supported_language"]
-          meta_description?: string | null
-          meta_title?: string | null
-          page_id?: string
-          robots_follow?: boolean | null
-          robots_index?: boolean | null
-          slug?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "cms_seo_meta_page_id_fkey"
-            columns: ["page_id"]
-            isOneToOne: false
-            referencedRelation: "cms_pages"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       cms_users: {
         Row: {
           created_at: string
@@ -172,7 +51,6 @@ export type Database = {
     }
     Enums: {
       cms_user_role: "admin" | "editor" | "viewer"
-      supported_language: "en" | "pt"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -289,7 +167,6 @@ export const Constants = {
   public: {
     Enums: {
       cms_user_role: ["admin", "editor", "viewer"],
-      supported_language: ["en", "pt"],
     },
   },
 } as const
