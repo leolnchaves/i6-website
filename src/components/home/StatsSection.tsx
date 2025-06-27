@@ -3,7 +3,6 @@ import ClientCarousel from '@/components/ClientCarousel';
 import { useLanguage } from '@/contexts/LanguageContext';
 import StatCard from './stats/StatCard';
 import StatsBackground from './stats/StatsBackground';
-import CMSText from '@/components/cms/CMSText';
 
 const StatsSection = () => {
   const { t } = useLanguage();
@@ -16,21 +15,21 @@ const StatsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-8">
           <StatCard 
             value="97%" 
-            label={<CMSText contentKey="stats.topEngine" fallback={t('stats.topEngine')} />}
+            label={t('stats.topEngine')} 
           />
           <StatCard 
             value="0" 
-            label={<CMSText contentKey="stats.securityIssue" fallback={t('stats.securityIssue')} />}
+            label={t('stats.securityIssue')} 
             delay="0.2s"
           />
           <StatCard 
             value="< 1,5" 
-            label={<CMSText contentKey="stats.leadtime" fallback={t('stats.leadtime')} />}
+            label={t('stats.leadtime')} 
             delay="0.4s"
           />
           <StatCard 
             value="100%" 
-            label={<CMSText contentKey="stats.explainability" fallback={t('stats.explainability')} />}
+            label={t('stats.explainability')} 
             delay="0.6s"
           />
         </div>

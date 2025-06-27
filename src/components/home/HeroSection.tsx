@@ -9,7 +9,6 @@ import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
-import CMSText from '@/components/cms/CMSText';
 
 /**
  * Hero section component for the home page
@@ -66,22 +65,22 @@ const HeroSection = () => {
             <div className="animate-bounce-in">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 leading-tight">
                 <span className="block text-white font-light text-2xl sm:text-3xl md:text-4xl lg:text-7xl mb-4">
-                  <CMSText contentKey="hero.infinite" fallback={t('hero.infinite')} />
+                  {t('hero.infinite')}
                 </span>
                 <div className="relative inline-block w-full">
                   <span className="relative block text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl px-2 leading-tight">
-                    <CMSText contentKey="hero.possibilities" fallback={t('hero.possibilities')} />
+                    {t('hero.possibilities')}
                   </span>
                 </div>
                 <span className="block text-white text-xl sm:text-2xl md:text-3xl lg:text-5xl mt-6 font-light">
-                  <CMSText contentKey="hero.poweredByAI" fallback={t('hero.poweredByAI')} />
+                  {t('hero.poweredByAI')}
                 </span>
               </h1>
             </div>
             
             {/* Hero description */}
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-10 animate-slide-in-left font-medium px-4">
-              <CMSText contentKey="hero.description" fallback={t('hero.description')} />
+              {t('hero.description')}
             </p>
             
             {/* Call-to-action buttons */}
@@ -91,7 +90,7 @@ const HeroSection = () => {
                 className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold"
                 onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
               >
-                <CMSText contentKey="hero.startJourney" fallback={t('hero.startJourney')} />
+                {t('hero.startJourney')}
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
               <Button 
@@ -99,7 +98,7 @@ const HeroSection = () => {
                 className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full backdrop-blur-sm font-semibold"
                 onClick={handleOpenVideoModal}
               >
-                <CMSText contentKey="hero.watchDemo" fallback={t('hero.watchDemo')} />
+                {t('hero.watchDemo')}
               </Button>
             </div>
           </div>
