@@ -15,7 +15,7 @@ const SandboxEnvironment = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 backdrop-blur-sm"></div>
           <div className="relative z-10">
             <div className="text-center">
-              <h3 className="text-3xl font-bold mb-4">
+              <h3 className="text-3xl font-bold mb-4 whitespace-nowrap">
                 {t('solutions.sandbox.title')}
               </h3>
               <p className="text-orange-100 text-lg leading-relaxed">
