@@ -12,7 +12,7 @@ const SolutionsGrid = () => {
     let engine = 'i6 RecSys'; // Default engine
     
     // Assign engines based on solution type
-    if (solution.title.includes('Pricing') || solution.title.includes('Preço')) {
+    if (solution.title.includes('Pricing') || solution.title.includes('Preço') || solution.title.includes('Smart Price')) {
       engine = 'i6 ElasticPrice';
     } else if (solution.title.includes('Forecasting') || solution.title.includes('Previsão') || solution.title.includes('Demand')) {
       engine = 'i6 Previsio';
@@ -27,7 +27,7 @@ const SolutionsGrid = () => {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
           {solutionsWithEngines.map((solution, index) => (
             <SolutionCard
               key={index}

@@ -43,10 +43,10 @@ const SolutionCard = ({
         };
       case 'i6 ElasticPrice':
         return {
-          backgroundColor: 'rgba(249, 115, 22, 0.08)', // Orange with low opacity
-          borderColor: 'rgba(249, 115, 22, 0.2)',
-          iconBgColor: 'rgba(249, 115, 22, 0.15)',
-          buttonGradient: 'from-orange-500/80 to-orange-600/80'
+          backgroundColor: 'rgba(34, 197, 94, 0.08)', // Green with low opacity
+          borderColor: 'rgba(34, 197, 94, 0.2)',
+          iconBgColor: 'rgba(34, 197, 94, 0.15)',
+          buttonGradient: 'from-green-500/80 to-green-600/80'
         };
       case 'i6 Previsio':
         return {
