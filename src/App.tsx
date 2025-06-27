@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { CMSProvider } from "./contexts/CMSContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Solutions from "./pages/Solutions";
@@ -13,6 +14,9 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminContent from "./pages/AdminContent";
+import AdminMedia from "./pages/AdminMedia";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
@@ -51,27 +55,39 @@ const App = () => {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Layout>
+          <CMSProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/solutions" element={<Solutions />} />
-                  <Route path="/success-stories" element={<SuccessStories />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/ethics-policy" element={<EthicsPolicy />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
+                  {/* Admin Routes - Hidden */}
+                  <Route path="/admin-i6" element={<AdminDashboard />} />
+                  <Route path="/admin-i6/content" element={<AdminContent />} />
+                  <Route path="/admin-i6/media" element={<AdminMedia />} />
+                  
+                  {/* Public Routes */}
+                  <Route path="/*" element={
+                    <Layout>
+                      <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/solutions" element={<Solutions />} />
+                        <Route path="/success-stories" element={<SuccessStories />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route path="/ethics-policy" element={<EthicsPolicy />} />
+                        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </Layout>
+                  } />
                 </Routes>
-              </Layout>
-            </BrowserRouter>
-            
-            {/* Debug panel for development */}
-            <DebugPanel />
-          </TooltipProvider>
+              </BrowserRouter>
+              
+              {/* Debug panel for development */}
+              <DebugPanel />
+            </TooltipProvider>
+          </CMSProvider>
         </LanguageProvider>
       </QueryClientProvider>
     </ErrorBoundary>

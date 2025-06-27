@@ -9,7 +9,72 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      cms_content: {
+        Row: {
+          category: string | null
+          content_en: string
+          content_pt: string
+          content_type: string
+          created_at: string
+          id: string
+          key: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          content_en: string
+          content_pt: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          key: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          content_en?: string
+          content_pt?: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_media: {
+        Row: {
+          alt_text_en: string | null
+          alt_text_pt: string | null
+          created_at: string
+          file_size: number | null
+          file_type: string | null
+          id: string
+          name: string
+          url: string
+        }
+        Insert: {
+          alt_text_en?: string | null
+          alt_text_pt?: string | null
+          created_at?: string
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          name: string
+          url: string
+        }
+        Update: {
+          alt_text_en?: string | null
+          alt_text_pt?: string | null
+          created_at?: string
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          name?: string
+          url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
