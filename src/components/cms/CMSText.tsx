@@ -20,14 +20,14 @@ const CMSText: React.FC<CMSTextProps> = ({
   if (loading) {
     return (
       <Component className={className}>
-        {fallback || 'Carregando...'}
+        {fallback || contentKey}
       </Component>
     );
   }
   
   const content = getContent(contentKey);
   
-  // Se não há conteúdo do CMS, usar o fallback
+  // Se há conteúdo do CMS, usar ele. Senão, usar fallback ou a própria chave
   const displayContent = content || fallback || contentKey;
 
   return (

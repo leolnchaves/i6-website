@@ -25,7 +25,7 @@ export const useCMSContent = () => {
       console.log('🚀 Buscando conteúdo CMS...');
       setLoading(true);
       
-      // Fazer requisição direta para o schema público sem especificar schema
+      // Fazer requisição direta usando o schema público (sem especificar schema)
       const { data, error } = await supabase
         .from('cms_content')
         .select('*')
@@ -34,16 +34,10 @@ export const useCMSContent = () => {
 
       if (error) {
         console.error('❌ Erro do Supabase:', error);
-        console.error('❌ Detalhes do erro:', {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code
-        });
         
-        // Tentar inserir dados de exemplo se a tabela estiver vazia
-        if (error.code === 'PGRST116' || data?.length === 0) {
-          console.log('📝 Tentando inserir dados de exemplo...');
+        // Se houver erro de tabela não encontrada, inserir dados de exemplo
+        if (error.code === 'PGRST116' || error.message.includes('does not exist')) {
+          console.log('📝 Tabela não encontrada, inserindo dados de exemplo...');
           await insertSampleData();
           return;
         }
@@ -52,43 +46,65 @@ export const useCMSContent = () => {
       }
       
       console.log('✅ Conteúdo CMS carregado:', data?.length || 0, 'itens');
+      
+      // Se não há dados, inserir dados de exemplo
+      if (!data || data.length === 0) {
+        console.log('📝 Nenhum dado encontrado, inserindo dados de exemplo...');
+        await insertSampleData();
+        return;
+      }
+      
       console.log('📋 Chaves disponíveis:', data?.map(item => item.key));
       setContent(data || []);
     } catch (error) {
       console.error('❌ Erro ao buscar conteúdo CMS:', error);
-      setContent([]);
+      
+      // Em caso de erro, usar dados estáticos como fallback
+      console.log('🔄 Usando dados estáticos como fallback...');
+      setContent(getStaticContent());
+      
       toast({
-        title: "Erro",
-        description: "Falhou ao carregar conteúdo do CMS",
-        variant: "destructive",
+        title: "Aviso",
+        description: "Usando conteúdo estático - dados dinâmicos não disponíveis",
+        variant: "default",
       });
     } finally {
       setLoading(false);
     }
   };
 
+  const getStaticContent = (): CMSContent[] => {
+    return [
+      // Hero section content
+      { id: '1', key: 'hero.infinite', content_en: 'Infinite', content_pt: 'Infinitas', content_type: 'text', category: 'hero', created_at: '', updated_at: '' },
+      { id: '2', key: 'hero.possibilities', content_en: 'Possibilities', content_pt: 'Possibilidades', content_type: 'text', category: 'hero', created_at: '', updated_at: '' },
+      { id: '3', key: 'hero.poweredByAI', content_en: 'Powered by AI', content_pt: 'Alimentado por IA', content_type: 'text', category: 'hero', created_at: '', updated_at: '' },
+      { id: '4', key: 'hero.description', content_en: 'Transform your business with our cutting-edge AI solutions. Unlock unprecedented efficiency and innovation.', content_pt: 'Transforme seu negócio com nossas soluções de IA de ponta. Desbloqueie eficiência e inovação sem precedentes.', content_type: 'text', category: 'hero', created_at: '', updated_at: '' },
+      { id: '5', key: 'hero.startJourney', content_en: 'Start Your Journey', content_pt: 'Comece Sua Jornada', content_type: 'text', category: 'hero', created_at: '', updated_at: '' },
+      { id: '6', key: 'hero.watchDemo', content_en: 'Watch Demo', content_pt: 'Assistir Demo', content_type: 'text', category: 'hero', created_at: '', updated_at: '' },
+      
+      // Stats section content
+      { id: '7', key: 'stats.topEngine', content_en: 'Top 1% Search Engine', content_pt: 'Top 1% Motor de Busca', content_type: 'text', category: 'stats', created_at: '', updated_at: '' },
+      { id: '8', key: 'stats.securityIssue', content_en: 'Security Issues', content_pt: 'Problemas de Segurança', content_type: 'text', category: 'stats', created_at: '', updated_at: '' },
+      { id: '9', key: 'stats.leadtime', content_en: 'sec Lead Time', content_pt: 'seg Tempo de Resposta', content_type: 'text', category: 'stats', created_at: '', updated_at: '' },
+      { id: '10', key: 'stats.explainability', content_en: 'Explainability', content_pt: 'Explicabilidade', content_type: 'text', category: 'stats', created_at: '', updated_at: '' },
+      
+      // CTA section content
+      { id: '11', key: 'cta.title', content_en: 'Ready to Transform Your Business?', content_pt: 'Pronto para Transformar seu Negócio?', content_type: 'text', category: 'cta', created_at: '', updated_at: '' },
+      { id: '12', key: 'cta.description', content_en: 'Join thousands of companies already using our AI solutions to drive growth and innovation.', content_pt: 'Junte-se a milhares de empresas que já usam nossas soluções de IA para impulsionar crescimento e inovação.', content_type: 'text', category: 'cta', created_at: '', updated_at: '' },
+      { id: '13', key: 'cta.button', content_en: 'Get Started Today', content_pt: 'Comece Hoje', content_type: 'text', category: 'cta', created_at: '', updated_at: '' }
+    ];
+  };
+
   const insertSampleData = async () => {
     try {
-      const sampleData = [
-        // Hero section content
-        { key: 'hero.infinite', content_en: 'Infinite', content_pt: 'Infinitas', content_type: 'text', category: 'hero' },
-        { key: 'hero.possibilities', content_en: 'Possibilities', content_pt: 'Possibilidades', content_type: 'text', category: 'hero' },
-        { key: 'hero.poweredByAI', content_en: 'Powered by AI', content_pt: 'Alimentado por IA', content_type: 'text', category: 'hero' },
-        { key: 'hero.description', content_en: 'Transform your business with our cutting-edge AI solutions. Unlock unprecedented efficiency and innovation.', content_pt: 'Transforme seu negócio com nossas soluções de IA de ponta. Desbloqueie eficiência e inovação sem precedentes.', content_type: 'text', category: 'hero' },
-        { key: 'hero.startJourney', content_en: 'Start Your Journey', content_pt: 'Comece Sua Jornada', content_type: 'text', category: 'hero' },
-        { key: 'hero.watchDemo', content_en: 'Watch Demo', content_pt: 'Assistir Demo', content_type: 'text', category: 'hero' },
-        
-        // Stats section content
-        { key: 'stats.topEngine', content_en: 'Top 1% Search Engine', content_pt: 'Top 1% Motor de Busca', content_type: 'text', category: 'stats' },
-        { key: 'stats.securityIssue', content_en: 'Security Issues', content_pt: 'Problemas de Segurança', content_type: 'text', category: 'stats' },
-        { key: 'stats.leadtime', content_en: 'sec Lead Time', content_pt: 'seg Tempo de Resposta', content_type: 'text', category: 'stats' },
-        { key: 'stats.explainability', content_en: 'Explainability', content_pt: 'Explicabilidade', content_type: 'text', category: 'stats' },
-        
-        // CTA section content
-        { key: 'cta.title', content_en: 'Ready to Transform Your Business?', content_pt: 'Pronto para Transformar seu Negócio?', content_type: 'text', category: 'cta' },
-        { key: 'cta.description', content_en: 'Join thousands of companies already using our AI solutions to drive growth and innovation.', content_pt: 'Junte-se a milhares de empresas que já usam nossas soluções de IA para impulsionar crescimento e inovação.', content_type: 'text', category: 'cta' },
-        { key: 'cta.button', content_en: 'Get Started Today', content_pt: 'Comece Hoje', content_type: 'text', category: 'cta' }
-      ];
+      const sampleData = getStaticContent().map(item => ({
+        key: item.key,
+        content_en: item.content_en,
+        content_pt: item.content_pt,
+        content_type: item.content_type,
+        category: item.category
+      }));
 
       const { error } = await supabase
         .from('cms_content')
@@ -96,6 +112,8 @@ export const useCMSContent = () => {
 
       if (error) {
         console.error('❌ Erro ao inserir dados de exemplo:', error);
+        // Usar dados estáticos se inserção falhar
+        setContent(getStaticContent());
       } else {
         console.log('✅ Dados de exemplo inseridos com sucesso');
         // Buscar novamente depois de inserir
@@ -103,6 +121,8 @@ export const useCMSContent = () => {
       }
     } catch (error) {
       console.error('❌ Erro ao inserir dados de exemplo:', error);
+      // Usar dados estáticos como último recurso
+      setContent(getStaticContent());
     }
   };
 

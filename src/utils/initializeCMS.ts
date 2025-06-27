@@ -5,21 +5,24 @@ export const initializeCMS = async () => {
   try {
     console.log('🔧 Verificando inicialização do CMS...');
     
-    // Testar a conexão com o Supabase
+    // Testar a conexão com o Supabase usando uma consulta simples
     const { data, error } = await supabase
       .from('cms_content')
-      .select('count(*)', { count: 'exact' })
+      .select('id')
       .limit(1);
     
     if (error) {
       console.error('❌ Erro na conexão com Supabase:', error);
-      return false;
+      // Não retornar false, deixar o sistema tentar usar dados estáticos
+      console.log('🔄 Sistema funcionará com dados estáticos');
+      return true;
     }
     
-    console.log('✅ CMS conectado com sucesso. Total de registros:', data);
+    console.log('✅ CMS conectado com sucesso');
     return true;
   } catch (error) {
     console.error('❌ Erro ao inicializar CMS:', error);
-    return false;
+    console.log('🔄 Sistema funcionará com dados estáticos');
+    return true;
   }
 };
