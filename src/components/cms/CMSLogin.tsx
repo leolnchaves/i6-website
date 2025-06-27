@@ -24,43 +24,77 @@ const CMSLogin = () => {
     setIsLoading(true);
     setError('');
 
-    console.log('Tentando fazer login com:', { email });
+    console.log('=== INÍCIO DO LOGIN ===');
+    console.log('Email:', email);
+    console.log('Supabase URL:', supabase.supabaseUrl);
+    console.log('Supabase Key (primeiros 10 chars):', supabase.supabaseKey?.substring(0, 10));
 
     try {
+      // Teste de conectividade com Supabase
+      console.log('Testando conectividade com Supabase...');
+      
+      const { data: testData, error: testError } = await supabase
+        .from('cms_users')
+        .select('count')
+        .limit(1);
+
+      console.log('Teste de conectividade - dados:', testData);
+      console.log('Teste de conectividade - erro:', testError);
+
+      if (testError) {
+        console.error('Erro de conectividade:', testError);
+        setError(`Erro de conectividade: ${testError.message}`);
+        return;
+      }
+
       // Buscar usuário por email
+      console.log('Buscando usuário com email:', email.toLowerCase().trim());
+      
       const { data: users, error: fetchError } = await supabase
         .from('cms_users')
         .select('*')
         .eq('email', email.toLowerCase().trim())
         .eq('is_active', true);
 
-      console.log('Usuários encontrados:', users);
-      console.log('Erro na busca:', fetchError);
+      console.log('Resultado da busca:');
+      console.log('- Usuários encontrados:', users);
+      console.log('- Erro:', fetchError);
+      console.log('- Quantidade de usuários:', users?.length || 0);
 
       if (fetchError) {
-        console.error('Erro ao buscar usuário:', fetchError);
-        setError('Erro interno. Tente novamente.');
+        console.error('Erro detalhado na busca:', {
+          message: fetchError.message,
+          details: fetchError.details,
+          hint: fetchError.hint,
+          code: fetchError.code
+        });
+        setError(`Erro na busca: ${fetchError.message}`);
         return;
       }
 
       if (!users || users.length === 0) {
-        console.log('Nenhum usuário encontrado com email:', email);
+        console.log('Nenhum usuário encontrado com o email fornecido');
         setError('Email ou senha inválidos');
         return;
       }
 
       const user = users[0];
-      console.log('Usuário encontrado:', { id: user.id, email: user.email, role: user.role });
+      console.log('Usuário encontrado:', {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        is_active: user.is_active
+      });
 
-      // Para simplificar o teste, vamos verificar se a senha é 'tI#GhyB9kmlf'
-      // Em produção, isso seria feito no servidor com hash apropriado
+      // Verificar senha (simplificado para teste)
+      console.log('Verificando senha...');
       if (password !== 'tI#GhyB9kmlf') {
-        console.log('Senha incorreta fornecida');
+        console.log('Senha incorreta');
         setError('Email ou senha inválidos');
         return;
       }
 
-      console.log('Senha correta, atualizando último login...');
+      console.log('Senha correta! Atualizando último login...');
 
       // Atualizar último login
       const { error: updateError } = await supabase
@@ -70,6 +104,9 @@ const CMSLogin = () => {
 
       if (updateError) {
         console.error('Erro ao atualizar último login:', updateError);
+        // Não bloquear o login por causa disso
+      } else {
+        console.log('Último login atualizado com sucesso');
       }
 
       // Fazer login através do contexto
@@ -83,13 +120,21 @@ const CMSLogin = () => {
       console.log('Fazendo login com dados:', userData);
       login(userData);
 
+      console.log('Login realizado com sucesso! Redirecionando...');
+      
       // Redirecionar para o CMS
       navigate('/cms-admin-i6/site-structure');
     } catch (err) {
-      console.error('Erro no login:', err);
-      setError('Erro interno. Tente novamente.');
+      console.error('=== ERRO CAPTURADO ===');
+      console.error('Tipo do erro:', typeof err);
+      console.error('Erro completo:', err);
+      console.error('Stack trace:', err instanceof Error ? err.stack : 'N/A');
+      
+      const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
+      setError(`Erro interno: ${errorMessage}`);
     } finally {
       setIsLoading(false);
+      console.log('=== FIM DO LOGIN ===');
     }
   };
 
