@@ -14,42 +14,42 @@ const CompactSolutionsSection = () => {
       title: t('solutions.smartDiscovery.title'),
       description: t('solutions.smartDiscovery.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
       title: t('solutions.predictivePersonalization.title'),
       description: t('solutions.predictivePersonalization.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
       icon: <Cog className="w-6 h-6 text-white" />,
       title: t('solutions.industrialRecommendation.title'),
       description: t('solutions.industrialRecommendation.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-white" />,
       title: t('solutions.predictiveCampaign.title'),
       description: t('solutions.predictiveCampaign.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
       icon: <DollarSign className="w-6 h-6 text-white" />,
       title: t('solutions.smartPricing.title'),
       description: t('solutions.smartPricing.description'),
       engine: 'i6 ElasticPrice',
-      backgroundColor: '#D2472B' // Cor específica para i6 ElasticPrice
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-white" />,
       title: t('solutions.demandForecasting.title'),
       description: t('solutions.demandForecasting.description'),
       engine: 'i6 Previsio',
-      backgroundColor: '#0F1F36' // Mantém a cor atual para i6 Previsio
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     }
   ];
 

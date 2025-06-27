@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   // Header
   'header.home': 'Home',
@@ -90,7 +91,7 @@ export const enTranslations = {
   
   'solutions.industrialRecommendation.title': 'Industrial Recommendation Intelligence',
   'solutions.industrialRecommendation.focus': 'Focus: B2B, B2B2C',
-  'solutions.industrialRecommendation.description': 'Align commercial targets with intelligent recommendations that optimize assortment, pricing, and POS behavior — all in real time.',
+  'solutions.industrialRecommendation.description': 'Align commercial targets with intelligent recommendations that optimize assortment, pricing and POS behavior, all in real time.',
   'solutions.industrialRecommendation.feature1': 'Assortment Optimization',
   'solutions.industrialRecommendation.feature2': 'Dynamic Pricing Integration',
   'solutions.industrialRecommendation.feature3': 'Commercial Target Alignment',
@@ -108,7 +109,7 @@ export const enTranslations = {
   
   'solutions.smartPricing.title': 'Smart Price Optimization',
   'solutions.smartPricing.focus': 'Focus: B2B, B2C, B2B2C, D2C',
-  'solutions.smartPricing.description': 'A dynamic pricing solution that adapts in real time to demand, behavior, and product lifecycle. Maximize profitability without losing competitiveness.',
+  'solutions.smartPricing.description': 'A dynamic pricing solution that adapts in real time to demand, behavior and product lifecycle. Maximize profitability without losing competitiveness.',
   'solutions.smartPricing.feature1': 'Behavior-Based Pricing',
   'solutions.smartPricing.feature2': 'Lifecycle-Aware Strategy',
   'solutions.smartPricing.feature3': 'Price Sensitivity Calibration',
@@ -117,7 +118,7 @@ export const enTranslations = {
   
   'solutions.demandForecasting.title': 'Adaptive Demand Forecasting',
   'solutions.demandForecasting.focus': 'Focus: B2B, B2C',
-  'solutions.demandForecasting.description': 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality, and behaviors — empowering supply chain and commercial planning.',
+  'solutions.demandForecasting.description': 'Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality and behaviors, empowering supply chain and commercial planning.',
   'solutions.demandForecasting.feature1': 'Self-Reinforcing Forecast Model',
   'solutions.demandForecasting.feature2': 'Extended Projection (N+M)',
   'solutions.demandForecasting.feature3': 'Seasonality and Trend Detection',
