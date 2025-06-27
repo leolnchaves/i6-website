@@ -14,42 +14,42 @@ const CompactSolutionsSection = () => {
       title: t('solutions.smartDiscovery.title'),
       description: t('solutions.smartDiscovery.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#D2472B' // Orange from gradient
+      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
       title: t('solutions.predictivePersonalization.title'),
       description: t('solutions.predictivePersonalization.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Dark blue from gradient
+      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
     },
     {
       icon: <Cog className="w-6 h-6 text-white" />,
       title: t('solutions.industrialRecommendation.title'),
       description: t('solutions.industrialRecommendation.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#E67817' // Orange variant from gradient
+      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-white" />,
       title: t('solutions.predictiveCampaign.title'),
       description: t('solutions.predictiveCampaign.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#3A7BC8' // Medium blue from gradient
+      backgroundColor: '#1E4A94' // Cor específica para i6 RecSys
     },
     {
       icon: <DollarSign className="w-6 h-6 text-white" />,
       title: t('solutions.smartPricing.title'),
       description: t('solutions.smartPricing.description'),
       engine: 'i6 ElasticPrice',
-      backgroundColor: '#D2472B' // Orange from gradient
+      backgroundColor: '#D2472B' // Cor específica para i6 ElasticPrice
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-white" />,
       title: t('solutions.demandForecasting.title'),
       description: t('solutions.demandForecasting.description'),
       engine: 'i6 Previsio',
-      backgroundColor: '#0F1F36' // Darkest blue from gradient
+      backgroundColor: '#0F1F36' // Mantém a cor atual para i6 Previsio
     }
   ];
 
