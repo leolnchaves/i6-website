@@ -32,9 +32,9 @@ const WorldMap = () => {
       id: 'campinas',
       city: 'Campinas',
       state: 'São Paulo',
-      country: 'Brasil',
+      country: t('contact.map.brazil'),
       flag: '🇧🇷',
-      type: 'Sede',
+      type: t('contact.map.headquarters'),
       unitName: 'infinity6 LATAM',
       position: positions.campinas,
       address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrasil',
@@ -45,9 +45,9 @@ const WorldMap = () => {
       id: 'dover',
       city: 'Dover',
       state: 'Delaware',
-      country: 'Estados Unidos',
+      country: t('contact.map.usa'),
       flag: '🇺🇸',
-      type: 'Filial',
+      type: t('contact.map.branchOffice'),
       unitName: 'infinity6 NA',
       position: positions.dover,
       address: '123 Corporate Blvd\nDover, DE 19901\nEstados Unidos',
@@ -58,9 +58,9 @@ const WorldMap = () => {
       id: 'milan',
       city: 'Milão',
       state: 'Lombardia',
-      country: 'Itália',
+      country: t('contact.map.italy'),
       flag: '🇮🇹',
-      type: 'Filial',
+      type: t('contact.map.branchOffice'),
       unitName: 'infinity6 EMEA',
       position: positions.milan,
       address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItália',
@@ -162,7 +162,7 @@ const WorldMap = () => {
         </TooltipProvider>
         
         <p className="text-sm text-gray-500 mt-4 text-center">
-          Passe o mouse sobre os cards para ver detalhes de contato
+          {t('contact.map.hoverTip')}
         </p>
       </CardContent>
     </Card>

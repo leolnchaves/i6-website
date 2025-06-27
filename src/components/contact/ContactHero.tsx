@@ -14,13 +14,13 @@ const ContactHero = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Let's Start a
+            {t('contact.hero.title')}
             <span className="block bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
-              Conversation
+              {t('contact.hero.subtitle')}
             </span>
           </h1>
           <p className="text-xl text-gray-300 mb-8">
-            Your AI journey starts here!
+            {t('contact.hero.description')}
           </p>
         </div>
       </div>

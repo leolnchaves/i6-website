@@ -10,10 +10,10 @@ const CalendlySection = () => {
       <CardContent className="p-8">
         <div className="text-center mb-8">
           <h3 className="text-3xl font-bold mb-4">
-            Sometimes a quick chat is all it takes.
+            {t('contact.calendly.title')}
           </h3>
           <p className="text-lg opacity-90 mb-6">
-            Let's cut to the chase: schedule a session with our experts now!
+            {t('contact.calendly.description')}
           </p>
         </div>
         

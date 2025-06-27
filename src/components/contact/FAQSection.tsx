@@ -12,44 +12,44 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: "How long does AI implementation take?",
-      answer: "Implementation time varies depending on the project's complexity. Most of our clients see full deployment within 1 to 3 months, with measurable results starting in just a few weeks."
+      question: t('contact.faq.q1'),
+      answer: t('contact.faq.a1')
     },
     {
-      question: "What industries do you serve?",
-      answer: "We serve a wide range of industries, including retail, manufacturing, finance, healthcare, pharma, education and technology, always with a business-first approach."
+      question: t('contact.faq.q2'),
+      answer: t('contact.faq.a2')
     },
     {
-      question: "Do you provide ongoing support?",
-      answer: "Yes. We offer 24/7 support, proactive monitoring, maintenance and continuous optimization for all our AI solutions."
+      question: t('contact.faq.q3'),
+      answer: t('contact.faq.a3')
     },
     {
-      question: "What's the typical ROI for your AI solutions?",
-      answer: "Our clients commonly see up to 20x ROI within the first year, driven by increased efficiency, smarter decisions and revenue growth."
+      question: t('contact.faq.q4'),
+      answer: t('contact.faq.a4')
     },
     {
-      question: "What kind of data do I need to get started?",
-      answer: "We work with the data you already have, including behavioral, transactional, CRM or supply data. All data is 100% anonymized and handled securely. Our models are robust to gaps and can deliver value even with unstructured datasets. The first model training is conducted using a sample of your data, without requiring full integration."
+      question: t('contact.faq.q5'),
+      answer: t('contact.faq.a5')
     },
     {
-      question: "Can your AI models integrate with our existing systems?",
-      answer: "Yes. The Compass Suite is API-first and cloud-based, making it easy to connect with ERPs, CRMs, e-commerce platforms and internal data sources."
+      question: t('contact.faq.q6'),
+      answer: t('contact.faq.a6')
     },
     {
-      question: "Do I need a data science team to use your solutions?",
-      answer: "No. Our solutions are designed to be used by business teams. We take care of the AI complexity so your team can focus on action and results."
+      question: t('contact.faq.q7'),
+      answer: t('contact.faq.a7')
     },
     {
-      question: "Is your AI explainable and compliant with data privacy regulations?",
-      answer: "Absolutely. All our models include explainability layers to ensure transparency and trust. We are compliant with GDPR, LGPD and other global data privacy standards."
+      question: t('contact.faq.q8'),
+      answer: t('contact.faq.a8')
     },
     {
-      question: "What makes Infinity6 different from other AI companies?",
-      answer: "We combine predictive intelligence with real-time action, enabling smart decisions across the entire journey - with fast integration, measurable results and no heavy tech lift. We also offer a free test phase, proving the concrete potential of results before any cost is incurred."
+      question: t('contact.faq.q9'),
+      answer: t('contact.faq.a9')
     },
     {
-      question: "Can you help define our AI strategy and use cases?",
-      answer: "Yes. Our experts support you in shaping the business angle behind each AI initiative. We handle the entire feature engineering process — transforming raw data into high-impact predictive signals tailored to your goals."
+      question: t('contact.faq.q10'),
+      answer: t('contact.faq.a10')
     }
   ];
 
@@ -77,13 +77,13 @@ const FAQSection = () => {
         {/* Search Filter */}
         <div className="max-w-2xl mx-auto mb-12">
           <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
-            Search FAQs
+            {t('contact.faq.searchTitle')}
           </h3>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               type="text"
-              placeholder="Type to search frequently asked questions..."
+              placeholder={t('contact.faq.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 py-3 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-lg"
@@ -129,7 +129,7 @@ const FAQSection = () => {
         {filteredFaqs.length === 0 && (
           <div className="text-center py-8">
             <p className="text-gray-500 text-lg">
-              No FAQs found matching your search. Try different keywords.
+              {t('contact.faq.noResults')}
             </p>
           </div>
         )}
