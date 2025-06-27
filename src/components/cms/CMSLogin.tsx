@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,8 +25,6 @@ const CMSLogin = () => {
 
     console.log('=== INÍCIO DO LOGIN ===');
     console.log('Email:', email);
-    console.log('Supabase URL:', supabase.supabaseUrl);
-    console.log('Supabase Key (primeiros 10 chars):', supabase.supabaseKey?.substring(0, 10));
 
     try {
       // Teste de conectividade com Supabase
