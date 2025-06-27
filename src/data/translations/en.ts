@@ -67,7 +67,7 @@ export const enTranslations = {
   'solutions.hero.mainSubtitle': 'Built to Perform.',
   'solutions.hero.description': 'Discover how our AI solutions can transform your business operations and drive growth.',
   'solutions.viewAllSolutions': 'View All Solutions',
-  'solutions.businessOutcomes': 'Business Outcomes',
+  'solutions.businessOutcomes': 'Expected Results',
   'solutions.learnMore': 'Learn More',
   
   // Solutions Details

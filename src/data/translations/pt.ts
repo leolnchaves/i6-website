@@ -1,3 +1,4 @@
+
 export const ptTranslations = {
   // Header
   'header.home': 'Início',
@@ -66,7 +67,7 @@ export const ptTranslations = {
   'solutions.hero.mainSubtitle': 'Construídas para Performar.',
   'solutions.hero.description': 'Descubra como nossas soluções de IA podem transformar as operações do seu negócio e impulsionar o crescimento.',
   'solutions.viewAllSolutions': 'Ver Todas as Soluções',
-  'solutions.businessOutcomes': 'Resultados Empresariais',
+  'solutions.businessOutcomes': 'Resultados Esperados',
   'solutions.learnMore': 'Saiba Mais',
   
   // Solutions Details
