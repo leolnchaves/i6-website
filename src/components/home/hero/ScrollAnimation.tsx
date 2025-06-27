@@ -1,15 +1,29 @@
 
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useState, useEffect } from 'react';
 
 const ScrollAnimation = () => {
-  const { scrollY } = useScrollAnimation();
+  const [time, setTime] = useState(0);
   
-  // Calculate transform values based on scroll position
-  const layer1Transform = scrollY * 0.1;
-  const layer2Transform = scrollY * 0.15;
-  const layer3Transform = scrollY * 0.2;
-  const layer4Transform = scrollY * 0.25;
-  const layer5Transform = scrollY * 0.3;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(prevTime => prevTime + 0.016); // ~60fps
+    }, 16);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  // Calculate transform values based on time for automatic movement
+  const layer1Transform = Math.sin(time * 0.3) * 20;
+  const layer2Transform = Math.sin(time * 0.4) * 25;
+  const layer3Transform = Math.sin(time * 0.5) * 30;
+  const layer4Transform = Math.sin(time * 0.6) * 25;
+  const layer5Transform = Math.sin(time * 0.7) * 20;
+  
+  const layer1Rotate = Math.cos(time * 0.2) * 10;
+  const layer2Rotate = Math.cos(time * 0.3) * 15;
+  const layer3Rotate = Math.cos(time * 0.4) * 12;
+  const layer4Rotate = Math.cos(time * 0.35) * 15;
+  const layer5Rotate = Math.cos(time * 0.25) * 10;
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -17,7 +31,7 @@ const ScrollAnimation = () => {
       <div 
         className="absolute left-1/4 top-1/2 w-[500px] h-[500px] opacity-60"
         style={{
-          transform: `translateY(-50%) translateY(${layer1Transform}px) rotateY(${scrollY * 0.1}deg)`,
+          transform: `translateY(-50%) translateY(${layer1Transform}px) rotateY(${layer1Rotate}deg)`,
         }}
       >
         <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-[40%] blur-sm"></div>
@@ -27,7 +41,7 @@ const ScrollAnimation = () => {
       <div 
         className="absolute left-1/3 top-1/2 w-[420px] h-[420px] opacity-70"
         style={{
-          transform: `translateY(-50%) translateY(${layer2Transform}px) rotateY(${scrollY * 0.15}deg)`,
+          transform: `translateY(-50%) translateY(${layer2Transform}px) rotateY(${layer2Rotate}deg)`,
         }}
       >
         <div className="w-full h-full animate-wave-fast bg-gradient-to-br from-orange-500/12 to-red-600/12 rounded-[35%]"></div>
@@ -37,7 +51,7 @@ const ScrollAnimation = () => {
       <div 
         className="absolute left-1/2 top-1/2 w-[350px] h-[350px] opacity-80"
         style={{
-          transform: `translateX(-50%) translateY(-50%) translateY(${layer3Transform}px) rotateY(${scrollY * 0.2}deg)`,
+          transform: `translateX(-50%) translateY(-50%) translateY(${layer3Transform}px) rotateY(${layer3Rotate}deg)`,
         }}
       >
         <div className="w-full h-full animate-float-curve bg-gradient-to-br from-orange-600/10 to-red-700/10 rounded-[30%]"></div>
@@ -47,7 +61,7 @@ const ScrollAnimation = () => {
       <div 
         className="absolute right-1/3 top-1/2 w-[420px] h-[420px] opacity-70"
         style={{
-          transform: `translateY(-50%) translateY(${layer4Transform}px) rotateY(${scrollY * 0.25}deg)`,
+          transform: `translateY(-50%) translateY(${layer4Transform}px) rotateY(${layer4Rotate}deg)`,
         }}
       >
         <div className="w-full h-full animate-slide-curve bg-gradient-to-br from-orange-500/12 to-red-600/12 rounded-[35%]"></div>
@@ -57,7 +71,7 @@ const ScrollAnimation = () => {
       <div 
         className="absolute right-1/4 top-1/2 w-[500px] h-[500px] opacity-60"
         style={{
-          transform: `translateY(-50%) translateY(${layer5Transform}px) rotateY(${scrollY * 0.3}deg)`,
+          transform: `translateY(-50%) translateY(${layer5Transform}px) rotateY(${layer5Rotate}deg)`,
         }}
       >
         <div className="w-full h-full animate-drift-curve bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-[40%] blur-sm"></div>
@@ -72,7 +86,7 @@ const ScrollAnimation = () => {
             style={{
               left: `${15 + (i * 7)}%`,
               top: `${20 + (i * 5)}%`,
-              transform: `translateY(${scrollY * (0.02 + i * 0.01)}px)`,
+              transform: `translateY(${Math.sin(time * 0.8 + i) * 10}px)`,
               animationDelay: `${i * 0.5}s`,
             }}
           />
