@@ -2,7 +2,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
-import { LoadingSpinner } from '@/components/common/LoadingSpinner';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 interface CMSProtectedRouteProps {
   children: React.ReactNode;
