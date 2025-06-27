@@ -20,7 +20,7 @@ const ScrollAnimation = () => {
           transform: `translateY(-50%) translateY(${layer1Transform}px) rotateY(${scrollY * 0.1}deg)`,
         }}
       >
-        <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-orange-400/10 to-orange-500/15 rounded-[40%] blur-sm"></div>
+        <div className="w-full h-full animate-snake-slow bg-gradient-to-br from-orange-400/2 to-orange-500/3 rounded-[40%] blur-sm"></div>
       </div>
       
       {/* Layer 2 */}
