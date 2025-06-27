@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const WorldMap = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const isMobile = useIsMobile();
 
   // Posições ajustadas para o novo mapa
@@ -32,9 +32,9 @@ const WorldMap = () => {
       id: 'campinas',
       city: 'Campinas',
       state: 'São Paulo',
-      country: language === 'pt' ? 'Brasil' : 'Brazil',
+      country: 'Brasil',
       flag: '🇧🇷',
-      type: language === 'pt' ? 'Sede' : 'Headquarters',
+      type: 'Sede',
       unitName: 'infinity6 LATAM',
       position: positions.campinas,
       address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrasil',
@@ -45,25 +45,25 @@ const WorldMap = () => {
       id: 'dover',
       city: 'Dover',
       state: 'Delaware',
-      country: language === 'pt' ? 'Estados Unidos' : 'United States',
+      country: 'Estados Unidos',
       flag: '🇺🇸',
-      type: language === 'pt' ? 'Filial' : 'Branch Office',
+      type: 'Filial',
       unitName: 'infinity6 NA',
       position: positions.dover,
-      address: '123 Corporate Blvd\nDover, DE 19901\nUnited States',
+      address: '123 Corporate Blvd\nDover, DE 19901\nEstados Unidos',
       phone: '+1 (302) 555-0123',
       email: 'usa@infinity6.ai'
     },
     {
       id: 'milan',
-      city: language === 'pt' ? 'Milão' : 'Milan',
-      state: language === 'pt' ? 'Lombardia' : 'Lombardy',
-      country: language === 'pt' ? 'Itália' : 'Italy',
+      city: 'Milão',
+      state: 'Lombardia',
+      country: 'Itália',
       flag: '🇮🇹',
-      type: language === 'pt' ? 'Filial' : 'Branch Office',
+      type: 'Filial',
       unitName: 'infinity6 EMEA',
       position: positions.milan,
-      address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItaly',
+      address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItália',
       phone: '+39 02 1234 5678',
       email: 'italia@infinity6.ai'
     }
@@ -80,7 +80,7 @@ const WorldMap = () => {
         </p>
         
         <TooltipProvider>
-          <div className="relative w-full h-48 sm:h-64 lg:h-72 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+          <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
             <img 
               src="/lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png"
               alt="World Map"
@@ -162,7 +162,7 @@ const WorldMap = () => {
         </TooltipProvider>
         
         <p className="text-sm text-gray-500 mt-4 text-center">
-          {language === 'pt' ? 'Passe o mouse sobre os cards para ver detalhes de contato' : 'Hover over the cards to see contact details'}
+          Passe o mouse sobre os cards para ver detalhes de contato
         </p>
       </CardContent>
     </Card>
