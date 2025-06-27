@@ -2,7 +2,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
+import { CMSAuthProvider } from '@/hooks/useCMSAuth';
 import CMSLayout from '@/components/cms/CMSLayout';
+import CMSLogin from '@/components/cms/CMSLogin';
+import CMSProtectedRoute from '@/components/cms/CMSProtectedRoute';
 import SiteStructure from '@/components/cms/SiteStructure';
 
 /**
@@ -20,36 +23,49 @@ const CMSAdmin = () => {
   }, 'CMSAdmin');
   
   return (
-    <CMSLayout>
+    <CMSAuthProvider>
       <Routes>
+        <Route path="/login" element={<CMSLogin />} />
         <Route path="/" element={<Navigate to="/cms-admin-i6/site-structure" replace />} />
-        <Route path="/site-structure" element={<SiteStructure />} />
-        <Route path="/content" element={
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Gestão de Conteúdo</h2>
-            <p className="text-gray-600">Esta seção será implementada em breve.</p>
-          </div>
-        } />
-        <Route path="/users" element={
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Gestão de Usuários</h2>
-            <p className="text-gray-600">Esta seção será implementada em breve.</p>
-          </div>
-        } />
-        <Route path="/analytics" element={
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Analytics</h2>
-            <p className="text-gray-600">Esta seção será implementada em breve.</p>
-          </div>
-        } />
-        <Route path="/settings" element={
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Configurações</h2>
-            <p className="text-gray-600">Esta seção será implementada em breve.</p>
-          </div>
+        <Route path="/*" element={
+          <CMSProtectedRoute>
+            <CMSLayout>
+              <Routes>
+                <Route path="/site-structure" element={<SiteStructure />} />
+                <Route path="/content" element={
+                  <div className="text-center py-12">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">Gestão de Conteúdo</h2>
+                    <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                  </div>
+                } />
+                <Route path="/users" element={
+                  <CMSProtectedRoute requiredRole="admin">
+                    <div className="text-center py-12">
+                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">Gestão de Usuários</h2>
+                      <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                    </div>
+                  </CMSProtectedRoute>
+                } />
+                <Route path="/analytics" element={
+                  <div className="text-center py-12">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">Analytics</h2>
+                    <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                  </div>
+                } />
+                <Route path="/settings" element={
+                  <CMSProtectedRoute requiredRole="admin">
+                    <div className="text-center py-12">
+                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">Configurações</h2>
+                      <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                    </div>
+                  </CMSProtectedRoute>
+                } />
+              </Routes>
+            </CMSLayout>
+          </CMSProtectedRoute>
         } />
       </Routes>
-    </CMSLayout>
+    </CMSAuthProvider>
   );
 };
 

@@ -1,8 +1,10 @@
 
 import React from 'react';
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { FileText, Settings, Globe, Users, BarChart3 } from 'lucide-react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, SidebarFooter } from '@/components/ui/sidebar';
+import { Button } from '@/components/ui/button';
+import { FileText, Settings, Globe, Users, BarChart3, LogOut, User } from 'lucide-react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useCMSAuth } from '@/hooks/useCMSAuth';
 
 const cmsMenuItems = [
   {
@@ -38,6 +40,13 @@ interface CMSLayoutProps {
 
 const CMSLayout: React.FC<CMSLayoutProps> = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useCMSAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/cms-admin-i6/login');
+  };
 
   return (
     <SidebarProvider>
@@ -76,6 +85,33 @@ const CMSLayout: React.FC<CMSLayoutProps> = ({ children }) => {
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
+
+          <SidebarFooter className="border-t border-gray-200">
+            <div className="p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <User className="h-4 w-4 text-blue-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {user?.email}
+                  </p>
+                  <p className="text-xs text-gray-500 capitalize">
+                    {user?.role}
+                  </p>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleLogout}
+                className="w-full flex items-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Sair
+              </Button>
+            </div>
+          </SidebarFooter>
         </Sidebar>
         
         <div className="flex-1 flex flex-col">
