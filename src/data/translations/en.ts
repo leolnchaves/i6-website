@@ -63,6 +63,8 @@ export const enTranslations = {
   // Solutions Page
   'solutions.hero.title': 'AI Solutions That',
   'solutions.hero.subtitle': 'Drive Results',
+  'solutions.hero.mainTitle': 'Business AI Solutions.',
+  'solutions.hero.mainSubtitle': 'Built to Perform.',
   'solutions.hero.description': 'Discover how our AI solutions can transform your business operations and drive growth.',
   'solutions.viewAllSolutions': 'View All Solutions',
   'solutions.businessOutcomes': 'Expected Results',

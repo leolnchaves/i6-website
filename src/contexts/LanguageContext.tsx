@@ -21,31 +21,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const t = (key: string): string => {
-    // Split nested keys (e.g., 'hero.title' -> ['hero', 'title'])
-    const keys = key.split('.');
-    let value: any = translations[language];
-    
-    // Navigate through nested object structure
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        // Fallback to English if key not found in current language
-        let fallbackValue: any = translations['en'];
-        for (const fallbackKey of keys) {
-          if (fallbackValue && typeof fallbackValue === 'object' && fallbackKey in fallbackValue) {
-            fallbackValue = fallbackValue[fallbackKey];
-          } else {
-            // If not found in English either, return the key itself
-            console.warn(`Translation key not found: ${key}`);
-            return key;
-          }
-        }
-        return typeof fallbackValue === 'string' ? fallbackValue : key;
-      }
-    }
-    
-    return typeof value === 'string' ? value : key;
+    return translations[language][key as keyof typeof translations['en']] || key;
   };
 
   return (

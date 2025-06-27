@@ -63,6 +63,8 @@ export const ptTranslations = {
   // Solutions Page
   'solutions.hero.title': 'Soluções de IA Que',
   'solutions.hero.subtitle': 'Geram Resultados',
+  'solutions.hero.mainTitle': 'Soluções de IA Empresariais.',
+  'solutions.hero.mainSubtitle': 'Construídas para Performar.',
   'solutions.hero.description': 'Descubra como nossas soluções de IA podem transformar as operações do seu negócio e impulsionar o crescimento.',
   'solutions.viewAllSolutions': 'Ver Todas as Soluções',
   'solutions.businessOutcomes': 'Resultados Esperados',

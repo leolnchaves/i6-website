@@ -3,7 +3,7 @@
  * Tracks component render times and provides performance insights
  */
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { logger } from '@/utils/logger';
 
 interface PerformanceMetrics {
@@ -23,80 +23,56 @@ export const usePerformanceMonitor = (componentName: string, threshold: number =
 
   const renderStartTime = useRef<number>(0);
   const renderTimes = useRef<number[]>([]);
-  const isFirstRender = useRef(true);
 
-  // Memoized update function to prevent infinite loops
-  const updateMetrics = useCallback((renderTime: number) => {
-    renderTimes.current.push(renderTime);
-    
-    // Keep only last 20 render times for average calculation (reduced from 100)
-    if (renderTimes.current.length > 20) {
-      renderTimes.current.shift();
-    }
-
-    const newRenderCount = metrics.renderCount + 1;
-    const averageRenderTime = renderTimes.current.reduce((a, b) => a + b, 0) / renderTimes.current.length;
-    const slowRenders = renderTime > threshold ? metrics.slowRenders + 1 : metrics.slowRenders;
-
-    const newMetrics: PerformanceMetrics = {
-      renderCount: newRenderCount,
-      averageRenderTime,
-      lastRenderTime: renderTime,
-      slowRenders,
-    };
-
-    // Only update state if there's a significant change
-    setMetrics(prevMetrics => {
-      if (prevMetrics.renderCount !== newRenderCount) {
-        return newMetrics;
-      }
-      return prevMetrics;
-    });
-
-    // Log slow renders (but limit frequency)
-    if (renderTime > threshold && newRenderCount % 10 === 0) {
-      logger.warn(
-        `Slow render detected: ${renderTime.toFixed(2)}ms (threshold: ${threshold}ms)`,
-        { renderTime, threshold, component: componentName },
-        componentName
-      );
-    }
-
-    // Log performance summary less frequently (every 100 renders instead of 50)
-    if (newRenderCount % 100 === 0) {
-      logger.info(
-        `Performance summary for ${componentName}`,
-        {
-          renderCount: newRenderCount,
-          averageRenderTime: `${averageRenderTime.toFixed(2)}ms`,
-          lastRenderTime: `${renderTime.toFixed(2)}ms`,
-          slowRenderPercentage: `${((slowRenders / newRenderCount) * 100).toFixed(1)}%`,
-        },
-        componentName
-      );
-    }
-  }, [componentName, threshold, metrics.renderCount, metrics.slowRenders]);
-
-  // Start timing before render
+  // Start timing on component mount/update
   useEffect(() => {
     renderStartTime.current = performance.now();
   });
 
-  // End timing after render (only after first render to avoid initial measurement issues)
+  // End timing after render
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     const endTime = performance.now();
     const renderTime = endTime - renderStartTime.current;
     
-    // Only measure meaningful render times
-    if (renderTime > 0 && renderTime < 1000) { // Avoid measuring page loads
-      updateMetrics(renderTime);
+    renderTimes.current.push(renderTime);
+    
+    // Keep only last 100 render times for average calculation
+    if (renderTimes.current.length > 100) {
+      renderTimes.current.shift();
     }
-  }, [updateMetrics]);
+
+    const newMetrics: PerformanceMetrics = {
+      renderCount: metrics.renderCount + 1,
+      averageRenderTime: renderTimes.current.reduce((a, b) => a + b, 0) / renderTimes.current.length,
+      lastRenderTime: renderTime,
+      slowRenders: renderTime > threshold ? metrics.slowRenders + 1 : metrics.slowRenders,
+    };
+
+    setMetrics(newMetrics);
+
+    // Log slow renders
+    if (renderTime > threshold) {
+      logger.warn(
+        `Slow render detected: ${renderTime.toFixed(2)}ms (threshold: ${threshold}ms)`,
+        newMetrics,
+        componentName
+      );
+    }
+
+    // Log performance summary every 50 renders
+    if (newMetrics.renderCount % 50 === 0) {
+      logger.info(
+        `Performance summary for ${componentName}`,
+        {
+          ...newMetrics,
+          averageRenderTime: `${newMetrics.averageRenderTime.toFixed(2)}ms`,
+          lastRenderTime: `${newMetrics.lastRenderTime.toFixed(2)}ms`,
+          slowRenderPercentage: `${((newMetrics.slowRenders / newMetrics.renderCount) * 100).toFixed(1)}%`,
+        },
+        componentName
+      );
+    }
+  });
 
   return metrics;
 };

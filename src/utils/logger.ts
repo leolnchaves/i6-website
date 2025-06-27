@@ -22,9 +22,7 @@ export interface LogEntry {
 class Logger {
   private logLevel: LogLevel = process.env.NODE_ENV === 'development' ? LogLevel.DEBUG : LogLevel.INFO;
   private logs: LogEntry[] = [];
-  private maxLogs = 500; // Reduced from 1000 to improve performance
-  private logBuffer: LogEntry[] = [];
-  private batchTimeout: NodeJS.Timeout | null = null;
+  private maxLogs = 1000;
 
   /**
    * Set the minimum log level
@@ -34,26 +32,7 @@ class Logger {
   }
 
   /**
-   * Batch log processing to improve performance
-   */
-  private processBatch(): void {
-    if (this.logBuffer.length === 0) return;
-
-    // Add batched logs to main log array
-    this.logs.push(...this.logBuffer);
-    
-    // Trim logs if necessary
-    if (this.logs.length > this.maxLogs) {
-      this.logs.splice(0, this.logs.length - this.maxLogs);
-    }
-
-    // Clear buffer
-    this.logBuffer = [];
-    this.batchTimeout = null;
-  }
-
-  /**
-   * Generic log method with batching
+   * Generic log method
    */
   private log(level: LogLevel, message: string, data?: any, component?: string): void {
     if (level < this.logLevel) return;
@@ -66,10 +45,13 @@ class Logger {
       component,
     };
 
-    // Add to buffer for batching
-    this.logBuffer.push(logEntry);
+    // Add to internal log storage
+    this.logs.push(logEntry);
+    if (this.logs.length > this.maxLogs) {
+      this.logs.shift();
+    }
 
-    // Console output with formatting (immediate)
+    // Console output with formatting
     const levelColors = {
       [LogLevel.DEBUG]: 'color: #888;',
       [LogLevel.INFO]: 'color: #0066cc;',
@@ -91,12 +73,6 @@ class Logger {
     } else {
       console.log(prefix, levelColors[level]);
     }
-
-    // Batch process logs (debounced)
-    if (this.batchTimeout) {
-      clearTimeout(this.batchTimeout);
-    }
-    this.batchTimeout = setTimeout(() => this.processBatch(), 100);
   }
 
   /**
@@ -131,12 +107,7 @@ class Logger {
    * Get all stored logs
    */
   getLogs(): LogEntry[] {
-    // Process any pending batch before returning logs
-    if (this.batchTimeout) {
-      clearTimeout(this.batchTimeout);
-      this.processBatch();
-    }
-    return [...this.logs, ...this.logBuffer];
+    return [...this.logs];
   }
 
   /**
@@ -144,11 +115,6 @@ class Logger {
    */
   clearLogs(): void {
     this.logs = [];
-    this.logBuffer = [];
-    if (this.batchTimeout) {
-      clearTimeout(this.batchTimeout);
-      this.batchTimeout = null;
-    }
   }
 }
 
