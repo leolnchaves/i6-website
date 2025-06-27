@@ -14,42 +14,42 @@ const CompactSolutionsSection = () => {
       title: t('solutions.smartDiscovery.title'),
       description: t('solutions.smartDiscovery.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#22D3EE'
+      backgroundColor: '#D2472B' // Orange from gradient
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
       title: t('solutions.predictivePersonalization.title'),
       description: t('solutions.predictivePersonalization.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#374151'
+      backgroundColor: '#1E4A94' // Dark blue from gradient
     },
     {
       icon: <Cog className="w-6 h-6 text-white" />,
       title: t('solutions.industrialRecommendation.title'),
       description: t('solutions.industrialRecommendation.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#FB7185'
+      backgroundColor: '#E67817' // Orange variant from gradient
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-white" />,
       title: t('solutions.predictiveCampaign.title'),
       description: t('solutions.predictiveCampaign.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#3B82F6'
+      backgroundColor: '#3A7BC8' // Medium blue from gradient
     },
     {
       icon: <DollarSign className="w-6 h-6 text-white" />,
       title: t('solutions.smartPricing.title'),
       description: t('solutions.smartPricing.description'),
       engine: 'i6 ElasticPrice',
-      backgroundColor: '#F97316'
+      backgroundColor: '#D2472B' // Orange from gradient
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-white" />,
       title: t('solutions.demandForecasting.title'),
       description: t('solutions.demandForecasting.description'),
       engine: 'i6 Previsio',
-      backgroundColor: '#8B5CF6'
+      backgroundColor: '#0F1F36' // Darkest blue from gradient
     }
   ];
 
