@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -203,7 +202,7 @@ const ContentEditor: React.FC = () => {
           <h3 className="text-xl font-semibold capitalize flex items-center space-x-2">
             <span>{page === 'component' ? 'Componentes Reutilizáveis' : `Página: ${page}`}</span>
             <Badge variant="secondary">
-              {Object.values(categories).reduce((total: number, items: any[]) => total + items.length, 0)} itens
+              {Object.values(categories).reduce((total: number, items: any[]) => total + items.length, 0 as number)} itens
             </Badge>
           </h3>
           
