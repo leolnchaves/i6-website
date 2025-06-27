@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
+import InfinityAnimation from '@/components/home/hero/InfinityAnimation';
 
 /**
  * Hero section component for the home page
@@ -53,6 +53,9 @@ const HeroSection = () => {
         {/* Background gradients for visual appeal */}
         <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 via-transparent to-blue-600/10"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-purple-600/5 via-transparent to-pink-600/5"></div>
+
+        {/* Infinity Animation Background */}
+        <InfinityAnimation />
 
         {/* Main content container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
