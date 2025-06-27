@@ -2,13 +2,18 @@
 import React, { createContext, useContext, ReactNode, useEffect, useState } from 'react';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { initializeCMS } from '@/utils/initializeCMS';
+import type { Database } from '@/integrations/supabase/types';
+
+type CMSContent = Database['public']['Tables']['cms_content']['Row'];
 
 interface CMSContextType {
   getContent: (key: string) => string;
+  getContentByPage: (page: string) => CMSContent[];
+  getContentByPageAndCategory: (page: string, category: string) => CMSContent[];
   updateContent: (key: string, contentEn: string, contentPt: string) => Promise<void>;
-  createContent: (key: string, contentEn: string, contentPt: string, contentType?: string, category?: string) => Promise<void>;
+  createContent: (key: string, contentEn: string, contentPt: string, contentType?: string, category?: string, page?: string) => Promise<void>;
   deleteContent: (key: string) => Promise<void>;
-  content: any[];
+  content: CMSContent[];
   loading: boolean;
   refetch: () => Promise<void>;
 }
