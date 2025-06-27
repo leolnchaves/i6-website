@@ -1,8 +1,10 @@
 
 import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
+import ResultsHeader from './results/ResultsHeader';
+import ResultCard from './results/ResultCard';
+import ResultsBackground from './results/ResultsBackground';
 
 const ResultsSection = () => {
   const { scrollY } = useScrollAnimation();
@@ -63,43 +65,20 @@ const ResultsSection = () => {
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-orange-50/30"></div>
-      <div className="absolute inset-0 bg-gradient-to-tl from-blue-50/30 to-transparent"></div>
+      <ResultsBackground />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16 scroll-reveal">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            <span className="block mb-2">{t('results.mainTitle')}</span>
-            <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent pb-2">
-              {t('results.mainSubtitle')}
-            </span>
-          </h2>
-          <div className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
-            <p className="mb-4">
-              {t('results.subtitle1')}
-            </p>
-            <p>
-              {t('results.subtitle2')}
-            </p>
-          </div>
-        </div>
+        <ResultsHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {results.map((result, index) => (
-            <Card key={index} className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass" style={{ animationDelay: `${index * 0.1}s` }}>
-              <CardContent className="p-6 text-center">
-                <div className="mb-4 flex justify-center animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
-                  {result.icon}
-                </div>
-                <h3 className="text-lg font-semibold mb-3 text-gray-900">
-                  {result.title}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {result.description}
-                </p>
-              </CardContent>
-            </Card>
+            <ResultCard
+              key={index}
+              icon={result.icon}
+              title={result.title}
+              description={result.description}
+              index={index}
+            />
           ))}
         </div>
       </div>
