@@ -9,6 +9,127 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cms_page_content: {
+        Row: {
+          content: string | null
+          created_at: string
+          field_name: string
+          id: string
+          language: string
+          page_id: string
+          section_name: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          field_name: string
+          id?: string
+          language?: string
+          page_id: string
+          section_name: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          field_name?: string
+          id?: string
+          language?: string
+          page_id?: string
+          section_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_page_content_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "cms_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_pages: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_seo: {
+        Row: {
+          canonical_url: string | null
+          created_at: string
+          follow_flag: boolean | null
+          id: string
+          index_flag: boolean | null
+          language: string
+          meta_description: string | null
+          meta_title: string | null
+          page_id: string
+          slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          canonical_url?: string | null
+          created_at?: string
+          follow_flag?: boolean | null
+          id?: string
+          index_flag?: boolean | null
+          language?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          page_id: string
+          slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          canonical_url?: string | null
+          created_at?: string
+          follow_flag?: boolean | null
+          id?: string
+          index_flag?: boolean | null
+          language?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          page_id?: string
+          slug?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_seo_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "cms_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cms_users: {
         Row: {
           created_at: string
@@ -51,6 +172,7 @@ export type Database = {
     }
     Enums: {
       cms_user_role: "admin" | "editor" | "viewer"
+      supported_language: "en" | "pt"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -167,6 +289,7 @@ export const Constants = {
   public: {
     Enums: {
       cms_user_role: ["admin", "editor", "viewer"],
+      supported_language: ["en", "pt"],
     },
   },
 } as const
