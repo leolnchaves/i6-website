@@ -145,7 +145,7 @@ export const enTranslations = {
   'solutions.process.integration.description': 'Seamless deployment across your digital ecosystem',
   
   // Solutions Sandbox
-  'solutions.sandbox.title': 'Sandbox Environment & Consulting Support Included',
+  'solutions.sandbox.title': 'Risk-Free Sandbox Environment & Expert Support Included',
   'solutions.sandbox.description': 'Complete testing environment with expert guidance throughout your journey',
   'solutions.sandbox.feature1': 'Risk-Free Testing Environment',
   'solutions.sandbox.feature2': 'Expert Consulting & Support',

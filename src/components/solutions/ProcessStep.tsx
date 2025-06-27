@@ -14,6 +14,10 @@ interface ProcessStepProps {
 }
 
 const ProcessStep = ({ step, index, isLast }: ProcessStepProps) => {
+  // Special styling for the last step (Integration)
+  const isIntegrationStep = step.key === 'integration';
+  const titleColor = isIntegrationStep ? 'text-purple-600' : 'text-gray-900';
+  
   return (
     <div className="flex flex-col items-center relative flex-1">
       {/* Step Number Circle */}
@@ -24,7 +28,7 @@ const ProcessStep = ({ step, index, isLast }: ProcessStepProps) => {
       {/* Step Card */}
       <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-xs text-center border border-gray-100 h-[240px] flex flex-col justify-between">
         <div className="flex-1 flex flex-col justify-center">
-          <h3 className="font-bold text-gray-900 text-base mb-3 leading-tight">
+          <h3 className={`font-bold ${titleColor} text-base mb-3 leading-tight`}>
             {step.title}
           </h3>
           <div className="text-xs text-gray-600 mb-3 font-medium bg-gray-50 rounded-full px-3 py-1 inline-block">
