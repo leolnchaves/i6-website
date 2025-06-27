@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -202,7 +203,9 @@ const ContentEditor: React.FC = () => {
           <h3 className="text-xl font-semibold capitalize flex items-center space-x-2">
             <span>{page === 'component' ? 'Componentes Reutilizáveis' : `Página: ${page}`}</span>
             <Badge variant="secondary">
-              {Object.values(categories).reduce((total: number, items: any[]) => total + items.length, 0 as number)} itens
+              {Object.values(categories).reduce((total: number, items: any) => {
+                return total + (Array.isArray(items) ? items.length : 0);
+              }, 0)} itens
             </Badge>
           </h3>
           
@@ -211,12 +214,12 @@ const ContentEditor: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2 text-lg">
                   <span className="capitalize">{category}</span>
-                  <Badge variant="outline">{items.length} itens</Badge>
+                  <Badge variant="outline">{Array.isArray(items) ? items.length : 0} itens</Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {items.map((item: any) => (
+                  {Array.isArray(items) && items.map((item: any) => (
                     <div key={item.key} className="border rounded-lg p-4">
                       {editingItem?.key === item.key ? (
                         <div className="space-y-4">
