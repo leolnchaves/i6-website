@@ -1,6 +1,5 @@
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 interface SolutionCardProps {
   icon: React.ReactNode;
@@ -8,40 +7,43 @@ interface SolutionCardProps {
   description: string;
   index: number;
   engine: string;
-  backgroundImage?: string;
+  backgroundColor: string;
 }
 
-const SolutionCard = ({ icon, title, description, index, engine, backgroundImage }: SolutionCardProps) => {
+const SolutionCard = ({ icon, title, description, index, engine, backgroundColor }: SolutionCardProps) => {
   return (
-    <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 scroll-reveal bg-white" style={{ animationDelay: `${index * 0.1}s` }}>
-      {/* Image section with overlay */}
-      <div 
-        className="relative h-32 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-        style={{
-          backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
+    <Card 
+      className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 scroll-reveal rounded-2xl" 
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      {/* Main content with solid background color */}
+      <CardContent 
+        className="p-6 h-full flex flex-col justify-between text-white relative"
+        style={{ backgroundColor }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50"></div>
-        
-        {/* Badge for engine */}
-        <Badge className="absolute top-3 left-3 bg-green-600 hover:bg-green-700 text-white text-xs font-medium">
-          {engine}
-        </Badge>
-        
-        {/* Title overlay */}
-        <div className="relative z-10 text-center px-4">
-          <h3 className="text-white font-semibold text-sm leading-tight">
-            {title}
-          </h3>
+        {/* Engine badge */}
+        <div className="flex justify-between items-start mb-4">
+          <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+            <span className="text-xs font-medium text-white">
+              {engine}
+            </span>
+          </div>
         </div>
-      </div>
-      
-      {/* Content section */}
-      <CardContent className="p-4">
-        <p className="text-gray-600 text-xs leading-relaxed">
+        
+        {/* Icon */}
+        <div className="mb-4 flex items-center justify-start">
+          <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+            {icon}
+          </div>
+        </div>
+        
+        {/* Title */}
+        <h3 className="font-bold text-lg mb-3 leading-tight text-white">
+          {title}
+        </h3>
+        
+        {/* Description */}
+        <p className="text-white/90 text-sm leading-relaxed flex-grow">
           {description}
         </p>
       </CardContent>
