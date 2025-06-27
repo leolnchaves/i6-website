@@ -1,4 +1,3 @@
-
 export const ptTranslations = {
   // Header
   'header.home': 'Início',
@@ -16,6 +15,8 @@ export const ptTranslations = {
   'hero.watchDemo': 'Ver Demo',
   
   // Results Section
+  'results.mainTitle': 'Impacto Real de IA',
+  'results.mainSubtitle': 'Gerando Crescimento dos Negócios',
   'results.title': 'Impacto Real de IA Que Gera Crescimento dos Negócios',
   'results.subtitle1': 'Chega de soluções GenAI e agentes que não entregam resultados reais. Chega de focar apenas na produtividade de software. Chega de alta complexidade técnica e longas jornadas de integração.',
   'results.subtitle2': 'Nossa abordagem única combina inteligência artificial avançada com estratégia de negócios, entregando impacto mensurável e transformação real para sua empresa.',
@@ -44,6 +45,10 @@ export const ptTranslations = {
   'stats.companiesTransformed': 'Empresas Transformadas',
   'stats.accuracyRate': 'Taxa de Precisão',
   'stats.expertSupport': 'Suporte Especializado',
+  'stats.topEngine': 'Precisão do motor principal',
+  'stats.securityIssue': 'Questão de Segurança',
+  'stats.leadtime': 'Tempo de captura de valor (mês)',
+  'stats.explainability': 'Explicabilidade do motor de IA',
   
   // CTA Section
   'cta.title': 'Pronto para Transformar Seu Negócio?',
@@ -247,6 +252,7 @@ export const ptTranslations = {
   'contact.faq.a10': 'Sim. Nossos especialistas apoiam você na formatação do ângulo de negócio por trás de cada iniciativa de IA. Cuidamos de todo o processo de engenharia de características — transformando dados brutos em sinais preditivos de alto impacto adaptados aos seus objetivos.',
   'contact.form.title': 'Envie-nos uma Mensagem',
   'contact.form.subtitle': 'Preencha o formulário abaixo e entraremos em contato em até 24 horas.',
+  'contact.form.growthMessage': 'O crescimento começa com uma mensagem. Envie a sua.',
   'contact.form.fullName': 'Nome Completo',
   'contact.form.namePlaceholder': 'Seu nome completo',
   'contact.form.emailAddress': 'Endereço de Email',

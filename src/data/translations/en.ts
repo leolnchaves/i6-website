@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // Header
   'header.home': 'Home',
@@ -16,6 +15,8 @@ export const enTranslations = {
   'hero.watchDemo': 'Watch Demo',
   
   // Results Section
+  'results.mainTitle': 'Real AI Impact',
+  'results.mainSubtitle': 'Driving Business Growth',
   'results.title': 'Real AI Impact That Drives Business Growth',
   'results.subtitle1': 'No more GenAI solutions and agents that don\'t deliver real results. No more focus only on software productivity. No more high technical complexity and long integration journeys.',
   'results.subtitle2': 'Our unique approach combines advanced artificial intelligence with business strategy, delivering measurable impact and real transformation for your company.',
@@ -44,6 +45,10 @@ export const enTranslations = {
   'stats.companiesTransformed': 'Companies Transformed',
   'stats.accuracyRate': 'Accuracy Rate',
   'stats.expertSupport': 'Expert Support',
+  'stats.topEngine': 'Top engine accuracy',
+  'stats.securityIssue': 'Security Issue',
+  'stats.leadtime': 'Value capture leadtime (month)',
+  'stats.explainability': 'AI engine explainability',
   
   // CTA Section
   'cta.title': 'Ready to Transform Your Business?',
@@ -247,6 +252,7 @@ export const enTranslations = {
   'contact.faq.a10': 'Yes. Our experts support you in shaping the business angle behind each AI initiative. We handle the entire feature engineering process — transforming raw data into high-impact predictive signals tailored to your goals.',
   'contact.form.title': 'Send Us a Message',
   'contact.form.subtitle': 'Fill out the form below and we\'ll get back to you within 24 hours.',
+  'contact.form.growthMessage': 'Growth starts with one message. Send yours.',
   'contact.form.fullName': 'Full Name',
   'contact.form.namePlaceholder': 'Your full name',
   'contact.form.emailAddress': 'Email Address',

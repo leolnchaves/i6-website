@@ -19,19 +19,19 @@ const StatsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-8">
           <div className="scroll-reveal">
             <div className="text-5xl font-bold mb-2 animate-bounce-in">97%</div>
-            <div className="text-xl opacity-90">Top engine accuracy</div>
+            <div className="text-xl opacity-90">{t('stats.topEngine')}</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.2s' }}>
             <div className="text-5xl font-bold mb-2 animate-bounce-in">0</div>
-            <div className="text-xl opacity-90">Security Issue</div>
+            <div className="text-xl opacity-90">{t('stats.securityIssue')}</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.4s' }}>
             <div className="text-5xl font-bold mb-2 animate-bounce-in">{'< 1,5'}</div>
-            <div className="text-xl opacity-90">Value capture leadtime (month)</div>
+            <div className="text-xl opacity-90">{t('stats.leadtime')}</div>
           </div>
           <div className="scroll-reveal" style={{ animationDelay: '0.6s' }}>
             <div className="text-5xl font-bold mb-2 animate-bounce-in">100%</div>
-            <div className="text-xl opacity-90">AI engine explainability</div>
+            <div className="text-xl opacity-90">{t('stats.explainability')}</div>
           </div>
         </div>
         

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -36,7 +35,7 @@ const ContactForm = () => {
     <Card className="border-0 shadow-2xl">
       <CardHeader className="p-8">
         <CardTitle className="text-2xl font-bold text-gray-900">
-          Growth starts with one message. Send yours.
+          {t('contact.form.growthMessage')}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-8 pt-0">
