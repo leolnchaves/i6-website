@@ -2,11 +2,8 @@
 import { Calendar, Clock, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const CalendlySection = () => {
-  const { t } = useLanguage();
-
   return (
     <Card className="border-0 shadow-lg">
       <CardContent className="p-8">
@@ -15,10 +12,10 @@ const CalendlySection = () => {
             <Calendar className="w-8 h-8 text-white" />
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            {t('contact.calendly.title')}
+            Schedule a Free Consultation
           </h3>
           <p className="text-gray-600 mb-8">
-            {t('contact.calendly.description')}
+            Book a personalized session with our AI specialists to explore how we can transform your business operations.
           </p>
         </div>
 
