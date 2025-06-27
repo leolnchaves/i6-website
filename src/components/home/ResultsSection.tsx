@@ -12,40 +12,9 @@ const ResultsSection = () => {
 
   const results = [
     {
-      icon: <Search className="w-8 h-8 text-teal-500" />,
-      title: t('results.productDiscovery.title'),
-      description: t('results.productDiscovery.description'),
-      engine: 'i6 RecSys'
-    },
-    {
-      icon: <Users className="w-8 h-8 text-pink-500" />,
-      title: t('results.realTimeRec.title'),
-      description: t('results.realTimeRec.description'),
-      engine: 'i6 RecSys'
-    },
-    {
-      icon: <Target className="w-8 h-8 text-purple-500" />,
-      title: t('results.marketDemand.title'),
-      description: t('results.marketDemand.description'),
-      engine: 'i6 RecSys'
-    },
-    {
-      icon: <Award className="w-8 h-8 text-orange-600" />,
-      title: t('results.proposalEngagement.title'),
-      description: t('results.proposalEngagement.description'),
-      engine: 'i6 RecSys'
-    },
-    {
       icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
       title: t('results.conversionRate.title'),
-      description: t('results.conversionRate.description'),
-      engine: 'i6 Previsio'
-    },
-    {
-      icon: <DollarSign className="w-8 h-8 text-green-500" />,
-      title: t('results.dynamicPricing.title'),
-      description: t('results.dynamicPricing.description'),
-      engine: 'i6 ElasticPrice'
+      description: t('results.conversionRate.description')
     },
     {
       icon: <Shield className="w-8 h-8 text-blue-500" />,
@@ -61,6 +30,31 @@ const ResultsSection = () => {
       icon: <Eye className="w-8 h-8 text-red-500" />,
       title: t('results.bounceRate.title'),
       description: t('results.bounceRate.description')
+    },
+    {
+      icon: <Award className="w-8 h-8 text-orange-600" />,
+      title: t('results.proposalEngagement.title'),
+      description: t('results.proposalEngagement.description')
+    },
+    {
+      icon: <Users className="w-8 h-8 text-pink-500" />,
+      title: t('results.realTimeRec.title'),
+      description: t('results.realTimeRec.description')
+    },
+    {
+      icon: <Search className="w-8 h-8 text-teal-500" />,
+      title: t('results.productDiscovery.title'),
+      description: t('results.productDiscovery.description')
+    },
+    {
+      icon: <DollarSign className="w-8 h-8 text-green-500" />,
+      title: t('results.dynamicPricing.title'),
+      description: t('results.dynamicPricing.description')
+    },
+    {
+      icon: <Target className="w-8 h-8 text-purple-500" />,
+      title: t('results.marketDemand.title'),
+      description: t('results.marketDemand.description')
     },
     {
       icon: <Clock className="w-8 h-8 text-blue-600" />,
@@ -84,7 +78,6 @@ const ResultsSection = () => {
               title={result.title}
               description={result.description}
               index={index}
-              engine={result.engine}
             />
           ))}
         </div>

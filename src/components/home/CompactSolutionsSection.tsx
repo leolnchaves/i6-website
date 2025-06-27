@@ -12,38 +12,32 @@ const CompactSolutionsSection = () => {
     {
       icon: <Target className="w-6 h-6 text-blue-700" />,
       title: t('solutions.smartDiscovery.title'),
-      description: t('solutions.smartDiscovery.description'),
-      backgroundImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop'
+      description: t('solutions.smartDiscovery.description')
     },
     {
       icon: <Users className="w-6 h-6 text-orange-700" />,
       title: t('solutions.predictivePersonalization.title'),
-      description: t('solutions.predictivePersonalization.description'),
-      backgroundImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop'
+      description: t('solutions.predictivePersonalization.description')
     },
     {
       icon: <Cog className="w-6 h-6 text-blue-700" />,
       title: t('solutions.industrialRecommendation.title'),
-      description: t('solutions.industrialRecommendation.description'),
-      backgroundImage: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop'
+      description: t('solutions.industrialRecommendation.description')
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-gray-700" />,
       title: t('solutions.predictiveCampaign.title'),
-      description: t('solutions.predictiveCampaign.description'),
-      backgroundImage: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop'
+      description: t('solutions.predictiveCampaign.description')
     },
     {
       icon: <DollarSign className="w-6 h-6 text-orange-700" />,
       title: t('solutions.smartPricing.title'),
-      description: t('solutions.smartPricing.description'),
-      backgroundImage: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop'
+      description: t('solutions.smartPricing.description')
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-blue-700" />,
       title: t('solutions.demandForecasting.title'),
-      description: t('solutions.demandForecasting.description'),
-      backgroundImage: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop'
+      description: t('solutions.demandForecasting.description')
     }
   ];
 
@@ -68,7 +62,6 @@ const CompactSolutionsSection = () => {
               title={solution.title}
               description={solution.description}
               index={index}
-              backgroundImage={solution.backgroundImage}
             />
           ))}
         </div>

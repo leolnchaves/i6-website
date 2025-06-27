@@ -6,35 +6,25 @@ interface SolutionCardProps {
   title: string;
   description: string;
   index: number;
-  backgroundImage?: string;
 }
 
-const SolutionCard = ({ icon, title, description, index, backgroundImage }: SolutionCardProps) => {
+const SolutionCard = ({ icon, title, description, index }: SolutionCardProps) => {
   return (
-    <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden scroll-reveal" style={{ animationDelay: `${index * 0.1}s` }}>
-      {/* Image section with title overlay */}
-      <div 
-        className="relative h-32 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-        style={{
-          backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
-        
-        {/* Title over the image */}
-        <h3 className="relative z-10 text-white font-semibold text-sm text-center px-4 leading-tight">
-          {title}
-        </h3>
-      </div>
-
-      <CardContent className="p-4">
-        {/* Description */}
-        <p className="text-gray-600 text-xs leading-relaxed">
-          {description}
-        </p>
+    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass bg-white/80 backdrop-blur-sm" style={{ animationDelay: `${index * 0.1}s` }}>
+      <CardContent className="p-6">
+        <div className="flex items-start mb-4">
+          <div className="mr-3 mt-1 animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
+            {icon}
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900 leading-tight">
+              {title}
+            </h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              {description}
+            </p>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
