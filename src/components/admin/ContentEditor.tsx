@@ -1,28 +1,26 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { Edit, Save, X, Plus, Trash2 } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Pencil, Plus, Trash2, Save, X } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
 
-interface ContentItem {
-  id: string;
+interface EditingContent {
   key: string;
   content_en: string;
   content_pt: string;
-  content_type: string;
-  category: string | null;
+  category?: string;
+  content_type?: string;
 }
 
 const ContentEditor: React.FC = () => {
   const { content, loading, updateContent, createContent, deleteContent } = useCMS();
-  const [editingItem, setEditingItem] = useState<string | null>(null);
-  const [editData, setEditData] = useState<{ en: string; pt: string }>({ en: '', pt: '' });
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [newItem, setNewItem] = useState({
+  const [editingItem, setEditingItem] = useState<EditingContent | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [newContent, setNewContent] = useState<EditingContent>({
     key: '',
     content_en: '',
     content_pt: '',
@@ -30,121 +28,140 @@ const ContentEditor: React.FC = () => {
     content_type: 'text'
   });
 
-  const handleEdit = (item: ContentItem) => {
-    setEditingItem(item.key);
-    setEditData({ en: item.content_en, pt: item.content_pt });
+  const handleEdit = (item: any) => {
+    setEditingItem({
+      key: item.key,
+      content_en: item.content_en,
+      content_pt: item.content_pt,
+      category: item.category,
+      content_type: item.content_type
+    });
   };
 
-  const handleSave = async (key: string) => {
-    await updateContent(key, editData.en, editData.pt);
+  const handleSave = async () => {
+    if (!editingItem) return;
+    
+    await updateContent(editingItem.key, editingItem.content_en, editingItem.content_pt);
     setEditingItem(null);
-    setEditData({ en: '', pt: '' });
-  };
-
-  const handleCancel = () => {
-    setEditingItem(null);
-    setEditData({ en: '', pt: '' });
   };
 
   const handleCreate = async () => {
-    if (newItem.key && newItem.content_en && newItem.content_pt) {
-      await createContent(
-        newItem.key,
-        newItem.content_en,
-        newItem.content_pt,
-        newItem.content_type,
-        newItem.category || undefined
-      );
-      setNewItem({
-        key: '',
-        content_en: '',
-        content_pt: '',
-        category: '',
-        content_type: 'text'
-      });
-      setShowCreateForm(false);
+    if (!newContent.key || !newContent.content_en || !newContent.content_pt) {
+      return;
     }
+    
+    await createContent(
+      newContent.key, 
+      newContent.content_en, 
+      newContent.content_pt, 
+      newContent.content_type || 'text',
+      newContent.category
+    );
+    
+    setNewContent({
+      key: '',
+      content_en: '',
+      content_pt: '',
+      category: '',
+      content_type: 'text'
+    });
+    setIsCreating(false);
   };
 
   const handleDelete = async (key: string) => {
-    if (window.confirm('Are you sure you want to delete this content?')) {
+    if (confirm('Tem certeza que deseja deletar este conteúdo?')) {
       await deleteContent(key);
     }
   };
 
-  if (loading) {
-    return <div className="flex justify-center p-8">Loading...</div>;
-  }
-
-  // Group content by category
-  const groupedContent = content.reduce((acc: any, item: ContentItem) => {
-    const category = item.category || 'General';
-    if (!acc[category]) acc[category] = [];
+  const groupedContent = content.reduce((acc: any, item: any) => {
+    const category = item.category || 'uncategorized';
+    if (!acc[category]) {
+      acc[category] = [];
+    }
     acc[category].push(item);
     return acc;
   }, {});
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-lg">Carregando conteúdo...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">Content Management</h2>
-        <Button onClick={() => setShowCreateForm(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Content
+        <h2 className="text-2xl font-bold">Editor de Conteúdo</h2>
+        <Button onClick={() => setIsCreating(true)} className="flex items-center space-x-2">
+          <Plus className="w-4 h-4" />
+          <span>Novo Conteúdo</span>
         </Button>
       </div>
 
-      {showCreateForm && (
+      {isCreating && (
         <Card>
           <CardHeader>
-            <CardTitle>Create New Content</CardTitle>
+            <CardTitle>Criar Novo Conteúdo</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="key">Key</Label>
-                <Input
-                  id="key"
-                  value={newItem.key}
-                  onChange={(e) => setNewItem({ ...newItem, key: e.target.value })}
-                  placeholder="e.g., header.title"
-                />
-              </div>
-              <div>
-                <Label htmlFor="category">Category</Label>
-                <Input
-                  id="category"
-                  value={newItem.category}
-                  onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-                  placeholder="e.g., header"
-                />
-              </div>
-            </div>
-            
             <div>
-              <Label htmlFor="content_en">English Content</Label>
-              <Textarea
-                id="content_en"
-                value={newItem.content_en}
-                onChange={(e) => setNewItem({ ...newItem, content_en: e.target.value })}
-                placeholder="English content"
+              <label className="block text-sm font-medium mb-1">Chave</label>
+              <Input
+                value={newContent.key}
+                onChange={(e) => setNewContent({ ...newContent, key: e.target.value })}
+                placeholder="exemplo: hero.title"
               />
             </div>
-            
             <div>
-              <Label htmlFor="content_pt">Portuguese Content</Label>
-              <Textarea
-                id="content_pt"
-                value={newItem.content_pt}
-                onChange={(e) => setNewItem({ ...newItem, content_pt: e.target.value })}
-                placeholder="Portuguese content"
+              <label className="block text-sm font-medium mb-1">Categoria</label>
+              <Input
+                value={newContent.category}
+                onChange={(e) => setNewContent({ ...newContent, category: e.target.value })}
+                placeholder="hero, stats, cta, etc."
               />
             </div>
-            
+            <div>
+              <label className="block text-sm font-medium mb-1">Conteúdo (Inglês)</label>
+              <Textarea
+                value={newContent.content_en}
+                onChange={(e) => setNewContent({ ...newContent, content_en: e.target.value })}
+                placeholder="Conteúdo em inglês..."
+                rows={3}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Conteúdo (Português)</label>
+              <Textarea
+                value={newContent.content_pt}
+                onChange={(e) => setNewContent({ ...newContent, content_pt: e.target.value })}
+                placeholder="Conteúdo em português..."
+                rows={3}
+              />
+            </div>
             <div className="flex space-x-2">
-              <Button onClick={handleCreate}>Create</Button>
-              <Button variant="outline" onClick={() => setShowCreateForm(false)}>
-                Cancel
+              <Button onClick={handleCreate} className="flex items-center space-x-2">
+                <Save className="w-4 h-4" />
+                <span>Criar</span>
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setIsCreating(false);
+                  setNewContent({
+                    key: '',
+                    content_en: '',
+                    content_pt: '',
+                    category: '',
+                    content_type: 'text'
+                  });
+                }}
+                className="flex items-center space-x-2"
+              >
+                <X className="w-4 h-4" />
+                <span>Cancelar</span>
               </Button>
             </div>
           </CardContent>
@@ -154,69 +171,71 @@ const ContentEditor: React.FC = () => {
       {Object.entries(groupedContent).map(([category, items]: [string, any]) => (
         <Card key={category}>
           <CardHeader>
-            <CardTitle className="capitalize">{category}</CardTitle>
+            <CardTitle className="flex items-center space-x-2">
+              <span className="capitalize">{category}</span>
+              <Badge variant="secondary">{items.length} itens</Badge>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {items.map((item: ContentItem) => (
+              {items.map((item: any) => (
                 <div key={item.key} className="border rounded-lg p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-medium text-sm text-gray-600">{item.key}</h4>
-                    <div className="flex space-x-2">
-                      {editingItem === item.key ? (
-                        <>
-                          <Button size="sm" onClick={() => handleSave(item.key)}>
-                            <Save className="w-4 h-4" />
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={handleCancel}>
-                            <X className="w-4 h-4" />
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Button size="sm" variant="outline" onClick={() => handleEdit(item)}>
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="destructive" 
-                            onClick={() => handleDelete(item.key)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  
-                  {editingItem === item.key ? (
-                    <div className="space-y-3">
+                  {editingItem?.key === item.key ? (
+                    <div className="space-y-4">
                       <div>
-                        <Label className="text-xs">English</Label>
+                        <label className="block text-sm font-medium mb-1">Chave: {item.key}</label>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Conteúdo (Inglês)</label>
                         <Textarea
-                          value={editData.en}
-                          onChange={(e) => setEditData({ ...editData, en: e.target.value })}
-                          className="mt-1"
+                          value={editingItem.content_en}
+                          onChange={(e) => setEditingItem({ ...editingItem, content_en: e.target.value })}
+                          rows={3}
                         />
                       </div>
                       <div>
-                        <Label className="text-xs">Portuguese</Label>
+                        <label className="block text-sm font-medium mb-1">Conteúdo (Português)</label>
                         <Textarea
-                          value={editData.pt}
-                          onChange={(e) => setEditData({ ...editData, pt: e.target.value })}
-                          className="mt-1"
+                          value={editingItem.content_pt}
+                          onChange={(e) => setEditingItem({ ...editingItem, content_pt: e.target.value })}
+                          rows={3}
                         />
+                      </div>
+                      <div className="flex space-x-2">
+                        <Button onClick={handleSave} className="flex items-center space-x-2">
+                          <Save className="w-4 h-4" />
+                          <span>Salvar</span>
+                        </Button>
+                        <Button variant="outline" onClick={() => setEditingItem(null)} className="flex items-center space-x-2">
+                          <X className="w-4 h-4" />
+                          <span>Cancelar</span>
+                        </Button>
                       </div>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label className="text-xs text-blue-600">English</Label>
-                        <p className="text-sm mt-1">{item.content_en}</p>
+                    <div>
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h4 className="font-medium text-sm text-gray-600">{item.key}</h4>
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline" onClick={() => handleEdit(item)}>
+                            <Pencil className="w-3 h-3" />
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => handleDelete(item.key)}>
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
                       </div>
-                      <div>
-                        <Label className="text-xs text-green-600">Portuguese</Label>
-                        <p className="text-sm mt-1">{item.content_pt}</p>
+                      <div className="space-y-2">
+                        <div>
+                          <span className="text-sm font-medium">EN:</span>
+                          <p className="text-sm text-gray-700">{item.content_en}</p>
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium">PT:</span>
+                          <p className="text-sm text-gray-700">{item.content_pt}</p>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -226,6 +245,14 @@ const ContentEditor: React.FC = () => {
           </CardContent>
         </Card>
       ))}
+
+      {Object.keys(groupedContent).length === 0 && (
+        <Card>
+          <CardContent className="text-center py-8">
+            <p className="text-gray-500">Nenhum conteúdo encontrado. Clique em "Novo Conteúdo" para começar.</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

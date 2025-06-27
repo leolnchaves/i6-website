@@ -7,7 +7,7 @@ export const initializeCMS = async () => {
     
     // Testar a conexão com o Supabase usando uma consulta simples
     const { data, error } = await supabase
-      .from('cms_content')
+      .from('cms_content' as any)
       .select('id')
       .limit(1);
     

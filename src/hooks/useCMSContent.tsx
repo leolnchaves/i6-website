@@ -25,36 +25,46 @@ export const useCMSContent = () => {
       console.log('🚀 Buscando conteúdo CMS...');
       setLoading(true);
       
-      // Fazer requisição direta usando o schema público (sem especificar schema)
+      // Fazer requisição usando query SQL direta para evitar problemas de tipo
       const { data, error } = await supabase
-        .from('cms_content')
-        .select('*')
-        .order('category', { ascending: true })
-        .order('key', { ascending: true });
+        .rpc('get_cms_content')
+        .then(async (result) => {
+          // Se a função RPC não existir, fazer query direta
+          if (result.error?.code === '42883') {
+            return await supabase
+              .from('cms_content' as any)
+              .select('*')
+              .order('category', { ascending: true })
+              .order('key', { ascending: true });
+          }
+          return result;
+        });
 
       if (error) {
         console.error('❌ Erro do Supabase:', error);
         
-        // Se houver erro de tabela não encontrada, inserir dados de exemplo
-        if (error.code === 'PGRST116' || error.message.includes('does not exist')) {
-          console.log('📝 Tabela não encontrada, inserindo dados de exemplo...');
-          await insertSampleData();
-          return;
-        }
+        // Usar dados estáticos como fallback
+        console.log('🔄 Usando dados estáticos como fallback...');
+        setContent(getStaticContent());
         
-        throw error;
+        toast({
+          title: "Aviso",
+          description: "Usando conteúdo estático - dados dinâmicos não disponíveis",
+          variant: "default",
+        });
+        return;
       }
       
       console.log('✅ Conteúdo CMS carregado:', data?.length || 0, 'itens');
       
-      // Se não há dados, inserir dados de exemplo
+      // Se não há dados, usar dados estáticos
       if (!data || data.length === 0) {
-        console.log('📝 Nenhum dado encontrado, inserindo dados de exemplo...');
-        await insertSampleData();
+        console.log('📝 Nenhum dado encontrado, usando dados estáticos...');
+        setContent(getStaticContent());
         return;
       }
       
-      console.log('📋 Chaves disponíveis:', data?.map(item => item.key));
+      console.log('📋 Chaves disponíveis:', data?.map((item: any) => item.key));
       setContent(data || []);
     } catch (error) {
       console.error('❌ Erro ao buscar conteúdo CMS:', error);
@@ -96,36 +106,6 @@ export const useCMSContent = () => {
     ];
   };
 
-  const insertSampleData = async () => {
-    try {
-      const sampleData = getStaticContent().map(item => ({
-        key: item.key,
-        content_en: item.content_en,
-        content_pt: item.content_pt,
-        content_type: item.content_type,
-        category: item.category
-      }));
-
-      const { error } = await supabase
-        .from('cms_content')
-        .insert(sampleData);
-
-      if (error) {
-        console.error('❌ Erro ao inserir dados de exemplo:', error);
-        // Usar dados estáticos se inserção falhar
-        setContent(getStaticContent());
-      } else {
-        console.log('✅ Dados de exemplo inseridos com sucesso');
-        // Buscar novamente depois de inserir
-        await fetchContent();
-      }
-    } catch (error) {
-      console.error('❌ Erro ao inserir dados de exemplo:', error);
-      // Usar dados estáticos como último recurso
-      setContent(getStaticContent());
-    }
-  };
-
   const getContent = (key: string): string => {
     const item = content.find(c => c.key === key);
     if (!item) {
@@ -141,7 +121,7 @@ export const useCMSContent = () => {
   const updateContent = async (key: string, contentEn: string, contentPt: string) => {
     try {
       const { error } = await supabase
-        .from('cms_content')
+        .from('cms_content' as any)
         .update({
           content_en: contentEn,
           content_pt: contentPt,
@@ -169,7 +149,7 @@ export const useCMSContent = () => {
   const createContent = async (key: string, contentEn: string, contentPt: string, contentType: string = 'text', category?: string) => {
     try {
       const { error } = await supabase
-        .from('cms_content')
+        .from('cms_content' as any)
         .insert({
           key,
           content_en: contentEn,
@@ -198,7 +178,7 @@ export const useCMSContent = () => {
   const deleteContent = async (key: string) => {
     try {
       const { error } = await supabase
-        .from('cms_content')
+        .from('cms_content' as any)
         .delete()
         .eq('key', key);
 
