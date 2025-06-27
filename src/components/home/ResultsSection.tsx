@@ -1,80 +1,52 @@
 
-import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ResultsHeader from './results/ResultsHeader';
-import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
+import ResultCard from './results/ResultCard';
 
 const ResultsSection = () => {
-  const { scrollY } = useScrollAnimation();
   const { t } = useLanguage();
 
   const results = [
     {
-      icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
-      title: t('results.conversionRate.title'),
-      description: t('results.conversionRate.description')
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      title: t('home.results.predictiveAnalytics.title'),
+      description: t('home.results.predictiveAnalytics.description')
     },
     {
-      icon: <Shield className="w-8 h-8 text-blue-500" />,
-      title: t('results.crmCost.title'), 
-      description: t('results.crmCost.description')
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      title: t('home.results.smartRecommendations.title'),
+      description: t('home.results.smartRecommendations.description')
     },
     {
-      icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
-      title: t('results.avgTicket.title'),
-      description: t('results.avgTicket.description')
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      title: t('home.results.processOptimization.title'),
+      description: t('home.results.processOptimization.description')
     },
     {
-      icon: <Eye className="w-8 h-8 text-red-500" />,
-      title: t('results.bounceRate.title'),
-      description: t('results.bounceRate.description')
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      title: t('home.results.dataInsights.title'),
+      description: t('home.results.dataInsights.description')
     },
     {
-      icon: <Award className="w-8 h-8 text-orange-600" />,
-      title: t('results.proposalEngagement.title'),
-      description: t('results.proposalEngagement.description')
-    },
-    {
-      icon: <Users className="w-8 h-8 text-pink-500" />,
-      title: t('results.realTimeRec.title'),
-      description: t('results.realTimeRec.description')
-    },
-    {
-      icon: <Search className="w-8 h-8 text-teal-500" />,
-      title: t('results.productDiscovery.title'),
-      description: t('results.productDiscovery.description')
-    },
-    {
-      icon: <DollarSign className="w-8 h-8 text-green-500" />,
-      title: t('results.dynamicPricing.title'),
-      description: t('results.dynamicPricing.description')
-    },
-    {
-      icon: <Target className="w-8 h-8 text-purple-500" />,
-      title: t('results.marketDemand.title'),
-      description: t('results.marketDemand.description')
-    },
-    {
-      icon: <Clock className="w-8 h-8 text-blue-600" />,
-      title: t('results.rapidImplementation.title'),
-      description: t('results.rapidImplementation.description')
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      title: t('home.results.automatedDecisions.title'),
+      description: t('home.results.automatedDecisions.description')
     }
   ];
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className="py-20 relative overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50/30">
       <ResultsBackground />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ResultsHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-12">
           {results.map((result, index) => (
             <ResultCard
               key={index}
-              icon={result.icon}
+              image={result.image}
               title={result.title}
               description={result.description}
               index={index}
