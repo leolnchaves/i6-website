@@ -3,17 +3,9 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from '@/components/ui/use-toast';
+import type { Database } from '@/integrations/supabase/types';
 
-interface CMSContent {
-  id: string;
-  key: string;
-  content_en: string;
-  content_pt: string;
-  content_type: string;
-  category: string | null;
-  created_at: string;
-  updated_at: string;
-}
+type CMSContent = Database['public']['Tables']['cms_content']['Row'];
 
 export const useCMSContent = () => {
   const [content, setContent] = useState<CMSContent[]>([]);
@@ -25,20 +17,11 @@ export const useCMSContent = () => {
       console.log('🚀 Buscando conteúdo CMS...');
       setLoading(true);
       
-      // Fazer requisição usando query SQL direta para evitar problemas de tipo
       const { data, error } = await supabase
-        .rpc('get_cms_content')
-        .then(async (result) => {
-          // Se a função RPC não existir, fazer query direta
-          if (result.error?.code === '42883') {
-            return await supabase
-              .from('cms_content' as any)
-              .select('*')
-              .order('category', { ascending: true })
-              .order('key', { ascending: true });
-          }
-          return result;
-        });
+        .from('cms_content')
+        .select('*')
+        .order('category', { ascending: true })
+        .order('key', { ascending: true });
 
       if (error) {
         console.error('❌ Erro do Supabase:', error);
@@ -64,7 +47,7 @@ export const useCMSContent = () => {
         return;
       }
       
-      console.log('📋 Chaves disponíveis:', data?.map((item: any) => item.key));
+      console.log('📋 Chaves disponíveis:', data?.map((item) => item.key));
       setContent(data || []);
     } catch (error) {
       console.error('❌ Erro ao buscar conteúdo CMS:', error);
@@ -121,7 +104,7 @@ export const useCMSContent = () => {
   const updateContent = async (key: string, contentEn: string, contentPt: string) => {
     try {
       const { error } = await supabase
-        .from('cms_content' as any)
+        .from('cms_content')
         .update({
           content_en: contentEn,
           content_pt: contentPt,
@@ -149,7 +132,7 @@ export const useCMSContent = () => {
   const createContent = async (key: string, contentEn: string, contentPt: string, contentType: string = 'text', category?: string) => {
     try {
       const { error } = await supabase
-        .from('cms_content' as any)
+        .from('cms_content')
         .insert({
           key,
           content_en: contentEn,
@@ -178,7 +161,7 @@ export const useCMSContent = () => {
   const deleteContent = async (key: string) => {
     try {
       const { error } = await supabase
-        .from('cms_content' as any)
+        .from('cms_content')
         .delete()
         .eq('key', key);
 
