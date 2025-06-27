@@ -16,7 +16,7 @@ interface ProcessStepProps {
 const ProcessStep = ({ step, index, isLast }: ProcessStepProps) => {
   // Special styling for the last step (Integration)
   const isIntegrationStep = step.key === 'integration';
-  const titleColor = isIntegrationStep ? 'text-purple-600' : 'text-gray-900';
+  const titleColor = isIntegrationStep ? 'text-blue-600' : 'text-gray-900';
   
   return (
     <div className="flex flex-col items-center relative flex-1">

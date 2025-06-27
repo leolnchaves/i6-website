@@ -33,6 +33,6 @@ export const getProcessSteps = (t: (key: string) => string) => [
     title: t('solutions.process.integration.title'),
     subtitle: t('solutions.process.integration.subtitle'),
     description: t('solutions.process.integration.description'),
-    color: "from-purple-500 to-purple-600"
+    color: "from-blue-500 to-blue-600"
   }
 ];
