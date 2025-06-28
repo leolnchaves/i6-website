@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
 import { useToast } from '@/hooks/use-toast';
@@ -159,6 +158,11 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
     }
   };
 
+  // Create a specialized function for toggling active status
+  const handleToggleActive = async (index: number, isActive: boolean) => {
+    await handleCardChangeWithSync(index, 'is_active', isActive);
+  };
+
   const saveCards = async () => {
     if (!selectedPage) return;
 
@@ -245,7 +249,7 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
             onChange={handleCardChange}
             onMove={moveCard}
             onRemove={removeCard}
-            onToggleActive={handleCardChangeWithSync}
+            onToggleActive={handleToggleActive}
           />
         ))}
 
