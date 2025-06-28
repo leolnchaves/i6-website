@@ -85,6 +85,20 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
     setCards(updatedCards);
   };
 
+  const getSelectedIconDisplay = (iconName: string) => {
+    const selectedOption = iconOptions.find(option => option.value === iconName);
+    if (selectedOption) {
+      const IconComponent = selectedOption.icon;
+      return (
+        <div className="flex items-center gap-2">
+          <IconComponent className="h-4 w-4" />
+          {selectedOption.label}
+        </div>
+      );
+    }
+    return "Selecione um ícone";
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -205,7 +219,9 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
                       onValueChange={(value) => handleUpdateCard(card.id, 'icon_name', value)}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione um ícone" />
+                        <SelectValue>
+                          {getSelectedIconDisplay(card.icon_name)}
+                        </SelectValue>
                       </SelectTrigger>
                       <SelectContent className="bg-white">
                         {iconOptions.map((option) => {
