@@ -6,7 +6,7 @@ import SuccessStoriesHero from '@/components/success-stories/SuccessStoriesHero'
 import MetricsSection from '@/components/success-stories/MetricsSection';
 import StoriesGrid from '@/components/success-stories/StoriesGrid';
 import TestimonialsSection from '@/components/success-stories/TestimonialsSection';
-import CTASection from '@/components/home/CTASection';
+import SuccessStoriesCTA from '@/components/success-stories/SuccessStoriesCTA';
 
 /**
  * Success Stories page component
@@ -40,7 +40,7 @@ const SuccessStories = () => {
       <TestimonialsSection />
       
       {/* Call-to-action section */}
-      <CTASection />
+      <SuccessStoriesCTA />
     </div>
   );
 };

@@ -1,15 +1,51 @@
 
 import { TrendingUp, Users, DollarSign } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
 
 const MetricsSection = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const { getMetricsContent, loading } = useSuccessStoriesContent(language);
+  
+  const metricsContent = getMetricsContent();
 
   const metrics = [
-    { icon: <TrendingUp className="w-8 h-8" />, value: "150%", label: t('successStories.metrics.avgROI') },
-    { icon: <Users className="w-8 h-8" />, value: "500+", label: t('successStories.metrics.companiesServed') },
-    { icon: <DollarSign className="w-8 h-8" />, value: "$50M+", label: t('successStories.metrics.costSavings') }
+    { 
+      icon: <TrendingUp className="w-8 h-8" />, 
+      value: metricsContent.avgROI, 
+      label: metricsContent.avgROILabel 
+    },
+    { 
+      icon: <Users className="w-8 h-8" />, 
+      value: metricsContent.companiesServed, 
+      label: metricsContent.companiesServedLabel 
+    },
+    { 
+      icon: <DollarSign className="w-8 h-8" />, 
+      value: metricsContent.costSavings, 
+      label: metricsContent.costSavingsLabel 
+    }
   ];
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((index) => (
+              <div key={index} className="text-center bg-gray-50 rounded-lg p-8 border border-gray-200 animate-pulse">
+                <div className="flex justify-center mb-4">
+                  <div className="w-8 h-8 bg-gray-300 rounded"></div>
+                </div>
+                <div className="h-10 bg-gray-300 rounded mb-2"></div>
+                <div className="h-4 bg-gray-300 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 bg-white">
