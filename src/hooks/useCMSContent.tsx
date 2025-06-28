@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -27,7 +27,7 @@ export const useCMSContent = () => {
   const { toast } = useToast();
 
   // Buscar páginas
-  const fetchPages = async () => {
+  const fetchPages = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('cms_pages')
@@ -45,10 +45,10 @@ export const useCMSContent = () => {
         variant: 'destructive',
       });
     }
-  };
+  }, [toast]);
 
   // Buscar conteúdo de uma página específica
-  const fetchPageContent = async (pageId: string, language: string = 'en') => {
+  const fetchPageContent = useCallback(async (pageId: string, language: string = 'en') => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -70,10 +70,10 @@ export const useCMSContent = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   // Salvar/atualizar conteúdo
-  const saveContent = async (
+  const saveContent = useCallback(async (
     pageId: string,
     sectionName: string,
     fieldName: string,
@@ -133,21 +133,21 @@ export const useCMSContent = () => {
         variant: 'destructive',
       });
     }
-  };
+  }, [toast]);
 
   // Obter conteúdo específico
-  const getContent = (sectionName: string, fieldName: string, language: string = 'en') => {
+  const getContent = useCallback((sectionName: string, fieldName: string, language: string = 'en') => {
     const item = content.find(
       c => c.section_name === sectionName && 
            c.field_name === fieldName && 
            c.language === language
     );
     return item?.content || '';
-  };
+  }, [content]);
 
   useEffect(() => {
     fetchPages();
-  }, []);
+  }, [fetchPages]);
 
   return {
     pages,

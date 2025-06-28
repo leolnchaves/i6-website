@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,31 +42,33 @@ const ContentManagement = () => {
     { section: 'hero', field: 'watchDemo', label: 'Botão - "Watch Demo"', type: 'input' },
   ];
 
-  // Carregar conteúdo quando página ou idioma mudarem
-  useEffect(() => {
+  // Função para carregar dados quando página ou idioma mudarem
+  const loadData = useCallback(async () => {
     if (selectedPage) {
-      fetchPageContent(selectedPage, selectedLanguage);
-      fetchSEOData(selectedPage, selectedLanguage);
+      await Promise.all([
+        fetchPageContent(selectedPage, selectedLanguage),
+        fetchSEOData(selectedPage, selectedLanguage)
+      ]);
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
   // Atualizar formData quando conteúdo mudar
-  useEffect(() => {
+  const updateContentFormData = useCallback(() => {
     const newContentFormData: { [key: string]: string } = {};
     heroFields.forEach(field => {
       const key = `${field.section}_${field.field}`;
       newContentFormData[key] = getContent(field.section, field.field, selectedLanguage);
     });
     setContentFormData(newContentFormData);
-  }, [content, selectedLanguage, getContent]);
+  }, [getContent, selectedLanguage]);
 
   // Atualizar SEO form data quando dados de SEO mudarem
-  useEffect(() => {
+  const updateSEOFormData = useCallback(() => {
     if (selectedPage) {
       const currentSEOData = getSEOData(selectedPage, selectedLanguage);
       setSeoFormData(currentSEOData);
     }
-  }, [selectedPage, selectedLanguage, seoData, getSEOData]);
+  }, [selectedPage, selectedLanguage, getSEOData]);
 
   // Selecionar página Home automaticamente se disponível
   useEffect(() => {
@@ -77,6 +79,21 @@ const ContentManagement = () => {
       }
     }
   }, [pages, selectedPage]);
+
+  // Carregar dados quando página ou idioma mudarem
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  // Atualizar form data quando conteúdo mudar
+  useEffect(() => {
+    updateContentFormData();
+  }, [updateContentFormData]);
+
+  // Atualizar SEO form data quando dados de SEO mudarem
+  useEffect(() => {
+    updateSEOFormData();
+  }, [updateSEOFormData]);
 
   const handleContentInputChange = (key: string, value: string) => {
     setContentFormData(prev => ({ ...prev, [key]: value }));

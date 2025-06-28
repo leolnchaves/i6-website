@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface PageContent {
@@ -11,71 +11,74 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  const fetchContent = useCallback(async () => {
+    if (!pageSlug) {
+      setLoading(false);
+      return;
+    }
 
-        // Primeiro, buscar a página pelo slug
-        const { data: pageData, error: pageError } = await supabase
-          .from('cms_pages')
-          .select('id')
-          .eq('slug', pageSlug)
-          .eq('is_active', true)
-          .maybeSingle();
+    try {
+      setLoading(true);
+      setError(null);
 
-        if (pageError) {
-          console.error('Error fetching page:', pageError);
-          setError('Erro ao buscar página');
-          return;
-        }
+      // Primeiro, buscar a página pelo slug
+      const { data: pageData, error: pageError } = await supabase
+        .from('cms_pages')
+        .select('id')
+        .eq('slug', pageSlug)
+        .eq('is_active', true)
+        .maybeSingle();
 
-        if (!pageData) {
-          console.log('Page not found:', pageSlug);
-          setError('Página não encontrada');
-          return;
-        }
-
-        // Depois, buscar o conteúdo da página
-        const { data: contentData, error: contentError } = await supabase
-          .from('cms_page_content')
-          .select('section_name, field_name, content')
-          .eq('page_id', pageData.id)
-          .eq('language', language);
-
-        if (contentError) {
-          console.error('Error fetching content:', contentError);
-          setError('Erro ao carregar conteúdo');
-          return;
-        }
-
-        // Organizar dados em formato útil
-        const organizedContent: PageContent = {};
-        contentData?.forEach(item => {
-          const key = `${item.section_name}.${item.field_name}`;
-          organizedContent[key] = item.content || '';
-        });
-
-        setContent(organizedContent);
-      } catch (err) {
-        console.error('Error in fetchContent:', err);
-        setError('Erro inesperado');
-      } finally {
-        setLoading(false);
+      if (pageError) {
+        console.error('Error fetching page:', pageError);
+        setError('Erro ao buscar página');
+        return;
       }
-    };
 
-    if (pageSlug) {
-      fetchContent();
+      if (!pageData) {
+        console.log('Page not found:', pageSlug);
+        setError('Página não encontrada');
+        return;
+      }
+
+      // Depois, buscar o conteúdo da página
+      const { data: contentData, error: contentError } = await supabase
+        .from('cms_page_content')
+        .select('section_name, field_name, content')
+        .eq('page_id', pageData.id)
+        .eq('language', language);
+
+      if (contentError) {
+        console.error('Error fetching content:', contentError);
+        setError('Erro ao carregar conteúdo');
+        return;
+      }
+
+      // Organizar dados em formato útil
+      const organizedContent: PageContent = {};
+      contentData?.forEach(item => {
+        const key = `${item.section_name}.${item.field_name}`;
+        organizedContent[key] = item.content || '';
+      });
+
+      setContent(organizedContent);
+    } catch (err) {
+      console.error('Error in fetchContent:', err);
+      setError('Erro inesperado');
+    } finally {
+      setLoading(false);
     }
   }, [pageSlug, language]);
 
+  useEffect(() => {
+    fetchContent();
+  }, [fetchContent]);
+
   // Função helper para obter conteúdo específico
-  const getContent = (section: string, field: string, fallback: string = '') => {
+  const getContent = useCallback((section: string, field: string, fallback: string = '') => {
     const key = `${section}.${field}`;
     return content[key] || fallback;
-  };
+  }, [content]);
 
   return {
     content,
