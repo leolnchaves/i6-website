@@ -11,7 +11,7 @@ const CompactSolutionsSection = () => {
   const { t, language } = useLanguage();
   const { cards, loading, error } = useCMSCompactSolutionsCards(language);
 
-  console.log('=== CompactSolutionsSection Debug ===');
+  console.log('=== CompactSolutionsSection Render Debug ===');
   console.log('Current language:', language);
   console.log('Loading state:', loading);
   console.log('Error state:', error);
@@ -97,19 +97,30 @@ const CompactSolutionsSection = () => {
   const usesCMSData = cards && cards.length > 0;
   const cardsToRender = usesCMSData ? cards : fallbackSolutions;
 
-  console.log('Cards to render:', cardsToRender);
-  console.log('Uses CMS data:', usesCMSData);
-  console.log('Cards to render length:', cardsToRender.length);
+  console.log('=== Final Render Decision ===');
+  console.log('usesCMSData:', usesCMSData);
+  console.log('cardsToRender length:', cardsToRender.length);
+  console.log('cardsToRender:', cardsToRender);
 
   // Mostrar erro se houver, mas ainda renderizar com fallback
   if (error) {
     console.warn('CMS Error (usando fallback):', error);
   }
 
-  console.log('Rendering main section with', cardsToRender.length, 'cards');
+  // FORÇAR renderização com fallback para debug
+  console.log('=== FORCE RENDERING WITH FALLBACK FOR DEBUG ===');
+  const debugCardsToRender = fallbackSolutions;
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+    <section 
+      className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden"
+      style={{ minHeight: '600px' }}
+    >
+      {/* Debug info visible */}
+      <div className="fixed top-4 right-4 bg-red-500 text-white p-2 text-xs z-50 rounded">
+        DEBUG: Cards={cardsToRender.length} | CMS={usesCMSData ? 'YES' : 'NO'} | Loading={loading}
+      </div>
+      
       {/* Subtle background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent"></div>
       
@@ -117,39 +128,20 @@ const CompactSolutionsSection = () => {
         <CompactSolutionsHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {usesCMSData ? (
-            // Renderizar com dados do CMS
-            cards.map((card, index) => {
-              console.log(`Rendering CMS card ${index + 1}:`, card);
-              return (
-                <SolutionCard
-                  key={card.id}
-                  icon={iconMap[card.icon_name as keyof typeof iconMap] || <Target className="w-6 h-6 text-white" />}
-                  title={card.title}
-                  description={card.description}
-                  index={index}
-                  engine={card.engine}
-                  backgroundColor={card.background_color || '#1E4A94'}
-                />
-              );
-            })
-          ) : (
-            // Renderizar com dados de fallback
-            fallbackSolutions.map((solution, index) => {
-              console.log(`Rendering fallback card ${index + 1}:`, solution.title);
-              return (
-                <SolutionCard
-                  key={index}
-                  icon={solution.icon}
-                  title={solution.title}
-                  description={solution.description}
-                  index={index}
-                  engine={solution.engine}
-                  backgroundColor={solution.backgroundColor}
-                />
-              );
-            })
-          )}
+          {debugCardsToRender.map((solution, index) => {
+            console.log(`Rendering DEBUG fallback card ${index + 1}:`, solution.title);
+            return (
+              <SolutionCard
+                key={`debug-${index}`}
+                icon={solution.icon}
+                title={solution.title}
+                description={solution.description}
+                index={index}
+                engine={solution.engine}
+                backgroundColor={solution.backgroundColor}
+              />
+            );
+          })}
         </div>
 
         {/* Button to Solutions page */}
