@@ -43,6 +43,15 @@ const ContentManagement = () => {
     { section: 'hero', field: 'demoLink', label: 'Link do Demo (URL)', type: 'input' },
   ];
 
+  // Campos específicos para a seção Results
+  const resultsFields = [
+    { section: 'results', field: 'mainTitle', label: 'Título', type: 'input' },
+    { section: 'results', field: 'mainSubtitle', label: 'Subtítulo', type: 'input' },
+  ];
+
+  // Combinar todos os campos
+  const allFields = [...heroFields, ...resultsFields];
+
   // Função para carregar dados quando página ou idioma mudarem
   const loadData = useCallback(async () => {
     if (selectedPage) {
@@ -56,7 +65,7 @@ const ContentManagement = () => {
   // Atualizar formData quando conteúdo mudar
   const updateContentFormData = useCallback(() => {
     const newContentFormData: { [key: string]: string } = {};
-    heroFields.forEach(field => {
+    allFields.forEach(field => {
       const key = `${field.section}_${field.field}`;
       newContentFormData[key] = getContent(field.section, field.field, selectedLanguage);
     });
@@ -110,7 +119,7 @@ const ContentManagement = () => {
     setSaving(true);
     try {
       // Salvar todos os campos de conteúdo modificados
-      const contentSavePromises = heroFields.map(field => {
+      const contentSavePromises = allFields.map(field => {
         const key = `${field.section}_${field.field}`;
         const value = contentFormData[key] || '';
         
@@ -142,6 +151,50 @@ const ContentManagement = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const renderFieldsBySection = (fields: typeof allFields, sectionName: string, sectionTitle: string) => {
+    const sectionFields = fields.filter(field => field.section === sectionName);
+    
+    if (sectionFields.length === 0) return null;
+
+    return (
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">{sectionTitle}</h3>
+        <div className="space-y-4">
+          {sectionFields.map(field => {
+            const key = `${field.section}_${field.field}`;
+            const value = contentFormData[key] || '';
+
+            return (
+              <div key={key} className="space-y-2">
+                <Label htmlFor={key}>{field.label}</Label>
+                {field.type === 'textarea' ? (
+                  <Textarea
+                    id={key}
+                    value={value}
+                    onChange={(e) => handleContentInputChange(key, e.target.value)}
+                    placeholder={`Digite o ${field.label.toLowerCase()}...`}
+                    rows={3}
+                  />
+                ) : (
+                  <Input
+                    id={key}
+                    value={value}
+                    onChange={(e) => handleContentInputChange(key, e.target.value)}
+                    placeholder={
+                      field.field === 'demoLink' 
+                        ? 'https://www.youtube.com/embed/...' 
+                        : `Digite o ${field.label.toLowerCase()}...`
+                    }
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
   };
 
   if (contentLoading || seoLoading) {
@@ -234,45 +287,17 @@ const ContentManagement = () => {
           <TabsContent value="content">
             <Card>
               <CardHeader>
-                <CardTitle>Seção Hero - Página Principal</CardTitle>
+                <CardTitle>Conteúdo da Página Principal</CardTitle>
                 <CardDescription>
-                  Edite o conteúdo da seção principal da página inicial
+                  Edite o conteúdo das seções da página inicial
                   <Badge variant="outline" className="ml-2">
                     {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
                   </Badge>
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {heroFields.map(field => {
-                  const key = `${field.section}_${field.field}`;
-                  const value = contentFormData[key] || '';
-
-                  return (
-                    <div key={key} className="space-y-2">
-                      <Label htmlFor={key}>{field.label}</Label>
-                      {field.type === 'textarea' ? (
-                        <Textarea
-                          id={key}
-                          value={value}
-                          onChange={(e) => handleContentInputChange(key, e.target.value)}
-                          placeholder={`Digite o ${field.label.toLowerCase()}...`}
-                          rows={3}
-                        />
-                      ) : (
-                        <Input
-                          id={key}
-                          value={value}
-                          onChange={(e) => handleContentInputChange(key, e.target.value)}
-                          placeholder={
-                            field.field === 'demoLink' 
-                              ? 'https://www.youtube.com/embed/...' 
-                              : `Digite o ${field.label.toLowerCase()}...`
-                          }
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+                {renderFieldsBySection(allFields, 'hero', 'Seção Hero - Página Principal')}
+                {renderFieldsBySection(allFields, 'results', 'Seção Results - Resultados')}
 
                 <div className="flex justify-end pt-4">
                   <Button onClick={handleSaveContent} disabled={saving}>
