@@ -78,12 +78,12 @@ const PageSelector: React.FC<PageSelectorProps> = ({
               <Languages className="h-4 w-4 text-orange-600" />
               Idioma
             </Label>
-            <div className="flex items-center space-x-3 p-3 bg-white/80 border border-gray-200 rounded-xl">
+            <div className="h-12 flex items-center space-x-3 px-3 bg-white/80 border border-gray-200 rounded-xl">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => onLanguageChange(lang.code)}
-                  className={`relative w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 border-2 ${
+                  className={`relative w-8 h-8 rounded-full flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 border-2 ${
                     selectedLanguage === lang.code 
                       ? 'border-orange-500 shadow-lg scale-110' 
                       : 'border-gray-200 hover:border-orange-300'
@@ -91,7 +91,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
                 >
                   {lang.flag}
                   {selectedLanguage === lang.code && (
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white"></div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full border-2 border-white"></div>
                   )}
                 </button>
               ))}
