@@ -72,10 +72,13 @@ const ContentManagement = () => {
   const successStoriesMetricsFields = [
     { section: 'successStoriesMetrics', field: 'avgROI', label: 'Estatística 1', type: 'input' as const },
     { section: 'successStoriesMetrics', field: 'avgROILabel', label: 'Label Estatística 1', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'avgROIIcon', label: 'Ícone Estatística 1', type: 'icon' as const },
     { section: 'successStoriesMetrics', field: 'companiesServed', label: 'Estatística 2', type: 'input' as const },
     { section: 'successStoriesMetrics', field: 'companiesServedLabel', label: 'Label Estatística 2', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'companiesServedIcon', label: 'Ícone Estatística 2', type: 'icon' as const },
     { section: 'successStoriesMetrics', field: 'costSavings', label: 'Estatística 3', type: 'input' as const },
     { section: 'successStoriesMetrics', field: 'costSavingsLabel', label: 'Label Estatística 3', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'costSavingsIcon', label: 'Ícone Estatística 3', type: 'icon' as const },
   ];
 
   // Campos específicos para Success Stories CTA

@@ -14,10 +14,13 @@ export const useSuccessStoriesContent = (language: string = 'en') => {
   const getMetricsContent = () => ({
     avgROI: getContent('successStoriesMetrics', 'avgROI', '150%'),
     avgROILabel: getContent('successStoriesMetrics', 'avgROILabel', 'Average ROI Increase'),
+    avgROIIcon: getContent('successStoriesMetrics', 'avgROIIcon', 'trending-up'),
     companiesServed: getContent('successStoriesMetrics', 'companiesServed', '500+'),
     companiesServedLabel: getContent('successStoriesMetrics', 'companiesServedLabel', 'Companies Served'),
+    companiesServedIcon: getContent('successStoriesMetrics', 'companiesServedIcon', 'users'),
     costSavings: getContent('successStoriesMetrics', 'costSavings', '$50M+'),
-    costSavingsLabel: getContent('successStoriesMetrics', 'costSavingsLabel', 'Total Cost Savings')
+    costSavingsLabel: getContent('successStoriesMetrics', 'costSavingsLabel', 'Total Cost Savings'),
+    costSavingsIcon: getContent('successStoriesMetrics', 'costSavingsIcon', 'dollar-sign')
   });
 
   const getCTAContent = () => ({

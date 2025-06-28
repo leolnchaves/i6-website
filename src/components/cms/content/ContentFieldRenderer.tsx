@@ -3,12 +3,13 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import IconSelector from './IconSelector';
 
 interface ContentField {
   section: string;
   field: string;
   label: string;
-  type: 'input' | 'textarea';
+  type: 'input' | 'textarea' | 'icon';
 }
 
 interface ContentFieldRendererProps {
@@ -27,6 +28,18 @@ const ContentFieldRenderer: React.FC<ContentFieldRendererProps> = ({
       {fields.map(field => {
         const key = `${field.section}_${field.field}`;
         const value = formData[key] || '';
+
+        if (field.type === 'icon') {
+          return (
+            <IconSelector
+              key={key}
+              id={key}
+              label={field.label}
+              value={value}
+              onChange={(iconValue) => onFieldChange(key, iconValue)}
+            />
+          );
+        }
 
         return (
           <div key={key} className="space-y-2">

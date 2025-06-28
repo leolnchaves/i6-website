@@ -1,7 +1,31 @@
 
-import { TrendingUp, Users, DollarSign } from 'lucide-react';
+import { 
+  TrendingUp, 
+  Users, 
+  DollarSign, 
+  BarChart3, 
+  Target, 
+  Award, 
+  Zap, 
+  Building2, 
+  Globe, 
+  Rocket 
+} from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
+
+const iconMap = {
+  'trending-up': TrendingUp,
+  'users': Users,
+  'dollar-sign': DollarSign,
+  'bar-chart-3': BarChart3,
+  'target': Target,
+  'award': Award,
+  'zap': Zap,
+  'building-2': Building2,
+  'globe': Globe,
+  'rocket': Rocket,
+};
 
 const MetricsSection = () => {
   const { language } = useLanguage();
@@ -9,19 +33,24 @@ const MetricsSection = () => {
   
   const metricsContent = getMetricsContent();
 
+  const getIconComponent = (iconName: string) => {
+    const IconComponent = iconMap[iconName as keyof typeof iconMap] || TrendingUp;
+    return <IconComponent className="w-8 h-8" />;
+  };
+
   const metrics = [
     { 
-      icon: <TrendingUp className="w-8 h-8" />, 
+      icon: getIconComponent(metricsContent.avgROIIcon), 
       value: metricsContent.avgROI, 
       label: metricsContent.avgROILabel 
     },
     { 
-      icon: <Users className="w-8 h-8" />, 
+      icon: getIconComponent(metricsContent.companiesServedIcon), 
       value: metricsContent.companiesServed, 
       label: metricsContent.companiesServedLabel 
     },
     { 
-      icon: <DollarSign className="w-8 h-8" />, 
+      icon: getIconComponent(metricsContent.costSavingsIcon), 
       value: metricsContent.costSavings, 
       label: metricsContent.costSavingsLabel 
     }
