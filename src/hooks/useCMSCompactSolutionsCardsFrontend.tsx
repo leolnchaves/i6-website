@@ -1,7 +1,7 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface CompactSolutionsCard {
   id: string;
@@ -15,65 +15,77 @@ interface CompactSolutionsCard {
   is_active: boolean;
 }
 
-export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home') => {
+export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home', language: string = 'en') => {
   const [cards, setCards] = useState<CompactSolutionsCard[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { toast } = useToast();
+
+  const fetchCards = useCallback(async () => {
+    try {
+      setLoading(true);
+      console.log('useCMSCompactSolutionsCardsFrontend - Fetching cards for page:', pageSlug, 'language:', language);
+
+      // First, get the page ID
+      const { data: pageData, error: pageError } = await supabase
+        .from('cms_pages')
+        .select('id')
+        .eq('slug', pageSlug)
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (pageError) {
+        console.error('Error fetching page:', pageError);
+        return;
+      }
+
+      if (!pageData) {
+        console.log('Page not found:', pageSlug);
+        return;
+      }
+
+      console.log('useCMSCompactSolutionsCardsFrontend - Found page ID:', pageData.id);
+
+      // Then, fetch cards for this page (only active ones for frontend)
+      const { data: cardsData, error: cardsError } = await supabase
+        .from('cms_compact_solutions_cards')
+        .select('*')
+        .eq('page_id', pageData.id)
+        .eq('language', language)
+        .eq('is_active', true)
+        .order('card_order');
+
+      if (cardsError) {
+        console.error('Error fetching compact solutions cards:', cardsError);
+        toast({
+          title: 'Erro ao carregar cards',
+          description: 'Não foi possível carregar os cards da seção Compact Solutions.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      console.log('useCMSCompactSolutionsCardsFrontend - Fetched cards:', cardsData?.length || 0);
+      console.log('useCMSCompactSolutionsCardsFrontend - Cards data:', cardsData);
+      setCards(cardsData || []);
+    } catch (error) {
+      console.error('Error in fetchCards:', error);
+      toast({
+        title: 'Erro inesperado',
+        description: 'Ocorreu um erro ao carregar os cards.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [pageSlug, language, toast]);
 
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        console.log('Fetching compact solutions cards for:', { pageSlug, language });
-        
-        // First get the page ID
-        const { data: pageData, error: pageError } = await supabase
-          .from('cms_pages')
-          .select('id')
-          .eq('slug', pageSlug)
-          .maybeSingle();
-
-        if (pageError) {
-          console.error('Error fetching page:', pageError);
-          setError('Failed to fetch page data');
-          return;
-        }
-
-        if (!pageData) {
-          console.log('No page found for slug:', pageSlug);
-          setCards([]);
-          return;
-        }
-
-        // Then get the cards for that page
-        const { data, error } = await supabase
-          .from('cms_compact_solutions_cards')
-          .select('*')
-          .eq('page_id', pageData.id)
-          .eq('language', language)
-          .eq('is_active', true)
-          .order('card_order');
-
-        if (error) {
-          console.error('Error fetching compact solutions cards:', error);
-          setError('Failed to fetch cards');
-          return;
-        }
-
-        console.log('Fetched compact solutions cards:', data);
-        setCards(data || []);
-      } catch (error) {
-        console.error('Error in fetchCards:', error);
-        setError('Unexpected error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCards();
-  }, [pageSlug, language]);
+  }, [fetchCards]);
 
-  return { cards, loading, error };
+  return {
+    cards,
+    loading,
+    refetch: fetchCards,
+  };
 };

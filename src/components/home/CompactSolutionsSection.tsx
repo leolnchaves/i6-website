@@ -7,23 +7,30 @@ import CompactSolutionsHeader from './compact-solutions/CompactSolutionsHeader';
 import SolutionCard from './compact-solutions/SolutionCard';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
-const CompactSolutionsSection = () => {
-  const { t } = useLanguage();
-  const { cards, loading, error } = useCMSCompactSolutionsCardsFrontend('home');
+// Icon mapping for dynamic icon rendering
+const iconMap = {
+  'Target': Target,
+  'Users': Users,
+  'Cog': Cog,
+  'TrendingUp': TrendingUp,
+  'DollarSign': DollarSign,
+  'BarChart3': BarChart3,
+  'Zap': Zap,
+  'Star': Star,
+  'Heart': Heart,
+  'Shield': Shield,
+};
 
-  // Icon mapping
-  const iconMap = {
-    Target: <Target className="w-6 h-6 text-white" />,
-    Users: <Users className="w-6 h-6 text-white" />,
-    Cog: <Cog className="w-6 h-6 text-white" />,
-    TrendingUp: <TrendingUp className="w-6 h-6 text-white" />,
-    DollarSign: <DollarSign className="w-6 h-6 text-white" />,
-    BarChart3: <BarChart3 className="w-6 h-6 text-white" />,
-    Zap: <Zap className="w-6 h-6 text-white" />,
-    Star: <Star className="w-6 h-6 text-white" />,
-    Heart: <Heart className="w-6 h-6 text-white" />,
-    Shield: <Shield className="w-6 h-6 text-white" />,
-  };
+const CompactSolutionsSection = () => {
+  const { t, language } = useLanguage();
+  const { cards, loading } = useCMSCompactSolutionsCardsFrontend('home', language);
+
+  console.log('CompactSolutionsSection - Total cards fetched:', cards.length);
+  console.log('CompactSolutionsSection - Cards data:', cards);
+
+  // Filter only active cards for display on the website
+  const activeCards = cards.filter(card => card.is_active);
+  console.log('CompactSolutionsSection - Active cards:', activeCards.length);
 
   // Fallback data for when CMS data is not available
   const fallbackCards = [
@@ -95,20 +102,27 @@ const CompactSolutionsSection = () => {
     );
   }
 
-  // Show error state with fallback
-  if (error) {
-    console.warn('CMS data failed to load, using fallback data:', error);
-  }
-
-  // Use CMS data if available, otherwise use fallback
-  const cardsToRender = cards.length > 0 ? cards.map(card => ({
+  // Use CMS active cards if available, otherwise fallback to static data
+  const cardsToRender = activeCards.length > 0 ? activeCards.map(card => {
+    const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || Target;
+    return {
+      id: card.id,
+      title: card.title,
+      description: card.description,
+      icon: <IconComponent className="w-6 h-6 text-white" />,
+      engine: card.engine_name,
+      backgroundColor: card.background_color
+    };
+  }) : fallbackCards.map(card => ({
     id: card.id,
     title: card.title,
     description: card.description,
-    icon: card.icon_name,
-    engine: card.engine_name,
-    backgroundColor: card.background_color
-  })) : fallbackCards;
+    icon: iconMap[card.icon as keyof typeof iconMap] ? React.createElement(iconMap[card.icon as keyof typeof iconMap], { className: "w-6 h-6 text-white" }) : <Target className="w-6 h-6 text-white" />,
+    engine: card.engine,
+    backgroundColor: card.backgroundColor
+  }));
+
+  console.log('CompactSolutionsSection - Final cards to render:', cardsToRender.length);
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
@@ -122,7 +136,7 @@ const CompactSolutionsSection = () => {
           {cardsToRender.map((card, index) => (
             <SolutionCard
               key={card.id}
-              icon={iconMap[card.icon as keyof typeof iconMap] || iconMap.Target}
+              icon={card.icon}
               title={card.title}
               description={card.description}
               index={index}
