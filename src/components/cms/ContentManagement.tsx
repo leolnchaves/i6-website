@@ -30,7 +30,8 @@ const ContentManagement = () => {
   });
   const [saving, setSaving] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+  const currentPageLanguageRef = useRef<string>('');
 
   // Get current page info
   const currentPage = pages.find(p => p.id === selectedPage);
@@ -134,17 +135,26 @@ const ContentManagement = () => {
   useEffect(() => {
     const loadData = async () => {
       if (selectedPage) {
-        console.log('Loading data for page:', selectedPage, 'language:', selectedLanguage);
+        const pageLanguageKey = `${selectedPage}_${selectedLanguage}`;
+        
+        // Reset flags when page/language changes
         setHasUnsavedChanges(false);
-        setDataLoaded(false);
+        setInitialDataLoaded(false);
+        currentPageLanguageRef.current = pageLanguageKey;
+        
+        console.log('Loading data for page:', selectedPage, 'language:', selectedLanguage);
         
         try {
           await Promise.all([
             fetchPageContent(selectedPage, selectedLanguage),
             fetchSEOData(selectedPage, selectedLanguage)
           ]);
-          setDataLoaded(true);
-          console.log('Data loaded successfully');
+          
+          // Only mark as loaded if we're still on the same page/language
+          if (currentPageLanguageRef.current === pageLanguageKey) {
+            setInitialDataLoaded(true);
+            console.log('Data loaded successfully for:', pageLanguageKey);
+          }
         } catch (error) {
           console.error('Error loading data:', error);
         }
@@ -154,10 +164,10 @@ const ContentManagement = () => {
     loadData();
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Atualizar formData quando conteúdo mudar - apenas após carregamento
+  // Atualizar formData quando conteúdo mudar - APENAS no carregamento inicial
   useEffect(() => {
-    if (content.length > 0 && allFields.length > 0 && dataLoaded) {
-      console.log('Setting up form data with content:', content);
+    if (content.length > 0 && allFields.length > 0 && initialDataLoaded && !hasUnsavedChanges) {
+      console.log('Setting up initial form data with content:', content);
       console.log('Fields to process:', allFields);
       
       const newContentFormData: { [key: string]: string } = {};
@@ -171,16 +181,16 @@ const ContentManagement = () => {
       console.log('Final form data:', newContentFormData);
       setContentFormData(newContentFormData);
     }
-  }, [content, allFields, selectedLanguage, getContent, dataLoaded]);
+  }, [content, allFields, selectedLanguage, getContent, initialDataLoaded, hasUnsavedChanges]);
 
   // Atualizar SEO form data quando dados de SEO mudarem
   useEffect(() => {
-    if (selectedPage && Object.keys(seoData).length > 0 && dataLoaded) {
+    if (selectedPage && Object.keys(seoData).length > 0 && initialDataLoaded) {
       console.log('Setting up SEO form data');
       const currentSEOData = getSEOData(selectedPage, selectedLanguage);
       setSeoFormData(currentSEOData);
     }
-  }, [selectedPage, selectedLanguage, getSEOData, seoData, dataLoaded]);
+  }, [selectedPage, selectedLanguage, getSEOData, seoData, initialDataLoaded]);
 
   const handleContentInputChange = (key: string, value: string) => {
     console.log(`Handling input change: ${key} = ${value}`);
