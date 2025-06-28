@@ -58,17 +58,34 @@ export const successStoriesCTAFields: ContentField[] = [
   { section: 'successStoriesCTA', field: 'buttonText', label: 'Texto do Botão', type: 'input' },
 ];
 
+// Contact page field definitions
+export const contactHeroFields: ContentField[] = [
+  { section: 'contactHero', field: 'title', label: 'Título Principal', type: 'input' },
+  { section: 'contactHero', field: 'subtitle', label: 'Subtítulo Destacado', type: 'input' },
+  { section: 'contactHero', field: 'description', label: 'Descrição', type: 'textarea' },
+];
+
+export const contactFAQFields: ContentField[] = [
+  { section: 'contactFAQ', field: 'title', label: 'Título da Seção FAQ', type: 'input' },
+  { section: 'contactFAQ', field: 'subtitle', label: 'Subtítulo da Seção FAQ', type: 'textarea' },
+  { section: 'contactFAQ', field: 'searchTitle', label: 'Título da Busca', type: 'input' },
+  { section: 'contactFAQ', field: 'searchPlaceholder', label: 'Placeholder da Busca', type: 'input' },
+  { section: 'contactFAQ', field: 'noResults', label: 'Mensagem Sem Resultados', type: 'input' },
+];
+
 // Helper functions
-export const getPageFields = (isHome: boolean, isSuccessStories: boolean) => {
+export const getPageFields = (isHome: boolean, isSuccessStories: boolean, isContact: boolean) => {
   if (isHome) {
     return [...homeHeroFields, ...homeResultsFields, ...homeCompactSolutionsFields];
   } else if (isSuccessStories) {
     return [...successStoriesHeroFields, ...successStoriesMetricsFields, ...successStoriesTestimonialsFields, ...successStoriesCTAFields];
+  } else if (isContact) {
+    return [...contactHeroFields, ...contactFAQFields];
   }
   return [];
 };
 
-export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean) => {
+export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean, isContact: boolean) => {
   if (isHome) {
     return {
       heroFields: homeHeroFields,
@@ -81,6 +98,12 @@ export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean) =
       resultsFields: successStoriesMetricsFields,
       compactSolutionsFields: successStoriesTestimonialsFields,
       ctaFields: successStoriesCTAFields
+    };
+  } else if (isContact) {
+    return {
+      heroFields: contactHeroFields,
+      resultsFields: contactFAQFields,
+      compactSolutionsFields: []
     };
   }
   return {

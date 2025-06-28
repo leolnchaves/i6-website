@@ -9,6 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cms_faq_cards: {
+        Row: {
+          answer: string
+          card_order: number
+          created_at: string
+          id: string
+          is_active: boolean
+          language: string
+          page_id: string
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          card_order: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          page_id: string
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          card_order?: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          page_id?: string
+          question?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cms_page_content: {
         Row: {
           content: string | null

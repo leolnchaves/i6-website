@@ -1,13 +1,27 @@
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useCMSContent } from './useCMSContent';
 import { useCMSSEO } from './useCMSSEO';
 import { getPageFields } from '@/components/cms/content/ContentFieldsConfig';
 
 export const useContentManagement = () => {
-  const { pages, content, loading: contentLoading, fetchPageContent, saveContent, getContent } = useCMSContent();
-  const { seoData, loading: seoLoading, fetchSEOData, saveSEOData, getSEOData } = useCMSSEO();
+  const { 
+    pages, 
+    content, 
+    loading: contentLoading, 
+    fetchPages, 
+    fetchContent, 
+    saveContent 
+  } = useCMSContent();
   
+  const { 
+    seoData, 
+    loading: seoLoading, 
+    fetchSEOData, 
+    saveSEOData, 
+    getSEOData 
+  } = useCMSSEO();
+
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
   const [contentFormData, setContentFormData] = useState<{ [key: string]: string }>({});
@@ -20,145 +34,94 @@ export const useContentManagement = () => {
     follow_flag: true
   });
   const [saving, setSaving] = useState(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const currentPageLanguageRef = useRef<string>('');
 
-  // Get current page info
+  const loading = contentLoading || seoLoading;
+
+  // Get current page data
   const currentPage = pages.find(p => p.id === selectedPage);
   const isHomePage = currentPage?.slug === 'home';
   const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
+  const isContactPage = currentPage?.slug === 'contact';
 
-  const allFields = getPageFields(isHomePage, isSuccessStoriesPage);
+  // Get fields for current page
+  const allFields = getPageFields(isHomePage, isSuccessStoriesPage, isContactPage);
 
-  // Select home page automatically if available
+  // Load pages on mount
+  useEffect(() => {
+    fetchPages();
+  }, [fetchPages]);
+
+  // Auto-select first page when pages are loaded
   useEffect(() => {
     if (pages.length > 0 && !selectedPage) {
-      const homePage = pages.find(p => p.slug === 'home');
-      if (homePage) {
-        setSelectedPage(homePage.id);
-      }
+      setSelectedPage(pages[0].id);
     }
   }, [pages, selectedPage]);
 
-  // Load data when page or language changes
+  // Load content and SEO when page/language changes
   useEffect(() => {
-    const loadData = async () => {
-      if (selectedPage) {
-        const pageLanguageKey = `${selectedPage}_${selectedLanguage}`;
-        
-        setHasUnsavedChanges(false);
-        setInitialDataLoaded(false);
-        currentPageLanguageRef.current = pageLanguageKey;
-        
-        console.log('Loading data for page:', selectedPage, 'language:', selectedLanguage);
-        
-        try {
-          await Promise.all([
-            fetchPageContent(selectedPage, selectedLanguage),
-            fetchSEOData(selectedPage, selectedLanguage)
-          ]);
-          
-          if (currentPageLanguageRef.current === pageLanguageKey) {
-            setInitialDataLoaded(true);
-            console.log('Data loaded successfully for:', pageLanguageKey);
-          }
-        } catch (error) {
-          console.error('Error loading data:', error);
-        }
-      }
-    };
-    
-    loadData();
-  }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
-
-  // Update formData when content changes - only on initial load
-  useEffect(() => {
-    if (content.length > 0 && allFields.length > 0 && initialDataLoaded && !hasUnsavedChanges) {
-      console.log('Setting up initial form data with content:', content);
-      console.log('Fields to process:', allFields);
-      
-      const newContentFormData: { [key: string]: string } = {};
-      allFields.forEach(field => {
-        const key = `${field.section}_${field.field}`;
-        const value = getContent(field.section, field.field, selectedLanguage);
-        newContentFormData[key] = value;
-        console.log(`Setting ${key} = "${value}"`);
-      });
-      
-      console.log('Final form data:', newContentFormData);
-      setContentFormData(newContentFormData);
+    if (selectedPage && selectedLanguage) {
+      fetchContent(selectedPage, selectedLanguage);
+      fetchSEOData(selectedPage, selectedLanguage);
     }
-  }, [content, allFields, selectedLanguage, getContent, initialDataLoaded, hasUnsavedChanges]);
+  }, [selectedPage, selectedLanguage, fetchContent, fetchSEOData]);
 
-  // Update SEO form data when SEO data changes
+  // Update form data when content loads
   useEffect(() => {
-    if (selectedPage && Object.keys(seoData).length > 0 && initialDataLoaded) {
-      console.log('Setting up SEO form data');
+    const formData: { [key: string]: string } = {};
+    allFields.forEach(field => {
+      const key = `${field.section}_${field.field}`;
+      formData[key] = content[key] || '';
+    });
+    setContentFormData(formData);
+  }, [content, allFields]);
+
+  // Update SEO form data when SEO data loads
+  useEffect(() => {
+    if (selectedPage && selectedLanguage) {
       const currentSEOData = getSEOData(selectedPage, selectedLanguage);
       setSeoFormData(currentSEOData);
     }
-  }, [selectedPage, selectedLanguage, getSEOData, seoData, initialDataLoaded]);
+  }, [selectedPage, selectedLanguage, seoData, getSEOData]);
 
+  // Handle content input changes
   const handleContentInputChange = useCallback((key: string, value: string) => {
-    console.log(`Handling input change: ${key} = ${value}`);
-    setContentFormData(prev => {
-      const updated = { ...prev, [key]: value };
-      console.log('Updated form data:', updated);
-      return updated;
-    });
-    setHasUnsavedChanges(true);
+    setContentFormData(prev => ({ ...prev, [key]: value }));
   }, []);
 
+  // Handle SEO input changes
   const handleSEOInputChange = useCallback((field: string, value: string | boolean) => {
     setSeoFormData(prev => ({ ...prev, [field]: value }));
   }, []);
 
+  // Save content
   const handleSaveContent = useCallback(async () => {
-    if (!selectedPage) return;
+    if (!selectedPage || !selectedLanguage) return;
 
     setSaving(true);
     try {
-      const contentSavePromises = allFields.map(field => {
-        const key = `${field.section}_${field.field}`;
-        const value = contentFormData[key] || '';
-        
-        return saveContent(
-          selectedPage,
-          field.section,
-          field.field,
-          selectedLanguage,
-          value
-        );
-      });
-
-      await Promise.all(contentSavePromises);
-      setHasUnsavedChanges(false);
-    } catch (error) {
-      console.error('Error saving content:', error);
+      await saveContent(selectedPage, selectedLanguage, contentFormData);
     } finally {
       setSaving(false);
     }
-  }, [selectedPage, allFields, contentFormData, selectedLanguage, saveContent]);
+  }, [selectedPage, selectedLanguage, contentFormData, saveContent]);
 
+  // Save SEO data
   const handleSaveSEO = useCallback(async () => {
-    if (!selectedPage) return;
+    if (!selectedPage || !selectedLanguage) return;
 
     setSaving(true);
     try {
       await saveSEOData(selectedPage, selectedLanguage, seoFormData);
-    } catch (error) {
-      console.error('Error saving SEO data:', error);
     } finally {
       setSaving(false);
     }
   }, [selectedPage, selectedLanguage, seoFormData, saveSEOData]);
 
   const getPageTitle = useCallback(() => {
-    if (isHomePage) return 'Página Principal';
-    if (isSuccessStoriesPage) return 'Cases de Sucesso';
-    return currentPage?.name || 'Página';
-  }, [isHomePage, isSuccessStoriesPage, currentPage]);
+    if (!currentPage) return 'Página';
+    return currentPage.name;
+  }, [currentPage]);
 
   return {
     // State
@@ -168,16 +131,16 @@ export const useContentManagement = () => {
     contentFormData,
     seoFormData,
     saving,
-    hasUnsavedChanges,
-    loading: contentLoading || seoLoading,
+    loading,
     
-    // Page info
+    // Computed
     currentPage,
     isHomePage,
     isSuccessStoriesPage,
+    isContactPage,
     allFields,
     
-    // Handlers
+    // Actions
     setSelectedPage,
     setSelectedLanguage,
     handleContentInputChange,

@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { Save } from 'lucide-react';
 import ContentSectionAccordion from './ContentSectionAccordion';
 import SuccessStoriesCardsManagement from '../SuccessStoriesCardsManagement';
+import FAQCardsManagement from '../FAQCardsManagement';
 import { getAccordionFields } from './ContentFieldsConfig';
 
 interface ContentTabProps {
@@ -15,6 +16,7 @@ interface ContentTabProps {
   contentFormData: { [key: string]: string };
   isHomePage: boolean;
   isSuccessStoriesPage: boolean;
+  isContactPage: boolean;
   currentPageName?: string;
   saving: boolean;
   allFieldsLength: number;
@@ -29,6 +31,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
   contentFormData,
   isHomePage,
   isSuccessStoriesPage,
+  isContactPage,
   currentPageName,
   saving,
   allFieldsLength,
@@ -36,11 +39,12 @@ const ContentTab: React.FC<ContentTabProps> = ({
   onSaveContent,
   getPageTitle,
 }) => {
-  const accordionFields = getAccordionFields(isHomePage, isSuccessStoriesPage);
+  const accordionFields = getAccordionFields(isHomePage, isSuccessStoriesPage, isContactPage);
 
   const getDescription = () => {
     if (isHomePage) return 'Edite o conteúdo das seções da página inicial';
     if (isSuccessStoriesPage) return 'Edite o conteúdo das seções da página de cases de sucesso';
+    if (isContactPage) return 'Edite o conteúdo das seções da página de contato';
     return `Edite o conteúdo da página ${currentPageName}`;
   };
 
@@ -57,7 +61,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {(isHomePage || isSuccessStoriesPage) && (
+          {(isHomePage || isSuccessStoriesPage || isContactPage) && (
             <ContentSectionAccordion
               heroFields={accordionFields.heroFields}
               resultsFields={accordionFields.resultsFields}
@@ -67,10 +71,11 @@ const ContentTab: React.FC<ContentTabProps> = ({
               selectedPage={selectedPage}
               selectedLanguage={selectedLanguage}
               onFieldChange={onFieldChange}
+              isContactPage={isContactPage}
             />
           )}
 
-          {!isHomePage && !isSuccessStoriesPage && (
+          {!isHomePage && !isSuccessStoriesPage && !isContactPage && (
             <div className="text-center py-8 text-gray-500">
               <p>Configuração de conteúdo para esta página ainda não foi implementada.</p>
               <p className="text-sm mt-2">Será adicionada conforme necessário.</p>
@@ -91,6 +96,17 @@ const ContentTab: React.FC<ContentTabProps> = ({
         <>
           <Separator />
           <SuccessStoriesCardsManagement
+            selectedPage={selectedPage}
+            selectedLanguage={selectedLanguage}
+          />
+        </>
+      )}
+
+      {/* FAQ Cards Management */}
+      {isContactPage && (
+        <>
+          <Separator />
+          <FAQCardsManagement
             selectedPage={selectedPage}
             selectedLanguage={selectedLanguage}
           />

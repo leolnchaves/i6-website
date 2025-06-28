@@ -1,8 +1,15 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 
 const ContactHero = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+  const { getContent } = useCMSPageContent('contact', language);
+
+  // Get content from CMS with fallbacks
+  const title = getContent('contactHero', 'title', t('contact.hero.title'));
+  const subtitle = getContent('contactHero', 'subtitle', t('contact.hero.subtitle'));
+  const description = getContent('contactHero', 'description', t('contact.hero.description'));
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 text-white relative overflow-hidden">
@@ -14,13 +21,13 @@ const ContactHero = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            {t('contact.hero.title')}
+            {title}
             <span className="block bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
-              {t('contact.hero.subtitle')}
+              {subtitle}
             </span>
           </h1>
           <p className="text-xl text-gray-300 mb-8">
-            {t('contact.hero.description')}
+            {description}
           </p>
         </div>
       </div>
