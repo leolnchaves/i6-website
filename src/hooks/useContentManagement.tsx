@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCMSContent } from './useCMSContent';
 import { useCMSSEO } from './useCMSSEO';
 import { getPageFields } from '@/components/cms/content/ContentFieldsConfig';
@@ -35,6 +35,11 @@ export const useContentManagement = () => {
   });
   const [saving, setSaving] = useState(false);
 
+  // Refs para controlar quando é seguro atualizar o estado local
+  const isLoadingContentRef = useRef(false);
+  const lastContentUpdateRef = useRef<string>('');
+  const userModifiedFieldsRef = useRef<Set<string>>(new Set());
+
   const loading = contentLoading || seoLoading;
 
   // Get current page data
@@ -61,25 +66,57 @@ export const useContentManagement = () => {
   // Load content and SEO when page/language changes
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
+      isLoadingContentRef.current = true;
+      userModifiedFieldsRef.current.clear(); // Limpar campos modificados ao trocar página/idioma
       fetchPageContent(selectedPage, selectedLanguage);
       fetchSEOData(selectedPage, selectedLanguage);
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Update form data when content loads
+  // Marcar que o loading terminou quando o conteúdo for carregado
+  useEffect(() => {
+    if (!contentLoading) {
+      isLoadingContentRef.current = false;
+    }
+  }, [contentLoading]);
+
+  // Update form data when content loads - apenas quando é seguro
   useEffect(() => {
     if (content.length > 0) {
-      const formData: { [key: string]: string } = {};
-      allFields.forEach(field => {
-        const key = `${field.section}_${field.field}`;
-        formData[key] = content.find(c => 
-          c.section_name === field.section && 
-          c.field_name === field.field
-        )?.content || '';
-      });
-      setContentFormData(formData);
+      const contentKey = `${selectedPage}_${selectedLanguage}_${content.length}`;
+      
+      // Só atualiza se:
+      // 1. Está carregando conteúdo novo (mudança de página/idioma)
+      // 2. O conteúdo realmente mudou (diferente chave)
+      if (isLoadingContentRef.current || lastContentUpdateRef.current !== contentKey) {
+        const formData: { [key: string]: string } = {};
+        
+        allFields.forEach(field => {
+          const key = `${field.section}_${field.field}`;
+          const contentValue = content.find(c => 
+            c.section_name === field.section && 
+            c.field_name === field.field
+          )?.content || '';
+          
+          // Só atualiza campos que não foram modificados pelo usuário ou se estamos carregando
+          if (isLoadingContentRef.current || !userModifiedFieldsRef.current.has(key)) {
+            formData[key] = contentValue;
+          } else {
+            // Manter o valor atual se foi modificado pelo usuário
+            formData[key] = contentFormData[key] || contentValue;
+          }
+        });
+        
+        setContentFormData(formData);
+        lastContentUpdateRef.current = contentKey;
+        
+        // Limpar campos modificados após carregar conteúdo novo
+        if (isLoadingContentRef.current) {
+          userModifiedFieldsRef.current.clear();
+        }
+      }
     }
-  }, [content, allFields]);
+  }, [content, allFields, selectedPage, selectedLanguage, contentFormData]);
 
   // Update SEO form data when SEO data loads
   useEffect(() => {
@@ -91,6 +128,9 @@ export const useContentManagement = () => {
 
   // Handle content input changes
   const handleContentInputChange = useCallback((key: string, value: string) => {
+    // Marcar que este campo foi modificado pelo usuário
+    userModifiedFieldsRef.current.add(key);
+    
     setContentFormData(prev => ({ ...prev, [key]: value }));
   }, []);
 
@@ -112,6 +152,9 @@ export const useContentManagement = () => {
       });
       
       await Promise.all(savePromises);
+      
+      // Limpar campos modificados após salvar com sucesso
+      userModifiedFieldsRef.current.clear();
     } finally {
       setSaving(false);
     }
