@@ -35,10 +35,10 @@ export const useContentManagement = () => {
   });
   const [saving, setSaving] = useState(false);
 
-  // Refs para controlar quando é seguro atualizar o estado local
-  const isLoadingContentRef = useRef(false);
-  const lastContentUpdateRef = useRef<string>('');
+  // Refs para controlar o estado e detectar mudanças
+  const lastPageLanguageRef = useRef<string>('');
   const userModifiedFieldsRef = useRef<Set<string>>(new Set());
+  const hasLoadedContentRef = useRef(false);
 
   const loading = contentLoading || seoLoading;
 
@@ -66,29 +66,32 @@ export const useContentManagement = () => {
   // Load content and SEO when page/language changes
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
-      isLoadingContentRef.current = true;
-      userModifiedFieldsRef.current.clear(); // Limpar campos modificados ao trocar página/idioma
-      fetchPageContent(selectedPage, selectedLanguage);
-      fetchSEOData(selectedPage, selectedLanguage);
+      const currentPageLanguage = `${selectedPage}_${selectedLanguage}`;
+      
+      // Só carrega se realmente mudou página ou idioma
+      if (lastPageLanguageRef.current !== currentPageLanguage) {
+        console.log('Loading content for:', currentPageLanguage);
+        userModifiedFieldsRef.current.clear(); // Limpar campos modificados ao trocar página/idioma
+        hasLoadedContentRef.current = false; // Marcar que não carregou o novo conteúdo ainda
+        lastPageLanguageRef.current = currentPageLanguage;
+        
+        fetchPageContent(selectedPage, selectedLanguage);
+        fetchSEOData(selectedPage, selectedLanguage);
+      }
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Marcar que o loading terminou quando o conteúdo for carregado
+  // Update form data when content loads
   useEffect(() => {
-    if (!contentLoading) {
-      isLoadingContentRef.current = false;
-    }
-  }, [contentLoading]);
-
-  // Update form data when content loads - apenas quando é seguro
-  useEffect(() => {
-    if (content.length > 0) {
-      const contentKey = `${selectedPage}_${selectedLanguage}_${content.length}`;
+    if (content.length > 0 && selectedPage && selectedLanguage) {
+      const currentPageLanguage = `${selectedPage}_${selectedLanguage}`;
       
       // Só atualiza se:
-      // 1. Está carregando conteúdo novo (mudança de página/idioma)
-      // 2. O conteúdo realmente mudou (diferente chave)
-      if (isLoadingContentRef.current || lastContentUpdateRef.current !== contentKey) {
+      // 1. Ainda não carregou o conteúdo para esta combinação página/idioma
+      // 2. O loading terminou
+      if (!hasLoadedContentRef.current && !contentLoading) {
+        console.log('Updating form data for:', currentPageLanguage);
+        
         const formData: { [key: string]: string } = {};
         
         allFields.forEach(field => {
@@ -98,25 +101,15 @@ export const useContentManagement = () => {
             c.field_name === field.field
           )?.content || '';
           
-          // Só atualiza campos que não foram modificados pelo usuário ou se estamos carregando
-          if (isLoadingContentRef.current || !userModifiedFieldsRef.current.has(key)) {
-            formData[key] = contentValue;
-          } else {
-            // Manter o valor atual se foi modificado pelo usuário
-            formData[key] = contentFormData[key] || contentValue;
-          }
+          formData[key] = contentValue;
         });
         
         setContentFormData(formData);
-        lastContentUpdateRef.current = contentKey;
-        
-        // Limpar campos modificados após carregar conteúdo novo
-        if (isLoadingContentRef.current) {
-          userModifiedFieldsRef.current.clear();
-        }
+        hasLoadedContentRef.current = true; // Marcar que carregou
+        userModifiedFieldsRef.current.clear(); // Limpar campos modificados após carregar
       }
     }
-  }, [content, allFields, selectedPage, selectedLanguage, contentFormData]);
+  }, [content, allFields, selectedPage, selectedLanguage, contentLoading]);
 
   // Update SEO form data when SEO data loads
   useEffect(() => {
