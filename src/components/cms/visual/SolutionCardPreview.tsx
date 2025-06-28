@@ -1,8 +1,7 @@
 
 import React from 'react';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { 
   TrendingUp, 
   Users, 
@@ -62,20 +61,6 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
   border_color,
   icon,
 }) => {
-  // Define colors based on engine for button gradient only
-  const getButtonGradient = (engine: string) => {
-    switch (engine) {
-      case 'i6 RecSys':
-        return 'from-blue-500/80 to-blue-600/80';
-      case 'i6 ElasticPrice':
-        return 'from-green-500/80 to-green-600/80';
-      case 'i6 Previsio':
-        return 'from-gray-500/80 to-gray-600/80';
-      default:
-        return 'from-blue-500/80 to-blue-600/80';
-    }
-  };
-
   // Get icon background color based on selected bg_color
   const getIconBgColor = (bgColor: string) => {
     if (bgColor.includes('gray')) return 'rgba(107, 114, 128, 0.15)';
@@ -98,7 +83,6 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
     return 'rgba(107, 114, 128, 0.2)'; // default gray
   };
 
-  const buttonGradient = getButtonGradient(engine);
   const iconBgColor = getIconBgColor(bg_color);
   const badgeBgColor = getBadgeBgColor(bg_color);
   const IconComponent = iconMap[icon] || Building2;
@@ -106,10 +90,10 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
   return (
     <div className="w-full max-w-md">
       <Card 
-        className={`border shadow-sm ${bg_color} ${border_color}`}
+        className={`border shadow-sm ${bg_color} ${border_color} h-full`}
       >
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
+        <CardContent className="p-4 h-full">
+          <div className="flex items-start gap-3 h-full">
             {/* Icon */}
             <div 
               className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
@@ -119,7 +103,7 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
             </div>
             
             {/* Content section */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 flex flex-col h-full">
               {/* Engine badge */}
               <div className="mb-2">
                 <span 
@@ -146,7 +130,7 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
               </p>
               
               {/* Features */}
-              <div className="space-y-1 mb-3">
+              <div className="space-y-1 mb-3 flex-grow">
                 {(features?.length > 0 ? features.slice(0, 2) : ['Feature exemplo']).map((feature, index) => (
                   <div key={index} className="flex items-start">
                     <CheckCircle className="w-3 h-3 text-green-500 mr-1 flex-shrink-0 mt-0.5" />
@@ -157,7 +141,7 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
               
               {/* Business Outcomes */}
               <div 
-                className="rounded-lg p-2 mb-3"
+                className="rounded-lg p-2"
                 style={{ backgroundColor: badgeBgColor }}
               >
                 <h4 className="font-semibold text-gray-900 mb-1 text-xs">
@@ -165,15 +149,6 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
                 </h4>
                 <p className="text-gray-700 text-xs">{outcome || 'Resultados esperados...'}</p>
               </div>
-              
-              {/* Learn More Button */}
-              <Button 
-                size="sm"
-                className={`bg-gradient-to-r ${buttonGradient} hover:opacity-90 text-white transition-all duration-300 shadow-sm hover:shadow-md text-xs`}
-              >
-                Saiba Mais
-                <ArrowRight className="ml-1 w-3 h-3" />
-              </Button>
             </div>
           </div>
         </CardContent>

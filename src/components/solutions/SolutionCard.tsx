@@ -1,6 +1,6 @@
-import { CheckCircle, ArrowRight, LucideIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+import { CheckCircle, LucideIcon } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface SolutionCardProps {
@@ -30,20 +30,6 @@ const SolutionCard = ({
 }: SolutionCardProps) => {
   const { t } = useLanguage();
 
-  // Define button gradient based on engine (keeping this for button styling)
-  const getButtonGradient = (engine: string) => {
-    switch (engine) {
-      case 'i6 RecSys':
-        return 'from-blue-500/80 to-blue-600/80';
-      case 'i6 ElasticPrice':
-        return 'from-green-500/80 to-green-600/80';
-      case 'i6 Previsio':
-        return 'from-gray-500/80 to-gray-600/80';
-      default:
-        return 'from-blue-500/80 to-blue-600/80';
-    }
-  };
-
   // Get icon and badge background color based on selected bgColor from CMS
   const getIconBgColor = (bgColor: string) => {
     if (bgColor.includes('gray')) return 'rgba(107, 114, 128, 0.15)';
@@ -66,16 +52,15 @@ const SolutionCard = ({
     return 'rgba(107, 114, 128, 0.2)'; // default gray
   };
 
-  const buttonGradient = getButtonGradient(engine);
   const iconBgColor = getIconBgColor(bgColor);
   const badgeBgColor = getBadgeBgColor(bgColor);
 
   return (
     <Card 
-      className={`border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${bgColor} ${borderColor}`}
+      className={`border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${bgColor} ${borderColor} h-full`}
     >
-      <CardContent className="p-6">
-        <div className="flex items-start gap-4">
+      <CardContent className="p-6 h-full">
+        <div className="flex items-start gap-4 h-full">
           {/* Icon section */}
           <div 
             className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center"
@@ -85,7 +70,7 @@ const SolutionCard = ({
           </div>
           
           {/* Content section */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 flex flex-col h-full">
             {/* Engine badge */}
             <div className="mb-2">
               <span 
@@ -112,7 +97,7 @@ const SolutionCard = ({
             </p>
             
             {/* Features */}
-            <div className="space-y-2 mb-4">
+            <div className="space-y-2 mb-4 flex-grow">
               {features.map((feature, featureIndex) => (
                 <div key={featureIndex} className="flex items-start">
                   <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -123,7 +108,7 @@ const SolutionCard = ({
             
             {/* Business Outcomes */}
             <div 
-              className="rounded-lg p-3 mb-4"
+              className="rounded-lg p-3"
               style={{ backgroundColor: badgeBgColor }}
             >
               <h4 className="font-semibold text-gray-900 mb-1 text-sm">
@@ -131,14 +116,6 @@ const SolutionCard = ({
               </h4>
               <p className="text-gray-700 text-sm">{outcome}</p>
             </div>
-            
-            {/* Learn More Button */}
-            <Button 
-              className={`bg-gradient-to-r ${buttonGradient} hover:opacity-90 text-white transition-all duration-300 shadow-sm hover:shadow-md`}
-            >
-              {t('solutions.learnMore')}
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
           </div>
         </div>
       </CardContent>
