@@ -23,6 +23,7 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
   const fetchCards = useCallback(async () => {
     try {
       setLoading(true);
+      console.log('useCMSResultsCards - Fetching cards for page:', pageSlug, 'language:', language);
 
       // First, get the page ID
       const { data: pageData, error: pageError } = await supabase
@@ -42,6 +43,8 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         return;
       }
 
+      console.log('useCMSResultsCards - Found page ID:', pageData.id);
+
       // Then, fetch ALL cards for this page (including inactive ones for CMS management)
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_results_cards')
@@ -60,6 +63,8 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         return;
       }
 
+      console.log('useCMSResultsCards - Fetched cards:', cardsData?.length || 0);
+      console.log('useCMSResultsCards - Cards data:', cardsData);
       setCards(cardsData || []);
     } catch (error) {
       console.error('Error in fetchCards:', error);

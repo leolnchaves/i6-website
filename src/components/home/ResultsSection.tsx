@@ -26,6 +26,13 @@ const ResultsSection = () => {
   const { t, language } = useLanguage();
   const { cards, loading } = useCMSResultsCards('home', language);
 
+  console.log('ResultsSection - Total cards fetched:', cards.length);
+  console.log('ResultsSection - Cards data:', cards);
+
+  // Filter only active cards for display on the website
+  const activeCards = cards.filter(card => card.is_active);
+  console.log('ResultsSection - Active cards:', activeCards.length);
+
   // Fallback data for when CMS data is not available
   const fallbackResults = [
     {
@@ -100,8 +107,8 @@ const ResultsSection = () => {
     }
   ];
 
-  // Use CMS cards if available, otherwise fallback to translations
-  const resultsToRender = cards.length > 0 ? cards.map(card => {
+  // Use CMS active cards if available, otherwise fallback to translations
+  const resultsToRender = activeCards.length > 0 ? activeCards.map(card => {
     const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || TrendingUp;
     return {
       icon: <IconComponent className={`w-8 h-8`} style={{ color: card.icon_color }} />,
@@ -111,6 +118,8 @@ const ResultsSection = () => {
       backgroundOpacity: card.background_opacity
     };
   }) : fallbackResults;
+
+  console.log('ResultsSection - Final results to render:', resultsToRender.length);
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
