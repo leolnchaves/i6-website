@@ -233,6 +233,7 @@ export type Database = {
           features: string[]
           focus: string
           gradient: string
+          icon: string
           id: string
           is_active: boolean
           language: string
@@ -251,6 +252,7 @@ export type Database = {
           features: string[]
           focus: string
           gradient?: string
+          icon?: string
           id?: string
           is_active?: boolean
           language?: string
@@ -269,6 +271,7 @@ export type Database = {
           features?: string[]
           focus?: string
           gradient?: string
+          icon?: string
           id?: string
           is_active?: boolean
           language?: string

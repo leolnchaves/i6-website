@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -41,40 +42,6 @@ const availableEngines = [
   { value: 'i6 RecSys', label: 'i6 RecSys' },
   { value: 'i6 ElasticPrice', label: 'i6 ElasticPrice' },
   { value: 'i6 Previsio', label: 'i6 Previsio' },
-];
-
-// Updated color options with visual previews
-const gradientOptions = [
-  { 
-    value: 'from-gray-600/80 to-blue-700/80', 
-    label: 'Blue', 
-    preview: 'bg-gradient-to-r from-gray-600 to-blue-700' 
-  },
-  { 
-    value: 'from-orange-600/80 to-red-600/80', 
-    label: 'Orange', 
-    preview: 'bg-gradient-to-r from-orange-600 to-red-600' 
-  },
-  { 
-    value: 'from-blue-600/80 to-gray-700/80', 
-    label: 'Blue Gray', 
-    preview: 'bg-gradient-to-r from-blue-600 to-gray-700' 
-  },
-  { 
-    value: 'from-gray-600/80 to-blue-600/80', 
-    label: 'Gray Blue', 
-    preview: 'bg-gradient-to-r from-gray-600 to-blue-600' 
-  },
-  { 
-    value: 'from-orange-600/80 to-gray-600/80', 
-    label: 'Orange Gray', 
-    preview: 'bg-gradient-to-r from-orange-600 to-gray-600' 
-  },
-  { 
-    value: 'from-green-600/80 to-blue-600/80', 
-    label: 'Green Blue', 
-    preview: 'bg-gradient-to-r from-green-600 to-blue-600' 
-  },
 ];
 
 const bgColorOptions = [
@@ -500,13 +467,6 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                     label="Ícone"
                     value={card.icon}
                     onChange={(value) => handleCardChange(index, 'icon', value)}
-                  />
-                  
-                  <ColorPalette
-                    label="Gradiente"
-                    value={card.gradient}
-                    onChange={(value) => handleCardChange(index, 'gradient', value)}
-                    options={gradientOptions}
                   />
 
                   <ColorPalette
