@@ -2,15 +2,32 @@
 import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
 import ResultsHeader from './results/ResultsHeader';
 import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
 
+// Icon mapping for dynamic icon rendering
+const iconMap = {
+  'trending-up': TrendingUp,
+  'shield': Shield,
+  'award': Award,
+  'clock': Clock,
+  'target': Target,
+  'dollar-sign': DollarSign,
+  'eye': Eye,
+  'shopping-cart': ShoppingCart,
+  'search': Search,
+  'users': Users,
+};
+
 const ResultsSection = () => {
   const { scrollY } = useScrollAnimation();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { cards, loading } = useCMSResultsCards('home', language);
 
-  const results = [
+  // Fallback data for when CMS data is not available
+  const fallbackResults = [
     {
       icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
       title: t('results.conversionRate.title'),
@@ -63,6 +80,18 @@ const ResultsSection = () => {
     }
   ];
 
+  // Use CMS cards if available, otherwise fallback to translations
+  const resultsToRender = cards.length > 0 ? cards.map(card => {
+    const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || TrendingUp;
+    return {
+      icon: <IconComponent className={`w-8 h-8`} style={{ color: card.icon_color }} />,
+      title: card.title,
+      description: card.description,
+      backgroundColor: card.background_color,
+      backgroundOpacity: card.background_opacity
+    };
+  }) : fallbackResults;
+
   return (
     <section className="py-20 bg-white relative overflow-hidden">
       <ResultsBackground />
@@ -71,7 +100,7 @@ const ResultsSection = () => {
         <ResultsHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {results.map((result, index) => (
+          {resultsToRender.map((result, index) => (
             <ResultCard
               key={index}
               icon={result.icon}

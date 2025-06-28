@@ -80,6 +80,62 @@ export type Database = {
         }
         Relationships: []
       }
+      cms_results_cards: {
+        Row: {
+          background_color: string | null
+          background_opacity: number | null
+          card_order: number
+          created_at: string
+          description: string
+          icon_color: string
+          icon_name: string
+          id: string
+          is_active: boolean
+          language: string
+          page_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          background_color?: string | null
+          background_opacity?: number | null
+          card_order: number
+          created_at?: string
+          description: string
+          icon_color?: string
+          icon_name: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          page_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          background_color?: string | null
+          background_opacity?: number | null
+          card_order?: number
+          created_at?: string
+          description?: string
+          icon_color?: string
+          icon_name?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          page_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_results_cards_page_id"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "cms_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cms_seo: {
         Row: {
           canonical_url: string | null

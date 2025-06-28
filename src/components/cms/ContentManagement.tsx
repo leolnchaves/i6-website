@@ -9,9 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
-import { Save, Globe, Home, Search } from 'lucide-react';
+import { Save, Globe, Home, Search, Grid3X3 } from 'lucide-react';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { useCMSSEO } from '@/hooks/useCMSSEO';
+import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const ContentManagement = () => {
@@ -269,13 +270,17 @@ const ContentManagement = () => {
         </CardContent>
       </Card>
 
-      {/* Tabs para Conteúdo e SEO */}
+      {/* Tabs para Conteúdo, SEO e Results Cards */}
       {selectedPage && (
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="content" className="flex items-center gap-2">
               <Home className="h-4 w-4" />
               Conteúdo
+            </TabsTrigger>
+            <TabsTrigger value="results-cards" className="flex items-center gap-2">
+              <Grid3X3 className="h-4 w-4" />
+              Cards Results
             </TabsTrigger>
             <TabsTrigger value="seo" className="flex items-center gap-2">
               <Search className="h-4 w-4" />
@@ -304,6 +309,28 @@ const ContentManagement = () => {
                     <Save className="h-4 w-4 mr-2" />
                     {saving ? 'Salvando...' : 'Salvar Conteúdo'}
                   </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Tab de Results Cards */}
+          <TabsContent value="results-cards">
+            <Card>
+              <CardHeader>
+                <CardTitle>Gestão dos Cards da Seção Results</CardTitle>
+                <CardDescription>
+                  Em breve: gerencie os cards da seção Results com controle completo de ícones, cores, títulos e descrições
+                  <Badge variant="outline" className="ml-2">
+                    {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
+                  </Badge>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-12 text-gray-500">
+                  <Grid3X3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p>Interface de gestão dos cards em desenvolvimento</p>
+                  <p className="text-sm mt-2">Por enquanto, os cards são gerenciados diretamente no banco de dados</p>
                 </div>
               </CardContent>
             </Card>
