@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical, Eye } from 'lucide-react';
+import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical, Eye, EyeOff } from 'lucide-react';
 import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -357,7 +357,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
       <div className="space-y-4">
         {formCards.map((card, index) => (
           <Card key={index} className="border border-gray-200 shadow-sm">
-            {/* Card Header */}
+            {/* Card Header - sempre visível */}
             <CardHeader className="pb-3 bg-gray-50/50">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -380,7 +380,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                     variant={expandedCard === index ? "default" : "ghost"}
                     onClick={() => setExpandedCard(expandedCard === index ? null : index)}
                   >
-                    <Eye className="h-4 w-4 mr-1" />
+                    {expandedCard === index ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
                     {expandedCard === index ? 'Recolher' : 'Editar'}
                   </Button>
                   <div className="flex items-center gap-1">
@@ -419,7 +419,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
               </div>
             </CardHeader>
 
-            {/* Expandable Content */}
+            {/* Conteúdo expandido - só aparece quando expandido */}
             {expandedCard === index && (
               <CardContent className="pt-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
