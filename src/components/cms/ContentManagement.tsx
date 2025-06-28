@@ -14,6 +14,7 @@ import { useCMSContent } from '@/hooks/useCMSContent';
 import { useCMSSEO } from '@/hooks/useCMSSEO';
 import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ResultsCardsManagement from './ResultsCardsManagement';
 
 const ContentManagement = () => {
   const { pages, content, loading: contentLoading, fetchPageContent, saveContent, getContent } = useCMSContent();
@@ -302,7 +303,21 @@ const ContentManagement = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 {renderFieldsBySection(allFields, 'hero', 'Seção Hero - Página Principal')}
-                {renderFieldsBySection(allFields, 'results', 'Seção Results - Resultados')}
+                
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Seção Results - Resultados</h3>
+                  <div className="space-y-4">
+                    {renderFieldsBySection(allFields, 'results', '').props.children}
+                  </div>
+                  
+                  <Separator className="my-6" />
+                  
+                  {/* Gestão dos Cards da Seção Results */}
+                  <ResultsCardsManagement 
+                    selectedPage={selectedPage}
+                    selectedLanguage={selectedLanguage}
+                  />
+                </div>
 
                 <div className="flex justify-end pt-4">
                   <Button onClick={handleSaveContent} disabled={saving}>
@@ -320,18 +335,17 @@ const ContentManagement = () => {
               <CardHeader>
                 <CardTitle>Gestão dos Cards da Seção Results</CardTitle>
                 <CardDescription>
-                  Em breve: gerencie os cards da seção Results com controle completo de ícones, cores, títulos e descrições
+                  Gerencie os cards da seção Results com controle completo de ícones, cores, títulos e descrições
                   <Badge variant="outline" className="ml-2">
                     {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
                   </Badge>
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-12 text-gray-500">
-                  <Grid3X3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Interface de gestão dos cards em desenvolvimento</p>
-                  <p className="text-sm mt-2">Por enquanto, os cards são gerenciados diretamente no banco de dados</p>
-                </div>
+                <ResultsCardsManagement 
+                  selectedPage={selectedPage}
+                  selectedLanguage={selectedLanguage}
+                />
               </CardContent>
             </Card>
           </TabsContent>

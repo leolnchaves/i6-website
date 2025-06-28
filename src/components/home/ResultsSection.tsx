@@ -107,6 +107,8 @@ const ResultsSection = () => {
               title={result.title}
               description={result.description}
               index={index}
+              backgroundColor={result.backgroundColor}
+              backgroundOpacity={result.backgroundOpacity}
             />
           ))}
         </div>

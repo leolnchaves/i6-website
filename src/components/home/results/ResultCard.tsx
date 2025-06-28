@@ -6,11 +6,24 @@ interface ResultCardProps {
   title: string;
   description: string;
   index: number;
+  backgroundColor?: string;
+  backgroundOpacity?: number;
 }
 
-const ResultCard = ({ icon, title, description, index }: ResultCardProps) => {
+const ResultCard = ({ icon, title, description, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
+  const cardStyle = backgroundColor ? {
+    backgroundColor: backgroundColor,
+    opacity: backgroundOpacity || 1.0,
+  } : {};
+
   return (
-    <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass" style={{ animationDelay: `${index * 0.1}s` }}>
+    <Card 
+      className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass" 
+      style={{ 
+        animationDelay: `${index * 0.1}s`,
+        ...cardStyle
+      }}
+    >
       <CardContent className="p-6 text-center">
         <div className="mb-4 flex justify-center animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
           {icon}
