@@ -9,7 +9,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const CompactSolutionsSection = () => {
   const { t } = useLanguage();
-  const { cards, loading } = useCMSCompactSolutionsCardsFrontend('home');
+  const { cards, loading, error } = useCMSCompactSolutionsCardsFrontend('home');
 
   // Icon mapping
   const iconMap = {
@@ -25,11 +25,63 @@ const CompactSolutionsSection = () => {
     Shield: <Shield className="w-6 h-6 text-white" />,
   };
 
+  // Fallback data for when CMS data is not available
+  const fallbackCards = [
+    {
+      id: '1',
+      title: 'Smart Discovery for Anonymous Visitors',
+      description: 'Turn anonymous traffic into engaged buyers with real-time intelligent recommendations.',
+      icon: 'Target',
+      engine: 'i6 RecSys',
+      backgroundColor: '#1E4A94'
+    },
+    {
+      id: '2',
+      title: 'Predictive Personalization',
+      description: 'Deliver truly personalized experiences based on individual behavior and preferences.',
+      icon: 'Users',
+      engine: 'i6 RecSys',
+      backgroundColor: '#2D5A87'
+    },
+    {
+      id: '3',
+      title: 'Industrial Recommendation Intelligence',
+      description: 'Align commercial targets with intelligent recommendations in real time.',
+      icon: 'Cog',
+      engine: 'i6 RecSys',
+      backgroundColor: '#3A6B7A'
+    },
+    {
+      id: '4',
+      title: 'Predictive Campaign Targeting',
+      description: 'Identify users most likely to convert before campaigns begin.',
+      icon: 'TrendingUp',
+      engine: 'i6 RecSys',
+      backgroundColor: '#477C6D'
+    },
+    {
+      id: '5',
+      title: 'Smart Price Optimization',
+      description: 'Dynamic pricing that adapts in real time to demand and behavior.',
+      icon: 'DollarSign',
+      engine: 'i6 ElasticPrice',
+      backgroundColor: '#548D60'
+    },
+    {
+      id: '6',
+      title: 'Adaptive Demand Forecasting',
+      description: 'Forecast demand with precision based on trends and behaviors.',
+      icon: 'BarChart3',
+      engine: 'i6 Previsio',
+      backgroundColor: '#619E53'
+    }
+  ];
+
   const handleSolutionsClick = () => {
-    // Navigate to solutions page and scroll to top
     window.location.href = '/solutions';
   };
 
+  // Show loading state
   if (loading) {
     return (
       <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
@@ -43,6 +95,21 @@ const CompactSolutionsSection = () => {
     );
   }
 
+  // Show error state with fallback
+  if (error) {
+    console.warn('CMS data failed to load, using fallback data:', error);
+  }
+
+  // Use CMS data if available, otherwise use fallback
+  const cardsToRender = cards.length > 0 ? cards.map(card => ({
+    id: card.id,
+    title: card.title,
+    description: card.description,
+    icon: card.icon_name,
+    engine: card.engine_name,
+    backgroundColor: card.background_color
+  })) : fallbackCards;
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
       {/* Subtle background elements */}
@@ -51,25 +118,19 @@ const CompactSolutionsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <CompactSolutionsHeader />
 
-        {cards.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {cards.map((card, index) => (
-              <SolutionCard
-                key={card.id}
-                icon={iconMap[card.icon_name as keyof typeof iconMap] || iconMap.Target}
-                title={card.title}
-                description={card.description}
-                index={index}
-                engine={card.engine_name}
-                backgroundColor={card.background_color}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-600">No solutions available at the moment.</p>
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {cardsToRender.map((card, index) => (
+            <SolutionCard
+              key={card.id}
+              icon={iconMap[card.icon as keyof typeof iconMap] || iconMap.Target}
+              title={card.title}
+              description={card.description}
+              index={index}
+              engine={card.engine}
+              backgroundColor={card.backgroundColor}
+            />
+          ))}
+        </div>
 
         {/* Button to Solutions page */}
         <div className="text-center">

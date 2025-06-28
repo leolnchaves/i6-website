@@ -18,12 +18,14 @@ interface CompactSolutionsCard {
 export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home') => {
   const [cards, setCards] = useState<CompactSolutionsCard[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { language } = useLanguage();
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
         setLoading(true);
+        setError(null);
         console.log('Fetching compact solutions cards for:', { pageSlug, language });
         
         // First get the page ID
@@ -31,10 +33,17 @@ export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home') =
           .from('cms_pages')
           .select('id')
           .eq('slug', pageSlug)
-          .single();
+          .maybeSingle();
 
         if (pageError) {
           console.error('Error fetching page:', pageError);
+          setError('Failed to fetch page data');
+          return;
+        }
+
+        if (!pageData) {
+          console.log('No page found for slug:', pageSlug);
+          setCards([]);
           return;
         }
 
@@ -49,6 +58,7 @@ export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home') =
 
         if (error) {
           console.error('Error fetching compact solutions cards:', error);
+          setError('Failed to fetch cards');
           return;
         }
 
@@ -56,6 +66,7 @@ export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home') =
         setCards(data || []);
       } catch (error) {
         console.error('Error in fetchCards:', error);
+        setError('Unexpected error occurred');
       } finally {
         setLoading(false);
       }
@@ -64,5 +75,5 @@ export const useCMSCompactSolutionsCardsFrontend = (pageSlug: string = 'home') =
     fetchCards();
   }, [pageSlug, language]);
 
-  return { cards, loading };
+  return { cards, loading, error };
 };
