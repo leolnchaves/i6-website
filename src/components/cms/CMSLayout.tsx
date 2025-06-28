@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, SidebarFooter } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
@@ -88,7 +87,7 @@ const CMSLayout: React.FC<CMSLayoutProps> = ({ children }) => {
                             `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                               isActive 
                                 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25' 
-                                : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md hover:shadow-blue-100/50'
+                                : 'text-gray-900 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md hover:shadow-blue-100/50'
                             }`
                           }
                         >
