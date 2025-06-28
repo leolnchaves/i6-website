@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Save, Home, Search } from 'lucide-react';
+import { Save, Home, Search, Settings } from 'lucide-react';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { useCMSSEO } from '@/hooks/useCMSSEO';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import PageSelector from './content/PageSelector';
 import ContentSectionAccordion from './content/ContentSectionAccordion';
 import SEOForm from './content/SEOForm';
+import CompactSolutionsCardsManagement from './CompactSolutionsCardsManagement';
 
 const ContentManagement = () => {
   const { pages, content, loading: contentLoading, fetchPageContent, saveContent, getContent } = useCMSContent();
@@ -185,10 +186,14 @@ const ContentManagement = () => {
 
       {selectedPage && (
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="content" className="flex items-center gap-2">
               <Home className="h-4 w-4" />
               Conteúdo
+            </TabsTrigger>
+            <TabsTrigger value="cards" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Cards
             </TabsTrigger>
             <TabsTrigger value="seo" className="flex items-center gap-2">
               <Search className="h-4 w-4" />
@@ -226,6 +231,13 @@ const ContentManagement = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="cards">
+            <CompactSolutionsCardsManagement 
+              selectedPage={selectedPage}
+              selectedLanguage={selectedLanguage}
+            />
           </TabsContent>
 
           <TabsContent value="seo">
