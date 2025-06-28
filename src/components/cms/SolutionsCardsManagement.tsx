@@ -486,52 +486,53 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
 
-              {/* Coluna direita - Preview e Estilo Visual */}
-              <div className="space-y-6">
-                {/* Preview do Card */}
-                <div>
-                  <Label className="text-sm font-medium mb-3 block">Preview do Card</Label>
-                  <div className="border rounded-lg p-4 bg-gray-50">
-                    <SolutionCardPreview
-                      title={card.title}
-                      focus={card.focus}
-                      description={card.description}
-                      features={card.features}
-                      outcome={card.outcome}
-                      engine={card.engine}
-                      gradient={card.gradient}
-                      bg_color={card.bg_color}
-                      border_color={card.border_color}
-                      icon={card.icon}
-                    />
+              {/* Coluna direita - Preview e Estilo Visual lado a lado */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Preview do Card */}
+                  <div>
+                    <Label className="text-sm font-medium mb-3 block">Preview</Label>
+                    <div className="border rounded-lg p-3 bg-gray-50">
+                      <SolutionCardPreview
+                        title={card.title}
+                        focus={card.focus}
+                        description={card.description}
+                        features={card.features}
+                        outcome={card.outcome}
+                        engine={card.engine}
+                        gradient={card.gradient}
+                        bg_color={card.bg_color}
+                        border_color={card.border_color}
+                        icon={card.icon}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <Separator />
+                  {/* Estilo Visual */}
+                  <div>
+                    <Label className="text-sm font-medium mb-3 block">Estilo Visual</Label>
+                    <div className="space-y-3">
+                      <IconPalette
+                        label="Ícone"
+                        value={card.icon}
+                        onChange={(value) => handleCardChange(index, 'icon', value)}
+                      />
 
-                {/* Estilo Visual */}
-                <div className="space-y-4">
-                  <h5 className="font-medium text-gray-900">Estilo Visual</h5>
-                  
-                  <IconPalette
-                    label="Ícone"
-                    value={card.icon}
-                    onChange={(value) => handleCardChange(index, 'icon', value)}
-                  />
+                      <ColorPalette
+                        label="Cor de Fundo"
+                        value={card.bg_color}
+                        onChange={(value) => handleCardChange(index, 'bg_color', value)}
+                        options={bgColorOptions}
+                      />
 
-                  <ColorPalette
-                    label="Cor de Fundo"
-                    value={card.bg_color}
-                    onChange={(value) => handleCardChange(index, 'bg_color', value)}
-                    options={bgColorOptions}
-                  />
-
-                  <ColorPalette
-                    label="Cor da Borda"
-                    value={card.border_color}
-                    onChange={(value) => handleCardChange(index, 'border_color', value)}
-                    options={borderColorOptions}
-                  />
+                      <ColorPalette
+                        label="Cor da Borda"
+                        value={card.border_color}
+                        onChange={(value) => handleCardChange(index, 'border_color', value)}
+                        options={borderColorOptions}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </CardContent>
