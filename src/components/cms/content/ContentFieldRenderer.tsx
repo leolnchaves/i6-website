@@ -4,49 +4,69 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import IconSelector from './IconSelector';
-import { ContentField } from './ContentFieldsConfig';
+
+interface ContentField {
+  section: string;
+  field: string;
+  label: string;
+  type: 'input' | 'textarea' | 'icon';
+}
 
 interface ContentFieldRendererProps {
-  field: ContentField;
-  value: string;
-  onChange: (key: string, value: string) => void;
+  fields: ContentField[];
+  formData: { [key: string]: string };
+  onFieldChange: (key: string, value: string) => void;
 }
 
 const ContentFieldRenderer: React.FC<ContentFieldRendererProps> = ({
-  field,
-  value,
-  onChange,
+  fields,
+  formData,
+  onFieldChange,
 }) => {
-  if (field.type === 'icon') {
-    return (
-      <IconSelector
-        id={field.key}
-        label={field.label}
-        value={value}
-        onChange={(iconValue) => onChange(field.key, iconValue)}
-      />
-    );
-  }
-
   return (
-    <div className="space-y-2">
-      <Label htmlFor={field.key}>{field.label}</Label>
-      {field.type === 'textarea' ? (
-        <Textarea
-          id={field.key}
-          value={value}
-          onChange={(e) => onChange(field.key, e.target.value)}
-          placeholder={field.placeholder}
-          rows={field.label.toLowerCase().includes('descrição') ? 5 : 3}
-        />
-      ) : (
-        <Input
-          id={field.key}
-          value={value}
-          onChange={(e) => onChange(field.key, e.target.value)}
-          placeholder={field.placeholder}
-        />
-      )}
+    <div className="space-y-4">
+      {fields.map(field => {
+        const key = `${field.section}_${field.field}`;
+        const value = formData[key] || '';
+
+        if (field.type === 'icon') {
+          return (
+            <IconSelector
+              key={key}
+              id={key}
+              label={field.label}
+              value={value}
+              onChange={(iconValue) => onFieldChange(key, iconValue)}
+            />
+          );
+        }
+
+        return (
+          <div key={key} className="space-y-2">
+            <Label htmlFor={key}>{field.label}</Label>
+            {field.type === 'textarea' ? (
+              <Textarea
+                id={key}
+                value={value}
+                onChange={(e) => onFieldChange(key, e.target.value)}
+                placeholder={`Digite o ${field.label.toLowerCase()}...`}
+                rows={field.field === 'description' ? 5 : 3}
+              />
+            ) : (
+              <Input
+                id={key}
+                value={value}
+                onChange={(e) => onFieldChange(key, e.target.value)}
+                placeholder={
+                  field.field === 'demoLink' 
+                    ? 'https://www.youtube.com/embed/...' 
+                    : `Digite o ${field.label.toLowerCase()}...`
+                }
+              />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
