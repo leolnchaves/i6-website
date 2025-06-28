@@ -21,6 +21,9 @@ export const contactFAQFields: ContentField[] = [
   { section: 'contactFAQ', field: 'noResults', label: 'Mensagem Sem Resultados', type: 'input' },
 ];
 
+// Export faqFields as an alias for contactFAQFields for backwards compatibility
+export const faqFields = contactFAQFields;
+
 export const getContactAccordionFields = () => {
   return {
     heroFields: contactHeroFields,

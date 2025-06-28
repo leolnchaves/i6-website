@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
 import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface SolutionsCardsManagementProps {
   selectedPage: string;
