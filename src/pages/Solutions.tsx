@@ -1,7 +1,7 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
 import SolutionsHero from '@/components/solutions/SolutionsHero';
-import SolutionsGrid from '@/components/solutions/SolutionsGrid';
+import CMSSolutionsGrid from '@/components/solutions/CMSSolutionsGrid';
 import ProcessFlow from '@/components/solutions/ProcessFlow';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
 
@@ -13,7 +13,7 @@ const Solutions = () => {
   return (
     <div className="min-h-screen">
       <SolutionsHero />
-      <SolutionsGrid />
+      <CMSSolutionsGrid />
       <ProcessFlow />
       <SolutionsCTA />
     </div>

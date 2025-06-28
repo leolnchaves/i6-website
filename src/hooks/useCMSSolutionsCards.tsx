@@ -29,7 +29,10 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
   const { toast } = useToast();
 
   const fetchCards = useCallback(async () => {
-    if (!pageId || !language) return;
+    if (!pageId || !language) {
+      console.log('Missing pageId or language:', { pageId, language });
+      return;
+    }
 
     setLoading(true);
     try {
@@ -40,6 +43,7 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
         .select('*')
         .eq('page_id', pageId)
         .eq('language', language)
+        .eq('is_active', true)
         .order('card_order', { ascending: true });
 
       if (error) {
@@ -47,7 +51,8 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
         throw error;
       }
 
-      console.log('Solutions cards fetched:', data?.length || 0);
+      console.log('Solutions cards fetched successfully:', data?.length || 0, 'cards');
+      console.log('Raw data:', data);
       setCards(data || []);
     } catch (error) {
       console.error('Failed to fetch solutions cards:', error);
@@ -59,7 +64,7 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
     } finally {
       setLoading(false);
     }
-  }, [pageId, language]);
+  }, [pageId, language, toast]);
 
   const saveCard = useCallback(async (cardData: Partial<SolutionsCard>) => {
     try {
