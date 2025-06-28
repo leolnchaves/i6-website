@@ -34,12 +34,12 @@ const ContentManagement = () => {
 
   // Campos específicos para a seção Hero
   const heroFields = [
-    { section: 'hero', field: 'infinite', label: 'Título Principal - "Infinite"', type: 'input' },
-    { section: 'hero', field: 'possibilities', label: 'Título Principal - "Possibilities"', type: 'input' },
-    { section: 'hero', field: 'poweredByAI', label: 'Subtítulo - "Powered by AI"', type: 'input' },
+    { section: 'hero', field: 'infinite', label: 'Título Principal', type: 'input' },
+    { section: 'hero', field: 'possibilities', label: 'Título Destaque', type: 'input' },
+    { section: 'hero', field: 'poweredByAI', label: 'Subtítulo', type: 'input' },
     { section: 'hero', field: 'description', label: 'Descrição', type: 'textarea' },
-    { section: 'hero', field: 'startJourney', label: 'Botão - "Start Journey"', type: 'input' },
-    { section: 'hero', field: 'watchDemo', label: 'Botão - "Watch Demo"', type: 'input' },
+    { section: 'hero', field: 'startJourney', label: 'Botão Jornada', type: 'input' },
+    { section: 'hero', field: 'watchDemo', label: 'Botão Demo', type: 'input' },
   ];
 
   // Função para carregar dados quando página ou idioma mudarem
