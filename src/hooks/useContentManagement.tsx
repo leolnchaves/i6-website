@@ -66,18 +66,24 @@ export const useContentManagement = () => {
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Update form data when content loads
+  // Update form data when content loads - ONLY when page or language changes, not during editing
   useEffect(() => {
-    const formData: { [key: string]: string } = {};
-    allFields.forEach(field => {
-      const key = `${field.section}_${field.field}`;
-      formData[key] = content.find(c => 
-        c.section_name === field.section && 
-        c.field_name === field.field
-      )?.content || '';
-    });
-    setContentFormData(formData);
-  }, [content, allFields]);
+    // Only update form data if we don't have any data yet or if page/language changed
+    const shouldUpdateFormData = Object.keys(contentFormData).length === 0 || 
+      !contentFormData[`${allFields[0]?.section}_${allFields[0]?.field}`];
+
+    if (shouldUpdateFormData && content.length > 0) {
+      const formData: { [key: string]: string } = {};
+      allFields.forEach(field => {
+        const key = `${field.section}_${field.field}`;
+        formData[key] = content.find(c => 
+          c.section_name === field.section && 
+          c.field_name === field.field
+        )?.content || '';
+      });
+      setContentFormData(formData);
+    }
+  }, [selectedPage, selectedLanguage, content, allFields]);
 
   // Update SEO form data when SEO data loads
   useEffect(() => {
