@@ -68,7 +68,7 @@ const ContentManagement = () => {
     { section: 'successStoriesHero', field: 'description', label: 'Descrição', type: 'textarea' as const },
   ];
 
-  // Campos específicos para Success Stories Metrics - LABELS ATUALIZADOS
+  // Campos específicos para Success Stories Metrics - COM CAMPOS DE ÍCONES
   const successStoriesMetricsFields = [
     { section: 'successStoriesMetrics', field: 'avgROI', label: 'Estatística 1', type: 'input' as const },
     { section: 'successStoriesMetrics', field: 'avgROILabel', label: 'Label Estatística 1', type: 'input' as const },
