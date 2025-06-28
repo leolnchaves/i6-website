@@ -11,6 +11,13 @@ const CompactSolutionsSection = () => {
   const { t, language } = useLanguage();
   const { cards, loading, error } = useCMSCompactSolutionsCards(language);
 
+  console.log('=== CompactSolutionsSection Debug ===');
+  console.log('Current language:', language);
+  console.log('Loading state:', loading);
+  console.log('Error state:', error);
+  console.log('Cards from CMS:', cards);
+  console.log('Cards length:', cards?.length);
+
   // Mapeamento de nomes de ícones para componentes
   const iconMap = {
     'Target': <Target className="w-6 h-6 text-white" />,
@@ -76,7 +83,12 @@ const CompactSolutionsSection = () => {
   const cardsToRender = (!loading && cards && cards.length > 0) ? cards : fallbackSolutions;
   const usesCMSData = (!loading && cards && cards.length > 0);
 
+  console.log('Cards to render:', cardsToRender);
+  console.log('Uses CMS data:', usesCMSData);
+  console.log('Cards to render length:', cardsToRender.length);
+
   if (loading) {
+    console.log('Rendering loading state');
     return (
       <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -89,6 +101,8 @@ const CompactSolutionsSection = () => {
     );
   }
 
+  console.log('Rendering main section with', cardsToRender.length, 'cards');
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
       {/* Subtle background elements */}
@@ -100,30 +114,36 @@ const CompactSolutionsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {usesCMSData ? (
             // Renderizar com dados do CMS
-            cards.map((card, index) => (
-              <SolutionCard
-                key={card.id}
-                icon={iconMap[card.icon_name as keyof typeof iconMap] || <Target className="w-6 h-6 text-white" />}
-                title={card.title}
-                description={card.description}
-                index={index}
-                engine={card.engine}
-                backgroundColor={card.background_color || '#1E4A94'}
-              />
-            ))
+            cards.map((card, index) => {
+              console.log(`Rendering CMS card ${index + 1}:`, card);
+              return (
+                <SolutionCard
+                  key={card.id}
+                  icon={iconMap[card.icon_name as keyof typeof iconMap] || <Target className="w-6 h-6 text-white" />}
+                  title={card.title}
+                  description={card.description}
+                  index={index}
+                  engine={card.engine}
+                  backgroundColor={card.background_color || '#1E4A94'}
+                />
+              );
+            })
           ) : (
             // Renderizar com dados de fallback
-            fallbackSolutions.map((solution, index) => (
-              <SolutionCard
-                key={index}
-                icon={solution.icon}
-                title={solution.title}
-                description={solution.description}
-                index={index}
-                engine={solution.engine}
-                backgroundColor={solution.backgroundColor}
-              />
-            ))
+            fallbackSolutions.map((solution, index) => {
+              console.log(`Rendering fallback card ${index + 1}:`, solution.title);
+              return (
+                <SolutionCard
+                  key={index}
+                  icon={solution.icon}
+                  title={solution.title}
+                  description={solution.description}
+                  index={index}
+                  engine={solution.engine}
+                  backgroundColor={solution.backgroundColor}
+                />
+              );
+            })
           )}
         </div>
 
