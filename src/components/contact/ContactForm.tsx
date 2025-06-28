@@ -35,7 +35,7 @@ const ContactForm = () => {
   };
 
   return (
-    <Card className="border-0 shadow-2xl">
+    <Card className="border-0 shadow-2xl h-full flex flex-col">
       <CardHeader className="p-8">
         <CardTitle className="text-2xl font-bold text-gray-900">
           <div className="space-y-1">
@@ -44,19 +44,21 @@ const ContactForm = () => {
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-8 pt-0">
+      <CardContent className="p-8 pt-0 flex-1 flex flex-col">
         {isSubmitted ? (
           <ContactFormSuccess />
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <ContactFormFields 
-              formData={formData}
-              handleInputChange={handleInputChange}
-            />
+          <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col">
+            <div className="flex-1">
+              <ContactFormFields 
+                formData={formData}
+                handleInputChange={handleInputChange}
+              />
+            </div>
 
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3"
+              className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3 mt-auto"
             >
               {t('contact.form.sendMessage')}
               <Send className="ml-2 w-4 h-4" />
