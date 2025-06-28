@@ -97,17 +97,17 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
         </select>
       </div>
 
-      <div>
+      <div className="flex-1">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           {t('contact.form.message')} *
         </label>
         <textarea
           name="message"
           required
-          rows={5}
+          rows={12}
           value={formData.message}
           onChange={handleInputChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
+          className="w-full h-full min-h-[300px] px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
           placeholder={t('contact.form.messagePlaceholder')}
         />
       </div>
