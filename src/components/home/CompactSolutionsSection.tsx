@@ -2,56 +2,93 @@
 import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCMSCompactSolutionsCards } from '@/hooks/useCMSCompactSolutionsCards';
 import CompactSolutionsHeader from './compact-solutions/CompactSolutionsHeader';
 import SolutionCard from './compact-solutions/SolutionCard';
 
 const CompactSolutionsSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { cards, loading } = useCMSCompactSolutionsCards('home', language);
 
-  const solutions = [
+  // Mapeamento dos ícones
+  const iconMap = {
+    'target': Target,
+    'users': Users,
+    'cog': Cog,
+    'trending-up': TrendingUp,
+    'dollar-sign': DollarSign,
+    'bar-chart-3': BarChart3,
+  };
+
+  // Fallback solutions se não houver dados do CMS
+  const fallbackSolutions = [
     {
       icon: <Target className="w-6 h-6 text-white" />,
       title: t('solutions.smartDiscovery.title'),
       description: t('solutions.smartDiscovery.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
+      backgroundColor: '#1E4A94',
+      backgroundOpacity: 1
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
       title: t('solutions.predictivePersonalization.title'),
       description: t('solutions.predictivePersonalization.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
+      backgroundColor: '#1E4A94',
+      backgroundOpacity: 1
     },
     {
       icon: <Cog className="w-6 h-6 text-white" />,
       title: t('solutions.industrialRecommendation.title'),
       description: t('solutions.industrialRecommendation.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
+      backgroundColor: '#1E4A94',
+      backgroundOpacity: 1
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-white" />,
       title: t('solutions.predictiveCampaign.title'),
       description: t('solutions.predictiveCampaign.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
+      backgroundColor: '#1E4A94',
+      backgroundOpacity: 1
     },
     {
       icon: <DollarSign className="w-6 h-6 text-white" />,
       title: t('solutions.smartPricing.title'),
       description: t('solutions.smartPricing.description'),
       engine: 'i6 ElasticPrice',
-      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
+      backgroundColor: '#1E4A94',
+      backgroundOpacity: 1
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-white" />,
       title: t('solutions.demandForecasting.title'),
       description: t('solutions.demandForecasting.description'),
       engine: 'i6 Previsio',
-      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
+      backgroundColor: '#1E4A94',
+      backgroundOpacity: 1
     }
   ];
+
+  // Converter cards do CMS para o formato esperado
+  const solutions = !loading && cards.length > 0 
+    ? cards
+        .filter(card => card.is_active)
+        .sort((a, b) => a.card_order - b.card_order)
+        .map((card) => {
+          const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || Target;
+          return {
+            icon: <IconComponent className="w-6 h-6 text-white" />,
+            title: card.title,
+            description: card.description,
+            engine: card.engine_name,
+            backgroundColor: card.background_color || '#1E4A94',
+            backgroundOpacity: card.background_opacity || 1
+          };
+        })
+    : fallbackSolutions;
 
   const handleSolutionsClick = () => {
     // Navigate to solutions page and scroll to top
@@ -76,6 +113,7 @@ const CompactSolutionsSection = () => {
               index={index}
               engine={solution.engine}
               backgroundColor={solution.backgroundColor}
+              backgroundOpacity={solution.backgroundOpacity}
             />
           ))}
         </div>
