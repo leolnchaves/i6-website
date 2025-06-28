@@ -1,323 +1,259 @@
 
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Plus, Save, Trash2, GripVertical, Target, Users, Cog, TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { useCMSCompactSolutionsCards } from '@/hooks/useCMSCompactSolutionsCards';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import CardsHeader from './cards/CardsHeader';
+import CompactSolutionCardForm from './cards/CompactSolutionCardForm';
+import EmptyCardsState from './cards/EmptyCardsState';
 
 interface CompactSolutionsCardsManagementProps {
   selectedPage: string;
   selectedLanguage: string;
 }
 
-const iconOptions = [
-  { value: 'target', label: 'Target', icon: Target },
-  { value: 'users', label: 'Users', icon: Users },
-  { value: 'cog', label: 'Cog', icon: Cog },
-  { value: 'trending-up', label: 'Trending Up', icon: TrendingUp },
-  { value: 'dollar-sign', label: 'Dollar Sign', icon: DollarSign },
-  { value: 'bar-chart-3', label: 'Bar Chart', icon: BarChart3 },
+interface CardFormData {
+  id?: string;
+  title: string;
+  description: string;
+  icon_name: string;
+  engine_name: string;
+  background_color: string;
+  background_opacity: number;
+  is_active: boolean;
+  card_order: number;
+}
+
+const availableIcons = [
+  { value: 'target', label: 'Target' },
+  { value: 'users', label: 'Users' },
+  { value: 'cog', label: 'Cog' },
+  { value: 'trending-up', label: 'Trending Up' },
+  { value: 'dollar-sign', label: 'Dollar Sign' },
+  { value: 'bar-chart-3', label: 'Bar Chart' },
+];
+
+const availableEngines = [
+  'i6 RecSys',
+  'i6 ElasticPrice',
+  'i6 Previsio',
 ];
 
 const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementProps> = ({
   selectedPage,
   selectedLanguage,
 }) => {
-  const { cards, loading, saveCards, deleteCard, setCards } = useCMSCompactSolutionsCards('home', selectedLanguage);
+  const { cards, loading, refetch } = useCMSCompactSolutionsCards('home', selectedLanguage);
+  const [formCards, setFormCards] = useState<CardFormData[]>([]);
   const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
 
-  const handleAddCard = () => {
-    const newCard = {
-      id: `temp-${Date.now()}`,
-      card_order: cards.length + 1,
-      title: 'Novo Card',
-      description: 'Descrição do novo card',
+  useEffect(() => {
+    if (cards.length > 0) {
+      const cardData = cards.map(card => ({
+        id: card.id,
+        title: card.title,
+        description: card.description,
+        icon_name: card.icon_name,
+        engine_name: card.engine_name,
+        background_color: card.background_color || '#1E4A94',
+        background_opacity: card.background_opacity || 1.0,
+        is_active: card.is_active,
+        card_order: card.card_order,
+      }));
+      setFormCards(cardData);
+    }
+  }, [cards]);
+
+  const handleCardChange = (index: number, field: keyof CardFormData, value: any) => {
+    const updatedCards = [...formCards];
+    updatedCards[index] = { ...updatedCards[index], [field]: value };
+    setFormCards(updatedCards);
+  };
+
+  const addNewCard = () => {
+    const newCard: CardFormData = {
+      title: '',
+      description: '',
       icon_name: 'target',
       engine_name: 'i6 RecSys',
       background_color: '#1E4A94',
       background_opacity: 1.0,
       is_active: true,
+      card_order: formCards.length + 1,
     };
-
-    setCards(prev => [...prev, newCard]);
+    setFormCards([...formCards, newCard]);
   };
 
-  const handleUpdateCard = (cardId: string, field: string, value: any) => {
-    setCards(prev => prev.map(card => 
-      card.id === cardId ? { ...card, [field]: value } : card
-    ));
-  };
-
-  const handleSaveCards = async () => {
-    setSaving(true);
-    const success = await saveCards(cards);
-    setSaving(false);
-  };
-
-  const handleDeleteCard = async (cardId: string) => {
-    if (window.confirm('Tem certeza que deseja excluir este card?')) {
-      await deleteCard(cardId);
-    }
-  };
-
-  const moveCard = (fromIndex: number, toIndex: number) => {
-    if (toIndex < 0 || toIndex >= cards.length) return;
-    
-    const newCards = [...cards];
-    const [movedCard] = newCards.splice(fromIndex, 1);
-    newCards.splice(toIndex, 0, movedCard);
-    
-    // Update card_order for all cards
-    const updatedCards = newCards.map((card, index) => ({
+  const removeCard = (index: number) => {
+    const updatedCards = formCards.filter((_, i) => i !== index);
+    const reorderedCards = updatedCards.map((card, i) => ({
       ...card,
-      card_order: index + 1
+      card_order: i + 1,
     }));
-    
-    setCards(updatedCards);
+    setFormCards(reorderedCards);
   };
 
-  const getSelectedIconDisplay = (iconName: string) => {
-    const selectedOption = iconOptions.find(option => option.value === iconName);
-    if (selectedOption) {
-      const IconComponent = selectedOption.icon;
-      return (
-        <div className="flex items-center gap-2">
-          <IconComponent className="h-4 w-4" />
-          {selectedOption.label}
-        </div>
-      );
+  const moveCard = (index: number, direction: 'up' | 'down') => {
+    if (
+      (direction === 'up' && index === 0) ||
+      (direction === 'down' && index === formCards.length - 1)
+    ) {
+      return;
     }
-    return "Selecione um ícone";
+
+    const updatedCards = [...formCards];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    [updatedCards[index], updatedCards[targetIndex]] = [updatedCards[targetIndex], updatedCards[index]];
+    
+    updatedCards.forEach((card, i) => {
+      card.card_order = i + 1;
+    });
+
+    setFormCards(updatedCards);
+  };
+
+  const syncCardStatusAcrossLanguages = async (cardOrder: number, isActive: boolean) => {
+    try {
+      console.log(`Syncing card at order ${cardOrder} to is_active: ${isActive} across all languages`);
+      
+      const { error } = await supabase
+        .from('cms_compact_solutions_cards')
+        .update({ is_active: isActive })
+        .eq('page_id', selectedPage)
+        .eq('card_order', cardOrder);
+
+      if (error) {
+        console.error('Error syncing card status across languages:', error);
+        throw error;
+      }
+
+      console.log(`Successfully synced card status across languages for card order ${cardOrder}`);
+    } catch (error) {
+      console.error('Failed to sync card status:', error);
+      toast({
+        title: 'Aviso',
+        description: 'Não foi possível sincronizar o status do card em todos os idiomas.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleCardChangeWithSync = async (index: number, field: keyof CardFormData, value: any) => {
+    const updatedCards = [...formCards];
+    updatedCards[index] = { ...updatedCards[index], [field]: value };
+    setFormCards(updatedCards);
+
+    if (field === 'is_active' && selectedPage) {
+      const cardOrder = updatedCards[index].card_order;
+      await syncCardStatusAcrossLanguages(cardOrder, value as boolean);
+      
+      toast({
+        title: 'Status Sincronizado',
+        description: `Card ${value ? 'ativado' : 'desativado'} em todos os idiomas.`,
+      });
+    }
+  };
+
+  const handleToggleActive = async (index: number, isActive: boolean) => {
+    await handleCardChangeWithSync(index, 'is_active', isActive);
+  };
+
+  const saveCards = async () => {
+    if (!selectedPage) return;
+
+    setSaving(true);
+    try {
+      console.log('Saving cards with data:', formCards);
+
+      const { error: deleteError } = await supabase
+        .from('cms_compact_solutions_cards')
+        .delete()
+        .eq('page_id', selectedPage)
+        .eq('language', selectedLanguage);
+
+      if (deleteError) throw deleteError;
+
+      if (formCards.length > 0) {
+        const cardsToInsert = formCards.map(card => {
+          console.log(`Card "${card.title}" - is_active: ${card.is_active}`);
+          return {
+            page_id: selectedPage,
+            title: card.title,
+            description: card.description,
+            icon_name: card.icon_name,
+            engine_name: card.engine_name,
+            background_color: card.background_color || null,
+            background_opacity: card.background_opacity,
+            is_active: card.is_active,
+            card_order: card.card_order,
+            language: selectedLanguage,
+          };
+        });
+
+        console.log('Cards to insert:', cardsToInsert);
+
+        const { error: insertError } = await supabase
+          .from('cms_compact_solutions_cards')
+          .insert(cardsToInsert);
+
+        if (insertError) throw insertError;
+      }
+
+      await refetch();
+      toast({
+        title: 'Sucesso!',
+        description: 'Cards salvos com sucesso.',
+      });
+    } catch (error) {
+      console.error('Error saving cards:', error);
+      toast({
+        title: 'Erro',
+        description: 'Ocorreu um erro ao salvar os cards.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <LoadingSpinner />
+        <div className="text-gray-500">Carregando cards...</div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-800">
-          Gestão dos Cards da Seção Compact Solutions
-        </h3>
-        <div className="flex gap-2">
-          <Button onClick={handleAddCard} variant="outline" size="sm">
-            <Plus className="h-4 w-4 mr-2" />
-            Adicionar Card
-          </Button>
-          <Button onClick={handleSaveCards} disabled={saving}>
-            <Save className="h-4 w-4 mr-2" />
-            {saving ? 'Salvando...' : 'Salvar Cards'}
-          </Button>
-        </div>
+      <CardsHeader
+        onAddCard={addNewCard}
+        onSaveCards={saveCards}
+        saving={saving}
+      />
+
+      <div className="space-y-4">
+        {formCards.map((card, index) => (
+          <CompactSolutionCardForm
+            key={index}
+            card={card}
+            index={index}
+            availableIcons={availableIcons}
+            availableEngines={availableEngines}
+            totalCards={formCards.length}
+            onChange={handleCardChange}
+            onMove={moveCard}
+            onRemove={removeCard}
+            onToggleActive={handleToggleActive}
+          />
+        ))}
+
+        {formCards.length === 0 && (
+          <EmptyCardsState onAddCard={addNewCard} />
+        )}
       </div>
-
-      {cards.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="text-gray-400 mb-4">
-              <Plus className="h-12 w-12 mx-auto" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">
-              Nenhum card encontrado
-            </h3>
-            <p className="text-gray-500 mb-4">
-              Comece adicionando o primeiro card da seção Compact Solutions.
-            </p>
-            <Button onClick={handleAddCard} variant="outline">
-              <Plus className="h-4 w-4 mr-2" />
-              Adicionar Primeiro Card
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-4">
-          {cards.map((card, index) => (
-            <Card key={card.id} className={`transition-all duration-200 ${!card.is_active ? 'opacity-60' : ''}`}>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2">
-                      <GripVertical className="h-4 w-4 text-gray-400 cursor-move" />
-                      <Badge variant="outline">
-                        #{card.card_order}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-base">
-                      Card {index + 1}
-                    </CardTitle>
-                    {!card.is_active && (
-                      <Badge variant="secondary">Inativo</Badge>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => moveCard(index, index - 1)}
-                      disabled={index === 0}
-                    >
-                      ↑
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => moveCard(index, index + 1)}
-                      disabled={index === cards.length - 1}
-                    >
-                      ↓
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDeleteCard(card.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor={`title-${card.id}`}>Título</Label>
-                    <Input
-                      id={`title-${card.id}`}
-                      value={card.title}
-                      onChange={(e) => handleUpdateCard(card.id, 'title', e.target.value)}
-                      placeholder="Título do card"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor={`engine-${card.id}`}>Nome do Motor</Label>
-                    <Input
-                      id={`engine-${card.id}`}
-                      value={card.engine_name}
-                      onChange={(e) => handleUpdateCard(card.id, 'engine_name', e.target.value)}
-                      placeholder="Ex: i6 RecSys, i6 ElasticPrice"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor={`icon-${card.id}`}>Ícone</Label>
-                    <Select
-                      value={card.icon_name}
-                      onValueChange={(value) => handleUpdateCard(card.id, 'icon_name', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue>
-                          {getSelectedIconDisplay(card.icon_name)}
-                        </SelectValue>
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        {iconOptions.map((option) => {
-                          const IconComponent = option.icon;
-                          return (
-                            <SelectItem key={option.value} value={option.value}>
-                              <div className="flex items-center gap-2">
-                                <IconComponent className="h-4 w-4" />
-                                {option.label}
-                              </div>
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor={`bg-color-${card.id}`}>Cor de Fundo</Label>
-                    <div className="flex gap-2">
-                      <Input
-                        id={`bg-color-${card.id}`}
-                        type="color"
-                        value={card.background_color || '#1E4A94'}
-                        onChange={(e) => handleUpdateCard(card.id, 'background_color', e.target.value)}
-                        className="w-16 h-10"
-                      />
-                      <Input
-                        value={card.background_color || '#1E4A94'}
-                        onChange={(e) => handleUpdateCard(card.id, 'background_color', e.target.value)}
-                        placeholder="#1E4A94"
-                        className="flex-1"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor={`opacity-${card.id}`}>
-                      Opacidade ({Math.round((card.background_opacity || 1) * 100)}%)
-                    </Label>
-                    <Slider
-                      id={`opacity-${card.id}`}
-                      min={0}
-                      max={1}
-                      step={0.1}
-                      value={[card.background_opacity || 1]}
-                      onValueChange={(values) => handleUpdateCard(card.id, 'background_opacity', values[0])}
-                      className="w-full"
-                    />
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id={`active-${card.id}`}
-                      checked={card.is_active}
-                      onCheckedChange={(checked) => handleUpdateCard(card.id, 'is_active', checked)}
-                    />
-                    <Label htmlFor={`active-${card.id}`}>Card Ativo</Label>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor={`description-${card.id}`}>Descrição</Label>
-                  <Textarea
-                    id={`description-${card.id}`}
-                    value={card.description}
-                    onChange={(e) => handleUpdateCard(card.id, 'description', e.target.value)}
-                    placeholder="Descrição do card"
-                    rows={3}
-                  />
-                </div>
-
-                {/* Preview do card */}
-                <div className="pt-4">
-                  <Label>Preview do Card</Label>
-                  <div 
-                    className="mt-2 p-4 rounded-lg text-white"
-                    style={{ 
-                      backgroundColor: card.background_color || '#1E4A94',
-                      opacity: card.background_opacity || 1
-                    }}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <Badge variant="secondary" className="bg-white/20 text-white">
-                        {card.engine_name}
-                      </Badge>
-                    </div>
-                    <h4 className="font-bold text-sm mb-2">{card.title}</h4>
-                    <p className="text-xs text-white/90 line-clamp-2">{card.description}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
     </div>
   );
 };
