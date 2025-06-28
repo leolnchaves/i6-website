@@ -22,12 +22,13 @@ const CompactSolutionsSection = () => {
 
   console.log('CompactSolutionsSection - Total cards fetched:', cards.length);
   console.log('CompactSolutionsSection - Cards data:', cards);
+  console.log('CompactSolutionsSection - Loading:', loading);
 
   // Filter only active cards for display on the website
   const activeCards = cards.filter(card => card.is_active);
   console.log('CompactSolutionsSection - Active cards:', activeCards.length);
 
-  // Fallback data for when CMS data is not available
+  // Fallback data for when CMS data is not available or no active cards
   const fallbackSolutions = [
     {
       icon: <Target className="w-6 h-6 text-white" />,
@@ -35,7 +36,7 @@ const CompactSolutionsSection = () => {
       description: t('solutions.smartDiscovery.description'),
       engine: 'i6 RecSys',
       backgroundColor: '#1E4A94',
-      backgroundOpacity: undefined
+      backgroundOpacity: 1.0
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
@@ -43,7 +44,7 @@ const CompactSolutionsSection = () => {
       description: t('solutions.predictivePersonalization.description'),
       engine: 'i6 RecSys',
       backgroundColor: '#1E4A94',
-      backgroundOpacity: undefined
+      backgroundOpacity: 1.0
     },
     {
       icon: <Cog className="w-6 h-6 text-white" />,
@@ -51,7 +52,7 @@ const CompactSolutionsSection = () => {
       description: t('solutions.industrialRecommendation.description'),
       engine: 'i6 RecSys',
       backgroundColor: '#1E4A94',
-      backgroundOpacity: undefined
+      backgroundOpacity: 1.0
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-white" />,
@@ -59,7 +60,7 @@ const CompactSolutionsSection = () => {
       description: t('solutions.predictiveCampaign.description'),
       engine: 'i6 RecSys',
       backgroundColor: '#1E4A94',
-      backgroundOpacity: undefined
+      backgroundOpacity: 1.0
     },
     {
       icon: <DollarSign className="w-6 h-6 text-white" />,
@@ -67,7 +68,7 @@ const CompactSolutionsSection = () => {
       description: t('solutions.smartPricing.description'),
       engine: 'i6 ElasticPrice',
       backgroundColor: '#1E4A94',
-      backgroundOpacity: undefined
+      backgroundOpacity: 1.0
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-white" />,
@@ -75,20 +76,20 @@ const CompactSolutionsSection = () => {
       description: t('solutions.demandForecasting.description'),
       engine: 'i6 Previsio',
       backgroundColor: '#1E4A94',
-      backgroundOpacity: undefined
+      backgroundOpacity: 1.0
     }
   ];
 
-  // Use CMS active cards if available, otherwise fallback to translations
-  const solutionsToRender = activeCards.length > 0 ? activeCards.map(card => {
+  // Use CMS active cards if available and not loading, otherwise use fallback
+  const solutionsToRender = !loading && activeCards.length > 0 ? activeCards.map(card => {
     const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || Target;
     return {
       icon: <IconComponent className="w-6 h-6 text-white" />,
       title: card.title,
       description: card.description,
       engine: card.engine_name,
-      backgroundColor: card.background_color,
-      backgroundOpacity: card.background_opacity
+      backgroundColor: card.background_color || '#1E4A94',
+      backgroundOpacity: card.background_opacity || 1.0
     };
   }) : fallbackSolutions;
 
@@ -98,6 +99,17 @@ const CompactSolutionsSection = () => {
     // Navigate to solutions page and scroll to top
     window.location.href = '/solutions';
   };
+
+  // Don't render nothing while loading
+  if (loading && cards.length === 0) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center">Loading...</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">

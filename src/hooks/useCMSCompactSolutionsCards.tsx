@@ -35,17 +35,19 @@ export const useCMSCompactSolutionsCards = (pageSlug: string = 'home', language:
 
       if (pageError) {
         console.error('Error fetching page:', pageError);
+        setCards([]);
         return;
       }
 
       if (!pageData) {
         console.log('Page not found:', pageSlug);
+        setCards([]);
         return;
       }
 
       console.log('useCMSCompactSolutionsCards - Found page ID:', pageData.id);
 
-      // Then, fetch ALL cards for this page (including inactive ones for CMS management)
+      // Then, fetch cards for this page
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_compact_solutions_cards')
         .select('*')
@@ -55,6 +57,7 @@ export const useCMSCompactSolutionsCards = (pageSlug: string = 'home', language:
 
       if (cardsError) {
         console.error('Error fetching cards:', cardsError);
+        setCards([]);
         toast({
           title: 'Erro ao carregar cards',
           description: 'Não foi possível carregar os cards da seção Compact Solutions.',
@@ -68,6 +71,7 @@ export const useCMSCompactSolutionsCards = (pageSlug: string = 'home', language:
       setCards(cardsData || []);
     } catch (error) {
       console.error('Error in fetchCards:', error);
+      setCards([]);
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao carregar os cards.',
