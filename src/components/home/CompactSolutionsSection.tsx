@@ -1,129 +1,62 @@
 
-import React from 'react';
-import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight, Zap, Star, Heart, Shield } from 'lucide-react';
+import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSCompactSolutionsCardsFrontend } from '@/hooks/useCMSCompactSolutionsCardsFrontend';
 import CompactSolutionsHeader from './compact-solutions/CompactSolutionsHeader';
 import SolutionCard from './compact-solutions/SolutionCard';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-
-// Icon mapping for dynamic icon rendering
-const iconMap = {
-  'Target': Target,
-  'Users': Users,
-  'Cog': Cog,
-  'TrendingUp': TrendingUp,
-  'DollarSign': DollarSign,
-  'BarChart3': BarChart3,
-  'Zap': Zap,
-  'Star': Star,
-  'Heart': Heart,
-  'Shield': Shield,
-};
 
 const CompactSolutionsSection = () => {
-  const { t, language } = useLanguage();
-  const { cards, loading } = useCMSCompactSolutionsCardsFrontend('home', language);
+  const { t } = useLanguage();
 
-  console.log('CompactSolutionsSection - Total cards fetched:', cards.length);
-  console.log('CompactSolutionsSection - Cards data:', cards);
-
-  // Filter only active cards for display on the website
-  const activeCards = cards.filter(card => card.is_active);
-  console.log('CompactSolutionsSection - Active cards:', activeCards.length);
-
-  // Fallback data usando as traduções antigas quando CMS não tem conteúdo
-  const fallbackCards = [
+  const solutions = [
     {
-      id: '1',
-      title: t('solutions.card1.title') || 'Smart Discovery for Anonymous Visitors',
-      description: t('solutions.card1.description') || 'Turn anonymous traffic into engaged buyers with real-time intelligent recommendations.',
-      icon: 'Target',
+      icon: <Target className="w-6 h-6 text-white" />,
+      title: t('solutions.smartDiscovery.title'),
+      description: t('solutions.smartDiscovery.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#1E4A94'
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
-      id: '2',
-      title: t('solutions.card2.title') || 'Predictive Personalization',
-      description: t('solutions.card2.description') || 'Deliver truly personalized experiences based on individual behavior and preferences.',
-      icon: 'Users',
+      icon: <Users className="w-6 h-6 text-white" />,
+      title: t('solutions.predictivePersonalization.title'),
+      description: t('solutions.predictivePersonalization.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#2D5A87'
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
-      id: '3',
-      title: t('solutions.card3.title') || 'Industrial Recommendation Intelligence',
-      description: t('solutions.card3.description') || 'Align commercial targets with intelligent recommendations in real time.',
-      icon: 'Cog',
+      icon: <Cog className="w-6 h-6 text-white" />,
+      title: t('solutions.industrialRecommendation.title'),
+      description: t('solutions.industrialRecommendation.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#3A6B7A'
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
-      id: '4',
-      title: t('solutions.card4.title') || 'Predictive Campaign Targeting',
-      description: t('solutions.card4.description') || 'Identify users most likely to convert before campaigns begin.',
-      icon: 'TrendingUp',
+      icon: <TrendingUp className="w-6 h-6 text-white" />,
+      title: t('solutions.predictiveCampaign.title'),
+      description: t('solutions.predictiveCampaign.description'),
       engine: 'i6 RecSys',
-      backgroundColor: '#477C6D'
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
-      id: '5',
-      title: t('solutions.card5.title') || 'Smart Price Optimization',
-      description: t('solutions.card5.description') || 'Dynamic pricing that adapts in real time to demand and behavior.',
-      icon: 'DollarSign',
+      icon: <DollarSign className="w-6 h-6 text-white" />,
+      title: t('solutions.smartPricing.title'),
+      description: t('solutions.smartPricing.description'),
       engine: 'i6 ElasticPrice',
-      backgroundColor: '#548D60'
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     },
     {
-      id: '6',
-      title: t('solutions.card6.title') || 'Adaptive Demand Forecasting',
-      description: t('solutions.card6.description') || 'Forecast demand with precision based on trends and behaviors.',
-      icon: 'BarChart3',
+      icon: <BarChart3 className="w-6 h-6 text-white" />,
+      title: t('solutions.demandForecasting.title'),
+      description: t('solutions.demandForecasting.description'),
       engine: 'i6 Previsio',
-      backgroundColor: '#619E53'
+      backgroundColor: '#1E4A94' // Cor padrão para todos os cards
     }
   ];
 
   const handleSolutionsClick = () => {
+    // Navigate to solutions page and scroll to top
     window.location.href = '/solutions';
   };
-
-  // Show loading state
-  if (loading) {
-    return (
-      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <CompactSolutionsHeader />
-          <div className="flex items-center justify-center py-12">
-            <LoadingSpinner />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Use CMS active cards if available, otherwise fallback to translations
-  const cardsToRender = activeCards.length > 0 ? activeCards.map(card => {
-    const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || Target;
-    return {
-      id: card.id,
-      title: card.title,
-      description: card.description,
-      icon: <IconComponent className="w-6 h-6 text-white" />,
-      engine: card.engine_name,
-      backgroundColor: card.background_color
-    };
-  }) : fallbackCards.map(card => ({
-    id: card.id,
-    title: card.title,
-    description: card.description,
-    icon: iconMap[card.icon as keyof typeof iconMap] ? React.createElement(iconMap[card.icon as keyof typeof iconMap], { className: "w-6 h-6 text-white" }) : <Target className="w-6 h-6 text-white" />,
-    engine: card.engine,
-    backgroundColor: card.backgroundColor
-  }));
-
-  console.log('CompactSolutionsSection - Final cards to render:', cardsToRender.length);
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
@@ -134,15 +67,15 @@ const CompactSolutionsSection = () => {
         <CompactSolutionsHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {cardsToRender.map((card, index) => (
+          {solutions.map((solution, index) => (
             <SolutionCard
-              key={card.id}
-              icon={card.icon}
-              title={card.title}
-              description={card.description}
+              key={index}
+              icon={solution.icon}
+              title={solution.title}
+              description={solution.description}
               index={index}
-              engine={card.engine}
-              backgroundColor={card.backgroundColor}
+              engine={solution.engine}
+              backgroundColor={solution.backgroundColor}
             />
           ))}
         </div>
