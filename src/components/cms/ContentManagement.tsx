@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Save, Globe, Home, Search } from 'lucide-react';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { useCMSSEO } from '@/hooks/useCMSSEO';
@@ -155,46 +157,43 @@ const ContentManagement = () => {
     }
   };
 
-  const renderFieldsBySection = (fields: typeof allFields, sectionName: string, sectionTitle: string) => {
+  const renderSectionFields = (fields: typeof allFields, sectionName: string) => {
     const sectionFields = fields.filter(field => field.section === sectionName);
     
     if (sectionFields.length === 0) return null;
 
     return (
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">{sectionTitle}</h3>
-        <div className="space-y-4">
-          {sectionFields.map(field => {
-            const key = `${field.section}_${field.field}`;
-            const value = contentFormData[key] || '';
+      <div className="space-y-4">
+        {sectionFields.map(field => {
+          const key = `${field.section}_${field.field}`;
+          const value = contentFormData[key] || '';
 
-            return (
-              <div key={key} className="space-y-2">
-                <Label htmlFor={key}>{field.label}</Label>
-                {field.type === 'textarea' ? (
-                  <Textarea
-                    id={key}
-                    value={value}
-                    onChange={(e) => handleContentInputChange(key, e.target.value)}
-                    placeholder={`Digite o ${field.label.toLowerCase()}...`}
-                    rows={field.field === 'description' ? 5 : 3}
-                  />
-                ) : (
-                  <Input
-                    id={key}
-                    value={value}
-                    onChange={(e) => handleContentInputChange(key, e.target.value)}
-                    placeholder={
-                      field.field === 'demoLink' 
-                        ? 'https://www.youtube.com/embed/...' 
-                        : `Digite o ${field.label.toLowerCase()}...`
-                    }
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
+          return (
+            <div key={key} className="space-y-2">
+              <Label htmlFor={key}>{field.label}</Label>
+              {field.type === 'textarea' ? (
+                <Textarea
+                  id={key}
+                  value={value}
+                  onChange={(e) => handleContentInputChange(key, e.target.value)}
+                  placeholder={`Digite o ${field.label.toLowerCase()}...`}
+                  rows={field.field === 'description' ? 5 : 3}
+                />
+              ) : (
+                <Input
+                  id={key}
+                  value={value}
+                  onChange={(e) => handleContentInputChange(key, e.target.value)}
+                  placeholder={
+                    field.field === 'demoLink' 
+                      ? 'https://www.youtube.com/embed/...' 
+                      : `Digite o ${field.label.toLowerCase()}...`
+                  }
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -297,25 +296,59 @@ const ContentManagement = () => {
                   </Badge>
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                {renderFieldsBySection(allFields, 'hero', 'Seção Hero - Página Principal')}
-                
-                <div className="mb-8">
-                  <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Seção Results - Resultados</h3>
-                  <div className="space-y-4">
-                    {renderFieldsBySection(allFields, 'results', '').props.children}
-                  </div>
+              <CardContent>
+                <Accordion type="multiple" defaultValue={["hero", "results"]} className="w-full">
                   
-                  <Separator className="my-6" />
-                  
-                  {/* Gestão dos Cards da Seção Results */}
-                  <ResultsCardsManagement 
-                    selectedPage={selectedPage}
-                    selectedLanguage={selectedLanguage}
-                  />
-                </div>
+                  {/* Seção Hero */}
+                  <AccordionItem value="hero">
+                    <AccordionTrigger className="text-lg font-semibold">
+                      Seção Hero - Página Principal
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="pt-4">
+                        {renderSectionFields(allFields, 'hero')}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                <div className="flex justify-end pt-4">
+                  {/* Seção Results */}
+                  <AccordionItem value="results">
+                    <AccordionTrigger className="text-lg font-semibold">
+                      Seção Results - Resultados
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="pt-4 space-y-6">
+                        {/* Campos da seção Results */}
+                        <div className="space-y-4">
+                          <h4 className="font-medium text-gray-800 border-b pb-2">Conteúdo Principal</h4>
+                          {renderSectionFields(allFields, 'results')}
+                        </div>
+                        
+                        <Separator />
+                        
+                        {/* Gestão dos Cards - Nested Accordion */}
+                        <Accordion type="single" collapsible className="w-full">
+                          <AccordionItem value="cards-management">
+                            <AccordionTrigger className="text-base font-medium">
+                              Gestão dos Cards da Seção Results
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pt-4">
+                                <ResultsCardsManagement 
+                                  selectedPage={selectedPage}
+                                  selectedLanguage={selectedLanguage}
+                                />
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                </Accordion>
+
+                <div className="flex justify-end pt-6 mt-6 border-t">
                   <Button onClick={handleSaveContent} disabled={saving}>
                     <Save className="h-4 w-4 mr-2" />
                     {saving ? 'Salvando...' : 'Salvar Conteúdo'}
