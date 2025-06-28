@@ -18,10 +18,11 @@ import {
   Brain,
   ShoppingCart,
   LineChart,
-  Lightbulb
+  Lightbulb,
+  LucideIcon
 } from 'lucide-react';
 
-const iconMap: { [key: string]: React.ComponentType<any> } = {
+const iconMap: { [key: string]: LucideIcon } = {
   'trending-up': TrendingUp,
   'users': Users,
   'dollar-sign': DollarSign,
