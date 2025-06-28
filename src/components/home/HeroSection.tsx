@@ -4,7 +4,6 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
@@ -14,8 +13,7 @@ import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 /**
  * Hero section component for the home page
  * Features dynamic background, call-to-action buttons, and video modal
- * Includes performance monitoring and error handling
- * Now with CMS content management support
+ * Includes error handling and CMS content management support
  */
 const HeroSection = () => {
   // Hooks for functionality
@@ -25,9 +23,6 @@ const HeroSection = () => {
   
   // CMS content hook
   const { getContent, loading: cmsLoading } = useCMSPageContent('home', language);
-  
-  // Performance monitoring
-  const metrics = usePerformanceMonitor('HeroSection', 16);
   
   // Component state
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);

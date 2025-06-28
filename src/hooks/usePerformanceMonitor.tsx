@@ -11,68 +11,72 @@ interface PerformanceMetrics {
   averageRenderTime: number;
   lastRenderTime: number;
   slowRenders: number;
+  slowRenderPercentage: string;
 }
 
 export const usePerformanceMonitor = (componentName: string, threshold: number = 16) => {
+  const renderCountRef = useRef(0);
+  const renderTimesRef = useRef<number[]>([]);
+  const lastLogTimeRef = useRef(0);
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     renderCount: 0,
     averageRenderTime: 0,
     lastRenderTime: 0,
     slowRenders: 0,
+    slowRenderPercentage: '0.0%'
   });
 
-  const renderStartTime = useRef<number>(0);
-  const renderTimes = useRef<number[]>([]);
-
-  // Start timing on component mount/update
   useEffect(() => {
-    renderStartTime.current = performance.now();
-  });
-
-  // End timing after render
-  useEffect(() => {
-    const endTime = performance.now();
-    const renderTime = endTime - renderStartTime.current;
+    const startTime = performance.now();
     
-    renderTimes.current.push(renderTime);
-    
-    // Keep only last 100 render times for average calculation
-    if (renderTimes.current.length > 100) {
-      renderTimes.current.shift();
-    }
-
-    const newMetrics: PerformanceMetrics = {
-      renderCount: metrics.renderCount + 1,
-      averageRenderTime: renderTimes.current.reduce((a, b) => a + b, 0) / renderTimes.current.length,
-      lastRenderTime: renderTime,
-      slowRenders: renderTime > threshold ? metrics.slowRenders + 1 : metrics.slowRenders,
+    return () => {
+      const endTime = performance.now();
+      const renderTime = endTime - startTime;
+      
+      renderCountRef.current += 1;
+      renderTimesRef.current.push(renderTime);
+      
+      // Keep only last 100 render times to prevent memory issues
+      if (renderTimesRef.current.length > 100) {
+        renderTimesRef.current = renderTimesRef.current.slice(-100);
+      }
+      
+      const now = Date.now();
+      // Only log every 5 seconds to prevent spam
+      if (now - lastLogTimeRef.current > 5000) {
+        lastLogTimeRef.current = now;
+        
+        const totalTime = renderTimesRef.current.reduce((sum, time) => sum + time, 0);
+        const averageTime = totalTime / renderTimesRef.current.length;
+        const slowRenders = renderTimesRef.current.filter(time => time > threshold).length;
+        const slowRenderPercentage = ((slowRenders / renderTimesRef.current.length) * 100).toFixed(1);
+        
+        const newMetrics = {
+          renderCount: renderCountRef.current,
+          averageRenderTime: Number(averageTime.toFixed(2)),
+          lastRenderTime: Number(renderTime.toFixed(2)),
+          slowRenders,
+          slowRenderPercentage: `${slowRenderPercentage}%`
+        };
+        
+        // Only update state if metrics have actually changed significantly
+        setMetrics(prevMetrics => {
+          if (
+            Math.abs(prevMetrics.averageRenderTime - newMetrics.averageRenderTime) > 0.1 ||
+            prevMetrics.renderCount !== newMetrics.renderCount
+          ) {
+            return newMetrics;
+          }
+          return prevMetrics;
+        });
+        
+        // Log performance summary only if there are performance issues
+        if (slowRenders > 0 || renderCountRef.current % 1000 === 0) {
+          logger.info(`Performance summary for ${componentName}`, newMetrics, componentName);
+        }
+      }
     };
-
-    setMetrics(newMetrics);
-
-    // Log slow renders
-    if (renderTime > threshold) {
-      logger.warn(
-        `Slow render detected: ${renderTime.toFixed(2)}ms (threshold: ${threshold}ms)`,
-        newMetrics,
-        componentName
-      );
-    }
-
-    // Log performance summary every 50 renders
-    if (newMetrics.renderCount % 50 === 0) {
-      logger.info(
-        `Performance summary for ${componentName}`,
-        {
-          ...newMetrics,
-          averageRenderTime: `${newMetrics.averageRenderTime.toFixed(2)}ms`,
-          lastRenderTime: `${newMetrics.lastRenderTime.toFixed(2)}ms`,
-          slowRenderPercentage: `${((newMetrics.slowRenders / newMetrics.renderCount) * 100).toFixed(1)}%`,
-        },
-        componentName
-      );
-    }
-  });
+  }); // Remove dependency array to prevent infinite loop
 
   return metrics;
 };
