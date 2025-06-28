@@ -29,12 +29,19 @@ export const useSuccessStoriesContent = (language: string = 'en') => {
     buttonText: getContent('successStoriesCTA', 'buttonText', 'Get Started Today')
   });
 
+  const getTestimonialsContent = () => ({
+    title: getContent('testimonialsSection', 'title', 'What Our Clients Say'),
+    subtitle: getContent('testimonialsSection', 'subtitle', 'Hear directly from the leaders who\'ve transformed their businesses with Infinity6.')
+  });
+
   return {
     content,
     loading,
     error,
+    getContent,
     getHeroContent,
     getMetricsContent,
-    getCTAContent
+    getCTAContent,
+    getTestimonialsContent
   };
 };
