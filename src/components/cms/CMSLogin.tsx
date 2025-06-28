@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, Mail, Globe, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
 
@@ -133,142 +133,89 @@ const CMSLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative max-w-md w-full space-y-8">
-        {/* Header */}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl">
-              <Globe className="h-7 w-7 text-white" />
-            </div>
-            <div className="text-left">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                CMS Admin
-              </h1>
-              <p className="text-sm text-gray-600 font-medium">Infinity6.ai</p>
-            </div>
-          </div>
-          <p className="text-gray-600">
-            Acesse o painel administrativo para gerenciar seu conteúdo
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900">CMS Admin</h1>
+          <p className="mt-2 text-gray-600">Infinity6.ai</p>
         </div>
 
-        {/* Login Card */}
-        <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-2xl shadow-gray-200/50">
-          <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-bold text-gray-900 flex items-center justify-center gap-2">
-              <Sparkles className="h-6 w-6 text-purple-600" />
-              Entrar
-            </CardTitle>
-            <CardDescription className="text-gray-600">
-              Digite suas credenciais para acessar o sistema
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">Login</CardTitle>
+            <CardDescription className="text-center">
+              Entre com suas credenciais para acessar o painel administrativo
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Credentials Info */}
-            <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-xl">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mt-0.5">
-                  <Lock className="h-4 w-4 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-blue-900 mb-1">Credenciais de teste</p>
-                  <div className="text-sm text-blue-800 space-y-1">
-                    <p><span className="font-medium">Email:</span> leo@infinity6.ai</p>
-                    <p><span className="font-medium">Senha:</span> tI#GhyB9kmlf</p>
-                  </div>
-                </div>
-              </div>
+          <CardContent>
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+              <p className="text-sm text-blue-800">
+                <strong>Credenciais de teste:</strong><br />
+                Email: leo@infinity6.ai<br />
+                Senha: tI#GhyB9kmlf
+              </p>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-6">
+            <form onSubmit={handleLogin} className="space-y-4">
               {error && (
-                <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-800">
-                  <AlertDescription className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    {error}
-                  </AlertDescription>
+                <Alert variant="destructive">
+                  <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
-                    Email
-                  </Label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="seu.email@infinity6.ai"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-12 h-12 bg-white/50 border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl"
-                      required
-                    />
-                  </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="seu.email@infinity6.ai"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-semibold text-gray-700">
-                    Senha
-                  </Label>
-                  <div className="relative">
-                    <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-12 pr-12 h-12 bg-white/50 border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-3.5 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                    </button>
-                  </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Senha</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-10 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
                 </div>
               </div>
 
               <Button 
                 type="submit" 
-                className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]" 
+                className="w-full" 
                 disabled={isLoading}
               >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    Entrando...
-                  </div>
-                ) : (
-                  'Entrar no Sistema'
-                )}
+                {isLoading ? 'Entrando...' : 'Entrar'}
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Footer */}
-        <div className="text-center text-sm text-gray-600 space-y-2">
-          <p className="flex items-center justify-center gap-2">
-            <Lock className="h-4 w-4" />
-            Sistema de administração seguro
-          </p>
-          <p className="text-xs text-gray-500">
-            © 2024 Infinity6.ai - Todos os direitos reservados
-          </p>
+        <div className="text-center text-sm text-gray-600">
+          <p>Sistema de administração seguro</p>
+          <p className="mt-1">© 2024 Infinity6.ai - Todos os direitos reservados</p>
         </div>
       </div>
     </div>
