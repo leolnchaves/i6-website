@@ -9,7 +9,7 @@ interface ContentField {
   section: string;
   field: string;
   label: string;
-  type: 'input' | 'textarea';
+  type: 'input' | 'textarea' | 'icon';
 }
 
 interface ContentSectionAccordionProps {
