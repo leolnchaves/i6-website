@@ -53,10 +53,37 @@ const HeroSection = () => {
     return cmsContent || t(translationKey);
   };
 
-  // Get demo URL from CMS with fallback
+  // Get demo URL from CMS with fallback and convert to embed format
   const getDemoUrl = () => {
     const cmsUrl = getContent('hero', 'demoLink');
-    return cmsUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0';
+    const fallbackUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0';
+    
+    if (!cmsUrl) return fallbackUrl;
+    
+    // Convert YouTube watch URLs to embed format
+    const youtubeWatchRegex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/;
+    const youtubeShareRegex = /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]+)/;
+    
+    let videoId = null;
+    
+    // Check for watch URL format
+    const watchMatch = cmsUrl.match(youtubeWatchRegex);
+    if (watchMatch) {
+      videoId = watchMatch[1];
+    } else {
+      // Check for share URL format
+      const shareMatch = cmsUrl.match(youtubeShareRegex);
+      if (shareMatch) {
+        videoId = shareMatch[1];
+      }
+    }
+    
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&showinfo=0&rel=0`;
+    }
+    
+    // If it's already an embed URL or unknown format, return as is
+    return cmsUrl.includes('/embed/') ? cmsUrl : fallbackUrl;
   };
 
   return (
