@@ -1,4 +1,3 @@
-
 import { CheckCircle, ArrowRight, LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,56 +30,56 @@ const SolutionCard = ({
 }: SolutionCardProps) => {
   const { t } = useLanguage();
 
-  // Define colors based on engine
-  const getEngineColors = (engine: string) => {
+  // Define button gradient based on engine (keeping this for button styling)
+  const getButtonGradient = (engine: string) => {
     switch (engine) {
       case 'i6 RecSys':
-        return {
-          backgroundColor: 'rgba(59, 130, 246, 0.08)', // Blue with low opacity
-          borderColor: 'rgba(59, 130, 246, 0.2)',
-          iconBgColor: 'rgba(59, 130, 246, 0.15)',
-          buttonGradient: 'from-blue-500/80 to-blue-600/80'
-        };
+        return 'from-blue-500/80 to-blue-600/80';
       case 'i6 ElasticPrice':
-        return {
-          backgroundColor: 'rgba(34, 197, 94, 0.08)', // Green with low opacity
-          borderColor: 'rgba(34, 197, 94, 0.2)',
-          iconBgColor: 'rgba(34, 197, 94, 0.15)',
-          buttonGradient: 'from-green-500/80 to-green-600/80'
-        };
+        return 'from-green-500/80 to-green-600/80';
       case 'i6 Previsio':
-        return {
-          backgroundColor: 'rgba(107, 114, 128, 0.08)', // Gray with low opacity
-          borderColor: 'rgba(107, 114, 128, 0.2)',
-          iconBgColor: 'rgba(107, 114, 128, 0.15)',
-          buttonGradient: 'from-gray-500/80 to-gray-600/80'
-        };
+        return 'from-gray-500/80 to-gray-600/80';
       default:
-        return {
-          backgroundColor: 'rgba(59, 130, 246, 0.08)',
-          borderColor: 'rgba(59, 130, 246, 0.2)',
-          iconBgColor: 'rgba(59, 130, 246, 0.15)',
-          buttonGradient: 'from-blue-500/80 to-blue-600/80'
-        };
+        return 'from-blue-500/80 to-blue-600/80';
     }
   };
 
-  const colors = getEngineColors(engine);
+  // Get icon and badge background color based on selected bgColor from CMS
+  const getIconBgColor = (bgColor: string) => {
+    if (bgColor.includes('gray')) return 'rgba(107, 114, 128, 0.15)';
+    if (bgColor.includes('orange')) return 'rgba(251, 146, 60, 0.15)';
+    if (bgColor.includes('blue')) return 'rgba(59, 130, 246, 0.15)';
+    if (bgColor.includes('green')) return 'rgba(34, 197, 94, 0.15)';
+    if (bgColor.includes('purple')) return 'rgba(147, 51, 234, 0.15)';
+    if (bgColor.includes('pink')) return 'rgba(236, 72, 153, 0.15)';
+    return 'rgba(107, 114, 128, 0.15)'; // default gray
+  };
+
+  // Get badge background color based on selected bgColor from CMS
+  const getBadgeBgColor = (bgColor: string) => {
+    if (bgColor.includes('gray')) return 'rgba(107, 114, 128, 0.2)';
+    if (bgColor.includes('orange')) return 'rgba(251, 146, 60, 0.2)';
+    if (bgColor.includes('blue')) return 'rgba(59, 130, 246, 0.2)';
+    if (bgColor.includes('green')) return 'rgba(34, 197, 94, 0.2)';
+    if (bgColor.includes('purple')) return 'rgba(147, 51, 234, 0.2)';
+    if (bgColor.includes('pink')) return 'rgba(236, 72, 153, 0.2)';
+    return 'rgba(107, 114, 128, 0.2)'; // default gray
+  };
+
+  const buttonGradient = getButtonGradient(engine);
+  const iconBgColor = getIconBgColor(bgColor);
+  const badgeBgColor = getBadgeBgColor(bgColor);
 
   return (
     <Card 
-      className="border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
-      style={{ 
-        backgroundColor: colors.backgroundColor,
-        borderColor: colors.borderColor
-      }}
+      className={`border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${bgColor} ${borderColor}`}
     >
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
           {/* Icon section */}
           <div 
             className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center"
-            style={{ backgroundColor: colors.iconBgColor }}
+            style={{ backgroundColor: iconBgColor }}
           >
             <Icon className="w-6 h-6 text-gray-700" />
           </div>
@@ -91,7 +90,7 @@ const SolutionCard = ({
             <div className="mb-2">
               <span 
                 className="inline-block px-2 py-1 rounded-full text-xs font-medium text-gray-600"
-                style={{ backgroundColor: colors.iconBgColor }}
+                style={{ backgroundColor: badgeBgColor }}
               >
                 {engine}
               </span>
@@ -125,7 +124,7 @@ const SolutionCard = ({
             {/* Business Outcomes */}
             <div 
               className="rounded-lg p-3 mb-4"
-              style={{ backgroundColor: colors.iconBgColor }}
+              style={{ backgroundColor: badgeBgColor }}
             >
               <h4 className="font-semibold text-gray-900 mb-1 text-sm">
                 {t('solutions.businessOutcomes')}:
@@ -135,7 +134,7 @@ const SolutionCard = ({
             
             {/* Learn More Button */}
             <Button 
-              className={`bg-gradient-to-r ${colors.buttonGradient} hover:opacity-90 text-white transition-all duration-300 shadow-sm hover:shadow-md`}
+              className={`bg-gradient-to-r ${buttonGradient} hover:opacity-90 text-white transition-all duration-300 shadow-sm hover:shadow-md`}
             >
               {t('solutions.learnMore')}
               <ArrowRight className="ml-2 w-4 h-4" />
