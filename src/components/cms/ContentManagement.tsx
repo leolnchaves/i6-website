@@ -93,7 +93,30 @@ const ContentManagement = () => {
     return [];
   };
 
+  // Obter os campos corretos para passar para o accordion baseado na página
+  const getFieldsForAccordion = () => {
+    if (isHomePage) {
+      return {
+        heroFields,
+        resultsFields,  
+        compactSolutionsFields
+      };
+    } else if (isSuccessStoriesPage) {
+      return {
+        heroFields: successStoriesHeroFields,
+        resultsFields: successStoriesMetricsFields,
+        compactSolutionsFields: successStoriesCTAFields
+      };
+    }
+    return {
+      heroFields: [],
+      resultsFields: [],
+      compactSolutionsFields: []
+    };
+  };
+
   const allFields = getAllFields();
+  const accordionFields = getFieldsForAccordion();
 
   // Função para carregar dados quando página ou idioma mudarem
   const loadData = useCallback(async () => {
@@ -255,23 +278,11 @@ const ContentManagement = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {isHomePage && (
+                {(isHomePage || isSuccessStoriesPage) && (
                   <ContentSectionAccordion
-                    heroFields={heroFields}
-                    resultsFields={resultsFields}
-                    compactSolutionsFields={compactSolutionsFields}
-                    formData={contentFormData}
-                    selectedPage={selectedPage}
-                    selectedLanguage={selectedLanguage}
-                    onFieldChange={handleContentInputChange}
-                  />
-                )}
-
-                {isSuccessStoriesPage && (
-                  <ContentSectionAccordion
-                    heroFields={successStoriesHeroFields}
-                    resultsFields={successStoriesMetricsFields}
-                    compactSolutionsFields={successStoriesCTAFields}
+                    heroFields={accordionFields.heroFields}
+                    resultsFields={accordionFields.resultsFields}
+                    compactSolutionsFields={accordionFields.compactSolutionsFields}
                     formData={contentFormData}
                     selectedPage={selectedPage}
                     selectedLanguage={selectedLanguage}
