@@ -6,7 +6,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
 import { useCMSContent } from '@/hooks/useCMSContent';
 
-const StoriesGrid = () => {
+interface StoriesGridProps {
+  selectedSegment?: string | null;
+}
+
+const StoriesGrid: React.FC<StoriesGridProps> = ({ selectedSegment }) => {
   const { language, t } = useLanguage();
   const { pages, fetchPages } = useCMSContent();
   const { cards, loading, fetchCards } = useCMSSuccessStoriesCards();
@@ -25,6 +29,11 @@ const StoriesGrid = () => {
       }
     }
   }, [pages, language, fetchCards]);
+
+  // Filter cards based on selected segment
+  const filteredCards = selectedSegment 
+    ? cards.filter(card => card.industry === selectedSegment)
+    : cards;
 
   if (loading) {
     return (
@@ -62,13 +71,23 @@ const StoriesGrid = () => {
     );
   }
 
-  if (cards.length === 0) {
+  if (filteredCards.length === 0) {
     return (
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Nenhum case de sucesso disponível</h2>
-            <p className="text-gray-600">Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {selectedSegment 
+                ? `Nenhum case de sucesso encontrado para "${selectedSegment}"`
+                : 'Nenhum case de sucesso disponível'
+              }
+            </h2>
+            <p className="text-gray-600">
+              {selectedSegment 
+                ? 'Tente selecionar um segmento diferente ou veja todos os cases.'
+                : 'Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.'
+              }
+            </p>
           </div>
         </div>
       </section>
@@ -79,7 +98,7 @@ const StoriesGrid = () => {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-16">
-          {cards.map((story, index) => (
+          {filteredCards.map((story, index) => (
             <Card key={story.id} className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden bg-white">
               <CardContent className="p-0">
                 <div className={`grid grid-cols-1 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>

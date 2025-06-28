@@ -2,8 +2,10 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
+import { useState } from 'react';
 import SuccessStoriesHero from '@/components/success-stories/SuccessStoriesHero';
 import MetricsSection from '@/components/success-stories/MetricsSection';
+import SegmentFilter from '@/components/success-stories/SegmentFilter';
 import StoriesGrid from '@/components/success-stories/StoriesGrid';
 import TestimonialsSection from '@/components/success-stories/TestimonialsSection';
 import SuccessStoriesCTA from '@/components/success-stories/SuccessStoriesCTA';
@@ -20,6 +22,9 @@ const SuccessStories = () => {
   // Language context
   const { t } = useLanguage();
   
+  // Segment filter state
+  const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
+  
   // Log page visit
   logger.info('Success Stories page loaded', { 
     timestamp: new Date().toISOString() 
@@ -33,8 +38,14 @@ const SuccessStories = () => {
       {/* Metrics and achievements section */}
       <MetricsSection />
       
+      {/* Segment filter */}
+      <SegmentFilter 
+        onSegmentChange={setSelectedSegment} 
+        selectedSegment={selectedSegment} 
+      />
+      
       {/* Grid of success stories */}
-      <StoriesGrid />
+      <StoriesGrid selectedSegment={selectedSegment} />
       
       {/* Customer testimonials section */}
       <TestimonialsSection />
