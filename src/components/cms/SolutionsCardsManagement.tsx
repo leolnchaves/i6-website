@@ -436,7 +436,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
 
-              {/* Coluna do meio - Engine, Features e Estilo */}
+              {/* Coluna do meio - Engine e Features */}
               <div className="space-y-4">
                 <div>
                   <Label htmlFor={`engine-${index}`}>Engine</Label>
@@ -484,9 +484,32 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                     </Button>
                   </div>
                 </div>
+              </div>
+
+              {/* Coluna direita - Preview e Estilo Visual */}
+              <div className="space-y-6">
+                {/* Preview do Card */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Preview do Card</Label>
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <SolutionCardPreview
+                      title={card.title}
+                      focus={card.focus}
+                      description={card.description}
+                      features={card.features}
+                      outcome={card.outcome}
+                      engine={card.engine}
+                      gradient={card.gradient}
+                      bg_color={card.bg_color}
+                      border_color={card.border_color}
+                      icon={card.icon}
+                    />
+                  </div>
+                </div>
 
                 <Separator />
 
+                {/* Estilo Visual */}
                 <div className="space-y-4">
                   <h5 className="font-medium text-gray-900">Estilo Visual</h5>
                   
@@ -509,27 +532,6 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                     onChange={(value) => handleCardChange(index, 'border_color', value)}
                     options={borderColorOptions}
                   />
-                </div>
-              </div>
-
-              {/* Coluna direita - Preview */}
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-sm font-medium mb-3 block">Preview do Card</Label>
-                  <div className="border rounded-lg p-4 bg-gray-50">
-                    <SolutionCardPreview
-                      title={card.title}
-                      focus={card.focus}
-                      description={card.description}
-                      features={card.features}
-                      outcome={card.outcome}
-                      engine={card.engine}
-                      gradient={card.gradient}
-                      bg_color={card.bg_color}
-                      border_color={card.border_color}
-                      icon={card.icon}
-                    />
-                  </div>
                 </div>
               </div>
             </CardContent>
