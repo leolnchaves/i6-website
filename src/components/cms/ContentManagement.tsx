@@ -8,15 +8,28 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Save, Globe, Home } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
+import { Save, Globe, Home, Search } from 'lucide-react';
 import { useCMSContent } from '@/hooks/useCMSContent';
+import { useCMSSEO } from '@/hooks/useCMSSEO';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const ContentManagement = () => {
-  const { pages, content, loading, fetchPageContent, saveContent, getContent } = useCMSContent();
+  const { pages, content, loading: contentLoading, fetchPageContent, saveContent, getContent } = useCMSContent();
+  const { seoData, loading: seoLoading, fetchSEOData, saveSEOData, getSEOData } = useCMSSEO();
+  
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
-  const [formData, setFormData] = useState<{ [key: string]: string }>({});
+  const [contentFormData, setContentFormData] = useState<{ [key: string]: string }>({});
+  const [seoFormData, setSeoFormData] = useState({
+    meta_title: '',
+    meta_description: '',
+    slug: '',
+    canonical_url: '',
+    index_flag: true,
+    follow_flag: true
+  });
   const [saving, setSaving] = useState(false);
 
   // Campos específicos para a seção Hero
@@ -33,18 +46,27 @@ const ContentManagement = () => {
   useEffect(() => {
     if (selectedPage) {
       fetchPageContent(selectedPage, selectedLanguage);
+      fetchSEOData(selectedPage, selectedLanguage);
     }
-  }, [selectedPage, selectedLanguage, fetchPageContent]);
+  }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
   // Atualizar formData quando conteúdo mudar
   useEffect(() => {
-    const newFormData: { [key: string]: string } = {};
+    const newContentFormData: { [key: string]: string } = {};
     heroFields.forEach(field => {
       const key = `${field.section}_${field.field}`;
-      newFormData[key] = getContent(field.section, field.field, selectedLanguage);
+      newContentFormData[key] = getContent(field.section, field.field, selectedLanguage);
     });
-    setFormData(newFormData);
+    setContentFormData(newContentFormData);
   }, [content, selectedLanguage, getContent]);
+
+  // Atualizar SEO form data quando dados de SEO mudarem
+  useEffect(() => {
+    if (selectedPage) {
+      const currentSEOData = getSEOData(selectedPage, selectedLanguage);
+      setSeoFormData(currentSEOData);
+    }
+  }, [selectedPage, selectedLanguage, seoData, getSEOData]);
 
   // Selecionar página Home automaticamente se disponível
   useEffect(() => {
@@ -56,19 +78,23 @@ const ContentManagement = () => {
     }
   }, [pages, selectedPage]);
 
-  const handleInputChange = (key: string, value: string) => {
-    setFormData(prev => ({ ...prev, [key]: value }));
+  const handleContentInputChange = (key: string, value: string) => {
+    setContentFormData(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleSave = async () => {
+  const handleSEOInputChange = (field: string, value: string | boolean) => {
+    setSeoFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSaveContent = async () => {
     if (!selectedPage) return;
 
     setSaving(true);
     try {
-      // Salvar todos os campos modificados
-      const savePromises = heroFields.map(field => {
+      // Salvar todos os campos de conteúdo modificados
+      const contentSavePromises = heroFields.map(field => {
         const key = `${field.section}_${field.field}`;
-        const value = formData[key] || '';
+        const value = contentFormData[key] || '';
         
         return saveContent(
           selectedPage,
@@ -79,7 +105,7 @@ const ContentManagement = () => {
         );
       });
 
-      await Promise.all(savePromises);
+      await Promise.all(contentSavePromises);
     } catch (error) {
       console.error('Error saving content:', error);
     } finally {
@@ -87,7 +113,20 @@ const ContentManagement = () => {
     }
   };
 
-  if (loading) {
+  const handleSaveSEO = async () => {
+    if (!selectedPage) return;
+
+    setSaving(true);
+    try {
+      await saveSEOData(selectedPage, selectedLanguage, seoFormData);
+    } catch (error) {
+      console.error('Error saving SEO data:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (contentLoading || seoLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <LoadingSpinner />
@@ -100,7 +139,7 @@ const ContentManagement = () => {
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestão de Conteúdo</h1>
         <p className="text-gray-600">
-          Gerencie o conteúdo das páginas com suporte a múltiplos idiomas.
+          Gerencie o conteúdo das páginas e configurações de SEO com suporte a múltiplos idiomas.
         </p>
       </div>
 
@@ -159,54 +198,172 @@ const ContentManagement = () => {
         </CardContent>
       </Card>
 
-      {/* Campos de conteúdo */}
+      {/* Tabs para Conteúdo e SEO */}
       {selectedPage && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Seção Hero - Página Principal</CardTitle>
-            <CardDescription>
-              Edite o conteúdo da seção principal da página inicial
-              <Badge variant="outline" className="ml-2">
-                {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
-              </Badge>
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {heroFields.map(field => {
-              const key = `${field.section}_${field.field}`;
-              const value = formData[key] || '';
+        <Tabs defaultValue="content" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="content" className="flex items-center gap-2">
+              <Home className="h-4 w-4" />
+              Conteúdo
+            </TabsTrigger>
+            <TabsTrigger value="seo" className="flex items-center gap-2">
+              <Search className="h-4 w-4" />
+              SEO
+            </TabsTrigger>
+          </TabsList>
 
-              return (
-                <div key={key} className="space-y-2">
-                  <Label htmlFor={key}>{field.label}</Label>
-                  {field.type === 'textarea' ? (
-                    <Textarea
-                      id={key}
-                      value={value}
-                      onChange={(e) => handleInputChange(key, e.target.value)}
-                      placeholder={`Digite o ${field.label.toLowerCase()}...`}
-                      rows={3}
-                    />
-                  ) : (
-                    <Input
-                      id={key}
-                      value={value}
-                      onChange={(e) => handleInputChange(key, e.target.value)}
-                      placeholder={`Digite o ${field.label.toLowerCase()}...`}
-                    />
-                  )}
+          {/* Tab de Conteúdo */}
+          <TabsContent value="content">
+            <Card>
+              <CardHeader>
+                <CardTitle>Seção Hero - Página Principal</CardTitle>
+                <CardDescription>
+                  Edite o conteúdo da seção principal da página inicial
+                  <Badge variant="outline" className="ml-2">
+                    {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
+                  </Badge>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {heroFields.map(field => {
+                  const key = `${field.section}_${field.field}`;
+                  const value = contentFormData[key] || '';
+
+                  return (
+                    <div key={key} className="space-y-2">
+                      <Label htmlFor={key}>{field.label}</Label>
+                      {field.type === 'textarea' ? (
+                        <Textarea
+                          id={key}
+                          value={value}
+                          onChange={(e) => handleContentInputChange(key, e.target.value)}
+                          placeholder={`Digite o ${field.label.toLowerCase()}...`}
+                          rows={3}
+                        />
+                      ) : (
+                        <Input
+                          id={key}
+                          value={value}
+                          onChange={(e) => handleContentInputChange(key, e.target.value)}
+                          placeholder={`Digite o ${field.label.toLowerCase()}...`}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+
+                <div className="flex justify-end pt-4">
+                  <Button onClick={handleSaveContent} disabled={saving}>
+                    <Save className="h-4 w-4 mr-2" />
+                    {saving ? 'Salvando...' : 'Salvar Conteúdo'}
+                  </Button>
                 </div>
-              );
-            })}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-            <div className="flex justify-end pt-4">
-              <Button onClick={handleSave} disabled={saving}>
-                <Save className="h-4 w-4 mr-2" />
-                {saving ? 'Salvando...' : 'Salvar Alterações'}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          {/* Tab de SEO */}
+          <TabsContent value="seo">
+            <Card>
+              <CardHeader>
+                <CardTitle>Configurações de SEO</CardTitle>
+                <CardDescription>
+                  Configure os metadados para otimização de mecanismos de busca
+                  <Badge variant="outline" className="ml-2">
+                    {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
+                  </Badge>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="meta_title">Título da Página (Meta Title)</Label>
+                  <Input
+                    id="meta_title"
+                    value={seoFormData.meta_title}
+                    onChange={(e) => handleSEOInputChange('meta_title', e.target.value)}
+                    placeholder="Digite o título da página..."
+                    maxLength={60}
+                  />
+                  <p className="text-sm text-gray-500">
+                    {seoFormData.meta_title.length}/60 caracteres (recomendado: até 60)
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="meta_description">Descrição (Meta Description)</Label>
+                  <Textarea
+                    id="meta_description"
+                    value={seoFormData.meta_description}
+                    onChange={(e) => handleSEOInputChange('meta_description', e.target.value)}
+                    placeholder="Digite a descrição da página..."
+                    rows={3}
+                    maxLength={160}
+                  />
+                  <p className="text-sm text-gray-500">
+                    {seoFormData.meta_description.length}/160 caracteres (recomendado: até 160)
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="slug">Slug da URL</Label>
+                  <Input
+                    id="slug"
+                    value={seoFormData.slug}
+                    onChange={(e) => handleSEOInputChange('slug', e.target.value)}
+                    placeholder="Digite o slug da URL..."
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="canonical_url">URL Canônica</Label>
+                  <Input
+                    id="canonical_url"
+                    value={seoFormData.canonical_url}
+                    onChange={(e) => handleSEOInputChange('canonical_url', e.target.value)}
+                    placeholder="Digite a URL canônica..."
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label htmlFor="index_flag">Indexação (Index)</Label>
+                      <p className="text-sm text-gray-500">
+                        Permitir que mecanismos de busca indexem esta página
+                      </p>
+                    </div>
+                    <Switch
+                      id="index_flag"
+                      checked={seoFormData.index_flag}
+                      onCheckedChange={(checked) => handleSEOInputChange('index_flag', checked)}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label htmlFor="follow_flag">Seguir Links (Follow)</Label>
+                      <p className="text-sm text-gray-500">
+                        Permitir que mecanismos de busca sigam os links desta página
+                      </p>
+                    </div>
+                    <Switch
+                      id="follow_flag"
+                      checked={seoFormData.follow_flag}
+                      onCheckedChange={(checked) => handleSEOInputChange('follow_flag', checked)}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-4">
+                  <Button onClick={handleSaveSEO} disabled={saving}>
+                    <Save className="h-4 w-4 mr-2" />
+                    {saving ? 'Salvando...' : 'Salvar SEO'}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       )}
     </div>
   );
