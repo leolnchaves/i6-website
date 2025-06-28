@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -297,7 +296,7 @@ const ContentManagement = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Accordion type="multiple" defaultValue={["hero", "results"]} className="w-full">
+                <Accordion type="multiple" className="w-full">
                   
                   {/* Seção Hero */}
                   <AccordionItem value="hero">
