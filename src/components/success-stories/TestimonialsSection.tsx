@@ -3,17 +3,48 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSTestimonials } from '@/hooks/useCMSTestimonials';
 import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const TestimonialsSection = () => {
   const { language } = useLanguage();
   const { getContent } = useSuccessStoriesContent(language);
   const { testimonials, loading, fetchTestimonials } = useCMSTestimonials();
+  const [pageId, setPageId] = useState<string | null>(null);
 
-  // Fetch testimonials when component mounts
+  // First, get the page ID for success-stories
   useEffect(() => {
-    fetchTestimonials('success-stories', language);
-  }, [language, fetchTestimonials]);
+    const getPageId = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('cms_pages')
+          .select('id')
+          .eq('slug', 'success-stories')
+          .eq('is_active', true)
+          .single();
+
+        if (error) {
+          console.error('Error fetching page ID:', error);
+          return;
+        }
+
+        if (data) {
+          setPageId(data.id);
+        }
+      } catch (error) {
+        console.error('Error getting page ID:', error);
+      }
+    };
+
+    getPageId();
+  }, []);
+
+  // Then fetch testimonials when we have the page ID
+  useEffect(() => {
+    if (pageId) {
+      fetchTestimonials(pageId, language);
+    }
+  }, [pageId, language, fetchTestimonials]);
 
   const sectionContent = {
     title: getContent('testimonialsSection', 'title'),
