@@ -23,10 +23,16 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
           .select('id')
           .eq('slug', pageSlug)
           .eq('is_active', true)
-          .single();
+          .maybeSingle();
 
         if (pageError) {
           console.error('Error fetching page:', pageError);
+          setError('Erro ao buscar página');
+          return;
+        }
+
+        if (!pageData) {
+          console.log('Page not found:', pageSlug);
           setError('Página não encontrada');
           return;
         }
