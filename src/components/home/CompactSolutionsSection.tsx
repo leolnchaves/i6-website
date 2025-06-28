@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Target, Users, Cog, TrendingUp, DollarSign, BarChart3, ArrowRight, Zap, Star, Heart, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
