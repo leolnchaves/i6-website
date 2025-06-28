@@ -159,7 +159,7 @@ const ContentManagement = () => {
 
   // Atualizar SEO form data quando dados de SEO mudarem
   useEffect(() => {
-    if (selectedPage && seoData.length > 0) {
+    if (selectedPage && Object.keys(seoData).length > 0) {
       const currentSEOData = getSEOData(selectedPage, selectedLanguage);
       setSeoFormData(currentSEOData);
     }
