@@ -1,12 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { Save } from 'lucide-react';
 import ContentSectionAccordion from './ContentSectionAccordion';
-import SuccessStoriesCardsManagement from '../SuccessStoriesCardsManagement';
 import { getAccordionFields } from './ContentFieldsConfig';
 
 interface ContentTabProps {
@@ -84,17 +81,6 @@ const ContentTab: React.FC<ContentTabProps> = ({
           </div>
         </CardContent>
       </Card>
-
-      {/* Success Stories Cards Management */}
-      {isSuccessStoriesPage && (
-        <>
-          <Separator />
-          <SuccessStoriesCardsManagement
-            selectedPage={selectedPage}
-            selectedLanguage={selectedLanguage}
-          />
-        </>
-      )}
     </div>
   );
 };
