@@ -9,6 +9,7 @@ const ResultsHeader = () => {
   // Usar conteúdo do CMS se disponível, senão usar as traduções como fallback
   const mainTitle = getContent('results', 'mainTitle') || t('results.mainTitle');
   const mainSubtitle = getContent('results', 'mainSubtitle') || t('results.mainSubtitle');
+  const description = getContent('results', 'description');
 
   return (
     <div className="text-center mb-16 scroll-reveal">
@@ -19,12 +20,22 @@ const ResultsHeader = () => {
         </span>
       </h2>
       <div className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
-        <p className="mb-4">
-          {t('results.subtitle1')}
-        </p>
-        <p>
-          {t('results.subtitle2')}
-        </p>
+        {description ? (
+          // Usar descrição do CMS se disponível
+          <div className="whitespace-pre-line">
+            {description}
+          </div>
+        ) : (
+          // Fallback para as traduções antigas se CMS não tiver conteúdo
+          <>
+            <p className="mb-4">
+              {t('results.subtitle1')}
+            </p>
+            <p>
+              {t('results.subtitle2')}
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

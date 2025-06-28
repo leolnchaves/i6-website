@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -47,6 +46,7 @@ const ContentManagement = () => {
   const resultsFields = [
     { section: 'results', field: 'mainTitle', label: 'Título', type: 'input' },
     { section: 'results', field: 'mainSubtitle', label: 'Subtítulo', type: 'input' },
+    { section: 'results', field: 'description', label: 'Descrição', type: 'textarea' },
   ];
 
   // Combinar todos os campos
@@ -175,7 +175,7 @@ const ContentManagement = () => {
                     value={value}
                     onChange={(e) => handleContentInputChange(key, e.target.value)}
                     placeholder={`Digite o ${field.label.toLowerCase()}...`}
-                    rows={3}
+                    rows={field.field === 'description' ? 5 : 3}
                   />
                 ) : (
                   <Input
