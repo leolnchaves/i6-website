@@ -75,18 +75,10 @@ const CompactSolutionsSection = () => {
   ];
 
   const handleSolutionsClick = () => {
-    // Navigate to solutions page and scroll to top
     window.location.href = '/solutions';
   };
 
-  // Determinar quais cards usar (CMS ou fallback)
-  const cardsToRender = (!loading && cards && cards.length > 0) ? cards : fallbackSolutions;
-  const usesCMSData = (!loading && cards && cards.length > 0);
-
-  console.log('Cards to render:', cardsToRender);
-  console.log('Uses CMS data:', usesCMSData);
-  console.log('Cards to render length:', cardsToRender.length);
-
+  // Mostrar loading apenas se ainda estiver carregando
   if (loading) {
     console.log('Rendering loading state');
     return (
@@ -99,6 +91,19 @@ const CompactSolutionsSection = () => {
         </div>
       </section>
     );
+  }
+
+  // Determinar quais cards usar
+  const usesCMSData = cards && cards.length > 0;
+  const cardsToRender = usesCMSData ? cards : fallbackSolutions;
+
+  console.log('Cards to render:', cardsToRender);
+  console.log('Uses CMS data:', usesCMSData);
+  console.log('Cards to render length:', cardsToRender.length);
+
+  // Mostrar erro se houver, mas ainda renderizar com fallback
+  if (error) {
+    console.warn('CMS Error (usando fallback):', error);
   }
 
   console.log('Rendering main section with', cardsToRender.length, 'cards');

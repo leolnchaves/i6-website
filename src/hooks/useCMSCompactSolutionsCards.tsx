@@ -39,12 +39,14 @@ export const useCMSCompactSolutionsCards = (language: string = 'en') => {
       if (pageError) {
         console.error('Error fetching page:', pageError);
         setError('Erro ao buscar página');
+        setLoading(false);
         return;
       }
 
       if (!pageData) {
-        console.log('Page not found: home');
-        setError('Página não encontrada');
+        console.log('Page not found: home - using fallback');
+        setCards([]);
+        setLoading(false);
         return;
       }
 
@@ -65,18 +67,22 @@ export const useCMSCompactSolutionsCards = (language: string = 'en') => {
       if (cardsError) {
         console.error('Error fetching cards:', cardsError);
         setError('Erro ao carregar cards');
+        setCards([]);
+        setLoading(false);
         return;
       }
 
       console.log('Fetched cards count:', cardsData?.length || 0);
       console.log('Fetched cards:', cardsData);
+      
+      // Sempre definir cards (mesmo que seja array vazio) e parar loading
       setCards(cardsData || []);
+      setLoading(false);
     } catch (err) {
       console.error('Error in fetchCards:', err);
       setError('Erro inesperado');
-    } finally {
+      setCards([]);
       setLoading(false);
-      console.log('fetchCards completed');
     }
   }, [language]);
 
