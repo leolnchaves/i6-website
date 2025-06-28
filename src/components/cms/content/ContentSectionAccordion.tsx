@@ -1,15 +1,10 @@
+
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
 import ContentFieldRenderer from './ContentFieldRenderer';
 import SuccessStoriesCardsManagement from '../SuccessStoriesCardsManagement';
-
-interface ContentField {
-  section: string;
-  field: string;
-  label: string;
-  type: 'input' | 'textarea' | 'icon';
-}
+import { ContentField } from './ContentFieldsConfig';
 
 interface ContentSectionAccordionProps {
   heroFields: ContentField[];

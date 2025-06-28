@@ -1,4 +1,10 @@
-import { ContentField } from './ContentFieldRenderer';
+
+export interface ContentField {
+  key: string;
+  label: string;
+  type: 'text' | 'textarea' | 'icon';
+  placeholder: string;
+}
 
 export const getAccordionFields = (isHomePage: boolean, isSuccessStoriesPage: boolean) => {
   if (isHomePage) {
@@ -172,4 +178,13 @@ export const getAccordionFields = (isHomePage: boolean, isSuccessStoriesPage: bo
     resultsFields: [],
     compactSolutionsFields: []
   };
+};
+
+export const getPageFields = (isHomePage: boolean, isSuccessStoriesPage: boolean): ContentField[] => {
+  const accordionFields = getAccordionFields(isHomePage, isSuccessStoriesPage);
+  return [
+    ...accordionFields.heroFields,
+    ...accordionFields.resultsFields,
+    ...accordionFields.compactSolutionsFields
+  ];
 };
