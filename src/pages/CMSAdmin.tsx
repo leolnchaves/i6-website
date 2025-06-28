@@ -8,7 +8,6 @@ import CMSLogin from '@/components/cms/CMSLogin';
 import CMSProtectedRoute from '@/components/cms/CMSProtectedRoute';
 import SiteStructure from '@/components/cms/SiteStructure';
 import ContentManagement from '@/components/cms/ContentManagement';
-import CompactSolutionsCardsManagement from '@/components/cms/CompactSolutionsCardsManagement';
 
 /**
  * CMS Admin page - hidden admin interface
@@ -35,7 +34,6 @@ const CMSAdmin = () => {
               <Routes>
                 <Route path="/site-structure" element={<SiteStructure />} />
                 <Route path="/content" element={<ContentManagement />} />
-                <Route path="/compact-solutions-cards" element={<CompactSolutionsCardsManagement selectedPage="297cb5eb-2861-4217-b0b1-ae66a6361326" selectedLanguage="en" />} />
                 <Route path="/users" element={
                   <CMSProtectedRoute requiredRole="admin">
                     <div className="text-center py-12">

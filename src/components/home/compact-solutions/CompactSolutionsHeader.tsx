@@ -3,12 +3,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 
 const CompactSolutionsHeader = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const { getContent } = useCMSPageContent('home', language);
 
   // Tentar buscar do CMS primeiro, senão usar as traduções como fallback
-  const title = getContent('compactSolutions', 'title') || t('solutions.title') || 'Soluções';
-  const subtitle = getContent('compactSolutions', 'subtitle') || t('solutions.subtitle') || 'Inteligentes';
+  const title = getContent('compactSolutions', 'title') || 'Soluções';
+  const subtitle = getContent('compactSolutions', 'subtitle') || 'Inteligentes';
 
   return (
     <div className="text-center mb-16 scroll-reveal">

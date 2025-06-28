@@ -22,9 +22,6 @@ const Home = () => {
     timestamp: new Date().toISOString(),
     userAgent: navigator.userAgent 
   }, 'HomePage');
-
-  console.log('=== Home Page Render Debug ===');
-  console.log('Rendering Home page components');
   
   return (
     <div className="min-h-screen">

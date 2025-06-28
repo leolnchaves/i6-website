@@ -9,51 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      cms_compact_solutions_cards: {
-        Row: {
-          background_color: string | null
-          card_order: number
-          created_at: string
-          description: string
-          engine: string
-          icon_name: string
-          id: string
-          is_active: boolean
-          language: string
-          page_id: string
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          background_color?: string | null
-          card_order: number
-          created_at?: string
-          description: string
-          engine: string
-          icon_name: string
-          id?: string
-          is_active?: boolean
-          language?: string
-          page_id: string
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          background_color?: string | null
-          card_order?: number
-          created_at?: string
-          description?: string
-          engine?: string
-          icon_name?: string
-          id?: string
-          is_active?: boolean
-          language?: string
-          page_id?: string
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       cms_page_content: {
         Row: {
           content: string | null
