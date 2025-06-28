@@ -47,8 +47,14 @@ const ContentManagement = () => {
     { section: 'results', field: 'description', label: 'Descrição', type: 'textarea' as const },
   ];
 
+  // Campos específicos para a seção Compact Solutions
+  const compactSolutionsFields = [
+    { section: 'compactSolutions', field: 'title', label: 'Título', type: 'input' as const },
+    { section: 'compactSolutions', field: 'subtitle', label: 'Subtítulo', type: 'input' as const },
+  ];
+
   // Combinar todos os campos
-  const allFields = [...heroFields, ...resultsFields];
+  const allFields = [...heroFields, ...resultsFields, ...compactSolutionsFields];
 
   // Função para carregar dados quando página ou idioma mudarem
   const loadData = useCallback(async () => {
@@ -205,6 +211,7 @@ const ContentManagement = () => {
                 <ContentSectionAccordion
                   heroFields={heroFields}
                   resultsFields={resultsFields}
+                  compactSolutionsFields={compactSolutionsFields}
                   formData={contentFormData}
                   selectedPage={selectedPage}
                   selectedLanguage={selectedLanguage}

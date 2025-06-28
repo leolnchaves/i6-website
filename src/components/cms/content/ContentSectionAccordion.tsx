@@ -15,6 +15,7 @@ interface ContentField {
 interface ContentSectionAccordionProps {
   heroFields: ContentField[];
   resultsFields: ContentField[];
+  compactSolutionsFields: ContentField[];
   formData: { [key: string]: string };
   selectedPage: string;
   selectedLanguage: string;
@@ -24,6 +25,7 @@ interface ContentSectionAccordionProps {
 const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   heroFields,
   resultsFields,
+  compactSolutionsFields,
   formData,
   selectedPage,
   selectedLanguage,
@@ -82,6 +84,22 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+
+      {/* Seção Compact Solutions */}
+      <AccordionItem value="compact-solutions">
+        <AccordionTrigger className="text-lg font-semibold">
+          Seção Compact Solutions - Soluções Compactas
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="pt-4">
+            <ContentFieldRenderer
+              fields={compactSolutionsFields}
+              formData={formData}
+              onFieldChange={onFieldChange}
+            />
           </div>
         </AccordionContent>
       </AccordionItem>
