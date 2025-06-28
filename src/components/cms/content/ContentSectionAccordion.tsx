@@ -31,12 +31,32 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   selectedLanguage,
   onFieldChange,
 }) => {
+  // Determine section names based on field sections
+  const isSuccessStoriesPage = heroFields.some(field => field.section === 'successStoriesHero');
+  
+  const getFirstSectionTitle = () => {
+    if (isSuccessStoriesPage) return 'Seção Hero - Cases de Sucesso';
+    return 'Seção Hero - Página Principal';
+  };
+
+  const getSecondSectionTitle = () => {
+    if (isSuccessStoriesPage) return 'Seção Métricas - Estatísticas';
+    return 'Seção Results - Resultados';
+  };
+
+  const getThirdSectionTitle = () => {
+    if (isSuccessStoriesPage) return 'Seção CTA - Chamada para Ação';
+    return 'Seção Compact Solutions - Soluções Compactas';
+  };
+
+  const showCardsManagement = !isSuccessStoriesPage && resultsFields.length > 0;
+
   return (
     <Accordion type="single" collapsible className="w-full">
-      {/* Seção Hero */}
-      <AccordionItem value="hero">
+      {/* Primeira seção */}
+      <AccordionItem value="first-section">
         <AccordionTrigger className="text-lg font-semibold">
-          Seção Hero - Página Principal
+          {getFirstSectionTitle()}
         </AccordionTrigger>
         <AccordionContent>
           <div className="pt-4">
@@ -49,16 +69,18 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
         </AccordionContent>
       </AccordionItem>
 
-      {/* Seção Results */}
-      <AccordionItem value="results">
+      {/* Segunda seção */}
+      <AccordionItem value="second-section">
         <AccordionTrigger className="text-lg font-semibold">
-          Seção Results - Resultados
+          {getSecondSectionTitle()}
         </AccordionTrigger>
         <AccordionContent>
           <div className="pt-4 space-y-6">
-            {/* Campos da seção Results */}
+            {/* Campos da segunda seção */}
             <div className="space-y-4">
-              <h4 className="font-medium text-gray-800 border-b pb-2">Conteúdo Principal</h4>
+              <h4 className="font-medium text-gray-800 border-b pb-2">
+                {isSuccessStoriesPage ? 'Métricas e Estatísticas' : 'Conteúdo Principal'}
+              </h4>
               <ContentFieldRenderer
                 fields={resultsFields}
                 formData={formData}
@@ -66,32 +88,35 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
               />
             </div>
             
-            <Separator />
-            
-            {/* Gestão dos Cards - Nested Accordion */}
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="cards-management">
-                <AccordionTrigger className="text-base font-medium">
-                  Gestão dos Cards da Seção Results
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-4">
-                    <ResultsCardsManagement 
-                      selectedPage={selectedPage}
-                      selectedLanguage={selectedLanguage}
-                    />
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+            {/* Gestão dos Cards - apenas para página home */}
+            {showCardsManagement && (
+              <>
+                <Separator />
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="cards-management">
+                    <AccordionTrigger className="text-base font-medium">
+                      Gestão dos Cards da Seção Results
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="pt-4">
+                        <ResultsCardsManagement 
+                          selectedPage={selectedPage}
+                          selectedLanguage={selectedLanguage}
+                        />
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </>
+            )}
           </div>
         </AccordionContent>
       </AccordionItem>
 
-      {/* Seção Compact Solutions */}
-      <AccordionItem value="compact-solutions">
+      {/* Terceira seção */}
+      <AccordionItem value="third-section">
         <AccordionTrigger className="text-lg font-semibold">
-          Seção Compact Solutions - Soluções Compactas
+          {getThirdSectionTitle()}
         </AccordionTrigger>
         <AccordionContent>
           <div className="pt-4">

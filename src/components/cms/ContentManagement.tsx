@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,7 +30,12 @@ const ContentManagement = () => {
   });
   const [saving, setSaving] = useState(false);
 
-  // Campos específicos para a seção Hero
+  // Get current page info
+  const currentPage = pages.find(p => p.id === selectedPage);
+  const isHomePage = currentPage?.slug === 'home';
+  const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
+
+  // Campos específicos para a seção Hero (Home)
   const heroFields = [
     { section: 'hero', field: 'infinite', label: 'Título Principal', type: 'input' as const },
     { section: 'hero', field: 'possibilities', label: 'Título Destaque', type: 'input' as const },
@@ -40,21 +46,54 @@ const ContentManagement = () => {
     { section: 'hero', field: 'demoLink', label: 'Link do Demo (URL)', type: 'input' as const },
   ];
 
-  // Campos específicos para a seção Results
+  // Campos específicos para a seção Results (Home)
   const resultsFields = [
     { section: 'results', field: 'mainTitle', label: 'Título', type: 'input' as const },
     { section: 'results', field: 'mainSubtitle', label: 'Subtítulo', type: 'input' as const },
     { section: 'results', field: 'description', label: 'Descrição', type: 'textarea' as const },
   ];
 
-  // Campos específicos para a seção Compact Solutions
+  // Campos específicos para a seção Compact Solutions (Home)
   const compactSolutionsFields = [
     { section: 'compactSolutions', field: 'title', label: 'Título', type: 'input' as const },
     { section: 'compactSolutions', field: 'subtitle', label: 'Subtítulo', type: 'input' as const },
   ];
 
-  // Combinar todos os campos
-  const allFields = [...heroFields, ...resultsFields, ...compactSolutionsFields];
+  // Campos específicos para Success Stories Hero
+  const successStoriesHeroFields = [
+    { section: 'successStoriesHero', field: 'title', label: 'Título Principal', type: 'input' as const },
+    { section: 'successStoriesHero', field: 'subtitle', label: 'Subtítulo Destacado', type: 'input' as const },
+    { section: 'successStoriesHero', field: 'description', label: 'Descrição', type: 'textarea' as const },
+  ];
+
+  // Campos específicos para Success Stories Metrics
+  const successStoriesMetricsFields = [
+    { section: 'successStoriesMetrics', field: 'avgROI', label: 'ROI Médio (ex: 150%)', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'avgROILabel', label: 'Label ROI Médio', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'companiesServed', label: 'Empresas Atendidas (ex: 500+)', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'companiesServedLabel', label: 'Label Empresas Atendidas', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'costSavings', label: 'Economia de Custos (ex: $50M+)', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'costSavingsLabel', label: 'Label Economia de Custos', type: 'input' as const },
+  ];
+
+  // Campos específicos para Success Stories CTA
+  const successStoriesCTAFields = [
+    { section: 'successStoriesCTA', field: 'title', label: 'Título do CTA', type: 'input' as const },
+    { section: 'successStoriesCTA', field: 'description', label: 'Descrição do CTA', type: 'textarea' as const },
+    { section: 'successStoriesCTA', field: 'buttonText', label: 'Texto do Botão', type: 'input' as const },
+  ];
+
+  // Combinar campos baseado na página selecionada
+  const getAllFields = () => {
+    if (isHomePage) {
+      return [...heroFields, ...resultsFields, ...compactSolutionsFields];
+    } else if (isSuccessStoriesPage) {
+      return [...successStoriesHeroFields, ...successStoriesMetricsFields, ...successStoriesCTAFields];
+    }
+    return [];
+  };
+
+  const allFields = getAllFields();
 
   // Função para carregar dados quando página ou idioma mudarem
   const loadData = useCallback(async () => {
@@ -74,7 +113,7 @@ const ContentManagement = () => {
       newContentFormData[key] = getContent(field.section, field.field, selectedLanguage);
     });
     setContentFormData(newContentFormData);
-  }, [getContent, selectedLanguage]);
+  }, [getContent, selectedLanguage, allFields]);
 
   // Atualizar SEO form data quando dados de SEO mudarem
   const updateSEOFormData = useCallback(() => {
@@ -164,6 +203,12 @@ const ContentManagement = () => {
     );
   }
 
+  const getPageTitle = () => {
+    if (isHomePage) return 'Página Principal';
+    if (isSuccessStoriesPage) return 'Cases de Sucesso';
+    return currentPage?.name || 'Página';
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -199,27 +244,50 @@ const ContentManagement = () => {
           <TabsContent value="content">
             <Card>
               <CardHeader>
-                <CardTitle>Conteúdo da Página Principal</CardTitle>
+                <CardTitle>Conteúdo da {getPageTitle()}</CardTitle>
                 <CardDescription>
-                  Edite o conteúdo das seções da página inicial
+                  {isHomePage && 'Edite o conteúdo das seções da página inicial'}
+                  {isSuccessStoriesPage && 'Edite o conteúdo das seções da página de cases de sucesso'}
+                  {!isHomePage && !isSuccessStoriesPage && `Edite o conteúdo da página ${currentPage?.name}`}
                   <Badge variant="outline" className="ml-2">
                     {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
                   </Badge>
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ContentSectionAccordion
-                  heroFields={heroFields}
-                  resultsFields={resultsFields}
-                  compactSolutionsFields={compactSolutionsFields}
-                  formData={contentFormData}
-                  selectedPage={selectedPage}
-                  selectedLanguage={selectedLanguage}
-                  onFieldChange={handleContentInputChange}
-                />
+                {isHomePage && (
+                  <ContentSectionAccordion
+                    heroFields={heroFields}
+                    resultsFields={resultsFields}
+                    compactSolutionsFields={compactSolutionsFields}
+                    formData={contentFormData}
+                    selectedPage={selectedPage}
+                    selectedLanguage={selectedLanguage}
+                    onFieldChange={handleContentInputChange}
+                  />
+                )}
+
+                {isSuccessStoriesPage && (
+                  <ContentSectionAccordion
+                    heroFields={successStoriesHeroFields}
+                    resultsFields={successStoriesMetricsFields}
+                    compactSolutionsFields={successStoriesCTAFields}
+                    formData={contentFormData}
+                    selectedPage={selectedPage}
+                    selectedLanguage={selectedLanguage}
+                    onFieldChange={handleContentInputChange}
+                  />
+                )}
+
+                {!isHomePage && !isSuccessStoriesPage && (
+                  <div className="text-center py-8 text-gray-500">
+                    <p>Configuração de conteúdo para esta página ainda não foi implementada.</p>
+                    <p className="text-sm mt-2">Será adicionada conforme necessário.</p>
+                  </div>
+                )}
 
                 <div className="flex justify-end pt-6 mt-6 border-t">
-                  <Button onClick={handleSaveContent} disabled={saving}>
+                  <Button onClick={handleSaveContent} disabled={saving || allFields.length === 0}>
                     <Save className="h-4 w-4 mr-2" />
                     {saving ? 'Salvando...' : 'Salvar Conteúdo'}
                   </Button>
