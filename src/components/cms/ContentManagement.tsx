@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +29,8 @@ const ContentManagement = () => {
     follow_flag: true
   });
   const [saving, setSaving] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const initialLoadRef = useRef(true);
 
   // Get current page info
   const currentPage = pages.find(p => p.id === selectedPage);
@@ -132,6 +134,8 @@ const ContentManagement = () => {
   useEffect(() => {
     const loadData = async () => {
       if (selectedPage) {
+        setHasUnsavedChanges(false);
+        initialLoadRef.current = true;
         await Promise.all([
           fetchPageContent(selectedPage, selectedLanguage),
           fetchSEOData(selectedPage, selectedLanguage)
@@ -142,10 +146,10 @@ const ContentManagement = () => {
     loadData();
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Atualizar formData quando conteúdo mudar
+  // Atualizar formData quando conteúdo mudar - apenas no carregamento inicial
   useEffect(() => {
-    if (content.length > 0 && allFields.length > 0) {
-      console.log('Updating content form data with:', content);
+    if (content.length > 0 && allFields.length > 0 && initialLoadRef.current) {
+      console.log('Initial loading of content form data with:', content);
       const newContentFormData: { [key: string]: string } = {};
       allFields.forEach(field => {
         const key = `${field.section}_${field.field}`;
@@ -154,6 +158,7 @@ const ContentManagement = () => {
         console.log(`Setting ${key} = ${value}`);
       });
       setContentFormData(newContentFormData);
+      initialLoadRef.current = false;
     }
   }, [content, allFields, selectedLanguage, getContent]);
 
@@ -172,6 +177,7 @@ const ContentManagement = () => {
       console.log('Updated form data:', updated);
       return updated;
     });
+    setHasUnsavedChanges(true);
   };
 
   const handleSEOInputChange = (field: string, value: string | boolean) => {
@@ -197,6 +203,7 @@ const ContentManagement = () => {
       });
 
       await Promise.all(contentSavePromises);
+      setHasUnsavedChanges(false);
     } catch (error) {
       console.error('Error saving content:', error);
     } finally {
