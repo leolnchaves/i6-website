@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -69,14 +68,14 @@ const ContentManagement = () => {
     { section: 'successStoriesHero', field: 'description', label: 'Descrição', type: 'textarea' as const },
   ];
 
-  // Campos específicos para Success Stories Metrics
+  // Campos específicos para Success Stories Metrics - LABELS ATUALIZADOS
   const successStoriesMetricsFields = [
-    { section: 'successStoriesMetrics', field: 'avgROI', label: 'ROI Médio (ex: 150%)', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'avgROILabel', label: 'Label ROI Médio', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'companiesServed', label: 'Empresas Atendidas (ex: 500+)', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'companiesServedLabel', label: 'Label Empresas Atendidas', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'costSavings', label: 'Economia de Custos (ex: $50M+)', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'costSavingsLabel', label: 'Label Economia de Custos', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'avgROI', label: 'Estatística 1', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'avgROILabel', label: 'Label Estatística 1', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'companiesServed', label: 'Estatística 2', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'companiesServedLabel', label: 'Label Estatística 2', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'costSavings', label: 'Estatística 3', type: 'input' as const },
+    { section: 'successStoriesMetrics', field: 'costSavingsLabel', label: 'Label Estatística 3', type: 'input' as const },
   ];
 
   // Campos específicos para Success Stories CTA
