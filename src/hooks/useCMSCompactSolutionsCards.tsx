@@ -116,7 +116,6 @@ export const useCMSCompactSolutionsCards = (pageSlug: string = 'home', language:
 
         if (card.id && card.id.startsWith('temp-')) {
           // New card - insert
-          delete cardData.id;
           const { error } = await supabase
             .from('cms_compact_solutions_cards')
             .insert(cardData);
