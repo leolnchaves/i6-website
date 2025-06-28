@@ -47,9 +47,10 @@ export const useContentManagement = () => {
   const isHomePage = currentPage?.slug === 'home';
   const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
   const isContactPage = currentPage?.slug === 'contact';
+  const isSolutionsPage = currentPage?.slug === 'solutions';
 
   // Get fields for current page
-  const allFields = getPageFields(isHomePage, isSuccessStoriesPage, isContactPage);
+  const allFields = getPageFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
 
   // Debug logs
   console.log('fetched', fetchedContentFormData);
@@ -195,6 +196,7 @@ export const useContentManagement = () => {
     isHomePage,
     isSuccessStoriesPage,
     isContactPage,
+    isSolutionsPage,
     allFields,
     
     // New utilities

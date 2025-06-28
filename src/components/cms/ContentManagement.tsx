@@ -22,6 +22,7 @@ const ContentManagement = () => {
     isHomePage,
     isSuccessStoriesPage,
     isContactPage,
+    isSolutionsPage,
     allFields,
     setSelectedPage,
     setSelectedLanguage,
@@ -80,6 +81,7 @@ const ContentManagement = () => {
               isHomePage={isHomePage}
               isSuccessStoriesPage={isSuccessStoriesPage}
               isContactPage={isContactPage}
+              isSolutionsPage={isSolutionsPage}
               currentPageName={currentPage?.name}
               saving={saving}
               allFieldsLength={allFields.length}

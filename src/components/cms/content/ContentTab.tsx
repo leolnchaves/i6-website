@@ -17,6 +17,7 @@ interface ContentTabProps {
   isHomePage: boolean;
   isSuccessStoriesPage: boolean;
   isContactPage: boolean;
+  isSolutionsPage: boolean;
   currentPageName?: string;
   saving: boolean;
   allFieldsLength: number;
@@ -32,6 +33,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
   isHomePage,
   isSuccessStoriesPage,
   isContactPage,
+  isSolutionsPage,
   currentPageName,
   saving,
   allFieldsLength,
@@ -39,12 +41,13 @@ const ContentTab: React.FC<ContentTabProps> = ({
   onSaveContent,
   getPageTitle,
 }) => {
-  const accordionFields = getAccordionFields(isHomePage, isSuccessStoriesPage, isContactPage);
+  const accordionFields = getAccordionFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
 
   const getDescription = () => {
     if (isHomePage) return 'Edite o conteúdo das seções da página inicial';
     if (isSuccessStoriesPage) return 'Edite o conteúdo das seções da página de cases de sucesso';
     if (isContactPage) return 'Edite o conteúdo das seções da página de contato';
+    if (isSolutionsPage) return 'Edite o conteúdo das seções da página de soluções';
     return `Edite o conteúdo da página ${currentPageName}`;
   };
 
@@ -61,7 +64,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {(isHomePage || isSuccessStoriesPage || isContactPage) && (
+          {(isHomePage || isSuccessStoriesPage || isContactPage || isSolutionsPage) && (
             <ContentSectionAccordion
               heroFields={accordionFields.heroFields}
               resultsFields={accordionFields.resultsFields}
@@ -72,10 +75,11 @@ const ContentTab: React.FC<ContentTabProps> = ({
               selectedLanguage={selectedLanguage}
               onFieldChange={onFieldChange}
               isContactPage={isContactPage}
+              isSolutionsPage={isSolutionsPage}
             />
           )}
 
-          {!isHomePage && !isSuccessStoriesPage && !isContactPage && (
+          {!isHomePage && !isSuccessStoriesPage && !isContactPage && !isSolutionsPage && (
             <div className="text-center py-8 text-gray-500">
               <p>Configuração de conteúdo para esta página ainda não foi implementada.</p>
               <p className="text-sm mt-2">Será adicionada conforme necessário.</p>

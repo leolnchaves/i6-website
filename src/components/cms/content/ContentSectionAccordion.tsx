@@ -23,6 +23,7 @@ interface ContentSectionAccordionProps {
   selectedLanguage: string;
   onFieldChange: (key: string, value: string) => void;
   isContactPage?: boolean;
+  isSolutionsPage?: boolean;
 }
 
 const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
@@ -35,6 +36,7 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   selectedLanguage,
   onFieldChange,
   isContactPage = false,
+  isSolutionsPage = false,
 }) => {
   // Determine section names based on field sections
   const isSuccessStoriesPage = heroFields.some(field => field.section === 'successStoriesHero');
@@ -42,6 +44,7 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   const getFirstSectionTitle = () => {
     if (isContactPage) return 'Seção Hero - Contato';
     if (isSuccessStoriesPage) return 'Seção Hero - Cases de Sucesso';
+    if (isSolutionsPage) return 'Seção Hero - Soluções';
     return 'Seção Hero - Página Principal';
   };
 
@@ -56,7 +59,7 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
     return 'Seção Compact Solutions - Soluções Compactas';
   };
 
-  const showCardsManagement = !isSuccessStoriesPage && !isContactPage && resultsFields.length > 0;
+  const showCardsManagement = !isSuccessStoriesPage && !isContactPage && !isSolutionsPage && resultsFields.length > 0;
   const showTestimonialsManagement = isSuccessStoriesPage && compactSolutionsFields.some(field => field.section === 'testimonialsSection');
 
   return (
@@ -77,8 +80,8 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
         </AccordionContent>
       </AccordionItem>
 
-      {/* Segunda seção */}
-      {resultsFields.length > 0 && (
+      {/* Segunda seção - não mostrar para Solutions que só tem Hero */}
+      {resultsFields.length > 0 && !isSolutionsPage && (
         <AccordionItem value="second-section">
           <AccordionTrigger className="text-lg font-semibold">
             {getSecondSectionTitle()}
@@ -125,7 +128,7 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
       )}
 
       {/* Terceira seção - apenas para success stories */}
-      {!isContactPage && compactSolutionsFields.length > 0 && (
+      {!isContactPage && !isSolutionsPage && compactSolutionsFields.length > 0 && (
         <AccordionItem value="third-section">
           <AccordionTrigger className="text-lg font-semibold">
             {getThirdSectionTitle()}

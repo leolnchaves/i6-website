@@ -73,19 +73,28 @@ export const contactFAQFields: ContentField[] = [
   { section: 'contactFAQ', field: 'noResults', label: 'Mensagem Sem Resultados', type: 'input' },
 ];
 
+// Solutions page field definitions
+export const solutionsHeroFields: ContentField[] = [
+  { section: 'solutionsHero', field: 'mainTitle', label: 'Título Principal (Primeira Linha)', type: 'input' },
+  { section: 'solutionsHero', field: 'mainSubtitle', label: 'Título Destacado (Segunda Linha)', type: 'input' },
+  { section: 'solutionsHero', field: 'description', label: 'Descrição', type: 'textarea' },
+];
+
 // Helper functions
-export const getPageFields = (isHome: boolean, isSuccessStories: boolean, isContact: boolean) => {
+export const getPageFields = (isHome: boolean, isSuccessStories: boolean, isContact: boolean, isSolutions: boolean = false) => {
   if (isHome) {
     return [...homeHeroFields, ...homeResultsFields, ...homeCompactSolutionsFields];
   } else if (isSuccessStories) {
     return [...successStoriesHeroFields, ...successStoriesMetricsFields, ...successStoriesTestimonialsFields, ...successStoriesCTAFields];
   } else if (isContact) {
     return [...contactHeroFields, ...contactFAQFields];
+  } else if (isSolutions) {
+    return [...solutionsHeroFields];
   }
   return [];
 };
 
-export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean, isContact: boolean) => {
+export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean, isContact: boolean, isSolutions: boolean = false) => {
   if (isHome) {
     return {
       heroFields: homeHeroFields,
@@ -103,6 +112,12 @@ export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean, i
     return {
       heroFields: contactHeroFields,
       resultsFields: contactFAQFields,
+      compactSolutionsFields: []
+    };
+  } else if (isSolutions) {
+    return {
+      heroFields: solutionsHeroFields,
+      resultsFields: [],
       compactSolutionsFields: []
     };
   }
