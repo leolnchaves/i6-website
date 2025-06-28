@@ -390,29 +390,83 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              {/* Coluna esquerda - Conteúdo */}
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor={`title-${index}`}>Título</Label>
-                  <Input
-                    id={`title-${index}`}
-                    value={card.title}
-                    onChange={(e) => handleCardChange(index, 'title', e.target.value)}
-                    placeholder="Digite o título do card"
-                  />
+            <CardContent className="space-y-6">
+              {/* Primeira linha - Título e Engine alinhados */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor={`title-${index}`}>Título</Label>
+                    <Input
+                      id={`title-${index}`}
+                      value={card.title}
+                      onChange={(e) => handleCardChange(index, 'title', e.target.value)}
+                      placeholder="Digite o título do card"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor={`focus-${index}`}>Foco</Label>
+                    <Input
+                      id={`focus-${index}`}
+                      value={card.focus}
+                      onChange={(e) => handleCardChange(index, 'focus', e.target.value)}
+                      placeholder="Digite o foco da solução"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <Label htmlFor={`focus-${index}`}>Foco</Label>
-                  <Input
-                    id={`focus-${index}`}
-                    value={card.focus}
-                    onChange={(e) => handleCardChange(index, 'focus', e.target.value)}
-                    placeholder="Digite o foco da solução"
-                  />
-                </div>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor={`engine-${index}`}>Engine</Label>
+                    <Select value={card.engine} onValueChange={(value) => handleCardChange(index, 'engine', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o engine" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableEngines.map(engine => (
+                          <SelectItem key={engine.value} value={engine.value}>
+                            {engine.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
+                  <div>
+                    <Label>Features</Label>
+                    <div className="space-y-2">
+                      {card.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex gap-2">
+                          <Input
+                            value={feature}
+                            onChange={(e) => handleFeatureChange(index, featureIndex, e.target.value)}
+                            placeholder="Digite a feature"
+                          />
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => removeFeature(index, featureIndex)}
+                            className="text-red-600"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => addFeature(index)}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Adicionar Feature
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Segunda linha - Descrição e Resultados */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor={`description-${index}`}>Descrição</Label>
                   <Textarea
@@ -431,107 +485,57 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                     value={card.outcome}
                     onChange={(e) => handleCardChange(index, 'outcome', e.target.value)}
                     placeholder="Digite os resultados esperados"
-                    rows={3}
+                    rows={4}
                   />
                 </div>
               </div>
 
-              {/* Coluna do meio - Engine e Features */}
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor={`engine-${index}`}>Engine</Label>
-                  <Select value={card.engine} onValueChange={(value) => handleCardChange(index, 'engine', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o engine" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {availableEngines.map(engine => (
-                        <SelectItem key={engine.value} value={engine.value}>
-                          {engine.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <Separator />
 
+              {/* Terceira linha - Estilo Visual e Preview lado a lado */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Estilo Visual */}
                 <div>
-                  <Label>Features</Label>
-                  <div className="space-y-2">
-                    {card.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex gap-2">
-                        <Input
-                          value={feature}
-                          onChange={(e) => handleFeatureChange(index, featureIndex, e.target.value)}
-                          placeholder="Digite a feature"
-                        />
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => removeFeature(index, featureIndex)}
-                          className="text-red-600"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => addFeature(index)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Adicionar Feature
-                    </Button>
+                  <Label className="text-sm font-medium mb-3 block">Estilo Visual</Label>
+                  <div className="space-y-4">
+                    <IconPalette
+                      label="Ícone"
+                      value={card.icon}
+                      onChange={(value) => handleCardChange(index, 'icon', value)}
+                    />
+
+                    <ColorPalette
+                      label="Cor de Fundo"
+                      value={card.bg_color}
+                      onChange={(value) => handleCardChange(index, 'bg_color', value)}
+                      options={bgColorOptions}
+                    />
+
+                    <ColorPalette
+                      label="Cor da Borda"
+                      value={card.border_color}
+                      onChange={(value) => handleCardChange(index, 'border_color', value)}
+                      options={borderColorOptions}
+                    />
                   </div>
                 </div>
-              </div>
 
-              {/* Coluna direita - Preview e Estilo Visual lado a lado */}
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* Preview do Card */}
-                  <div>
-                    <Label className="text-sm font-medium mb-3 block">Preview</Label>
-                    <div className="border rounded-lg p-3 bg-gray-50">
-                      <SolutionCardPreview
-                        title={card.title}
-                        focus={card.focus}
-                        description={card.description}
-                        features={card.features}
-                        outcome={card.outcome}
-                        engine={card.engine}
-                        gradient={card.gradient}
-                        bg_color={card.bg_color}
-                        border_color={card.border_color}
-                        icon={card.icon}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Estilo Visual */}
-                  <div>
-                    <Label className="text-sm font-medium mb-3 block">Estilo Visual</Label>
-                    <div className="space-y-3">
-                      <IconPalette
-                        label="Ícone"
-                        value={card.icon}
-                        onChange={(value) => handleCardChange(index, 'icon', value)}
-                      />
-
-                      <ColorPalette
-                        label="Cor de Fundo"
-                        value={card.bg_color}
-                        onChange={(value) => handleCardChange(index, 'bg_color', value)}
-                        options={bgColorOptions}
-                      />
-
-                      <ColorPalette
-                        label="Cor da Borda"
-                        value={card.border_color}
-                        onChange={(value) => handleCardChange(index, 'border_color', value)}
-                        options={borderColorOptions}
-                      />
-                    </div>
+                {/* Preview do Card */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Preview</Label>
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <SolutionCardPreview
+                      title={card.title}
+                      focus={card.focus}
+                      description={card.description}
+                      features={card.features}
+                      outcome={card.outcome}
+                      engine={card.engine}
+                      gradient={card.gradient}
+                      bg_color={card.bg_color}
+                      border_color={card.border_color}
+                      icon={card.icon}
+                    />
                   </div>
                 </div>
               </div>
