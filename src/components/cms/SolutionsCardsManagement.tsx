@@ -13,6 +13,7 @@ import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import ColorPalette from '@/components/cms/visual/ColorPalette';
+import IconPalette from '@/components/cms/visual/IconPalette';
 import SolutionCardPreview from '@/components/cms/visual/SolutionCardPreview';
 
 interface SolutionsCardsManagementProps {
@@ -31,6 +32,7 @@ interface CardFormData {
   gradient: string;
   bg_color: string;
   border_color: string;
+  icon: string;
   is_active: boolean;
   card_order: number;
 }
@@ -163,6 +165,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
         gradient: card.gradient,
         bg_color: card.bg_color,
         border_color: card.border_color,
+        icon: card.icon || 'building-2',
         is_active: card.is_active,
         card_order: card.card_order,
       }));
@@ -209,6 +212,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
       gradient: 'from-gray-600/80 to-blue-700/80',
       bg_color: 'bg-gray-100/60',
       border_color: 'border-gray-300/60',
+      icon: 'building-2',
       is_active: true,
       card_order: formCards.length + 1,
     };
@@ -277,6 +281,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
           gradient: card.gradient,
           bg_color: card.bg_color,
           border_color: card.border_color,
+          icon: card.icon,
           is_active: card.is_active,
           card_order: card.card_order,
           language: selectedLanguage,
@@ -437,7 +442,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
 
-              {/* Coluna do meio - Engine e Features */}
+              {/* Coluna do meio - Engine, Features e Estilo */}
               <div className="space-y-4">
                 <div>
                   <Label htmlFor={`engine-${index}`}>Engine</Label>
@@ -491,6 +496,12 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 <div className="space-y-4">
                   <h5 className="font-medium text-gray-900">Estilo Visual</h5>
                   
+                  <IconPalette
+                    label="Ícone"
+                    value={card.icon}
+                    onChange={(value) => handleCardChange(index, 'icon', value)}
+                  />
+                  
                   <ColorPalette
                     label="Gradiente"
                     value={card.gradient}
@@ -529,6 +540,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                       gradient={card.gradient}
                       bg_color={card.bg_color}
                       border_color={card.border_color}
+                      icon={card.icon}
                     />
                   </div>
                 </div>

@@ -3,6 +3,22 @@ import React from 'react';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { 
+  TrendingUp, 
+  Users, 
+  DollarSign, 
+  BarChart3, 
+  Target, 
+  Award, 
+  Zap, 
+  Building2, 
+  Globe, 
+  Rocket,
+  Brain,
+  ShoppingCart,
+  LineChart,
+  Lightbulb
+} from 'lucide-react';
 
 interface SolutionCardPreviewProps {
   title: string;
@@ -14,7 +30,25 @@ interface SolutionCardPreviewProps {
   gradient: string;
   bg_color: string;
   border_color: string;
+  icon: string;
 }
+
+const iconMap: { [key: string]: React.ComponentType<any> } = {
+  'trending-up': TrendingUp,
+  'users': Users,
+  'dollar-sign': DollarSign,
+  'bar-chart-3': BarChart3,
+  'target': Target,
+  'award': Award,
+  'zap': Zap,
+  'building-2': Building2,
+  'globe': Globe,
+  'rocket': Rocket,
+  'brain': Brain,
+  'shopping-cart': ShoppingCart,
+  'line-chart': LineChart,
+  'lightbulb': Lightbulb,
+};
 
 const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
   title,
@@ -26,6 +60,7 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
   gradient,
   bg_color,
   border_color,
+  icon,
 }) => {
   // Define colors based on engine for preview
   const getEngineColors = (engine: string) => {
@@ -62,6 +97,7 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
   };
 
   const colors = getEngineColors(engine);
+  const IconComponent = iconMap[icon] || Building2;
 
   return (
     <div className="w-full max-w-md">
@@ -74,12 +110,12 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
       >
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            {/* Icon placeholder */}
+            {/* Icon */}
             <div 
               className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
               style={{ backgroundColor: colors.iconBgColor }}
             >
-              <div className="w-5 h-5 bg-gray-600 rounded" />
+              <IconComponent className="w-5 h-5 text-gray-700" />
             </div>
             
             {/* Content section */}
