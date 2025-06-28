@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -130,6 +129,8 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
 
     setSaving(true);
     try {
+      console.log('Saving cards with data:', formCards);
+
       // First, delete all existing cards for this page and language
       const { error: deleteError } = await supabase
         .from('cms_results_cards')
@@ -139,20 +140,25 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
 
       if (deleteError) throw deleteError;
 
-      // Then, insert all cards
+      // Then, insert all cards with correct is_active values
       if (formCards.length > 0) {
-        const cardsToInsert = formCards.map(card => ({
-          page_id: selectedPage,
-          title: card.title,
-          description: card.description,
-          icon_name: card.icon_name,
-          icon_color: card.icon_color,
-          background_color: card.background_color || null,
-          background_opacity: card.background_opacity,
-          is_active: card.is_active,
-          card_order: card.card_order,
-          language: selectedLanguage,
-        }));
+        const cardsToInsert = formCards.map(card => {
+          console.log(`Card "${card.title}" - is_active: ${card.is_active}`);
+          return {
+            page_id: selectedPage,
+            title: card.title,
+            description: card.description,
+            icon_name: card.icon_name,
+            icon_color: card.icon_color,
+            background_color: card.background_color || null,
+            background_opacity: card.background_opacity,
+            is_active: card.is_active, // Explicitly setting is_active
+            card_order: card.card_order,
+            language: selectedLanguage,
+          };
+        });
+
+        console.log('Cards to insert:', cardsToInsert);
 
         const { error: insertError } = await supabase
           .from('cms_results_cards')
@@ -239,6 +245,7 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => handleCardChange(index, 'is_active', !card.is_active)}
+                    title={card.is_active ? 'Desativar card' : 'Ativar card'}
                   >
                     {card.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </Button>
