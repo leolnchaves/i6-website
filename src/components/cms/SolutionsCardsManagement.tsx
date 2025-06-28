@@ -12,6 +12,8 @@ import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical } from 'lucide
 import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import ColorPalette from '@/components/cms/visual/ColorPalette';
+import SolutionCardPreview from '@/components/cms/visual/SolutionCardPreview';
 
 interface SolutionsCardsManagementProps {
   selectedPage: string;
@@ -39,24 +41,104 @@ const availableEngines = [
   { value: 'i6 Previsio', label: 'i6 Previsio' },
 ];
 
-const defaultGradients = [
-  'from-gray-600/80 to-blue-700/80',
-  'from-orange-600/80 to-red-600/80',
-  'from-blue-600/80 to-gray-700/80',
-  'from-gray-600/80 to-blue-600/80',
-  'from-orange-600/80 to-gray-600/80',
+// Updated color options with visual previews
+const gradientOptions = [
+  { 
+    value: 'from-gray-600/80 to-blue-700/80', 
+    label: 'Blue', 
+    preview: 'bg-gradient-to-r from-gray-600 to-blue-700' 
+  },
+  { 
+    value: 'from-orange-600/80 to-red-600/80', 
+    label: 'Orange', 
+    preview: 'bg-gradient-to-r from-orange-600 to-red-600' 
+  },
+  { 
+    value: 'from-blue-600/80 to-gray-700/80', 
+    label: 'Blue Gray', 
+    preview: 'bg-gradient-to-r from-blue-600 to-gray-700' 
+  },
+  { 
+    value: 'from-gray-600/80 to-blue-600/80', 
+    label: 'Gray Blue', 
+    preview: 'bg-gradient-to-r from-gray-600 to-blue-600' 
+  },
+  { 
+    value: 'from-orange-600/80 to-gray-600/80', 
+    label: 'Orange Gray', 
+    preview: 'bg-gradient-to-r from-orange-600 to-gray-600' 
+  },
+  { 
+    value: 'from-green-600/80 to-blue-600/80', 
+    label: 'Green Blue', 
+    preview: 'bg-gradient-to-r from-green-600 to-blue-600' 
+  },
 ];
 
-const defaultBgColors = [
-  'bg-gray-100/60',
-  'bg-orange-100/60',
-  'bg-blue-100/60',
+const bgColorOptions = [
+  { 
+    value: 'bg-gray-100/60', 
+    label: 'Gray', 
+    preview: 'bg-gray-100' 
+  },
+  { 
+    value: 'bg-orange-100/60', 
+    label: 'Orange', 
+    preview: 'bg-orange-100' 
+  },
+  { 
+    value: 'bg-blue-100/60', 
+    label: 'Blue', 
+    preview: 'bg-blue-100' 
+  },
+  { 
+    value: 'bg-green-100/60', 
+    label: 'Green', 
+    preview: 'bg-green-100' 
+  },
+  { 
+    value: 'bg-purple-100/60', 
+    label: 'Purple', 
+    preview: 'bg-purple-100' 
+  },
+  { 
+    value: 'bg-pink-100/60', 
+    label: 'Pink', 
+    preview: 'bg-pink-100' 
+  },
 ];
 
-const defaultBorderColors = [
-  'border-gray-300/60',
-  'border-orange-300/60',
-  'border-blue-300/60',
+const borderColorOptions = [
+  { 
+    value: 'border-gray-300/60', 
+    label: 'Gray', 
+    preview: 'bg-gray-300' 
+  },
+  { 
+    value: 'border-orange-300/60', 
+    label: 'Orange', 
+    preview: 'bg-orange-300' 
+  },
+  { 
+    value: 'border-blue-300/60', 
+    label: 'Blue', 
+    preview: 'bg-blue-300' 
+  },
+  { 
+    value: 'border-green-300/60', 
+    label: 'Green', 
+    preview: 'bg-green-300' 
+  },
+  { 
+    value: 'border-purple-300/60', 
+    label: 'Purple', 
+    preview: 'bg-purple-300' 
+  },
+  { 
+    value: 'border-pink-300/60', 
+    label: 'Pink', 
+    preview: 'bg-pink-300' 
+  },
 ];
 
 const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
@@ -309,8 +391,8 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Coluna esquerda */}
+            <CardContent className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+              {/* Coluna esquerda - Conteúdo */}
               <div className="space-y-4">
                 <div>
                   <Label htmlFor={`title-${index}`}>Título</Label>
@@ -355,7 +437,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
 
-              {/* Coluna direita */}
+              {/* Coluna do meio - Engine e Features */}
               <div className="space-y-4">
                 <div>
                   <Label htmlFor={`engine-${index}`}>Engine</Label>
@@ -406,55 +488,48 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
 
                 <Separator />
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <h5 className="font-medium text-gray-900">Estilo Visual</h5>
                   
-                  <div>
-                    <Label htmlFor={`gradient-${index}`}>Gradiente</Label>
-                    <Select value={card.gradient} onValueChange={(value) => handleCardChange(index, 'gradient', value)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {defaultGradients.map(gradient => (
-                          <SelectItem key={gradient} value={gradient}>
-                            {gradient}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <ColorPalette
+                    label="Gradiente"
+                    value={card.gradient}
+                    onChange={(value) => handleCardChange(index, 'gradient', value)}
+                    options={gradientOptions}
+                  />
 
-                  <div>
-                    <Label htmlFor={`bg-color-${index}`}>Cor de Fundo</Label>
-                    <Select value={card.bg_color} onValueChange={(value) => handleCardChange(index, 'bg_color', value)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {defaultBgColors.map(color => (
-                          <SelectItem key={color} value={color}>
-                            {color}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <ColorPalette
+                    label="Cor de Fundo"
+                    value={card.bg_color}
+                    onChange={(value) => handleCardChange(index, 'bg_color', value)}
+                    options={bgColorOptions}
+                  />
 
-                  <div>
-                    <Label htmlFor={`border-color-${index}`}>Cor da Borda</Label>
-                    <Select value={card.border_color} onValueChange={(value) => handleCardChange(index, 'border_color', value)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {defaultBorderColors.map(color => (
-                          <SelectItem key={color} value={color}>
-                            {color}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <ColorPalette
+                    label="Cor da Borda"
+                    value={card.border_color}
+                    onChange={(value) => handleCardChange(index, 'border_color', value)}
+                    options={borderColorOptions}
+                  />
+                </div>
+              </div>
+
+              {/* Coluna direita - Preview */}
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Preview do Card</Label>
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <SolutionCardPreview
+                      title={card.title}
+                      focus={card.focus}
+                      description={card.description}
+                      features={card.features}
+                      outcome={card.outcome}
+                      engine={card.engine}
+                      gradient={card.gradient}
+                      bg_color={card.bg_color}
+                      border_color={card.border_color}
+                    />
                   </div>
                 </div>
               </div>
