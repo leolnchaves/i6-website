@@ -38,7 +38,10 @@ const ContactForm = () => {
     <Card className="border-0 shadow-2xl">
       <CardHeader className="p-8">
         <CardTitle className="text-2xl font-bold text-gray-900">
-          {t('contact.form.growthMessage')}
+          <div className="space-y-1">
+            <div>{t('contact.form.growthMessageLine1')}</div>
+            <div>{t('contact.form.growthMessageLine2')}</div>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-8 pt-0">
