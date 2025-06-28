@@ -42,13 +42,12 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         return;
       }
 
-      // Then, fetch the cards for this page
+      // Then, fetch ALL cards for this page (including inactive ones for CMS management)
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_results_cards')
         .select('*')
         .eq('page_id', pageData.id)
         .eq('language', language)
-        .eq('is_active', true)
         .order('card_order');
 
       if (cardsError) {
