@@ -52,18 +52,24 @@ const ContentTab: React.FC<ContentTabProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Conteúdo da {getPageTitle()}</CardTitle>
-          <CardDescription>
-            {getDescription()}
-            <Badge variant="outline" className="ml-2">
+    <div className="space-y-8">
+      <Card className="border-0 shadow-sm bg-white">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-medium text-gray-900">
+                Conteúdo da {getPageTitle()}
+              </CardTitle>
+              <CardDescription className="text-gray-600 mt-1">
+                {getDescription()}
+              </CardDescription>
+            </div>
+            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
               {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
             </Badge>
-          </CardDescription>
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           {(isHomePage || isSuccessStoriesPage || isContactPage || isSolutionsPage) && (
             <ContentSectionAccordion
               heroFields={accordionFields.heroFields}
@@ -80,14 +86,18 @@ const ContentTab: React.FC<ContentTabProps> = ({
           )}
 
           {!isHomePage && !isSuccessStoriesPage && !isContactPage && !isSolutionsPage && (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-12 text-gray-500">
               <p>Configuração de conteúdo para esta página ainda não foi implementada.</p>
               <p className="text-sm mt-2">Será adicionada conforme necessário.</p>
             </div>
           )}
 
-          <div className="flex justify-end pt-6 mt-6 border-t">
-            <Button onClick={onSaveContent} disabled={saving || allFieldsLength === 0}>
+          <div className="flex justify-end pt-6 mt-6 border-t border-gray-100">
+            <Button 
+              onClick={onSaveContent} 
+              disabled={saving || allFieldsLength === 0}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+            >
               <Save className="h-4 w-4 mr-2" />
               {saving ? 'Salvando...' : 'Salvar Conteúdo'}
             </Button>
@@ -98,7 +108,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
       {/* Success Stories Cards Management */}
       {isSuccessStoriesPage && (
         <>
-          <Separator />
+          <Separator className="bg-gray-200" />
           <SuccessStoriesCardsManagement
             selectedPage={selectedPage}
             selectedLanguage={selectedLanguage}
@@ -109,7 +119,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
       {/* FAQ Cards Management */}
       {isContactPage && (
         <>
-          <Separator />
+          <Separator className="bg-gray-200" />
           <FAQCardsManagement
             selectedPage={selectedPage}
             selectedLanguage={selectedLanguage}

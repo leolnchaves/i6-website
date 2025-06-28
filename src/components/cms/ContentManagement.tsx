@@ -42,15 +42,13 @@ const ContentManagement = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestão de Conteúdo</h1>
+    <div className="space-y-8">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-semibold text-gray-900">Gestão de Conteúdo</h1>
         <p className="text-gray-600">
           Gerencie o conteúdo das páginas e configurações de SEO com suporte a múltiplos idiomas.
         </p>
       </div>
-
-      <Separator />
 
       <PageSelector
         pages={pages}
@@ -62,18 +60,18 @@ const ContentManagement = () => {
 
       {selectedPage && (
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="content" className="flex items-center gap-2">
+          <TabsList className="grid w-full grid-cols-2 bg-gray-100 p-1 rounded-lg">
+            <TabsTrigger value="content" className="flex items-center gap-2 rounded-md">
               <Home className="h-4 w-4" />
               Conteúdo
             </TabsTrigger>
-            <TabsTrigger value="seo" className="flex items-center gap-2">
+            <TabsTrigger value="seo" className="flex items-center gap-2 rounded-md">
               <Search className="h-4 w-4" />
               SEO
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="content">
+          <TabsContent value="content" className="mt-6">
             <ContentTab
               selectedPage={selectedPage}
               selectedLanguage={selectedLanguage}
@@ -91,7 +89,7 @@ const ContentManagement = () => {
             />
           </TabsContent>
 
-          <TabsContent value="seo">
+          <TabsContent value="seo" className="mt-6">
             <SEOForm
               formData={seoFormData}
               selectedLanguage={selectedLanguage}
