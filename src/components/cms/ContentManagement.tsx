@@ -21,6 +21,7 @@ const ContentManagement = () => {
     currentPage,
     isHomePage,
     isSuccessStoriesPage,
+    isContactPage,
     allFields,
     setSelectedPage,
     setSelectedLanguage,
@@ -78,6 +79,7 @@ const ContentManagement = () => {
               contentFormData={contentFormData}
               isHomePage={isHomePage}
               isSuccessStoriesPage={isSuccessStoriesPage}
+              isContactPage={isContactPage}
               currentPageName={currentPage?.name}
               saving={saving}
               allFieldsLength={allFields.length}

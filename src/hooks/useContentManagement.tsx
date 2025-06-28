@@ -10,7 +10,7 @@ export const useContentManagement = () => {
     content, 
     loading: contentLoading, 
     fetchPages, 
-    fetchContent, 
+    fetchPageContent, 
     saveContent 
   } = useCMSContent();
   
@@ -61,17 +61,20 @@ export const useContentManagement = () => {
   // Load content and SEO when page/language changes
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
-      fetchContent(selectedPage, selectedLanguage);
+      fetchPageContent(selectedPage, selectedLanguage);
       fetchSEOData(selectedPage, selectedLanguage);
     }
-  }, [selectedPage, selectedLanguage, fetchContent, fetchSEOData]);
+  }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
   // Update form data when content loads
   useEffect(() => {
     const formData: { [key: string]: string } = {};
     allFields.forEach(field => {
       const key = `${field.section}_${field.field}`;
-      formData[key] = content[key] || '';
+      formData[key] = content.find(c => 
+        c.section_name === field.section && 
+        c.field_name === field.field
+      )?.content || '';
     });
     setContentFormData(formData);
   }, [content, allFields]);
@@ -100,7 +103,13 @@ export const useContentManagement = () => {
 
     setSaving(true);
     try {
-      await saveContent(selectedPage, selectedLanguage, contentFormData);
+      // Save each field individually as the saveContent method expects individual field saves
+      const savePromises = Object.entries(contentFormData).map(([key, value]) => {
+        const [sectionName, fieldName] = key.split('_');
+        return saveContent(selectedPage, sectionName, fieldName, selectedLanguage, value);
+      });
+      
+      await Promise.all(savePromises);
     } finally {
       setSaving(false);
     }
