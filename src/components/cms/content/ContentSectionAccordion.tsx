@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Separator } from '@/components/ui/separator';
 import ContentFieldRenderer from './ContentFieldRenderer';
 import ResultsCardsManagement from '../ResultsCardsManagement';
+import CompactSolutionsCardsManagement from '../CompactSolutionsCardsManagement';
 
 interface ContentField {
   section: string;
@@ -94,12 +95,35 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
           Seção Compact Solutions - Soluções Compactas
         </AccordionTrigger>
         <AccordionContent>
-          <div className="pt-4">
-            <ContentFieldRenderer
-              fields={compactSolutionsFields}
-              formData={formData}
-              onFieldChange={onFieldChange}
-            />
+          <div className="pt-4 space-y-6">
+            {/* Campos da seção Compact Solutions */}
+            <div className="space-y-4">
+              <h4 className="font-medium text-gray-800 border-b pb-2">Conteúdo Principal</h4>
+              <ContentFieldRenderer
+                fields={compactSolutionsFields}
+                formData={formData}
+                onFieldChange={onFieldChange}
+              />
+            </div>
+            
+            <Separator />
+            
+            {/* Gestão dos Cards da Seção Compact Solutions - Nested Accordion */}
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="compact-solutions-cards-management">
+                <AccordionTrigger className="text-base font-medium">
+                  Gestão dos Cards da Seção Compact Solutions
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="pt-4">
+                    <CompactSolutionsCardsManagement 
+                      selectedPage={selectedPage}
+                      selectedLanguage={selectedLanguage}
+                    />
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </AccordionContent>
       </AccordionItem>
