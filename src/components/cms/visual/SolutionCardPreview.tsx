@@ -62,55 +62,70 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
   border_color,
   icon,
 }) => {
-  const IconComponent = iconMap[icon] || Building2;
-
-  // Define engine colors for consistent styling
+  // Define colors based on engine for preview
   const getEngineColors = (engine: string) => {
     switch (engine) {
       case 'i6 RecSys':
         return {
-          iconColor: 'text-blue-600',
-          badgeColor: 'bg-blue-100 text-blue-700',
-          buttonGradient: 'from-blue-500 to-blue-600'
+          backgroundColor: 'rgba(59, 130, 246, 0.08)',
+          borderColor: 'rgba(59, 130, 246, 0.2)',
+          iconBgColor: 'rgba(59, 130, 246, 0.15)',
+          buttonGradient: 'from-blue-500/80 to-blue-600/80'
         };
       case 'i6 ElasticPrice':
         return {
-          iconColor: 'text-green-600',
-          badgeColor: 'bg-green-100 text-green-700',
-          buttonGradient: 'from-green-500 to-green-600'
+          backgroundColor: 'rgba(34, 197, 94, 0.08)',
+          borderColor: 'rgba(34, 197, 94, 0.2)',
+          iconBgColor: 'rgba(34, 197, 94, 0.15)',
+          buttonGradient: 'from-green-500/80 to-green-600/80'
         };
       case 'i6 Previsio':
         return {
-          iconColor: 'text-gray-600',
-          badgeColor: 'bg-gray-100 text-gray-700',
-          buttonGradient: 'from-gray-500 to-gray-600'
+          backgroundColor: 'rgba(107, 114, 128, 0.08)',
+          borderColor: 'rgba(107, 114, 128, 0.2)',
+          iconBgColor: 'rgba(107, 114, 128, 0.15)',
+          buttonGradient: 'from-gray-500/80 to-gray-600/80'
         };
       default:
         return {
-          iconColor: 'text-blue-600',
-          badgeColor: 'bg-blue-100 text-blue-700',
-          buttonGradient: 'from-blue-500 to-blue-600'
+          backgroundColor: 'rgba(59, 130, 246, 0.08)',
+          borderColor: 'rgba(59, 130, 246, 0.2)',
+          iconBgColor: 'rgba(59, 130, 246, 0.15)',
+          buttonGradient: 'from-blue-500/80 to-blue-600/80'
         };
     }
   };
 
-  const engineColors = getEngineColors(engine);
+  const colors = getEngineColors(engine);
+  const IconComponent = iconMap[icon] || Building2;
 
   return (
     <div className="w-full max-w-md">
-      <Card className={`border shadow-sm ${bg_color} ${border_color}`}>
+      <Card 
+        className={`border shadow-sm ${bg_color} ${border_color}`}
+        style={{ 
+          backgroundColor: colors.backgroundColor,
+          borderColor: colors.borderColor
+        }}
+      >
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             {/* Icon */}
-            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center shadow-sm">
-              <IconComponent className={`w-5 h-5 ${engineColors.iconColor}`} />
+            <div 
+              className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+              style={{ backgroundColor: colors.iconBgColor }}
+            >
+              <IconComponent className="w-5 h-5 text-gray-700" />
             </div>
             
             {/* Content section */}
             <div className="flex-1 min-w-0">
               {/* Engine badge */}
               <div className="mb-2">
-                <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${engineColors.badgeColor}`}>
+                <span 
+                  className="inline-block px-2 py-1 rounded-full text-xs font-medium text-gray-600"
+                  style={{ backgroundColor: colors.iconBgColor }}
+                >
                   {engine}
                 </span>
               </div>
@@ -141,7 +156,10 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
               </div>
               
               {/* Business Outcomes */}
-              <div className="rounded-lg p-2 mb-3 bg-white/60 border border-gray-200/50">
+              <div 
+                className="rounded-lg p-2 mb-3"
+                style={{ backgroundColor: colors.iconBgColor }}
+              >
                 <h4 className="font-semibold text-gray-900 mb-1 text-xs">
                   Resultados:
                 </h4>
@@ -151,7 +169,7 @@ const SolutionCardPreview: React.FC<SolutionCardPreviewProps> = ({
               {/* Learn More Button */}
               <Button 
                 size="sm"
-                className={`bg-gradient-to-r ${engineColors.buttonGradient} hover:opacity-90 text-white transition-all duration-300 shadow-sm hover:shadow-md text-xs`}
+                className={`bg-gradient-to-r ${colors.buttonGradient} hover:opacity-90 text-white transition-all duration-300 shadow-sm hover:shadow-md text-xs`}
               >
                 Saiba Mais
                 <ArrowRight className="ml-1 w-3 h-3" />
