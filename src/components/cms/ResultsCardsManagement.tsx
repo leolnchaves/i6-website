@@ -124,6 +124,49 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
     setFormCards(updatedCards);
   };
 
+  const syncCardStatusAcrossLanguages = async (cardOrder: number, isActive: boolean) => {
+    try {
+      console.log(`Syncing card at order ${cardOrder} to is_active: ${isActive} across all languages`);
+      
+      const { error } = await supabase
+        .from('cms_results_cards')
+        .update({ is_active: isActive })
+        .eq('page_id', selectedPage)
+        .eq('card_order', cardOrder);
+
+      if (error) {
+        console.error('Error syncing card status across languages:', error);
+        throw error;
+      }
+
+      console.log(`Successfully synced card status across languages for card order ${cardOrder}`);
+    } catch (error) {
+      console.error('Failed to sync card status:', error);
+      toast({
+        title: 'Aviso',
+        description: 'Não foi possível sincronizar o status do card em todos os idiomas.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleCardChangeWithSync = async (index: number, field: keyof CardFormData, value: any) => {
+    const updatedCards = [...formCards];
+    updatedCards[index] = { ...updatedCards[index], [field]: value };
+    setFormCards(updatedCards);
+
+    // If changing is_active status, sync across all languages immediately
+    if (field === 'is_active' && selectedPage) {
+      const cardOrder = updatedCards[index].card_order;
+      await syncCardStatusAcrossLanguages(cardOrder, value as boolean);
+      
+      toast({
+        title: 'Status Sincronizado',
+        description: `Card ${value ? 'ativado' : 'desativado'} em todos os idiomas.`,
+      });
+    }
+  };
+
   const saveCards = async () => {
     if (!selectedPage) return;
 
@@ -244,8 +287,8 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleCardChange(index, 'is_active', !card.is_active)}
-                    title={card.is_active ? 'Desativar card' : 'Ativar card'}
+                    onClick={() => handleCardChangeWithSync(index, 'is_active', !card.is_active)}
+                    title={card.is_active ? 'Desativar card em todos os idiomas' : 'Ativar card em todos os idiomas'}
                   >
                     {card.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </Button>
@@ -367,9 +410,9 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
               <div className="flex items-center space-x-2">
                 <Switch
                   checked={card.is_active}
-                  onCheckedChange={(checked) => handleCardChange(index, 'is_active', checked)}
+                  onCheckedChange={(checked) => handleCardChangeWithSync(index, 'is_active', checked)}
                 />
-                <Label>Card ativo (visível no site)</Label>
+                <Label>Card ativo (sincronizado em todos os idiomas)</Label>
               </div>
             </CardContent>
           </Card>
