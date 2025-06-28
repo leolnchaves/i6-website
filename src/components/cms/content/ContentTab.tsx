@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { Save } from 'lucide-react';
 import ContentSectionAccordion from './ContentSectionAccordion';
 import SuccessStoriesCardsManagement from '../SuccessStoriesCardsManagement';
 import FAQCardsManagement from '../FAQCardsManagement';
+import SolutionsCardsManagement from '../SolutionsCardsManagement';
 import { getAccordionFields } from './ContentFieldsConfig';
 
 interface ContentTabProps {
@@ -121,6 +121,17 @@ const ContentTab: React.FC<ContentTabProps> = ({
         <>
           <Separator className="bg-gray-200" />
           <FAQCardsManagement
+            selectedPage={selectedPage}
+            selectedLanguage={selectedLanguage}
+          />
+        </>
+      )}
+
+      {/* Solutions Cards Management */}
+      {isSolutionsPage && (
+        <>
+          <Separator className="bg-gray-200" />
+          <SolutionsCardsManagement
             selectedPage={selectedPage}
             selectedLanguage={selectedLanguage}
           />

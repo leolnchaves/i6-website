@@ -222,6 +222,71 @@ export type Database = {
           },
         ]
       }
+      cms_solutions_cards: {
+        Row: {
+          bg_color: string
+          border_color: string
+          card_order: number
+          created_at: string
+          description: string
+          engine: string
+          features: string[]
+          focus: string
+          gradient: string
+          id: string
+          is_active: boolean
+          language: string
+          outcome: string
+          page_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          bg_color?: string
+          border_color?: string
+          card_order: number
+          created_at?: string
+          description: string
+          engine?: string
+          features: string[]
+          focus: string
+          gradient?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          outcome: string
+          page_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          bg_color?: string
+          border_color?: string
+          card_order?: number
+          created_at?: string
+          description?: string
+          engine?: string
+          features?: string[]
+          focus?: string
+          gradient?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          outcome?: string
+          page_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_solutions_cards_page_id"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "cms_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cms_success_stories_cards: {
         Row: {
           card_order: number
