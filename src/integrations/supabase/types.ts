@@ -186,6 +186,78 @@ export type Database = {
           },
         ]
       }
+      cms_success_stories_cards: {
+        Row: {
+          card_order: number
+          challenge: string
+          company_name: string
+          created_at: string
+          customer_name: string
+          customer_quote: string
+          customer_title: string
+          id: string
+          image_url: string
+          industry: string
+          is_active: boolean
+          language: string
+          metric1_label: string
+          metric1_value: string
+          metric2_label: string
+          metric2_value: string
+          metric3_label: string
+          metric3_value: string
+          page_id: string
+          solution: string
+          updated_at: string
+        }
+        Insert: {
+          card_order: number
+          challenge: string
+          company_name: string
+          created_at?: string
+          customer_name: string
+          customer_quote: string
+          customer_title: string
+          id?: string
+          image_url: string
+          industry: string
+          is_active?: boolean
+          language?: string
+          metric1_label: string
+          metric1_value: string
+          metric2_label: string
+          metric2_value: string
+          metric3_label: string
+          metric3_value: string
+          page_id: string
+          solution: string
+          updated_at?: string
+        }
+        Update: {
+          card_order?: number
+          challenge?: string
+          company_name?: string
+          created_at?: string
+          customer_name?: string
+          customer_quote?: string
+          customer_title?: string
+          id?: string
+          image_url?: string
+          industry?: string
+          is_active?: boolean
+          language?: string
+          metric1_label?: string
+          metric1_value?: string
+          metric2_label?: string
+          metric2_value?: string
+          metric3_label?: string
+          metric3_value?: string
+          page_id?: string
+          solution?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cms_users: {
         Row: {
           created_at: string
