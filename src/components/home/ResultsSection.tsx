@@ -1,67 +1,22 @@
 
-import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+import { useResultsCards } from '@/hooks/useResultsCards';
 import ResultsHeader from './results/ResultsHeader';
 import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ResultsSection = () => {
   const { scrollY } = useScrollAnimation();
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const { getContent } = useCMSPageContent('home', language);
+  const { cards, loading, error } = useResultsCards();
 
-  const results = [
-    {
-      icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
-      title: t('results.conversionRate.title'),
-      description: t('results.conversionRate.description')
-    },
-    {
-      icon: <Shield className="w-8 h-8 text-blue-500" />,
-      title: t('results.crmCost.title'), 
-      description: t('results.crmCost.description')
-    },
-    {
-      icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
-      title: t('results.avgTicket.title'),
-      description: t('results.avgTicket.description')
-    },
-    {
-      icon: <Eye className="w-8 h-8 text-red-500" />,
-      title: t('results.bounceRate.title'),
-      description: t('results.bounceRate.description')
-    },
-    {
-      icon: <Award className="w-8 h-8 text-orange-600" />,
-      title: t('results.proposalEngagement.title'),
-      description: t('results.proposalEngagement.description')
-    },
-    {
-      icon: <Users className="w-8 h-8 text-pink-500" />,
-      title: t('results.realTimeRec.title'),
-      description: t('results.realTimeRec.description')
-    },
-    {
-      icon: <Search className="w-8 h-8 text-teal-500" />,
-      title: t('results.productDiscovery.title'),
-      description: t('results.productDiscovery.description')
-    },
-    {
-      icon: <DollarSign className="w-8 h-8 text-green-500" />,
-      title: t('results.dynamicPricing.title'),
-      description: t('results.dynamicPricing.description')
-    },
-    {
-      icon: <Target className="w-8 h-8 text-purple-500" />,
-      title: t('results.marketDemand.title'),
-      description: t('results.marketDemand.description')
-    },
-    {
-      icon: <Clock className="w-8 h-8 text-blue-600" />,
-      title: t('results.rapidImplementation.title'),
-      description: t('results.rapidImplementation.description')
-    }
-  ];
+  if (error) {
+    console.error('Error loading results cards:', error);
+  }
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
@@ -71,15 +26,30 @@ const ResultsSection = () => {
         <ResultsHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {results.map((result, index) => (
-            <ResultCard
-              key={index}
-              icon={result.icon}
-              title={result.title}
-              description={result.description}
-              index={index}
-            />
-          ))}
+          {loading ? (
+            // Show skeleton loading cards
+            Array.from({ length: 10 }).map((_, index) => (
+              <div key={index} className="border-0 shadow-lg rounded-lg p-6">
+                <div className="text-center">
+                  <Skeleton className="w-8 h-8 mx-auto mb-4 rounded-full" />
+                  <Skeleton className="h-5 w-3/4 mx-auto mb-3" />
+                  <Skeleton className="h-4 w-full mb-1" />
+                  <Skeleton className="h-4 w-2/3 mx-auto" />
+                </div>
+              </div>
+            ))
+          ) : (
+            cards.map((card, index) => (
+              <ResultCard
+                key={index}
+                icon={card.icon}
+                iconColor={card.color}
+                title={card.title}
+                description={card.description}
+                index={index}
+              />
+            ))
+          )}
         </div>
       </div>
     </section>
