@@ -1,266 +1,43 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+
+import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Save, Home, Search } from 'lucide-react';
-import { useCMSContent } from '@/hooks/useCMSContent';
-import { useCMSSEO } from '@/hooks/useCMSSEO';
+import { Home, Search } from 'lucide-react';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import PageSelector from './content/PageSelector';
-import ContentSectionAccordion from './content/ContentSectionAccordion';
+import ContentTab from './content/ContentTab';
 import SEOForm from './content/SEOForm';
+import { useContentManagement } from '@/hooks/useContentManagement';
 
 const ContentManagement = () => {
-  const { pages, content, loading: contentLoading, fetchPageContent, saveContent, getContent } = useCMSContent();
-  const { seoData, loading: seoLoading, fetchSEOData, saveSEOData, getSEOData } = useCMSSEO();
-  
-  const [selectedPage, setSelectedPage] = useState<string>('');
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
-  const [contentFormData, setContentFormData] = useState<{ [key: string]: string }>({});
-  const [seoFormData, setSeoFormData] = useState({
-    meta_title: '',
-    meta_description: '',
-    slug: '',
-    canonical_url: '',
-    index_flag: true,
-    follow_flag: true
-  });
-  const [saving, setSaving] = useState(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const currentPageLanguageRef = useRef<string>('');
+  const {
+    pages,
+    selectedPage,
+    selectedLanguage,
+    contentFormData,
+    seoFormData,
+    saving,
+    loading,
+    currentPage,
+    isHomePage,
+    isSuccessStoriesPage,
+    allFields,
+    setSelectedPage,
+    setSelectedLanguage,
+    handleContentInputChange,
+    handleSEOInputChange,
+    handleSaveContent,
+    handleSaveSEO,
+    getPageTitle,
+  } = useContentManagement();
 
-  // Get current page info
-  const currentPage = pages.find(p => p.id === selectedPage);
-  const isHomePage = currentPage?.slug === 'home';
-  const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
-
-  // Campos específicos para a seção Hero (Home)
-  const heroFields = [
-    { section: 'hero', field: 'infinite', label: 'Título Principal', type: 'input' as const },
-    { section: 'hero', field: 'possibilities', label: 'Título Destaque', type: 'input' as const },
-    { section: 'hero', field: 'poweredByAI', label: 'Subtítulo', type: 'input' as const },
-    { section: 'hero', field: 'description', label: 'Descrição', type: 'textarea' as const },
-    { section: 'hero', field: 'startJourney', label: 'Botão Jornada', type: 'input' as const },
-    { section: 'hero', field: 'watchDemo', label: 'Botão Demo', type: 'input' as const },
-    { section: 'hero', field: 'demoLink', label: 'Link do Demo (URL)', type: 'input' as const },
-  ];
-
-  // Campos específicos para a seção Results (Home)
-  const resultsFields = [
-    { section: 'results', field: 'mainTitle', label: 'Título', type: 'input' as const },
-    { section: 'results', field: 'mainSubtitle', label: 'Subtítulo', type: 'input' as const },
-    { section: 'results', field: 'description', label: 'Descrição', type: 'textarea' as const },
-  ];
-
-  // Campos específicos para a seção Compact Solutions (Home)
-  const compactSolutionsFields = [
-    { section: 'compactSolutions', field: 'title', label: 'Título', type: 'input' as const },
-    { section: 'compactSolutions', field: 'subtitle', label: 'Subtítulo', type: 'input' as const },
-  ];
-
-  // Campos específicos para Success Stories Hero
-  const successStoriesHeroFields = [
-    { section: 'successStoriesHero', field: 'title', label: 'Título Principal', type: 'input' as const },
-    { section: 'successStoriesHero', field: 'subtitle', label: 'Subtítulo Destacado', type: 'input' as const },
-    { section: 'successStoriesHero', field: 'description', label: 'Descrição', type: 'textarea' as const },
-  ];
-
-  // Campos específicos para Success Stories Metrics - COM CAMPOS DE ÍCONES
-  const successStoriesMetricsFields = [
-    { section: 'successStoriesMetrics', field: 'avgROI', label: 'Estatística 1', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'avgROILabel', label: 'Label Estatística 1', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'avgROIIcon', label: 'Ícone Estatística 1', type: 'icon' as const },
-    { section: 'successStoriesMetrics', field: 'companiesServed', label: 'Estatística 2', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'companiesServedLabel', label: 'Label Estatística 2', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'companiesServedIcon', label: 'Ícone Estatística 2', type: 'icon' as const },
-    { section: 'successStoriesMetrics', field: 'costSavings', label: 'Estatística 3', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'costSavingsLabel', label: 'Label Estatística 3', type: 'input' as const },
-    { section: 'successStoriesMetrics', field: 'costSavingsIcon', label: 'Ícone Estatística 3', type: 'icon' as const },
-  ];
-
-  // Campos específicos para Success Stories CTA
-  const successStoriesCTAFields = [
-    { section: 'successStoriesCTA', field: 'title', label: 'Título do CTA', type: 'input' as const },
-    { section: 'successStoriesCTA', field: 'description', label: 'Descrição do CTA', type: 'textarea' as const },
-    { section: 'successStoriesCTA', field: 'buttonText', label: 'Texto do Botão', type: 'input' as const },
-  ];
-
-  // Combinar campos baseado na página selecionada
-  const getAllFields = () => {
-    if (isHomePage) {
-      return [...heroFields, ...resultsFields, ...compactSolutionsFields];
-    } else if (isSuccessStoriesPage) {
-      return [...successStoriesHeroFields, ...successStoriesMetricsFields, ...successStoriesCTAFields];
-    }
-    return [];
-  };
-
-  // Obter os campos corretos para passar para o accordion baseado na página
-  const getFieldsForAccordion = () => {
-    if (isHomePage) {
-      return {
-        heroFields,
-        resultsFields,  
-        compactSolutionsFields
-      };
-    } else if (isSuccessStoriesPage) {
-      return {
-        heroFields: successStoriesHeroFields,
-        resultsFields: successStoriesMetricsFields,
-        compactSolutionsFields: successStoriesCTAFields
-      };
-    }
-    return {
-      heroFields: [],
-      resultsFields: [],
-      compactSolutionsFields: []
-    };
-  };
-
-  const allFields = getAllFields();
-  const accordionFields = getFieldsForAccordion();
-
-  // Selecionar página Home automaticamente se disponível
-  useEffect(() => {
-    if (pages.length > 0 && !selectedPage) {
-      const homePage = pages.find(p => p.slug === 'home');
-      if (homePage) {
-        setSelectedPage(homePage.id);
-      }
-    }
-  }, [pages, selectedPage]);
-
-  // Carregar dados quando página ou idioma mudarem
-  useEffect(() => {
-    const loadData = async () => {
-      if (selectedPage) {
-        const pageLanguageKey = `${selectedPage}_${selectedLanguage}`;
-        
-        // Reset flags when page/language changes
-        setHasUnsavedChanges(false);
-        setInitialDataLoaded(false);
-        currentPageLanguageRef.current = pageLanguageKey;
-        
-        console.log('Loading data for page:', selectedPage, 'language:', selectedLanguage);
-        
-        try {
-          await Promise.all([
-            fetchPageContent(selectedPage, selectedLanguage),
-            fetchSEOData(selectedPage, selectedLanguage)
-          ]);
-          
-          // Only mark as loaded if we're still on the same page/language
-          if (currentPageLanguageRef.current === pageLanguageKey) {
-            setInitialDataLoaded(true);
-            console.log('Data loaded successfully for:', pageLanguageKey);
-          }
-        } catch (error) {
-          console.error('Error loading data:', error);
-        }
-      }
-    };
-    
-    loadData();
-  }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
-
-  // Atualizar formData quando conteúdo mudar - APENAS no carregamento inicial
-  useEffect(() => {
-    if (content.length > 0 && allFields.length > 0 && initialDataLoaded && !hasUnsavedChanges) {
-      console.log('Setting up initial form data with content:', content);
-      console.log('Fields to process:', allFields);
-      
-      const newContentFormData: { [key: string]: string } = {};
-      allFields.forEach(field => {
-        const key = `${field.section}_${field.field}`;
-        const value = getContent(field.section, field.field, selectedLanguage);
-        newContentFormData[key] = value;
-        console.log(`Setting ${key} = "${value}"`);
-      });
-      
-      console.log('Final form data:', newContentFormData);
-      setContentFormData(newContentFormData);
-    }
-  }, [content, allFields, selectedLanguage, getContent, initialDataLoaded, hasUnsavedChanges]);
-
-  // Atualizar SEO form data quando dados de SEO mudarem
-  useEffect(() => {
-    if (selectedPage && Object.keys(seoData).length > 0 && initialDataLoaded) {
-      console.log('Setting up SEO form data');
-      const currentSEOData = getSEOData(selectedPage, selectedLanguage);
-      setSeoFormData(currentSEOData);
-    }
-  }, [selectedPage, selectedLanguage, getSEOData, seoData, initialDataLoaded]);
-
-  const handleContentInputChange = (key: string, value: string) => {
-    console.log(`Handling input change: ${key} = ${value}`);
-    setContentFormData(prev => {
-      const updated = { ...prev, [key]: value };
-      console.log('Updated form data:', updated);
-      return updated;
-    });
-    setHasUnsavedChanges(true);
-  };
-
-  const handleSEOInputChange = (field: string, value: string | boolean) => {
-    setSeoFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSaveContent = async () => {
-    if (!selectedPage) return;
-
-    setSaving(true);
-    try {
-      const contentSavePromises = allFields.map(field => {
-        const key = `${field.section}_${field.field}`;
-        const value = contentFormData[key] || '';
-        
-        return saveContent(
-          selectedPage,
-          field.section,
-          field.field,
-          selectedLanguage,
-          value
-        );
-      });
-
-      await Promise.all(contentSavePromises);
-      setHasUnsavedChanges(false);
-    } catch (error) {
-      console.error('Error saving content:', error);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleSaveSEO = async () => {
-    if (!selectedPage) return;
-
-    setSaving(true);
-    try {
-      await saveSEOData(selectedPage, selectedLanguage, seoFormData);
-    } catch (error) {
-      console.error('Error saving SEO data:', error);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (contentLoading || seoLoading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <LoadingSpinner />
       </div>
     );
   }
-
-  const getPageTitle = () => {
-    if (isHomePage) return 'Página Principal';
-    if (isSuccessStoriesPage) return 'Cases de Sucesso';
-    return currentPage?.name || 'Página';
-  };
 
   return (
     <div className="space-y-6">
@@ -295,46 +72,19 @@ const ContentManagement = () => {
           </TabsList>
 
           <TabsContent value="content">
-            <Card>
-              <CardHeader>
-                <CardTitle>Conteúdo da {getPageTitle()}</CardTitle>
-                <CardDescription>
-                  {isHomePage && 'Edite o conteúdo das seções da página inicial'}
-                  {isSuccessStoriesPage && 'Edite o conteúdo das seções da página de cases de sucesso'}
-                  {!isHomePage && !isSuccessStoriesPage && `Edite o conteúdo da página ${currentPage?.name}`}
-                  <Badge variant="outline" className="ml-2">
-                    {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
-                  </Badge>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {(isHomePage || isSuccessStoriesPage) && (
-                  <ContentSectionAccordion
-                    heroFields={accordionFields.heroFields}
-                    resultsFields={accordionFields.resultsFields}
-                    compactSolutionsFields={accordionFields.compactSolutionsFields}
-                    formData={contentFormData}
-                    selectedPage={selectedPage}
-                    selectedLanguage={selectedLanguage}
-                    onFieldChange={handleContentInputChange}
-                  />
-                )}
-
-                {!isHomePage && !isSuccessStoriesPage && (
-                  <div className="text-center py-8 text-gray-500">
-                    <p>Configuração de conteúdo para esta página ainda não foi implementada.</p>
-                    <p className="text-sm mt-2">Será adicionada conforme necessário.</p>
-                  </div>
-                )}
-
-                <div className="flex justify-end pt-6 mt-6 border-t">
-                  <Button onClick={handleSaveContent} disabled={saving || allFields.length === 0}>
-                    <Save className="h-4 w-4 mr-2" />
-                    {saving ? 'Salvando...' : 'Salvar Conteúdo'}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <ContentTab
+              selectedPage={selectedPage}
+              selectedLanguage={selectedLanguage}
+              contentFormData={contentFormData}
+              isHomePage={isHomePage}
+              isSuccessStoriesPage={isSuccessStoriesPage}
+              currentPageName={currentPage?.name}
+              saving={saving}
+              allFieldsLength={allFields.length}
+              onFieldChange={handleContentInputChange}
+              onSaveContent={handleSaveContent}
+              getPageTitle={getPageTitle}
+            />
           </TabsContent>
 
           <TabsContent value="seo">
