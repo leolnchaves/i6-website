@@ -31,52 +31,72 @@ const ResultsSection = () => {
     {
       icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
       title: t('results.conversionRate.title'),
-      description: t('results.conversionRate.description')
+      description: t('results.conversionRate.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Shield className="w-8 h-8 text-blue-500" />,
       title: t('results.crmCost.title'), 
-      description: t('results.crmCost.description')
+      description: t('results.crmCost.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
       title: t('results.avgTicket.title'),
-      description: t('results.avgTicket.description')
+      description: t('results.avgTicket.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Eye className="w-8 h-8 text-red-500" />,
       title: t('results.bounceRate.title'),
-      description: t('results.bounceRate.description')
+      description: t('results.bounceRate.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Award className="w-8 h-8 text-orange-600" />,
       title: t('results.proposalEngagement.title'),
-      description: t('results.proposalEngagement.description')
+      description: t('results.proposalEngagement.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Users className="w-8 h-8 text-pink-500" />,
       title: t('results.realTimeRec.title'),
-      description: t('results.realTimeRec.description')
+      description: t('results.realTimeRec.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Search className="w-8 h-8 text-teal-500" />,
       title: t('results.productDiscovery.title'),
-      description: t('results.productDiscovery.description')
+      description: t('results.productDiscovery.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <DollarSign className="w-8 h-8 text-green-500" />,
       title: t('results.dynamicPricing.title'),
-      description: t('results.dynamicPricing.description')
+      description: t('results.dynamicPricing.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Target className="w-8 h-8 text-purple-500" />,
       title: t('results.marketDemand.title'),
-      description: t('results.marketDemand.description')
+      description: t('results.marketDemand.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     },
     {
       icon: <Clock className="w-8 h-8 text-blue-600" />,
       title: t('results.rapidImplementation.title'),
-      description: t('results.rapidImplementation.description')
+      description: t('results.rapidImplementation.description'),
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
     }
   ];
 
