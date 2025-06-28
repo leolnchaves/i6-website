@@ -26,6 +26,11 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   onPageChange,
   onLanguageChange,
 }) => {
+  const languages = [
+    { code: 'en', flag: '🇺🇸', name: 'English' },
+    { code: 'pt', flag: '🇧🇷', name: 'Português' }
+  ];
+
   return (
     <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-lg shadow-gray-200/50">
       <CardHeader className="pb-4">
@@ -70,38 +75,27 @@ const PageSelector: React.FC<PageSelectorProps> = ({
           {/* Language Selection */}
           <div className="space-y-3">
             <Label htmlFor="language-select" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-              <Languages className="h-4 w-4 text-purple-600" />
+              <Languages className="h-4 w-4 text-orange-600" />
               Idioma
             </Label>
-            <Select value={selectedLanguage} onValueChange={onLanguageChange}>
-              <SelectTrigger className="h-12 bg-white/80 border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl">
-                <SelectValue placeholder="Selecione um idioma" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 shadow-xl rounded-xl">
-                <SelectItem 
-                  value="en"
-                  className="px-4 py-3 hover:bg-purple-50 focus:bg-purple-50 rounded-lg m-1"
+            <div className="flex items-center space-x-3 p-3 bg-white/80 border border-gray-200 rounded-xl">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => onLanguageChange(lang.code)}
+                  className={`relative w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 border-2 ${
+                    selectedLanguage === lang.code 
+                      ? 'border-orange-500 shadow-lg scale-110' 
+                      : 'border-gray-200 hover:border-orange-300'
+                  }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-lg">
-                      🇺🇸
-                    </div>
-                    <span className="font-medium">English</span>
-                  </div>
-                </SelectItem>
-                <SelectItem 
-                  value="pt"
-                  className="px-4 py-3 hover:bg-purple-50 focus:bg-purple-50 rounded-lg m-1"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-lg">
-                      🇧🇷
-                    </div>
-                    <span className="font-medium">Português</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
+                  {lang.flag}
+                  {selectedLanguage === lang.code && (
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white"></div>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </CardContent>
