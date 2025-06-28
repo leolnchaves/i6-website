@@ -7,10 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Plus, Save, Trash2, GripVertical } from 'lucide-react';
+import { Plus, Save, Trash2, GripVertical, Target, Users, Cog, TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
 import { useCMSCompactSolutionsCards } from '@/hooks/useCMSCompactSolutionsCards';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
@@ -20,12 +20,12 @@ interface CompactSolutionsCardsManagementProps {
 }
 
 const iconOptions = [
-  { value: 'target', label: 'Target' },
-  { value: 'users', label: 'Users' },
-  { value: 'cog', label: 'Cog' },
-  { value: 'trending-up', label: 'Trending Up' },
-  { value: 'dollar-sign', label: 'Dollar Sign' },
-  { value: 'bar-chart-3', label: 'Bar Chart' },
+  { value: 'target', label: 'Target', icon: Target },
+  { value: 'users', label: 'Users', icon: Users },
+  { value: 'cog', label: 'Cog', icon: Cog },
+  { value: 'trending-up', label: 'Trending Up', icon: TrendingUp },
+  { value: 'dollar-sign', label: 'Dollar Sign', icon: DollarSign },
+  { value: 'bar-chart-3', label: 'Bar Chart', icon: BarChart3 },
 ];
 
 const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementProps> = ({
@@ -143,7 +143,7 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
                       </Badge>
                     </div>
                     <CardTitle className="text-base">
-                      {card.title}
+                      Card {index + 1}
                     </CardTitle>
                     {!card.is_active && (
                       <Badge variant="secondary">Inativo</Badge>
@@ -207,12 +207,18 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
                       <SelectTrigger>
                         <SelectValue placeholder="Selecione um ícone" />
                       </SelectTrigger>
-                      <SelectContent>
-                        {iconOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
+                      <SelectContent className="bg-white">
+                        {iconOptions.map((option) => {
+                          const IconComponent = option.icon;
+                          return (
+                            <SelectItem key={option.value} value={option.value}>
+                              <div className="flex items-center gap-2">
+                                <IconComponent className="h-4 w-4" />
+                                {option.label}
+                              </div>
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                   </div>
@@ -240,14 +246,13 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
                     <Label htmlFor={`opacity-${card.id}`}>
                       Opacidade ({Math.round((card.background_opacity || 1) * 100)}%)
                     </Label>
-                    <Input
+                    <Slider
                       id={`opacity-${card.id}`}
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.1"
-                      value={card.background_opacity || 1}
-                      onChange={(e) => handleUpdateCard(card.id, 'background_opacity', parseFloat(e.target.value))}
+                      min={0}
+                      max={1}
+                      step={0.1}
+                      value={[card.background_opacity || 1]}
+                      onValueChange={(values) => handleUpdateCard(card.id, 'background_opacity', values[0])}
                       className="w-full"
                     />
                   </div>
