@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Save, Sparkles, Globe2 } from 'lucide-react';
+import { Save, Settings, Globe2 } from 'lucide-react';
 import ContentSectionAccordion from './ContentSectionAccordion';
 import SuccessStoriesCardsManagement from '../SuccessStoriesCardsManagement';
 import FAQCardsManagement from '../FAQCardsManagement';
@@ -61,21 +61,21 @@ const ContentTab: React.FC<ContentTabProps> = ({
 
   return (
     <div className="space-y-8">
-      <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 border-b border-slate-200/60">
+      <Card className="bg-white border border-gray-200 shadow-sm">
+        <CardHeader className="bg-gray-50/50 border-b border-gray-200">
           <div className="flex items-start justify-between">
             <div className="space-y-2">
-              <CardTitle className="flex items-center gap-3 text-slate-800">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
-                  <Sparkles className="h-4 w-4 text-white" />
+              <CardTitle className="flex items-center gap-3 text-gray-900">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                  <Settings className="h-4 w-4 text-white" />
                 </div>
                 Conteúdo da {getPageTitle()}
               </CardTitle>
-              <CardDescription className="text-slate-600 leading-relaxed max-w-2xl">
+              <CardDescription className="text-gray-600 leading-relaxed max-w-2xl">
                 {getDescription()}
               </CardDescription>
             </div>
-            <Badge variant="outline" className="border-blue-200 bg-blue-50/50 text-blue-700 font-medium px-3 py-1">
+            <Badge variant="outline" className="border-purple-200 bg-purple-50 text-purple-700 font-medium px-3 py-1">
               <span className="text-base mr-2">{getLanguageFlag()}</span>
               {getLanguageName()}
             </Badge>
@@ -101,22 +101,22 @@ const ContentTab: React.FC<ContentTabProps> = ({
 
           {!isHomePage && !isSuccessStoriesPage && !isContactPage && !isSolutionsPage && (
             <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center mx-auto mb-4">
-                <Globe2 className="h-8 w-8 text-slate-500" />
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center mx-auto mb-4">
+                <Globe2 className="h-8 w-8 text-gray-500" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-800 mb-2">Página em Desenvolvimento</h3>
-              <p className="text-slate-600 max-w-md mx-auto">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Página em Desenvolvimento</h3>
+              <p className="text-gray-600 max-w-md mx-auto">
                 Configuração de conteúdo para esta página ainda não foi implementada. 
                 Será adicionada conforme necessário.
               </p>
             </div>
           )}
 
-          <div className="flex justify-end pt-8 mt-8 border-t border-slate-200/60">
+          <div className="flex justify-end pt-8 mt-8 border-t border-gray-200">
             <Button 
               onClick={onSaveContent} 
               disabled={saving || allFieldsLength === 0}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-2.5"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-2.5"
             >
               <Save className="h-4 w-4 mr-2" />
               {saving ? 'Salvando...' : 'Salvar Conteúdo'}
@@ -128,7 +128,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
       {/* Success Stories Cards Management */}
       {isSuccessStoriesPage && (
         <>
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+          <div className="h-px bg-gray-200"></div>
           <SuccessStoriesCardsManagement
             selectedPage={selectedPage}
             selectedLanguage={selectedLanguage}
@@ -139,7 +139,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
       {/* FAQ Cards Management */}
       {isContactPage && (
         <>
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+          <div className="h-px bg-gray-200"></div>
           <FAQCardsManagement
             selectedPage={selectedPage}
             selectedLanguage={selectedLanguage}
