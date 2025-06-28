@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -227,17 +226,34 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
     try {
       console.log('Saving solutions cards:', formCards);
 
-      // Delete existing cards first
-      const { error: deleteError } = await supabase
+      // Primeiro, identifica quais cards existem na base de dados
+      const { data: existingCards, error: fetchError } = await supabase
         .from('cms_solutions_cards')
-        .delete()
+        .select('id')
         .eq('page_id', selectedPage)
         .eq('language', selectedLanguage);
 
-      if (deleteError) throw deleteError;
+      if (fetchError) throw fetchError;
 
-      if (formCards.length > 0) {
-        const cardsToInsert = formCards.map(card => ({
+      const existingCardIds = existingCards?.map(card => card.id) || [];
+      const formCardIds = formCards.filter(card => card.id).map(card => card.id);
+
+      // Identifica cards que devem ser removidos (existem na base mas não no formulário)
+      const cardsToDelete = existingCardIds.filter(id => !formCardIds.includes(id));
+
+      // Remove cards que não estão mais no formulário
+      if (cardsToDelete.length > 0) {
+        const { error: deleteError } = await supabase
+          .from('cms_solutions_cards')
+          .delete()
+          .in('id', cardsToDelete);
+
+        if (deleteError) throw deleteError;
+      }
+
+      // Processa cada card no formulário
+      for (const card of formCards) {
+        const cardData = {
           page_id: selectedPage,
           title: card.title,
           focus: card.focus,
@@ -252,13 +268,24 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
           is_active: card.is_active,
           card_order: card.card_order,
           language: selectedLanguage,
-        }));
+        };
 
-        const { error: insertError } = await supabase
-          .from('cms_solutions_cards')
-          .insert(cardsToInsert);
+        if (card.id) {
+          // Atualiza card existente
+          const { error: updateError } = await supabase
+            .from('cms_solutions_cards')
+            .update(cardData)
+            .eq('id', card.id);
 
-        if (insertError) throw insertError;
+          if (updateError) throw updateError;
+        } else {
+          // Insere novo card
+          const { error: insertError } = await supabase
+            .from('cms_solutions_cards')
+            .insert(cardData);
+
+          if (insertError) throw insertError;
+        }
       }
 
       await refetch();
