@@ -35,10 +35,8 @@ export const useContentManagement = () => {
   });
   const [saving, setSaving] = useState(false);
 
-  // Refs para controlar o estado e detectar mudanças
-  const lastPageLanguageRef = useRef<string>('');
-  const userModifiedFieldsRef = useRef<Set<string>>(new Set());
-  const hasLoadedContentRef = useRef(false);
+  // Simplificar o controle de estado
+  const initialLoadRef = useRef(false);
 
   const loading = contentLoading || seoLoading;
 
@@ -63,51 +61,35 @@ export const useContentManagement = () => {
     }
   }, [pages, selectedPage]);
 
-  // Load content and SEO when page/language changes
+  // Load content and SEO when page/language changes OR on initial load
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
-      const currentPageLanguage = `${selectedPage}_${selectedLanguage}`;
-      
-      // Só carrega se realmente mudou página ou idioma
-      if (lastPageLanguageRef.current !== currentPageLanguage) {
-        console.log('Loading content for:', currentPageLanguage);
-        userModifiedFieldsRef.current.clear(); // Limpar campos modificados ao trocar página/idioma
-        hasLoadedContentRef.current = false; // Marcar que não carregou o novo conteúdo ainda
-        lastPageLanguageRef.current = currentPageLanguage;
-        
-        fetchPageContent(selectedPage, selectedLanguage);
-        fetchSEOData(selectedPage, selectedLanguage);
-      }
+      console.log('Loading content for page:', selectedPage, 'language:', selectedLanguage);
+      fetchPageContent(selectedPage, selectedLanguage);
+      fetchSEOData(selectedPage, selectedLanguage);
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Update form data when content loads
+  // Update form data when content loads - sempre atualizar quando o conteúdo muda
   useEffect(() => {
-    if (content.length > 0 && selectedPage && selectedLanguage) {
-      const currentPageLanguage = `${selectedPage}_${selectedLanguage}`;
+    if (content.length > 0 && selectedPage && selectedLanguage && !contentLoading) {
+      console.log('Updating form data with content:', content.length, 'fields for page:', selectedPage, 'language:', selectedLanguage);
       
-      // Só atualiza se:
-      // 1. Ainda não carregou o conteúdo para esta combinação página/idioma
-      // 2. O loading terminou
-      if (!hasLoadedContentRef.current && !contentLoading) {
-        console.log('Updating form data for:', currentPageLanguage);
+      const formData: { [key: string]: string } = {};
+      
+      allFields.forEach(field => {
+        const key = `${field.section}_${field.field}`;
+        const contentValue = content.find(c => 
+          c.section_name === field.section && 
+          c.field_name === field.field
+        )?.content || '';
         
-        const formData: { [key: string]: string } = {};
-        
-        allFields.forEach(field => {
-          const key = `${field.section}_${field.field}`;
-          const contentValue = content.find(c => 
-            c.section_name === field.section && 
-            c.field_name === field.field
-          )?.content || '';
-          
-          formData[key] = contentValue;
-        });
-        
-        setContentFormData(formData);
-        hasLoadedContentRef.current = true; // Marcar que carregou
-        userModifiedFieldsRef.current.clear(); // Limpar campos modificados após carregar
-      }
+        console.log(`Field ${key}:`, contentValue);
+        formData[key] = contentValue;
+      });
+      
+      setContentFormData(formData);
+      initialLoadRef.current = true;
     }
   }, [content, allFields, selectedPage, selectedLanguage, contentLoading]);
 
@@ -121,9 +103,7 @@ export const useContentManagement = () => {
 
   // Handle content input changes
   const handleContentInputChange = useCallback((key: string, value: string) => {
-    // Marcar que este campo foi modificado pelo usuário
-    userModifiedFieldsRef.current.add(key);
-    
+    console.log('Field changed:', key, '=', value);
     setContentFormData(prev => ({ ...prev, [key]: value }));
   }, []);
 
@@ -145,9 +125,6 @@ export const useContentManagement = () => {
       });
       
       await Promise.all(savePromises);
-      
-      // Limpar campos modificados após salvar com sucesso
-      userModifiedFieldsRef.current.clear();
     } finally {
       setSaving(false);
     }
