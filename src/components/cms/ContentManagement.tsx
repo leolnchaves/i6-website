@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -296,7 +297,7 @@ const ContentManagement = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Accordion type="multiple" className="w-full">
+                <Accordion type="single" collapsible className="w-full">
                   
                   {/* Seção Hero */}
                   <AccordionItem value="hero">
