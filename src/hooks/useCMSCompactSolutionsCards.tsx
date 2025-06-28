@@ -9,6 +9,7 @@ interface CompactSolutionCard {
   engine: string;
   icon_name: string;
   background_color: string;
+  is_active: boolean;
   card_order: number;
 }
 
