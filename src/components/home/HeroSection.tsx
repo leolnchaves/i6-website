@@ -53,6 +53,12 @@ const HeroSection = () => {
     return cmsContent || t(translationKey);
   };
 
+  // Get demo URL from CMS with fallback
+  const getDemoUrl = () => {
+    const cmsUrl = getContent('hero', 'demoLink');
+    return cmsUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0';
+  };
+
   return (
     <>
       {/* Main hero section */}
@@ -121,7 +127,8 @@ const HeroSection = () => {
       {/* Video modal component */}
       <VideoModal 
         isOpen={isVideoModalOpen} 
-        onClose={handleCloseVideoModal} 
+        onClose={handleCloseVideoModal}
+        videoUrl={getDemoUrl()}
       />
     </>
   );

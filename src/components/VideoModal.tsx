@@ -5,9 +5,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 interface VideoModalProps {
   isOpen: boolean;
   onClose: () => void;
+  videoUrl?: string;
 }
 
-const VideoModal = ({ isOpen, onClose }: VideoModalProps) => {
+const VideoModal = ({ isOpen, onClose, videoUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0' }: VideoModalProps) => {
   const { t } = useLanguage();
 
   if (!isOpen) return null;
@@ -31,7 +32,7 @@ const VideoModal = ({ isOpen, onClose }: VideoModalProps) => {
         {/* Video Container */}
         <div className="relative aspect-video bg-black">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0"
+            src={videoUrl}
             title="AI Solutions Demo"
             className="w-full h-full"
             frameBorder="0"

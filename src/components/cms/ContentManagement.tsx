@@ -40,6 +40,7 @@ const ContentManagement = () => {
     { section: 'hero', field: 'description', label: 'Descrição', type: 'textarea' },
     { section: 'hero', field: 'startJourney', label: 'Botão Jornada', type: 'input' },
     { section: 'hero', field: 'watchDemo', label: 'Botão Demo', type: 'input' },
+    { section: 'hero', field: 'demoLink', label: 'Link do Demo (URL)', type: 'input' },
   ];
 
   // Função para carregar dados quando página ou idioma mudarem
@@ -262,7 +263,11 @@ const ContentManagement = () => {
                           id={key}
                           value={value}
                           onChange={(e) => handleContentInputChange(key, e.target.value)}
-                          placeholder={`Digite o ${field.label.toLowerCase()}...`}
+                          placeholder={
+                            field.field === 'demoLink' 
+                              ? 'https://www.youtube.com/embed/...' 
+                              : `Digite o ${field.label.toLowerCase()}...`
+                          }
                         />
                       )}
                     </div>
