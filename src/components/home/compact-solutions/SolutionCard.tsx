@@ -8,39 +8,18 @@ interface SolutionCardProps {
   index: number;
   engine: string;
   backgroundColor: string;
-  backgroundOpacity?: number;
 }
 
-const SolutionCard = ({ 
-  icon, 
-  title, 
-  description, 
-  index, 
-  engine, 
-  backgroundColor,
-  backgroundOpacity = 1 
-}: SolutionCardProps) => {
-  
-  const hexToRgba = (hex: string, opacity: number) => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (result) {
-      const r = parseInt(result[1], 16);
-      const g = parseInt(result[2], 16);
-      const b = parseInt(result[3], 16);
-      return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-    }
-    return hex;
-  };
-
+const SolutionCard = ({ icon, title, description, index, engine, backgroundColor }: SolutionCardProps) => {
   return (
     <Card 
       className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 scroll-reveal rounded-2xl" 
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      {/* Main content with rgba background color for opacity control */}
+      {/* Main content with solid background color */}
       <CardContent 
         className="p-6 h-full flex flex-col justify-between text-white relative"
-        style={{ backgroundColor: hexToRgba(backgroundColor, backgroundOpacity) }}
+        style={{ backgroundColor }}
       >
         {/* Engine badge */}
         <div className="flex justify-between items-start mb-4">

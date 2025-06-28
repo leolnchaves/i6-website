@@ -99,17 +99,6 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
     return "Selecione um ícone";
   };
 
-  const hexToRgba = (hex: string, opacity: number) => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (result) {
-      const r = parseInt(result[1], 16);
-      const g = parseInt(result[2], 16);
-      const b = parseInt(result[3], 16);
-      return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-    }
-    return hex;
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -234,7 +223,7 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
                           {getSelectedIconDisplay(card.icon_name)}
                         </SelectValue>
                       </SelectTrigger>
-                      <SelectContent className="bg-white z-50">
+                      <SelectContent className="bg-white">
                         {iconOptions.map((option) => {
                           const IconComponent = option.icon;
                           return (
@@ -309,9 +298,10 @@ const CompactSolutionsCardsManagement: React.FC<CompactSolutionsCardsManagementP
                 <div className="pt-4">
                   <Label>Preview do Card</Label>
                   <div 
-                    className="mt-2 p-4 rounded-lg text-white relative overflow-hidden"
+                    className="mt-2 p-4 rounded-lg text-white"
                     style={{ 
-                      backgroundColor: hexToRgba(card.background_color || '#1E4A94', card.background_opacity || 1)
+                      backgroundColor: card.background_color || '#1E4A94',
+                      opacity: card.background_opacity || 1
                     }}
                   >
                     <div className="flex justify-between items-start mb-2">
