@@ -33,52 +33,52 @@ const CompactSolutionsSection = () => {
   const activeCards = cards.filter(card => card.is_active);
   console.log('CompactSolutionsSection - Active cards:', activeCards.length);
 
-  // Fallback data for when CMS data is not available
+  // Fallback data usando as traduções antigas quando CMS não tem conteúdo
   const fallbackCards = [
     {
       id: '1',
-      title: 'Smart Discovery for Anonymous Visitors',
-      description: 'Turn anonymous traffic into engaged buyers with real-time intelligent recommendations.',
+      title: t('solutions.card1.title') || 'Smart Discovery for Anonymous Visitors',
+      description: t('solutions.card1.description') || 'Turn anonymous traffic into engaged buyers with real-time intelligent recommendations.',
       icon: 'Target',
       engine: 'i6 RecSys',
       backgroundColor: '#1E4A94'
     },
     {
       id: '2',
-      title: 'Predictive Personalization',
-      description: 'Deliver truly personalized experiences based on individual behavior and preferences.',
+      title: t('solutions.card2.title') || 'Predictive Personalization',
+      description: t('solutions.card2.description') || 'Deliver truly personalized experiences based on individual behavior and preferences.',
       icon: 'Users',
       engine: 'i6 RecSys',
       backgroundColor: '#2D5A87'
     },
     {
       id: '3',
-      title: 'Industrial Recommendation Intelligence',
-      description: 'Align commercial targets with intelligent recommendations in real time.',
+      title: t('solutions.card3.title') || 'Industrial Recommendation Intelligence',
+      description: t('solutions.card3.description') || 'Align commercial targets with intelligent recommendations in real time.',
       icon: 'Cog',
       engine: 'i6 RecSys',
       backgroundColor: '#3A6B7A'
     },
     {
       id: '4',
-      title: 'Predictive Campaign Targeting',
-      description: 'Identify users most likely to convert before campaigns begin.',
+      title: t('solutions.card4.title') || 'Predictive Campaign Targeting',
+      description: t('solutions.card4.description') || 'Identify users most likely to convert before campaigns begin.',
       icon: 'TrendingUp',
       engine: 'i6 RecSys',
       backgroundColor: '#477C6D'
     },
     {
       id: '5',
-      title: 'Smart Price Optimization',
-      description: 'Dynamic pricing that adapts in real time to demand and behavior.',
+      title: t('solutions.card5.title') || 'Smart Price Optimization',
+      description: t('solutions.card5.description') || 'Dynamic pricing that adapts in real time to demand and behavior.',
       icon: 'DollarSign',
       engine: 'i6 ElasticPrice',
       backgroundColor: '#548D60'
     },
     {
       id: '6',
-      title: 'Adaptive Demand Forecasting',
-      description: 'Forecast demand with precision based on trends and behaviors.',
+      title: t('solutions.card6.title') || 'Adaptive Demand Forecasting',
+      description: t('solutions.card6.description') || 'Forecast demand with precision based on trends and behaviors.',
       icon: 'BarChart3',
       engine: 'i6 Previsio',
       backgroundColor: '#619E53'
@@ -103,7 +103,7 @@ const CompactSolutionsSection = () => {
     );
   }
 
-  // Use CMS active cards if available, otherwise fallback to static data
+  // Use CMS active cards if available, otherwise fallback to translations
   const cardsToRender = activeCards.length > 0 ? activeCards.map(card => {
     const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || Target;
     return {
