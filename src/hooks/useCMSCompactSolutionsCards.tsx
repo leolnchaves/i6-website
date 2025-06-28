@@ -58,6 +58,7 @@ export const useCMSCompactSolutionsCards = (language: string = 'en') => {
         return;
       }
 
+      console.log('Fetched cards:', cardsData);
       setCards(cardsData || []);
     } catch (err) {
       console.error('Error in fetchCards:', err);
