@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
-import { Save, Globe, Home, Search, Grid3X3 } from 'lucide-react';
+import { Save, Globe, Home, Search } from 'lucide-react';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { useCMSSEO } from '@/hooks/useCMSSEO';
 import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
@@ -271,17 +271,13 @@ const ContentManagement = () => {
         </CardContent>
       </Card>
 
-      {/* Tabs para Conteúdo, SEO e Results Cards */}
+      {/* Tabs para Conteúdo e SEO */}
       {selectedPage && (
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="content" className="flex items-center gap-2">
               <Home className="h-4 w-4" />
               Conteúdo
-            </TabsTrigger>
-            <TabsTrigger value="results-cards" className="flex items-center gap-2">
-              <Grid3X3 className="h-4 w-4" />
-              Cards Results
             </TabsTrigger>
             <TabsTrigger value="seo" className="flex items-center gap-2">
               <Search className="h-4 w-4" />
@@ -325,27 +321,6 @@ const ContentManagement = () => {
                     {saving ? 'Salvando...' : 'Salvar Conteúdo'}
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Tab de Results Cards */}
-          <TabsContent value="results-cards">
-            <Card>
-              <CardHeader>
-                <CardTitle>Gestão dos Cards da Seção Results</CardTitle>
-                <CardDescription>
-                  Gerencie os cards da seção Results com controle completo de ícones, cores, títulos e descrições
-                  <Badge variant="outline" className="ml-2">
-                    {selectedLanguage === 'en' ? '🇺🇸 English' : '🇧🇷 Português'}
-                  </Badge>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ResultsCardsManagement 
-                  selectedPage={selectedPage}
-                  selectedLanguage={selectedLanguage}
-                />
               </CardContent>
             </Card>
           </TabsContent>
