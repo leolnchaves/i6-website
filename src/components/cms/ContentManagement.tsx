@@ -118,34 +118,6 @@ const ContentManagement = () => {
   const allFields = getAllFields();
   const accordionFields = getFieldsForAccordion();
 
-  // Função para carregar dados quando página ou idioma mudarem
-  const loadData = useCallback(async () => {
-    if (selectedPage) {
-      await Promise.all([
-        fetchPageContent(selectedPage, selectedLanguage),
-        fetchSEOData(selectedPage, selectedLanguage)
-      ]);
-    }
-  }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
-
-  // Atualizar formData quando conteúdo mudar
-  const updateContentFormData = useCallback(() => {
-    const newContentFormData: { [key: string]: string } = {};
-    allFields.forEach(field => {
-      const key = `${field.section}_${field.field}`;
-      newContentFormData[key] = getContent(field.section, field.field, selectedLanguage);
-    });
-    setContentFormData(newContentFormData);
-  }, [getContent, selectedLanguage, allFields]);
-
-  // Atualizar SEO form data quando dados de SEO mudarem
-  const updateSEOFormData = useCallback(() => {
-    if (selectedPage) {
-      const currentSEOData = getSEOData(selectedPage, selectedLanguage);
-      setSeoFormData(currentSEOData);
-    }
-  }, [selectedPage, selectedLanguage, getSEOData]);
-
   // Selecionar página Home automaticamente se disponível
   useEffect(() => {
     if (pages.length > 0 && !selectedPage) {
@@ -158,21 +130,48 @@ const ContentManagement = () => {
 
   // Carregar dados quando página ou idioma mudarem
   useEffect(() => {
+    const loadData = async () => {
+      if (selectedPage) {
+        await Promise.all([
+          fetchPageContent(selectedPage, selectedLanguage),
+          fetchSEOData(selectedPage, selectedLanguage)
+        ]);
+      }
+    };
+    
     loadData();
-  }, [loadData]);
+  }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Atualizar form data quando conteúdo mudar
+  // Atualizar formData quando conteúdo mudar
   useEffect(() => {
-    updateContentFormData();
-  }, [updateContentFormData]);
+    if (content.length > 0 && allFields.length > 0) {
+      console.log('Updating content form data with:', content);
+      const newContentFormData: { [key: string]: string } = {};
+      allFields.forEach(field => {
+        const key = `${field.section}_${field.field}`;
+        const value = getContent(field.section, field.field, selectedLanguage);
+        newContentFormData[key] = value;
+        console.log(`Setting ${key} = ${value}`);
+      });
+      setContentFormData(newContentFormData);
+    }
+  }, [content, allFields, selectedLanguage, getContent]);
 
   // Atualizar SEO form data quando dados de SEO mudarem
   useEffect(() => {
-    updateSEOFormData();
-  }, [updateSEOFormData]);
+    if (selectedPage && seoData.length > 0) {
+      const currentSEOData = getSEOData(selectedPage, selectedLanguage);
+      setSeoFormData(currentSEOData);
+    }
+  }, [selectedPage, selectedLanguage, getSEOData, seoData]);
 
   const handleContentInputChange = (key: string, value: string) => {
-    setContentFormData(prev => ({ ...prev, [key]: value }));
+    console.log(`Handling input change: ${key} = ${value}`);
+    setContentFormData(prev => {
+      const updated = { ...prev, [key]: value };
+      console.log('Updated form data:', updated);
+      return updated;
+    });
   };
 
   const handleSEOInputChange = (field: string, value: string | boolean) => {
