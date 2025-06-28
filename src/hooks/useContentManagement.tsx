@@ -34,8 +34,6 @@ export const useContentManagement = () => {
     follow_flag: true
   });
   const [saving, setSaving] = useState(false);
-  const [lastLoadedPage, setLastLoadedPage] = useState<string>('');
-  const [lastLoadedLanguage, setLastLoadedLanguage] = useState<string>('');
 
   const loading = contentLoading || seoLoading;
 
@@ -68,12 +66,9 @@ export const useContentManagement = () => {
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Update form data when content loads - Only when page or language actually changes
+  // Update form data when content loads
   useEffect(() => {
-    const pageChanged = selectedPage !== lastLoadedPage;
-    const languageChanged = selectedLanguage !== lastLoadedLanguage;
-    
-    if ((pageChanged || languageChanged) && content.length > 0) {
+    if (content.length > 0) {
       const formData: { [key: string]: string } = {};
       allFields.forEach(field => {
         const key = `${field.section}_${field.field}`;
@@ -83,10 +78,8 @@ export const useContentManagement = () => {
         )?.content || '';
       });
       setContentFormData(formData);
-      setLastLoadedPage(selectedPage);
-      setLastLoadedLanguage(selectedLanguage);
     }
-  }, [selectedPage, selectedLanguage, content, allFields, lastLoadedPage, lastLoadedLanguage]);
+  }, [content, allFields]);
 
   // Update SEO form data when SEO data loads
   useEffect(() => {
