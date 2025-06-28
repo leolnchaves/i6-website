@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Separator } from '@/components/ui/separator';
 import ContentFieldRenderer from './ContentFieldRenderer';
 import ResultsCardsManagement from '../ResultsCardsManagement';
+import TestimonialsManagement from '../TestimonialsManagement';
 
 interface ContentField {
   section: string;
@@ -16,6 +17,7 @@ interface ContentSectionAccordionProps {
   heroFields: ContentField[];
   resultsFields: ContentField[];
   compactSolutionsFields: ContentField[];
+  ctaFields?: ContentField[];
   formData: { [key: string]: string };
   selectedPage: string;
   selectedLanguage: string;
@@ -26,6 +28,7 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   heroFields,
   resultsFields,
   compactSolutionsFields,
+  ctaFields = [],
   formData,
   selectedPage,
   selectedLanguage,
@@ -45,11 +48,12 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   };
 
   const getThirdSectionTitle = () => {
-    if (isSuccessStoriesPage) return 'Seção CTA - Chamada para Ação';
+    if (isSuccessStoriesPage) return 'Seção Testimonials - Depoimentos';
     return 'Seção Compact Solutions - Soluções Compactas';
   };
 
   const showCardsManagement = !isSuccessStoriesPage && resultsFields.length > 0;
+  const showTestimonialsManagement = isSuccessStoriesPage && compactSolutionsFields.some(field => field.section === 'testimonialsSection');
 
   return (
     <Accordion type="single" collapsible className="w-full">
@@ -119,15 +123,61 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
           {getThirdSectionTitle()}
         </AccordionTrigger>
         <AccordionContent>
-          <div className="pt-4">
-            <ContentFieldRenderer
-              fields={compactSolutionsFields}
-              formData={formData}
-              onFieldChange={onFieldChange}
-            />
+          <div className="pt-4 space-y-6">
+            {/* Campos da terceira seção */}
+            <div className="space-y-4">
+              <h4 className="font-medium text-gray-800 border-b pb-2">
+                {isSuccessStoriesPage ? 'Título e Subtítulo da Seção' : 'Conteúdo da Seção'}
+              </h4>
+              <ContentFieldRenderer
+                fields={compactSolutionsFields}
+                formData={formData}
+                onFieldChange={onFieldChange}
+              />
+            </div>
+
+            {/* Gestão dos Testimonials - apenas para success stories */}
+            {showTestimonialsManagement && (
+              <>
+                <Separator />
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="testimonials-management">
+                    <AccordionTrigger className="text-base font-medium">
+                      Gestão dos Depoimentos
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="pt-4">
+                        <TestimonialsManagement 
+                          selectedPage={selectedPage}
+                          selectedLanguage={selectedLanguage}
+                        />
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </>
+            )}
           </div>
         </AccordionContent>
       </AccordionItem>
+
+      {/* Quarta seção - CTA (apenas para success stories) */}
+      {isSuccessStoriesPage && ctaFields.length > 0 && (
+        <AccordionItem value="fourth-section">
+          <AccordionTrigger className="text-lg font-semibold">
+            Seção CTA - Chamada para Ação
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-4">
+              <ContentFieldRenderer
+                fields={ctaFields}
+                formData={formData}
+                onFieldChange={onFieldChange}
+              />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      )}
     </Accordion>
   );
 };

@@ -258,6 +258,51 @@ export type Database = {
         }
         Relationships: []
       }
+      cms_testimonials: {
+        Row: {
+          author_name: string
+          author_title: string | null
+          card_order: number
+          company_name: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          language: string
+          page_id: string
+          quote: string
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          author_name: string
+          author_title?: string | null
+          card_order: number
+          company_name?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          page_id: string
+          quote: string
+          rating?: number
+          updated_at?: string
+        }
+        Update: {
+          author_name?: string
+          author_title?: string | null
+          card_order?: number
+          company_name?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          language?: string
+          page_id?: string
+          quote?: string
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cms_users: {
         Row: {
           created_at: string

@@ -47,6 +47,11 @@ export const successStoriesMetricsFields: ContentField[] = [
   { section: 'successStoriesMetrics', field: 'costSavingsIcon', label: 'Ícone Estatística 3', type: 'icon' },
 ];
 
+export const successStoriesTestimonialsFields: ContentField[] = [
+  { section: 'testimonialsSection', field: 'title', label: 'Título da Seção', type: 'input' },
+  { section: 'testimonialsSection', field: 'subtitle', label: 'Subtítulo da Seção', type: 'textarea' },
+];
+
 export const successStoriesCTAFields: ContentField[] = [
   { section: 'successStoriesCTA', field: 'title', label: 'Título do CTA', type: 'input' },
   { section: 'successStoriesCTA', field: 'description', label: 'Descrição do CTA', type: 'textarea' },
@@ -58,7 +63,7 @@ export const getPageFields = (isHome: boolean, isSuccessStories: boolean) => {
   if (isHome) {
     return [...homeHeroFields, ...homeResultsFields, ...homeCompactSolutionsFields];
   } else if (isSuccessStories) {
-    return [...successStoriesHeroFields, ...successStoriesMetricsFields, ...successStoriesCTAFields];
+    return [...successStoriesHeroFields, ...successStoriesMetricsFields, ...successStoriesTestimonialsFields, ...successStoriesCTAFields];
   }
   return [];
 };
@@ -74,13 +79,15 @@ export const getAccordionFields = (isHome: boolean, isSuccessStories: boolean) =
     return {
       heroFields: successStoriesHeroFields,
       resultsFields: successStoriesMetricsFields,
-      compactSolutionsFields: successStoriesCTAFields
+      compactSolutionsFields: successStoriesTestimonialsFields,
+      ctaFields: successStoriesCTAFields
     };
   }
   return {
     heroFields: [],
     resultsFields: [],
-    compactSolutionsFields: []
+    compactSolutionsFields: [],
+    ctaFields: []
   };
 };
 

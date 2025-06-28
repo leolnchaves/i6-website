@@ -62,6 +62,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
               heroFields={accordionFields.heroFields}
               resultsFields={accordionFields.resultsFields}
               compactSolutionsFields={accordionFields.compactSolutionsFields}
+              ctaFields={accordionFields.ctaFields}
               formData={contentFormData}
               selectedPage={selectedPage}
               selectedLanguage={selectedLanguage}
