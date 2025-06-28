@@ -24,7 +24,11 @@ export const useContentManagement = () => {
 
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
-  const [contentFormData, setContentFormData] = useState<{ [key: string]: string }>({});
+  
+  // Separar estado "original" de estado "editável"
+  const [fetchedContentFormData, setFetchedContentFormData] = useState<{ [key: string]: string }>({});
+  const [editableContentFormData, setEditableContentFormData] = useState<{ [key: string]: string }>({});
+  
   const [seoFormData, setSeoFormData] = useState({
     meta_title: '',
     meta_description: '',
@@ -35,8 +39,8 @@ export const useContentManagement = () => {
   });
   const [saving, setSaving] = useState(false);
 
-  // Simplificar o controle de estado
-  const initialLoadRef = useRef(false);
+  // Flag para controlar se já foi inicializado
+  const initializedRef = useRef<string>('');
 
   const loading = contentLoading || seoLoading;
 
@@ -61,7 +65,7 @@ export const useContentManagement = () => {
     }
   }, [pages, selectedPage]);
 
-  // Load content and SEO when page/language changes OR on initial load
+  // Load content and SEO when page/language changes
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
       console.log('Loading content for page:', selectedPage, 'language:', selectedLanguage);
@@ -70,26 +74,34 @@ export const useContentManagement = () => {
     }
   }, [selectedPage, selectedLanguage, fetchPageContent, fetchSEOData]);
 
-  // Update form data when content loads - sempre atualizar quando o conteúdo muda
+  // Update form data when content loads - criar dados "fetched" e "editable"
   useEffect(() => {
     if (content.length > 0 && selectedPage && selectedLanguage && !contentLoading) {
-      console.log('Updating form data with content:', content.length, 'fields for page:', selectedPage, 'language:', selectedLanguage);
+      const currentKey = `${selectedPage}_${selectedLanguage}`;
       
-      const formData: { [key: string]: string } = {};
-      
-      allFields.forEach(field => {
-        const key = `${field.section}_${field.field}`;
-        const contentValue = content.find(c => 
-          c.section_name === field.section && 
-          c.field_name === field.field
-        )?.content || '';
+      // Só atualiza se mudou a combinação página/idioma
+      if (initializedRef.current !== currentKey) {
+        console.log('Initializing form data for:', currentKey);
         
-        console.log(`Field ${key}:`, contentValue);
-        formData[key] = contentValue;
-      });
-      
-      setContentFormData(formData);
-      initialLoadRef.current = true;
+        const formData: { [key: string]: string } = {};
+        
+        allFields.forEach(field => {
+          const key = `${field.section}_${field.field}`;
+          const contentValue = content.find(c => 
+            c.section_name === field.section && 
+            c.field_name === field.field
+          )?.content || '';
+          
+          formData[key] = contentValue;
+        });
+        
+        // Atualizar ambos os estados: fetched (imutável) e editable (para edição)
+        setFetchedContentFormData(formData);
+        setEditableContentFormData(formData);
+        initializedRef.current = currentKey;
+        
+        console.log('Form data initialized for:', currentKey, 'fields:', Object.keys(formData).length);
+      }
     }
   }, [content, allFields, selectedPage, selectedLanguage, contentLoading]);
 
@@ -101,10 +113,10 @@ export const useContentManagement = () => {
     }
   }, [selectedPage, selectedLanguage, seoData, getSEOData]);
 
-  // Handle content input changes
+  // Handle content input changes - apenas modifica o estado editável
   const handleContentInputChange = useCallback((key: string, value: string) => {
     console.log('Field changed:', key, '=', value);
-    setContentFormData(prev => ({ ...prev, [key]: value }));
+    setEditableContentFormData(prev => ({ ...prev, [key]: value }));
   }, []);
 
   // Handle SEO input changes
@@ -112,23 +124,28 @@ export const useContentManagement = () => {
     setSeoFormData(prev => ({ ...prev, [field]: value }));
   }, []);
 
-  // Save content
+  // Save content - usa o estado editável
   const handleSaveContent = useCallback(async () => {
     if (!selectedPage || !selectedLanguage) return;
 
     setSaving(true);
     try {
-      // Save each field individually as the saveContent method expects individual field saves
-      const savePromises = Object.entries(contentFormData).map(([key, value]) => {
+      // Save each field individually using the editable content
+      const savePromises = Object.entries(editableContentFormData).map(([key, value]) => {
         const [sectionName, fieldName] = key.split('_');
         return saveContent(selectedPage, sectionName, fieldName, selectedLanguage, value);
       });
       
       await Promise.all(savePromises);
+      
+      // Após salvar com sucesso, atualizar o estado "fetched" para refletir os dados salvos
+      setFetchedContentFormData(editableContentFormData);
+      
+      console.log('Content saved successfully');
     } finally {
       setSaving(false);
     }
-  }, [selectedPage, selectedLanguage, contentFormData, saveContent]);
+  }, [selectedPage, selectedLanguage, editableContentFormData, saveContent]);
 
   // Save SEO data
   const handleSaveSEO = useCallback(async () => {
@@ -142,6 +159,17 @@ export const useContentManagement = () => {
     }
   }, [selectedPage, selectedLanguage, seoFormData, saveSEOData]);
 
+  // Função para resetar para dados originais
+  const handleResetContent = useCallback(() => {
+    console.log('Resetting content to original values');
+    setEditableContentFormData(fetchedContentFormData);
+  }, [fetchedContentFormData]);
+
+  // Verificar se há mudanças não salvas
+  const hasUnsavedChanges = useCallback(() => {
+    return JSON.stringify(fetchedContentFormData) !== JSON.stringify(editableContentFormData);
+  }, [fetchedContentFormData, editableContentFormData]);
+
   const getPageTitle = useCallback(() => {
     if (!currentPage) return 'Página';
     return currentPage.name;
@@ -152,7 +180,7 @@ export const useContentManagement = () => {
     pages,
     selectedPage,
     selectedLanguage,
-    contentFormData,
+    contentFormData: editableContentFormData, // Expor o estado editável
     seoFormData,
     saving,
     loading,
@@ -164,6 +192,9 @@ export const useContentManagement = () => {
     isContactPage,
     allFields,
     
+    // New utilities
+    hasUnsavedChanges,
+    
     // Actions
     setSelectedPage,
     setSelectedLanguage,
@@ -171,6 +202,7 @@ export const useContentManagement = () => {
     handleSEOInputChange,
     handleSaveContent,
     handleSaveSEO,
+    handleResetContent,
     getPageTitle,
   };
 };
