@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
+import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical, Eye } from 'lucide-react';
 import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -150,6 +151,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
   const { cards, loading, saveCard, deleteCard, refetch } = useCMSSolutionsCards(selectedPage, selectedLanguage);
   const [formCards, setFormCards] = useState<CardFormData[]>([]);
   const [saving, setSaving] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -217,6 +219,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
       card_order: formCards.length + 1,
     };
     setFormCards([...formCards, newCard]);
+    setExpandedCard(formCards.length);
   };
 
   const removeCard = async (index: number) => {
@@ -230,6 +233,9 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
         card_order: i + 1,
       }));
       setFormCards(reorderedCards);
+    }
+    if (expandedCard === index) {
+      setExpandedCard(null);
     }
   };
 
@@ -320,36 +326,42 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
   }
 
   return (
-    <Card className="border-0 shadow-sm bg-white">
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-lg font-medium text-gray-900">
-              Gestão dos Cards da Solutions Grid
-            </CardTitle>
-            <p className="text-gray-600 mt-1">
-              Gerencie os cards de soluções exibidos na página Solutions
-            </p>
+    <div className="space-y-6">
+      {/* Header */}
+      <Card className="border-0 shadow-sm bg-white">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-medium text-gray-900">
+                Gestão dos Cards da Solutions Grid
+              </CardTitle>
+              <p className="text-gray-600 mt-1">
+                Gerencie os cards de soluções exibidos na página Solutions
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={addNewCard} variant="outline" size="sm">
+                <Plus className="h-4 w-4 mr-2" />
+                Adicionar Card
+              </Button>
+              <Button onClick={saveCards} disabled={saving}>
+                <Save className="h-4 w-4 mr-2" />
+                {saving ? 'Salvando...' : 'Salvar Cards'}
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <Button onClick={addNewCard} variant="outline" size="sm">
-              <Plus className="h-4 w-4 mr-2" />
-              Adicionar Card
-            </Button>
-            <Button onClick={saveCards} disabled={saving}>
-              <Save className="h-4 w-4 mr-2" />
-              {saving ? 'Salvando...' : 'Salvar Cards'}
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
+        </CardHeader>
+      </Card>
+
+      {/* Cards List */}
+      <div className="space-y-4">
         {formCards.map((card, index) => (
-          <Card key={index} className="border border-gray-200">
-            <CardHeader className="pb-3">
+          <Card key={index} className="border border-gray-200 shadow-sm">
+            {/* Card Header */}
+            <CardHeader className="pb-3 bg-gray-50/50">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2">
                     <GripVertical className="h-4 w-4 text-gray-400" />
                     <Badge variant="outline" className="text-xs">
                       #{card.card_order}
@@ -358,8 +370,19 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                   <h4 className="font-medium text-gray-900">
                     {card.title || `Card ${index + 1}`}
                   </h4>
+                  <Badge variant={card.is_active ? "default" : "secondary"} className="text-xs">
+                    {card.is_active ? 'Ativo' : 'Inativo'}
+                  </Badge>
                 </div>
                 <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant={expandedCard === index ? "default" : "ghost"}
+                    onClick={() => setExpandedCard(expandedCard === index ? null : index)}
+                  >
+                    <Eye className="h-4 w-4 mr-1" />
+                    {expandedCard === index ? 'Recolher' : 'Editar'}
+                  </Button>
                   <div className="flex items-center gap-1">
                     <Button
                       size="sm"
@@ -383,7 +406,6 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                       checked={card.is_active}
                       onCheckedChange={(checked) => handleCardChange(index, 'is_active', checked)}
                     />
-                    <Label className="text-sm">Ativo</Label>
                   </div>
                   <Button
                     size="sm"
@@ -396,172 +418,190 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              {/* Coluna esquerda - Conteúdo */}
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor={`title-${index}`}>Título</Label>
-                  <Input
-                    id={`title-${index}`}
-                    value={card.title}
-                    onChange={(e) => handleCardChange(index, 'title', e.target.value)}
-                    placeholder="Digite o título do card"
-                  />
-                </div>
 
-                <div>
-                  <Label htmlFor={`focus-${index}`}>Foco</Label>
-                  <Input
-                    id={`focus-${index}`}
-                    value={card.focus}
-                    onChange={(e) => handleCardChange(index, 'focus', e.target.value)}
-                    placeholder="Digite o foco da solução"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor={`description-${index}`}>Descrição</Label>
-                  <Textarea
-                    id={`description-${index}`}
-                    value={card.description}
-                    onChange={(e) => handleCardChange(index, 'description', e.target.value)}
-                    placeholder="Digite a descrição detalhada"
-                    rows={4}
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor={`outcome-${index}`}>Resultados Esperados</Label>
-                  <Textarea
-                    id={`outcome-${index}`}
-                    value={card.outcome}
-                    onChange={(e) => handleCardChange(index, 'outcome', e.target.value)}
-                    placeholder="Digite os resultados esperados"
-                    rows={3}
-                  />
-                </div>
-              </div>
-
-              {/* Coluna do meio - Engine, Features e Estilo */}
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor={`engine-${index}`}>Engine</Label>
-                  <Select value={card.engine} onValueChange={(value) => handleCardChange(index, 'engine', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o engine" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {availableEngines.map(engine => (
-                        <SelectItem key={engine.value} value={engine.value}>
-                          {engine.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label>Features</Label>
-                  <div className="space-y-2">
-                    {card.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex gap-2">
+            {/* Expandable Content */}
+            {expandedCard === index && (
+              <CardContent className="pt-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                  
+                  {/* Coluna 1: Conteúdo Principal */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium text-gray-900 text-sm border-b pb-2">Conteúdo Principal</h5>
+                    
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor={`title-${index}`} className="text-sm">Título</Label>
                         <Input
-                          value={feature}
-                          onChange={(e) => handleFeatureChange(index, featureIndex, e.target.value)}
-                          placeholder="Digite a feature"
+                          id={`title-${index}`}
+                          value={card.title}
+                          onChange={(e) => handleCardChange(index, 'title', e.target.value)}
+                          placeholder="Digite o título do card"
+                          className="mt-1"
                         />
+                      </div>
+
+                      <div>
+                        <Label htmlFor={`focus-${index}`} className="text-sm">Foco</Label>
+                        <Input
+                          id={`focus-${index}`}
+                          value={card.focus}
+                          onChange={(e) => handleCardChange(index, 'focus', e.target.value)}
+                          placeholder="Digite o foco da solução"
+                          className="mt-1"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor={`engine-${index}`} className="text-sm">Engine</Label>
+                        <Select value={card.engine} onValueChange={(value) => handleCardChange(index, 'engine', value)}>
+                          <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Selecione o engine" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {availableEngines.map(engine => (
+                              <SelectItem key={engine.value} value={engine.value}>
+                                {engine.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label htmlFor={`description-${index}`} className="text-sm">Descrição</Label>
+                        <Textarea
+                          id={`description-${index}`}
+                          value={card.description}
+                          onChange={(e) => handleCardChange(index, 'description', e.target.value)}
+                          placeholder="Digite a descrição detalhada"
+                          rows={3}
+                          className="mt-1"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor={`outcome-${index}`} className="text-sm">Resultados Esperados</Label>
+                        <Textarea
+                          id={`outcome-${index}`}
+                          value={card.outcome}
+                          onChange={(e) => handleCardChange(index, 'outcome', e.target.value)}
+                          placeholder="Digite os resultados esperados"
+                          rows={2}
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Coluna 2: Features e Estilo Visual */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium text-gray-900 text-sm border-b pb-2">Features e Estilo</h5>
+                    
+                    <div>
+                      <Label className="text-sm">Features</Label>
+                      <div className="space-y-2 mt-2">
+                        {card.features.map((feature, featureIndex) => (
+                          <div key={featureIndex} className="flex gap-2">
+                            <Input
+                              value={feature}
+                              onChange={(e) => handleFeatureChange(index, featureIndex, e.target.value)}
+                              placeholder="Digite a feature"
+                              className="text-sm"
+                            />
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => removeFeature(index, featureIndex)}
+                              className="text-red-600 px-2"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ))}
                         <Button
                           size="sm"
-                          variant="ghost"
-                          onClick={() => removeFeature(index, featureIndex)}
-                          className="text-red-600"
+                          variant="outline"
+                          onClick={() => addFeature(index)}
+                          className="w-full"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Plus className="h-3 w-3 mr-1" />
+                          Adicionar Feature
                         </Button>
                       </div>
-                    ))}
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => addFeature(index)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Adicionar Feature
-                    </Button>
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-4">
+                      <IconPalette
+                        label="Ícone"
+                        value={card.icon}
+                        onChange={(value) => handleCardChange(index, 'icon', value)}
+                      />
+                      
+                      <ColorPalette
+                        label="Gradiente"
+                        value={card.gradient}
+                        onChange={(value) => handleCardChange(index, 'gradient', value)}
+                        options={gradientOptions}
+                      />
+
+                      <ColorPalette
+                        label="Cor de Fundo"
+                        value={card.bg_color}
+                        onChange={(value) => handleCardChange(index, 'bg_color', value)}
+                        options={bgColorOptions}
+                      />
+
+                      <ColorPalette
+                        label="Cor da Borda"
+                        value={card.border_color}
+                        onChange={(value) => handleCardChange(index, 'border_color', value)}
+                        options={borderColorOptions}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Coluna 3: Preview */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium text-gray-900 text-sm border-b pb-2">Preview do Card</h5>
+                    <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+                      <SolutionCardPreview
+                        title={card.title}
+                        focus={card.focus}
+                        description={card.description}
+                        features={card.features}
+                        outcome={card.outcome}
+                        engine={card.engine}
+                        gradient={card.gradient}
+                        bg_color={card.bg_color}
+                        border_color={card.border_color}
+                        icon={card.icon}
+                      />
+                    </div>
                   </div>
                 </div>
-
-                <Separator />
-
-                <div className="space-y-4">
-                  <h5 className="font-medium text-gray-900">Estilo Visual</h5>
-                  
-                  <IconPalette
-                    label="Ícone"
-                    value={card.icon}
-                    onChange={(value) => handleCardChange(index, 'icon', value)}
-                  />
-                  
-                  <ColorPalette
-                    label="Gradiente"
-                    value={card.gradient}
-                    onChange={(value) => handleCardChange(index, 'gradient', value)}
-                    options={gradientOptions}
-                  />
-
-                  <ColorPalette
-                    label="Cor de Fundo"
-                    value={card.bg_color}
-                    onChange={(value) => handleCardChange(index, 'bg_color', value)}
-                    options={bgColorOptions}
-                  />
-
-                  <ColorPalette
-                    label="Cor da Borda"
-                    value={card.border_color}
-                    onChange={(value) => handleCardChange(index, 'border_color', value)}
-                    options={borderColorOptions}
-                  />
-                </div>
-              </div>
-
-              {/* Coluna direita - Preview */}
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-sm font-medium mb-3 block">Preview do Card</Label>
-                  <div className="border rounded-lg p-4 bg-gray-50">
-                    <SolutionCardPreview
-                      title={card.title}
-                      focus={card.focus}
-                      description={card.description}
-                      features={card.features}
-                      outcome={card.outcome}
-                      engine={card.engine}
-                      gradient={card.gradient}
-                      bg_color={card.bg_color}
-                      border_color={card.border_color}
-                      icon={card.icon}
-                    />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
+              </CardContent>
+            )}
           </Card>
         ))}
 
         {formCards.length === 0 && (
-          <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
-            <div className="space-y-2">
-              <p>Nenhum card de solução encontrado</p>
-              <Button onClick={addNewCard} variant="outline">
-                <Plus className="h-4 w-4 mr-2" />
-                Criar Primeiro Card
-              </Button>
-            </div>
-          </div>
+          <Card className="border-2 border-dashed border-gray-300">
+            <CardContent className="text-center py-12 text-gray-500">
+              <div className="space-y-3">
+                <p className="text-lg">Nenhum card de solução encontrado</p>
+                <p className="text-sm text-gray-400">Crie seu primeiro card para começar</p>
+                <Button onClick={addNewCard} variant="outline" className="mt-4">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Criar Primeiro Card
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
