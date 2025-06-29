@@ -82,10 +82,17 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
     fetchContent();
   }, [fetchContent]);
 
-  // Função helper para obter conteúdo específico
+  // Função helper para obter conteúdo específico com fallback
   const getContent = useCallback((section: string, field: string, fallback: string = '') => {
     const key = `${section}.${field}`;
-    const value = content[key] || fallback;
+    const value = content[key];
+    
+    // Se não encontrou no CMS, usa o fallback
+    if (!value || value.trim() === '') {
+      console.log('useCMSPageContent - Using fallback for:', key, '=', fallback);
+      return fallback;
+    }
+    
     console.log('useCMSPageContent - getContent:', key, '=', value);
     return value;
   }, [content]);

@@ -2,9 +2,17 @@
 import { Link } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { getContent, loading } = useCMSPageContent('components', language);
+
+  // Get footer content from CMS with fallbacks
+  const companyDescription = getContent('footer', 'company_description', t('footer.description'));
+  const contactEmail = getContent('footer', 'contact_email', 'hello@infinity6.ai');
+  const contactPhone = getContent('footer', 'contact_phone', '+1 (555) 123-4567');
+  const copyrightText = getContent('footer', 'copyright_text', t('footer.copyright'));
 
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
@@ -25,7 +33,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              {t('footer.description')}
+              {loading ? t('footer.description') : companyDescription}
             </p>
             
             {/* Social Media Links */}
@@ -80,14 +88,18 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
             <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-400 transition-colors duration-300">hello@infinity6.ai</li>
-              <li className="hover:text-orange-400 transition-colors duration-300">+1 (555) 123-4567</li>
+              <li className="hover:text-orange-400 transition-colors duration-300">
+                {loading ? 'hello@infinity6.ai' : contactEmail}
+              </li>
+              <li className="hover:text-orange-400 transition-colors duration-300">
+                {loading ? '+1 (555) 123-4567' : contactPhone}
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>{t('footer.copyright')}</p>
+          <p>{loading ? t('footer.copyright') : copyrightText}</p>
         </div>
       </div>
     </footer>
