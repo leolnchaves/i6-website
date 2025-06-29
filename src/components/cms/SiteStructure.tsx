@@ -15,7 +15,10 @@ import {
   BarChart3,
   Users,
   Target,
-  Zap
+  Zap,
+  Database,
+  Settings,
+  FileText
 } from 'lucide-react';
 
 const SiteStructure = () => {
@@ -27,55 +30,73 @@ const SiteStructure = () => {
       sections: [
         {
           name: 'Hero Section',
-          description: 'Seção principal com título "Infinite Possibilities Powered by AI" e botões de CTA',
-          components: ['Título principal', 'Subtítulo', 'Botão "Start Your Journey"', 'Botão "Watch Demo"', 'Animação de scroll']
+          description: 'Seção principal com chamada para ação e animação de scroll',
+          components: [
+            'Título principal editável via CMS',
+            'Subtítulo editável via CMS', 
+            'Botão "Start Your Journey" editável via CMS',
+            'Botão "Watch Demo" editável via CMS',
+            'Animação de scroll suave',
+            'Background gradiente dinâmico'
+          ]
         },
         {
           name: 'Results Section',
-          description: 'Showcase dos resultados reais de IA que impulsionam o crescimento dos negócios',
+          description: 'Cards de resultados reais com dados gerenciados pelo CMS',
           components: [
-            'Título: "Real AI Impact That Drives Business Growth"',
-            'Cards de resultados: Conversion Rate (+127%), CRM Cost (-65%), Average Ticket (+89%)',
-            'Cards adicionais: Bounce Rate (-45%), Proposal Engagement (+156%), Real-Time Rec (+98%)',
-            'Mais cards: Product Discovery (+134%), Dynamic Pricing (+67%), Market Demand (+89%), Rapid Implementation (100%)'
+            'Título da seção editável via CMS',
+            'Subtítulo editável via CMS',
+            'Cards dinâmicos carregados do banco de dados',
+            'Cada card tem: ícone, título, descrição, cor de fundo',
+            'Sistema de ordenação de cards',
+            'Suporte a múltiplos idiomas (EN/PT)',
+            'Animações de hover e entrada'
           ]
         },
         {
           name: 'Compact Solutions Section',
-          description: 'Apresentação compacta das principais soluções de IA',
+          description: 'Grid de soluções compactas carregadas dinamicamente',
           components: [
-            'Grid de soluções',
-            'Cards para cada solução principal',
-            'Link para página de soluções completa'
+            'Título da seção editável via CMS',
+            'Subtítulo editável via CMS',
+            'Cards de soluções carregados da tabela cms_solutions_cards',
+            'Cada card exibe: ícone dinâmico, título, descrição',
+            'Ícones carregados dinamicamente do Lucide React',
+            'Layout responsivo em grid',
+            'Animações modernas com gradientes',
+            'Estados de loading e error'
           ]
         },
         {
           name: 'Stats Section',
-          description: 'Estatísticas importantes da empresa',
+          description: 'Estatísticas da empresa com contadores animados',
           components: [
-            'Companies Transformed: 500+',
-            'Accuracy Rate: 99.2%',
-            'Expert Support: 24/7',
-            'Estatísticas adicionais de performance'
+            'Título da seção editável via CMS',
+            'Cards de estatísticas editáveis',
+            'Animações de contagem automática',
+            'Layout responsivo',
+            'Background com gradientes'
           ]
         },
         {
           name: 'Featured Stories Section',
-          description: 'Cases de sucesso em destaque',
+          description: 'Cases de sucesso em destaque com dados estáticos',
           components: [
-            'TechCorp Industries - Manufacturing',
-            'FinanceFlow - Financial Services', 
-            'RetailMax - E-commerce',
-            'Botão para ver todos os cases'
+            'Título da seção editável via CMS',
+            'Subtítulo editável via CMS',
+            'Cards de cases pré-definidos',
+            'Botão "View All Stories" editável',
+            'Layout em carousel responsivo'
           ]
         },
         {
           name: 'CTA Section',
           description: 'Chamada final para ação',
           components: [
-            'Título: "Ready to Transform Your Business?"',
-            'Descrição motivacional',
-            'Botão "Get Started Today"'
+            'Título editável via CMS',
+            'Descrição editável via CMS',
+            'Botão principal editável via CMS',
+            'Background com gradiente'
           ]
         }
       ]
@@ -87,45 +108,43 @@ const SiteStructure = () => {
       sections: [
         {
           name: 'Solutions Hero',
-          description: 'Hero section específico para soluções',
-          components: ['Título principal sobre soluções de IA', 'Descrição das capacidades', 'CTA para explorar soluções']
+          description: 'Hero section da página de soluções',
+          components: [
+            'Título principal editável via CMS',
+            'Subtítulo editável via CMS',
+            'Descrição detalhada editável via CMS',
+            'Botão CTA editável via CMS'
+          ]
         },
         {
-          name: 'Solutions Grid',
-          description: 'Grid detalhado com todas as soluções disponíveis',
+          name: 'CMS Solutions Grid',
+          description: 'Grid de soluções gerenciado pelo CMS',
           components: [
-            'Smart Discovery for Anonymous Visitors (B2B, B2C)',
-            'Predictive Personalization for Identified Users (B2B, B2C, B2B2C, D2C)',
-            'Industrial Recommendation Intelligence (B2B, B2B2C)',
-            'Predictive Campaign Targeting (B2C)',
-            'Smart Price Optimization (B2B, B2C, B2B2C, D2C)',
-            'Adaptive Demand Forecasting (B2B, B2C)'
+            'Cards carregados da tabela cms_solutions_cards',
+            'Cada card inclui: título, descrição, features, foco, resultado',
+            'Ícones dinâmicos carregados do Lucide React',
+            'Cores e gradientes personalizáveis',
+            'Sistema de ordenação',
+            'Suporte a múltiplos idiomas'
           ]
         },
         {
           name: 'Process Flow',
-          description: 'Jornada de implementação da IA',
+          description: 'Fluxo do processo de implementação',
           components: [
-            'Discovery & Business Angle Definition',
-            'Data Sample & Anonymization',
-            'Model Training & Fine-tuning',
-            'Performance Evaluation',
-            'Integration & Recommendations'
+            'Dados estáticos do arquivo processData.ts',
+            'Visualização em linha temporal',
+            'Animações de entrada sequencial'
           ]
         },
         {
           name: 'Sandbox Environment',
-          description: 'Ambiente de testes sem risco',
+          description: 'Informações sobre ambiente de testes',
           components: [
-            'Risk-Free Testing Environment',
-            'Expert Consulting & Support',
-            '30-Day Concrete Results'
+            'Seção estática com informações sobre o sandbox',
+            'Cards informativos sobre benefícios',
+            'CTA para começar teste'
           ]
-        },
-        {
-          name: 'Solutions CTA',
-          description: 'Chamada para ação específica de soluções',
-          components: ['CTA personalizado para começar transformação']
         }
       ]
     },
@@ -137,39 +156,54 @@ const SiteStructure = () => {
         {
           name: 'Success Stories Hero',
           description: 'Hero section dos cases de sucesso',
-          components: ['Título inspiracional', 'Descrição sobre transformação de empresas']
+          components: [
+            'Título principal editável via CMS',
+            'Subtítulo editável via CMS',
+            'Descrição editável via CMS'
+          ]
         },
         {
           name: 'Metrics Section',
-          description: 'Métricas importantes dos resultados',
+          description: 'Métricas de performance da empresa',
           components: [
-            'Average ROI: 20x',
-            'Companies Served: 500+',
-            'Cost Savings Generated: $50M+'
+            'Título da seção editável via CMS',
+            'Cards de métricas editáveis via CMS',
+            'Animações de contagem',
+            'Layout responsivo'
           ]
         },
         {
           name: 'Stories Grid',
-          description: 'Grid detalhado dos cases de sucesso',
+          description: 'Grid de cases de sucesso gerenciado pelo CMS',
           components: [
-            'TechCorp Industries - Manufacturing (75% downtime reduction, 40% cost savings)',
-            'FinanceFlow - Financial Services (99.2% fraud detection, 60% false positives reduction)',
-            'RetailMax - E-commerce (45% revenue growth, 30% customer retention increase)'
+            'Cards carregados da tabela cms_success_stories_cards',
+            'Cada card inclui: empresa, indústria, desafio, solução, métricas',
+            'Imagens personalizáveis',
+            'Filtros por segmento',
+            'Sistema de ordenação',
+            'Suporte a múltiplos idiomas'
           ]
         },
         {
           name: 'Testimonials Section',
-          description: 'Depoimentos dos clientes',
+          description: 'Depoimentos de clientes gerenciados pelo CMS',
           components: [
-            'David Kim, CTO at DataTech',
-            'Emma Watson, CEO at InnovateCorp',
-            'Robert Taylor, VP at FutureTech'
+            'Título da seção editável via CMS',
+            'Subtítulo editável via CMS',
+            'Depoimentos carregados da tabela cms_testimonials',
+            'Cada depoimento inclui: citação, autor, título, empresa, rating',
+            'Layout em carousel',
+            'Sistema de ordenação'
           ]
         },
         {
           name: 'Success Stories CTA',
-          description: 'Chamada para começar transformação',
-          components: ['CTA para escrever sua própria história de sucesso']
+          description: 'Chamada para ação da página',
+          components: [
+            'Título editável via CMS',
+            'Descrição editável via CMS',
+            'Botão CTA editável via CMS'
+          ]
         }
       ]
     },
@@ -181,50 +215,61 @@ const SiteStructure = () => {
         {
           name: 'Contact Hero',
           description: 'Hero section da página de contato',
-          components: ['Título: "Let\'s Start a Conversation"', 'Descrição motivacional']
+          components: [
+            'Título principal editável via CMS',
+            'Subtítulo editável via CMS'
+          ]
         },
         {
           name: 'Contact Info Cards',
-          description: 'Informações de contato organizadas em cards',
+          description: 'Cards com informações de contato',
           components: [
-            'Email Us - Send us an email anytime',
-            'Call Us - Mon-Fri from 8am to 6pm',
-            'Visit Us - Come say hello at our headquarters'
+            'Dados estáticos: Email, Telefone, Endereço',
+            'Ícones e layout responsivo',
+            'Links funcionais para email e telefone'
           ]
         },
         {
           name: 'Contact Form',
-          description: 'Formulário de contato completo',
+          description: 'Formulário de contato funcional',
           components: [
-            'Full Name, Email Address, Company, Phone Number',
-            'Subject (General Inquiry, Request Demo, Partnership, Technical Support)',
-            'Message field',
-            'Send Message button'
+            'Campos: Nome, Email, Empresa, Telefone, Assunto, Mensagem',
+            'Validação de formulário com React Hook Form',
+            'Seletor de assunto com opções predefinidas',
+            'Feedback visual de envio'
           ]
         },
         {
           name: 'FAQ Section',
-          description: 'Perguntas frequentes com busca',
+          description: 'Seção de perguntas frequentes gerenciada pelo CMS',
           components: [
-            'Search functionality for FAQs',
-            '10 perguntas frequentes detalhadas',
-            'Respostas abrangentes sobre implementação, ROI, suporte, etc.'
+            'Título da seção editável via CMS',
+            'Barra de busca funcional',
+            'FAQs carregadas da tabela cms_faq_cards',
+            'Cada FAQ inclui: pergunta, resposta, ordenação',
+            'Sistema de busca em tempo real',
+            'Acordeão expansível'
           ]
         },
         {
           name: 'World Map',
           description: 'Mapa global com escritórios',
           components: [
-            'Brazil (Headquarters)',
-            'United States (Branch Office)',
-            'Italy (Branch Office)',
-            'Informações de contato para cada localização'
+            'Visualização de mapa mundial',
+            'Marcadores para: Brasil (HQ), EUA, Itália',
+            'Informações detalhadas de cada escritório',
+            'Layout responsivo'
           ]
         },
         {
           name: 'Calendly Section',
-          description: 'Agendamento direto com especialistas',
-          components: ['Integração com Calendly', 'CTA para agendar sessão']
+          description: 'Integração com Calendly para agendamentos',
+          components: [
+            'Título editável via CMS',
+            'Descrição editável via CMS',
+            'Botão para abrir modal do Calendly',
+            'Integração com widget do Calendly'
+          ]
         }
       ]
     },
@@ -236,12 +281,20 @@ const SiteStructure = () => {
         {
           name: 'Privacy Header',
           description: 'Cabeçalho da política de privacidade',
-          components: ['Título da política', 'Data de última atualização', 'Descrição sobre prioridade da privacidade']
+          components: [
+            'Título da página',
+            'Data de última atualização',
+            'Introdução sobre privacidade'
+          ]
         },
         {
           name: 'Privacy Content',
-          description: 'Conteúdo detalhado da política',
-          components: ['Documento legal completo sobre tratamento de dados']
+          description: 'Conteúdo legal da política',
+          components: [
+            'Documento completo sobre tratamento de dados',
+            'Seções organizadas por tópicos',
+            'Linguagem técnica e legal'
+          ]
         }
       ]
     },
@@ -253,12 +306,20 @@ const SiteStructure = () => {
         {
           name: 'Ethics Header',
           description: 'Cabeçalho da política de ética',
-          components: ['Título da política', 'Data de última atualização', 'Compromisso com IA ética']
+          components: [
+            'Título da página',
+            'Data de última atualização',
+            'Compromisso com IA ética'
+          ]
         },
         {
           name: 'Ethics Content',
-          description: 'Conteúdo detalhado da política ética',
-          components: ['Documento sobre práticas empresariais responsáveis']
+          description: 'Conteúdo da política ética',
+          components: [
+            'Princípios de IA responsável',
+            'Diretrizes éticas da empresa',
+            'Compromissos com stakeholders'
+          ]
         }
       ]
     }
@@ -267,40 +328,150 @@ const SiteStructure = () => {
   const globalComponents = [
     {
       name: 'Header/Navigation',
-      description: 'Cabeçalho global presente em todas as páginas',
+      description: 'Cabeçalho global responsivo presente em todas as páginas',
       components: [
-        'Logo Infinity6.ai',
-        'Menu: Home, Solutions, Success Stories, Contact Us',
-        'Language Selector (EN/PT)',
-        'Botão "Get Started"',
-        'Design responsivo com menu mobile'
+        'Logo Infinity6.ai com link para home',
+        'Menu principal: Home, Solutions, Success Stories, Contact',
+        'Seletor de idioma (EN/PT) com Context API',
+        'Botão "Get Started" destacado',
+        'Menu hambúrguer para dispositivos móveis',
+        'Navegação responsiva com animações',
+        'Estados ativos para página atual'
       ]
     },
     {
       name: 'Footer',
-      description: 'Rodapé global presente em todas as páginas',
+      description: 'Rodapé global com informações da empresa',
       components: [
         'Descrição da empresa',
-        'Quick Links (Home, Solutions, Success Stories, Contact)',
-        'Informações de contato',
-        'Links para Privacy Policy e Ethics Policy',
-        'Copyright © 2024 Infinity6.ai'
+        'Links rápidos organizados por categoria',
+        'Informações de contato com links funcionais',
+        'Links para políticas (Privacy, Ethics)',
+        'Copyright dinâmico com ano atual',
+        'Layout responsivo em colunas'
+      ]
+    },
+    {
+      name: 'Language Context',
+      description: 'Sistema de internacionalização global',
+      components: [
+        'Context API para gerenciamento de idioma',
+        'Suporte a Português e Inglês',
+        'Persistência da escolha do usuário',
+        'Tradução automática de interfaces',
+        'Carregamento dinâmico de conteúdo por idioma'
+      ]
+    }
+  ];
+
+  const cmsFeatures = [
+    {
+      name: 'Gestão de Conteúdo',
+      description: 'Sistema completo de gerenciamento de conteúdo',
+      features: [
+        'Editor de conteúdo por página e idioma',
+        'Campos organizados por seções',
+        'Suporte a texto, textarea e seleção de ícones',
+        'Preview em tempo real das mudanças',
+        'Sistema de salvamento automático'
+      ]
+    },
+    {
+      name: 'Gestão de Cards Dinâmicos',
+      description: 'Gerenciamento de cards em várias seções',
+      features: [
+        'Results Cards: ícone, título, descrição, cores',
+        'Solutions Cards: título, descrição, features, ícone',
+        'Success Stories Cards: empresa, métricas, imagens',
+        'FAQ Cards: pergunta, resposta, ordenação',
+        'Testimonials: citação, autor, empresa, rating'
+      ]
+    },
+    {
+      name: 'SEO Management',
+      description: 'Otimização para motores de busca',
+      features: [
+        'Meta título e descrição por página',
+        'URLs canônicas personalizáveis',
+        'Configuração de indexação (index/noindex)',
+        'Configuração de follow/nofollow',
+        'Slugs personalizados para URLs'
+      ]
+    },
+    {
+      name: 'Sistema de Autenticação',
+      description: 'Controle de acesso ao CMS',
+      features: [
+        'Login seguro com credenciais',
+        'Diferentes níveis de permissão (admin, editor, viewer)',
+        'Sessões persistentes',
+        'Rotas protegidas',
+        'Logout automático por inatividade'
+      ]
+    }
+  ];
+
+  const technicalFeatures = [
+    {
+      name: 'Arquitetura Frontend',
+      description: 'Stack tecnológico moderno',
+      components: [
+        'React 18 com TypeScript',
+        'Vite para build e desenvolvimento',
+        'Tailwind CSS para estilização',
+        'Shadcn/UI para componentes',
+        'React Router para navegação',
+        'Context API para estado global'
+      ]
+    },
+    {
+      name: 'Backend e Banco de Dados',
+      description: 'Infraestrutura robusta com Supabase',
+      components: [
+        'Supabase como backend-as-a-service',
+        'PostgreSQL como banco de dados',
+        'Row Level Security (RLS) para segurança',
+        'Triggers automáticos para updated_at',
+        'Relacionamentos entre tabelas otimizados'
+      ]
+    },
+    {
+      name: 'Performance e Monitoramento',
+      description: 'Otimizações e acompanhamento',
+      components: [
+        'Hook usePerformanceMonitor para métricas',
+        'Sistema de logging estruturado',
+        'Lazy loading de componentes',
+        'Otimização de imagens',
+        'Cache de dados quando apropriado'
+      ]
+    },
+    {
+      name: 'Experiência do Usuário',
+      description: 'Interface moderna e responsiva',
+      components: [
+        'Design responsivo para todos os dispositivos',
+        'Animações suaves com Tailwind',
+        'Estados de loading e error',
+        'Toasts para feedback do usuário',
+        'Acessibilidade com ARIA labels'
       ]
     }
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Estrutura do Site</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Estrutura Atual do Site</h1>
         <p className="text-gray-600">
-          Documentação completa da estrutura do site Infinity6.ai, organizada página por página com todas as seções e componentes.
+          Documentação completa e atualizada da estrutura do site Infinity6.ai, incluindo todas as páginas, 
+          seções, componentes e funcionalidades do CMS implementadas.
         </p>
       </div>
 
       <Separator />
 
-      {/* Global Components */}
+      {/* Componentes Globais */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -328,7 +499,7 @@ const SiteStructure = () => {
         </CardContent>
       </Card>
 
-      {/* Site Pages */}
+      {/* Páginas do Site */}
       <div className="space-y-6">
         <h2 className="text-2xl font-semibold text-gray-900">Páginas do Site</h2>
         
@@ -361,12 +532,69 @@ const SiteStructure = () => {
         ))}
       </div>
 
-      {/* Statistics Summary */}
+      {/* Funcionalidades do CMS */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="h-5 w-5" />
+            Funcionalidades do CMS
+          </CardTitle>
+          <CardDescription>
+            Sistema de gerenciamento de conteúdo implementado
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {cmsFeatures.map((feature, index) => (
+            <div key={index} className="border rounded-lg p-4">
+              <h4 className="font-semibold text-gray-900 mb-2">{feature.name}</h4>
+              <p className="text-sm text-gray-600 mb-3">{feature.description}</p>
+              <div className="space-y-2">
+                {feature.features.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
+                    <span className="text-sm text-gray-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Aspectos Técnicos */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Database className="h-5 w-5" />
+            Aspectos Técnicos
+          </CardTitle>
+          <CardDescription>
+            Arquitetura e tecnologias implementadas
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {technicalFeatures.map((feature, index) => (
+            <div key={index} className="border rounded-lg p-4">
+              <h4 className="font-semibold text-gray-900 mb-2">{feature.name}</h4>
+              <p className="text-sm text-gray-600 mb-3">{feature.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {feature.components.map((item, i) => (
+                  <Badge key={i} variant="outline" className="text-xs">
+                    {item}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Resumo Estatístico */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5" />
-            Resumo da Estrutura
+            Resumo da Estrutura Atual
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -382,12 +610,42 @@ const SiteStructure = () => {
               <div className="text-sm text-gray-600">Seções Totais</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">2</div>
-              <div className="text-sm text-gray-600">Idiomas (EN/PT)</div>
+              <div className="text-2xl font-bold text-purple-600">8</div>
+              <div className="text-sm text-gray-600">Tabelas CMS</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">100%</div>
-              <div className="text-sm text-gray-600">Responsivo</div>
+              <div className="text-2xl font-bold text-orange-600">2</div>
+              <div className="text-sm text-gray-600">Idiomas (EN/PT)</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Tabelas do Banco de Dados */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            Estrutura do Banco de Dados
+          </CardTitle>
+          <CardDescription>
+            Tabelas implementadas no Supabase para o CMS
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Badge variant="outline" className="text-xs">cms_pages - Páginas do site</Badge>
+              <Badge variant="outline" className="text-xs">cms_page_content - Conteúdo editável</Badge>
+              <Badge variant="outline" className="text-xs">cms_seo - Dados de SEO</Badge>
+              <Badge variant="outline" className="text-xs">cms_users - Usuários do CMS</Badge>
+            </div>
+            <div className="space-y-2">
+              <Badge variant="outline" className="text-xs">cms_results_cards - Cards de resultados</Badge>
+              <Badge variant="outline" className="text-xs">cms_solutions_cards - Cards de soluções</Badge>
+              <Badge variant="outline" className="text-xs">cms_success_stories_cards - Cases de sucesso</Badge>
+              <Badge variant="outline" className="text-xs">cms_testimonials - Depoimentos</Badge>
+              <Badge variant="outline" className="text-xs">cms_faq_cards - Perguntas frequentes</Badge>
             </div>
           </div>
         </CardContent>
