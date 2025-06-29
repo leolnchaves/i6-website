@@ -1,3 +1,4 @@
+
 interface ContentField {
   section: string;
   field: string;
@@ -25,6 +26,17 @@ export const resultsHeroFields: ContentField[] = [
 export const compactSolutionsHeroFields: ContentField[] = [
   { section: 'compactSolutionsHero', field: 'title', label: 'Título da Seção', type: 'input' },
   { section: 'compactSolutionsHero', field: 'subtitle', label: 'Subtítulo da Seção', type: 'input' },
+];
+
+export const statsFields: ContentField[] = [
+  { section: 'stats', field: 'stat1Value', label: 'Valor da Estatística 1', type: 'input' },
+  { section: 'stats', field: 'stat1Label', label: 'Label da Estatística 1', type: 'input' },
+  { section: 'stats', field: 'stat2Value', label: 'Valor da Estatística 2', type: 'input' },
+  { section: 'stats', field: 'stat2Label', label: 'Label da Estatística 2', type: 'input' },
+  { section: 'stats', field: 'stat3Value', label: 'Valor da Estatística 3', type: 'input' },
+  { section: 'stats', field: 'stat3Label', label: 'Label da Estatística 3', type: 'input' },
+  { section: 'stats', field: 'stat4Value', label: 'Valor da Estatística 4', type: 'input' },
+  { section: 'stats', field: 'stat4Label', label: 'Label da Estatística 4', type: 'input' },
 ];
 
 export type { ContentField };

@@ -1,4 +1,5 @@
-import { homeHeroFields, resultsHeroFields, compactSolutionsHeroFields } from './HomeFieldsConfig';
+
+import { homeHeroFields, resultsHeroFields, compactSolutionsHeroFields, statsFields } from './HomeFieldsConfig';
 import { successStoriesHeroFields, metricsFields, testimonialsFields, ctaFields } from './SuccessStoriesFieldsConfig';
 import { contactHeroFields, faqFields } from './ContactFieldsConfig';
 import { solutionsHeroFields } from './SolutionsFieldsConfig';
@@ -22,6 +23,7 @@ export const getAccordionFields = (
       heroFields: solutionsHeroFields,
       resultsFields: [], // Solutions page only has hero section
       compactSolutionsFields: [],
+      statsFields: [],
       ctaFields: []
     };
   }
@@ -31,6 +33,7 @@ export const getAccordionFields = (
       heroFields: homeHeroFields,
       resultsFields: resultsHeroFields,
       compactSolutionsFields: compactSolutionsHeroFields,
+      statsFields: statsFields,
       ctaFields: []
     };
   }
@@ -40,6 +43,7 @@ export const getAccordionFields = (
       heroFields: successStoriesHeroFields,
       resultsFields: metricsFields,
       compactSolutionsFields: testimonialsFields,
+      statsFields: [],
       ctaFields: ctaFields
     };
   }
@@ -49,6 +53,7 @@ export const getAccordionFields = (
       heroFields: contactHeroFields,
       resultsFields: faqFields,
       compactSolutionsFields: [],
+      statsFields: [],
       ctaFields: []
     };
   }
@@ -57,6 +62,7 @@ export const getAccordionFields = (
     heroFields: [],
     resultsFields: [],
     compactSolutionsFields: [],
+    statsFields: [],
     ctaFields: []
   };
 };
@@ -67,14 +73,14 @@ export const getPageFields = (
   isContactPage: boolean,
   isSolutionsPage: boolean
 ): ContentField[] => {
-  const { heroFields, resultsFields, compactSolutionsFields, ctaFields } = getAccordionFields(
+  const { heroFields, resultsFields, compactSolutionsFields, statsFields, ctaFields } = getAccordionFields(
     isHomePage, 
     isSuccessStoriesPage, 
     isContactPage,
     isSolutionsPage
   );
   
-  return [...heroFields, ...resultsFields, ...compactSolutionsFields, ...ctaFields];
+  return [...heroFields, ...resultsFields, ...compactSolutionsFields, ...statsFields, ...ctaFields];
 };
 
 export type { ContentField };

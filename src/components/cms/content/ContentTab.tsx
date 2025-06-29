@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -75,6 +76,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
               heroFields={accordionFields.heroFields}
               resultsFields={accordionFields.resultsFields}
               compactSolutionsFields={accordionFields.compactSolutionsFields}
+              statsFields={accordionFields.statsFields}
               ctaFields={accordionFields.ctaFields}
               formData={contentFormData}
               selectedPage={selectedPage}
