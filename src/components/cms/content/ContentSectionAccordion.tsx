@@ -17,6 +17,7 @@ interface ContentSectionAccordionProps {
   heroFields: ContentField[];
   resultsFields: ContentField[];
   compactSolutionsFields: ContentField[];
+  statsFields: ContentField[];
   ctaFields?: ContentField[];
   formData: { [key: string]: string };
   selectedPage: string;
@@ -30,6 +31,7 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   heroFields,
   resultsFields,
   compactSolutionsFields,
+  statsFields,
   ctaFields = [],
   formData,
   selectedPage,
@@ -173,9 +175,27 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
         </AccordionItem>
       )}
 
-      {/* Quarta seção - CTA (apenas para success stories) */}
-      {isSuccessStoriesPage && ctaFields.length > 0 && (
+      {/* Quarta seção - Stats (apenas para home page) */}
+      {!isContactPage && !isSuccessStoriesPage && !isSolutionsPage && statsFields.length > 0 && (
         <AccordionItem value="fourth-section">
+          <AccordionTrigger className="text-lg font-semibold">
+            Seção Stats - Estatísticas
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-4">
+              <ContentFieldRenderer
+                fields={statsFields}
+                formData={formData}
+                onFieldChange={onFieldChange}
+              />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      )}
+
+      {/* Quinta seção - CTA (apenas para success stories) */}
+      {isSuccessStoriesPage && ctaFields.length > 0 && (
+        <AccordionItem value="fifth-section">
           <AccordionTrigger className="text-lg font-semibold">
             Seção CTA - Chamada para Ação
           </AccordionTrigger>
