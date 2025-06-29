@@ -10,10 +10,21 @@ interface ModernSolutionCardProps {
 }
 
 const ModernSolutionCard = ({ title, description, icon, index }: ModernSolutionCardProps) => {
-  // Função para obter o ícone do Lucide
+  // Função para obter o ícone do Lucide baseado no nome do banco
   const getIcon = (iconName: string) => {
-    const iconKey = iconName.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-    const IconComponent = (LucideIcons as any)[iconKey] || (LucideIcons as any)[iconName] || LucideIcons.Building2;
+    // Converter de kebab-case para PascalCase (ex: "building-2" -> "Building2")
+    const pascalCase = iconName
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('');
+    
+    // Tentar buscar o ícone pelo nome em PascalCase
+    const IconComponent = (LucideIcons as any)[pascalCase] || 
+                          // Fallback: tentar o nome original
+                          (LucideIcons as any)[iconName] || 
+                          // Fallback final: usar Building2 como padrão
+                          LucideIcons.Building2;
+    
     return IconComponent;
   };
 
