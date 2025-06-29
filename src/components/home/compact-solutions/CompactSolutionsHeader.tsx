@@ -6,9 +6,16 @@ const CompactSolutionsHeader = () => {
   const { language } = useLanguage();
   const { getContent } = useCMSPageContent('home', language);
 
+  console.log('CompactSolutionsHeader - Getting CMS content for home page, language:', language);
+
   // Tentar buscar do CMS primeiro, senão usar as traduções como fallback
-  const title = getContent('compactSolutions', 'title') || 'Soluções';
-  const subtitle = getContent('compactSolutions', 'subtitle') || 'Inteligentes';
+  const title = getContent('compactSolutionsHero', 'title') || 'Soluções';
+  const subtitle = getContent('compactSolutionsHero', 'subtitle') || 'Inteligentes';
+
+  console.log('CompactSolutionsHeader - CMS content:', {
+    title: getContent('compactSolutionsHero', 'title'),
+    subtitle: getContent('compactSolutionsHero', 'subtitle')
+  });
 
   return (
     <div className="text-center mb-16 scroll-reveal">

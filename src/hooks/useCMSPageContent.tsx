@@ -21,6 +21,8 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
       setLoading(true);
       setError(null);
 
+      console.log('useCMSPageContent - Fetching content for page:', pageSlug, 'language:', language);
+
       // Primeiro, buscar a página pelo slug
       const { data: pageData, error: pageError } = await supabase
         .from('cms_pages')
@@ -41,6 +43,8 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
         return;
       }
 
+      console.log('useCMSPageContent - Found page ID:', pageData.id);
+
       // Depois, buscar o conteúdo da página
       const { data: contentData, error: contentError } = await supabase
         .from('cms_page_content')
@@ -54,13 +58,17 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
         return;
       }
 
+      console.log('useCMSPageContent - Raw content data:', contentData);
+
       // Organizar dados em formato útil
       const organizedContent: PageContent = {};
       contentData?.forEach(item => {
         const key = `${item.section_name}.${item.field_name}`;
         organizedContent[key] = item.content || '';
+        console.log('useCMSPageContent - Adding content:', key, '=', item.content);
       });
 
+      console.log('useCMSPageContent - Organized content:', organizedContent);
       setContent(organizedContent);
     } catch (err) {
       console.error('Error in fetchContent:', err);
@@ -77,7 +85,9 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
   // Função helper para obter conteúdo específico
   const getContent = useCallback((section: string, field: string, fallback: string = '') => {
     const key = `${section}.${field}`;
-    return content[key] || fallback;
+    const value = content[key] || fallback;
+    console.log('useCMSPageContent - getContent:', key, '=', value);
+    return value;
   }, [content]);
 
   return {
@@ -85,5 +95,6 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
     loading,
     error,
     getContent,
+    refetch: fetchContent,
   };
 };

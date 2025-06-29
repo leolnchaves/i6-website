@@ -50,12 +50,13 @@ const HeroSection = () => {
   // Get content with fallback to translations
   const getContentWithFallback = (section: string, field: string, translationKey: string) => {
     const cmsContent = getContent(section, field);
+    console.log('HeroSection - CMS content for', section, field, ':', cmsContent);
     return cmsContent || t(translationKey);
   };
 
   // Get demo URL from CMS with fallback and convert to embed format
   const getDemoUrl = () => {
-    const cmsUrl = getContent('hero', 'demoLink');
+    const cmsUrl = getContent('homeHero', 'demoLink');
     const fallbackUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0';
     
     if (!cmsUrl) return fallbackUrl;
@@ -104,22 +105,22 @@ const HeroSection = () => {
             <div className="animate-bounce-in">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 leading-tight">
                 <span className="block text-white font-light text-2xl sm:text-3xl md:text-4xl lg:text-7xl mb-4">
-                  {getContentWithFallback('hero', 'infinite', 'hero.infinite')}
+                  {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
                 </span>
                 <div className="relative inline-block w-full">
                   <span className="relative block text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl px-2 leading-tight">
-                    {getContentWithFallback('hero', 'possibilities', 'hero.possibilities')}
+                    {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
                   </span>
                 </div>
                 <span className="block text-white text-xl sm:text-2xl md:text-3xl lg:text-5xl mt-6 font-light">
-                  {getContentWithFallback('hero', 'poweredByAI', 'hero.poweredByAI')}
+                  {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
                 </span>
               </h1>
             </div>
             
             {/* Hero description */}
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-10 animate-slide-in-left font-medium px-4">
-              {getContentWithFallback('hero', 'description', 'hero.description')}
+              {getContentWithFallback('homeHero', 'description', 'hero.description')}
             </p>
             
             {/* Call-to-action buttons */}
@@ -129,7 +130,7 @@ const HeroSection = () => {
                 className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold"
                 onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
               >
-                {getContentWithFallback('hero', 'startJourney', 'hero.startJourney')}
+                {getContentWithFallback('homeHero', 'startJourney', 'hero.startJourney')}
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
               <Button 
@@ -137,7 +138,7 @@ const HeroSection = () => {
                 className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full backdrop-blur-sm font-semibold"
                 onClick={handleOpenVideoModal}
               >
-                {getContentWithFallback('hero', 'watchDemo', 'hero.watchDemo')}
+                {getContentWithFallback('homeHero', 'watchDemo', 'hero.watchDemo')}
               </Button>
             </div>
           </div>

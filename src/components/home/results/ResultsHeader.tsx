@@ -6,10 +6,18 @@ const ResultsHeader = () => {
   const { language, t } = useLanguage();
   const { getContent } = useCMSPageContent('home', language);
 
+  console.log('ResultsHeader - Getting CMS content for home page, language:', language);
+
   // Usar conteúdo do CMS se disponível, senão usar as traduções como fallback
-  const mainTitle = getContent('results', 'mainTitle') || t('results.mainTitle');
-  const mainSubtitle = getContent('results', 'mainSubtitle') || t('results.mainSubtitle');
-  const description = getContent('results', 'description');
+  const mainTitle = getContent('resultsHero', 'title') || t('results.mainTitle');
+  const mainSubtitle = getContent('resultsHero', 'subtitle') || t('results.mainSubtitle');
+  const description = getContent('resultsHero', 'description');
+
+  console.log('ResultsHeader - CMS content:', {
+    mainTitle: getContent('resultsHero', 'title'),
+    mainSubtitle: getContent('resultsHero', 'subtitle'),
+    description: getContent('resultsHero', 'description')
+  });
 
   return (
     <div className="text-center mb-16 scroll-reveal">
