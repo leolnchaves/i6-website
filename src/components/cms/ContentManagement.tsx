@@ -33,6 +33,9 @@ const ContentManagement = () => {
     getPageTitle,
   } = useContentManagement();
 
+  // Filter out the components page from the content management
+  const filteredPages = pages.filter(page => page.slug !== 'components');
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -51,7 +54,7 @@ const ContentManagement = () => {
       </div>
 
       <PageSelector
-        pages={pages}
+        pages={filteredPages}
         selectedPage={selectedPage}
         selectedLanguage={selectedLanguage}
         onPageChange={setSelectedPage}
