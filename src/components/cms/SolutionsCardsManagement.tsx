@@ -391,8 +391,9 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Primeira linha - Título e Engine alinhados */}
+              {/* Primeira linha - Campos de conteúdo e campos técnicos */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Lado esquerdo - Campos de conteúdo */}
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor={`title-${index}`}>Título</Label>
@@ -413,8 +414,31 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                       placeholder="Digite o foco da solução"
                     />
                   </div>
+
+                  <div>
+                    <Label htmlFor={`description-${index}`}>Descrição</Label>
+                    <Textarea
+                      id={`description-${index}`}
+                      value={card.description}
+                      onChange={(e) => handleCardChange(index, 'description', e.target.value)}
+                      placeholder="Digite a descrição detalhada"
+                      rows={4}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor={`outcome-${index}`}>Resultados Esperados</Label>
+                    <Textarea
+                      id={`outcome-${index}`}
+                      value={card.outcome}
+                      onChange={(e) => handleCardChange(index, 'outcome', e.target.value)}
+                      placeholder="Digite os resultados esperados"
+                      rows={4}
+                    />
+                  </div>
                 </div>
 
+                {/* Lado direito - Engine e Features */}
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor={`engine-${index}`}>Engine</Label>
@@ -462,31 +486,6 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
                       </Button>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Segunda linha - Descrição e Resultados */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <Label htmlFor={`description-${index}`}>Descrição</Label>
-                  <Textarea
-                    id={`description-${index}`}
-                    value={card.description}
-                    onChange={(e) => handleCardChange(index, 'description', e.target.value)}
-                    placeholder="Digite a descrição detalhada"
-                    rows={4}
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor={`outcome-${index}`}>Resultados Esperados</Label>
-                  <Textarea
-                    id={`outcome-${index}`}
-                    value={card.outcome}
-                    onChange={(e) => handleCardChange(index, 'outcome', e.target.value)}
-                    placeholder="Digite os resultados esperados"
-                    rows={4}
-                  />
                 </div>
               </div>
 
