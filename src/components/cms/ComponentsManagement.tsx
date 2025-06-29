@@ -1,8 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Layers,
   Globe,
@@ -15,10 +17,14 @@ import {
   MapPin,
   Calendar,
   Search,
-  ChevronRight
+  ChevronRight,
+  Edit3
 } from 'lucide-react';
+import FooterManagement from './FooterManagement';
 
 const ComponentsManagement = () => {
+  const [activeTab, setActiveTab] = useState('overview');
+
   const crossSiteComponents = [
     {
       name: 'Header/Navigation',
@@ -46,7 +52,8 @@ const ComponentsManagement = () => {
         'Informações de contato',
         'Links para políticas',
         'Copyright dinâmico'
-      ]
+      ],
+      editable: true
     },
     {
       name: 'Language Context',
@@ -174,168 +181,200 @@ const ComponentsManagement = () => {
     }
   };
 
+  const handleEditComponent = (componentName: string) => {
+    if (componentName === 'Footer') {
+      setActiveTab('footer');
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestão de Componentes</h1>
         <p className="text-gray-600">
           Gerenciamento de componentes cross-site utilizados globalmente no site Infinity6.ai.
-          Esta seção permite visualizar e futuramente gerenciar todos os componentes compartilhados.
+          Esta seção permite visualizar e gerenciar todos os componentes compartilhados.
         </p>
       </div>
 
-      <Separator />
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="overview">Visão Geral</TabsTrigger>
+          <TabsTrigger value="footer">Editar Footer</TabsTrigger>
+        </TabsList>
 
-      {/* Componentes Ativos */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Layers className="h-5 w-5" />
-            Componentes Cross-Site Ativos
-          </CardTitle>
-          <CardDescription>
-            Componentes globais implementados e em uso no site
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {crossSiteComponents.map((component, index) => (
-            <div key={index} className="border rounded-lg p-6 hover:shadow-sm transition-shadow">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <component.icon className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">{component.name}</h4>
-                    <p className="text-sm text-gray-600">{component.description}</p>
-                  </div>
-                </div>
-                {getStatusBadge(component.status)}
-              </div>
+        <TabsContent value="overview" className="space-y-8">
+          <Separator />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <h5 className="text-sm font-medium text-gray-700 mb-2">Páginas que utilizam:</h5>
-                  <div className="flex flex-wrap gap-1">
-                    {component.pages.map((page, i) => (
-                      <Badge key={i} variant="outline" className="text-xs">
-                        {page}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h5 className="text-sm font-medium text-gray-700 mb-2">Funcionalidades:</h5>
-                  <div className="space-y-1">
-                    {component.features.slice(0, 3).map((feature, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                        <span className="text-sm text-gray-600">{feature}</span>
+          {/* Componentes Ativos */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Layers className="h-5 w-5" />
+                Componentes Cross-Site Ativos
+              </CardTitle>
+              <CardDescription>
+                Componentes globais implementados e em uso no site
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {crossSiteComponents.map((component, index) => (
+                <div key={index} className="border rounded-lg p-6 hover:shadow-sm transition-shadow">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                        <component.icon className="h-5 w-5 text-blue-600" />
                       </div>
-                    ))}
-                    {component.features.length > 3 && (
-                      <div className="text-xs text-gray-500 pl-3.5">
-                        +{component.features.length - 3} funcionalidades adicionais
+                      <div>
+                        <h4 className="font-semibold text-gray-900">{component.name}</h4>
+                        <p className="text-sm text-gray-600">{component.description}</p>
                       </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <span className="text-sm text-gray-500">
-                  Implementado • Em produção
-                </span>
-                <button className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                  Ver detalhes <ChevronRight className="h-3 w-3" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Componentes Futuros */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Componentes Planejados
-          </CardTitle>
-          <CardDescription>
-            Componentes em desenvolvimento ou planejamento futuro
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {upcomingComponents.map((component, index) => (
-            <div key={index} className="border rounded-lg p-6 hover:shadow-sm transition-shadow opacity-75">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center">
-                    <component.icon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">{component.name}</h4>
-                    <p className="text-sm text-gray-600">{component.description}</p>
-                  </div>
-                </div>
-                {getStatusBadge(component.status)}
-              </div>
-
-              <div>
-                <h5 className="text-sm font-medium text-gray-700 mb-2">Funcionalidades planejadas:</h5>
-                <div className="space-y-1">
-                  {component.features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
-                      <span className="text-sm text-gray-600">{feature}</span>
                     </div>
-                  ))}
+                    <div className="flex items-center gap-2">
+                      {getStatusBadge(component.status)}
+                      {component.editable && (
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditComponent(component.name)}
+                          className="flex items-center gap-1"
+                        >
+                          <Edit3 className="h-3 w-3" />
+                          Editar
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-700 mb-2">Páginas que utilizam:</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {component.pages.map((page, i) => (
+                          <Badge key={i} variant="outline" className="text-xs">
+                            {page}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-700 mb-2">Funcionalidades:</h5>
+                      <div className="space-y-1">
+                        {component.features.slice(0, 3).map((feature, i) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                            <span className="text-sm text-gray-600">{feature}</span>
+                          </div>
+                        ))}
+                        {component.features.length > 3 && (
+                          <div className="text-xs text-gray-500 pl-3.5">
+                            +{component.features.length - 3} funcionalidades adicionais
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-sm text-gray-500">
+                      Implementado • Em produção
+                    </span>
+                    <button className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                      Ver detalhes <ChevronRight className="h-3 w-3" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Componentes Futuros */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                Componentes Planejados
+              </CardTitle>
+              <CardDescription>
+                Componentes em desenvolvimento ou planejamento futuro
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {upcomingComponents.map((component, index) => (
+                <div key={index} className="border rounded-lg p-6 hover:shadow-sm transition-shadow opacity-75">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center">
+                        <component.icon className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900">{component.name}</h4>
+                        <p className="text-sm text-gray-600">{component.description}</p>
+                      </div>
+                    </div>
+                    {getStatusBadge(component.status)}
+                  </div>
+
+                  <div>
+                    <h5 className="text-sm font-medium text-gray-700 mb-2">Funcionalidades planejadas:</h5>
+                    <div className="space-y-1">
+                      {component.features.map((feature, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
+                          <span className="text-sm text-gray-600">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-sm text-gray-500">
+                      {component.status === 'Planejado' ? 'Roadmap 2025' : 'Em avaliação'}
+                    </span>
+                    <button className="text-sm text-gray-400 hover:text-gray-500 flex items-center gap-1" disabled>
+                      Em desenvolvimento <ChevronRight className="h-3 w-3" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Resumo Estatístico */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="h-5 w-5" />
+                Resumo dos Componentes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">{crossSiteComponents.length}</div>
+                  <div className="text-sm text-gray-600">Componentes Ativos</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">{upcomingComponents.filter(c => c.status === 'Planejado').length}</div>
+                  <div className="text-sm text-gray-600">Planejados</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-yellow-600">{upcomingComponents.filter(c => c.status === 'Em Análise').length}</div>
+                  <div className="text-sm text-gray-600">Em Análise</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-600">6</div>
+                  <div className="text-sm text-gray-600">Páginas Cobertas</div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <span className="text-sm text-gray-500">
-                  {component.status === 'Planejado' ? 'Roadmap 2025' : 'Em avaliação'}
-                </span>
-                <button className="text-sm text-gray-400 hover:text-gray-500 flex items-center gap-1" disabled>
-                  Em desenvolvimento <ChevronRight className="h-3 w-3" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Resumo Estatístico */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
-            Resumo dos Componentes
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{crossSiteComponents.length}</div>
-              <div className="text-sm text-gray-600">Componentes Ativos</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{upcomingComponents.filter(c => c.status === 'Planejado').length}</div>
-              <div className="text-sm text-gray-600">Planejados</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600">{upcomingComponents.filter(c => c.status === 'Em Análise').length}</div>
-              <div className="text-sm text-gray-600">Em Análise</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">6</div>
-              <div className="text-sm text-gray-600">Páginas Cobertas</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        <TabsContent value="footer" className="space-y-6">
+          <FooterManagement />
+        </TabsContent>
+      </Tabs>
 
       {/* Nota sobre funcionalidade futura */}
       <Card className="bg-blue-50 border-blue-200">
@@ -347,9 +386,9 @@ const ComponentsManagement = () => {
             <div>
               <h4 className="font-medium text-blue-900 mb-1">Funcionalidade em Desenvolvimento</h4>
               <p className="text-sm text-blue-700">
-                Esta seção atualmente serve para documentação e visualização dos componentes cross-site. 
-                Em futuras atualizações, será possível editar e configurar estes componentes diretamente 
-                através do CMS, incluindo personalizações de estilo, conteúdo e comportamento.
+                Esta seção permite a gestão de componentes cross-site. Atualmente você pode editar o conteúdo do Footer. 
+                Em futuras atualizações, será possível configurar outros componentes diretamente através do CMS, 
+                incluindo personalizações de estilo, conteúdo e comportamento.
               </p>
             </div>
           </div>
