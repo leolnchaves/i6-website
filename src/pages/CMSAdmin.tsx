@@ -8,6 +8,7 @@ import CMSLogin from '@/components/cms/CMSLogin';
 import CMSProtectedRoute from '@/components/cms/CMSProtectedRoute';
 import SiteStructure from '@/components/cms/SiteStructure';
 import ContentManagement from '@/components/cms/ContentManagement';
+import ComponentsManagement from '@/components/cms/ComponentsManagement';
 
 /**
  * CMS Admin page - hidden admin interface
@@ -34,6 +35,7 @@ const CMSAdmin = () => {
               <Routes>
                 <Route path="/site-structure" element={<SiteStructure />} />
                 <Route path="/content" element={<ContentManagement />} />
+                <Route path="/components" element={<ComponentsManagement />} />
                 <Route path="/users" element={
                   <CMSProtectedRoute requiredRole="admin">
                     <div className="text-center py-12">

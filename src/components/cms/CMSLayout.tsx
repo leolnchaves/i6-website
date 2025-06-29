@@ -2,7 +2,7 @@
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, SidebarFooter } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { FileText, Settings, Globe, Users, BarChart3, LogOut, User, Menu } from 'lucide-react';
+import { FileText, Settings, Globe, Users, BarChart3, LogOut, User, Menu, Layers } from 'lucide-react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
 
@@ -16,6 +16,11 @@ const cmsMenuItems = [
     title: 'Conteúdo',
     url: '/cms-admin-i6/content',
     icon: FileText,
+  },
+  {
+    title: 'Componentes',
+    url: '/cms-admin-i6/components',
+    icon: Layers,
   },
   {
     title: 'Usuários',
