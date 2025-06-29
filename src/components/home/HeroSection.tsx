@@ -87,6 +87,17 @@ const HeroSection = () => {
     return cmsUrl.includes('/embed/') ? cmsUrl : fallbackUrl;
   };
 
+  console.log('HeroSection - CMS Loading:', cmsLoading);
+  console.log('HeroSection - All CMS content:', {
+    title: getContent('homeHero', 'title'),
+    subtitle: getContent('homeHero', 'subtitle'),
+    poweredByAI: getContent('homeHero', 'poweredByAI'),
+    description: getContent('homeHero', 'description'),
+    startJourney: getContent('homeHero', 'startJourney'),
+    watchDemo: getContent('homeHero', 'watchDemo'),
+    demoLink: getContent('homeHero', 'demoLink')
+  });
+
   return (
     <>
       {/* Main hero section */}

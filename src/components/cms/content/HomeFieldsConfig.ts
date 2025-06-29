@@ -10,6 +10,7 @@ interface ContentField {
 export const homeHeroFields: ContentField[] = [
   { section: 'homeHero', field: 'title', label: 'Título Principal', type: 'input' },
   { section: 'homeHero', field: 'subtitle', label: 'Subtítulo', type: 'input' },
+  { section: 'homeHero', field: 'poweredByAI', label: 'Powered by AI', type: 'input' },
   { section: 'homeHero', field: 'description', label: 'Descrição', type: 'textarea' },
   { section: 'homeHero', field: 'startJourney', label: 'Texto do Botão Principal', type: 'input' },
   { section: 'homeHero', field: 'watchDemo', label: 'Texto do Botão Demo', type: 'input' },
