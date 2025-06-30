@@ -306,5 +306,32 @@ export const enTranslations = {
   // 404 Page
   'notFound.title': '404',
   'notFound.subtitle': 'Oops! Page not found',
-  'notFound.backHome': 'Return to Home'
+  'notFound.backHome': 'Return to Home',
+
+  // Cookie Consent
+  'cookies.banner.title': 'Cookie Settings',
+  'cookies.banner.description': 'We use cookies to improve your experience and analyze site usage. You can customize your preferences at any time.',
+  'cookies.banner.acceptAll': 'Accept All',
+  'cookies.banner.rejectAll': 'Essential Only',
+  'cookies.banner.customize': 'Customize',
+  'cookies.banner.compliance': 'In compliance with GDPR and LGPD',
+  
+  'cookies.modal.title': 'Cookie Settings',
+  'cookies.modal.description': 'Manage your cookie preferences. You can change these settings at any time.',
+  'cookies.modal.required': 'Required',
+  'cookies.modal.cookiesUsed': 'Cookies used',
+  'cookies.modal.privacyTitle': 'Privacy Information',
+  'cookies.modal.privacyDescription': 'We respect your privacy and are compliant with GDPR (Europe) and LGPD (Brazil) laws. Your data is processed securely and transparently. You can change your preferences or withdraw consent at any time.',
+  'cookies.modal.rejectAll': 'Reject All',
+  'cookies.modal.savePreferences': 'Save Preferences',
+  'cookies.modal.acceptAll': 'Accept All',
+  
+  'cookies.categories.essential.name': 'Essential',
+  'cookies.categories.essential.description': 'Cookies necessary for the basic functioning of the site. Cannot be disabled.',
+  'cookies.categories.analytics.name': 'Analytics',
+  'cookies.categories.analytics.description': 'Cookies that help us understand how visitors interact with the site.',
+  'cookies.categories.marketing.name': 'Marketing',
+  'cookies.categories.marketing.description': 'Cookies used to deliver relevant ads and marketing campaigns.',
+  'cookies.categories.preferences.name': 'Preferences',
+  'cookies.categories.preferences.description': 'Cookies that remember your choices and personalize your experience.',
 };

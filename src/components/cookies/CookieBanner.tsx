@@ -4,10 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Settings, X } from 'lucide-react';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { CookieDetailsModal } from './CookieDetailsModal';
 
 const CookieBanner = () => {
   const { showBanner, acceptAll, rejectAll, setShowBanner } = useCookieConsent();
+  const { t } = useLanguage();
   const [showDetails, setShowDetails] = useState(false);
 
   if (!showBanner) return null;
@@ -19,11 +21,10 @@ const CookieBanner = () => {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <h3 className="font-semibold text-sm text-gray-900 mb-1">
-                Configurações de Cookies
+                {t('cookies.banner.title')}
               </h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Usamos cookies para melhorar sua experiência e analisar o uso do site. 
-                Você pode personalizar suas preferências a qualquer momento.
+                {t('cookies.banner.description')}
               </p>
             </div>
             <Button
@@ -43,7 +44,7 @@ const CookieBanner = () => {
                 size="sm"
                 className="flex-1 text-xs h-8 bg-primary hover:bg-primary/90"
               >
-                Aceitar Todos
+                {t('cookies.banner.acceptAll')}
               </Button>
               <Button
                 onClick={rejectAll}
@@ -51,7 +52,7 @@ const CookieBanner = () => {
                 size="sm"
                 className="flex-1 text-xs h-8"
               >
-                Apenas Essenciais
+                {t('cookies.banner.rejectAll')}
               </Button>
             </div>
             
@@ -62,12 +63,12 @@ const CookieBanner = () => {
               className="text-xs h-7 text-gray-600 hover:text-gray-800"
             >
               <Settings className="h-3 w-3 mr-1" />
-              Personalizar
+              {t('cookies.banner.customize')}
             </Button>
           </div>
           
           <div className="text-[10px] text-gray-500 pt-1 border-t">
-            <p>Em conformidade com LGPD e GDPR</p>
+            <p>{t('cookies.banner.compliance')}</p>
           </div>
         </Card>
       </div>

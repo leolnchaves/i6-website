@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cookieCategories, CookieConsent } from '@/types/cookies';
 
 interface CookieDetailsModalProps {
@@ -22,6 +23,7 @@ interface CookieDetailsModalProps {
 
 export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalProps) => {
   const { consent, saveConsent, updateConsent, acceptAll, rejectAll } = useCookieConsent();
+  const { t } = useLanguage();
   const [tempConsent, setTempConsent] = useState<CookieConsent>(consent);
 
   const handleSave = () => {
@@ -51,9 +53,9 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Configurações de Cookies</DialogTitle>
+          <DialogTitle>{t('cookies.modal.title')}</DialogTitle>
           <DialogDescription>
-            Gerencie suas preferências de cookies. Você pode alterar essas configurações a qualquer momento.
+            {t('cookies.modal.description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -66,11 +68,11 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
                     htmlFor={category.id} 
                     className="text-sm font-medium"
                   >
-                    {category.name}
+                    {t(`cookies.categories.${category.id}.name`)}
                   </Label>
                   {category.required && (
                     <Badge variant="secondary" className="text-xs">
-                      Obrigatório
+                      {t('cookies.modal.required')}
                     </Badge>
                   )}
                 </div>
@@ -83,11 +85,11 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
               </div>
               
               <p className="text-sm text-gray-600">
-                {category.description}
+                {t(`cookies.categories.${category.id}.description`)}
               </p>
               
               <div className="space-y-1">
-                <p className="text-xs font-medium text-gray-700">Cookies utilizados:</p>
+                <p className="text-xs font-medium text-gray-700">{t('cookies.modal.cookiesUsed')}:</p>
                 <div className="flex flex-wrap gap-1">
                   {category.cookies.map((cookie) => (
                     <Badge key={cookie} variant="outline" className="text-xs">
@@ -102,23 +104,21 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
           ))}
 
           <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-            <h4 className="text-sm font-medium">Informações sobre Privacidade</h4>
+            <h4 className="text-sm font-medium">{t('cookies.modal.privacyTitle')}</h4>
             <p className="text-xs text-gray-600">
-              Respeitamos sua privacidade e estamos em conformidade com as leis LGPD (Brasil) e GDPR (Europa). 
-              Seus dados são processados de forma segura e transparente. Você pode alterar suas preferências 
-              ou retirar seu consentimento a qualquer momento.
+              {t('cookies.modal.privacyDescription')}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Button onClick={handleRejectAll} variant="outline" className="flex-1">
-              Rejeitar Todos
+              {t('cookies.modal.rejectAll')}
             </Button>
             <Button onClick={handleSave} variant="secondary" className="flex-1">
-              Salvar Preferências
+              {t('cookies.modal.savePreferences')}
             </Button>
             <Button onClick={handleAcceptAll} className="flex-1">
-              Aceitar Todos
+              {t('cookies.modal.acceptAll')}
             </Button>
           </div>
         </div>
