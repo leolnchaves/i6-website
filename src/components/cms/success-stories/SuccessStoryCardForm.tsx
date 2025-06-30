@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { ArrowLeft, Save } from 'lucide-react';
 
 interface SuccessStoryCard {
@@ -27,6 +28,7 @@ interface SuccessStoryCard {
   customer_title: string;
   image_url: string;
   is_active: boolean;
+  is_active_home: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -59,6 +61,7 @@ const SuccessStoryCardForm: React.FC<SuccessStoryCardFormProps> = ({
     customer_name: '',
     customer_title: '',
     image_url: '',
+    is_active_home: false,
   });
 
   const [saving, setSaving] = useState(false);
@@ -80,11 +83,12 @@ const SuccessStoryCardForm: React.FC<SuccessStoryCardFormProps> = ({
         customer_name: card.customer_name,
         customer_title: card.customer_title,
         image_url: card.image_url,
+        is_active_home: card.is_active_home,
       });
     }
   }, [card]);
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -112,6 +116,26 @@ const SuccessStoryCardForm: React.FC<SuccessStoryCardFormProps> = ({
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Card Settings */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Configurações do Card</h3>
+            <div className="flex items-center space-x-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <Switch
+                id="is_active_home"
+                checked={formData.is_active_home}
+                onCheckedChange={(checked) => handleInputChange('is_active_home', checked)}
+              />
+              <div className="space-y-1">
+                <Label htmlFor="is_active_home" className="text-sm font-medium">
+                  Card ativo (sincronizado em todos os idiomas)
+                </Label>
+                <p className="text-xs text-gray-600">
+                  Quando ativo, este card aparecerá na seção "Featured Stories" da página inicial
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Basic Information */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Informações Básicas</h3>
