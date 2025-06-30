@@ -22,8 +22,8 @@ interface HomeFeaturedStoryCardProps {
 
 const HomeFeaturedStoryCard = ({ card, index }: HomeFeaturedStoryCardProps) => {
   return (
-    <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white relative transform hover:scale-105">
-      <CardContent className="p-0">
+    <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white relative transform hover:scale-105 h-full flex flex-col">
+      <CardContent className="p-0 flex flex-col h-full">
         {/* Image Container with Industry Badge */}
         <div className="relative overflow-hidden h-48">
           <img 
@@ -46,16 +46,16 @@ const HomeFeaturedStoryCard = ({ card, index }: HomeFeaturedStoryCardProps) => {
           </div>
         </div>
 
-        {/* Content Container */}
-        <div className="p-6">
+        {/* Content Container - Uses flex-1 to fill remaining space */}
+        <div className="p-6 flex flex-col flex-1">
           {/* Company Name */}
           <h3 className="text-xl font-bold text-gray-900 mb-3">{card.company_name}</h3>
           
-          {/* Solution */}
-          <p className="text-gray-600 mb-6 leading-relaxed">{card.solution}</p>
+          {/* Solution - Takes up available space */}
+          <p className="text-gray-600 mb-6 leading-relaxed flex-1">{card.solution}</p>
           
-          {/* Metrics Grid */}
-          <div className="grid grid-cols-3 gap-3">
+          {/* Metrics Grid - Always at bottom */}
+          <div className="grid grid-cols-3 gap-3 mt-auto">
             <div className="text-center p-3 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg border border-blue-100/50">
               <div className="text-lg font-bold text-blue-600 mb-1">{card.metric1_value}</div>
               <div className="text-xs text-gray-600 leading-tight">{card.metric1_label}</div>
