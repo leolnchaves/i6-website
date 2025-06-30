@@ -26,6 +26,7 @@ export const resultsHeroFields: ContentField[] = [
 export const compactSolutionsHeroFields: ContentField[] = [
   { section: 'compactSolutionsHero', field: 'title', label: 'Título da Seção', type: 'input' },
   { section: 'compactSolutionsHero', field: 'subtitle', label: 'Subtítulo da Seção', type: 'input' },
+  { section: 'compactSolutionsHero', field: 'buttonText', label: 'Texto do Botão', type: 'input' },
 ];
 
 export const statsFields: ContentField[] = [

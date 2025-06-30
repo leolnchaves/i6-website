@@ -1,16 +1,22 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSolutionsCards } from '@/hooks/useSolutionsCards';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import CompactSolutionsHeader from './compact-solutions/CompactSolutionsHeader';
 import ModernSolutionCard from './compact-solutions/ModernSolutionCard';
+import ViewAllSolutionsButton from './compact-solutions/ViewAllSolutionsButton';
 
 const CompactSolutionsSection = () => {
   const { language } = useLanguage();
   const { cards, loading, error } = useSolutionsCards(language, 'solutions');
+  const { getContent } = useCMSPageContent('home', language);
 
   console.log('CompactSolutionsSection - Cards loaded:', cards?.length || 0);
   console.log('CompactSolutionsSection - Loading:', loading);
   console.log('CompactSolutionsSection - Error:', error);
+
+  // Get button text from CMS with fallback
+  const buttonText = getContent('compactSolutionsHero', 'buttonText', 'Ver Todas as Soluções');
 
   if (loading) {
     return (
@@ -67,17 +73,22 @@ const CompactSolutionsSection = () => {
         <CompactSolutionsHeader />
 
         {cards.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-            {cards.map((card, index) => (
-              <ModernSolutionCard
-                key={card.id}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                index={index}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+              {cards.map((card, index) => (
+                <ModernSolutionCard
+                  key={card.id}
+                  title={card.title}
+                  description={card.description}
+                  icon={card.icon}
+                  index={index}
+                />
+              ))}
+            </div>
+            
+            {/* View All Solutions Button */}
+            <ViewAllSolutionsButton buttonText={buttonText} />
+          </>
         ) : (
           <div className="text-center py-12 mt-16">
             <p className="text-gray-500 mb-4">Nenhuma solução disponível no momento</p>
