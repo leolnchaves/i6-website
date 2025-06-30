@@ -6,6 +6,7 @@ import { logger } from '@/utils/logger';
 import Header from './Header';
 import Footer from './Footer';
 import ErrorBoundary from './common/ErrorBoundary';
+import CookieConsentManager from './cookies/CookieConsentManager';
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,7 +14,7 @@ interface LayoutProps {
 
 /**
  * Main layout component that wraps all pages
- * Provides consistent header, footer, and error handling
+ * Provides consistent header, footer, error handling, and cookie consent
  * Includes navigation logging and performance monitoring
  */
 const Layout = ({ children }: LayoutProps) => {
@@ -49,6 +50,9 @@ const Layout = ({ children }: LayoutProps) => {
       <ErrorBoundary fallback={<div className="h-32 bg-gray-900" />}>
         <Footer />
       </ErrorBoundary>
+
+      {/* Cookie Consent Manager */}
+      <CookieConsentManager />
     </div>
   );
 };
