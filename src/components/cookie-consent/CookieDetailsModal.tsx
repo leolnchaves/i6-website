@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -39,6 +40,12 @@ const CookieDetailsModal = () => {
     });
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      hideDetails();
+    }
+  };
+
   const getCategoryIcon = (categoryId: string) => {
     switch (categoryId) {
       case 'necessary':
@@ -55,7 +62,7 @@ const CookieDetailsModal = () => {
   };
 
   return (
-    <Dialog open={showDetails} onOpenChange={(open) => !open && hideDetails()}>
+    <Dialog open={showDetails} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="space-y-4">
           <div className="flex items-center gap-3">
