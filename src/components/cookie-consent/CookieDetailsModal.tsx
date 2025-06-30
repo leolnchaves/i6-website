@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -17,7 +16,7 @@ import { CookiePreferences } from '@/types/cookieConsent';
 
 const CookieDetailsModal = () => {
   const { 
-    showDetails, 
+    showDetails: isDetailsVisible, 
     hideDetails, 
     preferences, 
     savePreferences, 
@@ -62,7 +61,7 @@ const CookieDetailsModal = () => {
   };
 
   return (
-    <Dialog open={showDetails} onOpenChange={handleOpenChange}>
+    <Dialog open={isDetailsVisible} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="space-y-4">
           <div className="flex items-center gap-3">

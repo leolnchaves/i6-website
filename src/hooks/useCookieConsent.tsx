@@ -146,7 +146,7 @@ export const useCookieConsent = () => {
     savePreferences(defaultPreferences);
   }, [savePreferences]);
 
-  const showDetails = useCallback(() => {
+  const openDetails = useCallback(() => {
     setState(prev => ({
       ...prev,
       showDetails: true,
@@ -177,7 +177,7 @@ export const useCookieConsent = () => {
     acceptAll,
     acceptNecessary,
     savePreferences,
-    showDetails,
+    showDetails: openDetails,
     hideDetails,
     resetConsent,
   };
