@@ -1,11 +1,10 @@
 
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import CookieBanner from './CookieBanner';
-import CookieSettingsButton from './CookieSettingsButton';
 
 /**
  * Main cookie consent manager component
- * Handles the display of cookie banner and settings button
+ * Handles the display of cookie banner
  */
 const CookieConsentManager = () => {
   const { consent } = useCookieConsent();
@@ -20,7 +19,6 @@ const CookieConsentManager = () => {
   return (
     <>
       <CookieBanner />
-      <CookieSettingsButton />
     </>
   );
 };

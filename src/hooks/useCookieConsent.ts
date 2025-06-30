@@ -7,7 +7,6 @@ const COOKIE_CONSENT_VERSION = '1.0';
 
 export const useCookieConsent = () => {
   const [consent, setConsent] = useState<CookieConsent>(defaultCookieConsent);
-  const [hasConsented, setHasConsented] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
 
   // Load consent from localStorage on mount
@@ -18,7 +17,6 @@ export const useCookieConsent = () => {
         const parsed = JSON.parse(savedConsent);
         if (parsed.version === COOKIE_CONSENT_VERSION) {
           setConsent(parsed.consent);
-          setHasConsented(true);
           setShowBanner(false);
         } else {
           // Version mismatch, show banner again
@@ -43,7 +41,6 @@ export const useCookieConsent = () => {
     
     localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(consentData));
     setConsent(newConsent);
-    setHasConsented(true);
     setShowBanner(false);
   }, []);
 
@@ -79,13 +76,11 @@ export const useCookieConsent = () => {
   const resetConsent = useCallback(() => {
     localStorage.removeItem(COOKIE_CONSENT_KEY);
     setConsent(defaultCookieConsent);
-    setHasConsented(false);
     setShowBanner(true);
   }, []);
 
   return {
     consent,
-    hasConsented,
     showBanner,
     saveConsent,
     acceptAll,
