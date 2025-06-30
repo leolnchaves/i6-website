@@ -5,6 +5,7 @@ import { useCMSContent } from '@/hooks/useCMSContent';
 import { useState, useEffect } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
 import HomeFeaturedStoryCard from './featured-stories/HomeFeaturedStoryCard';
+import ViewAllButton from './featured-stories/ViewAllButton';
 
 const FeaturedStoriesSection = () => {
   const { language } = useLanguage();
@@ -69,11 +70,15 @@ const FeaturedStoriesSection = () => {
         <FeaturedStoriesHeader />
 
         {homeCards.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {homeCards.map((card, index) => (
-              <HomeFeaturedStoryCard key={card.id} card={card} index={index} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              {homeCards.map((card, index) => (
+                <HomeFeaturedStoryCard key={card.id} card={card} index={index} />
+              ))}
+            </div>
+            
+            <ViewAllButton />
+          </>
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-500 mb-4">Nenhum case de sucesso destacado disponível no momento</p>
