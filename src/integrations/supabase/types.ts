@@ -303,6 +303,7 @@ export type Database = {
           image_url: string
           industry: string
           is_active: boolean
+          is_active_home: boolean
           language: string
           metric1_label: string
           metric1_value: string
@@ -326,6 +327,7 @@ export type Database = {
           image_url: string
           industry: string
           is_active?: boolean
+          is_active_home?: boolean
           language?: string
           metric1_label: string
           metric1_value: string
@@ -349,6 +351,7 @@ export type Database = {
           image_url?: string
           industry?: string
           is_active?: boolean
+          is_active_home?: boolean
           language?: string
           metric1_label?: string
           metric1_value?: string

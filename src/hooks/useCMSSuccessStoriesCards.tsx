@@ -23,6 +23,7 @@ interface SuccessStoryCard {
   customer_title: string;
   image_url: string;
   is_active: boolean;
+  is_active_home: boolean;
   created_at: string;
   updated_at: string;
 }
