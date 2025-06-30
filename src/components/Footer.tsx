@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+import CookieSettingsButton from './cookie-consent/CookieSettingsButton';
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -70,6 +71,10 @@ const Footer = () => {
               >
                 {t('footer.ethics')}
               </Link>
+              <CookieSettingsButton 
+                variant="ghost"
+                className="text-gray-500 hover:text-orange-400 p-0 h-auto font-normal justify-start"
+              />
             </div>
           </div>
 
