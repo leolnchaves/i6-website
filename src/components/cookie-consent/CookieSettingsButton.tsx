@@ -6,7 +6,7 @@ import { useCookieConsent } from '@/hooks/useCookieConsent';
 
 interface CookieSettingsButtonProps {
   variant?: 'default' | 'ghost' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'default' | 'lg';
   className?: string;
 }
 
