@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -35,7 +36,9 @@ export const useCMSSuccessStoriesCards = () => {
   // Fetch cards for a specific page and language
   const fetchCards = useCallback(async (pageId: string, language: string = 'en') => {
     try {
+      console.log('useCMSSuccessStoriesCards - fetchCards called with:', { pageId, language });
       setLoading(true);
+      
       const { data, error } = await supabase
         .from('cms_success_stories_cards')
         .select('*')
@@ -44,7 +47,18 @@ export const useCMSSuccessStoriesCards = () => {
         .eq('is_active', true)
         .order('card_order');
 
+      console.log('useCMSSuccessStoriesCards - Supabase query result:', { data, error });
+
       if (error) throw error;
+      
+      console.log('useCMSSuccessStoriesCards - Cards fetched:', data?.length || 0);
+      console.log('useCMSSuccessStoriesCards - Cards data:', data);
+      
+      // Log cards with is_active_home = true
+      const homeActiveCards = data?.filter(card => card.is_active_home) || [];
+      console.log('useCMSSuccessStoriesCards - Cards with is_active_home=true:', homeActiveCards.length);
+      console.log('useCMSSuccessStoriesCards - Home active cards:', homeActiveCards);
+      
       setCards(data || []);
     } catch (error) {
       console.error('Error fetching success stories cards:', error);

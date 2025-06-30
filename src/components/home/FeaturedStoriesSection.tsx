@@ -14,14 +14,18 @@ const FeaturedStoriesSection = () => {
   const [pageId, setPageId] = useState<string>('');
 
   useEffect(() => {
+    console.log('FeaturedStoriesSection - Fetching pages...');
     fetchPages();
   }, [fetchPages]);
 
   useEffect(() => {
+    console.log('FeaturedStoriesSection - Pages changed:', pages);
     if (pages.length > 0) {
       const homePage = pages.find(p => p.slug === 'home');
+      console.log('FeaturedStoriesSection - Home page found:', homePage);
       if (homePage) {
         setPageId(homePage.id);
+        console.log('FeaturedStoriesSection - Fetching cards for page:', homePage.id, 'language:', language);
         fetchCards(homePage.id, language);
       }
     }
@@ -30,7 +34,12 @@ const FeaturedStoriesSection = () => {
   // Filter cards to show only active home cards
   const homeCards = cards.filter(card => card.is_active_home);
 
+  console.log('FeaturedStoriesSection - All cards:', cards);
+  console.log('FeaturedStoriesSection - Filtered homeCards:', homeCards);
+  console.log('FeaturedStoriesSection - Loading state:', loading);
+
   if (loading) {
+    console.log('FeaturedStoriesSection - Showing loading state');
     return (
       <section className="py-20 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
@@ -59,6 +68,8 @@ const FeaturedStoriesSection = () => {
     );
   }
 
+  console.log('FeaturedStoriesSection - Rendering main content, homeCards length:', homeCards.length);
+
   return (
     <section className="py-20 bg-white relative overflow-hidden">
       <div className="absolute inset-0">
@@ -83,6 +94,7 @@ const FeaturedStoriesSection = () => {
           <div className="text-center py-12">
             <p className="text-gray-500 mb-4">Nenhum case de sucesso destacado disponível no momento</p>
             <p className="text-sm text-gray-400">Os cases serão exibidos quando forem marcados como ativos para a home no CMS</p>
+            <ViewAllButton />
           </div>
         )}
       </div>
