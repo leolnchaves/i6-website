@@ -52,18 +52,20 @@ const FeaturedStoriesSection = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FeaturedStoriesHeader />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {[...Array(3)].map((_, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg p-6 animate-pulse">
-                <div className="h-48 bg-gray-200 rounded-xl mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-5xl">
+              {[...Array(3)].map((_, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-lg p-6 animate-pulse">
+                  <div className="h-48 bg-gray-200 rounded-xl mb-4"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-6 bg-gray-200 rounded mb-4"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -84,10 +86,18 @@ const FeaturedStoriesSection = () => {
 
         {fallbackCards.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {fallbackCards.map((card, index) => (
-                <HomeFeaturedStoryCard key={card.id} card={card} index={index} />
-              ))}
+            <div className="flex justify-center">
+              <div className={`grid gap-8 mb-12 max-w-5xl ${
+                fallbackCards.length === 1 
+                  ? 'grid-cols-1 max-w-md' 
+                  : fallbackCards.length === 2 
+                  ? 'grid-cols-1 md:grid-cols-2 max-w-3xl' 
+                  : 'grid-cols-1 md:grid-cols-3'
+              }`}>
+                {fallbackCards.map((card, index) => (
+                  <HomeFeaturedStoryCard key={card.id} card={card} index={index} />
+                ))}
+              </div>
             </div>
             
             <ViewAllButton />
