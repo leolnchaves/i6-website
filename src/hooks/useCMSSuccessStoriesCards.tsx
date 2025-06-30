@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -128,6 +127,43 @@ export const useCMSSuccessStoriesCards = () => {
     }
   }, [toast]);
 
+  // Update is_active_home field
+  const updateIsActiveHome = useCallback(async (cardId: string, isActiveHome: boolean) => {
+    try {
+      const { data, error } = await supabase
+        .from('cms_success_stories_cards')
+        .update({ is_active_home: isActiveHome })
+        .eq('id', cardId)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setCards(prev => 
+        prev.map(card => 
+          card.id === cardId ? { ...card, is_active_home: isActiveHome } : card
+        )
+      );
+
+      toast({
+        title: isActiveHome ? 'Card ativado na home' : 'Card desativado na home',
+        description: isActiveHome 
+          ? 'O card agora será exibido na seção de destaque da home.'
+          : 'O card não será mais exibido na seção de destaque da home.',
+      });
+
+      return data;
+    } catch (error) {
+      console.error('Error updating is_active_home:', error);
+      toast({
+        title: 'Erro ao atualizar status na home',
+        description: 'Não foi possível atualizar o status do card na home.',
+        variant: 'destructive',
+      });
+      throw error;
+    }
+  }, [toast]);
+
   // Delete a card (soft delete)
   const deleteCard = useCallback(async (cardId: string) => {
     try {
@@ -194,6 +230,7 @@ export const useCMSSuccessStoriesCards = () => {
     fetchCards,
     createCard,
     updateCard,
+    updateIsActiveHome,
     deleteCard,
     reorderCards,
   };

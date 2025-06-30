@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { ArrowLeft, Save } from 'lucide-react';
 
 interface SuccessStoryCard {
@@ -27,6 +27,7 @@ interface SuccessStoryCard {
   customer_title: string;
   image_url: string;
   is_active: boolean;
+  is_active_home: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -59,6 +60,7 @@ const SuccessStoryCardForm: React.FC<SuccessStoryCardFormProps> = ({
     customer_name: '',
     customer_title: '',
     image_url: '',
+    is_active_home: false,
   });
 
   const [saving, setSaving] = useState(false);
@@ -80,11 +82,12 @@ const SuccessStoryCardForm: React.FC<SuccessStoryCardFormProps> = ({
         customer_name: card.customer_name,
         customer_title: card.customer_title,
         image_url: card.image_url,
+        is_active_home: card.is_active_home,
       });
     }
   }, [card]);
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -289,6 +292,23 @@ const SuccessStoryCardForm: React.FC<SuccessStoryCardFormProps> = ({
                   />
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Home Display Setting */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Configurações de Exibição</h3>
+            <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-lg">
+              <Switch
+                checked={formData.is_active_home}
+                onCheckedChange={(checked) => handleInputChange('is_active_home', checked)}
+              />
+              <div className="flex-1">
+                <Label className="text-sm font-medium text-gray-900">Exibir na Home</Label>
+                <p className="text-sm text-gray-600">
+                  Quando ativado, este card será exibido na seção de "Cases de Sucesso em Destaque" da página inicial
+                </p>
+              </div>
             </div>
           </div>
 

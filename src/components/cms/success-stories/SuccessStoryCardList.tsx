@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
 import { Edit, Trash2, GripVertical, ExternalLink } from 'lucide-react';
 
 interface SuccessStoryCard {
@@ -25,6 +26,7 @@ interface SuccessStoryCard {
   customer_title: string;
   image_url: string;
   is_active: boolean;
+  is_active_home: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -34,6 +36,7 @@ interface SuccessStoryCardListProps {
   onEdit: (cardId: string) => void;
   onDelete: (cardId: string) => void;
   onReorder: (cardIds: string[]) => void;
+  onToggleActiveHome: (cardId: string, isActiveHome: boolean) => void;
 }
 
 const SuccessStoryCardList: React.FC<SuccessStoryCardListProps> = ({
@@ -41,6 +44,7 @@ const SuccessStoryCardList: React.FC<SuccessStoryCardListProps> = ({
   onEdit,
   onDelete,
   onReorder,
+  onToggleActiveHome,
 }) => {
   const handleDragStart = (e: React.DragEvent, cardId: string) => {
     e.dataTransfer.setData('text/plain', cardId);
@@ -150,6 +154,17 @@ const SuccessStoryCardList: React.FC<SuccessStoryCardListProps> = ({
                   <p className="text-xs text-gray-600 mt-1">
                     — {card.customer_name}, {card.customer_title}
                   </p>
+                </div>
+
+                {/* Home Display Toggle */}
+                <div className="flex items-center gap-2 mb-3 p-2 bg-blue-50 rounded">
+                  <Switch
+                    checked={card.is_active_home}
+                    onCheckedChange={(checked) => onToggleActiveHome(card.id, checked)}
+                  />
+                  <span className="text-sm font-medium text-gray-700">
+                    Exibir na Home
+                  </span>
                 </div>
               </div>
 
