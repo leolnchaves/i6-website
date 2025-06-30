@@ -31,11 +31,13 @@ const FeaturedStoriesSection = () => {
     }
   }, [pages, language, fetchCards]);
 
-  // Filter cards to show only active home cards
+  // Filter cards to show only active home cards - usando todos os cards se não houver cards específicos para home
   const homeCards = cards.filter(card => card.is_active_home);
+  const fallbackCards = homeCards.length === 0 ? cards.slice(0, 3) : homeCards;
 
   console.log('FeaturedStoriesSection - All cards:', cards);
-  console.log('FeaturedStoriesSection - Filtered homeCards:', homeCards);
+  console.log('FeaturedStoriesSection - Cards with is_active_home=true:', homeCards);
+  console.log('FeaturedStoriesSection - Final cards to display:', fallbackCards);
   console.log('FeaturedStoriesSection - Loading state:', loading);
 
   if (loading) {
@@ -68,7 +70,7 @@ const FeaturedStoriesSection = () => {
     );
   }
 
-  console.log('FeaturedStoriesSection - Rendering main content, homeCards length:', homeCards.length);
+  console.log('FeaturedStoriesSection - Rendering main content, fallbackCards length:', fallbackCards.length);
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
@@ -80,10 +82,10 @@ const FeaturedStoriesSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <FeaturedStoriesHeader />
 
-        {homeCards.length > 0 ? (
+        {fallbackCards.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {homeCards.map((card, index) => (
+              {fallbackCards.map((card, index) => (
                 <HomeFeaturedStoryCard key={card.id} card={card} index={index} />
               ))}
             </div>
@@ -92,8 +94,8 @@ const FeaturedStoriesSection = () => {
           </>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-4">Nenhum case de sucesso destacado disponível no momento</p>
-            <p className="text-sm text-gray-400">Os cases serão exibidos quando forem marcados como ativos para a home no CMS</p>
+            <p className="text-gray-500 mb-4">Nenhum case de sucesso disponível no momento</p>
+            <p className="text-sm text-gray-400">Cards serão exibidos quando houver dados disponíveis no CMS</p>
             <ViewAllButton />
           </div>
         )}

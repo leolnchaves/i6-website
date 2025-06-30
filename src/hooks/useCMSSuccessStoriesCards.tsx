@@ -39,7 +39,8 @@ export const useCMSSuccessStoriesCards = () => {
       console.log('useCMSSuccessStoriesCards - fetchCards called with:', { pageId, language });
       setLoading(true);
       
-      const { data, error } = await supabase
+      // First, try to get cards for the specific page and language
+      let { data, error } = await supabase
         .from('cms_success_stories_cards')
         .select('*')
         .eq('page_id', pageId)
@@ -47,11 +48,28 @@ export const useCMSSuccessStoriesCards = () => {
         .eq('is_active', true)
         .order('card_order');
 
-      console.log('useCMSSuccessStoriesCards - Supabase query result:', { data, error });
+      console.log('useCMSSuccessStoriesCards - Primary query result:', { data, error });
+
+      // If no cards found for the specific page/language, try without page restriction
+      if ((!data || data.length === 0) && !error) {
+        console.log('useCMSSuccessStoriesCards - No cards found for specific page, trying language-only query');
+        
+        const fallbackQuery = await supabase
+          .from('cms_success_stories_cards')
+          .select('*')
+          .eq('language', language)
+          .eq('is_active', true)
+          .order('card_order');
+          
+        data = fallbackQuery.data;
+        error = fallbackQuery.error;
+        
+        console.log('useCMSSuccessStoriesCards - Fallback query result:', { data, error });
+      }
 
       if (error) throw error;
       
-      console.log('useCMSSuccessStoriesCards - Cards fetched:', data?.length || 0);
+      console.log('useCMSSuccessStoriesCards - Final cards fetched:', data?.length || 0);
       console.log('useCMSSuccessStoriesCards - Cards data:', data);
       
       // Log cards with is_active_home = true
