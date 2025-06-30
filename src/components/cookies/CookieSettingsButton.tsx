@@ -4,9 +4,7 @@ import { Settings } from 'lucide-react';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 
 const CookieSettingsButton = () => {
-  const { hasConsented, setShowBanner } = useCookieConsent();
-
-  if (!hasConsented) return null;
+  const { setShowBanner } = useCookieConsent();
 
   return (
     <Button
