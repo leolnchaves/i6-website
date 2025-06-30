@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,7 +16,7 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
   selectedPage,
   selectedLanguage,
 }) => {
-  const { cards, loading, fetchCards, createCard, updateCard, deleteCard, reorderCards } = useCMSSuccessStoriesCards();
+  const { cards, loading, fetchCards, createCard, updateCard, deleteCard, reorderCards, updateIsActiveHome } = useCMSSuccessStoriesCards();
   const [editingCard, setEditingCard] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -68,6 +67,10 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
 
   const handleReorder = async (cardIds: string[]) => {
     await reorderCards(selectedPage, selectedLanguage, cardIds);
+  };
+
+  const handleToggleActiveHome = async (cardId: string, isActiveHome: boolean) => {
+    await updateIsActiveHome(cardId, isActiveHome);
   };
 
   if (loading) {
@@ -134,6 +137,7 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
             onEdit={handleEditCard}
             onDelete={handleDeleteCard}
             onReorder={handleReorder}
+            onToggleActiveHome={handleToggleActiveHome}
           />
         )}
       </CardContent>
