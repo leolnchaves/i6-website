@@ -68,8 +68,13 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
   }, [cards]);
 
   const handleCardChange = (index: number, field: keyof CardFormData, value: any) => {
+    console.log(`handleCardChange - Before: "${formCards[index]?.[field]}" -> After: "${value}"`);
+    
     const updatedCards = [...formCards];
+    // IMPORTANT: Never use .trim() here - preserve the exact value the user typed
     updatedCards[index] = { ...updatedCards[index], [field]: value };
+    
+    console.log(`handleCardChange - Final value set: "${updatedCards[index][field]}"`);
     setFormCards(updatedCards);
   };
 
@@ -143,8 +148,13 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
   };
 
   const handleCardChangeWithSync = async (index: number, field: keyof CardFormData, value: any) => {
+    console.log(`handleCardChangeWithSync - Before: "${formCards[index]?.[field]}" -> After: "${value}"`);
+    
     const updatedCards = [...formCards];
+    // IMPORTANT: Never use .trim() here - preserve the exact value the user typed
     updatedCards[index] = { ...updatedCards[index], [field]: value };
+    
+    console.log(`handleCardChangeWithSync - Final value set: "${updatedCards[index][field]}"`);
     setFormCards(updatedCards);
 
     if (field === 'is_active' && selectedPage) {
@@ -182,8 +192,9 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
           console.log(`Card "${card.title}" - is_active: ${card.is_active}`);
           return {
             page_id: selectedPage,
-            title: card.title,
-            description: card.description,
+            // Apply .trim() only when saving to database, not during editing
+            title: card.title.trim(),
+            description: card.description.trim(),
             icon_name: card.icon_name,
             icon_color: card.icon_color,
             background_color: card.background_color || null,
