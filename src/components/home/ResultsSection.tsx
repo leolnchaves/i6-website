@@ -28,11 +28,14 @@ const ResultsSection = () => {
   // Usar o novo hook unificado do Markdown com fallback para Supabase
   const { cards, loading, error, isUsingFallback } = useMarkdownResultsCards('home', language);
 
-  console.log('ResultsSection - Total cards fetched:', cards.length);
-  console.log('ResultsSection - Cards data:', cards);
-  console.log('ResultsSection - Loading:', loading);
-  console.log('ResultsSection - Error:', error);
-  console.log('ResultsSection - Using fallback:', isUsingFallback);
+  console.log('🔍 ResultsSection DEBUG:', {
+    cardsLength: cards.length,
+    cards,
+    loading,
+    error,
+    isUsingFallback,
+    language
+  });
 
   // Fallback data for when no CMS or Markdown data is available
   const fallbackResults = [
@@ -120,9 +123,14 @@ const ResultsSection = () => {
     };
   }) : fallbackResults;
 
-  console.log('ResultsSection - Final results to render:', resultsToRender.length);
+  console.log('📊 ResultsSection - Final render data:', {
+    resultsToRenderLength: resultsToRender.length,
+    usingFallback: cards.length === 0,
+    loading
+  });
 
   if (loading) {
+    console.log('⏳ ResultsSection - Showing loading state');
     return (
       <section className="py-20 bg-white relative overflow-hidden">
         <ResultsBackground />
@@ -142,10 +150,18 @@ const ResultsSection = () => {
               </div>
             ))}
           </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-xs text-blue-500">
+              🔄 Carregando cards... (Debug: loading={loading ? 'true' : 'false'})
+            </p>
+          </div>
         </div>
       </section>
     );
   }
+
+  console.log('✅ ResultsSection - Rendering main content');
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
@@ -168,22 +184,24 @@ const ResultsSection = () => {
           ))}
         </div>
         
-        {/* Indicador de fonte de dados */}
-        {isUsingFallback && (
-          <div className="text-center mt-8">
-            <p className="text-xs text-gray-400">
+        {/* Debug e status indicators */}
+        <div className="text-center mt-8 space-y-2">
+          {isUsingFallback && (
+            <p className="text-xs text-blue-500">
               📄 Dados carregados do Supabase (fallback)
             </p>
-          </div>
-        )}
-        
-        {cards.length === 0 && !loading && (
-          <div className="text-center mt-8">
-            <p className="text-xs text-gray-400">
-              🌐 Usando dados das traduções (nenhum dado CMS disponível)
+          )}
+          
+          {cards.length === 0 && !loading && (
+            <p className="text-xs text-orange-500">
+              🌐 Usando dados das traduções (nenhum dado CMS/Markdown disponível)
             </p>
-          </div>
-        )}
+          )}
+          
+          <p className="text-xs text-gray-400">
+            🔍 Debug: {cards.length} cards, loading={loading ? 'true' : 'false'}, fallback={isUsingFallback ? 'true' : 'false'}
+          </p>
+        </div>
       </div>
     </section>
   );

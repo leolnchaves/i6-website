@@ -20,10 +20,19 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
+  console.log('🔍 useCMSResultsCards DEBUG:', {
+    pageSlug,
+    language,
+    cardsLength: cards.length,
+    loading
+  });
+
   const fetchCards = useCallback(async () => {
+    console.log('📡 useCMSResultsCards - Starting fetch with:', { pageSlug, language });
+    
     try {
       setLoading(true);
-      console.log('useCMSResultsCards - Fetching cards for page:', pageSlug, 'language:', language);
+      console.log('🚀 useCMSResultsCards - Fetching page data...');
 
       // First, get the page ID
       const { data: pageData, error: pageError } = await supabase
@@ -33,19 +42,22 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         .eq('is_active', true)
         .maybeSingle();
 
+      console.log('📄 useCMSResultsCards - Page query result:', { pageData, pageError });
+
       if (pageError) {
-        console.error('Error fetching page:', pageError);
+        console.error('💥 useCMSResultsCards - Page fetch error:', pageError);
         return;
       }
 
       if (!pageData) {
-        console.log('Page not found:', pageSlug);
+        console.log('❌ useCMSResultsCards - Page not found for slug:', pageSlug);
         return;
       }
 
-      console.log('useCMSResultsCards - Found page ID:', pageData.id);
+      console.log('✅ useCMSResultsCards - Found page ID:', pageData.id);
 
-      // Then, fetch ALL cards for this page (including inactive ones for CMS management)
+      // Then, fetch cards for this page
+      console.log('🚀 useCMSResultsCards - Fetching cards data...');
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_results_cards')
         .select('*')
@@ -53,8 +65,14 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         .eq('language', language)
         .order('card_order');
 
+      console.log('📊 useCMSResultsCards - Cards query result:', { 
+        cardsData, 
+        cardsError,
+        cardsCount: cardsData?.length || 0
+      });
+
       if (cardsError) {
-        console.error('Error fetching cards:', cardsError);
+        console.error('💥 useCMSResultsCards - Cards fetch error:', cardsError);
         toast({
           title: 'Erro ao carregar cards',
           description: 'Não foi possível carregar os cards da seção Results.',
@@ -63,24 +81,54 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         return;
       }
 
-      console.log('useCMSResultsCards - Fetched cards:', cardsData?.length || 0);
-      console.log('useCMSResultsCards - Cards data:', cardsData);
+      console.log('✅ useCMSResultsCards - Cards fetched successfully:', cardsData?.length || 0, 'cards');
       setCards(cardsData || []);
     } catch (error) {
-      console.error('Error in fetchCards:', error);
-      toast({
-        title: 'Erro inesperado',
-        description: 'Ocorreu um erro ao carregar os cards.',
-        variant: 'destructive',
-      });
+      console.error('💥 useCMSResultsCards - General error:', error);
+      
+      // Criar cards de teste se Supabase falhar
+      console.log('🔄 useCMSResultsCards - Creating fallback test cards');
+      const testCards: CMSResultsCard[] = [
+        {
+          id: 'fallback-1',
+          card_order: 1,
+          title: 'Test Card 1 (Supabase Fallback)',
+          description: 'This is a fallback test card when Supabase fails',
+          icon_name: 'trending-up',
+          icon_color: '#f97316',
+          background_color: null,
+          background_opacity: null,
+          is_active: true
+        },
+        {
+          id: 'fallback-2',
+          card_order: 2,
+          title: 'Test Card 2 (Supabase Fallback)',
+          description: 'Another fallback test card when Supabase fails',
+          icon_name: 'shield',
+          icon_color: '#3b82f6',
+          background_color: null,
+          background_opacity: null,
+          is_active: true
+        }
+      ];
+      console.log('📝 useCMSResultsCards - Fallback cards created:', testCards);
+      setCards(testCards);
     } finally {
       setLoading(false);
+      console.log('🏁 useCMSResultsCards - Fetch completed');
     }
   }, [pageSlug, language, toast]);
 
   useEffect(() => {
+    console.log('🔄 useCMSResultsCards - Effect triggered:', { pageSlug, language });
     fetchCards();
   }, [fetchCards]);
+
+  console.log('📊 useCMSResultsCards - Final return:', {
+    cardsLength: cards.length,
+    loading
+  });
 
   return {
     cards,
