@@ -312,7 +312,7 @@ export const ptTranslations = {
   'cookies.banner.title': 'Configurações de Cookies',
   'cookies.banner.description': 'Usamos cookies para melhorar sua experiência e analisar o uso do site. Você pode personalizar suas preferências a qualquer momento.',
   'cookies.banner.acceptAll': 'Aceitar Todos',
-  'cookies.banner.rejectAll': 'Apenas Essenciais',
+  'cookies.banner.rejectAll': 'Rejeitar Todos',
   'cookies.banner.customize': 'Personalizar',
   'cookies.banner.compliance': 'Em conformidade com LGPD e GDPR',
   
