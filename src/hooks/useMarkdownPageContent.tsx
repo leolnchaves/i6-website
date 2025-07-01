@@ -10,7 +10,7 @@ interface PageContent {
 
 export const useMarkdownPageContent = (pageSlug: string, language: string = 'en') => {
   const [markdownContent, setMarkdownContent] = useState<PageContent>({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastFetch, setLastFetch] = useState<number>(0);
   
@@ -18,7 +18,8 @@ export const useMarkdownPageContent = (pageSlug: string, language: string = 'en'
   const supabaseFallback = useCMSPageContent(pageSlug, language);
 
   const fetchMarkdownContent = useCallback(async () => {
-    if (!pageSlug) {
+    // Não fazer fetch se não tiver pageSlug válido
+    if (!pageSlug || pageSlug.trim() === '') {
       setLoading(false);
       return;
     }
@@ -56,7 +57,10 @@ export const useMarkdownPageContent = (pageSlug: string, language: string = 'en'
   }, [pageSlug, language]);
 
   useEffect(() => {
-    fetchMarkdownContent();
+    // Só fazer fetch se tiver pageSlug válido
+    if (pageSlug && pageSlug.trim() !== '') {
+      fetchMarkdownContent();
+    }
   }, [fetchMarkdownContent]);
 
   // Função para obter conteúdo com fallback automático

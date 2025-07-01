@@ -20,13 +20,19 @@ interface MarkdownSolutionCard {
 
 export const useMarkdownSolutionsCards = (pageSlug: string, language: string = 'en') => {
   const [markdownCards, setMarkdownCards] = useState<MarkdownSolutionCard[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   // Fallback para Supabase
   const supabaseFallback = useCMSSolutionsCards(pageSlug, language);
 
   const fetchMarkdownCards = useCallback(async () => {
+    // Não fazer fetch se não tiver pageSlug válido
+    if (!pageSlug || pageSlug.trim() === '') {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -52,7 +58,10 @@ export const useMarkdownSolutionsCards = (pageSlug: string, language: string = '
   }, [pageSlug, language]);
 
   useEffect(() => {
-    fetchMarkdownCards();
+    // Só fazer fetch se tiver pageSlug válido
+    if (pageSlug && pageSlug.trim() !== '') {
+      fetchMarkdownCards();
+    }
   }, [fetchMarkdownCards]);
 
   const getCards = useCallback(() => {

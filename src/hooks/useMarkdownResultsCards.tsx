@@ -16,13 +16,19 @@ interface MarkdownResultCard {
 
 export const useMarkdownResultsCards = (pageSlug: string, language: string = 'en') => {
   const [markdownCards, setMarkdownCards] = useState<MarkdownResultCard[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   // Fallback para Supabase
   const supabaseFallback = useCMSResultsCards(pageSlug, language);
 
   const fetchMarkdownCards = useCallback(async () => {
+    // Não fazer fetch se não tiver pageSlug válido
+    if (!pageSlug || pageSlug.trim() === '') {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -49,7 +55,10 @@ export const useMarkdownResultsCards = (pageSlug: string, language: string = 'en
   }, [pageSlug, language]);
 
   useEffect(() => {
-    fetchMarkdownCards();
+    // Só fazer fetch se tiver pageSlug válido
+    if (pageSlug && pageSlug.trim() !== '') {
+      fetchMarkdownCards();
+    }
   }, [fetchMarkdownCards]);
 
   // Função com fallback automático

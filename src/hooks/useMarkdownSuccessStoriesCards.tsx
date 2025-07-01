@@ -24,13 +24,19 @@ interface MarkdownSuccessStoryCard {
 
 export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: string = 'en') => {
   const [markdownCards, setMarkdownCards] = useState<MarkdownSuccessStoryCard[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   // Fallback para Supabase
   const supabaseFallback = useCMSSuccessStoriesCards();
 
   const fetchMarkdownCards = useCallback(async () => {
+    // Não fazer fetch se não tiver pageSlug válido
+    if (!pageSlug || pageSlug.trim() === '') {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -52,9 +58,13 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
       console.error('useMarkdownSuccessStoriesCards - Error:', err);
       setError(`Erro ao carregar cards: ${err}`);
       
-      // Trigger fallback fetch when markdown fails
-      if (pageSlug) {
-        await supabaseFallback.fetchCards(pageSlug, language);
+      // Trigger fallback fetch quando markdown falha e temos pageSlug válido
+      if (pageSlug && pageSlug.trim() !== '') {
+        try {
+          await supabaseFallback.fetchCards(pageSlug, language);
+        } catch (fallbackError) {
+          console.log('Supabase fallback também falhou, isso é normal durante navegação do CMS');
+        }
       }
     } finally {
       setLoading(false);
@@ -62,7 +72,10 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
   }, [pageSlug, language, supabaseFallback]);
 
   useEffect(() => {
-    fetchMarkdownCards();
+    // Só fazer fetch se tiver pageSlug válido
+    if (pageSlug && pageSlug.trim() !== '') {
+      fetchMarkdownCards();
+    }
   }, [fetchMarkdownCards]);
 
   // Função para fazer fallback automático
