@@ -312,7 +312,7 @@ export const enTranslations = {
   'cookies.banner.title': 'Cookie Settings',
   'cookies.banner.description': 'We use cookies to improve your experience and analyze site usage. You can customize your preferences at any time.',
   'cookies.banner.acceptAll': 'Accept All',
-  'cookies.banner.rejectAll': 'Essential Only',
+  'cookies.banner.rejectAll': 'Reject All',
   'cookies.banner.customize': 'Customize',
   'cookies.banner.compliance': 'In compliance with GDPR and LGPD',
   
