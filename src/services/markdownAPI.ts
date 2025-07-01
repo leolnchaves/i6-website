@@ -13,26 +13,66 @@ export interface MarkdownAPIResponse {
 
 export class MarkdownAPI {
   private static baseURL = '/api/markdown';
+  
+  // Simulação de arquivos existentes para testes
+  private static mockFiles = new Map<string, string>([
+    ['home.en.md', `---
+language: en
+page: home
+sections:
+  homeHero:
+    title: "Infinite"
+    subtitle: "Possibilities"
+    poweredByAI: "Powered by AI"
+    description: "Transform your business with cutting-edge AI solutions"
+    startJourney: "Start Your Journey"
+    watchDemo: "Watch Demo"
+    demoLink: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+---
+
+# Home Page Content
+
+This is mock content for testing the Markdown system.
+`],
+    ['home.pt.md', `---
+language: pt
+page: home
+sections:
+  homeHero:
+    title: "Infinitas"
+    subtitle: "Possibilidades"
+    poweredByAI: "Powered by AI"
+    description: "Transforme seu negócio com soluções de IA de ponta"
+    startJourney: "Comece Sua Jornada"
+    watchDemo: "Assista Demo"
+    demoLink: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+---
+
+# Conteúdo da Página Home
+
+Este é conteúdo simulado para testar o sistema Markdown.
+`]
+  ]);
 
   static async saveFile(fileName: string, content: string, path: string = ''): Promise<MarkdownAPIResponse> {
     console.log('MarkdownAPI - Saving file:', fileName);
     
     try {
-      // Simular API externa - em produção seria uma chamada real
       await this.simulateAPICall();
       
-      // Por enquanto, apenas logamos o conteúdo
-      console.log('MarkdownAPI - File content:', content);
-      console.log('MarkdownAPI - File path:', path);
+      // Salvar no mock storage para testes
+      const fullPath = path ? `${path}/${fileName}` : fileName;
+      this.mockFiles.set(fileName, content);
       
-      // Simular sucesso
+      console.log('MarkdownAPI - File saved to mock storage:', fileName);
+      
       return {
         success: true,
         message: `Arquivo ${fileName} salvo com sucesso`,
         file: {
           fileName,
           content,
-          path: path || `content/${fileName}`
+          path: fullPath
         }
       };
     } catch (error) {
@@ -50,10 +90,27 @@ export class MarkdownAPI {
     try {
       await this.simulateAPICall();
       
-      // Simular que o arquivo não existe ainda (será implementado quando conectarmos API real)
+      // Verificar se o arquivo existe no mock storage
+      const content = this.mockFiles.get(fileName);
+      
+      if (content) {
+        console.log('MarkdownAPI - File found in mock storage:', fileName);
+        return {
+          success: true,
+          message: `Arquivo ${fileName} encontrado`,
+          file: {
+            fileName,
+            content,
+            path: path ? `${path}/${fileName}` : fileName
+          }
+        };
+      }
+      
+      // Se não existe, retornar como não encontrado (comportamento normal)
+      console.log('MarkdownAPI - File not found:', fileName, '- This is expected during testing');
       return {
         success: false,
-        message: `Arquivo ${fileName} não encontrado - usando Supabase como fallback`
+        message: `Arquivo ${fileName} não encontrado - usando fallback do Supabase`
       };
     } catch (error) {
       console.error('MarkdownAPI - Error getting file:', error);
@@ -70,11 +127,16 @@ export class MarkdownAPI {
     try {
       await this.simulateAPICall();
       
-      // Simular lista vazia por enquanto
+      // Retornar arquivos do mock storage
+      const files = Array.from(this.mockFiles.keys()).filter(fileName => {
+        if (!path) return true;
+        return fileName.startsWith(path);
+      });
+      
       return {
         success: true,
         message: 'Lista de arquivos obtida com sucesso',
-        files: []
+        files
       };
     } catch (error) {
       console.error('MarkdownAPI - Error listing files:', error);
@@ -91,6 +153,9 @@ export class MarkdownAPI {
     try {
       await this.simulateAPICall();
       
+      // Remover do mock storage
+      this.mockFiles.delete(fileName);
+      
       return {
         success: true,
         message: `Arquivo ${fileName} deletado com sucesso`
@@ -105,11 +170,11 @@ export class MarkdownAPI {
   }
 
   private static async simulateAPICall(): Promise<void> {
-    // Simular latência de rede
-    await new Promise(resolve => setTimeout(resolve, Math.random() * 500 + 100));
+    // Simular latência de rede menor para melhor experiência nos testes
+    await new Promise(resolve => setTimeout(resolve, Math.random() * 200 + 50));
     
-    // Simular falha ocasional (5% das vezes)
-    if (Math.random() < 0.05) {
+    // Reduzir chance de falha para testes mais estáveis (1% das vezes)
+    if (Math.random() < 0.01) {
       throw new Error('Falha simulada de conexão com API');
     }
   }
@@ -123,5 +188,25 @@ export class MarkdownAPI {
       console.error('MarkdownAPI - Health check failed:', error);
       return false;
     }
+  }
+
+  // Método para adicionar arquivos mock durante desenvolvimento
+  static addMockFile(fileName: string, content: string): void {
+    this.mockFiles.set(fileName, content);
+    console.log('MarkdownAPI - Mock file added:', fileName);
+  }
+
+  // Método para limpar arquivos mock
+  static clearMockFiles(): void {
+    this.mockFiles.clear();
+    console.log('MarkdownAPI - Mock files cleared');
+  }
+
+  // Método para obter estatísticas dos arquivos mock
+  static getMockStats() {
+    return {
+      totalFiles: this.mockFiles.size,
+      files: Array.from(this.mockFiles.keys())
+    };
   }
 }
