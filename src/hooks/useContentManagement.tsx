@@ -1,33 +1,54 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { useCMSPage } from './useCMSPage';
+import { useCMSPages } from './useCMSPages';
 import { useCMSPageContent } from './useCMSPageContent';
 import { useCMSSEO } from './useCMSSEO';
 import { useToast } from './use-toast';
 import { getAllFields } from '@/components/cms/content/ContentFieldsConfig';
+import { supabase } from '@/integrations/supabase/client';
+
+interface SEOFormData {
+  meta_title: string;
+  meta_description: string;
+  slug: string;
+  canonical_url: string;
+  index_flag: boolean;
+  follow_flag: boolean;
+}
 
 export const useContentManagement = () => {
-  const { pages, loading: pagesLoading } = useCMSPage();
+  const { pages, loading: pagesLoading } = useCMSPages();
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
   const [contentFormData, setContentFormData] = useState<{ [key: string]: string }>({});
-  const [seoFormData, setSeoFormData] = useState<{ [key: string]: string }>({});
+  const [seoFormData, setSeoFormData] = useState<SEOFormData>({
+    meta_title: '',
+    meta_description: '',
+    slug: '',
+    canonical_url: '',
+    index_flag: true,
+    follow_flag: true,
+  });
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
+
+  // Get current page slug for content hook
+  const currentPage = pages.find(page => page.id === selectedPage);
+  const pageSlug = currentPage?.slug || '';
 
   const { 
     content, 
     loading: contentLoading, 
-    saveContent, 
     refetch: refetchContent 
-  } = useCMSPageContent(selectedPage, selectedLanguage);
+  } = useCMSPageContent(pageSlug, selectedLanguage);
 
   const { 
     seoData, 
     loading: seoLoading, 
-    saveSEO, 
-    refetch: refetchSEO 
-  } = useCMSSEO(selectedPage, selectedLanguage);
+    fetchSEOData,
+    saveSEOData,
+    getSEOData
+  } = useCMSSEO();
 
   const loading = pagesLoading || contentLoading || seoLoading;
 
@@ -37,7 +58,21 @@ export const useContentManagement = () => {
     }
   }, [pages, selectedPage]);
 
-  const currentPage = pages.find(page => page.id === selectedPage);
+  // Fetch SEO data when page or language changes
+  useEffect(() => {
+    if (selectedPage && selectedLanguage) {
+      fetchSEOData(selectedPage, selectedLanguage);
+    }
+  }, [selectedPage, selectedLanguage, fetchSEOData]);
+
+  // Update SEO form data when SEO data changes
+  useEffect(() => {
+    if (selectedPage && selectedLanguage) {
+      const currentSEOData = getSEOData(selectedPage, selectedLanguage);
+      setSeoFormData(currentSEOData);
+    }
+  }, [selectedPage, selectedLanguage, getSEOData, seoData]);
+
   const isHomePage = currentPage?.slug === 'home';
   const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
   const isContactPage = currentPage?.slug === 'contact';
@@ -46,12 +81,12 @@ export const useContentManagement = () => {
   const allFields = getAllFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
 
   useEffect(() => {
-    if (content.length > 0) {
+    if (Object.keys(content).length > 0) {
       const formData: { [key: string]: string } = {};
-      content.forEach((item) => {
-        const key = `${item.section_name}_${item.field_name}`;
+      Object.entries(content).forEach(([key, value]) => {
+        const fieldKey = key.replace('.', '_');
         // IMPORTANT: Don't use .trim() here - preserve the exact content
-        formData[key] = item.content || '';
+        formData[fieldKey] = value || '';
       });
       setContentFormData(formData);
     } else if (allFields.length > 0) {
@@ -63,17 +98,6 @@ export const useContentManagement = () => {
       setContentFormData(formData);
     }
   }, [content, allFields]);
-
-  useEffect(() => {
-    if (seoData.length > 0) {
-      const formData: { [key: string]: string } = {};
-      seoData.forEach((item) => {
-        // IMPORTANT: Don't use .trim() here - preserve the exact content
-        formData[item.field_name] = item.content || '';
-      });
-      setSeoFormData(formData);
-    }
-  }, [seoData]);
 
   const handleContentInputChange = useCallback((key: string, value: string) => {
     console.log(`handleContentInputChange - Before: "${contentFormData[key]}" -> After: "${value}"`);
@@ -87,8 +111,8 @@ export const useContentManagement = () => {
     console.log(`handleContentInputChange - Final value set: "${value}"`);
   }, [contentFormData]);
 
-  const handleSEOInputChange = useCallback((key: string, value: string) => {
-    console.log(`handleSEOInputChange - Before: "${seoFormData[key]}" -> After: "${value}"`);
+  const handleSEOInputChange = useCallback((key: string, value: string | boolean) => {
+    console.log(`handleSEOInputChange - Before: "${seoFormData[key as keyof SEOFormData]}" -> After: "${value}"`);
     
     setSeoFormData(prev => ({
       ...prev,
@@ -115,7 +139,27 @@ export const useContentManagement = () => {
         };
       });
 
-      await saveContent(contentArray);
+      // Delete existing content for this page and language
+      const { error: deleteError } = await supabase
+        .from('cms_page_content')
+        .delete()
+        .eq('page_id', selectedPage)
+        .eq('language', selectedLanguage);
+
+      if (deleteError) throw deleteError;
+
+      // Insert new content
+      if (contentArray.length > 0) {
+        const { error: insertError } = await supabase
+          .from('cms_page_content')
+          .insert(contentArray.map(item => ({
+            ...item,
+            page_id: selectedPage,
+          })));
+
+        if (insertError) throw insertError;
+      }
+
       await refetchContent();
       
       toast({
@@ -139,20 +183,21 @@ export const useContentManagement = () => {
 
     setSaving(true);
     try {
-      const seoArray = Object.entries(seoFormData).map(([key, value]) => ({
-        field_name: key,
+      const success = await saveSEOData(selectedPage, selectedLanguage, {
+        ...seoFormData,
         // Apply .trim() only when saving to database, not during editing
-        content: value.trim(),
-        language: selectedLanguage,
-      }));
-
-      await saveSEO(seoArray);
-      await refetchSEO();
-      
-      toast({
-        title: 'Sucesso!',
-        description: 'Configurações de SEO salvas com sucesso.',
+        meta_title: seoFormData.meta_title.trim(),
+        meta_description: seoFormData.meta_description.trim(),
+        slug: seoFormData.slug.trim(),
+        canonical_url: seoFormData.canonical_url.trim(),
       });
+
+      if (success) {
+        toast({
+          title: 'Sucesso!',
+          description: 'Configurações de SEO salvas com sucesso.',
+        });
+      }
     } catch (error) {
       console.error('Error saving SEO:', error);
       toast({
