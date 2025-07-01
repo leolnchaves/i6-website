@@ -1,10 +1,7 @@
 
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Separator } from '@/components/ui/separator';
 import ContentFieldRenderer from './ContentFieldRenderer';
-import ResultsCardsManagement from '../ResultsCardsManagement';
-import TestimonialsManagement from '../TestimonialsManagement';
 
 interface ContentField {
   section: string;
@@ -18,7 +15,7 @@ interface ContentSectionAccordionProps {
   resultsFields: ContentField[];
   compactSolutionsFields: ContentField[];
   statsFields: ContentField[];
-  ctaFields?: ContentField[];
+  ctaFields: ContentField[];
   formData: { [key: string]: string };
   selectedPage: string;
   selectedLanguage: string;
@@ -32,181 +29,106 @@ const ContentSectionAccordion: React.FC<ContentSectionAccordionProps> = ({
   resultsFields,
   compactSolutionsFields,
   statsFields,
-  ctaFields = [],
+  ctaFields,
   formData,
-  selectedPage,
-  selectedLanguage,
   onFieldChange,
   isContactPage = false,
   isSolutionsPage = false,
 }) => {
-  // Determine section names based on field sections
-  const isSuccessStoriesPage = heroFields.some(field => field.section === 'successStoriesHero');
-  
-  const getFirstSectionTitle = () => {
-    if (isContactPage) return 'Seção Hero - Contato';
-    if (isSuccessStoriesPage) return 'Seção Hero - Cases de Sucesso';
-    if (isSolutionsPage) return 'Seção Hero - Soluções';
-    return 'Seção Hero - Página Principal';
+  const getSectionTitle = (sectionType: string) => {
+    if (isContactPage) {
+      if (sectionType === 'hero') return 'Seção Hero';
+      if (sectionType === 'results') return 'Seção FAQ';
+    }
+    
+    if (isSolutionsPage) {
+      if (sectionType === 'hero') return 'Seção Hero';
+      if (sectionType === 'results') return 'Sandbox Environment';
+    }
+    
+    // Default titles for other pages
+    if (sectionType === 'hero') return 'Seção Hero';
+    if (sectionType === 'results') return 'Seção de Resultados';
+    if (sectionType === 'compactSolutions') return 'Seção Compact Solutions';
+    if (sectionType === 'stats') return 'Seção de Estatísticas';
+    if (sectionType === 'cta') return 'Seção Call to Action';
+    
+    return 'Seção';
   };
-
-  const getSecondSectionTitle = () => {
-    if (isContactPage) return 'Seção FAQ - Perguntas Frequentes';
-    if (isSuccessStoriesPage) return 'Seção Métricas - Estatísticas';
-    return 'Seção Results - Resultados';
-  };
-
-  const getThirdSectionTitle = () => {
-    if (isSuccessStoriesPage) return 'Seção Testimonials - Depoimentos';
-    return 'Seção Compact Solutions - Soluções Compactas';
-  };
-
-  const showCardsManagement = !isSuccessStoriesPage && !isContactPage && !isSolutionsPage && resultsFields.length > 0;
-  const showTestimonialsManagement = isSuccessStoriesPage && compactSolutionsFields.some(field => field.section === 'testimonialsSection');
 
   return (
-    <Accordion type="single" collapsible className="w-full">
-      {/* Primeira seção */}
-      <AccordionItem value="first-section">
-        <AccordionTrigger className="text-lg font-semibold">
-          {getFirstSectionTitle()}
-        </AccordionTrigger>
-        <AccordionContent>
-          <div className="pt-4">
+    <Accordion type="multiple" className="w-full space-y-4">
+      {heroFields.length > 0 && (
+        <AccordionItem value="hero" className="border border-gray-200 rounded-lg px-4">
+          <AccordionTrigger className="text-left font-medium text-gray-900 hover:no-underline">
+            {getSectionTitle('hero')}
+          </AccordionTrigger>
+          <AccordionContent className="pt-4">
             <ContentFieldRenderer
               fields={heroFields}
               formData={formData}
               onFieldChange={onFieldChange}
             />
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-
-      {/* Segunda seção - não mostrar para Solutions que só tem Hero */}
-      {resultsFields.length > 0 && !isSolutionsPage && (
-        <AccordionItem value="second-section">
-          <AccordionTrigger className="text-lg font-semibold">
-            {getSecondSectionTitle()}
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="pt-4 space-y-6">
-              {/* Campos da segunda seção */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-gray-800 border-b pb-2">
-                  {isContactPage ? 'Título e Configurações da FAQ' : 
-                   isSuccessStoriesPage ? 'Métricas e Estatísticas' : 'Conteúdo Principal'}
-                </h4>
-                <ContentFieldRenderer
-                  fields={resultsFields}
-                  formData={formData}
-                  onFieldChange={onFieldChange}
-                />
-              </div>
-              
-              {/* Gestão dos Cards - apenas para página home */}
-              {showCardsManagement && (
-                <>
-                  <Separator />
-                  <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="cards-management">
-                      <AccordionTrigger className="text-base font-medium">
-                        Gestão dos Cards da Seção Results
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <div className="pt-4">
-                          <ResultsCardsManagement 
-                            selectedPage={selectedPage}
-                            selectedLanguage={selectedLanguage}
-                          />
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </>
-              )}
-            </div>
           </AccordionContent>
         </AccordionItem>
       )}
 
-      {/* Terceira seção - apenas para success stories */}
-      {!isContactPage && !isSolutionsPage && compactSolutionsFields.length > 0 && (
-        <AccordionItem value="third-section">
-          <AccordionTrigger className="text-lg font-semibold">
-            {getThirdSectionTitle()}
+      {resultsFields.length > 0 && (
+        <AccordionItem value="results" className="border border-gray-200 rounded-lg px-4">
+          <AccordionTrigger className="text-left font-medium text-gray-900 hover:no-underline">
+            {getSectionTitle('results')}
           </AccordionTrigger>
-          <AccordionContent>
-            <div className="pt-4 space-y-6">
-              {/* Campos da terceira seção */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-gray-800 border-b pb-2">
-                  {isSuccessStoriesPage ? 'Título e Subtítulo da Seção' : 'Conteúdo da Seção'}
-                </h4>
-                <ContentFieldRenderer
-                  fields={compactSolutionsFields}
-                  formData={formData}
-                  onFieldChange={onFieldChange}
-                />
-              </div>
-
-              {/* Gestão dos Testimonials - apenas para success stories */}
-              {showTestimonialsManagement && (
-                <>
-                  <Separator />
-                  <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="testimonials-management">
-                      <AccordionTrigger className="text-base font-medium">
-                        Gestão dos Depoimentos
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <div className="pt-4">
-                          <TestimonialsManagement 
-                            selectedPage={selectedPage}
-                            selectedLanguage={selectedLanguage}
-                          />
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </>
-              )}
-            </div>
+          <AccordionContent className="pt-4">
+            <ContentFieldRenderer
+              fields={resultsFields}
+              formData={formData}
+              onFieldChange={onFieldChange}
+            />
           </AccordionContent>
         </AccordionItem>
       )}
 
-      {/* Quarta seção - Stats (apenas para home page) */}
-      {!isContactPage && !isSuccessStoriesPage && !isSolutionsPage && statsFields.length > 0 && (
-        <AccordionItem value="fourth-section">
-          <AccordionTrigger className="text-lg font-semibold">
-            Seção Stats - Estatísticas
+      {compactSolutionsFields.length > 0 && (
+        <AccordionItem value="compactSolutions" className="border border-gray-200 rounded-lg px-4">
+          <AccordionTrigger className="text-left font-medium text-gray-900 hover:no-underline">
+            {getSectionTitle('compactSolutions')}
           </AccordionTrigger>
-          <AccordionContent>
-            <div className="pt-4">
-              <ContentFieldRenderer
-                fields={statsFields}
-                formData={formData}
-                onFieldChange={onFieldChange}
-              />
-            </div>
+          <AccordionContent className="pt-4">
+            <ContentFieldRenderer
+              fields={compactSolutionsFields}
+              formData={formData}
+              onFieldChange={onFieldChange}
+            />
           </AccordionContent>
         </AccordionItem>
       )}
 
-      {/* Quinta seção - CTA (apenas para success stories) */}
-      {isSuccessStoriesPage && ctaFields.length > 0 && (
-        <AccordionItem value="fifth-section">
-          <AccordionTrigger className="text-lg font-semibold">
-            Seção CTA - Chamada para Ação
+      {statsFields.length > 0 && (
+        <AccordionItem value="stats" className="border border-gray-200 rounded-lg px-4">
+          <AccordionTrigger className="text-left font-medium text-gray-900 hover:no-underline">
+            {getSectionTitle('stats')}
           </AccordionTrigger>
-          <AccordionContent>
-            <div className="pt-4">
-              <ContentFieldRenderer
-                fields={ctaFields}
-                formData={formData}
-                onFieldChange={onFieldChange}
-              />
-            </div>
+          <AccordionContent className="pt-4">
+            <ContentFieldRenderer
+              fields={statsFields}
+              formData={formData}
+              onFieldChange={onFieldChange}
+            />
+          </AccordionContent>
+        </AccordionItem>
+      )}
+
+      {ctaFields.length > 0 && (
+        <AccordionItem value="cta" className="border border-gray-200 rounded-lg px-4">
+          <AccordionTrigger className="text-left font-medium text-gray-900 hover:no-underline">
+            {getSectionTitle('cta')}
+          </AccordionTrigger>
+          <AccordionContent className="pt-4">
+            <ContentFieldRenderer
+              fields={ctaFields}
+              formData={formData}
+              onFieldChange={onFieldChange}
+            />
           </AccordionContent>
         </AccordionItem>
       )}

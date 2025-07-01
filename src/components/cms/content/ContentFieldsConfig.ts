@@ -2,7 +2,7 @@
 import { homeHeroFields, resultsHeroFields, compactSolutionsHeroFields, statsFields } from './HomeFieldsConfig';
 import { successStoriesHeroFields, metricsFields, testimonialsFields, ctaFields } from './SuccessStoriesFieldsConfig';
 import { contactHeroFields, faqFields } from './ContactFieldsConfig';
-import { solutionsHeroFields } from './SolutionsFieldsConfig';
+import { solutionsHeroFields, sandboxEnvironmentFields } from './SolutionsFieldsConfig';
 
 interface ContentField {
   section: string;
@@ -21,7 +21,7 @@ export const getAccordionFields = (
   if (isSolutionsPage) {
     return {
       heroFields: solutionsHeroFields,
-      resultsFields: [], // Solutions page only has hero section
+      resultsFields: sandboxEnvironmentFields, // Using resultsFields for Sandbox Environment
       compactSolutionsFields: [],
       statsFields: [],
       ctaFields: []

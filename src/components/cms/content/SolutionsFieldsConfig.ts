@@ -13,4 +13,10 @@ export const solutionsHeroFields: ContentField[] = [
   { section: 'solutionsHero', field: 'description', label: 'Descrição', type: 'textarea' },
 ];
 
+// Sandbox Environment fields
+export const sandboxEnvironmentFields: ContentField[] = [
+  { section: 'sandboxEnvironment', field: 'title', label: 'Título do Sandbox Environment', type: 'input' },
+  { section: 'sandboxEnvironment', field: 'description', label: 'Descrição do Sandbox Environment', type: 'textarea' },
+];
+
 export type { ContentField };
