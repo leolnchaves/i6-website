@@ -34,7 +34,7 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
       setLoading(true);
       console.log('🚀 useCMSResultsCards - Fetching page data...');
 
-      // First, get the page ID
+      // First, get the page ID using slug
       const { data: pageData, error: pageError } = await supabase
         .from('cms_pages')
         .select('id')
@@ -46,23 +46,25 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
 
       if (pageError) {
         console.error('💥 useCMSResultsCards - Page fetch error:', pageError);
-        return;
+        throw pageError;
       }
 
       if (!pageData) {
         console.log('❌ useCMSResultsCards - Page not found for slug:', pageSlug);
+        setCards([]);
         return;
       }
 
       console.log('✅ useCMSResultsCards - Found page ID:', pageData.id);
 
-      // Then, fetch cards for this page
+      // Then, fetch cards for this page using the UUID
       console.log('🚀 useCMSResultsCards - Fetching cards data...');
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_results_cards')
         .select('*')
         .eq('page_id', pageData.id)
         .eq('language', language)
+        .eq('is_active', true)
         .order('card_order');
 
       console.log('📊 useCMSResultsCards - Cards query result:', { 
@@ -73,12 +75,7 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
 
       if (cardsError) {
         console.error('💥 useCMSResultsCards - Cards fetch error:', cardsError);
-        toast({
-          title: 'Erro ao carregar cards',
-          description: 'Não foi possível carregar os cards da seção Results.',
-          variant: 'destructive',
-        });
-        return;
+        throw cardsError;
       }
 
       console.log('✅ useCMSResultsCards - Cards fetched successfully:', cardsData?.length || 0, 'cards');
@@ -86,34 +83,14 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
     } catch (error) {
       console.error('💥 useCMSResultsCards - General error:', error);
       
-      // Criar cards de teste se Supabase falhar
-      console.log('🔄 useCMSResultsCards - Creating fallback test cards');
-      const testCards: CMSResultsCard[] = [
-        {
-          id: 'fallback-1',
-          card_order: 1,
-          title: 'Test Card 1 (Supabase Fallback)',
-          description: 'This is a fallback test card when Supabase fails',
-          icon_name: 'trending-up',
-          icon_color: '#f97316',
-          background_color: null,
-          background_opacity: null,
-          is_active: true
-        },
-        {
-          id: 'fallback-2',
-          card_order: 2,
-          title: 'Test Card 2 (Supabase Fallback)',
-          description: 'Another fallback test card when Supabase fails',
-          icon_name: 'shield',
-          icon_color: '#3b82f6',
-          background_color: null,
-          background_opacity: null,
-          is_active: true
-        }
-      ];
-      console.log('📝 useCMSResultsCards - Fallback cards created:', testCards);
-      setCards(testCards);
+      // Set empty cards array on error to prevent infinite loading
+      setCards([]);
+      
+      toast({
+        title: 'Erro ao carregar cards',
+        description: 'Não foi possível carregar os cards da seção Results.',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
       console.log('🏁 useCMSResultsCards - Fetch completed');

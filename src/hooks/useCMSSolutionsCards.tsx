@@ -61,6 +61,7 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
   const fetchCards = useCallback(async () => {
     if (!pageSlugOrId || !language) {
       console.log('useCMSSolutionsCards - Missing pageSlugOrId or language:', { pageSlugOrId, language });
+      setCards([]);
       return;
     }
 
@@ -78,7 +79,7 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
         console.log('useCMSSolutionsCards - Converting slug to page ID:', pageSlugOrId);
         const convertedPageId = await getPageId(pageSlugOrId);
         if (!convertedPageId) {
-          console.log('useCMSSolutionsCards - Could not convert slug to page ID');
+          console.log('useCMSSolutionsCards - Could not convert slug to page ID, setting empty cards');
           setCards([]);
           return;
         }
@@ -101,10 +102,11 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
       }
 
       console.log('useCMSSolutionsCards - Solutions cards fetched successfully:', data?.length || 0, 'cards');
-      console.log('useCMSSolutionsCards - Raw data:', data);
+      console.log('useCMSSolutionsCards - Cards data:', data);
       setCards(data || []);
     } catch (error) {
       console.error('useCMSSolutionsCards - Failed to fetch solutions cards:', error);
+      setCards([]);
       toast({
         title: 'Erro',
         description: 'Falha ao carregar os cards de soluções.',
