@@ -20,12 +20,25 @@ const Header = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleLinkClick = () => {
+    // Close mobile menu when link is clicked
+    setIsMenuOpen(false);
+    // Scroll to top immediately
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 50);
+  };
+
   return (
     <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
+          <Link 
+            to="/" 
+            className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300"
+            onClick={handleLinkClick}
+          >
             <img 
               src="/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png" 
               alt="Infinity6" 
@@ -39,6 +52,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
+                onClick={handleLinkClick}
                 className={`text-sm font-medium transition-all duration-300 hover:text-orange-500 relative group ${
                   isActive(item.href) ? 'text-orange-500' : 'text-gray-700'
                 }`}
@@ -79,7 +93,7 @@ const Header = () => {
                 className={`block px-3 py-2 text-base font-medium transition-all duration-300 hover:text-orange-500 hover:bg-orange-50 rounded-lg ${
                   isActive(item.href) ? 'text-orange-500 bg-orange-50' : 'text-gray-700'
                 }`}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={handleLinkClick}
               >
                 {item.name}
               </Link>

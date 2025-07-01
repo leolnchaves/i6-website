@@ -2,6 +2,7 @@
 import { ReactNode, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 import { logger } from '@/utils/logger';
 import Header from './Header';
 import Footer from './Footer';
@@ -22,6 +23,9 @@ const Layout = ({ children }: LayoutProps) => {
   
   // Performance monitoring for layout renders
   const metrics = usePerformanceMonitor('Layout', 20);
+  
+  // Auto-scroll to top on route changes
+  useScrollToTop();
   
   // Log route changes
   useEffect(() => {

@@ -14,6 +14,13 @@ const Footer = () => {
   const contactPhone = getContent('footer', 'contact_phone', '+1 (555) 123-4567');
   const copyrightText = getContent('footer', 'copyright_text', t('footer.copyright'));
 
+  const handleLinkClick = () => {
+    // Scroll to top when link is clicked
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 50);
+  };
+
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
       <div className="absolute inset-0">
@@ -61,12 +68,14 @@ const Footer = () => {
               <Link 
                 to="/privacy-policy" 
                 className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
+                onClick={handleLinkClick}
               >
                 {t('footer.privacy')}
               </Link>
               <Link 
                 to="/ethics-policy" 
                 className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
+                onClick={handleLinkClick}
               >
                 {t('footer.ethics')}
               </Link>
@@ -77,10 +86,42 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.home')}</Link></li>
-              <li><Link to="/solutions" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.solutions')}</Link></li>
-              <li><Link to="/success-stories" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.successStories')}</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-orange-400 transition-colors duration-300">{t('header.contact')}</Link></li>
+              <li>
+                <Link 
+                  to="/" 
+                  className="text-gray-400 hover:text-orange-400 transition-colors duration-300"
+                  onClick={handleLinkClick}
+                >
+                  {t('header.home')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/solutions" 
+                  className="text-gray-400 hover:text-orange-400 transition-colors duration-300"
+                  onClick={handleLinkClick}
+                >
+                  {t('header.solutions')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/success-stories" 
+                  className="text-gray-400 hover:text-orange-400 transition-colors duration-300"
+                  onClick={handleLinkClick}
+                >
+                  {t('header.successStories')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/contact" 
+                  className="text-gray-400 hover:text-orange-400 transition-colors duration-300"
+                  onClick={handleLinkClick}
+                >
+                  {t('header.contact')}
+                </Link>
+              </li>
             </ul>
           </div>
 
