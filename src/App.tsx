@@ -1,9 +1,8 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -17,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
+import CMSPhase1Tests from '@/pages/CMSPhase1Tests';
 
 // Configure React Query client with error handling
 const queryClient = new QueryClient({
@@ -39,7 +39,7 @@ const queryClient = new QueryClient({
  * Main App component with error boundaries and debug tools
  * Provides the root structure for the entire application
  */
-const App = () => {
+function App() {
   // Log app initialization
   logger.info('App initialized', { 
     environment: process.env.NODE_ENV,
@@ -55,7 +55,7 @@ const App = () => {
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <Router>
               <Routes>
                 {/* CMS Admin routes - without Layout wrapper */}
                 <Route path="/cms-admin-i6/*" element={<CMSAdmin />} />
@@ -75,8 +75,20 @@ const App = () => {
                     </Routes>
                   </Layout>
                 } />
+                
+                <Route path="/cms-admin" element={
+                  <CMSProtectedRoute>
+                    <CMSLayout />
+                  </CMSProtectedRoute>
+                }>
+                  <Route index element={<ContentManagement />} />
+                  <Route path="content" element={<ContentManagement />} />
+                  <Route path="components" element={<ComponentsManagement />} />
+                  <Route path="testimonials" element={<TestimonialsManagement />} />
+                  <Route path="phase1-tests" element={<CMSPhase1Tests />} />
+                </Route>
               </Routes>
-            </BrowserRouter>
+            </Router>
             
             {/* Debug panel for development */}
             <DebugPanel />
@@ -85,6 +97,6 @@ const App = () => {
       </QueryClientProvider>
     </ErrorBoundary>
   );
-};
+}
 
 export default App;

@@ -1,155 +1,95 @@
 
 import React from 'react';
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, SidebarFooter } from '@/components/ui/sidebar';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { 
+  LayoutDashboard, 
+  FileText, 
+  Users, 
+  Settings, 
+  LogOut,
+  TestTube
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { FileText, Settings, Globe, Users, BarChart3, LogOut, User, Menu, Layers } from 'lucide-react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
 
-const cmsMenuItems = [
-  {
-    title: 'Estrutura do Site',
-    url: '/cms-admin-i6/site-structure',
-    icon: Globe,
-  },
-  {
-    title: 'Conteúdo',
-    url: '/cms-admin-i6/content',
-    icon: FileText,
-  },
-  {
-    title: 'Componentes',
-    url: '/cms-admin-i6/components',
-    icon: Layers,
-  },
-  {
-    title: 'Usuários',
-    url: '/cms-admin-i6/users',
-    icon: Users,
-  },
-  {
-    title: 'Analytics',
-    url: '/cms-admin-i6/analytics',
-    icon: BarChart3,
-  },
-  {
-    title: 'Configurações',
-    url: '/cms-admin-i6/settings',
-    icon: Settings,
-  },
-];
-
-interface CMSLayoutProps {
-  children: React.ReactNode;
-}
-
-const CMSLayout: React.FC<CMSLayoutProps> = ({ children }) => {
+const CMSLayout = () => {
+  const { logout } = useCMSAuth();
   const location = useLocation();
-  const navigate = useNavigate();
-  const { user, logout } = useCMSAuth();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/cms-admin-i6/login');
+  const navigationItems = [
+    { path: '/cms-admin', icon: LayoutDashboard, label: 'Dashboard' },
+    { path: '/cms-admin/content', icon: FileText, label: 'Conteúdo' },
+    { path: '/cms-admin/components', icon: Settings, label: 'Componentes' },
+    { path: '/cms-admin/testimonials', icon: Users, label: 'Depoimentos' },
+    { path: '/cms-admin/phase1-tests', icon: TestTube, label: 'Testes Fase 1' },
+  ];
+
+  const isActive = (path: string) => {
+    if (path === '/cms-admin') {
+      return location.pathname === '/cms-admin';
+    }
+    return location.pathname.startsWith(path);
   };
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gray-50">
-        <Sidebar className="border-r border-gray-200 bg-white">
-          <div className="p-6 border-b border-gray-100">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-semibold text-sm">I6</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-medium text-gray-900">CMS Admin</h1>
-                <p className="text-xs text-gray-500">Infinity6.ai</p>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg">
+        <div className="flex h-full flex-col">
+          {/* Logo */}
+          <div className="flex h-16 items-center justify-center border-b border-gray-200">
+            <img 
+              src="/lovable-uploads/fa0e2de0-5d60-4759-bb8f-ae448b70417c.png" 
+              alt="Infinity6" 
+              className="h-8 w-auto"
+            />
+            <span className="ml-2 text-xl font-semibold text-gray-900">CMS</span>
           </div>
-          
-          <SidebarContent className="px-4 py-6">
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu className="space-y-1">
-                  {cmsMenuItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <NavLink 
-                          to={item.url} 
-                          className={({ isActive }) =>
-                            `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                              isActive 
-                                ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                            }`
-                          }
-                        >
-                          <item.icon className="h-5 w-5" />
-                          <span>{item.title}</span>
-                        </NavLink>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
 
-          <SidebarFooter className="border-t border-gray-100 bg-gray-50">
-            <div className="p-4 space-y-4">
-              <div className="flex items-center gap-3 px-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <User className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {user?.email}
-                  </p>
-                  <p className="text-xs text-gray-500 capitalize">
-                    {user?.role}
-                  </p>
-                </div>
-              </div>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={handleLogout}
-                className="w-full justify-start gap-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              >
-                <LogOut className="h-4 w-4" />
-                Sair
-              </Button>
-            </div>
-          </SidebarFooter>
-        </Sidebar>
-        
-        <div className="flex-1 flex flex-col">
-          <header className="h-16 bg-white border-b border-gray-200 flex items-center px-6 justify-between">
-            <div className="flex items-center gap-4">
-              <SidebarTrigger>
-                <Menu className="h-5 w-5 text-gray-600" />
-              </SidebarTrigger>
-              <h2 className="text-xl font-semibold text-gray-900">
-                {cmsMenuItems.find(item => location.pathname === item.url)?.title || 'Dashboard'}
-              </h2>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <User className="h-4 w-4 text-white" />
-              </div>
-            </div>
-          </header>
-          
-          <main className="flex-1 p-8 overflow-auto bg-gray-50">
-            <div className="max-w-7xl mx-auto">
-              {children}
-            </div>
-          </main>
+          {/* Navigation */}
+          <nav className="flex-1 space-y-1 p-4">
+            {navigationItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'bg-blue-50 text-blue-700'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}
+                >
+                  <Icon className="mr-3 h-5 w-5" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* User section */}
+          <div className="border-t border-gray-200 p-4">
+            <Button
+              variant="ghost"
+              onClick={logout}
+              className="w-full justify-start text-gray-600 hover:text-gray-900"
+            >
+              <LogOut className="mr-3 h-5 w-5" />
+              Sair
+            </Button>
+          </div>
         </div>
       </div>
-    </SidebarProvider>
+
+      {/* Main content */}
+      <div className="pl-64">
+        <main className="py-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Outlet />
+          </div>
+        </main>
+      </div>
+    </div>
   );
 };
 
