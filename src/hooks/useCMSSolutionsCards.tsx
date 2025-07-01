@@ -23,20 +23,69 @@ interface SolutionsCard {
   updated_at: string;
 }
 
-export const useCMSSolutionsCards = (pageId: string, language: string) => {
+export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => {
   const [cards, setCards] = useState<SolutionsCard[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
+  // Helper function to get page ID from slug
+  const getPageId = useCallback(async (pageSlug: string) => {
+    console.log('useCMSSolutionsCards - Getting page ID for slug:', pageSlug);
+    
+    try {
+      const { data: pageData, error: pageError } = await supabase
+        .from('cms_pages')
+        .select('id')
+        .eq('slug', pageSlug)
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (pageError) {
+        console.error('useCMSSolutionsCards - Page fetch error:', pageError);
+        return null;
+      }
+
+      if (!pageData) {
+        console.log('useCMSSolutionsCards - Page not found for slug:', pageSlug);
+        return null;
+      }
+
+      console.log('useCMSSolutionsCards - Found page ID:', pageData.id);
+      return pageData.id;
+    } catch (error) {
+      console.error('useCMSSolutionsCards - Error getting page ID:', error);
+      return null;
+    }
+  }, []);
+
   const fetchCards = useCallback(async () => {
-    if (!pageId || !language) {
-      console.log('useCMSSolutionsCards - Missing pageId or language:', { pageId, language });
+    if (!pageSlugOrId || !language) {
+      console.log('useCMSSolutionsCards - Missing pageSlugOrId or language:', { pageSlugOrId, language });
       return;
     }
 
     setLoading(true);
     try {
-      console.log('useCMSSolutionsCards - Fetching solutions cards for page:', pageId, 'language:', language);
+      console.log('useCMSSolutionsCards - Fetching solutions cards for:', pageSlugOrId, 'language:', language);
+      
+      // Convert slug to page ID if needed
+      let pageId = pageSlugOrId;
+      
+      // Check if it's a UUID (contains hyphens) or a slug
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pageSlugOrId);
+      
+      if (!isUuid) {
+        console.log('useCMSSolutionsCards - Converting slug to page ID:', pageSlugOrId);
+        const convertedPageId = await getPageId(pageSlugOrId);
+        if (!convertedPageId) {
+          console.log('useCMSSolutionsCards - Could not convert slug to page ID');
+          setCards([]);
+          return;
+        }
+        pageId = convertedPageId;
+      }
+
+      console.log('useCMSSolutionsCards - Using page ID:', pageId);
       
       const { data, error } = await supabase
         .from('cms_solutions_cards')
@@ -64,7 +113,7 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
     } finally {
       setLoading(false);
     }
-  }, [pageId, language, toast]);
+  }, [pageSlugOrId, language, toast, getPageId]);
 
   const saveCard = useCallback(async (cardData: Partial<SolutionsCard>) => {
     try {

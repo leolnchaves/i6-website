@@ -33,13 +33,62 @@ export const useCMSSuccessStoriesCards = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Fetch cards for a specific page and language
-  const fetchCards = useCallback(async (pageId: string, language: string = 'en') => {
+  // Helper function to get page ID from slug
+  const getPageId = useCallback(async (pageSlug: string) => {
+    console.log('useCMSSuccessStoriesCards - Getting page ID for slug:', pageSlug);
+    
     try {
-      console.log('useCMSSuccessStoriesCards - fetchCards called with:', { pageId, language });
+      const { data: pageData, error: pageError } = await supabase
+        .from('cms_pages')
+        .select('id')
+        .eq('slug', pageSlug)
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (pageError) {
+        console.error('useCMSSuccessStoriesCards - Page fetch error:', pageError);
+        return null;
+      }
+
+      if (!pageData) {
+        console.log('useCMSSuccessStoriesCards - Page not found for slug:', pageSlug);
+        return null;
+      }
+
+      console.log('useCMSSuccessStoriesCards - Found page ID:', pageData.id);
+      return pageData.id;
+    } catch (error) {
+      console.error('useCMSSuccessStoriesCards - Error getting page ID:', error);
+      return null;
+    }
+  }, []);
+
+  // Fetch cards for a specific page and language
+  const fetchCards = useCallback(async (pageSlugOrId: string, language: string = 'en') => {
+    try {
+      console.log('useCMSSuccessStoriesCards - fetchCards called with:', { pageSlugOrId, language });
       setLoading(true);
       
-      // First, try to get cards for the specific page and language
+      // Convert slug to page ID if needed
+      let pageId = pageSlugOrId;
+      
+      // Check if it's a UUID (contains hyphens) or a slug
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pageSlugOrId);
+      
+      if (!isUuid) {
+        console.log('useCMSSuccessStoriesCards - Converting slug to page ID:', pageSlugOrId);
+        const convertedPageId = await getPageId(pageSlugOrId);
+        if (!convertedPageId) {
+          console.log('useCMSSuccessStoriesCards - Could not convert slug to page ID');
+          setCards([]);
+          return;
+        }
+        pageId = convertedPageId;
+      }
+
+      console.log('useCMSSuccessStoriesCards - Using page ID:', pageId);
+
+      // Fetch cards for the specific page and language
       let { data, error } = await supabase
         .from('cms_success_stories_cards')
         .select('*')
@@ -88,11 +137,23 @@ export const useCMSSuccessStoriesCards = () => {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, [toast, getPageId]);
 
   // Create a new card
-  const createCard = useCallback(async (pageId: string, language: string, cardData: Omit<SuccessStoryCard, 'id' | 'page_id' | 'language' | 'created_at' | 'updated_at'>) => {
+  const createCard = useCallback(async (pageSlugOrId: string, language: string, cardData: Omit<SuccessStoryCard, 'id' | 'page_id' | 'language' | 'created_at' | 'updated_at'>) => {
     try {
+      // Convert slug to page ID if needed
+      let pageId = pageSlugOrId;
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pageSlugOrId);
+      
+      if (!isUuid) {
+        const convertedPageId = await getPageId(pageSlugOrId);
+        if (!convertedPageId) {
+          throw new Error('Could not find page');
+        }
+        pageId = convertedPageId;
+      }
+
       const { data, error } = await supabase
         .from('cms_success_stories_cards')
         .insert({
@@ -122,7 +183,7 @@ export const useCMSSuccessStoriesCards = () => {
       });
       throw error;
     }
-  }, [toast]);
+  }, [toast, getPageId]);
 
   // Update an existing card
   const updateCard = useCallback(async (cardId: string, updates: Partial<SuccessStoryCard>) => {
@@ -224,7 +285,7 @@ export const useCMSSuccessStoriesCards = () => {
   }, [toast]);
 
   // Reorder cards
-  const reorderCards = useCallback(async (pageId: string, language: string, cardIds: string[]) => {
+  const reorderCards = useCallback(async (pageSlugOrId: string, language: string, cardIds: string[]) => {
     try {
       const updates = cardIds.map((cardId, index) => ({
         id: cardId,
@@ -239,7 +300,7 @@ export const useCMSSuccessStoriesCards = () => {
       }
 
       // Refresh cards after reordering
-      await fetchCards(pageId, language);
+      await fetchCards(pageSlugOrId, language);
 
       toast({
         title: 'Ordem atualizada',
