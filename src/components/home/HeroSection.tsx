@@ -8,12 +8,12 @@ import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+import { useHybridPageContent } from '@/hooks/useHybridPageContent';
 
 /**
  * Hero section component for the home page
  * Features dynamic background, call-to-action buttons, and video modal
- * Includes error handling and CMS content management support
+ * Includes error handling and hybrid CMS/Markdown content management support
  */
 const HeroSection = () => {
   // Hooks for functionality
@@ -21,8 +21,8 @@ const HeroSection = () => {
   const { t, language } = useLanguage();
   const { handleError } = useErrorHandler('HeroSection');
   
-  // CMS content hook
-  const { getContent, loading: cmsLoading } = useCMSPageContent('home', language);
+  // Hybrid content hook (CMS + Markdown fallback)
+  const { getContent, loading: hybridLoading } = useHybridPageContent('home', language);
   
   // Component state
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -49,17 +49,17 @@ const HeroSection = () => {
 
   // Get content with fallback to translations
   const getContentWithFallback = (section: string, field: string, translationKey: string) => {
-    const cmsContent = getContent(section, field);
-    console.log('HeroSection - CMS content for', section, field, ':', cmsContent);
-    return cmsContent || t(translationKey);
+    const hybridContent = getContent(section, field);
+    console.log(`HeroSection - Hybrid content for ${section} ${field}:`, hybridContent);
+    return hybridContent || t(translationKey);
   };
 
-  // Get demo URL from CMS with fallback and convert to embed format
+  // Get demo URL from hybrid content with fallback and convert to embed format
   const getDemoUrl = () => {
-    const cmsUrl = getContent('homeHero', 'demoLink');
+    const hybridUrl = getContent('homeHero', 'demoLink');
     const fallbackUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0';
     
-    if (!cmsUrl) return fallbackUrl;
+    if (!hybridUrl) return fallbackUrl;
     
     // Convert YouTube watch URLs to embed format
     const youtubeWatchRegex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/;
@@ -68,12 +68,12 @@ const HeroSection = () => {
     let videoId = null;
     
     // Check for watch URL format
-    const watchMatch = cmsUrl.match(youtubeWatchRegex);
+    const watchMatch = hybridUrl.match(youtubeWatchRegex);
     if (watchMatch) {
       videoId = watchMatch[1];
     } else {
       // Check for share URL format
-      const shareMatch = cmsUrl.match(youtubeShareRegex);
+      const shareMatch = hybridUrl.match(youtubeShareRegex);
       if (shareMatch) {
         videoId = shareMatch[1];
       }
@@ -84,11 +84,11 @@ const HeroSection = () => {
     }
     
     // If it's already an embed URL or unknown format, return as is
-    return cmsUrl.includes('/embed/') ? cmsUrl : fallbackUrl;
+    return hybridUrl.includes('/embed/') ? hybridUrl : fallbackUrl;
   };
 
-  console.log('HeroSection - CMS Loading:', cmsLoading);
-  console.log('HeroSection - All CMS content:', {
+  console.log('HeroSection - Hybrid Loading:', hybridLoading);
+  console.log('HeroSection - All hybrid content:', {
     title: getContent('homeHero', 'title'),
     subtitle: getContent('homeHero', 'subtitle'),
     poweredByAI: getContent('homeHero', 'poweredByAI'),
