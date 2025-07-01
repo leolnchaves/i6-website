@@ -30,13 +30,21 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
 
   const fetchCards = useCallback(async () => {
     if (!pageId || !language) {
-      console.log('Missing pageId or language:', { pageId, language });
+      console.log('useCMSSolutionsCards - Missing pageId or language:', { pageId, language });
       return;
     }
 
     setLoading(true);
     try {
-      console.log('Fetching solutions cards for page:', pageId, 'language:', language);
+      console.log('useCMSSolutionsCards - Fetching solutions cards for page:', pageId, 'language:', language);
+      
+      // First, let's check if RLS is blocking our query
+      const { data: testData, error: testError } = await supabase
+        .from('cms_solutions_cards')
+        .select('count(*)')
+        .limit(1);
+      
+      console.log('useCMSSolutionsCards - RLS test query result:', { testData, testError });
       
       const { data, error } = await supabase
         .from('cms_solutions_cards')
@@ -47,18 +55,24 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
         .order('card_order', { ascending: true });
 
       if (error) {
-        console.error('Error fetching solutions cards:', error);
+        console.error('useCMSSolutionsCards - Error fetching solutions cards:', error);
+        console.error('useCMSSolutionsCards - Error details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
         throw error;
       }
 
-      console.log('Solutions cards fetched successfully:', data?.length || 0, 'cards');
-      console.log('Raw data:', data);
+      console.log('useCMSSolutionsCards - Solutions cards fetched successfully:', data?.length || 0, 'cards');
+      console.log('useCMSSolutionsCards - Raw data:', data);
       setCards(data || []);
     } catch (error) {
-      console.error('Failed to fetch solutions cards:', error);
+      console.error('useCMSSolutionsCards - Failed to fetch solutions cards:', error);
       toast({
         title: 'Erro',
-        description: 'Falha ao carregar os cards de soluções.',
+        description: 'Falha ao carregar os cards de soluções. Verifique as permissões RLS.',
         variant: 'destructive',
       });
     } finally {

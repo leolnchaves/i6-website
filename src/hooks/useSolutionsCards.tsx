@@ -24,7 +24,15 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
       setLoading(true);
       setError(null);
 
-      console.log('Fetching solutions cards for page:', pageSlug, 'language:', language);
+      console.log('useSolutionsCards - Fetching solutions cards for page:', pageSlug, 'language:', language);
+
+      // Test RLS first
+      const { data: rlsTest, error: rlsError } = await supabase
+        .from('cms_solutions_cards')
+        .select('count(*)')
+        .limit(1);
+      
+      console.log('useSolutionsCards - RLS test result:', { rlsTest, rlsError });
 
       // Buscar a página específica
       const { data: pageData, error: pageError } = await supabase
@@ -35,17 +43,17 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
         .maybeSingle();
 
       if (pageError) {
-        console.error('Error fetching page:', pageError);
+        console.error('useSolutionsCards - Error fetching page:', pageError);
         throw pageError;
       }
 
       if (!pageData) {
-        console.log('Page not found:', pageSlug);
+        console.log('useSolutionsCards - Page not found:', pageSlug);
         setCards([]);
         return;
       }
 
-      console.log('Found page ID:', pageData.id);
+      console.log('useSolutionsCards - Found page ID:', pageData.id);
 
       // Buscar os cards de soluções ativos
       const { data: cardsData, error: cardsError } = await supabase
@@ -57,18 +65,26 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
         .order('card_order', { ascending: true });
 
       if (cardsError) {
-        console.error('Error fetching solutions cards:', cardsError);
+        console.error('useSolutionsCards - Error fetching solutions cards:', cardsError);
+        console.error('useSolutionsCards - Error details:', {
+          message: cardsError.message,
+          details: cardsError.details,
+          hint: cardsError.hint,
+          code: cardsError.code
+        });
         throw cardsError;
       }
 
-      console.log('Solutions cards fetched:', cardsData?.length || 0, 'cards');
+      console.log('useSolutionsCards - Solutions cards fetched:', cardsData?.length || 0, 'cards');
+      console.log('useSolutionsCards - Cards data:', cardsData);
       setCards(cardsData || []);
     } catch (err) {
-      console.error('Error in fetchCards:', err);
-      setError('Erro ao carregar cards de soluções');
+      const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
+      console.error('useSolutionsCards - Error in fetchCards:', err);
+      setError(`Erro ao carregar cards de soluções: ${errorMessage}`);
       toast({
         title: 'Erro',
-        description: 'Falha ao carregar os cards de soluções.',
+        description: 'Falha ao carregar os cards de soluções. Verifique as permissões RLS.',
         variant: 'destructive',
       });
     } finally {
