@@ -67,7 +67,7 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSelector />
             <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0 rounded-full font-semibold">
-              {t('header.getStarted')}
+              Business Intelliboard
             </Button>
           </div>
 
@@ -103,7 +103,7 @@ const Header = () => {
             </div>
             <div className="px-3 py-2">
               <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 border-0 rounded-full font-semibold">
-                {t('header.getStarted')}
+                Business Intelliboard
               </Button>
             </div>
           </div>
