@@ -18,11 +18,6 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
     onOpenChange(false);
   };
 
-  const handleEssentialOnly = () => {
-    rejectAll(); // This sets only essential cookies to true
-    onOpenChange(false);
-  };
-
   const handleRejectAll = () => {
     rejectAll();
     onOpenChange(false);
@@ -49,18 +44,10 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
           </Button>
           
           <Button
-            onClick={handleEssentialOnly}
-            variant="outline"
-            className="w-full"
-          >
-            {t('cookies.banner.rejectAll')}
-          </Button>
-          
-          <Button
             onClick={handleRejectAll}
             className="w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 hover:border-red-300 transition-colors"
           >
-            Reject All
+            {t('cookies.banner.rejectAll')}
           </Button>
         </div>
         
