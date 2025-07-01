@@ -23,27 +23,56 @@ interface SolutionsCard {
   updated_at: string;
 }
 
-export const useCMSSolutionsCards = (pageId: string, language: string) => {
+export const useCMSSolutionsCards = (pageSlug: string, language: string) => {
   const [cards, setCards] = useState<SolutionsCard[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const fetchCards = useCallback(async () => {
-    if (!pageId || !language) {
-      console.log('useCMSSolutionsCards - Missing pageId or language:', { pageId, language });
+  const fetchCards = useCallback(async (pageId?: string, lang?: string) => {
+    const targetPageSlug = pageId || pageSlug;
+    const targetLanguage = lang || language;
+    
+    if (!targetPageSlug || !targetLanguage) {
+      console.log('useCMSSolutionsCards - Missing pageSlug or language:', { pageSlug: targetPageSlug, language: targetLanguage });
       return;
     }
 
     setLoading(true);
     try {
-      console.log('useCMSSolutionsCards - Fetching solutions cards for page:', pageId, 'language:', language);
+      console.log('useCMSSolutionsCards - Fetching solutions cards for page:', targetPageSlug, 'language:', targetLanguage);
       
+      // First, get the page ID if we have a slug
+      let resolvedPageId = targetPageSlug;
+      
+      // If the pageSlug looks like a slug (not a UUID), resolve it to page ID
+      if (!targetPageSlug.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+        const { data: pageData, error: pageError } = await supabase
+          .from('cms_pages')
+          .select('id')
+          .eq('slug', targetPageSlug)
+          .eq('is_active', true)
+          .maybeSingle();
+
+        if (pageError) {
+          console.error('useCMSSolutionsCards - Error fetching page:', pageError);
+          throw pageError;
+        }
+
+        if (!pageData) {
+          console.log('useCMSSolutionsCards - Page not found:', targetPageSlug);
+          setCards([]);
+          return;
+        }
+
+        resolvedPageId = pageData.id;
+        console.log('useCMSSolutionsCards - Resolved page ID:', resolvedPageId);
+      }
+
       const { data, error } = await supabase
         .from('cms_solutions_cards')
         .select('*')
-        .eq('page_id', pageId)
-        .eq('language', language)
-        .eq('is_active', true)
+        .eq('page_id', resolvedPageId)
+        .eq('language', targetLanguage)
         .order('card_order', { ascending: true });
 
       if (error) {
@@ -56,6 +85,7 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
       setCards(data || []);
     } catch (error) {
       console.error('useCMSSolutionsCards - Failed to fetch solutions cards:', error);
+      setCards([]);
       toast({
         title: 'Erro',
         description: 'Falha ao carregar os cards de soluções.',
@@ -64,7 +94,7 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
     } finally {
       setLoading(false);
     }
-  }, [pageId, language, toast]);
+  }, [pageSlug, language, toast]);
 
   const saveCard = useCallback(async (cardData: Partial<SolutionsCard>) => {
     try {
@@ -128,8 +158,10 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
   }, [fetchCards, toast]);
 
   useEffect(() => {
-    fetchCards();
-  }, [fetchCards]);
+    if (pageSlug && language) {
+      fetchCards();
+    }
+  }, [fetchCards, pageSlug, language]);
 
   const refetch = useCallback(() => {
     return fetchCards();
