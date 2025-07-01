@@ -42,11 +42,6 @@ const CardForm: React.FC<CardFormProps> = ({
   onIsActiveChange,
   onDelete,
 }) => {
-  const handleInputChange = (value: string, onChange: (value: string) => void) => {
-    // Preserve all characters including spaces
-    onChange(value);
-  };
-
   return (
     <div className="border rounded-lg p-4 space-y-4">
       <div className="flex items-center justify-between">
@@ -75,7 +70,7 @@ const CardForm: React.FC<CardFormProps> = ({
             id="title"
             type="text"
             value={title}
-            onChange={(e) => handleInputChange(e.target.value, onTitleChange)}
+            onChange={(e) => onTitleChange(e.target.value)}
             placeholder="Digite o título do card..."
             autoComplete="off"
           />
@@ -87,7 +82,7 @@ const CardForm: React.FC<CardFormProps> = ({
             id="iconName"
             type="text"
             value={iconName}
-            onChange={(e) => handleInputChange(e.target.value, onIconNameChange)}
+            onChange={(e) => onIconNameChange(e.target.value)}
             placeholder="Ex: star, heart, etc..."
             autoComplete="off"
           />
@@ -99,7 +94,7 @@ const CardForm: React.FC<CardFormProps> = ({
             id="iconColor"
             type="text"
             value={iconColor}
-            onChange={(e) => handleInputChange(e.target.value, onIconColorChange)}
+            onChange={(e) => onIconColorChange(e.target.value)}
             placeholder="#f97316"
             autoComplete="off"
           />
@@ -111,7 +106,7 @@ const CardForm: React.FC<CardFormProps> = ({
             id="backgroundColor"
             type="text"
             value={backgroundColor}
-            onChange={(e) => handleInputChange(e.target.value, onBackgroundColorChange)}
+            onChange={(e) => onBackgroundColorChange(e.target.value)}
             placeholder="#ffffff"
             autoComplete="off"
           />
@@ -123,7 +118,7 @@ const CardForm: React.FC<CardFormProps> = ({
         <Textarea
           id="description"
           value={description}
-          onChange={(e) => handleInputChange(e.target.value, onDescriptionChange)}
+          onChange={(e) => onDescriptionChange(e.target.value)}
           placeholder="Digite a descrição do card..."
           rows={3}
           className="resize-none"
