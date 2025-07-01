@@ -138,7 +138,7 @@ const CMSLogin = () => {
           {/* Header */}
           <div className="text-center text-white">
             <h1 className="text-4xl font-bold mb-2">Welcome to</h1>
-            <h2 className="text-4xl font-bold mb-4">Business<br />Intelliboard</h2>
+            <h2 className="text-4xl font-bold mb-4">infinity6 Website<br />CMS Admin</h2>
             <p className="text-lg opacity-90 flex items-center justify-center gap-2">
               Powered by 
               <span className="text-xl">♾️</span>
