@@ -1,6 +1,7 @@
 
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 interface SEOData {
   meta_title: string;
@@ -15,6 +16,7 @@ export const useCMSSEO = () => {
   const [seoData, setSeoData] = useState<{ [key: string]: SEOData }>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const fetchSEOData = useCallback(async (pageId: string, language: string) => {
     try {
@@ -31,6 +33,11 @@ export const useCMSSEO = () => {
       if (fetchError) {
         console.error('Error fetching SEO data:', fetchError);
         setError('Erro ao carregar dados de SEO');
+        toast({
+          title: "Erro",
+          description: "Erro ao carregar dados de SEO",
+          variant: "destructive",
+        });
         return;
       }
 
@@ -49,10 +56,15 @@ export const useCMSSEO = () => {
     } catch (err) {
       console.error('Error in fetchSEOData:', err);
       setError('Erro inesperado');
+      toast({
+        title: "Erro",
+        description: "Erro inesperado ao carregar dados de SEO",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [toast]);
 
   const saveSEOData = useCallback(async (
     pageId: string,
@@ -73,19 +85,36 @@ export const useCMSSEO = () => {
       if (saveError) {
         console.error('Error saving SEO data:', saveError);
         setError('Erro ao salvar dados de SEO');
+        toast({
+          title: "Erro",
+          description: "Erro ao salvar dados de SEO",
+          variant: "destructive",
+        });
         return false;
       }
 
       // Update local state
       const key = `${pageId}_${language}`;
       setSeoData(prev => ({ ...prev, [key]: data }));
+      
+      // Show success toast
+      toast({
+        title: "Sucesso",
+        description: "Dados de SEO salvos com sucesso!",
+      });
+      
       return true;
     } catch (err) {
       console.error('Error in saveSEOData:', err);
       setError('Erro inesperado');
+      toast({
+        title: "Erro",
+        description: "Erro inesperado ao salvar dados de SEO",
+        variant: "destructive",
+      });
       return false;
     }
-  }, []);
+  }, [toast]);
 
   const getSEOData = useCallback((pageId: string, language: string): SEOData => {
     const key = `${pageId}_${language}`;
