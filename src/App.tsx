@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,7 +17,6 @@ import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
-import CMSPhase1Tests from '@/pages/CMSPhase1Tests';
 
 // Configure React Query client with error handling
 const queryClient = new QueryClient({
@@ -75,18 +75,6 @@ function App() {
                     </Routes>
                   </Layout>
                 } />
-                
-                <Route path="/cms-admin" element={
-                  <CMSProtectedRoute>
-                    <CMSLayout />
-                  </CMSProtectedRoute>
-                }>
-                  <Route index element={<ContentManagement />} />
-                  <Route path="content" element={<ContentManagement />} />
-                  <Route path="components" element={<ComponentsManagement />} />
-                  <Route path="testimonials" element={<TestimonialsManagement />} />
-                  <Route path="phase1-tests" element={<CMSPhase1Tests />} />
-                </Route>
               </Routes>
             </Router>
             
