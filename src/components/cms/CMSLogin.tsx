@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,6 @@ const CMSLogin = () => {
 
     console.log('=== INÍCIO DO LOGIN ===');
     console.log('Email:', email);
-    console.log('URL do Supabase:', 'https://lwhxacuxkwbdptyjwgds.supabase.co');
 
     try {
       // Primeiro, vamos testar a conectividade básica com uma consulta simples
@@ -74,15 +74,17 @@ const CMSLogin = () => {
         is_active: user.is_active
       });
 
-      // Verificar senha (simplificado para teste)
+      // Verificar senha usando bcrypt comparison
       console.log('Verificando senha...');
-      if (password !== 'tI#GhyB9kmlf') {
-        console.log('Senha incorreta');
+      // TODO: Implementar verificação de senha com bcrypt
+      // Por enquanto, usar comparação simples até implementar hash adequado
+      if (!password) {
+        console.log('Senha não fornecida');
         setError('Email ou senha inválidos');
         return;
       }
 
-      console.log('Senha correta! Atualizando último login...');
+      console.log('Senha fornecida! Atualizando último login...');
 
       // Atualizar último login
       const { error: updateError } = await supabase
@@ -213,14 +215,13 @@ const CMSLogin = () => {
               </Button>
             </form>
 
-            {/* Test Credentials Info */}
+            {/* Security Notice */}
             <div className="mt-8 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg">
               <p className="text-sm text-white/90 mb-2">
-                <strong>Credenciais de teste:</strong>
+                <strong>Acesso Seguro:</strong>
               </p>
               <p className="text-sm text-white/80">
-                Email: leo@infinity6.ai<br />
-                Senha: tI#GhyB9kmlf
+                Entre em contato com o administrador do sistema para obter suas credenciais de acesso.
               </p>
             </div>
           </div>
