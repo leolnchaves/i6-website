@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
-  const [useTextFallback, setUseTextFallback] = useState(false);
+  const [useTextFallback, setUseTextFallback] = useState(true); // Start with text fallback as default
 
   const languages = [
     { 
@@ -22,31 +22,75 @@ const LanguageSelector = () => {
   ];
 
   useEffect(() => {
-    // Detecta se o navegador suporta emojis de bandeiras
+    // Enhanced emoji support detection
     const detectEmojiSupport = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      // Check user agent for known problematic cases
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isWindows = userAgent.includes('windows');
+      const isChrome = userAgent.includes('chrome');
       
-      if (!ctx) {
+      // Some Windows Chrome versions have issues with flag emojis
+      if (isWindows && isChrome) {
+        console.log('Windows Chrome detected - using text fallback for better compatibility');
         setUseTextFallback(true);
         return;
       }
-      
-      canvas.width = canvas.height = 10;
-      ctx.textBaseline = 'top';
-      ctx.font = '8px Arial';
-      
-      // Testa renderização de emoji de bandeira
-      ctx.fillText('🇺🇸', 0, 0);
-      const imageData = ctx.getImageData(0, 0, 10, 10);
-      
-      // Se todos os pixels são transparentes, emoji não é suportado
-      const hasColor = imageData.data.some((value, index) => index % 4 === 3 && value > 0);
-      
-      setUseTextFallback(!hasColor);
+
+      // Canvas-based detection as secondary check
+      try {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        if (!ctx) {
+          setUseTextFallback(true);
+          return;
+        }
+        
+        canvas.width = 20;
+        canvas.height = 20;
+        ctx.textBaseline = 'top';
+        ctx.font = '16px Arial';
+        
+        // Test with flag emoji
+        ctx.fillText('🇺🇸', 0, 0);
+        const imageData = ctx.getImageData(0, 0, 20, 20);
+        
+        // Check if any non-transparent pixels exist
+        let hasVisiblePixels = false;
+        for (let i = 3; i < imageData.data.length; i += 4) {
+          if (imageData.data[i] > 0) {
+            hasVisiblePixels = true;
+            break;
+          }
+        }
+        
+        // Additional check: compare with a basic emoji
+        ctx.clearRect(0, 0, 20, 20);
+        ctx.fillText('😀', 0, 0);
+        const basicEmojiData = ctx.getImageData(0, 0, 20, 20);
+        
+        let hasBasicEmoji = false;
+        for (let i = 3; i < basicEmojiData.data.length; i += 4) {
+          if (basicEmojiData.data[i] > 0) {
+            hasBasicEmoji = true;
+            break;
+          }
+        }
+        
+        // Use flags only if both flag and basic emojis render
+        const shouldUseEmoji = hasVisiblePixels && hasBasicEmoji;
+        console.log('Emoji support detection:', { hasVisiblePixels, hasBasicEmoji, shouldUseEmoji });
+        setUseTextFallback(!shouldUseEmoji);
+        
+      } catch (error) {
+        console.log('Emoji detection failed, using text fallback:', error);
+        setUseTextFallback(true);
+      }
     };
 
-    detectEmojiSupport();
+    // Run detection after a short delay to ensure DOM is ready
+    const timer = setTimeout(detectEmojiSupport, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -68,7 +112,13 @@ const LanguageSelector = () => {
               {lang.text}
             </span>
           ) : (
-            <span className="text-lg leading-none" style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, Android Emoji, sans-serif' }}>
+            <span 
+              className="text-lg leading-none select-none" 
+              style={{ 
+                fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif',
+                fontSize: '16px'
+              }}
+            >
               {lang.flag}
             </span>
           )}
