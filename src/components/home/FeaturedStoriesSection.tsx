@@ -1,6 +1,6 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useMarkdownSuccessStoriesCards } from '@/hooks/useMarkdownSuccessStoriesCards';
+import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { useState, useEffect } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
@@ -10,10 +10,8 @@ import ViewAllButton from './featured-stories/ViewAllButton';
 const FeaturedStoriesSection = () => {
   const { language } = useLanguage();
   const { pages, fetchPages } = useCMSContent();
-  const [pageSlug, setPageSlug] = useState<string>('');
-
-  // Usar o novo hook unificado do Markdown com fallback para Supabase
-  const { cards, loading, error, isUsingFallback } = useMarkdownSuccessStoriesCards(pageSlug, language);
+  const { cards, loading, fetchCards } = useCMSSuccessStoriesCards();
+  const [pageId, setPageId] = useState<string>('');
 
   useEffect(() => {
     console.log('FeaturedStoriesSection - Fetching pages...');
@@ -26,25 +24,23 @@ const FeaturedStoriesSection = () => {
       const homePage = pages.find(p => p.slug === 'home');
       console.log('FeaturedStoriesSection - Home page found:', homePage);
       if (homePage) {
-        setPageSlug('home');
-        console.log('FeaturedStoriesSection - Using page slug: home, language:', language);
+        setPageId(homePage.id);
+        console.log('FeaturedStoriesSection - Fetching cards for page:', homePage.id, 'language:', language);
+        fetchCards(homePage.id, language);
       }
     }
-  }, [pages, language]);
+  }, [pages, language, fetchCards]);
 
   // Filter cards to show only active home cards - usando todos os cards se não houver cards específicos para home
-  const homeCards = cards.filter(card => card.isActiveHome);
+  const homeCards = cards.filter(card => card.is_active_home);
   const fallbackCards = homeCards.length === 0 ? cards.slice(0, 3) : homeCards;
 
-  console.log('FeaturedStoriesSection - All cards:', cards.length);
-  console.log('FeaturedStoriesSection - Cards with isActiveHome=true:', homeCards.length);
-  console.log('FeaturedStoriesSection - Final cards to display:', fallbackCards.length);
+  console.log('FeaturedStoriesSection - All cards:', cards);
+  console.log('FeaturedStoriesSection - Cards with is_active_home=true:', homeCards);
+  console.log('FeaturedStoriesSection - Final cards to display:', fallbackCards);
   console.log('FeaturedStoriesSection - Loading state:', loading);
-  console.log('FeaturedStoriesSection - Using fallback:', isUsingFallback);
-  console.log('FeaturedStoriesSection - Error:', error);
 
-  // Não mostrar erro se estivermos carregando ou se não temos pageSlug ainda
-  if (loading || !pageSlug) {
+  if (loading) {
     console.log('FeaturedStoriesSection - Showing loading state');
     return (
       <section className="py-20 bg-white relative overflow-hidden">
@@ -98,60 +94,21 @@ const FeaturedStoriesSection = () => {
                   ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
                   : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl'
               }`}>
-                {fallbackCards.map((card, index) => {
-                  // Converter o formato do Markdown para o formato esperado pelo componente
-                  const adaptedCard = {
-                    id: card.id,
-                    company_name: card.companyName,
-                    industry: card.industry,
-                    challenge: card.challenge,
-                    solution: card.solution,
-                    metric1_value: card.metrics.metric1.value,
-                    metric1_label: card.metrics.metric1.label,
-                    metric2_value: card.metrics.metric2.value,
-                    metric2_label: card.metrics.metric2.label,
-                    metric3_value: card.metrics.metric3.value,
-                    metric3_label: card.metrics.metric3.label,
-                    customer_quote: card.customerQuote,
-                    customer_name: card.customerName,
-                    customer_title: card.customerTitle,
-                    image_url: card.imageUrl,
-                    is_active_home: card.isActiveHome,
-                    card_order: card.cardOrder,
-                  };
-
-                  return (
-                    <div key={card.id} className="flex">
-                      <HomeFeaturedStoryCard card={adaptedCard} index={index} />
-                    </div>
-                  );
-                })}
+                {fallbackCards.map((card, index) => (
+                  <div key={card.id} className="flex">
+                    <HomeFeaturedStoryCard card={card} index={index} />
+                  </div>
+                ))}
               </div>
             </div>
             
             <ViewAllButton />
-            
-            {/* Indicador de fonte de dados */}
-            {isUsingFallback && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-gray-400">
-                  📄 Dados carregados do Supabase (fallback)
-                </p>
-              </div>
-            )}
           </>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-4">Cases de sucesso serão exibidos em breve</p>
-            <p className="text-sm text-gray-400">Configure os cards no painel de administração</p>
+            <p className="text-gray-500 mb-4">Nenhum case de sucesso disponível no momento</p>
+            <p className="text-sm text-gray-400">Cards serão exibidos quando houver dados disponíveis no CMS</p>
             <ViewAllButton />
-            
-            {/* Indicador silencioso de que não há dados - sem mostrar erro */}
-            <div className="text-center mt-4">
-              <p className="text-xs text-gray-300">
-                ℹ️ Nenhum card configurado (normal durante configuração inicial)
-              </p>
-            </div>
           </div>
         )}
       </div>

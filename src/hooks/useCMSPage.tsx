@@ -8,38 +8,27 @@ export const useCMSPage = (slug: string) => {
 
   useEffect(() => {
     const fetchPageId = async () => {
-      if (!slug) {
-        setLoading(false);
-        return;
-      }
+      if (!slug) return;
 
       try {
-        console.log('useCMSPage - Fetching page ID for slug:', slug);
+        console.log('Fetching page ID for slug:', slug);
         
         const { data, error } = await supabase
           .from('cms_pages')
           .select('id')
           .eq('slug', slug)
           .eq('is_active', true)
-          .maybeSingle();
+          .single();
 
         if (error) {
-          console.error('useCMSPage - Error fetching page:', error);
-          setPageId(null);
+          console.error('Error fetching page:', error);
           return;
         }
 
-        if (!data) {
-          console.log('useCMSPage - Page not found for slug:', slug);
-          setPageId(null);
-          return;
-        }
-
-        console.log('useCMSPage - Found page ID:', data.id);
-        setPageId(data.id);
+        console.log('Found page ID:', data?.id);
+        setPageId(data?.id || null);
       } catch (error) {
-        console.error('useCMSPage - Failed to fetch page:', error);
-        setPageId(null);
+        console.error('Failed to fetch page:', error);
       } finally {
         setLoading(false);
       }

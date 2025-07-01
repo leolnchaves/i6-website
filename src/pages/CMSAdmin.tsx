@@ -10,7 +10,6 @@ import SecurityHeaders from '@/components/cms/SecurityHeaders';
 import SiteStructure from '@/components/cms/SiteStructure';
 import ContentManagement from '@/components/cms/ContentManagement';
 import ComponentsManagement from '@/components/cms/ComponentsManagement';
-import CMSPhase1Tests from '@/pages/CMSPhase1Tests';
 
 /**
  * CMS Admin page - hidden admin interface
@@ -35,7 +34,37 @@ const CMSAdmin = () => {
           <Route path="/" element={<Navigate to="/cms-admin-i6/site-structure" replace />} />
           <Route path="/*" element={
             <CMSProtectedRoute>
-              <CMSLayout />
+              <CMSLayout>
+                <Routes>
+                  <Route path="/site-structure" element={<SiteStructure />} />
+                  <Route path="/content" element={<ContentManagement />} />
+                  <Route path="/components" element={<ComponentsManagement />} />
+                  <Route path="/users" element={
+                    <CMSProtectedRoute requiredRole="admin">
+                      <div className="text-center py-12">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">Gestão de Usuários</h2>
+                        <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                      </div>
+                    </CMSProtectedRoute>
+                  } />
+                  <Route path="/analytics" element={
+                    <CMSProtectedRoute requiredRole="editor">
+                      <div className="text-center py-12">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">Analytics</h2>
+                        <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                      </div>
+                    </CMSProtectedRoute>
+                  } />
+                  <Route path="/settings" element={
+                    <CMSProtectedRoute requiredRole="admin">
+                      <div className="text-center py-12">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">Configurações</h2>
+                        <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                      </div>
+                    </CMSProtectedRoute>
+                  } />
+                </Routes>
+              </CMSLayout>
             </CMSProtectedRoute>
           } />
         </Routes>

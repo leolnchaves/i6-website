@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -39,7 +39,7 @@ const queryClient = new QueryClient({
  * Main App component with error boundaries and debug tools
  * Provides the root structure for the entire application
  */
-function App() {
+const App = () => {
   // Log app initialization
   logger.info('App initialized', { 
     environment: process.env.NODE_ENV,
@@ -55,7 +55,7 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <Router>
+            <BrowserRouter>
               <Routes>
                 {/* CMS Admin routes - without Layout wrapper */}
                 <Route path="/cms-admin-i6/*" element={<CMSAdmin />} />
@@ -76,7 +76,7 @@ function App() {
                   </Layout>
                 } />
               </Routes>
-            </Router>
+            </BrowserRouter>
             
             {/* Debug panel for development */}
             <DebugPanel />
@@ -85,6 +85,6 @@ function App() {
       </QueryClientProvider>
     </ErrorBoundary>
   );
-}
+};
 
 export default App;
