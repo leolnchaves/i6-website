@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -75,7 +76,7 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
 
   if (loading) {
     return (
-      <Card className="bg-gray-50">
+      <Card style={{ backgroundColor: '#f9fafb' }}>
         <CardHeader>
           <CardTitle>Gestão de Cards - Cases de Sucesso</CardTitle>
           <CardDescription>Carregando cards...</CardDescription>
@@ -103,7 +104,7 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
   }
 
   return (
-    <Card className="bg-gray-50">
+    <Card style={{ backgroundColor: '#f9fafb' }}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>

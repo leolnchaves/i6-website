@@ -22,8 +22,8 @@ interface HomeFeaturedStoryCardProps {
 
 const HomeFeaturedStoryCard = ({ card, index }: HomeFeaturedStoryCardProps) => {
   return (
-    <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden !bg-gray-50 relative transform hover:scale-105 h-full flex flex-col">
-      <CardContent className="p-0 flex flex-col h-full">
+    <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden relative transform hover:scale-105 h-full flex flex-col" style={{ backgroundColor: '#f9fafb' }}>
+      <CardContent className="p-0 flex flex-col h-full" style={{ backgroundColor: '#f9fafb' }}>
         {/* Image Container with Industry Badge */}
         <div className="relative overflow-hidden h-48">
           <img 
@@ -47,7 +47,7 @@ const HomeFeaturedStoryCard = ({ card, index }: HomeFeaturedStoryCardProps) => {
         </div>
 
         {/* Content Container - Uses flex-1 to fill remaining space */}
-        <div className="p-6 flex flex-col flex-1 bg-gray-50">
+        <div className="p-6 flex flex-col flex-1" style={{ backgroundColor: '#f9fafb' }}>
           {/* Company Name */}
           <h3 className="text-xl font-bold text-gray-900 mb-3">{card.company_name}</h3>
           
