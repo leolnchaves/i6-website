@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
-  const [useTextFallback, setUseTextFallback] = useState(false);
+  const [flagsLoaded, setFlagsLoaded] = useState(false);
 
   const languages = [
     { 
@@ -22,32 +22,37 @@ const LanguageSelector = () => {
   ];
 
   useEffect(() => {
-    // Detecta se o navegador suporta emojis de bandeiras
-    const detectEmojiSupport = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+    // Força o carregamento das fontes de emoji
+    const loadEmojiFont = () => {
+      const testElement = document.createElement('span');
+      testElement.style.fontFamily = '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Android Emoji", sans-serif';
+      testElement.style.fontSize = '16px';
+      testElement.innerHTML = '🇺🇸';
+      testElement.style.position = 'absolute';
+      testElement.style.left = '-9999px';
+      testElement.style.top = '-9999px';
       
-      if (!ctx) {
-        setUseTextFallback(true);
-        return;
-      }
+      document.body.appendChild(testElement);
       
-      canvas.width = canvas.height = 10;
-      ctx.textBaseline = 'top';
-      ctx.font = '8px Arial';
-      
-      // Testa renderização de emoji de bandeira
-      ctx.fillText('🇺🇸', 0, 0);
-      const imageData = ctx.getImageData(0, 0, 10, 10);
-      
-      // Se todos os pixels são transparentes, emoji não é suportado
-      const hasColor = imageData.data.some((value, index) => index % 4 === 3 && value > 0);
-      
-      setUseTextFallback(!hasColor);
+      // Aguarda um pouco para garantir que a fonte seja carregada
+      setTimeout(() => {
+        setFlagsLoaded(true);
+        document.body.removeChild(testElement);
+      }, 100);
     };
 
-    detectEmojiSupport();
+    loadEmojiFont();
   }, []);
+
+  const getFlagStyle = () => ({
+    fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Android Emoji", sans-serif',
+    fontSize: '18px',
+    lineHeight: '1',
+    display: 'inline-block',
+    textRendering: 'optimizeSpeed',
+    fontFeatureSettings: '"liga" off, "kern" off',
+    fontVariant: 'none'
+  });
 
   return (
     <div className="flex items-center space-x-2">
@@ -63,15 +68,9 @@ const LanguageSelector = () => {
           title={lang.label}
           aria-label={`Switch to ${lang.label}`}
         >
-          {useTextFallback ? (
-            <span className="font-bold text-xs">
-              {lang.text}
-            </span>
-          ) : (
-            <span className="text-lg leading-none" style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, Android Emoji, sans-serif' }}>
-              {lang.flag}
-            </span>
-          )}
+          <span style={getFlagStyle()}>
+            {lang.flag}
+          </span>
         </button>
       ))}
     </div>
