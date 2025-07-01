@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Chrome, Github } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
 import GradientBackground from '@/components/ui/gradient-background';
@@ -213,43 +212,6 @@ const CMSLogin = () => {
                 {isLoading ? 'Entrando...' : 'Enter'}
               </Button>
             </form>
-
-            {/* Divider */}
-            <div className="text-center text-white/60 text-sm">
-              or
-            </div>
-
-            {/* Social Login Buttons */}
-            <div className="space-y-3">
-              <Button 
-                type="button" 
-                className="w-full h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-full transition-all duration-200"
-                variant="outline"
-              >
-                <Chrome className="mr-3 h-5 w-5" />
-                CONTINUE WITH GOOGLE
-              </Button>
-              
-              <Button 
-                type="button" 
-                className="w-full h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-full transition-all duration-200"
-                variant="outline"
-              >
-                <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M23.5 12h-2.09C21.78 8.67 18.64 6 14.91 6c-4.72 0-8.55 3.83-8.55 8.55S10.19 23.1 14.91 23.1c2.36 0 4.5-.97 6.04-2.53L19.41 19c-1.15 1.15-2.74 1.86-4.5 1.86-3.54 0-6.41-2.87-6.41-6.41S10.37 8.04 13.91 8.04c2.87 0 5.32 1.89 6.19 4.49h-6.19v2.47H23.5z"/>
-                </svg>
-                CONTINUE WITH MICROSOFT
-              </Button>
-              
-              <Button 
-                type="button" 
-                className="w-full h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm text-white border border-white/10 rounded-full transition-all duration-200"
-                variant="outline"
-              >
-                <Github className="mr-3 h-5 w-5" />
-                CONTINUE WITH GITHUB
-              </Button>
-            </div>
 
             {/* Test Credentials Info */}
             <div className="mt-8 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg">
