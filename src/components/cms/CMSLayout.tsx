@@ -7,7 +7,8 @@ import {
   Users, 
   Settings, 
   LogOut,
-  TestTube
+  TestTube,
+  Layers
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
@@ -16,6 +17,7 @@ import SiteStructure from './SiteStructure';
 import ContentManagement from './ContentManagement';
 import ComponentsManagement from './ComponentsManagement';
 import CMSPhase1Tests from '@/pages/CMSPhase1Tests';
+import CMSPhase2Tests from '@/pages/CMSPhase2Tests';
 
 const CMSLayout = () => {
   const { logout } = useCMSAuth();
@@ -27,6 +29,7 @@ const CMSLayout = () => {
     { path: '/cms-admin-i6/components', icon: Settings, label: 'Componentes' },
     { path: '/cms-admin-i6/testimonials', icon: Users, label: 'Depoimentos' },
     { path: '/cms-admin-i6/phase1-tests', icon: TestTube, label: 'Testes Fase 1' },
+    { path: '/cms-admin-i6/phase2-tests', icon: Layers, label: 'Testes Fase 2' },
   ];
 
   const isActive = (path: string) => {
@@ -95,6 +98,7 @@ const CMSLayout = () => {
               <Route path="/content" element={<ContentManagement />} />
               <Route path="/components" element={<ComponentsManagement />} />
               <Route path="/phase1-tests" element={<CMSPhase1Tests />} />
+              <Route path="/phase2-tests" element={<CMSPhase2Tests />} />
               <Route path="/users" element={
                 <CMSProtectedRoute requiredRole="admin">
                   <div className="text-center py-12">
