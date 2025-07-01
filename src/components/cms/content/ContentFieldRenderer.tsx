@@ -23,6 +23,11 @@ const ContentFieldRenderer: React.FC<ContentFieldRendererProps> = ({
   formData,
   onFieldChange,
 }) => {
+  const handleInputChange = (key: string, value: string) => {
+    // Ensure we preserve all characters including spaces
+    onFieldChange(key, value);
+  };
+
   return (
     <div className="space-y-4">
       {fields.map(field => {
@@ -36,7 +41,7 @@ const ContentFieldRenderer: React.FC<ContentFieldRendererProps> = ({
               id={key}
               label={field.label}
               value={value}
-              onChange={(iconValue) => onFieldChange(key, iconValue)}
+              onChange={(iconValue) => handleInputChange(key, iconValue)}
             />
           );
         }
@@ -48,20 +53,24 @@ const ContentFieldRenderer: React.FC<ContentFieldRendererProps> = ({
               <Textarea
                 id={key}
                 value={value}
-                onChange={(e) => onFieldChange(key, e.target.value)}
+                onChange={(e) => handleInputChange(key, e.target.value)}
                 placeholder={`Digite o ${field.label.toLowerCase()}...`}
                 rows={field.field === 'description' ? 5 : 3}
+                className="resize-none"
               />
             ) : (
               <Input
                 id={key}
+                type="text"
                 value={value}
-                onChange={(e) => onFieldChange(key, e.target.value)}
+                onChange={(e) => handleInputChange(key, e.target.value)}
                 placeholder={
                   field.field === 'demoLink' 
                     ? 'https://www.youtube.com/embed/...' 
                     : `Digite o ${field.label.toLowerCase()}...`
                 }
+                autoComplete="off"
+                spellCheck="false"
               />
             )}
           </div>
