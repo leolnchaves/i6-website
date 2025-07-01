@@ -53,9 +53,9 @@ const FeaturedStoriesSection = () => {
           <FeaturedStoriesHeader />
 
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-7xl w-full">
               {[...Array(3)].map((_, index) => (
-                <div key={index} className="bg-gray-50 rounded-2xl shadow-lg p-6 animate-pulse">
+                <div key={index} className="bg-gray-50 rounded-2xl shadow-lg p-6 animate-pulse h-[500px]">
                   <div className="h-48 bg-gray-200 rounded-xl mb-4"></div>
                   <div className="h-4 bg-gray-200 rounded mb-2"></div>
                   <div className="h-6 bg-gray-200 rounded mb-4"></div>
@@ -87,15 +87,17 @@ const FeaturedStoriesSection = () => {
         {fallbackCards.length > 0 ? (
           <>
             <div className="flex justify-center">
-              <div className={`grid gap-8 mb-12 max-w-5xl ${
+              <div className={`grid gap-8 mb-12 w-full ${
                 fallbackCards.length === 1 
-                  ? 'grid-cols-1 max-w-md' 
+                  ? 'grid-cols-1 max-w-md mx-auto' 
                   : fallbackCards.length === 2 
-                  ? 'grid-cols-1 md:grid-cols-2 max-w-3xl' 
-                  : 'grid-cols-1 md:grid-cols-3'
+                  ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
+                  : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl'
               }`}>
                 {fallbackCards.map((card, index) => (
-                  <HomeFeaturedStoryCard key={card.id} card={card} index={index} />
+                  <div key={card.id} className="flex">
+                    <HomeFeaturedStoryCard card={card} index={index} />
+                  </div>
                 ))}
               </div>
             </div>
