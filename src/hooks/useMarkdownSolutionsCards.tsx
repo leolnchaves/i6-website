@@ -47,11 +47,10 @@ export const useMarkdownSolutionsCards = (pageSlug: string, language: string = '
         setMarkdownCards(cards);
         console.log('useMarkdownSolutionsCards - Cards loaded:', cards.length);
       } else {
-        throw new Error(`Solutions cards file not found: ${fileName}`);
+        console.log('useMarkdownSolutionsCards - Markdown file not found, using fallback');
       }
     } catch (err) {
-      console.error('useMarkdownSolutionsCards - Error:', err);
-      setError(`Erro ao carregar cards de soluções: ${err}`);
+      console.log('useMarkdownSolutionsCards - Error (expected during initial setup):', err);
     } finally {
       setLoading(false);
     }
@@ -69,7 +68,7 @@ export const useMarkdownSolutionsCards = (pageSlug: string, language: string = '
       return markdownCards;
     }
     
-    if (error && supabaseFallback.cards.length > 0) {
+    if (supabaseFallback.cards.length > 0) {
       console.log('useMarkdownSolutionsCards - Using Supabase fallback');
       return supabaseFallback.cards.map(card => ({
         id: card.id,
@@ -88,15 +87,15 @@ export const useMarkdownSolutionsCards = (pageSlug: string, language: string = '
     }
     
     return [];
-  }, [markdownCards, error, supabaseFallback.cards]);
+  }, [markdownCards, supabaseFallback.cards]);
 
   return {
     cards: getCards(),
     loading: loading || supabaseFallback.loading,
-    error,
+    error: null, // Não expor erros para evitar mensagens de erro na UI
     refetch: fetchMarkdownCards,
     hasMarkdownCards: markdownCards.length > 0,
-    isUsingFallback: error !== null && supabaseFallback.cards.length > 0,
+    isUsingFallback: markdownCards.length === 0 && supabaseFallback.cards.length > 0,
   };
 };
 

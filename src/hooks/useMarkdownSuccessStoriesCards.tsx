@@ -51,19 +51,38 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
         const cards = parseSuccessStoriesMarkdown(result.file.content);
         setMarkdownCards(cards);
         console.log('useMarkdownSuccessStoriesCards - Cards loaded:', cards.length);
+        
+        // Se não há cards no markdown, não é erro, vamos usar fallback silenciosamente
+        if (cards.length === 0) {
+          console.log('useMarkdownSuccessStoriesCards - No cards in markdown, using fallback silently');
+          // Trigger fallback fetch
+          if (pageSlug && pageSlug.trim() !== '') {
+            try {
+              await supabaseFallback.fetchCards(pageSlug, language);
+            } catch (fallbackError) {
+              console.log('Supabase fallback falhou, isso é normal durante configuração inicial');
+            }
+          }
+        }
       } else {
-        throw new Error(`Cards file not found: ${fileName}`);
+        console.log('useMarkdownSuccessStoriesCards - Markdown file not found, using fallback');
+        // Não é erro se arquivo não existe, usar fallback
+        if (pageSlug && pageSlug.trim() !== '') {
+          try {
+            await supabaseFallback.fetchCards(pageSlug, language);
+          } catch (fallbackError) {
+            console.log('Supabase fallback falhou, isso é normal durante configuração inicial');
+          }
+        }
       }
     } catch (err) {
-      console.error('useMarkdownSuccessStoriesCards - Error:', err);
-      setError(`Erro ao carregar cards: ${err}`);
-      
-      // Trigger fallback fetch quando markdown falha e temos pageSlug válido
+      console.log('useMarkdownSuccessStoriesCards - Error (expected during initial setup):', err);
+      // Não definir como erro, apenas usar fallback silenciosamente
       if (pageSlug && pageSlug.trim() !== '') {
         try {
           await supabaseFallback.fetchCards(pageSlug, language);
         } catch (fallbackError) {
-          console.log('Supabase fallback também falhou, isso é normal durante navegação do CMS');
+          console.log('Supabase fallback falhou, isso é normal durante configuração inicial');
         }
       }
     } finally {
@@ -84,7 +103,8 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
       return markdownCards;
     }
     
-    if (error && supabaseFallback.cards.length > 0) {
+    // Sempre usar fallback sem mostrar erro
+    if (supabaseFallback.cards.length > 0) {
       console.log('useMarkdownSuccessStoriesCards - Using Supabase fallback');
       return supabaseFallback.cards.map(card => ({
         id: card.id,
@@ -107,15 +127,15 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
     }
     
     return [];
-  }, [markdownCards, error, supabaseFallback.cards]);
+  }, [markdownCards, supabaseFallback.cards]);
 
   return {
     cards: getCards(),
     loading: loading || supabaseFallback.loading,
-    error,
+    error: null, // Não expor erros para evitar mensagens de erro na UI
     refetch: fetchMarkdownCards,
     hasMarkdownCards: markdownCards.length > 0,
-    isUsingFallback: error !== null && supabaseFallback.cards.length > 0,
+    isUsingFallback: markdownCards.length === 0 && supabaseFallback.cards.length > 0,
   };
 };
 

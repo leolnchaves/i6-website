@@ -26,7 +26,7 @@ const FeaturedStoriesSection = () => {
       const homePage = pages.find(p => p.slug === 'home');
       console.log('FeaturedStoriesSection - Home page found:', homePage);
       if (homePage) {
-        setPageSlug('home'); // Usar slug em vez de ID
+        setPageSlug('home');
         console.log('FeaturedStoriesSection - Using page slug: home, language:', language);
       }
     }
@@ -43,7 +43,8 @@ const FeaturedStoriesSection = () => {
   console.log('FeaturedStoriesSection - Using fallback:', isUsingFallback);
   console.log('FeaturedStoriesSection - Error:', error);
 
-  if (loading) {
+  // Não mostrar erro se estivermos carregando ou se não temos pageSlug ainda
+  if (loading || !pageSlug) {
     console.log('FeaturedStoriesSection - Showing loading state');
     return (
       <section className="py-20 bg-white relative overflow-hidden">
@@ -141,9 +142,16 @@ const FeaturedStoriesSection = () => {
           </>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-4">Nenhum case de sucesso disponível no momento</p>
-            <p className="text-sm text-gray-400">Cards serão exibidos quando houver dados disponíveis</p>
+            <p className="text-gray-500 mb-4">Cases de sucesso serão exibidos em breve</p>
+            <p className="text-sm text-gray-400">Configure os cards no painel de administração</p>
             <ViewAllButton />
+            
+            {/* Indicador silencioso de que não há dados - sem mostrar erro */}
+            <div className="text-center mt-4">
+              <p className="text-xs text-gray-300">
+                ℹ️ Nenhum card configurado (normal durante configuração inicial)
+              </p>
+            </div>
           </div>
         )}
       </div>
