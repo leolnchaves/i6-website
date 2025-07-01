@@ -28,7 +28,7 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
   const [error, setError] = useState<string | null>(null);
   
   // Fallback para Supabase
-  const supabaseFallback = useCMSSuccessStoriesCards(pageSlug, language);
+  const supabaseFallback = useCMSSuccessStoriesCards();
 
   const fetchMarkdownCards = useCallback(async () => {
     try {
@@ -51,10 +51,15 @@ export const useMarkdownSuccessStoriesCards = (pageSlug: string, language: strin
     } catch (err) {
       console.error('useMarkdownSuccessStoriesCards - Error:', err);
       setError(`Erro ao carregar cards: ${err}`);
+      
+      // Trigger fallback fetch when markdown fails
+      if (pageSlug) {
+        await supabaseFallback.fetchCards(pageSlug, language);
+      }
     } finally {
       setLoading(false);
     }
-  }, [pageSlug, language]);
+  }, [pageSlug, language, supabaseFallback]);
 
   useEffect(() => {
     fetchMarkdownCards();
