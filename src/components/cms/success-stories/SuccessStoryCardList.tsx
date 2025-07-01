@@ -132,16 +132,16 @@ const SuccessStoryCardList: React.FC<SuccessStoryCardListProps> = ({
 
                 {/* Metrics */}
                 <div className="grid grid-cols-3 gap-2 mb-3">
-                  <div className="bg-blue-50 p-2 rounded text-center">
-                    <div className="font-semibold text-blue-600 text-sm">{card.metric1_value}</div>
+                  <div className="text-center p-2 rounded border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
+                    <div className="font-semibold text-sm" style={{ color: '#2563eb' }}>{card.metric1_value}</div>
                     <div className="text-xs text-gray-600">{card.metric1_label}</div>
                   </div>
-                  <div className="bg-green-50 p-2 rounded text-center">
-                    <div className="font-semibold text-green-600 text-sm">{card.metric2_value}</div>
+                  <div className="text-center p-2 rounded border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
+                    <div className="font-semibold text-sm" style={{ color: '#2563eb' }}>{card.metric2_value}</div>
                     <div className="text-xs text-gray-600">{card.metric2_label}</div>
                   </div>
-                  <div className="bg-purple-50 p-2 rounded text-center">
-                    <div className="font-semibold text-purple-600 text-sm">{card.metric3_value}</div>
+                  <div className="text-center p-2 rounded border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
+                    <div className="font-semibold text-sm" style={{ color: '#2563eb' }}>{card.metric3_value}</div>
                     <div className="text-xs text-gray-600">{card.metric3_label}</div>
                   </div>
                 </div>
