@@ -9,6 +9,7 @@ import ContentSectionAccordion from './ContentSectionAccordion';
 import SuccessStoriesCardsManagement from '../SuccessStoriesCardsManagement';
 import FAQCardsManagement from '../FAQCardsManagement';
 import SolutionsCardsManagement from '../SolutionsCardsManagement';
+import ResultsCardsManagement from '../ResultsCardsManagement';
 import { getAccordionFields } from './ContentFieldsConfig';
 
 interface ContentTabProps {
@@ -106,6 +107,17 @@ const ContentTab: React.FC<ContentTabProps> = ({
           </div>
         </CardContent>
       </Card>
+
+      {/* Results Cards Management - Only for Home Page */}
+      {isHomePage && (
+        <>
+          <Separator className="bg-gray-200" />
+          <ResultsCardsManagement
+            selectedPage={selectedPage}
+            selectedLanguage={selectedLanguage}
+          />
+        </>
+      )}
 
       {/* Success Stories Cards Management */}
       {isSuccessStoriesPage && (
