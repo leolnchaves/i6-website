@@ -8,7 +8,7 @@ import ViewAllSolutionsButton from './compact-solutions/ViewAllSolutionsButton';
 
 const CompactSolutionsSection = () => {
   const { language } = useLanguage();
-  const { cards, loading, error } = useSolutionsCards(language, 'home');
+  const { cards, loading, error } = useSolutionsCards(language, 'solutions');
   const { getContent } = useCMSPageContent('home', language);
 
   console.log('CompactSolutionsSection - Cards loaded:', cards?.length || 0);
@@ -47,6 +47,23 @@ const CompactSolutionsSection = () => {
     );
   }
 
+  if (error) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent"></div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <CompactSolutionsHeader />
+          
+          <div className="text-center py-12 mt-16">
+            <p className="text-gray-500 mb-4">Erro ao carregar as soluções</p>
+            <p className="text-sm text-gray-400">{error}</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
       {/* Subtle background elements */}
@@ -74,14 +91,8 @@ const CompactSolutionsSection = () => {
           </>
         ) : (
           <div className="text-center py-12 mt-16">
-            <p className="text-gray-500 mb-4">
-              {error ? 'Erro ao carregar as soluções' : 'Nenhuma solução disponível no momento'}
-            </p>
-            <p className="text-sm text-gray-400">
-              {error || 'Os cards de soluções serão exibidos quando estiverem configurados no CMS'}
-            </p>
-            {/* Still show the button even when there are no cards */}
-            <ViewAllSolutionsButton buttonText={buttonText} />
+            <p className="text-gray-500 mb-4">Nenhuma solução disponível no momento</p>
+            <p className="text-sm text-gray-400">Os cards de soluções serão exibidos quando estiverem configurados no CMS</p>
           </div>
         )}
       </div>

@@ -26,7 +26,7 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
 
       console.log('useSolutionsCards - Fetching solutions cards for page:', pageSlug, 'language:', language);
 
-      // First get the page ID from the slug
+      // Buscar a página específica
       const { data: pageData, error: pageError } = await supabase
         .from('cms_pages')
         .select('id')
@@ -47,7 +47,7 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
 
       console.log('useSolutionsCards - Found page ID:', pageData.id);
 
-      // Then fetch the solutions cards for this page
+      // Buscar os cards de soluções ativos
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_solutions_cards')
         .select('id, title, description, icon, engine, is_active, card_order')
@@ -68,7 +68,6 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
       const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
       console.error('useSolutionsCards - Error in fetchCards:', err);
       setError(`Erro ao carregar cards de soluções: ${errorMessage}`);
-      setCards([]);
       toast({
         title: 'Erro',
         description: 'Falha ao carregar os cards de soluções.',

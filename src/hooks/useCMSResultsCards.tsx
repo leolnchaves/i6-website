@@ -35,19 +35,17 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
 
       if (pageError) {
         console.error('Error fetching page:', pageError);
-        setCards([]);
         return;
       }
 
       if (!pageData) {
         console.log('Page not found:', pageSlug);
-        setCards([]);
         return;
       }
 
       console.log('useCMSResultsCards - Found page ID:', pageData.id);
 
-      // Then, fetch cards for this page
+      // Then, fetch ALL cards for this page (including inactive ones for CMS management)
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_results_cards')
         .select('*')
@@ -62,7 +60,6 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
           description: 'Não foi possível carregar os cards da seção Results.',
           variant: 'destructive',
         });
-        setCards([]);
         return;
       }
 
@@ -71,7 +68,6 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
       setCards(cardsData || []);
     } catch (error) {
       console.error('Error in fetchCards:', error);
-      setCards([]);
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao carregar os cards.',
