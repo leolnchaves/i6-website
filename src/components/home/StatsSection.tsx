@@ -31,7 +31,6 @@ const StatsSection = () => {
               key={key}
               value={stat.value}
               label={stat.label}
-              icon={stat.icon}
             />
           ))}
         </div>
