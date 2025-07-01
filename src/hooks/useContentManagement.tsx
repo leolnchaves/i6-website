@@ -80,7 +80,7 @@ export const useContentManagement = () => {
 
   const allFields = getAllFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
 
-  // CORRIGIDO: useEffect com flag para evitar reidratação constante
+  // CORRIGIDO: useEffect com flag para evitar reidratação constante e comparação correta de objeto vazio
   useEffect(() => {
     console.log('useContentManagement - useEffect triggered');
     console.log('- content:', Object.keys(content).length, 'fields');
@@ -88,7 +88,7 @@ export const useContentManagement = () => {
     console.log('- allFields length:', allFields.length);
 
     // Só reidrata se não foi inicializado ainda OU se mudou de página/idioma
-    if (Object.keys(content).length > 0 && (!isInitialized || contentFormData === {})) {
+    if (Object.keys(content).length > 0 && (!isInitialized || Object.keys(contentFormData).length === 0)) {
       console.log('useContentManagement - Initializing from content');
       const formData: { [key: string]: string } = {};
       Object.entries(content).forEach(([key, value]) => {
