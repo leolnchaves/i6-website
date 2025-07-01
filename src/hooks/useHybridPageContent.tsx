@@ -17,8 +17,11 @@ export const useHybridPageContent = (pageSlug: string, language: string = 'en') 
     filePath: markdownFilePath
   });
 
-  console.log('useHybridPageContent - CMS Content:', cmsContent);
-  console.log('useHybridPageContent - Markdown Data:', markdownData);
+  console.log('🔄 useHybridPageContent - TESTE DE FALLBACK');
+  console.log('📊 CMS Content:', cmsContent);
+  console.log('📄 Markdown Data:', markdownData);
+  console.log('⚠️ CMS Error:', cmsError);
+  console.log('⚠️ Markdown Error:', markdownError);
 
   // Merge content from both sources
   useEffect(() => {
@@ -28,7 +31,9 @@ export const useHybridPageContent = (pageSlug: string, language: string = 'en') 
       // First, add all CMS content
       if (cmsContent && Object.keys(cmsContent).length > 0) {
         Object.assign(merged, cmsContent);
-        console.log('useHybridPageContent - Using CMS content as primary source');
+        console.log('✅ useHybridPageContent - TESTE: Usando CMS como fonte primária');
+      } else {
+        console.log('❌ useHybridPageContent - TESTE: CMS vazio, partindo para Markdown');
       }
 
       // Then, add Markdown content as fallback for missing keys
@@ -36,19 +41,22 @@ export const useHybridPageContent = (pageSlug: string, language: string = 'en') 
         Object.keys(markdownData.frontMatter).forEach(key => {
           if (!merged[key] || merged[key].trim() === '') {
             merged[key] = markdownData.frontMatter[key];
-            console.log('useHybridPageContent - Using Markdown fallback for:', key);
+            console.log('📄 useHybridPageContent - TESTE: Usando Markdown fallback para:', key, '=', markdownData.frontMatter[key]);
           }
         });
       }
 
+      console.log('🎯 useHybridPageContent - TESTE: Conteúdo final mesclado:', merged);
       setHybridContent(merged);
       setLoading(false);
 
       // Set error only if both sources failed
       if (cmsError && markdownError) {
         setError('Failed to load content from both CMS and Markdown sources');
+        console.log('💥 useHybridPageContent - TESTE: Ambas as fontes falharam!');
       } else {
         setError(null);
+        console.log('✅ useHybridPageContent - TESTE: Pelo menos uma fonte funcionou');
       }
     }
   }, [cmsContent, markdownData, cmsLoading, markdownLoading, cmsError, markdownError]);
@@ -60,19 +68,19 @@ export const useHybridPageContent = (pageSlug: string, language: string = 'en') 
     // First try CMS content
     const cmsValue = getCMSContent(section, field);
     if (cmsValue && cmsValue.trim() !== '') {
-      console.log('useHybridPageContent - getContent from CMS:', key, '=', cmsValue);
+      console.log('🏛️ useHybridPageContent - TESTE: getContent do CMS:', key, '=', cmsValue);
       return cmsValue;
     }
 
     // Then try Markdown content
     const markdownValue = hybridContent[key];
     if (markdownValue && markdownValue.toString().trim() !== '') {
-      console.log('useHybridPageContent - getContent from Markdown:', key, '=', markdownValue);
+      console.log('📄 useHybridPageContent - TESTE: getContent do Markdown:', key, '=', markdownValue);
       return markdownValue.toString();
     }
 
     // Finally use fallback
-    console.log('useHybridPageContent - getContent using fallback:', key, '=', fallback);
+    console.log('🔄 useHybridPageContent - TESTE: getContent usando fallback final:', key, '=', fallback);
     return fallback;
   }, [getCMSContent, hybridContent]);
 
