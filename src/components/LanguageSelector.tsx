@@ -1,11 +1,10 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useState } from 'react';
-import { Flag, Type } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
-  const [showEmojis, setShowEmojis] = useState(false); // Default to text for better compatibility
+  const [useTextFallback, setUseTextFallback] = useState(false);
 
   const languages = [
     { 
@@ -22,19 +21,36 @@ const LanguageSelector = () => {
     }
   ];
 
+  useEffect(() => {
+    // Detecta se o navegador suporta emojis de bandeiras
+    const detectEmojiSupport = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) {
+        setUseTextFallback(true);
+        return;
+      }
+      
+      canvas.width = canvas.height = 10;
+      ctx.textBaseline = 'top';
+      ctx.font = '8px Arial';
+      
+      // Testa renderização de emoji de bandeira
+      ctx.fillText('🇺🇸', 0, 0);
+      const imageData = ctx.getImageData(0, 0, 10, 10);
+      
+      // Se todos os pixels são transparentes, emoji não é suportado
+      const hasColor = imageData.data.some((value, index) => index % 4 === 3 && value > 0);
+      
+      setUseTextFallback(!hasColor);
+    };
+
+    detectEmojiSupport();
+  }, []);
+
   return (
     <div className="flex items-center space-x-2">
-      {/* Toggle button for emoji/text display */}
-      <button
-        onClick={() => setShowEmojis(!showEmojis)}
-        className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-300"
-        title={showEmojis ? 'Switch to text' : 'Switch to flags'}
-        aria-label={showEmojis ? 'Switch to text display' : 'Switch to flag display'}
-      >
-        {showEmojis ? <Type size={16} /> : <Flag size={16} />}
-      </button>
-
-      {/* Language buttons */}
       {languages.map((lang) => (
         <button
           key={lang.code}
@@ -47,19 +63,13 @@ const LanguageSelector = () => {
           title={lang.label}
           aria-label={`Switch to ${lang.label}`}
         >
-          {showEmojis ? (
-            <span 
-              className="text-lg leading-none select-none" 
-              style={{ 
-                fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif',
-                fontSize: '16px'
-              }}
-            >
-              {lang.flag}
-            </span>
-          ) : (
+          {useTextFallback ? (
             <span className="font-bold text-xs">
               {lang.text}
+            </span>
+          ) : (
+            <span className="text-lg leading-none" style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, Android Emoji, sans-serif' }}>
+              {lang.flag}
             </span>
           )}
         </button>
