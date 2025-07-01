@@ -18,50 +18,101 @@ interface CMSAuthContextType {
 
 const CMSAuthContext = createContext<CMSAuthContextType | undefined>(undefined);
 
+// Constantes de segurança
+const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 horas
+const SESSION_KEY = 'cms_user_session';
+
 export const CMSAuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<CMSUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Função para validar sessão
+  const isSessionValid = (userData: CMSUser): boolean => {
+    try {
+      const loginTime = new Date(userData.loginTime);
+      const now = new Date();
+      const timeDiff = now.getTime() - loginTime.getTime();
+      
+      return timeDiff < SESSION_DURATION;
+    } catch (error) {
+      console.error('Erro ao validar sessão:', error);
+      return false;
+    }
+  };
+
+  // Função para limpar sessão
+  const clearSession = () => {
+    setUser(null);
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY); // Limpar também localStorage como precaução
+  };
+
   useEffect(() => {
-    // Verificar se há uma sessão ativa ao carregar
     const checkSession = () => {
       try {
-        const storedUser = sessionStorage.getItem('cms_user');
+        const storedUser = sessionStorage.getItem(SESSION_KEY);
         if (storedUser) {
           const userData = JSON.parse(storedUser);
           
-          // Verificar se a sessão não expirou (24 horas)
-          const loginTime = new Date(userData.loginTime);
-          const now = new Date();
-          const timeDiff = now.getTime() - loginTime.getTime();
-          const hoursDiff = timeDiff / (1000 * 3600);
+          // Validar estrutura dos dados
+          if (!userData.id || !userData.email || !userData.role || !userData.loginTime) {
+            console.warn('Dados de sessão inválidos encontrados');
+            clearSession();
+            return;
+          }
 
-          if (hoursDiff < 24) {
+          // Verificar se a sessão ainda é válida
+          if (isSessionValid(userData)) {
             setUser(userData);
           } else {
-            // Sessão expirada
-            sessionStorage.removeItem('cms_user');
+            console.log('Sessão expirada');
+            clearSession();
           }
         }
       } catch (error) {
         console.error('Erro ao verificar sessão:', error);
-        sessionStorage.removeItem('cms_user');
+        clearSession();
       } finally {
         setIsLoading(false);
       }
     };
 
     checkSession();
+
+    // Verificar sessão periodicamente
+    const intervalId = setInterval(checkSession, 60000); // A cada minuto
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const login = (userData: CMSUser) => {
-    setUser(userData);
-    sessionStorage.setItem('cms_user', JSON.stringify(userData));
+    try {
+      // Validar dados de entrada
+      if (!userData.id || !userData.email || !userData.role) {
+        throw new Error('Dados de usuário inválidos');
+      }
+
+      // Sanitizar dados
+      const sanitizedUserData = {
+        id: userData.id.toString(),
+        email: userData.email.toLowerCase().trim(),
+        role: userData.role,
+        loginTime: userData.loginTime || new Date().toISOString()
+      };
+
+      setUser(sanitizedUserData);
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(sanitizedUserData));
+      
+      console.log('Usuário logado com sucesso:', sanitizedUserData.email);
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      throw error;
+    }
   };
 
   const logout = () => {
-    setUser(null);
-    sessionStorage.removeItem('cms_user');
+    console.log('Fazendo logout do usuário:', user?.email);
+    clearSession();
   };
 
   const value = {

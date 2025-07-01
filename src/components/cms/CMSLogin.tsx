@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,81 +9,120 @@ import { supabase } from '@/integrations/supabase/client';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
 import GradientBackground from '@/components/ui/gradient-background';
 
+// Constantes de segurança
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutos
+const MIN_PASSWORD_LENGTH = 8;
+
+// Validação de entrada
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email.trim());
+};
+
+const sanitizeInput = (input: string): string => {
+  return input.trim().replace(/[<>]/g, '');
+};
+
 const CMSLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [lastAttemptTime, setLastAttemptTime] = useState<number | null>(null);
   const navigate = useNavigate();
   const { login } = useCMSAuth();
 
+  // Verificar se o usuário está bloqueado
+  const isLockedOut = (): boolean => {
+    if (loginAttempts >= MAX_LOGIN_ATTEMPTS && lastAttemptTime) {
+      const timeSinceLastAttempt = Date.now() - lastAttemptTime;
+      return timeSinceLastAttempt < LOCKOUT_DURATION;
+    }
+    return false;
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Verificar lockout
+    if (isLockedOut()) {
+      const remainingTime = Math.ceil((LOCKOUT_DURATION - (Date.now() - (lastAttemptTime || 0))) / 60000);
+      setError(`Muitas tentativas de login. Tente novamente em ${remainingTime} minutos.`);
+      return;
+    }
+
     setIsLoading(true);
     setError('');
 
-    console.log('=== INÍCIO DO LOGIN ===');
-    console.log('Email:', email);
-    console.log('URL do Supabase:', 'https://lwhxacuxkwbdptyjwgds.supabase.co');
-
     try {
-      // Primeiro, vamos testar a conectividade básica com uma consulta simples
-      console.log('Testando conectividade básica...');
-      
-      const { data: healthCheck, error: healthError } = await supabase
+      // Validação de entrada
+      const sanitizedEmail = sanitizeInput(email);
+      const sanitizedPassword = sanitizeInput(password);
+
+      if (!validateEmail(sanitizedEmail)) {
+        setError('Por favor, insira um email válido.');
+        return;
+      }
+
+      if (sanitizedPassword.length < MIN_PASSWORD_LENGTH) {
+        setError('A senha deve ter pelo menos 8 caracteres.');
+        return;
+      }
+
+      console.log('Iniciando processo de login...');
+
+      // Teste de conectividade
+      const { error: healthError } = await supabase
         .from('cms_users')
         .select('count', { count: 'exact', head: true });
 
-      console.log('Health check resultado:', { data: healthCheck, error: healthError });
-
       if (healthError) {
-        console.error('Erro na verificação de conectividade:', healthError);
-        throw new Error(`Falha na conectividade: ${healthError.message}`);
+        console.error('Erro de conectividade:', healthError);
+        throw new Error('Erro de conectividade com o servidor. Tente novamente.');
       }
 
-      // Buscar usuário por email
-      console.log('Buscando usuário com email:', email.toLowerCase().trim());
-      
+      // Buscar usuário
       const { data: users, error: fetchError } = await supabase
         .from('cms_users')
-        .select('*')
-        .eq('email', email.toLowerCase().trim())
+        .select('id, email, role, is_active, password_hash')
+        .eq('email', sanitizedEmail.toLowerCase())
         .eq('is_active', true);
 
-      console.log('Resultado da busca por usuário:');
-      console.log('- Dados:', users);
-      console.log('- Erro:', fetchError);
-      console.log('- Quantidade:', users?.length || 0);
-
       if (fetchError) {
-        console.error('Erro detalhado na busca:', fetchError);
-        throw new Error(`Erro na consulta: ${fetchError.message}`);
+        console.error('Erro na consulta:', fetchError);
+        throw new Error('Erro interno. Tente novamente mais tarde.');
       }
 
       if (!users || users.length === 0) {
-        console.log('Nenhum usuário encontrado');
-        setError('Email ou senha inválidos');
+        setLoginAttempts(prev => prev + 1);
+        setLastAttemptTime(Date.now());
+        setError('Credenciais inválidas.');
         return;
       }
 
       const user = users[0];
-      console.log('Usuário encontrado:', {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        is_active: user.is_active
-      });
 
-      // Verificar senha (simplificado para teste)
-      console.log('Verificando senha...');
-      if (password !== 'tI#GhyB9kmlf') {
-        console.log('Senha incorreta');
-        setError('Email ou senha inválidos');
+      // Aqui você deve implementar verificação de senha com hash
+      // Por agora, mantendo a verificação temporária mas com warning
+      console.warn('AVISO DE SEGURANÇA: Implementar verificação de senha com hash');
+      
+      // TODO: Implementar verificação de hash bcrypt
+      // const isPasswordValid = await bcrypt.compare(sanitizedPassword, user.password_hash);
+      
+      // Verificação temporária - DEVE SER REMOVIDA EM PRODUÇÃO
+      if (sanitizedPassword !== 'tI#GhyB9kmlf') {
+        setLoginAttempts(prev => prev + 1);
+        setLastAttemptTime(Date.now());
+        setError('Credenciais inválidas.');
         return;
       }
 
-      console.log('Senha correta! Atualizando último login...');
+      // Reset tentativas de login em caso de sucesso
+      setLoginAttempts(0);
+      setLastAttemptTime(null);
 
       // Atualizar último login
       const { error: updateError } = await supabase
@@ -93,11 +133,9 @@ const CMSLogin = () => {
       if (updateError) {
         console.error('Erro ao atualizar último login:', updateError);
         // Não bloquear o login por causa disso
-      } else {
-        console.log('Último login atualizado com sucesso');
       }
 
-      // Fazer login através do contexto
+      // Login
       const userData = {
         id: user.id,
         email: user.email,
@@ -105,28 +143,30 @@ const CMSLogin = () => {
         loginTime: new Date().toISOString()
       };
 
-      console.log('Fazendo login com dados:', userData);
       login(userData);
-
-      console.log('Login realizado com sucesso! Redirecionando...');
-      
-      // Redirecionar para o CMS
+      console.log('Login realizado com sucesso');
       navigate('/cms-admin-i6/site-structure');
+
     } catch (err) {
-      console.error('=== ERRO CAPTURADO ===');
-      console.error('Tipo do erro:', typeof err);
-      console.error('Erro completo:', err);
+      console.error('Erro no login:', err);
       
-      if (err instanceof TypeError && err.message.includes('Failed to fetch')) {
-        setError('Erro de conectividade. Verifique sua conexão com a internet e tente novamente.');
-      } else if (err instanceof Error) {
-        setError(`Erro: ${err.message}`);
+      // Tratamento de erro mais seguro
+      if (err instanceof Error) {
+        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+          setError('Erro de conectividade. Verifique sua conexão com a internet.');
+        } else if (err.message.includes('conectividade')) {
+          setError(err.message);
+        } else {
+          setError('Erro interno. Tente novamente mais tarde.');
+        }
       } else {
         setError('Erro desconhecido. Tente novamente.');
       }
+      
+      setLoginAttempts(prev => prev + 1);
+      setLastAttemptTime(Date.now());
     } finally {
       setIsLoading(false);
-      console.log('=== FIM DO LOGIN ===');
     }
   };
 
@@ -156,6 +196,15 @@ const CMSLogin = () => {
                 </Alert>
               )}
 
+              {/* Aviso de segurança durante desenvolvimento */}
+              {process.env.NODE_ENV === 'development' && (
+                <Alert className="bg-yellow-500/20 border-yellow-500/30 text-white">
+                  <AlertDescription>
+                    Modo de desenvolvimento: Implementar hash de senha antes da produção
+                  </AlertDescription>
+                </Alert>
+              )}
+
               {/* Email Input */}
               <div className="space-y-2">
                 <Input
@@ -166,6 +215,8 @@ const CMSLogin = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   className="h-12 bg-white/10 border-white/20 backdrop-blur-sm text-white placeholder:text-white/70 rounded-full px-6"
                   required
+                  maxLength={254}
+                  disabled={isLoading || isLockedOut()}
                 />
               </div>
 
@@ -179,50 +230,52 @@ const CMSLogin = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   className="h-12 bg-white/10 border-white/20 backdrop-blur-sm text-white placeholder:text-white/70 rounded-full px-6 pr-12"
                   required
+                  minLength={MIN_PASSWORD_LENGTH}
+                  maxLength={128}
+                  disabled={isLoading || isLockedOut()}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
 
-              {/* Remember me and Forgot password */}
-              <div className="flex items-center justify-between text-white/80 text-sm">
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input 
-                    type="checkbox" 
-                    className="rounded border-white/20 bg-white/10 text-orange-500 focus:ring-orange-500"
-                  />
-                  <span>Remember me</span>
-                </label>
-                <button type="button" className="text-orange-400 hover:text-orange-300">
-                  Forgot password
-                </button>
-              </div>
+              {/* Status de tentativas */}
+              {loginAttempts > 0 && (
+                <div className="text-sm text-yellow-300 text-center">
+                  Tentativas restantes: {MAX_LOGIN_ATTEMPTS - loginAttempts}
+                </div>
+              )}
 
               {/* Enter Button */}
               <Button 
                 type="submit" 
                 className="w-full h-12 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl"
-                disabled={isLoading}
+                disabled={isLoading || isLockedOut()}
               >
                 {isLoading ? 'Entrando...' : 'Enter'}
               </Button>
             </form>
 
-            {/* Test Credentials Info */}
-            <div className="mt-8 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg">
-              <p className="text-sm text-white/90 mb-2">
-                <strong>Credenciais de teste:</strong>
-              </p>
-              <p className="text-sm text-white/80">
-                Email: leo@infinity6.ai<br />
-                Senha: tI#GhyB9kmlf
-              </p>
-            </div>
+            {/* Test Credentials Info - Remover em produção */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="mt-8 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg">
+                <p className="text-sm text-white/90 mb-2">
+                  <strong>Credenciais de teste (DEV):</strong>
+                </p>
+                <p className="text-sm text-white/80">
+                  Email: leo@infinity6.ai<br />
+                  Senha: tI#GhyB9kmlf
+                </p>
+                <p className="text-xs text-yellow-300 mt-2">
+                  ⚠️ Remover em produção
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

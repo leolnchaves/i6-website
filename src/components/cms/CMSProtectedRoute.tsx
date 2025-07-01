@@ -24,6 +24,7 @@ const CMSProtectedRoute: React.FC<CMSProtectedRouteProps> = ({
   }
 
   if (!isAuthenticated) {
+    console.log('Usuário não autenticado, redirecionando para login');
     return <Navigate to="/cms-admin-i6/login" replace />;
   }
 
@@ -34,11 +35,15 @@ const CMSProtectedRoute: React.FC<CMSProtectedRouteProps> = ({
     const requiredLevel = roleHierarchy[requiredRole];
 
     if (userLevel < requiredLevel) {
+      console.warn(`Acesso negado: usuário ${user.role} tentou acessar recurso ${requiredRole}`);
       return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Acesso Negado</h1>
             <p className="text-gray-600">Você não tem permissão para acessar esta página.</p>
+            <p className="text-sm text-gray-500 mt-2">
+              Nível necessário: {requiredRole} | Seu nível: {user.role}
+            </p>
           </div>
         </div>
       );

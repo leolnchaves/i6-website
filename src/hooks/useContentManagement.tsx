@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCMSContent } from './useCMSContent';
 import { useCMSSEO } from './useCMSSEO';
 import { getPageFields } from '@/components/cms/content/ContentFieldsConfig';
+import { sanitizeInput, validateUUID } from '@/utils/security';
 
 export const useContentManagement = () => {
   const { 
@@ -71,6 +72,12 @@ export const useContentManagement = () => {
   // Load content and SEO when page/language changes - SEM outras dependências
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
+      // Validar entrada
+      if (!validateUUID(selectedPage)) {
+        console.error('ID de página inválido:', selectedPage);
+        return;
+      }
+      
       console.log('Loading content for page:', selectedPage, 'language:', selectedLanguage);
       fetchPageContent(selectedPage, selectedLanguage);
       fetchSEOData(selectedPage, selectedLanguage);
@@ -91,7 +98,8 @@ export const useContentManagement = () => {
           c.field_name === field.field
         )?.content || '';
         
-        formData[key] = contentValue;
+        // Sanitizar conteúdo ao carregar
+        formData[key] = sanitizeInput(contentValue);
       });
       
       setFetchedContentFormData(formData);
@@ -112,32 +120,49 @@ export const useContentManagement = () => {
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
       const currentSEOData = getSEOData(selectedPage, selectedLanguage);
-      setSeoFormData(currentSEOData);
+      // Sanitizar dados SEO
+      setSeoFormData({
+        meta_title: sanitizeInput(currentSEOData.meta_title || ''),
+        meta_description: sanitizeInput(currentSEOData.meta_description || ''),
+        slug: sanitizeInput(currentSEOData.slug || ''),
+        canonical_url: sanitizeInput(currentSEOData.canonical_url || ''),
+        index_flag: currentSEOData.index_flag ?? true,
+        follow_flag: currentSEOData.follow_flag ?? true
+      });
     }
   }, [selectedPage, selectedLanguage, seoData, getSEOData]);
 
-  // Handle content input changes - usando prev corretamente
+  // Handle content input changes - usando prev corretamente e sanitizando entrada
   const handleContentInputChange = useCallback((key: string, value: string) => {
-    console.log('Field changed:', key, '=', value);
-    setEditableContentFormData(prev => ({ ...prev, [key]: value }));
+    const sanitizedValue = sanitizeInput(value);
+    console.log('Field changed:', key, '=', sanitizedValue);
+    setEditableContentFormData(prev => ({ ...prev, [key]: sanitizedValue }));
     setIsDirty(true);
   }, []);
 
-  // Handle SEO input changes
+  // Handle SEO input changes com sanitização
   const handleSEOInputChange = useCallback((field: string, value: string | boolean) => {
-    setSeoFormData(prev => ({ ...prev, [field]: value }));
+    const sanitizedValue = typeof value === 'string' ? sanitizeInput(value) : value;
+    setSeoFormData(prev => ({ ...prev, [field]: sanitizedValue }));
   }, []);
 
-  // Save content
+  // Save content com validação adicional
   const handleSaveContent = useCallback(async () => {
     if (!selectedPage || !selectedLanguage) return;
+
+    // Validar entrada
+    if (!validateUUID(selectedPage)) {
+      console.error('ID de página inválido para salvamento:', selectedPage);
+      return;
+    }
 
     setSaving(true);
     try {
       // Save each field individually
       const savePromises = Object.entries(editableContentFormData).map(([key, value]) => {
         const [sectionName, fieldName] = key.split('_');
-        return saveContent(selectedPage, sectionName, fieldName, selectedLanguage, value);
+        const sanitizedValue = sanitizeInput(value);
+        return saveContent(selectedPage, sectionName, fieldName, selectedLanguage, sanitizedValue);
       });
       
       await Promise.all(savePromises);
@@ -147,18 +172,28 @@ export const useContentManagement = () => {
       setIsDirty(false);
       
       console.log('Content saved successfully');
+    } catch (error) {
+      console.error('Erro ao salvar conteúdo:', error);
     } finally {
       setSaving(false);
     }
   }, [selectedPage, selectedLanguage, editableContentFormData, saveContent]);
 
-  // Save SEO data
+  // Save SEO data com validação
   const handleSaveSEO = useCallback(async () => {
     if (!selectedPage || !selectedLanguage) return;
+
+    // Validar entrada
+    if (!validateUUID(selectedPage)) {
+      console.error('ID de página inválido para salvamento SEO:', selectedPage);
+      return;
+    }
 
     setSaving(true);
     try {
       await saveSEOData(selectedPage, selectedLanguage, seoFormData);
+    } catch (error) {
+      console.error('Erro ao salvar dados SEO:', error);
     } finally {
       setSaving(false);
     }
@@ -180,6 +215,15 @@ export const useContentManagement = () => {
     if (!currentPage) return 'Página';
     return currentPage.name;
   }, [currentPage]);
+
+  // Função segura para definir página selecionada
+  const setSelectedPageSecure = useCallback((pageId: string) => {
+    if (validateUUID(pageId)) {
+      setSelectedPage(pageId);
+    } else {
+      console.error('ID de página inválido:', pageId);
+    }
+  }, []);
 
   return {
     // State
@@ -203,7 +247,7 @@ export const useContentManagement = () => {
     hasUnsavedChanges,
     
     // Actions
-    setSelectedPage,
+    setSelectedPage: setSelectedPageSecure,
     setSelectedLanguage,
     handleContentInputChange,
     handleSEOInputChange,
