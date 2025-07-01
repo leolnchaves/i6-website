@@ -44,12 +44,12 @@ const LanguageSelector = () => {
     loadEmojiFont();
   }, []);
 
-  const getFlagStyle = () => ({
+  const getFlagStyle = (): React.CSSProperties => ({
     fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Android Emoji", sans-serif',
     fontSize: '18px',
     lineHeight: '1',
     display: 'inline-block',
-    textRendering: 'optimizeSpeed',
+    textRendering: 'optimizeSpeed' as any,
     fontFeatureSettings: '"liga" off, "kern" off',
     fontVariant: 'none'
   });
