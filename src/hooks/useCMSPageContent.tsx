@@ -49,7 +49,7 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
       console.error('useCMSPageContent - Erro simulado:', err);
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
       setContent({});
-      logger.error('Failed to load CMS content (TESTE)', err, { pageSlug, language });
+      logger.error('Failed to load CMS content (TESTE)', err as Error, `pageSlug: ${pageSlug}, language: ${language}`);
     } finally {
       setLoading(false);
     }
@@ -66,10 +66,16 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
     return value && value.trim() !== '' ? value : fallback;
   }, [content]);
 
+  // Add refetch function
+  const refetch = useCallback(() => {
+    fetchContent();
+  }, [fetchContent]);
+
   return {
     content,
     loading,
     error,
-    getContent
+    getContent,
+    refetch
   };
 };
