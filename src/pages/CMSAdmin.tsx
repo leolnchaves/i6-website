@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
@@ -9,6 +8,8 @@ import CMSProtectedRoute from '@/components/cms/CMSProtectedRoute';
 import SiteStructure from '@/components/cms/SiteStructure';
 import ContentManagement from '@/components/cms/ContentManagement';
 import ComponentsManagement from '@/components/cms/ComponentsManagement';
+import SecuritySettings from '@/components/cms/SecuritySettings';
+import AdvancedSecuritySettings from '@/components/cms/AdvancedSecuritySettings';
 
 /**
  * CMS Admin page - hidden admin interface
@@ -52,9 +53,9 @@ const CMSAdmin = () => {
                 } />
                 <Route path="/settings" element={
                   <CMSProtectedRoute requiredRole="admin">
-                    <div className="text-center py-12">
-                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">Configurações</h2>
-                      <p className="text-gray-600">Esta seção será implementada em breve.</p>
+                    <div className="space-y-8">
+                      <SecuritySettings />
+                      <AdvancedSecuritySettings />
                     </div>
                   </CMSProtectedRoute>
                 } />
