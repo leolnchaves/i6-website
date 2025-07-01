@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -22,17 +22,26 @@ interface CookieDetailsModalProps {
 }
 
 export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalProps) => {
-  const { consent, saveConsent, updateConsent, acceptAll, rejectAll } = useCookieConsent();
+  const { consent, saveConsent, acceptAll, rejectAll } = useCookieConsent();
   const { t } = useLanguage();
   const [tempConsent, setTempConsent] = useState<CookieConsent>(consent);
 
+  // Sync tempConsent with actual consent when modal opens or consent changes
+  useEffect(() => {
+    if (open) {
+      setTempConsent(consent);
+    }
+  }, [open, consent]);
+
   const handleSave = () => {
+    console.log('Saving consent:', tempConsent);
     saveConsent(tempConsent);
     onOpenChange(false);
   };
 
   const handleCategoryChange = (category: keyof CookieConsent, value: boolean) => {
     if (category === 'essential') return;
+    console.log(`Changing ${category} to ${value}`);
     setTempConsent(prev => ({
       ...prev,
       [category]: value
@@ -40,11 +49,13 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
   };
 
   const handleAcceptAll = () => {
+    console.log('Accepting all cookies');
     acceptAll();
     onOpenChange(false);
   };
 
   const handleRejectAll = () => {
+    console.log('Rejecting all cookies');
     rejectAll();
     onOpenChange(false);
   };
