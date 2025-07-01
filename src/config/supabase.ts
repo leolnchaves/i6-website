@@ -4,20 +4,29 @@
  * Utiliza variáveis de ambiente para proteger as chaves sensíveis
  */
 
-// Configurações do Supabase
+// Configurações do Supabase usando apenas variáveis de ambiente
 export const SUPABASE_CONFIG = {
-  url: import.meta.env.VITE_SUPABASE_URL || 'https://lwhxacuxkwbdptyjwgds.supabase.co',
-  anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3aHhhY3V4a3diZHB0eWp3Z2RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwNjAyMTUsImV4cCI6MjA2NjYzNjIxNX0.BdWVpSkdeDvXbRJ0bL8g0inAnceBHIz8e0WZeoi4sWw'
+  url: import.meta.env.VITE_SUPABASE_URL,
+  anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY
 };
 
 // Validação das configurações necessárias
 export const validateSupabaseConfig = () => {
   if (!SUPABASE_CONFIG.url) {
-    throw new Error('VITE_SUPABASE_URL não está definida');
+    throw new Error('VITE_SUPABASE_URL não está definida. Configure esta variável de ambiente.');
   }
   
   if (!SUPABASE_CONFIG.anonKey) {
-    throw new Error('VITE_SUPABASE_ANON_KEY não está definida');
+    throw new Error('VITE_SUPABASE_ANON_KEY não está definida. Configure esta variável de ambiente.');
+  }
+  
+  // Verificar se não são valores de exemplo
+  if (SUPABASE_CONFIG.url.includes('seu-projeto') || SUPABASE_CONFIG.url === 'https://seu-projeto.supabase.co') {
+    throw new Error('Por favor, substitua VITE_SUPABASE_URL pela URL real do seu projeto Supabase.');
+  }
+  
+  if (SUPABASE_CONFIG.anonKey.includes('sua-chave') || SUPABASE_CONFIG.anonKey === 'sua-chave-anonima-aqui') {
+    throw new Error('Por favor, substitua VITE_SUPABASE_ANON_KEY pela chave anônima real do seu projeto Supabase.');
   }
   
   return true;

@@ -4,8 +4,9 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Shield, Key, Lock, AlertTriangle } from 'lucide-react';
+import { Shield, Key, Lock, AlertTriangle, CheckCircle } from 'lucide-react';
 import { logger } from '@/utils/logger';
+import { SUPABASE_CONFIG } from '@/config/supabase';
 
 const SecuritySettings = () => {
   const [sessionTimeout, setSessionTimeout] = useState('24');
@@ -15,6 +16,14 @@ const SecuritySettings = () => {
     requireNumbers: true,
     requireUppercase: true
   });
+
+  // Verificar se as variáveis de ambiente estão configuradas adequadamente
+  const isSupabaseConfigured = () => {
+    return SUPABASE_CONFIG.url && 
+           SUPABASE_CONFIG.anonKey && 
+           !SUPABASE_CONFIG.url.includes('seu-projeto') &&
+           !SUPABASE_CONFIG.anonKey.includes('sua-chave');
+  };
 
   const handleSaveSettings = () => {
     logger.info('Configurações de segurança atualizadas', { 
@@ -33,14 +42,50 @@ const SecuritySettings = () => {
         <h2 className="text-2xl font-semibold">Configurações de Segurança</h2>
       </div>
 
-      {/* Alerta de Segurança */}
-      <Alert className="border-orange-200 bg-orange-50">
-        <AlertTriangle className="h-4 w-4 text-orange-600" />
-        <AlertDescription className="text-orange-800">
-          <strong>Importante:</strong> As credenciais hardcoded foram removidas. 
-          Configure variáveis de ambiente para uma segurança adequada.
+      {/* Status da Configuração de Segurança */}
+      <Alert className={isSupabaseConfigured() ? "border-green-200 bg-green-50" : "border-orange-200 bg-orange-50"}>
+        {isSupabaseConfigured() ? (
+          <CheckCircle className="h-4 w-4 text-green-600" />
+        ) : (
+          <AlertTriangle className="h-4 w-4 text-orange-600" />
+        )}
+        <AlertDescription className={isSupabaseConfigured() ? "text-green-800" : "text-orange-800"}>
+          {isSupabaseConfigured() ? (
+            <div>
+              <strong>✅ Configuração Segura:</strong> As variáveis de ambiente estão configuradas corretamente.
+            </div>
+          ) : (
+            <div>
+              <strong>⚠️ Ação Necessária:</strong> Configure as variáveis de ambiente VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY 
+              nas configurações do projeto para garantir segurança adequada.
+            </div>
+          )}
         </AlertDescription>
       </Alert>
+
+      {/* Informações sobre Variáveis de Ambiente */}
+      <Card className="p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Key className="h-5 w-5 text-blue-500" />
+          <h3 className="text-lg font-medium">Status das Variáveis de Ambiente</h3>
+        </div>
+        
+        <div className="space-y-3">
+          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="font-medium">VITE_SUPABASE_URL:</span>
+            <span className={SUPABASE_CONFIG.url ? "text-green-600" : "text-red-600"}>
+              {SUPABASE_CONFIG.url ? "✅ Configurada" : "❌ Não configurada"}
+            </span>
+          </div>
+          
+          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="font-medium">VITE_SUPABASE_ANON_KEY:</span>
+            <span className={SUPABASE_CONFIG.anonKey ? "text-green-600" : "text-red-600"}>
+              {SUPABASE_CONFIG.anonKey ? "✅ Configurada" : "❌ Não configurada"}
+            </span>
+          </div>
+        </div>
+      </Card>
 
       {/* Configurações de Sessão */}
       <Card className="p-6">
