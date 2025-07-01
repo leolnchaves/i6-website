@@ -2,7 +2,7 @@
 import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
+import { useMarkdownResultsCards } from '@/hooks/useMarkdownResultsCards';
 import ResultsHeader from './results/ResultsHeader';
 import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
@@ -24,16 +24,17 @@ const iconMap = {
 const ResultsSection = () => {
   const { scrollY } = useScrollAnimation();
   const { t, language } = useLanguage();
-  const { cards, loading } = useCMSResultsCards('home', language);
+  
+  // Usar o novo hook unificado do Markdown com fallback para Supabase
+  const { cards, loading, error, isUsingFallback } = useMarkdownResultsCards('home', language);
 
   console.log('ResultsSection - Total cards fetched:', cards.length);
   console.log('ResultsSection - Cards data:', cards);
+  console.log('ResultsSection - Loading:', loading);
+  console.log('ResultsSection - Error:', error);
+  console.log('ResultsSection - Using fallback:', isUsingFallback);
 
-  // Filter only active cards for display on the website
-  const activeCards = cards.filter(card => card.is_active);
-  console.log('ResultsSection - Active cards:', activeCards.length);
-
-  // Fallback data for when CMS data is not available
+  // Fallback data for when no CMS or Markdown data is available
   const fallbackResults = [
     {
       icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
@@ -107,19 +108,44 @@ const ResultsSection = () => {
     }
   ];
 
-  // Use CMS active cards if available, otherwise fallback to translations
-  const resultsToRender = activeCards.length > 0 ? activeCards.map(card => {
-    const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || TrendingUp;
+  // Use Markdown/CMS cards if available, otherwise fallback to translations
+  const resultsToRender = cards.length > 0 ? cards.map(card => {
+    const IconComponent = iconMap[card.iconName as keyof typeof iconMap] || TrendingUp;
     return {
-      icon: <IconComponent className={`w-8 h-8`} style={{ color: card.icon_color }} />,
+      icon: <IconComponent className={`w-8 h-8`} style={{ color: card.iconColor }} />,
       title: card.title,
       description: card.description,
-      backgroundColor: card.background_color,
-      backgroundOpacity: card.background_opacity
+      backgroundColor: card.backgroundColor,
+      backgroundOpacity: card.backgroundOpacity
     };
   }) : fallbackResults;
 
   console.log('ResultsSection - Final results to render:', resultsToRender.length);
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-white relative overflow-hidden">
+        <ResultsBackground />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <ResultsHeader />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {[...Array(10)].map((_, index) => (
+              <div key={index} className="bg-gray-50 rounded-2xl shadow-lg p-6 animate-pulse">
+                <div className="w-8 h-8 bg-gray-200 rounded mb-4"></div>
+                <div className="h-6 bg-gray-200 rounded mb-3"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
@@ -141,6 +167,23 @@ const ResultsSection = () => {
             />
           ))}
         </div>
+        
+        {/* Indicador de fonte de dados */}
+        {isUsingFallback && (
+          <div className="text-center mt-8">
+            <p className="text-xs text-gray-400">
+              📄 Dados carregados do Supabase (fallback)
+            </p>
+          </div>
+        )}
+        
+        {cards.length === 0 && !loading && (
+          <div className="text-center mt-8">
+            <p className="text-xs text-gray-400">
+              🌐 Usando dados das traduções (nenhum dado CMS disponível)
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,3 @@
-
 export interface MarkdownFile {
   fileName: string;
   content: string;
@@ -14,7 +13,7 @@ export interface MarkdownAPIResponse {
 export class MarkdownAPI {
   private static baseURL = '/api/markdown';
   
-  // Simulação de arquivos existentes para testes
+  // Simulação de arquivos existentes para testes - incluindo dados de cards
   private static mockFiles = new Map<string, string>([
     ['home.en.md', `---
 language: en
@@ -51,6 +50,69 @@ sections:
 # Conteúdo da Página Home
 
 Este é conteúdo simulado para testar o sistema Markdown.
+`],
+    // Arquivos de exemplo para cards de resultados
+    ['results-cards.en.md', `---
+language: en
+type: results-cards
+---
+
+# Results Cards - English
+
+This file contains the results cards configuration for the English version.
+Currently using placeholder content for testing the Markdown system.
+`],
+    ['results-cards.pt.md', `---
+language: pt
+type: results-cards
+---
+
+# Cards de Resultados - Português
+
+Este arquivo contém a configuração dos cards de resultados para a versão em português.
+Atualmente usando conteúdo de placeholder para testar o sistema Markdown.
+`],
+    // Arquivos de exemplo para cards de soluções
+    ['solutions-cards.en.md', `---
+language: en
+type: solutions-cards
+---
+
+# Solutions Cards - English
+
+This file contains the solutions cards configuration for the English version.
+Currently using placeholder content for testing the Markdown system.
+`],
+    ['solutions-cards.pt.md', `---
+language: pt
+type: solutions-cards
+---
+
+# Cards de Soluções - Português
+
+Este arquivo contém a configuração dos cards de soluções para a versão em português.
+Atualmente usando conteúdo de placeholder para testar o sistema Markdown.
+`],
+    // Arquivos de exemplo para cards de cases de sucesso
+    ['success-stories-cards.en.md', `---
+language: en
+type: success-stories-cards
+---
+
+# Success Stories Cards - English
+
+This file contains the success stories cards configuration for the English version.
+Currently using placeholder content for testing the Markdown system.
+`],
+    ['success-stories-cards.pt.md', `---
+language: pt
+type: success-stories-cards
+---
+
+# Cards de Cases de Sucesso - Português
+
+Este arquivo contém a configuração dos cards de cases de sucesso para a versão em português.
+Atualmente usando conteúdo de placeholder para testar o sistema Markdown.
 `]
   ]);
 

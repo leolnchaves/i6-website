@@ -1,19 +1,22 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSolutionsCards } from '@/hooks/useSolutionsCards';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+import { useMarkdownSolutionsCards } from '@/hooks/useMarkdownSolutionsCards';
+import { useMarkdownPageContent } from '@/hooks/useMarkdownPageContent';
 import CompactSolutionsHeader from './compact-solutions/CompactSolutionsHeader';
 import ModernSolutionCard from './compact-solutions/ModernSolutionCard';
 import ViewAllSolutionsButton from './compact-solutions/ViewAllSolutionsButton';
 
 const CompactSolutionsSection = () => {
   const { language } = useLanguage();
-  const { cards, loading, error } = useSolutionsCards(language, 'solutions');
-  const { getContent } = useCMSPageContent('home', language);
+  
+  // Usar os novos hooks unificados do Markdown com fallback para Supabase
+  const { cards, loading, error, isUsingFallback } = useMarkdownSolutionsCards('solutions', language);
+  const { getContent } = useMarkdownPageContent('home', language);
 
   console.log('CompactSolutionsSection - Cards loaded:', cards?.length || 0);
   console.log('CompactSolutionsSection - Loading:', loading);
   console.log('CompactSolutionsSection - Error:', error);
+  console.log('CompactSolutionsSection - Using fallback:', isUsingFallback);
 
   // Get button text from CMS with fallback
   const buttonText = getContent('compactSolutionsHero', 'buttonText', 'Ver Todas as Soluções');
@@ -58,6 +61,9 @@ const CompactSolutionsSection = () => {
           <div className="text-center py-12 mt-16">
             <p className="text-gray-500 mb-4">Erro ao carregar as soluções</p>
             <p className="text-sm text-gray-400">{error}</p>
+            {isUsingFallback && (
+              <p className="text-xs text-blue-500 mt-2">Tentando carregar dados do Supabase...</p>
+            )}
           </div>
         </div>
       </section>
@@ -88,11 +94,20 @@ const CompactSolutionsSection = () => {
             
             {/* View All Solutions Button */}
             <ViewAllSolutionsButton buttonText={buttonText} />
+            
+            {/* Indicador de fonte de dados */}
+            {isUsingFallback && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-gray-400">
+                  📄 Dados carregados do Supabase (fallback)
+                </p>
+              </div>
+            )}
           </>
         ) : (
           <div className="text-center py-12 mt-16">
             <p className="text-gray-500 mb-4">Nenhuma solução disponível no momento</p>
-            <p className="text-sm text-gray-400">Os cards de soluções serão exibidos quando estiverem configurados no CMS</p>
+            <p className="text-sm text-gray-400">Os cards de soluções serão exibidos quando estiverem configurados</p>
           </div>
         )}
       </div>
