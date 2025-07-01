@@ -1,4 +1,3 @@
-
 // Mock implementation for testing markdown functionality
 // This will be replaced with real API calls when GitHub integration is ready
 
@@ -74,6 +73,19 @@ customer: John Smith | CEO`
 };
 
 export class MarkdownAPI {
+  static async healthCheck(): Promise<boolean> {
+    console.log('🏥 MarkdownAPI.healthCheck DEBUG:', {
+      timestamp: new Date().toISOString()
+    });
+
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    // For mock implementation, always return true
+    console.log('✅ MarkdownAPI - Health check passed');
+    return true;
+  }
+
   static async getFile(fileName: string, folder: string = ''): Promise<MarkdownAPIResponse> {
     console.log('🔍 MarkdownAPI.getFile DEBUG:', {
       fileName,
