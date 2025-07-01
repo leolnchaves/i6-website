@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 
 interface CardData {
@@ -22,7 +21,7 @@ interface HomeFeaturedStoryCardProps {
 
 const HomeFeaturedStoryCard = ({ card, index }: HomeFeaturedStoryCardProps) => {
   return (
-    <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-white relative transform hover:scale-105 h-full flex flex-col">
+    <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden bg-gray-50 relative transform hover:scale-105 h-full flex flex-col">
       <CardContent className="p-0 flex flex-col h-full">
         {/* Image Container with Industry Badge */}
         <div className="relative overflow-hidden h-48">

@@ -75,7 +75,7 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
 
   if (loading) {
     return (
-      <Card>
+      <Card className="bg-gray-50">
         <CardHeader>
           <CardTitle>Gestão de Cards - Cases de Sucesso</CardTitle>
           <CardDescription>Carregando cards...</CardDescription>
@@ -103,7 +103,7 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
   }
 
   return (
-    <Card>
+    <Card className="bg-gray-50">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
