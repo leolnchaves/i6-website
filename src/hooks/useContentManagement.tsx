@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { useCMSPages } from './useCMSPages';
 import { useCMSPageContent } from './useCMSPageContent';
@@ -30,6 +29,7 @@ export const useContentManagement = () => {
     follow_flag: true,
   });
   const [saving, setSaving] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false); // Flag para evitar reidratação
   const { toast } = useToast();
 
   // Get current page slug for content hook
@@ -80,48 +80,78 @@ export const useContentManagement = () => {
 
   const allFields = getAllFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
 
+  // CORRIGIDO: useEffect com flag para evitar reidratação constante
   useEffect(() => {
-    if (Object.keys(content).length > 0) {
+    console.log('useContentManagement - useEffect triggered');
+    console.log('- content:', Object.keys(content).length, 'fields');
+    console.log('- isInitialized:', isInitialized);
+    console.log('- allFields length:', allFields.length);
+
+    // Só reidrata se não foi inicializado ainda OU se mudou de página/idioma
+    if (Object.keys(content).length > 0 && (!isInitialized || contentFormData === {})) {
+      console.log('useContentManagement - Initializing from content');
       const formData: { [key: string]: string } = {};
       Object.entries(content).forEach(([key, value]) => {
         const fieldKey = key.replace('.', '_');
-        // IMPORTANT: Don't use .trim() here - preserve the exact content
-        formData[fieldKey] = value || '';
+        // CRÍTICO: Preservar valor exato sem qualquer transformação
+        const exactValue = value || '';
+        formData[fieldKey] = exactValue;
+        console.log(`useContentManagement - Setting field "${fieldKey}" = "${exactValue}"`);
       });
       setContentFormData(formData);
-    } else if (allFields.length > 0) {
+      setIsInitialized(true);
+    } else if (allFields.length > 0 && Object.keys(contentFormData).length === 0 && !isInitialized) {
+      console.log('useContentManagement - Initializing empty fields');
       const formData: { [key: string]: string } = {};
       allFields.forEach((field) => {
         const key = `${field.section}_${field.field}`;
         formData[key] = '';
+        console.log(`useContentManagement - Setting empty field "${key}"`);
       });
       setContentFormData(formData);
+      setIsInitialized(true);
     }
-  }, [content, allFields]);
+  }, [content, allFields, isInitialized, contentFormData]);
+
+  // Reset initialization flag when page or language changes
+  useEffect(() => {
+    console.log('useContentManagement - Page or language changed, resetting initialization');
+    setIsInitialized(false);
+    setContentFormData({});
+  }, [selectedPage, selectedLanguage]);
 
   const handleContentInputChange = useCallback((key: string, value: string) => {
-    console.log(`handleContentInputChange - Before: "${contentFormData[key]}" -> After: "${value}"`);
+    console.log(`🔍 handleContentInputChange INÍCIO:`);
+    console.log(`  - Key: "${key}"`);
+    console.log(`  - Value recebido: "${value}"`);
+    console.log(`  - Value length: ${value.length}`);
+    console.log(`  - Ends with space: ${value.endsWith(' ')}`);
+    console.log(`  - Value antes no estado: "${contentFormData[key]}"`);
     
-    setContentFormData(prev => ({
-      ...prev,
-      // IMPORTANT: Never use .trim() here - preserve the exact value the user typed
-      [key]: value
-    }));
-    
-    console.log(`handleContentInputChange - Final value set: "${value}"`);
-  }, [contentFormData]);
+    setContentFormData(prevData => {
+      const newData = {
+        ...prevData,
+        [key]: value // CRÍTICO: valor exato sem transformação
+      };
+      
+      console.log(`  - Value depois no estado: "${newData[key]}"`);
+      console.log(`  - Ends with space after: ${newData[key].endsWith(' ')}`);
+      console.log(`🔍 handleContentInputChange FIM`);
+      
+      return newData;
+    });
+  }, []); // Removendo dependência de contentFormData para evitar re-renders
 
   const handleSEOInputChange = useCallback((key: string, value: string | boolean) => {
-    console.log(`handleSEOInputChange - Before: "${seoFormData[key as keyof SEOFormData]}" -> After: "${value}"`);
+    console.log(`🔍 handleSEOInputChange:`);
+    console.log(`  - Key: "${key}"`);
+    console.log(`  - Value: "${value}"`);
     
     setSeoFormData(prev => ({
       ...prev,
-      // IMPORTANT: Never use .trim() here - preserve the exact value the user typed
       [key]: value
     }));
-    
-    console.log(`handleSEOInputChange - Final value set: "${value}"`);
-  }, [seoFormData]);
+  }, []);
 
   const handleSaveContent = async () => {
     if (!selectedPage) return;

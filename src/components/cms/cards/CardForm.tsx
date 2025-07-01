@@ -42,6 +42,20 @@ const CardForm: React.FC<CardFormProps> = ({
   onIsActiveChange,
   onDelete,
 }) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    console.log(`🏷️ CardForm title onChange - Raw value: "${value}"`);
+    console.log(`  - Ends with space: ${value.endsWith(' ')}`);
+    onTitleChange(value);
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    console.log(`📄 CardForm description onChange - Raw value: "${value}"`);
+    console.log(`  - Ends with space: ${value.endsWith(' ')}`);
+    onDescriptionChange(value);
+  };
+
   return (
     <div className="border rounded-lg p-4 space-y-4">
       <div className="flex items-center justify-between">
@@ -70,9 +84,10 @@ const CardForm: React.FC<CardFormProps> = ({
             id="title"
             type="text"
             value={title}
-            onChange={(e) => onTitleChange(e.target.value)}
+            onChange={handleTitleChange}
             placeholder="Digite o título do card..."
             autoComplete="off"
+            spellCheck="false"
           />
         </div>
 
@@ -85,6 +100,7 @@ const CardForm: React.FC<CardFormProps> = ({
             onChange={(e) => onIconNameChange(e.target.value)}
             placeholder="Ex: star, heart, etc..."
             autoComplete="off"
+            spellCheck="false"
           />
         </div>
 
@@ -97,6 +113,7 @@ const CardForm: React.FC<CardFormProps> = ({
             onChange={(e) => onIconColorChange(e.target.value)}
             placeholder="#f97316"
             autoComplete="off"
+            spellCheck="false"
           />
         </div>
 
@@ -109,6 +126,7 @@ const CardForm: React.FC<CardFormProps> = ({
             onChange={(e) => onBackgroundColorChange(e.target.value)}
             placeholder="#ffffff"
             autoComplete="off"
+            spellCheck="false"
           />
         </div>
       </div>
@@ -118,10 +136,12 @@ const CardForm: React.FC<CardFormProps> = ({
         <Textarea
           id="description"
           value={description}
-          onChange={(e) => onDescriptionChange(e.target.value)}
+          onChange={handleDescriptionChange}
           placeholder="Digite a descrição do card..."
           rows={3}
           className="resize-none"
+          autoComplete="off"
+          spellCheck="false"
         />
       </div>
     </div>
