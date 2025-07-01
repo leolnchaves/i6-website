@@ -1,14 +1,13 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { Eye, EyeOff, Chrome, Github } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useCMSAuth } from '@/hooks/useCMSAuth';
+import GradientBackground from '@/components/ui/gradient-background';
 
 const CMSLogin = () => {
   const [email, setEmail] = useState('');
@@ -133,92 +132,136 @@ const CMSLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">CMS Admin</h1>
-          <p className="mt-2 text-gray-600">Infinity6.ai</p>
-        </div>
+    <GradientBackground className="min-h-screen">
+      <div className="min-h-screen flex items-center justify-center relative z-10 px-4 py-12">
+        <div className="w-full max-w-md space-y-8">
+          {/* Header */}
+          <div className="text-center text-white">
+            <h1 className="text-4xl font-bold mb-2">Welcome to</h1>
+            <h2 className="text-4xl font-bold mb-4">Business<br />Intelliboard</h2>
+            <p className="text-lg opacity-90 flex items-center justify-center gap-2">
+              Powered by 
+              <span className="text-xl">♾️</span>
+            </p>
+          </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">Login</CardTitle>
-            <CardDescription className="text-center">
-              Entre com suas credenciais para acessar o painel administrativo
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-              <p className="text-sm text-blue-800">
-                <strong>Credenciais de teste:</strong><br />
-                Email: leo@infinity6.ai<br />
-                Senha: tI#GhyB9kmlf
-              </p>
-            </div>
-
+          {/* Login Form */}
+          <div className="space-y-6">
             <form onSubmit={handleLogin} className="space-y-4">
               {error && (
-                <Alert variant="destructive">
+                <Alert variant="destructive" className="bg-red-500/20 border-red-500/30 text-white">
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
+              {/* Email Input */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu.email@infinity6.ai"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
-                    required
-                  />
-                </div>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-12 bg-white/10 border-white/20 backdrop-blur-sm text-white placeholder:text-white/70 rounded-full px-6"
+                  required
+                />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
-                </div>
+              {/* Password Input */}
+              <div className="space-y-2 relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-12 bg-white/10 border-white/20 backdrop-blur-sm text-white placeholder:text-white/70 rounded-full px-6 pr-12"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white"
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
               </div>
 
+              {/* Remember me and Forgot password */}
+              <div className="flex items-center justify-between text-white/80 text-sm">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    className="rounded border-white/20 bg-white/10 text-orange-500 focus:ring-orange-500"
+                  />
+                  <span>Remember me</span>
+                </label>
+                <button type="button" className="text-orange-400 hover:text-orange-300">
+                  Forgot password
+                </button>
+              </div>
+
+              {/* Enter Button */}
               <Button 
                 type="submit" 
-                className="w-full" 
+                className="w-full h-12 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl"
                 disabled={isLoading}
               >
-                {isLoading ? 'Entrando...' : 'Entrar'}
+                {isLoading ? 'Entrando...' : 'Enter'}
               </Button>
             </form>
-          </CardContent>
-        </Card>
 
-        <div className="text-center text-sm text-gray-600">
-          <p>Sistema de administração seguro</p>
-          <p className="mt-1">© 2024 Infinity6.ai - Todos os direitos reservados</p>
+            {/* Divider */}
+            <div className="text-center text-white/60 text-sm">
+              or
+            </div>
+
+            {/* Social Login Buttons */}
+            <div className="space-y-3">
+              <Button 
+                type="button" 
+                className="w-full h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-full transition-all duration-200"
+                variant="outline"
+              >
+                <Chrome className="mr-3 h-5 w-5" />
+                CONTINUE WITH GOOGLE
+              </Button>
+              
+              <Button 
+                type="button" 
+                className="w-full h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-full transition-all duration-200"
+                variant="outline"
+              >
+                <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.5 12h-2.09C21.78 8.67 18.64 6 14.91 6c-4.72 0-8.55 3.83-8.55 8.55S10.19 23.1 14.91 23.1c2.36 0 4.5-.97 6.04-2.53L19.41 19c-1.15 1.15-2.74 1.86-4.5 1.86-3.54 0-6.41-2.87-6.41-6.41S10.37 8.04 13.91 8.04c2.87 0 5.32 1.89 6.19 4.49h-6.19v2.47H23.5z"/>
+                </svg>
+                CONTINUE WITH MICROSOFT
+              </Button>
+              
+              <Button 
+                type="button" 
+                className="w-full h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm text-white border border-white/10 rounded-full transition-all duration-200"
+                variant="outline"
+              >
+                <Github className="mr-3 h-5 w-5" />
+                CONTINUE WITH GITHUB
+              </Button>
+            </div>
+
+            {/* Test Credentials Info */}
+            <div className="mt-8 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg">
+              <p className="text-sm text-white/90 mb-2">
+                <strong>Credenciais de teste:</strong>
+              </p>
+              <p className="text-sm text-white/80">
+                Email: leo@infinity6.ai<br />
+                Senha: tI#GhyB9kmlf
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </GradientBackground>
   );
 };
 
