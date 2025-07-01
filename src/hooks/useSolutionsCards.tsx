@@ -26,14 +26,6 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
 
       console.log('useSolutionsCards - Fetching solutions cards for page:', pageSlug, 'language:', language);
 
-      // Test RLS first
-      const { data: rlsTest, error: rlsError } = await supabase
-        .from('cms_solutions_cards')
-        .select('count(*)')
-        .limit(1);
-      
-      console.log('useSolutionsCards - RLS test result:', { rlsTest, rlsError });
-
       // Buscar a página específica
       const { data: pageData, error: pageError } = await supabase
         .from('cms_pages')
@@ -66,12 +58,6 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
 
       if (cardsError) {
         console.error('useSolutionsCards - Error fetching solutions cards:', cardsError);
-        console.error('useSolutionsCards - Error details:', {
-          message: cardsError.message,
-          details: cardsError.details,
-          hint: cardsError.hint,
-          code: cardsError.code
-        });
         throw cardsError;
       }
 
@@ -84,7 +70,7 @@ export const useSolutionsCards = (language: string = 'en', pageSlug: string = 's
       setError(`Erro ao carregar cards de soluções: ${errorMessage}`);
       toast({
         title: 'Erro',
-        description: 'Falha ao carregar os cards de soluções. Verifique as permissões RLS.',
+        description: 'Falha ao carregar os cards de soluções.',
         variant: 'destructive',
       });
     } finally {

@@ -38,14 +38,6 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
     try {
       console.log('useCMSSolutionsCards - Fetching solutions cards for page:', pageId, 'language:', language);
       
-      // First, let's check if RLS is blocking our query
-      const { data: testData, error: testError } = await supabase
-        .from('cms_solutions_cards')
-        .select('count(*)')
-        .limit(1);
-      
-      console.log('useCMSSolutionsCards - RLS test query result:', { testData, testError });
-      
       const { data, error } = await supabase
         .from('cms_solutions_cards')
         .select('*')
@@ -56,12 +48,6 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
 
       if (error) {
         console.error('useCMSSolutionsCards - Error fetching solutions cards:', error);
-        console.error('useCMSSolutionsCards - Error details:', {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code
-        });
         throw error;
       }
 
@@ -72,7 +58,7 @@ export const useCMSSolutionsCards = (pageId: string, language: string) => {
       console.error('useCMSSolutionsCards - Failed to fetch solutions cards:', error);
       toast({
         title: 'Erro',
-        description: 'Falha ao carregar os cards de soluções. Verifique as permissões RLS.',
+        description: 'Falha ao carregar os cards de soluções.',
         variant: 'destructive',
       });
     } finally {
