@@ -123,15 +123,15 @@ const StoriesGrid: React.FC<StoriesGridProps> = ({ selectedSegment }) => {
 
                     <div className="grid grid-cols-3 gap-4 mb-8">
                       <div className="text-center p-4 rounded-lg shadow-sm border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
-                        <div className="text-2xl font-bold text-blue-600 mb-1">{story.metric1_value}</div>
+                        <div className="text-2xl font-bold mb-1" style={{ color: '#2563eb' }}>{story.metric1_value}</div>
                         <div className="text-sm text-gray-600">{story.metric1_label}</div>
                       </div>
                       <div className="text-center p-4 rounded-lg shadow-sm border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
-                        <div className="text-2xl font-bold text-blue-600 mb-1">{story.metric2_value}</div>
+                        <div className="text-2xl font-bold mb-1" style={{ color: '#2563eb' }}>{story.metric2_value}</div>
                         <div className="text-sm text-gray-600">{story.metric2_label}</div>
                       </div>
                       <div className="text-center p-4 rounded-lg shadow-sm border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
-                        <div className="text-2xl font-bold text-blue-600 mb-1">{story.metric3_value}</div>
+                        <div className="text-2xl font-bold mb-1" style={{ color: '#2563eb' }}>{story.metric3_value}</div>
                         <div className="text-sm text-gray-600">{story.metric3_label}</div>
                       </div>
                     </div>

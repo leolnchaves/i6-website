@@ -62,7 +62,7 @@ const MetricsSection = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((index) => (
-              <div key={index} className="text-center bg-gray-50 rounded-lg p-8 border border-gray-200 animate-pulse">
+              <div key={index} className="text-center rounded-lg p-8 border border-gray-200 animate-pulse" style={{ backgroundColor: '#f3f4f6' }}>
                 <div className="flex justify-center mb-4">
                   <div className="w-8 h-8 bg-gray-300 rounded"></div>
                 </div>
@@ -81,11 +81,11 @@ const MetricsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {metrics.map((metric, index) => (
-            <div key={index} className="text-center bg-gray-50 rounded-lg p-8 border border-gray-200 hover:shadow-lg transition-all duration-300">
-              <div className="flex justify-center text-blue-600 mb-4">
+            <div key={index} className="text-center rounded-lg p-8 border border-gray-200 hover:shadow-lg transition-all duration-300" style={{ backgroundColor: '#f3f4f6' }}>
+              <div className="flex justify-center mb-4" style={{ color: '#2563eb' }}>
                 {metric.icon}
               </div>
-              <div className="text-4xl font-bold text-gray-900 mb-2">{metric.value}</div>
+              <div className="text-4xl font-bold mb-2" style={{ color: '#2563eb' }}>{metric.value}</div>
               <div className="text-gray-600">{metric.label}</div>
             </div>
           ))}

@@ -57,15 +57,15 @@ const HomeFeaturedStoryCard = ({ card, index }: HomeFeaturedStoryCardProps) => {
           {/* Metrics Grid - Always at bottom */}
           <div className="grid grid-cols-3 gap-3 mt-auto">
             <div className="text-center p-3 rounded-lg border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
-              <div className="text-lg font-bold text-blue-600 mb-1">{card.metric1_value}</div>
+              <div className="text-lg font-bold mb-1" style={{ color: '#2563eb' }}>{card.metric1_value}</div>
               <div className="text-xs text-gray-600 leading-tight">{card.metric1_label}</div>
             </div>
             <div className="text-center p-3 rounded-lg border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
-              <div className="text-lg font-bold text-orange-600 mb-1">{card.metric2_value}</div>
+              <div className="text-lg font-bold mb-1" style={{ color: '#2563eb' }}>{card.metric2_value}</div>
               <div className="text-xs text-gray-600 leading-tight">{card.metric2_label}</div>
             </div>
             <div className="text-center p-3 rounded-lg border border-gray-200" style={{ backgroundColor: '#f3f4f6' }}>
-              <div className="text-lg font-bold text-green-600 mb-1">{card.metric3_value}</div>
+              <div className="text-lg font-bold mb-1" style={{ color: '#2563eb' }}>{card.metric3_value}</div>
               <div className="text-xs text-gray-600 leading-tight">{card.metric3_label}</div>
             </div>
           </div>
