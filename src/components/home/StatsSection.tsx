@@ -1,31 +1,32 @@
 
 import ClientCarousel from '@/components/ClientCarousel';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useHybridPageContent } from '@/hooks/useHybridPageContent';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import StatCard from './stats/StatCard';
 import StatsBackground from './stats/StatsBackground';
 
 const StatsSection = () => {
   const { t, language } = useLanguage();
-  const { getContent } = useHybridPageContent('home', language);
+  const { getContent } = useCMSPageContent('home', language);
 
-  console.log('StatsSection - Getting content for home page, language:', language);
+  console.log('StatsSection - Getting CMS content for home page, language:', language);
 
-  // Get the actual values and labels with proper fallbacks
-  const stat1Value = getContent('stats', 'stat1Value', '97%');
-  const stat1Label = getContent('stats', 'stat1Label', 'Top Performance Engine');
-  const stat2Value = getContent('stats', 'stat2Value', '0');
-  const stat2Label = getContent('stats', 'stat2Label', 'Security Issues');
-  const stat3Value = getContent('stats', 'stat3Value', '< 1,5');
-  const stat3Label = getContent('stats', 'stat3Label', 'Months Lead Time');
-  const stat4Value = getContent('stats', 'stat4Value', '100%');
-  const stat4Label = getContent('stats', 'stat4Label', 'Explainable AI');
+  // Função para obter conteúdo do CMS com fallback para traduções
+  const getContentWithFallback = (field: string, translationKey: string) => {
+    const cmsContent = getContent('stats', field);
+    console.log(`StatsSection - CMS content for stats ${field}:`, cmsContent);
+    return cmsContent || t(translationKey);
+  };
 
-  console.log('StatsSection - All stats content:', {
-    stat1Value, stat1Label,
-    stat2Value, stat2Label,
-    stat3Value, stat3Label,
-    stat4Value, stat4Label
+  console.log('StatsSection - All CMS stats content:', {
+    stat1Value: getContent('stats', 'stat1Value'),
+    stat1Label: getContent('stats', 'stat1Label'),
+    stat2Value: getContent('stats', 'stat2Value'),
+    stat2Label: getContent('stats', 'stat2Label'),
+    stat3Value: getContent('stats', 'stat3Value'),
+    stat3Label: getContent('stats', 'stat3Label'),
+    stat4Value: getContent('stats', 'stat4Value'),
+    stat4Label: getContent('stats', 'stat4Label'),
   });
   
   return (
@@ -35,22 +36,22 @@ const StatsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-8">
           <StatCard 
-            value={stat1Value} 
-            label={stat1Label} 
+            value={getContentWithFallback('stat1Value', 'stats.topEngine').split('%')[0] + '%' || "97%"} 
+            label={getContentWithFallback('stat1Label', 'stats.topEngine')} 
           />
           <StatCard 
-            value={stat2Value} 
-            label={stat2Label} 
+            value={getContentWithFallback('stat2Value', 'stats.securityIssue') || "0"} 
+            label={getContentWithFallback('stat2Label', 'stats.securityIssue')} 
             delay="0.2s"
           />
           <StatCard 
-            value={stat3Value} 
-            label={stat3Label} 
+            value={getContentWithFallback('stat3Value', 'stats.leadtime') || "< 1,5"} 
+            label={getContentWithFallback('stat3Label', 'stats.leadtime')} 
             delay="0.4s"
           />
           <StatCard 
-            value={stat4Value} 
-            label={stat4Label} 
+            value={getContentWithFallback('stat4Value', 'stats.explainability').split('%')[0] + '%' || "100%"} 
+            label={getContentWithFallback('stat4Label', 'stats.explainability')} 
             delay="0.6s"
           />
         </div>

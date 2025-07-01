@@ -1,55 +1,78 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { logger } from '@/utils/logger';
+
+interface PageContent {
+  [sectionField: string]: string;
+}
 
 export const useCMSPageContent = (pageSlug: string, language: string = 'en') => {
-  const [content, setContent] = useState<{ [key: string]: string }>({});
+  const [content, setContent] = useState<PageContent>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchContent = useCallback(async () => {
+    if (!pageSlug) {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
-      
-      console.log('useCMSPageContent - TESTE: Simulando falha no banco de dados');
-      
-      // SIMULAÇÃO DE FALHA DO BANCO - COMENTAR ESTA LINHA PARA RESTAURAR
-      throw new Error('Banco de dados desconectado para teste de fallback');
-      
-      // Código original comentado para o teste
-      /*
-      const { data, error: fetchError } = await supabase
-        .from('page_content')
-        .select('section, field, content')
-        .eq('page_slug', pageSlug)
+
+      console.log('useCMSPageContent - Fetching content for page:', pageSlug, 'language:', language);
+
+      // Primeiro, buscar a página pelo slug
+      const { data: pageData, error: pageError } = await supabase
+        .from('cms_pages')
+        .select('id')
+        .eq('slug', pageSlug)
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (pageError) {
+        console.error('Error fetching page:', pageError);
+        setError('Erro ao buscar página');
+        return;
+      }
+
+      if (!pageData) {
+        console.log('Page not found:', pageSlug);
+        setError('Página não encontrada');
+        return;
+      }
+
+      console.log('useCMSPageContent - Found page ID:', pageData.id);
+
+      // Depois, buscar o conteúdo da página
+      const { data: contentData, error: contentError } = await supabase
+        .from('cms_page_content')
+        .select('section_name, field_name, content')
+        .eq('page_id', pageData.id)
         .eq('language', language);
 
-      if (fetchError) {
-        throw fetchError;
+      if (contentError) {
+        console.error('Error fetching content:', contentError);
+        setError('Erro ao carregar conteúdo');
+        return;
       }
 
-      const contentMap: { [key: string]: string } = {};
-      if (data) {
-        data.forEach((item) => {
-          const key = `${item.section}.${item.field}`;
-          contentMap[key] = item.content;
-        });
-      }
+      console.log('useCMSPageContent - Raw content data:', contentData);
 
-      setContent(contentMap);
-      logger.info('CMS content loaded successfully', { pageSlug, language, itemCount: data?.length || 0 });
-      */
-      
-      // Para o teste, definimos conteúdo vazio
-      setContent({});
-      
+      // Organizar dados em formato útil
+      const organizedContent: PageContent = {};
+      contentData?.forEach(item => {
+        const key = `${item.section_name}.${item.field_name}`;
+        organizedContent[key] = item.content || '';
+        console.log('useCMSPageContent - Adding content:', key, '=', item.content);
+      });
+
+      console.log('useCMSPageContent - Organized content:', organizedContent);
+      setContent(organizedContent);
     } catch (err) {
-      console.error('useCMSPageContent - Erro simulado:', err);
-      setError(err instanceof Error ? err.message : 'Erro desconhecido');
-      setContent({});
-      logger.error('Failed to load CMS content (TESTE)', err as Error, `pageSlug: ${pageSlug}, language: ${language}`);
+      console.error('Error in fetchContent:', err);
+      setError('Erro inesperado');
     } finally {
       setLoading(false);
     }
@@ -59,23 +82,26 @@ export const useCMSPageContent = (pageSlug: string, language: string = 'en') => 
     fetchContent();
   }, [fetchContent]);
 
+  // Função helper para obter conteúdo específico com fallback
   const getContent = useCallback((section: string, field: string, fallback: string = '') => {
     const key = `${section}.${field}`;
     const value = content[key];
-    console.log('useCMSPageContent - TESTE getContent:', key, '=', value || 'VAZIO (irá usar fallback)');
-    return value && value.trim() !== '' ? value : fallback;
+    
+    // Se não encontrou no CMS, usa o fallback
+    if (!value || value.trim() === '') {
+      console.log('useCMSPageContent - Using fallback for:', key, '=', fallback);
+      return fallback;
+    }
+    
+    console.log('useCMSPageContent - getContent:', key, '=', value);
+    return value;
   }, [content]);
-
-  // Add refetch function
-  const refetch = useCallback(() => {
-    fetchContent();
-  }, [fetchContent]);
 
   return {
     content,
     loading,
     error,
     getContent,
-    refetch
+    refetch: fetchContent,
   };
 };

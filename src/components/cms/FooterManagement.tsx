@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Save, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useHybridPageContent } from '@/hooks/useHybridPageContent';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import { supabase } from '@/integrations/supabase/client';
 
 const FooterManagement = () => {
@@ -22,17 +22,19 @@ const FooterManagement = () => {
     copyright_text: ''
   });
 
-  const { getContent, loading, error, cmsContent } = useHybridPageContent('components', selectedLanguage);
+  const { content, loading, error, refetch } = useCMSPageContent('components', selectedLanguage);
 
   // Update form data when content loads
   useEffect(() => {
-    setFormData({
-      company_description: getContent('footer', 'company_description', ''),
-      contact_email: getContent('footer', 'contact_email', ''),
-      contact_phone: getContent('footer', 'contact_phone', ''),
-      copyright_text: getContent('footer', 'copyright_text', '')
-    });
-  }, [getContent]);
+    if (content && Object.keys(content).length > 0) {
+      setFormData({
+        company_description: content['footer.company_description'] || '',
+        contact_email: content['footer.contact_email'] || '',
+        contact_phone: content['footer.contact_phone'] || '',
+        copyright_text: content['footer.copyright_text'] || ''
+      });
+    }
+  }, [content]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -77,7 +79,8 @@ const FooterManagement = () => {
         description: `O conteúdo do footer foi atualizado para ${selectedLanguage === 'en' ? 'inglês' : 'português'}.`,
       });
 
-      // Note: The hybrid hook will automatically refetch when needed
+      // Refetch to update the content
+      refetch();
     } catch (err) {
       console.error('Error saving footer:', err);
       toast({
@@ -106,7 +109,7 @@ const FooterManagement = () => {
       <Card>
         <CardContent className="text-center py-12">
           <p className="text-red-600 mb-4">Erro ao carregar conteúdo do footer</p>
-          <Button onClick={() => window.location.reload()} variant="outline">
+          <Button onClick={refetch} variant="outline">
             Tentar novamente
           </Button>
         </CardContent>
