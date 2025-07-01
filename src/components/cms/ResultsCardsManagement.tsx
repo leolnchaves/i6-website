@@ -158,7 +158,6 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
     }
   };
 
-  // Create a specialized function for toggling active status
   const handleToggleActive = async (index: number, isActive: boolean) => {
     await handleCardChangeWithSync(index, 'is_active', isActive);
   };
@@ -241,15 +240,21 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
         {formCards.map((card, index) => (
           <CardForm
             key={index}
-            card={card}
-            index={index}
-            availableIcons={availableIcons}
-            defaultColors={defaultColors}
-            totalCards={formCards.length}
-            onChange={handleCardChange}
-            onMove={moveCard}
-            onRemove={removeCard}
-            onToggleActive={handleToggleActive}
+            title={card.title}
+            description={card.description}
+            iconName={card.icon_name}
+            iconColor={card.icon_color}
+            backgroundColor={card.background_color}
+            backgroundOpacity={card.background_opacity}
+            isActive={card.is_active}
+            onTitleChange={(value) => handleCardChange(index, 'title', value)}
+            onDescriptionChange={(value) => handleCardChange(index, 'description', value)}
+            onIconNameChange={(value) => handleCardChange(index, 'icon_name', value)}
+            onIconColorChange={(value) => handleCardChange(index, 'icon_color', value)}
+            onBackgroundColorChange={(value) => handleCardChange(index, 'background_color', value)}
+            onBackgroundOpacityChange={(value) => handleCardChange(index, 'background_opacity', value)}
+            onIsActiveChange={(value) => handleCardChangeWithSync(index, 'is_active', value)}
+            onDelete={() => removeCard(index)}
           />
         ))}
 
