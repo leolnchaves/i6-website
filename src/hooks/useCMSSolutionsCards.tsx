@@ -28,12 +28,13 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  // Helper function to get page ID from slug
-  const getPageId = useCallback(async (pageSlug: string) => {
-    console.log('useCMSSolutionsCards - Getting page ID for slug:', pageSlug);
+  // Helper function to get or create page
+  const getOrCreatePage = useCallback(async (pageSlug: string) => {
+    console.log('useCMSSolutionsCards - Getting or creating page for slug:', pageSlug);
     
     try {
-      const { data: pageData, error: pageError } = await supabase
+      // First try to get existing page
+      let { data: pageData, error: pageError } = await supabase
         .from('cms_pages')
         .select('id')
         .eq('slug', pageSlug)
@@ -45,15 +46,34 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
         return null;
       }
 
+      // If page doesn't exist, create it
       if (!pageData) {
-        console.log('useCMSSolutionsCards - Page not found for slug:', pageSlug);
-        return null;
+        console.log('useCMSSolutionsCards - Page not found, creating:', pageSlug);
+        
+        const { data: newPageData, error: createError } = await supabase
+          .from('cms_pages')
+          .insert({
+            slug: pageSlug,
+            name: pageSlug.charAt(0).toUpperCase() + pageSlug.slice(1),
+            description: `${pageSlug} page`,
+            is_active: true
+          })
+          .select('id')
+          .single();
+
+        if (createError) {
+          console.error('useCMSSolutionsCards - Page creation error:', createError);
+          return null;
+        }
+
+        pageData = newPageData;
+        console.log('useCMSSolutionsCards - Created page with ID:', pageData.id);
       }
 
-      console.log('useCMSSolutionsCards - Found page ID:', pageData.id);
+      console.log('useCMSSolutionsCards - Using page ID:', pageData.id);
       return pageData.id;
     } catch (error) {
-      console.error('useCMSSolutionsCards - Error getting page ID:', error);
+      console.error('useCMSSolutionsCards - Error in getOrCreatePage:', error);
       return null;
     }
   }, []);
@@ -78,9 +98,9 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
       
       if (!isUuid) {
         console.log('useCMSSolutionsCards - Converting slug to page ID:', pageSlugOrId);
-        const convertedPageId = await getPageId(pageSlugOrId);
+        const convertedPageId = await getOrCreatePage(pageSlugOrId);
         if (!convertedPageId) {
-          console.log('useCMSSolutionsCards - Could not convert slug to page ID, setting empty cards');
+          console.log('useCMSSolutionsCards - Could not get or create page, setting empty cards');
           setCards([]);
           return;
         }
@@ -102,8 +122,31 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
         throw error;
       }
 
-      console.log('useCMSSolutionsCards - Solutions cards fetched successfully:', data?.length || 0, 'cards');
-      setCards(data || []);
+      // If no cards exist and it's the solutions page, create sample cards
+      if ((!data || data.length === 0) && pageSlugOrId === 'solutions') {
+        console.log('🏗️ useCMSSolutionsCards - No cards found, creating sample cards');
+        await createSampleCards(pageId, language);
+        
+        // Fetch again after creating sample cards
+        const { data: newData, error: newError } = await supabase
+          .from('cms_solutions_cards')
+          .select('*')
+          .eq('page_id', pageId)
+          .eq('language', language)
+          .eq('is_active', true)
+          .order('card_order', { ascending: true });
+
+        if (newError) {
+          console.error('useCMSSolutionsCards - Error fetching new cards:', newError);
+          throw newError;
+        }
+
+        console.log('✅ useCMSSolutionsCards - Sample cards created and fetched:', newData?.length || 0);
+        setCards(newData || []);
+      } else {
+        console.log('useCMSSolutionsCards - Solutions cards fetched successfully:', data?.length || 0, 'cards');
+        setCards(data || []);
+      }
     } catch (error) {
       console.error('useCMSSolutionsCards - Failed to fetch solutions cards:', error);
       setCards([]);
@@ -115,7 +158,90 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
     } finally {
       setLoading(false);
     }
-  }, [pageSlugOrId, language, toast, getPageId]);
+  }, [pageSlugOrId, language, toast, getOrCreatePage]);
+
+  const createSampleCards = async (pageId: string, language: string) => {
+    const sampleCards = language === 'en' ? [
+      {
+        page_id: pageId,
+        card_order: 1,
+        language,
+        title: 'Recommendation Engine',
+        focus: 'Personalized product recommendations',
+        description: 'AI-powered engine that analyzes user behavior to suggest relevant products',
+        features: ['Real-time processing', 'Machine learning', 'A/B testing'],
+        outcome: 'Increased conversion rates and customer satisfaction',
+        engine: 'i6 RecSys'
+      },
+      {
+        page_id: pageId,
+        card_order: 2,
+        language,
+        title: 'Dynamic Pricing',
+        focus: 'Intelligent price optimization',
+        description: 'Advanced algorithms optimize pricing strategies in real-time',
+        features: ['Market analysis', 'Competitor tracking', 'Demand forecasting'],
+        outcome: 'Maximized revenue and market competitiveness',
+        engine: 'i6 RecSys'
+      },
+      {
+        page_id: pageId,
+        card_order: 3,
+        language,
+        title: 'Customer Analytics',
+        focus: 'Deep customer insights',
+        description: 'Comprehensive analytics platform for understanding customer behavior',
+        features: ['Behavioral tracking', 'Predictive modeling', 'Segmentation'],
+        outcome: 'Better customer understanding and targeting',
+        engine: 'i6 RecSys'
+      }
+    ] : [
+      {
+        page_id: pageId,
+        card_order: 1,
+        language,
+        title: 'Motor de Recomendação',
+        focus: 'Recomendações personalizadas de produtos',
+        description: 'Motor alimentado por IA que analisa comportamento do usuário para sugerir produtos relevantes',
+        features: ['Processamento em tempo real', 'Aprendizado de máquina', 'Testes A/B'],
+        outcome: 'Aumento das taxas de conversão e satisfação do cliente',
+        engine: 'i6 RecSys'
+      },
+      {
+        page_id: pageId,
+        card_order: 2,
+        language,
+        title: 'Precificação Dinâmica',
+        focus: 'Otimização inteligente de preços',
+        description: 'Algoritmos avançados otimizam estratégias de preços em tempo real',
+        features: ['Análise de mercado', 'Rastreamento de concorrentes', 'Previsão de demanda'],
+        outcome: 'Receita maximizada e competitividade no mercado',
+        engine: 'i6 RecSys'
+      },
+      {
+        page_id: pageId,
+        card_order: 3,
+        language,
+        title: 'Analytics de Cliente',
+        focus: 'Insights profundos do cliente',
+        description: 'Plataforma de analytics abrangente para entender comportamento do cliente',
+        features: ['Rastreamento comportamental', 'Modelagem preditiva', 'Segmentação'],
+        outcome: 'Melhor compreensão e direcionamento do cliente',
+        engine: 'i6 RecSys'
+      }
+    ];
+
+    const { error } = await supabase
+      .from('cms_solutions_cards')
+      .insert(sampleCards);
+
+    if (error) {
+      console.error('💥 useCMSSolutionsCards - Error creating sample cards:', error);
+      throw error;
+    }
+
+    console.log('✅ useCMSSolutionsCards - Sample cards created successfully');
+  };
 
   const saveCard = useCallback(async (cardData: Partial<SolutionsCard>) => {
     try {
