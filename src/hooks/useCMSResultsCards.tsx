@@ -17,22 +17,23 @@ interface CMSResultsCard {
 
 export const useCMSResultsCards = (pageSlug: string = 'home', language: string = 'en') => {
   const [cards, setCards] = useState<CMSResultsCard[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  console.log('🔍 useCMSResultsCards DEBUG:', {
-    pageSlug,
-    language,
-    cardsLength: cards.length,
-    loading
-  });
+  console.log('🔍 useCMSResultsCards initialized:', { pageSlug, language });
 
   const fetchCards = useCallback(async () => {
+    if (!pageSlug) {
+      console.log('❌ useCMSResultsCards - No pageSlug provided');
+      setCards([]);
+      setLoading(false);
+      return;
+    }
+
     console.log('📡 useCMSResultsCards - Starting fetch with:', { pageSlug, language });
     
     try {
       setLoading(true);
-      console.log('🚀 useCMSResultsCards - Fetching page data...');
 
       // First, get the page ID using slug
       const { data: pageData, error: pageError } = await supabase
@@ -42,7 +43,7 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
         .eq('is_active', true)
         .maybeSingle();
 
-      console.log('📄 useCMSResultsCards - Page query result:', { pageData, pageError });
+      console.log('📄 useCMSResultsCards - Page query result:', { pageData, pageError, pageSlug });
 
       if (pageError) {
         console.error('💥 useCMSResultsCards - Page fetch error:', pageError);
@@ -58,7 +59,6 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
       console.log('✅ useCMSResultsCards - Found page ID:', pageData.id);
 
       // Then, fetch cards for this page using the UUID
-      console.log('🚀 useCMSResultsCards - Fetching cards data...');
       const { data: cardsData, error: cardsError } = await supabase
         .from('cms_results_cards')
         .select('*')
@@ -82,8 +82,6 @@ export const useCMSResultsCards = (pageSlug: string = 'home', language: string =
       setCards(cardsData || []);
     } catch (error) {
       console.error('💥 useCMSResultsCards - General error:', error);
-      
-      // Set empty cards array on error to prevent infinite loading
       setCards([]);
       
       toast({

@@ -62,6 +62,7 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
     if (!pageSlugOrId || !language) {
       console.log('useCMSSolutionsCards - Missing pageSlugOrId or language:', { pageSlugOrId, language });
       setCards([]);
+      setLoading(false);
       return;
     }
 
@@ -102,7 +103,6 @@ export const useCMSSolutionsCards = (pageSlugOrId: string, language: string) => 
       }
 
       console.log('useCMSSolutionsCards - Solutions cards fetched successfully:', data?.length || 0, 'cards');
-      console.log('useCMSSolutionsCards - Cards data:', data);
       setCards(data || []);
     } catch (error) {
       console.error('useCMSSolutionsCards - Failed to fetch solutions cards:', error);
