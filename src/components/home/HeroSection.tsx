@@ -101,64 +101,35 @@ const HeroSection = () => {
   return (
     <>
       {/* Main hero section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          {/* Flowing curved shapes */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full blur-3xl animate-float-curve"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-l from-orange-400/15 to-yellow-500/15 rounded-full blur-2xl animate-slide-curve"></div>
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-xl animate-drift-curve"></div>
-          
-          {/* Particle dots */}
-          <div className="absolute top-20 left-20 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-32 right-32 w-1 h-1 bg-orange-300 rounded-full animate-ping"></div>
-          <div className="absolute bottom-40 left-40 w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/3 left-1/2 w-1 h-1 bg-orange-500 rounded-full animate-ping"></div>
-          <div className="absolute bottom-1/4 right-1/3 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-3/4 left-1/6 w-1 h-1 bg-red-300 rounded-full animate-ping"></div>
-          <div className="absolute top-1/6 right-1/4 w-2 h-2 bg-orange-300 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-1/2 left-3/4 w-1 h-1 bg-orange-400 rounded-full animate-ping"></div>
-          
-          {/* Grid pattern overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
-        </div>
-
-        {/* Main content container */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            {/* Hero title with animations */}
-            <div className="animate-fade-in">
-              <div className="mb-8">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-light text-white/90 mb-2">
-                  {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
-                </div>
-                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-none mb-4">
-                  {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
-                </h1>
-                <div className="text-xl sm:text-2xl md:text-3xl font-light text-white/80">
-                  {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
-                </div>
-              </div>
-            </div>
-            
-            {/* Hero description */}
-            <p className="text-lg sm:text-xl md:text-2xl text-white/75 mb-12 animate-slide-in-left max-w-3xl mx-auto leading-relaxed">
+      <section className="gradient-primary w-full min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
+        
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-4xl md:text-5xl font-light mb-2 drop-shadow-lg">
+              {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
+            </h2>
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 drop-shadow-lg">
+              {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
+            </h1>
+            <h3 className="text-2xl md:text-3xl font-light mb-8 drop-shadow-lg">
+              {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
+            </h3>
+            <p className="text-lg md:text-xl mb-10 leading-relaxed">
               {getContentWithFallback('homeHero', 'description', 'hero.description')}
             </p>
-            
-            {/* Call-to-action buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-in-right">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white hover:scale-105 transition-all duration-300 text-lg px-8 py-4 shadow-2xl hover:shadow-orange-500/25 border-0 rounded-lg font-semibold min-w-[200px]"
+                className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap"
                 onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
               >
                 {getContentWithFallback('homeHero', 'startJourney', 'hero.startJourney')}
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="w-5 h-5" />
               </Button>
               <Button 
                 size="lg" 
-                className="bg-blue-600/20 border-2 border-blue-400/30 text-white hover:bg-blue-500/30 hover:border-blue-300/50 transition-all duration-300 hover:scale-105 text-lg px-8 py-4 rounded-lg backdrop-blur-sm font-semibold min-w-[200px]"
+                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-lg font-medium hover:bg-white/30 transition-all w-full sm:w-auto whitespace-nowrap"
                 onClick={handleOpenVideoModal}
               >
                 {getContentWithFallback('homeHero', 'watchDemo', 'hero.watchDemo')}
@@ -166,11 +137,10 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
+        
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+          <div className="w-10 h-10 flex items-center justify-center text-white/80">
+            <ArrowRight className="w-6 h-6 rotate-90" />
           </div>
         </div>
       </section>
