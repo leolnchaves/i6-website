@@ -8,7 +8,7 @@ export const enTranslations = {
   'header.getStarted': 'Get Started',
   
   // Hero Section
-  'hero.infinite': 'Infinite',
+  'hero.infinite': 'Endless',
   'hero.possibilities': 'Possibilities',
   'hero.poweredByAI': 'Powered by AI',
   'hero.description': 'Transform your business with cutting-edge artificial intelligence solutions that unlock unlimited potential and drive extraordinary results.',
