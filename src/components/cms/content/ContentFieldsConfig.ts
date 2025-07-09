@@ -83,13 +83,4 @@ export const getPageFields = (
   return [...heroFields, ...resultsFields, ...compactSolutionsFields, ...statsFields, ...ctaFields];
 };
 
-export const getAllFields = (
-  isHomePage: boolean, 
-  isSuccessStoriesPage: boolean, 
-  isContactPage: boolean,
-  isSolutionsPage: boolean
-): ContentField[] => {
-  return getPageFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
-};
-
 export type { ContentField };

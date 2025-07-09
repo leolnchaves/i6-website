@@ -68,13 +68,8 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
   }, [cards]);
 
   const handleCardChange = (index: number, field: keyof CardFormData, value: any) => {
-    console.log(`handleCardChange - Before: "${formCards[index]?.[field]}" -> After: "${value}"`);
-    
     const updatedCards = [...formCards];
-    // IMPORTANT: Never use .trim() here - preserve the exact value the user typed
     updatedCards[index] = { ...updatedCards[index], [field]: value };
-    
-    console.log(`handleCardChange - Final value set: "${updatedCards[index][field]}"`);
     setFormCards(updatedCards);
   };
 
@@ -148,13 +143,8 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
   };
 
   const handleCardChangeWithSync = async (index: number, field: keyof CardFormData, value: any) => {
-    console.log(`handleCardChangeWithSync - Before: "${formCards[index]?.[field]}" -> After: "${value}"`);
-    
     const updatedCards = [...formCards];
-    // IMPORTANT: Never use .trim() here - preserve the exact value the user typed
     updatedCards[index] = { ...updatedCards[index], [field]: value };
-    
-    console.log(`handleCardChangeWithSync - Final value set: "${updatedCards[index][field]}"`);
     setFormCards(updatedCards);
 
     if (field === 'is_active' && selectedPage) {
@@ -168,6 +158,7 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
     }
   };
 
+  // Create a specialized function for toggling active status
   const handleToggleActive = async (index: number, isActive: boolean) => {
     await handleCardChangeWithSync(index, 'is_active', isActive);
   };
@@ -192,9 +183,8 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
           console.log(`Card "${card.title}" - is_active: ${card.is_active}`);
           return {
             page_id: selectedPage,
-            // Apply .trim() only when saving to database, not during editing
-            title: card.title.trim(),
-            description: card.description.trim(),
+            title: card.title,
+            description: card.description,
             icon_name: card.icon_name,
             icon_color: card.icon_color,
             background_color: card.background_color || null,
@@ -251,21 +241,15 @@ const ResultsCardsManagement: React.FC<ResultsCardsManagementProps> = ({
         {formCards.map((card, index) => (
           <CardForm
             key={index}
-            title={card.title}
-            description={card.description}
-            iconName={card.icon_name}
-            iconColor={card.icon_color}
-            backgroundColor={card.background_color}
-            backgroundOpacity={card.background_opacity}
-            isActive={card.is_active}
-            onTitleChange={(value) => handleCardChange(index, 'title', value)}
-            onDescriptionChange={(value) => handleCardChange(index, 'description', value)}
-            onIconNameChange={(value) => handleCardChange(index, 'icon_name', value)}
-            onIconColorChange={(value) => handleCardChange(index, 'icon_color', value)}
-            onBackgroundColorChange={(value) => handleCardChange(index, 'background_color', value)}
-            onBackgroundOpacityChange={(value) => handleCardChange(index, 'background_opacity', value)}
-            onIsActiveChange={(value) => handleCardChangeWithSync(index, 'is_active', value)}
-            onDelete={() => removeCard(index)}
+            card={card}
+            index={index}
+            availableIcons={availableIcons}
+            defaultColors={defaultColors}
+            totalCards={formCards.length}
+            onChange={handleCardChange}
+            onMove={moveCard}
+            onRemove={removeCard}
+            onToggleActive={handleToggleActive}
           />
         ))}
 

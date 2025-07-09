@@ -16,15 +16,6 @@ interface ContactFormFieldsProps {
 const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsProps) => {
   const { t } = useLanguage();
 
-  const handleInputChangeWithLogging = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    console.log(`📞 ContactFormFields input change:`);
-    console.log(`  - Field: ${e.target.name}`);
-    console.log(`  - Value: "${e.target.value}"`);
-    console.log(`  - Ends with space: ${e.target.value.endsWith(' ')}`);
-    
-    handleInputChange(e);
-  };
-
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -37,11 +28,9 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
             name="name"
             required
             value={formData.name}
-            onChange={handleInputChangeWithLogging}
+            onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
             placeholder={t('contact.form.namePlaceholder')}
-            autoComplete="off"
-            spellCheck="false"
           />
         </div>
         <div>
@@ -53,11 +42,9 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
             name="email"
             required
             value={formData.email}
-            onChange={handleInputChangeWithLogging}
+            onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
             placeholder={t('contact.form.emailPlaceholder')}
-            autoComplete="off"
-            spellCheck="false"
           />
         </div>
       </div>
@@ -71,11 +58,9 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
             type="text"
             name="company"
             value={formData.company}
-            onChange={handleInputChangeWithLogging}
+            onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
             placeholder={t('contact.form.companyPlaceholder')}
-            autoComplete="off"
-            spellCheck="false"
           />
         </div>
         <div>
@@ -86,11 +71,9 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
             type="tel"
             name="phone"
             value={formData.phone}
-            onChange={handleInputChangeWithLogging}
+            onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
             placeholder={t('contact.form.phonePlaceholder')}
-            autoComplete="off"
-            spellCheck="false"
           />
         </div>
       </div>
@@ -103,7 +86,7 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
           name="subject"
           required
           value={formData.subject}
-          onChange={handleInputChangeWithLogging}
+          onChange={handleInputChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
         >
           <option value="">{t('contact.form.subjectPlaceholder')}</option>
@@ -123,11 +106,9 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
           required
           rows={12}
           value={formData.message}
-          onChange={handleInputChangeWithLogging}
+          onChange={handleInputChange}
           className="w-full h-full min-h-[300px] px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
           placeholder={t('contact.form.messagePlaceholder')}
-          autoComplete="off"
-          spellCheck="false"
         />
       </div>
     </>

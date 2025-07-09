@@ -1,273 +1,259 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useCMSPages } from './useCMSPages';
-import { useCMSPageContent } from './useCMSPageContent';
-import { useCMSSEO } from './useCMSSEO';
-import { useToast } from './use-toast';
-import { getAllFields } from '@/components/cms/content/ContentFieldsConfig';
-import { supabase } from '@/integrations/supabase/client';
 
-interface SEOFormData {
-  meta_title: string;
-  meta_description: string;
-  slug: string;
-  canonical_url: string;
-  index_flag: boolean;
-  follow_flag: boolean;
-}
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCMSContent } from './useCMSContent';
+import { useCMSSEO } from './useCMSSEO';
+import { getPageFields } from '@/components/cms/content/ContentFieldsConfig';
+import { sanitizeInput, validateUUID } from '@/utils/security';
 
 export const useContentManagement = () => {
-  const { pages, loading: pagesLoading } = useCMSPages();
+  const { 
+    pages, 
+    content, 
+    loading: contentLoading, 
+    fetchPages, 
+    fetchPageContent, 
+    saveContent 
+  } = useCMSContent();
+  
+  const { 
+    seoData, 
+    loading: seoLoading, 
+    fetchSEOData, 
+    saveSEOData, 
+    getSEOData 
+  } = useCMSSEO();
+
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
-  const [contentFormData, setContentFormData] = useState<{ [key: string]: string }>({});
-  const [seoFormData, setSeoFormData] = useState<SEOFormData>({
+  
+  // Estados separados: dados originais vs dados editáveis
+  const [fetchedContentFormData, setFetchedContentFormData] = useState<{ [key: string]: string }>({});
+  const [editableContentFormData, setEditableContentFormData] = useState<{ [key: string]: string }>({});
+  
+  const [seoFormData, setSeoFormData] = useState({
     meta_title: '',
     meta_description: '',
     slug: '',
     canonical_url: '',
     index_flag: true,
-    follow_flag: true,
+    follow_flag: true
   });
   const [saving, setSaving] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false); // Flag para evitar reidratação
-  const { toast } = useToast();
+  const [isDirty, setIsDirty] = useState(false);
 
-  // Get current page slug for content hook
-  const currentPage = pages.find(page => page.id === selectedPage);
-  const pageSlug = currentPage?.slug || '';
+  const loading = contentLoading || seoLoading;
 
-  const { 
-    content, 
-    loading: contentLoading, 
-    refetch: refetchContent 
-  } = useCMSPageContent(pageSlug, selectedLanguage);
+  // Get current page data
+  const currentPage = pages.find(p => p.id === selectedPage);
+  const isHomePage = currentPage?.slug === 'home';
+  const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
+  const isContactPage = currentPage?.slug === 'contact';
+  const isSolutionsPage = currentPage?.slug === 'solutions';
 
-  const { 
-    seoData, 
-    loading: seoLoading, 
-    fetchSEOData,
-    saveSEOData,
-    getSEOData
-  } = useCMSSEO();
+  // Get fields for current page
+  const allFields = getPageFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
 
-  const loading = pagesLoading || contentLoading || seoLoading;
+  // Debug logs
+  console.log('fetched', fetchedContentFormData);
+  console.log('editable', editableContentFormData);
 
+  // Load pages on mount
+  useEffect(() => {
+    fetchPages();
+  }, [fetchPages]);
+
+  // Auto-select first page when pages are loaded
   useEffect(() => {
     if (pages.length > 0 && !selectedPage) {
       setSelectedPage(pages[0].id);
     }
   }, [pages, selectedPage]);
 
-  // Fetch SEO data when page or language changes
+  // Load content and SEO when page/language changes - SEM outras dependências
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
+      // Validar entrada
+      if (!validateUUID(selectedPage)) {
+        console.error('ID de página inválido:', selectedPage);
+        return;
+      }
+      
+      console.log('Loading content for page:', selectedPage, 'language:', selectedLanguage);
+      fetchPageContent(selectedPage, selectedLanguage);
       fetchSEOData(selectedPage, selectedLanguage);
     }
-  }, [selectedPage, selectedLanguage, fetchSEOData]);
+  }, [selectedPage, selectedLanguage]);
 
-  // Update SEO form data when SEO data changes
+  // Update fetched data when content loads - SEM dependências desnecessárias
+  useEffect(() => {
+    if (content.length > 0 && !contentLoading) {
+      console.log('Updating fetched data from content');
+      
+      const formData: { [key: string]: string } = {};
+      
+      allFields.forEach(field => {
+        const key = `${field.section}_${field.field}`;
+        const contentValue = content.find(c => 
+          c.section_name === field.section && 
+          c.field_name === field.field
+        )?.content || '';
+        
+        // Sanitizar conteúdo ao carregar
+        formData[key] = sanitizeInput(contentValue);
+      });
+      
+      setFetchedContentFormData(formData);
+      console.log('Fetched data updated:', Object.keys(formData).length, 'fields');
+    }
+  }, [content, contentLoading]);
+
+  // Update editable data APENAS quando fetched data mudar
+  useEffect(() => {
+    if (fetchedContentFormData && Object.keys(fetchedContentFormData).length > 0) {
+      console.log('Updating editable data from fetched data');
+      setEditableContentFormData(fetchedContentFormData);
+      setIsDirty(false);
+    }
+  }, [fetchedContentFormData]);
+
+  // Update SEO form data when SEO data loads
   useEffect(() => {
     if (selectedPage && selectedLanguage) {
       const currentSEOData = getSEOData(selectedPage, selectedLanguage);
-      setSeoFormData(currentSEOData);
-    }
-  }, [selectedPage, selectedLanguage, getSEOData, seoData]);
-
-  const isHomePage = currentPage?.slug === 'home';
-  const isSuccessStoriesPage = currentPage?.slug === 'success-stories';
-  const isContactPage = currentPage?.slug === 'contact';
-  const isSolutionsPage = currentPage?.slug === 'solutions';
-
-  const allFields = getAllFields(isHomePage, isSuccessStoriesPage, isContactPage, isSolutionsPage);
-
-  // CORRIGIDO: useEffect com flag para evitar reidratação constante e comparação correta de objeto vazio
-  useEffect(() => {
-    console.log('useContentManagement - useEffect triggered');
-    console.log('- content:', Object.keys(content).length, 'fields');
-    console.log('- isInitialized:', isInitialized);
-    console.log('- allFields length:', allFields.length);
-
-    // Só reidrata se não foi inicializado ainda OU se mudou de página/idioma
-    if (Object.keys(content).length > 0 && (!isInitialized || Object.keys(contentFormData).length === 0)) {
-      console.log('useContentManagement - Initializing from content');
-      const formData: { [key: string]: string } = {};
-      Object.entries(content).forEach(([key, value]) => {
-        const fieldKey = key.replace('.', '_');
-        // CRÍTICO: Preservar valor exato sem qualquer transformação
-        const exactValue = value || '';
-        formData[fieldKey] = exactValue;
-        console.log(`useContentManagement - Setting field "${fieldKey}" = "${exactValue}"`);
+      // Sanitizar dados SEO
+      setSeoFormData({
+        meta_title: sanitizeInput(currentSEOData.meta_title || ''),
+        meta_description: sanitizeInput(currentSEOData.meta_description || ''),
+        slug: sanitizeInput(currentSEOData.slug || ''),
+        canonical_url: sanitizeInput(currentSEOData.canonical_url || ''),
+        index_flag: currentSEOData.index_flag ?? true,
+        follow_flag: currentSEOData.follow_flag ?? true
       });
-      setContentFormData(formData);
-      setIsInitialized(true);
-    } else if (allFields.length > 0 && Object.keys(contentFormData).length === 0 && !isInitialized) {
-      console.log('useContentManagement - Initializing empty fields');
-      const formData: { [key: string]: string } = {};
-      allFields.forEach((field) => {
-        const key = `${field.section}_${field.field}`;
-        formData[key] = '';
-        console.log(`useContentManagement - Setting empty field "${key}"`);
-      });
-      setContentFormData(formData);
-      setIsInitialized(true);
     }
-  }, [content, allFields, isInitialized, contentFormData]);
+  }, [selectedPage, selectedLanguage, seoData, getSEOData]);
 
-  // Reset initialization flag when page or language changes
-  useEffect(() => {
-    console.log('useContentManagement - Page or language changed, resetting initialization');
-    setIsInitialized(false);
-    setContentFormData({});
-  }, [selectedPage, selectedLanguage]);
-
+  // Handle content input changes - usando prev corretamente e sanitizando entrada
   const handleContentInputChange = useCallback((key: string, value: string) => {
-    console.log(`🔍 handleContentInputChange INÍCIO:`);
-    console.log(`  - Key: "${key}"`);
-    console.log(`  - Value recebido: "${value}"`);
-    console.log(`  - Value length: ${value.length}`);
-    console.log(`  - Ends with space: ${value.endsWith(' ')}`);
-    console.log(`  - Value antes no estado: "${contentFormData[key]}"`);
-    
-    setContentFormData(prevData => {
-      const newData = {
-        ...prevData,
-        [key]: value // CRÍTICO: valor exato sem transformação
-      };
-      
-      console.log(`  - Value depois no estado: "${newData[key]}"`);
-      console.log(`  - Ends with space after: ${newData[key].endsWith(' ')}`);
-      console.log(`🔍 handleContentInputChange FIM`);
-      
-      return newData;
-    });
-  }, []); // Removendo dependência de contentFormData para evitar re-renders
-
-  const handleSEOInputChange = useCallback((key: string, value: string | boolean) => {
-    console.log(`🔍 handleSEOInputChange:`);
-    console.log(`  - Key: "${key}"`);
-    console.log(`  - Value: "${value}"`);
-    
-    setSeoFormData(prev => ({
-      ...prev,
-      [key]: value
-    }));
+    const sanitizedValue = sanitizeInput(value);
+    console.log('Field changed:', key, '=', sanitizedValue);
+    setEditableContentFormData(prev => ({ ...prev, [key]: sanitizedValue }));
+    setIsDirty(true);
   }, []);
 
-  const handleSaveContent = async () => {
-    if (!selectedPage) return;
+  // Handle SEO input changes com sanitização
+  const handleSEOInputChange = useCallback((field: string, value: string | boolean) => {
+    const sanitizedValue = typeof value === 'string' ? sanitizeInput(value) : value;
+    setSeoFormData(prev => ({ ...prev, [field]: sanitizedValue }));
+  }, []);
+
+  // Save content com validação adicional
+  const handleSaveContent = useCallback(async () => {
+    if (!selectedPage || !selectedLanguage) return;
+
+    // Validar entrada
+    if (!validateUUID(selectedPage)) {
+      console.error('ID de página inválido para salvamento:', selectedPage);
+      return;
+    }
 
     setSaving(true);
     try {
-      const contentArray = Object.entries(contentFormData).map(([key, value]) => {
-        const [section, field] = key.split('_');
-        return {
-          section_name: section,
-          field_name: field,
-          // Apply .trim() only when saving to database, not during editing
-          content: value.trim(),
-          language: selectedLanguage,
-        };
+      // Save each field individually
+      const savePromises = Object.entries(editableContentFormData).map(([key, value]) => {
+        const [sectionName, fieldName] = key.split('_');
+        const sanitizedValue = sanitizeInput(value);
+        return saveContent(selectedPage, sectionName, fieldName, selectedLanguage, sanitizedValue);
       });
-
-      // Delete existing content for this page and language
-      const { error: deleteError } = await supabase
-        .from('cms_page_content')
-        .delete()
-        .eq('page_id', selectedPage)
-        .eq('language', selectedLanguage);
-
-      if (deleteError) throw deleteError;
-
-      // Insert new content
-      if (contentArray.length > 0) {
-        const { error: insertError } = await supabase
-          .from('cms_page_content')
-          .insert(contentArray.map(item => ({
-            ...item,
-            page_id: selectedPage,
-          })));
-
-        if (insertError) throw insertError;
-      }
-
-      await refetchContent();
       
-      toast({
-        title: 'Sucesso!',
-        description: 'Conteúdo salvo com sucesso.',
-      });
+      await Promise.all(savePromises);
+      
+      // Após salvar, atualizar o estado "fetched" e limpar dirty flag
+      setFetchedContentFormData(editableContentFormData);
+      setIsDirty(false);
+      
+      console.log('Content saved successfully');
     } catch (error) {
-      console.error('Error saving content:', error);
-      toast({
-        title: 'Erro',
-        description: 'Ocorreu um erro ao salvar o conteúdo.',
-        variant: 'destructive',
-      });
+      console.error('Erro ao salvar conteúdo:', error);
     } finally {
       setSaving(false);
     }
-  };
+  }, [selectedPage, selectedLanguage, editableContentFormData, saveContent]);
 
-  const handleSaveSEO = async () => {
-    if (!selectedPage) return;
+  // Save SEO data com validação
+  const handleSaveSEO = useCallback(async () => {
+    if (!selectedPage || !selectedLanguage) return;
+
+    // Validar entrada
+    if (!validateUUID(selectedPage)) {
+      console.error('ID de página inválido para salvamento SEO:', selectedPage);
+      return;
+    }
 
     setSaving(true);
     try {
-      const success = await saveSEOData(selectedPage, selectedLanguage, {
-        ...seoFormData,
-        // Apply .trim() only when saving to database, not during editing
-        meta_title: seoFormData.meta_title.trim(),
-        meta_description: seoFormData.meta_description.trim(),
-        slug: seoFormData.slug.trim(),
-        canonical_url: seoFormData.canonical_url.trim(),
-      });
-
-      if (success) {
-        toast({
-          title: 'Sucesso!',
-          description: 'Configurações de SEO salvas com sucesso.',
-        });
-      }
+      await saveSEOData(selectedPage, selectedLanguage, seoFormData);
     } catch (error) {
-      console.error('Error saving SEO:', error);
-      toast({
-        title: 'Erro',
-        description: 'Ocorreu um erro ao salvar as configurações de SEO.',
-        variant: 'destructive',
-      });
+      console.error('Erro ao salvar dados SEO:', error);
     } finally {
       setSaving(false);
     }
-  };
+  }, [selectedPage, selectedLanguage, seoFormData, saveSEOData]);
 
-  const getPageTitle = () => {
-    if (isHomePage) return 'Página Inicial';
-    if (isSuccessStoriesPage) return 'Página de Cases de Sucesso';
-    if (isContactPage) return 'Página de Contato';
-    if (isSolutionsPage) return 'Página de Soluções';
-    return currentPage?.name || 'Página';
-  };
+  // Reset to original data
+  const handleResetContent = useCallback(() => {
+    console.log('Resetting content to original values');
+    setEditableContentFormData(fetchedContentFormData);
+    setIsDirty(false);
+  }, [fetchedContentFormData]);
+
+  // Check for unsaved changes usando isDirty
+  const hasUnsavedChanges = useCallback(() => {
+    return isDirty;
+  }, [isDirty]);
+
+  const getPageTitle = useCallback(() => {
+    if (!currentPage) return 'Página';
+    return currentPage.name;
+  }, [currentPage]);
+
+  // Função segura para definir página selecionada
+  const setSelectedPageSecure = useCallback((pageId: string) => {
+    if (validateUUID(pageId)) {
+      setSelectedPage(pageId);
+    } else {
+      console.error('ID de página inválido:', pageId);
+    }
+  }, []);
 
   return {
+    // State
     pages,
     selectedPage,
     selectedLanguage,
-    contentFormData,
+    contentFormData: editableContentFormData,
     seoFormData,
     saving,
     loading,
+    
+    // Computed
     currentPage,
     isHomePage,
     isSuccessStoriesPage,
     isContactPage,
     isSolutionsPage,
     allFields,
-    setSelectedPage,
+    
+    // New utilities
+    hasUnsavedChanges,
+    
+    // Actions
+    setSelectedPage: setSelectedPageSecure,
     setSelectedLanguage,
     handleContentInputChange,
     handleSEOInputChange,
     handleSaveContent,
     handleSaveSEO,
+    handleResetContent,
     getPageTitle,
   };
 };

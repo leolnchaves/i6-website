@@ -100,119 +100,70 @@ const HeroSection = () => {
 
   return (
     <>
-      {/* Clean hero section with gradient background */}
+      {/* Main hero section */}
       <section className="relative min-h-screen flex items-center justify-center gradient-primary overflow-hidden">
-        {/* Simple overlay for depth */}
-        <div className="absolute inset-0 bg-black/10"></div>
+        {/* Background gradients for visual appeal */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 via-transparent to-blue-600/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-purple-600/5 via-transparent to-pink-600/5"></div>
 
-        {/* Main content */}
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-screen py-20">
-            
-            {/* Left side - Content */}
-            <div className="text-left space-y-8">
-              {/* Subtitle/Category */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-                <span className="text-white/90 text-sm font-medium uppercase tracking-wider">
+        {/* Scroll-based Animation */}
+        <ScrollAnimation />
+
+        {/* Main content container */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-5xl mx-auto">
+            {/* Hero title with animations */}
+            <div className="animate-bounce-in">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+                <span className="block text-white font-light text-2xl sm:text-3xl md:text-4xl lg:text-7xl mb-4">
                   {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
                 </span>
-              </div>
-
-              {/* Main heading */}
-              <div className="space-y-4">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
-                  {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
-                </h1>
-                <div className="text-xl md:text-2xl text-orange-300 font-medium">
+                <div className="relative inline-block w-full">
+                  <span className="relative block text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-9xl bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl px-2 leading-tight">
+                    {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
+                  </span>
+                </div>
+                <span className="block text-white text-xl sm:text-2xl md:text-3xl lg:text-5xl mt-6 font-light">
                   {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-lg text-white/80 leading-relaxed max-w-xl">
-                {getContentWithFallback('homeHero', 'description', 'hero.description')}
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-blue-900 hover:bg-white/90 font-semibold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                  onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
-                >
-                  {getContentWithFallback('homeHero', 'startJourney', 'hero.startJourney')}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="lg" 
-                  className="border-2 border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-xl backdrop-blur-sm transition-all duration-300"
-                  onClick={handleOpenVideoModal}
-                >
-                  {getContentWithFallback('homeHero', 'watchDemo', 'hero.watchDemo')}
-                  <div className="ml-2 w-5 h-5 rounded-full border-2 border-current flex items-center justify-center">
-                    <div className="w-0 h-0 border-l-[6px] border-l-current border-y-[3px] border-y-transparent ml-0.5"></div>
-                  </div>
-                </Button>
-              </div>
+                </span>
+              </h1>
             </div>
-
-            {/* Right side - Visual element/illustration */}
-            <div className="hidden lg:flex items-center justify-center">
-              <div className="relative w-full max-w-lg">
-                {/* Main visual container */}
-                <div className="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-                  {/* Code-like interface mockup */}
-                  <div className="space-y-4">
-                    {/* Header */}
-                    <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      </div>
-                      <div className="text-white/60 text-sm">AI Assistant</div>
-                    </div>
-                    
-                    {/* Content lines */}
-                    <div className="space-y-3">
-                      <div className="h-3 bg-orange-300/60 rounded w-3/4"></div>
-                      <div className="h-3 bg-blue-300/60 rounded w-full"></div>
-                      <div className="h-3 bg-white/40 rounded w-5/6"></div>
-                      <div className="h-3 bg-orange-300/60 rounded w-2/3"></div>
-                    </div>
-                    
-                    {/* Interactive elements */}
-                    <div className="flex gap-2 pt-4">
-                      <div className="flex-1 h-8 bg-white/10 rounded-lg flex items-center px-3">
-                        <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-                      </div>
-                      <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                        <ArrowRight className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Floating elements */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-orange-400 rounded-lg opacity-80"></div>
-                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-400 rounded-full opacity-60"></div>
-                <div className="absolute top-1/2 -left-8 w-4 h-4 bg-white/40 rounded opacity-50"></div>
-              </div>
+            
+            {/* Hero description */}
+            <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-10 animate-slide-in-left font-medium px-4">
+              {getContentWithFallback('homeHero', 'description', 'hero.description')}
+            </p>
+            
+            {/* Call-to-action buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-in-right px-4">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-xl hover:shadow-2xl border-0 rounded-full font-semibold"
+                onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
+              >
+                {getContentWithFallback('homeHero', 'startJourney', 'hero.startJourney')}
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+              </Button>
+              <Button 
+                size="lg" 
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-500 transition-all duration-300 hover:scale-105 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full backdrop-blur-sm font-semibold"
+                onClick={handleOpenVideoModal}
+              >
+                {getContentWithFallback('homeHero', 'watchDemo', 'hero.watchDemo')}
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2"></div>
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
-      {/* Video modal */}
+      {/* Video modal component */}
       <VideoModal 
         isOpen={isVideoModalOpen} 
         onClose={handleCloseVideoModal}
