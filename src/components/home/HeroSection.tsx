@@ -9,6 +9,7 @@ import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
 import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+import heroBg from '@/assets/hero-bg.jpg';
 
 /**
  * Hero section component for the home page
@@ -101,7 +102,10 @@ const HeroSection = () => {
   return (
     <>
       {/* Main hero section */}
-      <section className="gradient-primary w-full min-h-screen flex items-center pt-20 relative overflow-hidden">
+      <section 
+        className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: `url(${heroBg})` }}
+      >
         {/* Background effects */}
         <div className="absolute inset-0">
           {/* Flowing curved shapes */}
