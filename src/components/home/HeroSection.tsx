@@ -102,6 +102,27 @@ const HeroSection = () => {
     <>
       {/* Main hero section */}
       <section className="gradient-primary w-full min-h-screen flex items-center pt-20 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0">
+          {/* Flowing curved shapes */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full blur-3xl animate-float-curve"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-l from-orange-400/15 to-yellow-500/15 rounded-full blur-2xl animate-slide-curve"></div>
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-xl animate-drift-curve"></div>
+          
+          {/* Particle dots */}
+          <div className="absolute top-20 left-20 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-32 right-32 w-1 h-1 bg-orange-300 rounded-full animate-ping"></div>
+          <div className="absolute bottom-40 left-40 w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-1/3 left-1/2 w-1 h-1 bg-orange-500 rounded-full animate-ping"></div>
+          <div className="absolute bottom-1/4 right-1/3 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-3/4 left-1/6 w-1 h-1 bg-red-300 rounded-full animate-ping"></div>
+          <div className="absolute top-1/6 right-1/4 w-2 h-2 bg-orange-300 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-1/2 left-3/4 w-1 h-1 bg-orange-400 rounded-full animate-ping"></div>
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
+        </div>
+        
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
         
         <div className="container mx-auto px-4 py-20 relative z-10">
