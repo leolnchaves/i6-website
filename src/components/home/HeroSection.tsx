@@ -140,7 +140,7 @@ const HeroSection = () => {
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-light mb-10 drop-shadow-lg">
               {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
             </h3>
-            <p className="text-xl md:text-2xl lg:text-3xl mb-8 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-4xl mx-auto">
               Rethink what's possible. Build smarter. Move faster.
             </p>
             
