@@ -57,9 +57,9 @@ const HorizontalSolutionCard = ({
 
   return (
     <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[120px]`}>
+      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[100px]`}>
         {/* Image Side */}
-        <div className="md:w-2/5 relative overflow-hidden min-h-[120px]">
+        <div className="md:w-2/5 relative overflow-hidden min-h-[100px]">
           <img 
             src={imageUrl}
             alt={title}
@@ -69,24 +69,24 @@ const HorizontalSolutionCard = ({
         </div>
 
         {/* Content Side */}
-        <div className="md:w-3/5 p-3 flex flex-col justify-start">
+        <div className="md:w-3/5 p-3 flex flex-col justify-center">
           <span className={`${colorScheme.text} text-xs font-medium tracking-wider uppercase mb-1`}>
             {category}
           </span>
           
-          <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">
+          <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
             {title}
           </h3>
           
-          <p className="text-gray-600 text-sm leading-relaxed mb-2">
+          <p className="text-gray-600 text-base leading-relaxed mb-2">
             {description}
           </p>
 
           {/* Features list if available */}
           {features && features.length > 0 && (
             <ul className="space-y-1">
-              {features.slice(0, 2).map((feature, idx) => (
-                <li key={idx} className="text-xs text-gray-500 flex items-start">
+              {features.slice(0, 1).map((feature, idx) => (
+                <li key={idx} className="text-sm text-gray-500 flex items-start">
                   <span className="w-1 h-1 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                   <span className="leading-relaxed">{feature}</span>
                 </li>
