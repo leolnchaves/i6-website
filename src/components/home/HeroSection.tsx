@@ -131,20 +131,20 @@ const HeroSection = () => {
         
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-5xl mx-auto text-center text-white">
-            <h2 className="text-5xl md:text-7xl font-light mb-4 drop-shadow-lg">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light mb-4 drop-shadow-lg">
               {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
             </h2>
-            <h1 className="text-7xl md:text-9xl lg:text-[12rem] font-bold mb-8 drop-shadow-lg leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold mb-8 drop-shadow-lg leading-tight">
               {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
             </h1>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-light mb-10 drop-shadow-lg">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light mb-10 drop-shadow-lg">
               {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
             </h3>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto">
               Rethink what's possible. Build smarter. Move faster.
             </p>
             
-            <p className="text-xl md:text-2xl lg:text-3xl mb-12 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-12 leading-relaxed max-w-4xl mx-auto">
               Grow beyond limits with adaptive AI.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
