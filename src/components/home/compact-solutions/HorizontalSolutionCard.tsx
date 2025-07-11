@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 
 interface HorizontalSolutionCardProps {
@@ -17,8 +16,7 @@ const HorizontalSolutionCard = ({
   icon, 
   index, 
   category,
-  features,
-  outcome 
+  features
 }: HorizontalSolutionCardProps) => {
   // Função para obter o ícone do Lucide baseado no nome do banco
   const getIcon = (iconName: string) => {
@@ -37,81 +35,74 @@ const HorizontalSolutionCard = ({
   const IconComponent = getIcon(icon);
   const isReversed = index % 2 === 1;
 
+  // Imagens placeholder para os cards
+  const placeholderImages = [
+    'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop&crop=center',
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop&crop=center',
+    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop&crop=center',
+    'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
+    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center'
+  ];
+
+  const imageUrl = placeholderImages[index % placeholderImages.length];
+
   // Define cores baseadas no índice usando as cores do sistema
   const colorSchemes = [
-    { text: 'text-primary', bg: 'from-primary/5 to-primary/10', accent: 'bg-primary/20' },
-    { text: 'text-orange-600', bg: 'from-orange-500/5 to-orange-600/10', accent: 'bg-orange-500/20' },
-    { text: 'text-blue-600', bg: 'from-blue-500/5 to-blue-600/10', accent: 'bg-blue-500/20' }
+    { text: 'text-primary', gradient: 'from-primary to-orange-500' },
+    { text: 'text-orange-600', gradient: 'from-orange-500 to-red-500' },
+    { text: 'text-blue-600', gradient: 'from-blue-500 to-purple-500' }
   ];
   
   const colorScheme = colorSchemes[index % colorSchemes.length];
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.2)] transition-all duration-500 transform hover:-translate-y-2">
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
-        {/* Image/Icon Side */}
-        <div className="md:w-2/5 relative">
-          <div className={`w-full h-64 bg-gradient-to-br ${colorScheme.bg} flex items-center justify-center relative overflow-hidden`}>
-            {/* Background Pattern */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px] opacity-30"></div>
-            
-            {/* Main Icon */}
-            <div className="relative z-10">
-              <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-2xl">
-                <IconComponent className={`w-12 h-12 ${colorScheme.text}`} />
-              </div>
-            </div>
-
-            {/* Floating decorative elements */}
-            <div className="absolute top-4 left-4 w-3 h-3 bg-white/30 rounded-full"></div>
-            <div className="absolute bottom-6 right-6 w-2 h-2 bg-white/20 rounded-full"></div>
-            <div className="absolute top-1/3 right-4 w-1 h-1 bg-white/40 rounded-full"></div>
-          </div>
+    <div className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative">
+      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} h-48`}>
+        {/* Image Side */}
+        <div className="md:w-2/5 relative overflow-hidden">
+          <img 
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
         </div>
 
         {/* Content Side */}
-        <div className="md:w-3/5 p-6 flex flex-col justify-center">
-          <span className={`${colorScheme.text} text-sm font-medium tracking-wider uppercase mb-2`}>
+        <div className="md:w-3/5 p-4 flex flex-col justify-center">
+          <span className={`${colorScheme.text} text-xs font-medium tracking-wider uppercase mb-2`}>
             {category}
           </span>
           
-          <h3 className="text-xl font-bold text-gray-900 mb-3">
+          <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">
             {title}
           </h3>
           
-          <p className="text-gray-600 text-base leading-relaxed mb-4">
+          <p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-3">
             {description}
           </p>
 
           {/* Features list if available */}
           {features && features.length > 0 && (
-            <ul className="space-y-1 mb-4">
-              {features.slice(0, 3).map((feature, idx) => (
-                <li key={idx} className="text-sm text-gray-500 flex items-start">
-                  <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+            <ul className="space-y-1">
+              {features.slice(0, 2).map((feature, idx) => (
+                <li key={idx} className="text-xs text-gray-500 flex items-start">
+                  <span className="w-1 h-1 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                   <span className="leading-relaxed">{feature}</span>
                 </li>
               ))}
             </ul>
           )}
+        </div>
+      </div>
 
-          {/* Outcome if available */}
-          {outcome && (
-            <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Resultado</p>
-              <p className="text-sm text-gray-700">{outcome}</p>
-            </div>
-          )}
-          
-          <a
-            href="/solutions"
-            className={`inline-flex items-center ${colorScheme.text} font-medium group`}
-          >
-            <span className="mr-2 group-hover:mr-4 transition-all">
-              Explore a Solução
-            </span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
-          </a>
+      {/* Innovative Bottom Bar */}
+      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left`}></div>
+      
+      {/* Hover Overlay with Call to Action */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/0 to-black/0 group-hover:from-black/5 group-hover:to-transparent transition-all duration-300 flex items-end justify-center opacity-0 group-hover:opacity-100">
+        <div className={`mb-2 px-4 py-2 bg-gradient-to-r ${colorScheme.gradient} text-white text-sm font-medium rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 cursor-pointer`}>
+          Explore Solution
         </div>
       </div>
     </div>
