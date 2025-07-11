@@ -140,12 +140,8 @@ const HeroSection = () => {
             <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light mb-10 drop-shadow-lg">
               {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
             </h3>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto">
-              Rethink what's possible. Build smarter. Move faster.
-            </p>
-            
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-12 leading-relaxed max-w-4xl mx-auto">
-              Grow beyond limits with adaptive AI.
+              {getContentWithFallback('homeHero', 'description', 'hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button 
