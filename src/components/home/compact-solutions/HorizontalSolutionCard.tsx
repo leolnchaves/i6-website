@@ -46,18 +46,18 @@ const HorizontalSolutionCard = ({
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
 
-  // Define cores baseadas no índice usando as cores do sistema
+  // Define cores baseadas no índice usando as cores do sistema - versões mais sutis
   const colorSchemes = [
-    { text: 'text-primary', gradient: 'from-primary to-orange-500' },
-    { text: 'text-orange-600', gradient: 'from-orange-500 to-red-500' },
-    { text: 'text-blue-600', gradient: 'from-blue-500 to-purple-500' }
+    { text: 'text-primary', gradient: 'from-primary/60 to-orange-400/60' },
+    { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' },
+    { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' }
   ];
   
   const colorScheme = colorSchemes[index % colorSchemes.length];
 
   return (
-    <div className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-3">
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} h-48`}>
+    <div className="group bg-white rounded-xl overflow-visible shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
+      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} h-44`}>
         {/* Image Side */}
         <div className="md:w-2/5 relative overflow-hidden">
           <img 
