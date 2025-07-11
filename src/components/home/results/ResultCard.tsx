@@ -10,22 +10,22 @@ interface ResultCardProps {
 
 const ResultCard = ({ icon, title, description, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
   return (
-    <div className="flex justify-center">
-      <div
-        className="bg-white p-12 rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:-translate-y-2 w-full max-w-lg group"
-        style={{ animationDelay: `${index * 0.1}s` }}
-      >
-        <div className="relative">
-          <div
-            className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-          >
-            {icon}
-          </div>
+    <div
+      className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col group"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className="flex-shrink-0">
+        <div
+          className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+        >
+          {icon}
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+      </div>
+      <div className="flex-grow flex flex-col">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 text-center leading-tight">
           {title}
         </h3>
-        <p className="text-gray-600 text-center text-lg leading-relaxed">
+        <p className="text-gray-600 text-center text-sm leading-relaxed flex-grow">
           {description}
         </p>
       </div>
