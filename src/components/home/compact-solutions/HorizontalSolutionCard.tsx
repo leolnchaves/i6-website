@@ -57,9 +57,9 @@ const HorizontalSolutionCard = ({
 
   return (
     <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[200px]`}>
+      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[160px]`}>
         {/* Image Side */}
-        <div className="md:w-2/5 relative overflow-hidden min-h-[200px]">
+        <div className="md:w-2/5 relative overflow-hidden min-h-[160px]">
           <img 
             src={imageUrl}
             alt={title}
@@ -69,7 +69,7 @@ const HorizontalSolutionCard = ({
         </div>
 
         {/* Content Side */}
-        <div className="md:w-3/5 p-6 flex flex-col justify-start">
+        <div className="md:w-3/5 p-4 flex flex-col justify-start">
           <span className={`${colorScheme.text} text-xs font-medium tracking-wider uppercase mb-3`}>
             {category}
           </span>
