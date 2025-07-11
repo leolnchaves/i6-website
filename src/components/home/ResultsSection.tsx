@@ -121,6 +121,13 @@ const ResultsSection = () => {
       backgroundOpacity: undefined
     },
     {
+      icon: <ShoppingCart className="text-primary text-3xl" />,
+      title: "Assortment Optimization",
+      description: "Boost sell-out and profitability with AI-driven product mix tailored to each POS profile.",
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
       icon: <Award className="text-primary text-3xl" />,
       title: "Sales Team Empowerment",
       description: "Enhance rep performance with real-time AI suggestions and gamified insights.",
@@ -163,7 +170,7 @@ const ResultsSection = () => {
         <ResultsHeader />
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 max-w-7xl mx-auto items-stretch">
-          {resultsToRender.slice(0, 14).map((result, index) => (
+          {resultsToRender.slice(0, 15).map((result, index) => (
             <ResultCard
               key={index}
               icon={result.icon}
