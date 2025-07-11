@@ -39,105 +39,98 @@ const ResultsSection = () => {
     {
       icon: <TrendingUp className="text-primary text-3xl" />,
       title: "Conversion Rate Optimization",
-      description: "Advanced AI algorithms boost conversion rates through intelligent customer behavior analysis and personalized recommendations",
+      description: "Boost conversions with advanced AI that understands behavior and delivers precise recommendations.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <DollarSign className="text-primary text-3xl" />,
       title: "CRM Cost Reduction", 
-      description: "Streamlined operations and automated processes significantly reduce operational expenses while maintaining service quality",
+      description: "Automate processes and cut operational costs without losing service quality.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Award className="text-primary text-3xl" />,
       title: "Average Ticket Enhancement",
-      description: "Substantial increase in average ticket value through AI-guided cross-selling with diversity balancing",
+      description: "Increase average ticket with smart, balanced cross-sell strategies.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Eye className="text-primary text-3xl" />,
       title: "Bounce Rate Optimization",
-      description: "Significant reduction of bounce rate in digital funnels through AI-driven user experience optimization",
+      description: "Reduce bounce rates through real-time, AI-optimized digital experiences.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Target className="text-primary text-3xl" />,
       title: "Enhanced Proposal Engagement",
-      description: "Data-driven insights and AI-powered personalization dramatically improve proposal success rates",
+      description: "Improve proposal success with AI-powered personalization and insights.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Clock className="text-primary text-3xl" />,
       title: "Real-Time Recommendations",
-      description: "Predictive behavior recommendations with equal precision for logged users (with history) and anonymous users (without history)",
+      description: "Predictive recommendations for both logged-in and anonymous users.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Search className="text-primary text-3xl" />,
       title: "Relevant Product Discovery",
-      description: "AI-powered product complementarity discovery based on navigation behavior patterns and user preferences",
+      description: "Uncover complementary products based on browsing and preferences.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <TrendingUp className="text-primary text-3xl" />,
       title: "Dynamic Pricing Intelligence",
-      description: "Self-reinforcing pricing model adjusting prices based on demand, where adjustments increase either demand or margin, feeding back into the system",
+      description: "Continuously adjust prices to boost demand or margin with smart AI.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Target className="text-primary text-3xl" />,
       title: "Market Demand Forecasting",
-      description: "AI-powered forecast precision directing production plans and commercial goals, optimizing stock breaks and turnover",
+      description: "Guide production and goals with precise, AI-driven demand forecasts.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <ShoppingCart className="text-primary text-3xl" />,
-      title: "Assortment Optimization",
-      description: "Personalized product mix recommendations tailored to each POS profile, increasing sell-out efficiency and profitability",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <TrendingUp className="text-primary text-3xl" />,
       title: "Channel Conversion Intelligence",
-      description: "Optimized product and offer targeting for each sales channel (WhatsApp, marketplace, rep), maximizing conversion rates and ROI",
+      description: "Target the right product and offer per channel to boost conversions and ROI.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Shield className="text-primary text-3xl" />,
       title: "AI-Guided Retention Offers",
-      description: "Behavioral-based offer personalization for churn recovery and financial reactivation, increasing acceptance while reducing discounts",
+      description: "Recover churned users with personalized offers that drive acceptance and reduce discounts.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Users className="text-primary text-3xl" />,
       title: "Cross-Sell Journey Prediction",
-      description: "AI engines anticipate the next best product for each consumer, increasing LTV through timing, context, and affinity",
+      description: "Predict the next best product using context, timing, and affinity to grow LTV.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Award className="text-primary text-3xl" />,
       title: "Sales Team Empowerment",
-      description: "AI suggestions and gamified metrics improve rep performance and execution with real-time actionability and visibility",
+      description: "Enhance rep performance with real-time AI suggestions and gamified insights.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Clock className="text-primary text-3xl" />,
       title: "Rapid Implementation",
-      description: "100% API-first and cloud-native AI solutions deliver measurable outcomes in weeks, not months",
+      description: "Deliver measurable results in weeks with API-first, cloud-native AI.",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     }
@@ -170,7 +163,7 @@ const ResultsSection = () => {
         <ResultsHeader />
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 max-w-7xl mx-auto items-stretch">
-          {resultsToRender.slice(0, 15).map((result, index) => (
+          {resultsToRender.slice(0, 14).map((result, index) => (
             <ResultCard
               key={index}
               icon={result.icon}
