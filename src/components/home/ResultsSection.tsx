@@ -143,17 +143,8 @@ const ResultsSection = () => {
     }
   ];
 
-  // Use CMS active cards if available, otherwise fallback to translations
-  const resultsToRender = activeCards.length > 0 ? activeCards.map(card => {
-    const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || TrendingUp;
-    return {
-      icon: <IconComponent className="text-primary text-3xl" />,
-      title: card.title,
-      description: card.description,
-      backgroundColor: card.background_color,
-      backgroundOpacity: card.background_opacity
-    };
-  }) : fallbackResults.map(result => ({
+  // Always use fallback results with 15 cards for now
+  const resultsToRender = fallbackResults.map(result => ({
     ...result,
     icon: React.cloneElement(result.icon as React.ReactElement, {
       className: "text-primary text-3xl"
