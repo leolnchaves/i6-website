@@ -110,6 +110,12 @@ const HeroSection = () => {
         .gentle-pulse-2 { animation: gentle-pulse 4s ease-in-out infinite 0.5s; }
         .gentle-pulse-3 { animation: gentle-pulse 3.5s ease-in-out infinite 1s; }
         .gentle-pulse-4 { animation: gentle-pulse 2.5s ease-in-out infinite 1.5s; }
+        .gentle-pulse-5 { animation: gentle-pulse 4.5s ease-in-out infinite 2s; }
+        .gentle-pulse-6 { animation: gentle-pulse 3.2s ease-in-out infinite 2.5s; }
+        .gentle-pulse-7 { animation: gentle-pulse 2.8s ease-in-out infinite 0.8s; }
+        .gentle-pulse-8 { animation: gentle-pulse 5s ease-in-out infinite 3s; }
+        .gentle-pulse-9 { animation: gentle-pulse 3.8s ease-in-out infinite 1.2s; }
+        .gentle-pulse-10 { animation: gentle-pulse 4.2s ease-in-out infinite 0.3s; }
       `}</style>
       {/* Main hero section */}
       <section 
@@ -123,15 +129,32 @@ const HeroSection = () => {
           <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-l from-orange-400/15 to-yellow-500/15 rounded-full blur-2xl"></div>
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-xl"></div>
           
-          {/* Strategic particle dots with subtle animations */}
-          <div className="absolute top-20 left-20 w-2 h-2 bg-orange-400 rounded-full gentle-pulse-1"></div>
-          <div className="absolute top-32 right-32 w-1 h-1 bg-orange-300 rounded-full opacity-60"></div>
-          <div className="absolute bottom-40 left-40 w-3 h-3 bg-red-400 rounded-full opacity-50"></div>
-          <div className="absolute top-1/3 left-1/2 w-1 h-1 bg-orange-500 rounded-full gentle-pulse-2"></div>
-          <div className="absolute bottom-1/4 right-1/3 w-2 h-2 bg-orange-400 rounded-full opacity-60"></div>
-          <div className="absolute top-3/4 left-1/6 w-1 h-1 bg-red-300 rounded-full gentle-pulse-3"></div>
-          <div className="absolute top-1/6 right-1/4 w-2 h-2 bg-orange-300 rounded-full opacity-50"></div>
-          <div className="absolute bottom-1/2 left-3/4 w-1 h-1 bg-orange-400 rounded-full gentle-pulse-4"></div>
+          {/* Strategic particle dots with subtle animations - avoiding text areas */}
+          {/* Top corners and edges */}
+          <div className="absolute top-16 left-16 w-2 h-2 bg-orange-400 rounded-full gentle-pulse-1"></div>
+          <div className="absolute top-24 right-24 w-1 h-1 bg-orange-300 rounded-full gentle-pulse-2"></div>
+          <div className="absolute top-12 right-40 w-1.5 h-1.5 bg-red-300 rounded-full gentle-pulse-5"></div>
+          <div className="absolute top-40 left-12 w-1 h-1 bg-orange-500 rounded-full gentle-pulse-7"></div>
+          
+          {/* Left side - avoiding center text area */}
+          <div className="absolute top-1/3 left-12 w-2 h-2 bg-red-400 rounded-full gentle-pulse-3"></div>
+          <div className="absolute top-2/3 left-20 w-1 h-1 bg-orange-400 rounded-full gentle-pulse-6"></div>
+          <div className="absolute bottom-1/3 left-16 w-1.5 h-1.5 bg-orange-300 rounded-full gentle-pulse-9"></div>
+          
+          {/* Right side - avoiding center text area */}
+          <div className="absolute top-1/4 right-16 w-1 h-1 bg-orange-500 rounded-full gentle-pulse-4"></div>
+          <div className="absolute top-1/2 right-12 w-2 h-2 bg-red-300 rounded-full gentle-pulse-8"></div>
+          <div className="absolute bottom-1/4 right-20 w-1.5 h-1.5 bg-orange-400 rounded-full gentle-pulse-10"></div>
+          
+          {/* Bottom area - below buttons */}
+          <div className="absolute bottom-32 left-1/4 w-1 h-1 bg-orange-300 rounded-full gentle-pulse-1"></div>
+          <div className="absolute bottom-40 right-1/3 w-2 h-2 bg-red-400 rounded-full gentle-pulse-3"></div>
+          <div className="absolute bottom-24 left-1/3 w-1.5 h-1.5 bg-orange-500 rounded-full gentle-pulse-7"></div>
+          <div className="absolute bottom-36 right-1/4 w-1 h-1 bg-orange-400 rounded-full gentle-pulse-5"></div>
+          
+          {/* Additional scattered points */}
+          <div className="absolute top-1/6 left-1/3 w-1 h-1 bg-red-300 rounded-full gentle-pulse-2"></div>
+          <div className="absolute top-5/6 right-1/6 w-1.5 h-1.5 bg-orange-300 rounded-full gentle-pulse-8"></div>
           
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
