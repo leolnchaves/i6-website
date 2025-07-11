@@ -9,7 +9,7 @@ import ViewAllSolutionsButton from './compact-solutions/ViewAllSolutionsButton';
 
 const CompactSolutionsSection = () => {
   const { language } = useLanguage();
-  const { pageId } = useCMSPage('home');
+  const { pageId } = useCMSPage('solutions');
   const { cards, loading } = useCMSSolutionsCards(pageId || '', language);
   const { getContent } = useCMSPageContent('home', language);
 
