@@ -56,7 +56,7 @@ const HorizontalSolutionCard = ({
   const colorScheme = colorSchemes[index % colorSchemes.length];
 
   return (
-    <div className="group bg-white rounded-xl overflow-visible shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
+    <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
       <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} h-44`}>
         {/* Image Side */}
         <div className="md:w-2/5 relative overflow-hidden">
@@ -97,7 +97,7 @@ const HorizontalSolutionCard = ({
       </div>
 
       {/* Innovative Bottom Bar with Text - Aligned with card bottom */}
-      <div className={`absolute top-full left-0 right-0 h-8 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer rounded-b-xl`}>
+      <div className={`absolute top-full left-0 right-0 h-8 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer`}>
         <a 
           href="/solutions"
           className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2 drop-shadow-md"
