@@ -96,15 +96,15 @@ const HorizontalSolutionCard = ({
         </div>
       </div>
 
-      {/* Innovative Bottom Bar with Text - Positioned outside content area */}
-      <div className={`absolute -bottom-3 left-0 right-0 h-12 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer rounded-b-xl`}>
+      {/* Innovative Bottom Bar with Text - Aligned with card bottom */}
+      <div className={`absolute top-full left-0 right-0 h-8 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer rounded-b-xl`}>
         <a 
           href="/solutions"
-          className="text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2"
+          className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2 drop-shadow-md"
         >
           <span>Explore Solution</span>
-          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </a>
       </div>
