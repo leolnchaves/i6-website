@@ -13,20 +13,22 @@ interface ResultCardProps {
 const ResultCard = ({ icon, title, description, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
   return (
     <div
-      className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 aspect-square flex flex-col items-center justify-center text-center group border border-gray-100"
+      className="bg-white p-12 rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:-translate-y-2 aspect-square flex flex-col items-center justify-center text-center group"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      <div className="w-16 h-16 mb-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-        {React.cloneElement(icon as React.ReactElement, {
-          className: "text-orange-500 w-8 h-8"
-        })}
+      <div className="relative">
+        <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          {React.cloneElement(icon as React.ReactElement, {
+            className: "text-primary text-3xl"
+          })}
+        </div>
       </div>
       
-      <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">
+      <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
         {title}
       </h3>
       
-      <p className="text-gray-600 text-sm leading-relaxed">
+      <p className="text-gray-600 text-center text-lg leading-relaxed">
         {description}
       </p>
     </div>
