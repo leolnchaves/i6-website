@@ -39,7 +39,7 @@ const ResultsSection = () => {
     {
       icon: <TrendingUp className="text-primary text-3xl" />,
       title: "Growth Acceleration",
-      description: "Accelerate performance with AI that boosts conversions, ticket size, and ROI across channels.",
+      description: "Accelerate performance with AI that boosts conversions, ticket size and ROI across channels.",
       solutions: [
         "Increase conversions by matching the right offer to the right customer",
         "Grow ticket size with smart, contextual cross-sell",
@@ -66,7 +66,7 @@ const ResultsSection = () => {
     {
       icon: <DollarSign className="text-primary text-3xl" />,
       title: "Supply & Profitability Optimization",
-      description: "Align pricing, demand, and assortment to improve margin, turnover, and sell-out.",
+      description: "Align pricing, demand, and assortment to improve margin, turnover and sell-out.",
       solutions: [
         "Increase margin or demand with dynamic pricing",
         "Forecast demand to avoid stockouts and excess",
@@ -106,7 +106,7 @@ const ResultsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ResultsHeader />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
           {resultsToRender.map((result, index) => (
             <ResultCard
               key={index}
