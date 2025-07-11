@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -111,13 +112,18 @@ const ResultsSection = () => {
   const resultsToRender = activeCards.length > 0 ? activeCards.map(card => {
     const IconComponent = iconMap[card.icon_name as keyof typeof iconMap] || TrendingUp;
     return {
-      icon: <IconComponent className={`w-8 h-8`} style={{ color: card.icon_color }} />,
+      icon: <IconComponent className="text-primary text-3xl" />,
       title: card.title,
       description: card.description,
       backgroundColor: card.background_color,
       backgroundOpacity: card.background_opacity
     };
-  }) : fallbackResults;
+  }) : fallbackResults.map(result => ({
+    ...result,
+    icon: React.cloneElement(result.icon as React.ReactElement, {
+      className: "text-primary text-3xl"
+    })
+  }));
 
   console.log('ResultsSection - Final results to render:', resultsToRender.length);
 
@@ -128,7 +134,7 @@ const ResultsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ResultsHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {resultsToRender.map((result, index) => (
             <ResultCard
               key={index}

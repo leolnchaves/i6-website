@@ -1,6 +1,4 @@
 
-import { Card, CardContent } from '@/components/ui/card';
-
 interface ResultCardProps {
   icon: React.ReactNode;
   title: string;
@@ -11,38 +9,27 @@ interface ResultCardProps {
 }
 
 const ResultCard = ({ icon, title, description, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
-  // Apply opacity only to background color, not to the entire card
-  const backgroundStyle = backgroundColor ? {
-    backgroundColor: backgroundColor,
-    opacity: backgroundOpacity || 1.0,
-  } : {};
-
   return (
-    <Card 
-      className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover-lift scroll-reveal glass relative overflow-hidden" 
-      style={{ animationDelay: `${index * 0.1}s` }}
-    >
-      {/* Background layer with opacity - positioned absolutely behind content */}
-      {backgroundColor && (
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={backgroundStyle}
-        />
-      )}
-      
-      {/* Content layer - always full opacity */}
-      <CardContent className="p-6 text-center relative z-10">
-        <div className="mb-4 flex justify-center animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
-          {icon}
+    <div className="flex justify-center">
+      <div
+        className="bg-white p-12 rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:-translate-y-2 w-full max-w-lg group"
+        style={{ animationDelay: `${index * 0.1}s` }}
+      >
+        <div className="relative">
+          <div
+            className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+          >
+            {icon}
+          </div>
         </div>
-        <h3 className="text-lg font-semibold mb-3 text-gray-900">
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
           {title}
         </h3>
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-center text-lg leading-relaxed">
           {description}
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
