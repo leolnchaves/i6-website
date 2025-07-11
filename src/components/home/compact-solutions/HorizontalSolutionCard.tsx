@@ -96,14 +96,17 @@ const HorizontalSolutionCard = ({
         </div>
       </div>
 
-      {/* Innovative Bottom Bar */}
-      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left`}></div>
-      
-      {/* Hover Overlay with Call to Action */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/0 to-black/0 group-hover:from-black/5 group-hover:to-transparent transition-all duration-300 flex items-end justify-center opacity-0 group-hover:opacity-100">
-        <div className={`mb-2 px-4 py-2 bg-gradient-to-r ${colorScheme.gradient} text-white text-sm font-medium rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 cursor-pointer`}>
-          Explore Solution
-        </div>
+      {/* Innovative Bottom Bar with Text */}
+      <div className={`absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer`}>
+        <a 
+          href="/solutions"
+          className="text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2"
+        >
+          <span>Explore Solution</span>
+          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
       </div>
     </div>
   );
