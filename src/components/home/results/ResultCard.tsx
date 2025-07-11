@@ -5,33 +5,46 @@ interface ResultCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
+  solutions: string[];
   index: number;
   backgroundColor?: string;
   backgroundOpacity?: number;
 }
 
-const ResultCard = ({ icon, title, description, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
+const ResultCard = ({ icon, title, description, solutions, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
   return (
     <div
-      className="bg-white p-3 rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:-translate-y-2 h-full min-h-[200px] flex flex-col items-center justify-between text-center group"
+      className="bg-white p-4 rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:-translate-y-2 h-full min-h-[280px] flex flex-col text-left group"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      <div className="flex-shrink-0">
-        <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+      <div className="flex-shrink-0 mb-4">
+        <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
           {React.cloneElement(icon as React.ReactElement, {
             className: "text-primary text-lg"
           })}
         </div>
       </div>
       
-      <div className="flex-grow flex flex-col justify-center">
-        <h3 className="text-xs font-bold text-gray-900 mb-2 text-center leading-tight px-1 line-clamp-2">
+      <div className="flex-grow">
+        <h3 className="text-sm font-bold text-gray-900 mb-3 leading-tight">
           {title}
         </h3>
         
-        <p className="text-gray-600 text-center text-[10px] leading-tight px-1 line-clamp-4">
+        <p className="text-gray-600 text-xs leading-relaxed mb-4">
           {description}
         </p>
+
+        <div className="space-y-2">
+          <h4 className="text-xs font-semibold text-gray-800 mb-2">Solutions:</h4>
+          <ul className="space-y-1">
+            {solutions.map((solution, idx) => (
+              <li key={idx} className="text-[10px] text-gray-600 flex items-start">
+                <span className="w-1 h-1 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                <span className="leading-relaxed">{solution}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

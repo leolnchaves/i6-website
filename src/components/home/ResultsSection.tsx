@@ -38,112 +38,58 @@ const ResultsSection = () => {
   const fallbackResults = [
     {
       icon: <TrendingUp className="text-primary text-3xl" />,
-      title: "Conversion Rate Optimization",
-      description: "Boost conversions with advanced AI that understands behavior and delivers precise recommendations.",
+      title: "Growth Acceleration",
+      description: "Accelerate commercial performance with AI that predicts behavior, drives conversions, and increases ticket size.",
+      solutions: [
+        "Conversion Rate Optimization",
+        "Average Ticket Enhancement", 
+        "Channel Conversion Intelligence",
+        "Cross-Sell Journey Prediction",
+        "Enhanced Proposal Engagement"
+      ],
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Target className="text-primary text-3xl" />,
+      title: "Hyperpersonalization Intelligence",
+      description: "Deliver relevant, contextual, and real-time experiences that engage deeply and convert better, at every touchpoint.",
+      solutions: [
+        "Real-Time Recommendations",
+        "Relevant Product Discovery",
+        "Bounce Rate Optimization", 
+        "AI-Guided Retention Offers"
+      ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <DollarSign className="text-primary text-3xl" />,
-      title: "CRM Cost Reduction", 
-      description: "Automate processes and cut operational costs without losing service quality.",
+      title: "Supply & Profitability Optimization",
+      description: "Balance pricing, demand and assortment to reduce stockouts, improve turnover, and grow margins with precision.",
+      solutions: [
+        "Dynamic Pricing Intelligence",
+        "Market Demand Forecasting",
+        "Assortment Optimization"
+      ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
       icon: <Award className="text-primary text-3xl" />,
-      title: "Average Ticket Enhancement",
-      description: "Increase average ticket with smart, balanced cross-sell strategies.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Eye className="text-primary text-3xl" />,
-      title: "Bounce Rate Optimization",
-      description: "Reduce bounce rates through real-time, AI-optimized digital experiences.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Target className="text-primary text-3xl" />,
-      title: "Enhanced Proposal Engagement",
-      description: "Improve proposal success with AI-powered personalization and insights.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Clock className="text-primary text-3xl" />,
-      title: "Real-Time Recommendations",
-      description: "Predictive recommendations for both logged-in and anonymous users.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Search className="text-primary text-3xl" />,
-      title: "Relevant Product Discovery",
-      description: "Uncover complementary products based on browsing and preferences.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <TrendingUp className="text-primary text-3xl" />,
-      title: "Dynamic Pricing Intelligence",
-      description: "Continuously adjust prices to boost demand or margin with smart AI.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Target className="text-primary text-3xl" />,
-      title: "Market Demand Forecasting",
-      description: "Guide production and goals with precise, AI-driven demand forecasts.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <ShoppingCart className="text-primary text-3xl" />,
-      title: "Channel Conversion Intelligence",
-      description: "Target the right product and offer per channel to boost conversions and ROI.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Shield className="text-primary text-3xl" />,
-      title: "AI-Guided Retention Offers",
-      description: "Recover churned users with personalized offers that drive acceptance and reduce discounts.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Users className="text-primary text-3xl" />,
-      title: "Cross-Sell Journey Prediction",
-      description: "Predict the next best product using context, timing, and affinity to grow LTV.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <ShoppingCart className="text-primary text-3xl" />,
-      title: "Assortment Optimization",
-      description: "Boost sell-out and profitability with AI-driven product mix tailored to each POS profile.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Award className="text-primary text-3xl" />,
-      title: "Sales Team Empowerment",
-      description: "Enhance rep performance with real-time AI suggestions and gamified insights.",
-      backgroundColor: undefined,
-      backgroundOpacity: undefined
-    },
-    {
-      icon: <Clock className="text-primary text-3xl" />,
-      title: "Rapid Implementation",
-      description: "Deliver measurable results in weeks with API-first, cloud-native AI.",
+      title: "Cost & Commercial Efficiency",
+      description: "Reduce costs, streamline operations, and empower sales teams with AI built for fast, scalable execution.",
+      solutions: [
+        "CRM Cost Reduction",
+        "Sales Team Empowerment",
+        "Rapid Implementation"
+      ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
     }
   ];
 
-  // Always use fallback results with 15 cards for now
+  // Always use fallback results with 4 category cards for now
   const resultsToRender = fallbackResults.map(result => ({
     ...result,
     icon: React.cloneElement(result.icon as React.ReactElement, {
@@ -160,13 +106,14 @@ const ResultsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ResultsHeader />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto items-stretch">
-          {resultsToRender.slice(0, 15).map((result, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
+          {resultsToRender.map((result, index) => (
             <ResultCard
               key={index}
               icon={result.icon}
               title={result.title}
               description={result.description}
+              solutions={result.solutions}
               index={index}
               backgroundColor={result.backgroundColor}
               backgroundOpacity={result.backgroundOpacity}
