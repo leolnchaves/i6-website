@@ -37,7 +37,7 @@ const HorizontalSolutionCard = ({
 
   // Imagens placeholder para os cards
   const placeholderImages = [
-    'https://videocdn.cdnpk.net/videos/9590b378-a214-58ce-b224-a6bfd541c3aa/horizontal/previews/clear/large.mp4?token=exp=1752277741~hmac=90e9b67b6a33d1ad20f15f6b45e01c70f823c65fda768e4f782a6337c814a9e4?w=400&h=200&fit=crop&crop=center',
+    'https://media.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif',
     'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
