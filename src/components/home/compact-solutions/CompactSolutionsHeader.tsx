@@ -9,8 +9,9 @@ const CompactSolutionsHeader = () => {
   console.log('CompactSolutionsHeader - Getting CMS content for home page, language:', language);
 
   // Tentar buscar do CMS primeiro, senão usar as traduções como fallback
-  const title = getContent('compactSolutionsHero', 'title') || 'Soluções';
-  const subtitle = getContent('compactSolutionsHero', 'subtitle') || 'Inteligentes';
+  const title = getContent('compactSolutionsHero', 'title') || 'AI Solutions That';
+  const subtitle = getContent('compactSolutionsHero', 'subtitle') || 'Drive Concrete Results';
+  const description = getContent('compactSolutionsHero', 'description') || 'Unlock real business value with AI solutions designed to deliver measurable outcomes. From customer intelligence to operational efficiency, our adaptive technology transforms how you compete and grow.';
 
   console.log('CompactSolutionsHeader - CMS content:', {
     title: getContent('compactSolutionsHero', 'title'),
@@ -19,12 +20,16 @@ const CompactSolutionsHeader = () => {
 
   return (
     <div className="text-center mb-16 scroll-reveal">
-      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
+      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
         <span className="block mb-2">{title}</span>
         <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent pb-2">
           {subtitle}
         </span>
       </h2>
+      
+      <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
+        {description}
+      </p>
     </div>
   );
 };
