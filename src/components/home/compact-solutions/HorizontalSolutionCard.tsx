@@ -84,8 +84,8 @@ const HorizontalSolutionCard = ({
 
           {/* Features list if available */}
           {features && features.length > 0 && (
-            <ul className="space-y-2">
-              {features.slice(0, 2).map((feature, idx) => (
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {features.slice(0, 4).map((feature, idx) => (
                 <li key={idx} className="text-xs text-gray-500 flex items-start">
                   <span className="w-1 h-1 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                   <span className="leading-relaxed">{feature}</span>
