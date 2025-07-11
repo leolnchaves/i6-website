@@ -37,7 +37,7 @@ const HorizontalSolutionCard = ({
 
   // Imagens placeholder para os cards
   const placeholderImages = [
-    'https://media.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif',
+    'https://i.pinimg.com/originals/95/83/b2/9583b279267d88e97aec880b38176f85.gif',
     'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
