@@ -37,72 +37,107 @@ const ResultsSection = () => {
   // Fallback data for when CMS data is not available
   const fallbackResults = [
     {
-      icon: <TrendingUp className="w-8 h-8 text-orange-500" />,
-      title: t('results.conversionRate.title'),
-      description: t('results.conversionRate.description'),
+      icon: <TrendingUp className="text-primary text-3xl" />,
+      title: "Conversion Rate Optimization",
+      description: "Advanced AI algorithms boost conversion rates through intelligent customer behavior analysis and personalized recommendations",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Shield className="w-8 h-8 text-blue-500" />,
-      title: t('results.crmCost.title'), 
-      description: t('results.crmCost.description'),
+      icon: <DollarSign className="text-primary text-3xl" />,
+      title: "CRM Cost Reduction", 
+      description: "Streamlined operations and automated processes significantly reduce operational expenses while maintaining service quality",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <ShoppingCart className="w-8 h-8 text-indigo-500" />,
-      title: t('results.avgTicket.title'),
-      description: t('results.avgTicket.description'),
+      icon: <Award className="text-primary text-3xl" />,
+      title: "Average Ticket Enhancement",
+      description: "Substantial increase in average ticket value through AI-guided cross-selling with diversity balancing",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Eye className="w-8 h-8 text-red-500" />,
-      title: t('results.bounceRate.title'),
-      description: t('results.bounceRate.description'),
+      icon: <Eye className="text-primary text-3xl" />,
+      title: "Bounce Rate Optimization",
+      description: "Significant reduction of bounce rate in digital funnels through AI-driven user experience optimization",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Award className="w-8 h-8 text-orange-600" />,
-      title: t('results.proposalEngagement.title'),
-      description: t('results.proposalEngagement.description'),
+      icon: <Target className="text-primary text-3xl" />,
+      title: "Enhanced Proposal Engagement",
+      description: "Data-driven insights and AI-powered personalization dramatically improve proposal success rates",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Users className="w-8 h-8 text-pink-500" />,
-      title: t('results.realTimeRec.title'),
-      description: t('results.realTimeRec.description'),
+      icon: <Clock className="text-primary text-3xl" />,
+      title: "Real-Time Recommendations",
+      description: "Predictive behavior recommendations with equal precision for logged users (with history) and anonymous users (without history)",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Search className="w-8 h-8 text-teal-500" />,
-      title: t('results.productDiscovery.title'),
-      description: t('results.productDiscovery.description'),
+      icon: <Search className="text-primary text-3xl" />,
+      title: "Relevant Product Discovery",
+      description: "AI-powered product complementarity discovery based on navigation behavior patterns and user preferences",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <DollarSign className="w-8 h-8 text-green-500" />,
-      title: t('results.dynamicPricing.title'),
-      description: t('results.dynamicPricing.description'),
+      icon: <TrendingUp className="text-primary text-3xl" />,
+      title: "Dynamic Pricing Intelligence",
+      description: "Self-reinforcing pricing model adjusting prices based on demand, where adjustments increase either demand or margin, feeding back into the system",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Target className="w-8 h-8 text-purple-500" />,
-      title: t('results.marketDemand.title'),
-      description: t('results.marketDemand.description'),
+      icon: <Target className="text-primary text-3xl" />,
+      title: "Market Demand Forecasting",
+      description: "AI-powered forecast precision directing production plans and commercial goals, optimizing stock breaks and turnover",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     },
     {
-      icon: <Clock className="w-8 h-8 text-blue-600" />,
-      title: t('results.rapidImplementation.title'),
-      description: t('results.rapidImplementation.description'),
+      icon: <ShoppingCart className="text-primary text-3xl" />,
+      title: "Assortment Optimization",
+      description: "Personalized product mix recommendations tailored to each POS profile, increasing sell-out efficiency and profitability",
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <TrendingUp className="text-primary text-3xl" />,
+      title: "Channel Conversion Intelligence",
+      description: "Optimized product and offer targeting for each sales channel (WhatsApp, marketplace, rep), maximizing conversion rates and ROI",
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Shield className="text-primary text-3xl" />,
+      title: "AI-Guided Retention Offers",
+      description: "Behavioral-based offer personalization for churn recovery and financial reactivation, increasing acceptance while reducing discounts",
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Users className="text-primary text-3xl" />,
+      title: "Cross-Sell Journey Prediction",
+      description: "AI engines anticipate the next best product for each consumer, increasing LTV through timing, context, and affinity",
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Award className="text-primary text-3xl" />,
+      title: "Sales Team Empowerment",
+      description: "AI suggestions and gamified metrics improve rep performance and execution with real-time actionability and visibility",
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Clock className="text-primary text-3xl" />,
+      title: "Rapid Implementation",
+      description: "100% API-first and cloud-native AI solutions deliver measurable outcomes in weeks, not months",
       backgroundColor: undefined,
       backgroundOpacity: undefined
     }
@@ -134,7 +169,7 @@ const ResultsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ResultsHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {resultsToRender.map((result, index) => (
             <ResultCard
               key={index}
