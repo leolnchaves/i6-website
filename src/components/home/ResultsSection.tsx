@@ -39,13 +39,13 @@ const ResultsSection = () => {
     {
       icon: <TrendingUp className="text-primary text-3xl" />,
       title: "Growth Acceleration",
-      description: "Accelerate commercial performance with AI that predicts behavior, drives conversions, and increases ticket size.",
+      description: "Accelerate performance with AI that boosts conversions, ticket size, and ROI across channels.",
       solutions: [
-        "Conversion Rate Optimization",
-        "Average Ticket Enhancement", 
-        "Channel Conversion Intelligence",
-        "Cross-Sell Journey Prediction",
-        "Enhanced Proposal Engagement"
+        "Increase conversions by matching the right offer to the right customer",
+        "Grow ticket size with smart, contextual cross-sell",
+        "Maximize ROI by adapting to each sales channel",
+        "Boost LTV by anticipating next-best purchases",
+        "Improve proposal win rates with personalized timing and content"
       ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
@@ -53,12 +53,12 @@ const ResultsSection = () => {
     {
       icon: <Target className="text-primary text-3xl" />,
       title: "Hyperpersonalization Intelligence",
-      description: "Deliver relevant, contextual, and real-time experiences that engage deeply and convert better, at every touchpoint.",
+      description: "Engage users with real-time, contextual experiences that convert better.",
       solutions: [
-        "Real-Time Recommendations",
-        "Relevant Product Discovery",
-        "Bounce Rate Optimization", 
-        "AI-Guided Retention Offers"
+        "Reduce bounce rate with behavior-based journeys",
+        "Help users find relevant products faster",
+        "Personalize offers even for anonymous visitors",
+        "Recover churned users with smart, timely offers"
       ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
@@ -66,11 +66,11 @@ const ResultsSection = () => {
     {
       icon: <DollarSign className="text-primary text-3xl" />,
       title: "Supply & Profitability Optimization",
-      description: "Balance pricing, demand and assortment to reduce stockouts, improve turnover, and grow margins with precision.",
+      description: "Align pricing, demand, and assortment to improve margin, turnover, and sell-out.",
       solutions: [
-        "Dynamic Pricing Intelligence",
-        "Market Demand Forecasting",
-        "Assortment Optimization"
+        "Increase margin or demand with dynamic pricing",
+        "Forecast demand to avoid stockouts and excess",
+        "Boost sell-out with smart, localized assortment"
       ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
@@ -78,11 +78,11 @@ const ResultsSection = () => {
     {
       icon: <Award className="text-primary text-3xl" />,
       title: "Cost & Commercial Efficiency",
-      description: "Reduce costs, streamline operations, and empower sales teams with AI built for fast, scalable execution.",
+      description: "Cut costs and scale smarter with fast, AI-powered execution.",
       solutions: [
-        "CRM Cost Reduction",
-        "Sales Team Empowerment",
-        "Rapid Implementation"
+        "Reduce CRM and operational expenses with automation",
+        "Improve sales team performance with AI and gamification",
+        "Launch and scale in weeks with plug-and-play AI"
       ],
       backgroundColor: undefined,
       backgroundOpacity: undefined
