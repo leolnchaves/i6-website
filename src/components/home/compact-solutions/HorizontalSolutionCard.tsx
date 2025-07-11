@@ -37,7 +37,7 @@ const HorizontalSolutionCard = ({
 
   // Imagens placeholder para os cards
   const placeholderImages = [
-    'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop&crop=center',
+    'https://br.freepik.com/video-gratuito/mulher-2d-fazendo-compras-on-line-canal-alfa-transparente_3384173#fromView=search&page=1&position=3&uuid=22d5cb2a-123a-45d2-9951-43e2c3315851?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
