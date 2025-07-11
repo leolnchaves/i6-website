@@ -130,17 +130,17 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
         
         <div className="container mx-auto px-4 py-20 relative z-10">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h2 className="text-4xl md:text-5xl font-light mb-2 drop-shadow-lg">
+          <div className="max-w-5xl mx-auto text-center text-white">
+            <h2 className="text-5xl md:text-7xl font-light mb-4 drop-shadow-lg">
               {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
             </h2>
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 drop-shadow-lg">
+            <h1 className="text-7xl md:text-9xl lg:text-[12rem] font-bold mb-8 drop-shadow-lg leading-tight">
               {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
             </h1>
-            <h3 className="text-2xl md:text-3xl font-light mb-8 drop-shadow-lg">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-light mb-10 drop-shadow-lg">
               {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
             </h3>
-            <p className="text-lg md:text-xl mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl lg:text-3xl mb-12 leading-relaxed max-w-4xl mx-auto">
               {getContentWithFallback('homeHero', 'description', 'hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
