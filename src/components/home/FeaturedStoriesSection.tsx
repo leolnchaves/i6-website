@@ -1,7 +1,6 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
-import { useCMSContent } from '@/hooks/useCMSContent';
+import { successStoriesCardsData } from '@/data/staticData/successStoriesCards';
 import { useState, useEffect, useRef } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
 import ViewAllButton from './featured-stories/ViewAllButton';
@@ -10,31 +9,13 @@ import { TrendingUp, BarChart3, Users, Target, ChevronLeft, ChevronRight } from 
 
 const FeaturedStoriesSection = () => {
   const { language } = useLanguage();
-  const { pages, fetchPages } = useCMSContent();
-  const { cards, loading, fetchCards } = useCMSSuccessStoriesCards();
-  const [pageId, setPageId] = useState<string>('');
   const [currentSlide, setCurrentSlide] = useState(0);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    console.log('FeaturedStoriesSection - Fetching pages...');
-    fetchPages();
-  }, [fetchPages]);
-
-  useEffect(() => {
-    console.log('FeaturedStoriesSection - Pages changed:', pages);
-    if (pages.length > 0) {
-      const homePage = pages.find(p => p.slug === 'home');
-      console.log('FeaturedStoriesSection - Home page found:', homePage);
-      if (homePage) {
-        setPageId(homePage.id);
-        console.log('FeaturedStoriesSection - Fetching cards for page:', homePage.id, 'language:', language);
-        fetchCards(homePage.id, language);
-      }
-    }
-  }, [pages, language, fetchCards]);
-
-  // Filter cards to show only active home cards - usando todos os cards se não houver cards específicos para home
+  // Get static data based on current language
+  const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
+  
+  // Filter cards to show only active home cards
   const homeCards = cards.filter(card => card.is_active_home);
   const fallbackCards = homeCards.length === 0 ? cards.slice(0, 3) : homeCards;
 
@@ -85,38 +66,6 @@ const FeaturedStoriesSection = () => {
   console.log('FeaturedStoriesSection - All cards:', cards);
   console.log('FeaturedStoriesSection - Cards with is_active_home=true:', homeCards);
   console.log('FeaturedStoriesSection - Final cards to display:', fallbackCards);
-  console.log('FeaturedStoriesSection - Loading state:', loading);
-
-  if (loading) {
-    console.log('FeaturedStoriesSection - Showing loading state');
-    return (
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-orange-100/50 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <FeaturedStoriesHeader />
-
-          <div className="max-w-6xl mx-auto mb-12">
-            <div className="flex gap-4 overflow-hidden">
-              {[...Array(3)].map((_, index) => (
-                <div key={index} className="min-w-[280px] md:min-w-[320px] h-[500px] bg-gray-50 rounded-2xl shadow-lg animate-pulse overflow-hidden">
-                  <div className="p-6 pb-4">
-                    <div className="h-6 bg-gray-200 rounded-full w-20 mb-4"></div>
-                    <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                  </div>
-                  <div className="mx-6 mb-6 h-64 bg-gray-200 rounded-2xl"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   console.log('FeaturedStoriesSection - Rendering main content, fallbackCards length:', fallbackCards.length);
 

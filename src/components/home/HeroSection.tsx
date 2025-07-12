@@ -8,22 +8,18 @@ import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import heroBg from '@/assets/hero-bg.jpg';
 
 /**
  * Hero section component for the home page
  * Features dynamic background, call-to-action buttons, and video modal
- * Includes error handling and CMS content management support
+ * Includes error handling and static content
  */
 const HeroSection = () => {
   // Hooks for functionality
   const { scrollY } = useScrollAnimation();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { handleError } = useErrorHandler('HeroSection');
-  
-  // CMS content hook
-  const { getContent, loading: cmsLoading } = useCMSPageContent('home', language);
   
   // Component state
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -48,56 +44,10 @@ const HeroSection = () => {
     }
   };
 
-  // Get content with fallback to translations
-  const getContentWithFallback = (section: string, field: string, translationKey: string) => {
-    const cmsContent = getContent(section, field);
-    console.log('HeroSection - CMS content for', section, field, ':', cmsContent);
-    return cmsContent || t(translationKey);
-  };
-
-  // Get demo URL from CMS with fallback and convert to embed format
+  // Static demo URL (from CMS data)
   const getDemoUrl = () => {
-    const cmsUrl = getContent('homeHero', 'demoLink');
-    const fallbackUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&showinfo=0&rel=0';
-    
-    if (!cmsUrl) return fallbackUrl;
-    
-    // Convert YouTube watch URLs to embed format
-    const youtubeWatchRegex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/;
-    const youtubeShareRegex = /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]+)/;
-    
-    let videoId = null;
-    
-    // Check for watch URL format
-    const watchMatch = cmsUrl.match(youtubeWatchRegex);
-    if (watchMatch) {
-      videoId = watchMatch[1];
-    } else {
-      // Check for share URL format
-      const shareMatch = cmsUrl.match(youtubeShareRegex);
-      if (shareMatch) {
-        videoId = shareMatch[1];
-      }
-    }
-    
-    if (videoId) {
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&showinfo=0&rel=0`;
-    }
-    
-    // If it's already an embed URL or unknown format, return as is
-    return cmsUrl.includes('/embed/') ? cmsUrl : fallbackUrl;
+    return 'https://www.youtube.com/embed/knNYT11sEk0?autoplay=1&controls=1&showinfo=0&rel=0';
   };
-
-  console.log('HeroSection - CMS Loading:', cmsLoading);
-  console.log('HeroSection - All CMS content:', {
-    title: getContent('homeHero', 'title'),
-    subtitle: getContent('homeHero', 'subtitle'),
-    poweredByAI: getContent('homeHero', 'poweredByAI'),
-    description: getContent('homeHero', 'description'),
-    startJourney: getContent('homeHero', 'startJourney'),
-    watchDemo: getContent('homeHero', 'watchDemo'),
-    demoLink: getContent('homeHero', 'demoLink')
-  });
 
   return (
     <>
@@ -165,13 +115,13 @@ const HeroSection = () => {
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-5xl mx-auto text-center text-white">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light mb-4 drop-shadow-lg">
-              {getContentWithFallback('homeHero', 'title', 'hero.infinite')}
+              {t('hero.infinite')}
             </h2>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold mb-8 drop-shadow-lg leading-tight">
-              {getContentWithFallback('homeHero', 'subtitle', 'hero.possibilities')}
+              {t('hero.possibilities')}
             </h1>
             <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light mb-10 drop-shadow-lg">
-              {getContentWithFallback('homeHero', 'poweredByAI', 'hero.poweredByAI')}
+              {t('hero.poweredByAI')}
             </h3>
             <div className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto mb-12">
               <p className="mb-0">Rethink what's possible. Build smarter. Move faster.</p>
@@ -183,7 +133,7 @@ const HeroSection = () => {
                 className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap"
                 onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
               >
-                {getContentWithFallback('homeHero', 'startJourney', 'hero.startJourney')}
+                {t('hero.startJourney')}
                 <ArrowRight className="w-5 h-5" />
               </Button>
               <Button 
@@ -191,7 +141,7 @@ const HeroSection = () => {
                 className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-lg font-medium hover:bg-white/30 transition-all w-full sm:w-auto whitespace-nowrap"
                 onClick={handleOpenVideoModal}
               >
-                {getContentWithFallback('homeHero', 'watchDemo', 'hero.watchDemo')}
+                {t('hero.watchDemo')}
               </Button>
             </div>
           </div>
