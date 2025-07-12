@@ -144,24 +144,25 @@ const AnimatedProcessFlow = () => {
                     >
                       {/* Step Circle with Progress */}
                       <div className="relative">
-                        {/* Progress Ring for Active Step */}
+                        {/* Progress Ring Background - Always visible */}
                         <svg className="absolute inset-0 w-12 h-12 -rotate-90">
                           <circle
                             cx="24"
                             cy="24"
                             r="18"
                             stroke="currentColor"
-                            strokeWidth="4"
+                            strokeWidth="3"
                             fill="none"
                             className="text-gray-200"
                           />
-                          {status === 'active' && (
+                          {/* Progress Ring for Active Step */}
+                          {status === 'active' && isPlaying && (
                             <circle
                               cx="24"
                               cy="24"
                               r="18"
                               stroke="currentColor"
-                              strokeWidth="4"
+                              strokeWidth="3"
                               fill="none"
                               strokeLinecap="round"
                               className="text-green-500 transition-all duration-300"
@@ -171,13 +172,14 @@ const AnimatedProcessFlow = () => {
                               }}
                             />
                           )}
+                          {/* Full Progress Ring for Completed Steps */}
                           {status === 'completed' && (
                             <circle
                               cx="24"
                               cy="24"
                               r="18"
                               stroke="currentColor"
-                              strokeWidth="4"
+                              strokeWidth="3"
                               fill="none"
                               className="text-green-500"
                               style={{
