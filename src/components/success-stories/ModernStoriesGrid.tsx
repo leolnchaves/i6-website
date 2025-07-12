@@ -128,63 +128,66 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
             {filteredCards.map((story) => (
               <Card 
                 key={story.id} 
-                className="group overflow-hidden cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white"
+                className="group overflow-hidden cursor-pointer border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 bg-white"
                 onClick={() => handleCardClick(story)}
               >
-                {/* Gradient bar on top - with hover effect */}
-                <div className="h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 group-hover:h-2 transition-all duration-300"></div>
+                {/* Hidden gradient bar - only appears on hover */}
+                <div className="h-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 group-hover:h-1 transition-all duration-500"></div>
                 
                 <CardContent className="p-6 relative">
+                  {/* Image placeholder */}
+                  <div className="w-full h-32 bg-gray-100 rounded-lg mb-4 overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop&auto=format"
+                      alt={story.company_name}
+                      className="w-full h-full object-cover opacity-80"
+                    />
+                  </div>
+
                   {/* Industry tag */}
-                  <div className="flex items-center mb-4">
-                    <Building2 className="w-4 h-4 text-orange-500 mr-2" />
-                    <span className="text-xs font-semibold text-orange-500 uppercase tracking-wider">
+                  <div className="flex items-center mb-3">
+                    <Building2 className="w-3 h-3 text-gray-500 mr-2" />
+                    <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {story.industry}
                     </span>
                   </div>
 
                   {/* Company name */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors duration-300">
                     {story.company_name}
                   </h3>
 
                   {/* Brief description */}
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                    {story.challenge.length > 120 ? `${story.challenge.substring(0, 120)}...` : story.challenge}
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                    {story.challenge.length > 100 ? `${story.challenge.substring(0, 100)}...` : story.challenge}
                   </p>
 
-                  {/* Key metrics - only show 2 main ones */}
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="text-center p-3 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
-                      <div className="text-2xl font-bold text-green-600 mb-1">
+                  {/* Key metrics - uniform background */}
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                      <div className="text-xl font-semibold text-gray-700 mb-1">
                         {story.metric1_value}
                       </div>
-                      <div className="text-xs text-gray-600 font-medium">
+                      <div className="text-xs text-gray-500 font-medium">
                         {story.metric1_label}
                       </div>
                     </div>
-                    <div className="text-center p-3 bg-gradient-to-br from-red-50 to-red-100 rounded-lg">
-                      <div className="text-2xl font-bold text-red-600 mb-1">
+                    <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                      <div className="text-xl font-semibold text-gray-700 mb-1">
                         {story.metric2_value}
                       </div>
-                      <div className="text-xs text-gray-600 font-medium">
+                      <div className="text-xs text-gray-500 font-medium">
                         {story.metric2_label}
                       </div>
                     </div>
                   </div>
 
-                  {/* Customer info */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mr-3">
-                        <User className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{story.customer_name}</p>
-                        <p className="text-xs text-gray-500">{story.customer_title}</p>
-                      </div>
+                  {/* Explore details with arrow */}
+                  <div className="flex items-center justify-end text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
+                    <span className="text-sm font-medium mr-2">Explore Details</span>
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-all duration-300">
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
                     </div>
-                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
                   </div>
                 </CardContent>
               </Card>
