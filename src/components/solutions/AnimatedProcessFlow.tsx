@@ -14,43 +14,33 @@ const AnimatedProcessFlow = () => {
   const [progress, setProgress] = useState(0);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
 
-  // Define tasks for each step
+  // Define tasks for each step (only 3 tasks per step)
   const getStepTasks = (stepKey: string) => {
     const tasks = {
       discovery: [
         "Analyzing business requirements and objectives",
         "Identifying key stakeholders and decision makers", 
-        "Mapping current processes and pain points",
-        "Defining success metrics and KPIs",
-        "Creating project timeline and milestones"
+        "Mapping current processes and pain points"
       ],
       data: [
         "Collecting data samples from multiple sources",
         "Implementing data anonymization protocols",
-        "Ensuring GDPR and privacy compliance",
-        "Validating data quality and consistency",
-        "Setting up secure data processing pipelines"
+        "Ensuring GDPR and privacy compliance"
       ],
       training: [
         "Preprocessing and cleaning collected data",
-        "Feature engineering and selection",
         "Training AI models with optimal parameters",
-        "Fine-tuning for maximum accuracy",
         "Cross-validation and performance testing"
       ],
       testing: [
         "Running comprehensive model validation tests",
         "A/B testing with controlled user groups",
-        "Performance benchmarking against baselines",
-        "Security and vulnerability assessments",
-        "Load testing for scalability verification"
+        "Performance benchmarking against baselines"
       ],
       integration: [
         "Seamless deployment across your digital ecosystem",
         "API integration with existing systems",
-        "Real-time monitoring and alerting setup",
-        "Staff training and documentation delivery",
-        "Continuous optimization and support"
+        "Real-time monitoring and alerting setup"
       ]
     };
     return tasks[stepKey as keyof typeof tasks] || [];
@@ -79,19 +69,11 @@ const AnimatedProcessFlow = () => {
     return () => clearInterval(interval);
   }, [isPlaying, processSteps.length]);
 
-  // Task cycling effect
-  useEffect(() => {
-    let taskInterval: NodeJS.Timeout;
-    
-    if (isPlaying) {
-      const tasks = getStepTasks(processSteps[currentStep].key);
-      taskInterval = setInterval(() => {
-        setCurrentTaskIndex(prev => (prev + 1) % tasks.length);
-      }, 1500); // Change task every 1.5 seconds
-    }
-
-    return () => clearInterval(taskInterval);
-  }, [isPlaying, currentStep, processSteps]);
+  // Calculate which tasks should be completed based on progress
+  const getCompletedTasksCount = () => {
+    const totalTasks = getStepTasks(processSteps[currentStep].key).length;
+    return Math.floor((progress / 100) * totalTasks);
+  };
 
   const handleStepClick = (index: number) => {
     setCurrentStep(index);
@@ -242,18 +224,18 @@ const AnimatedProcessFlow = () => {
         </div>
 
         {/* Current Step Detail Card */}
-        <div className="max-w-5xl mx-auto mb-16">
+        <div className="max-w-6xl mx-auto mb-16">
           <Card className="border-0 shadow-xl bg-white overflow-hidden">
             <CardContent className="p-0">
-              <div className="flex flex-col lg:flex-row">
-                {/* Left side - Content */}
-                <div className="flex-1 p-8 lg:p-12">
-                  <div className="flex items-start gap-6">
+              <div className="flex flex-col lg:flex-row min-h-[300px]">
+                {/* Left side - Compact Content */}
+                <div className="lg:w-80 p-6">
+                  <div className="flex items-start gap-4">
                     {/* Large Step Number Circle */}
                     <div className="flex-shrink-0">
                       <div className="relative">
-                        <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center">
-                          <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white text-xl font-bold">
+                        <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white text-lg font-bold">
                             {String(currentStep + 1).padStart(2, '0')}
                           </div>
                         </div>
@@ -268,22 +250,19 @@ const AnimatedProcessFlow = () => {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">
                         {processSteps[currentStep].title}
                       </h3>
-                      <p className="text-orange-500 font-semibold text-lg mb-6">
+                      <p className="text-orange-500 font-semibold text-sm">
                         {processSteps[currentStep].subtitle}
-                      </p>
-                      <p className="text-gray-700 text-lg leading-relaxed">
-                        {processSteps[currentStep].description}
                       </p>
                     </div>
                   </div>
 
                   {/* Progress Indicator */}
                   {isPlaying && (
-                    <div className="mt-8 space-y-3">
-                      <div className="flex justify-between text-sm text-gray-600">
+                    <div className="mt-6 space-y-2">
+                      <div className="flex justify-between text-xs text-gray-600">
                         <span>Progresso da Etapa</span>
                         <span>{Math.round(progress)}%</span>
                       </div>
@@ -297,71 +276,57 @@ const AnimatedProcessFlow = () => {
                   )}
                 </div>
 
-                {/* Right side - Task Display */}
-                <div className="lg:w-96 bg-gradient-to-br from-gray-50 to-gray-100 p-8 flex flex-col justify-center">
+                {/* Right side - Expanded Task Display */}
+                <div className="flex-1 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex flex-col justify-center">
                   <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-6">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
                       Tarefas em Execução
                     </h4>
                     
                     {/* Current Tasks Display */}
-                    <div className="space-y-3 min-h-[200px]">
-                      {getStepTasks(processSteps[currentStep].key).map((task, index) => (
-                        <div 
-                          key={index}
-                          className={`
-                            flex items-start gap-3 p-3 rounded-lg transition-all duration-500
-                            ${index === currentTaskIndex && isPlaying 
-                              ? 'bg-orange-100 border-l-4 border-orange-500 transform translate-x-2' 
-                              : index < currentTaskIndex && isPlaying
-                              ? 'bg-green-50 border-l-4 border-green-500 opacity-70'
-                              : 'bg-white border-l-4 border-gray-200 opacity-50'
-                            }
-                          `}
-                        >
-                          <div className={`
-                            w-2 h-2 rounded-full mt-2 flex-shrink-0
-                            ${index === currentTaskIndex && isPlaying 
-                              ? 'bg-orange-500 animate-pulse' 
-                              : index < currentTaskIndex && isPlaying
-                              ? 'bg-green-500'
-                              : 'bg-gray-300'
-                            }
-                          `}></div>
-                          <p className={`
-                            text-sm leading-relaxed
-                            ${index === currentTaskIndex && isPlaying 
-                              ? 'text-orange-700 font-medium' 
-                              : index < currentTaskIndex && isPlaying
-                              ? 'text-green-700'
-                              : 'text-gray-500'
-                            }
-                          `}>
-                            {task}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
+                    <div className="space-y-3">
+                      {getStepTasks(processSteps[currentStep].key).map((task, index) => {
+                        const completedTasks = getCompletedTasksCount();
+                        const isCompleted = index < completedTasks;
+                        const isActive = index === completedTasks && progress < 100;
 
-                    {/* Progress Summary */}
-                    {isPlaying && (
-                      <div className="mt-6 p-4 bg-white rounded-lg border">
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600">Tarefas Concluídas</span>
-                          <span className="font-semibold text-orange-600">
-                            {currentTaskIndex + 1} / {getStepTasks(processSteps[currentStep].key).length}
-                          </span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        return (
                           <div 
-                            className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-300"
-                            style={{ 
-                              width: `${((currentTaskIndex + 1) / getStepTasks(processSteps[currentStep].key).length) * 100}%` 
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    )}
+                            key={index}
+                            className={`
+                              flex items-start gap-3 p-3 rounded-lg transition-all duration-500
+                              ${isActive && isPlaying 
+                                ? 'bg-orange-100 border-l-4 border-orange-500 transform translate-x-2' 
+                                : isCompleted
+                                ? 'bg-green-50 border-l-4 border-green-500'
+                                : 'bg-white border-l-4 border-gray-200 opacity-60'
+                              }
+                            `}
+                          >
+                            <div className={`
+                              w-2 h-2 rounded-full mt-2 flex-shrink-0
+                              ${isActive && isPlaying 
+                                ? 'bg-orange-500 animate-pulse' 
+                                : isCompleted
+                                ? 'bg-green-500'
+                                : 'bg-gray-300'
+                              }
+                            `}></div>
+                            <p className={`
+                              text-sm leading-relaxed
+                              ${isActive && isPlaying 
+                                ? 'text-orange-700 font-medium' 
+                                : isCompleted
+                                ? 'text-green-700'
+                                : 'text-gray-500'
+                              }
+                            `}>
+                              {task}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
