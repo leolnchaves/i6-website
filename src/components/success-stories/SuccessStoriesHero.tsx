@@ -13,10 +13,12 @@ const SuccessStoriesHero = () => {
     return (
       <section 
         className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
+        style={{ 
+          backgroundImage: `url(${heroBg})`,
+          filter: 'blur(2px)'
+        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-secondary/95 backdrop-blur-sm"></div>
-        <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-md"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto text-white">
             <div className="animate-pulse">
@@ -32,7 +34,10 @@ const SuccessStoriesHero = () => {
   return (
     <section 
       className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: `url(${heroBg})` }}
+      style={{ 
+        backgroundImage: `url(${heroBg})`,
+        filter: 'blur(2px)'
+      }}
     >
       {/* Background effects similar to HOME but more opaque */}
       <div className="absolute inset-0">
@@ -45,9 +50,8 @@ const SuccessStoriesHero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
       </div>
       
-      {/* More opaque overlay with blur effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-secondary/95 backdrop-blur-sm"></div>
-      <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-md"></div>
+      {/* Standard overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">
