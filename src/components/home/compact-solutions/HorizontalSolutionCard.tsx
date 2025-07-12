@@ -40,7 +40,7 @@ const HorizontalSolutionCard = ({
     '/solution-Anonymous-Visitors.gif',
     '/solucao-Identified-Users.gif',
     '/solucao-Industrial-Intelligence.gif',
-    'solucao-Predictive-Campaign.gif',
+    '/solucao-Smart-Price.gif',
     'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center'
   ];
 
