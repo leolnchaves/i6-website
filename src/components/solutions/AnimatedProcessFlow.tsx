@@ -136,11 +136,10 @@ const AnimatedProcessFlow = () => {
 
         {/* Horizontal Steps */}
         <div className="max-w-6xl mx-auto mb-8">
-          {/* Desktop Layout */}
           <div className="hidden lg:block">
-            <div className="relative px-12">
+            <div className="relative px-6">
               {/* Progress Line */}
-              <div className="absolute top-6 left-12 right-12 h-1 bg-gray-300 rounded-full">
+              <div className="absolute top-6 left-6 right-6 h-1 bg-gray-300 rounded-full">
                 <div 
                   className="h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-500"
                   style={{ 
@@ -229,7 +228,7 @@ const AnimatedProcessFlow = () => {
             <CardContent className="p-0">
               <div className="flex flex-col lg:flex-row min-h-[300px]">
                 {/* Left side - Compact Content */}
-                <div className="lg:w-80 p-6">
+                <div className="lg:w-1/2 p-6">
                   <div className="flex items-start gap-4">
                     {/* Large Step Number Circle */}
                     <div className="flex-shrink-0">
@@ -276,8 +275,8 @@ const AnimatedProcessFlow = () => {
                   )}
                 </div>
 
-                {/* Right side - Expanded Task Display */}
-                <div className="flex-1 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex flex-col justify-center">
+                {/* Right side - Task Display */}
+                <div className="lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex flex-col justify-center">
                   <div className="space-y-4">
                     <h4 className="text-lg font-semibold text-gray-800 mb-4">
                       Tarefas em Execução
