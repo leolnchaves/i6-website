@@ -144,44 +144,69 @@ const AnimatedProcessFlow = () => {
                     >
                       {/* Step Circle with Progress */}
                       <div className="relative">
-                        {/* Progress Ring */}
-                        {status === 'active' && (
-                          <svg className="absolute inset-0 w-12 h-12 -rotate-90">
+                        {/* Progress Ring for Active Step */}
+                        <svg className="absolute inset-0 w-12 h-12 -rotate-90">
+                          <circle
+                            cx="24"
+                            cy="24"
+                            r="18"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                            className="text-gray-200"
+                          />
+                          {status === 'active' && (
                             <circle
                               cx="24"
                               cy="24"
-                              r="20"
+                              r="18"
                               stroke="currentColor"
-                              strokeWidth="3"
-                              fill="none"
-                              className="text-gray-200"
-                            />
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r="20"
-                              stroke="currentColor"
-                              strokeWidth="3"
+                              strokeWidth="4"
                               fill="none"
                               strokeLinecap="round"
-                              className="text-orange-500 transition-all duration-300"
+                              className="text-green-500 transition-all duration-300"
                               style={{
-                                strokeDasharray: `${2 * Math.PI * 20}`,
-                                strokeDashoffset: `${2 * Math.PI * 20 * (1 - progress / 100)}`
+                                strokeDasharray: `${2 * Math.PI * 18}`,
+                                strokeDashoffset: `${2 * Math.PI * 18 * (1 - progress / 100)}`
                               }}
                             />
-                          </svg>
-                        )}
+                          )}
+                          {status === 'completed' && (
+                            <circle
+                              cx="24"
+                              cy="24"
+                              r="18"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                              fill="none"
+                              className="text-green-500"
+                              style={{
+                                strokeDasharray: `${2 * Math.PI * 18}`,
+                                strokeDashoffset: '0'
+                              }}
+                            />
+                          )}
+                        </svg>
                         
                         <div className={`
-                          w-12 h-12 rounded-full border-3 flex items-center justify-center
+                          w-12 h-12 rounded-full flex items-center justify-center
                           transition-all duration-300 shadow-lg group-hover:scale-110 z-10 bg-white relative
-                          ${status === 'active' ? 'border-orange-500 text-orange-500' : 
-                            status === 'completed' ? 'border-green-500 text-green-500' : 'border-gray-300 text-gray-400'}
+                          ${status === 'active' ? 'text-green-600' : 
+                            status === 'completed' ? 'text-green-600' : 'text-gray-400'}
                         `}>
-                          <span className="text-sm font-bold">
-                            {String(index + 1).padStart(2, '0')}
-                          </span>
+                          {status === 'active' ? (
+                            <span className="text-xs font-bold">
+                              {Math.round(progress)}%
+                            </span>
+                          ) : status === 'completed' ? (
+                            <span className="text-xs font-bold">
+                              100%
+                            </span>
+                          ) : (
+                            <span className="text-sm font-bold">
+                              {String(index + 1).padStart(2, '0')}
+                            </span>
+                          )}
                         </div>
                       </div>
 
