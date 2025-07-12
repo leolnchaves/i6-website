@@ -303,24 +303,51 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                   </div>
                 </div>
               ) : (
-                <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Building2 className="w-6 h-6 text-blue-600" />
+                // Random selection between two different alternative layouts
+                Math.random() > 0.5 ? (
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                          <Building2 className="w-6 h-6 text-blue-600" />
+                        </div>
+                        <h3 className="font-semibold text-gray-900 mb-2">Implementação Rápida</h3>
+                        <p className="text-sm text-gray-600">Solução implementada em menos de 4 semanas com suporte completo</p>
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Implementação Rápida</h3>
-                      <p className="text-sm text-gray-600">Solução implementada em menos de 4 semanas com suporte completo</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <ArrowRight className="w-6 h-6 text-green-600" />
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                          <ArrowRight className="w-6 h-6 text-green-600" />
+                        </div>
+                        <h3 className="font-semibold text-gray-900 mb-2">ROI Comprovado</h3>
+                        <p className="text-sm text-gray-600">Retorno sobre investimento mensurável desde o primeiro mês</p>
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">ROI Comprovado</h3>
-                      <p className="text-sm text-gray-600">Retorno sobre investimento mensurável desde o primeiro mês</p>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                    <div className="text-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Projeto Concluído com Sucesso</h3>
+                      <p className="text-sm text-gray-600 max-w-md mx-auto">
+                        Esta implementação demonstra nossa capacidade de entregar soluções que geram impacto real e resultados mensuráveis para nossos clientes.
+                      </p>
+                    </div>
+                    <div className="flex justify-center items-center gap-6 text-xs text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>Projeto Ativo</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span>Suporte Contínuo</span>
+                      </div>
+                    </div>
+                  </div>
+                )
               )}
             </div>
           </div>
