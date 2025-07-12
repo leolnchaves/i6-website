@@ -131,15 +131,6 @@ const AnimatedProcessFlow = () => {
         <div className="max-w-6xl mx-auto mb-8">
           <div className="hidden lg:block">
             <div className="relative px-12">
-              {/* Progress Line */}
-              <div className="absolute top-6 h-1 bg-gray-300 rounded-full" style={{ left: '48px', right: '48px' }}>
-                <div 
-                  className="h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${(currentStep / (processSteps.length - 1)) * 100}%` 
-                  }}
-                ></div>
-              </div>
 
               {/* Steps */}
               <div className="flex justify-between relative">
@@ -151,16 +142,47 @@ const AnimatedProcessFlow = () => {
                       className="flex flex-col items-center cursor-pointer group max-w-[180px]"
                       onClick={() => handleStepClick(index)}
                     >
-                      {/* Step Circle */}
-                      <div className={`
-                        w-12 h-12 rounded-full border-3 flex items-center justify-center
-                        transition-all duration-300 shadow-lg group-hover:scale-110 z-10 bg-white
-                        ${status === 'active' ? 'border-orange-500 text-orange-500' : 
-                          status === 'completed' ? 'border-green-500 text-green-500' : 'border-gray-300 text-gray-400'}
-                      `}>
-                        <span className="text-sm font-bold">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
+                      {/* Step Circle with Progress */}
+                      <div className="relative">
+                        {/* Progress Ring */}
+                        {status === 'active' && (
+                          <svg className="absolute inset-0 w-12 h-12 -rotate-90">
+                            <circle
+                              cx="24"
+                              cy="24"
+                              r="20"
+                              stroke="currentColor"
+                              strokeWidth="3"
+                              fill="none"
+                              className="text-gray-200"
+                            />
+                            <circle
+                              cx="24"
+                              cy="24"
+                              r="20"
+                              stroke="currentColor"
+                              strokeWidth="3"
+                              fill="none"
+                              strokeLinecap="round"
+                              className="text-orange-500 transition-all duration-300"
+                              style={{
+                                strokeDasharray: `${2 * Math.PI * 20}`,
+                                strokeDashoffset: `${2 * Math.PI * 20 * (1 - progress / 100)}`
+                              }}
+                            />
+                          </svg>
+                        )}
+                        
+                        <div className={`
+                          w-12 h-12 rounded-full border-3 flex items-center justify-center
+                          transition-all duration-300 shadow-lg group-hover:scale-110 z-10 bg-white relative
+                          ${status === 'active' ? 'border-orange-500 text-orange-500' : 
+                            status === 'completed' ? 'border-green-500 text-green-500' : 'border-gray-300 text-gray-400'}
+                        `}>
+                          <span className="text-sm font-bold">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                        </div>
                       </div>
 
                       {/* Step Title */}
