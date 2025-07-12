@@ -103,13 +103,6 @@ const AnimatedProcessFlow = () => {
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary"></div>
-        <div className="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-orange-500"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-blue-500"></div>
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
