@@ -4,8 +4,10 @@ import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
 import { useCMSContent } from '@/hooks/useCMSContent';
 import { useState, useEffect } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
-import HomeFeaturedStoryCard from './featured-stories/HomeFeaturedStoryCard';
 import ViewAllButton from './featured-stories/ViewAllButton';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Card, CardContent } from '@/components/ui/card';
+import { Play } from 'lucide-react';
 
 const FeaturedStoriesSection = () => {
   const { language } = useLanguage();
@@ -52,17 +54,16 @@ const FeaturedStoriesSection = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FeaturedStoriesHeader />
 
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-7xl w-full">
+          <div className="max-w-6xl mx-auto mb-12">
+            <div className="flex gap-4 overflow-hidden">
               {[...Array(3)].map((_, index) => (
-                <div key={index} className="bg-gray-50 rounded-2xl shadow-lg p-6 animate-pulse h-[500px]">
-                  <div className="h-48 bg-gray-200 rounded-xl mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                  <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 rounded"></div>
+                <div key={index} className="min-w-[280px] md:min-w-[320px] h-[500px] bg-gray-50 rounded-2xl shadow-lg animate-pulse overflow-hidden">
+                  <div className="p-6 pb-4">
+                    <div className="h-6 bg-gray-200 rounded-full w-20 mb-4"></div>
+                    <div className="h-6 bg-gray-200 rounded mb-2"></div>
                     <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                   </div>
+                  <div className="mx-6 mb-6 h-64 bg-gray-200 rounded-2xl"></div>
                 </div>
               ))}
             </div>
@@ -86,20 +87,55 @@ const FeaturedStoriesSection = () => {
 
         {fallbackCards.length > 0 ? (
           <>
-            <div className="flex justify-center">
-              <div className={`grid gap-8 mb-12 w-full ${
-                fallbackCards.length === 1 
-                  ? 'grid-cols-1 max-w-md mx-auto' 
-                  : fallbackCards.length === 2 
-                  ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
-                  : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl'
-              }`}>
-                {fallbackCards.map((card, index) => (
-                  <div key={card.id} className="flex">
-                    <HomeFeaturedStoryCard card={card} index={index} />
-                  </div>
-                ))}
-              </div>
+            <div className="max-w-6xl mx-auto mb-12">
+              <Carousel className="w-full">
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  {fallbackCards.map((card, index) => (
+                    <CarouselItem key={card.id} className="pl-2 md:pl-4 basis-[280px] md:basis-[320px]">
+                      <Card className="h-[500px] bg-gradient-to-br from-blue-50 to-slate-100 border-0 shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
+                        <CardContent className="p-0 h-full flex flex-col">
+                          {/* Header com categoria */}
+                          <div className="p-6 pb-4">
+                            <div className="inline-block px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium text-gray-600 mb-4">
+                              {card.industry}
+                            </div>
+                            <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                              {card.solution}
+                            </h3>
+                            <p className="text-sm text-gray-600 mt-1">{card.company_name}</p>
+                          </div>
+                          
+                          {/* Imagem principal */}
+                          <div className="flex-1 relative mx-6 mb-6 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-100 to-cyan-100">
+                            {card.image_url ? (
+                              <img 
+                                src={card.image_url} 
+                                alt={card.company_name}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                                  <Play className="w-8 h-8 text-white" />
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* Play button overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/20 transition-colors duration-300">
+                              <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <Play className="w-8 h-8 text-gray-800 ml-1" />
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-4" />
+                <CarouselNext className="right-4" />
+              </Carousel>
             </div>
             
             <ViewAllButton />
