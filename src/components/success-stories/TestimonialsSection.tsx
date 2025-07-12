@@ -113,18 +113,9 @@ const TestimonialsSection = () => {
               <div key={testimonial.id} className="group">
                 <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
                   
-                  {/* Header with Quote and LinkedIn */}
+                  {/* Header with Quote only */}
                   <div className="flex items-center justify-between mb-4">
                     <Quote className="w-6 h-6 text-primary/60" />
-                    <a 
-                      href="https://www.linkedin.com/company/infinity6" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                      title="View LinkedIn Profile"
-                    >
-                      <Linkedin className="w-5 h-5" />
-                    </a>
                   </div>
 
                   {/* Quote text */}
@@ -132,12 +123,23 @@ const TestimonialsSection = () => {
                     "{testimonial.quote}"
                   </blockquote>
 
-                  {/* Author info */}
+                  {/* Author info with LinkedIn */}
                   <div className="mt-auto">
                     <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
                     <cite className="not-italic">
-                      <div className="font-medium text-foreground mb-1">
-                        {testimonial.author_name}
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-foreground">
+                          {testimonial.author_name}
+                        </span>
+                        <a 
+                          href="https://www.linkedin.com/company/infinity6" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
+                          title="View LinkedIn Profile"
+                        >
+                          <Linkedin className="w-4 h-4" />
+                        </a>
                       </div>
                       {testimonial.author_title && (
                         <div className="text-sm text-muted-foreground">
