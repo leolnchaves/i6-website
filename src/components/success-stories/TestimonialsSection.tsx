@@ -128,9 +128,6 @@ const TestimonialsSection = () => {
                     <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
                     <cite className="not-italic">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-medium text-foreground">
-                          {testimonial.author_name}
-                        </span>
                         <a 
                           href="https://www.linkedin.com/company/infinity6" 
                           target="_blank"
@@ -140,9 +137,12 @@ const TestimonialsSection = () => {
                         >
                           <Linkedin className="w-4 h-4" />
                         </a>
+                        <span className="font-medium text-foreground">
+                          {testimonial.author_name}
+                        </span>
                       </div>
                       {testimonial.author_title && (
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-muted-foreground ml-6">
                           {testimonial.author_title}
                           {testimonial.company_name && (
                             <span className="text-primary/70"> • {testimonial.company_name}</span>
