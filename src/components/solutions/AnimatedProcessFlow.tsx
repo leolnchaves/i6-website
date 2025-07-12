@@ -53,13 +53,20 @@ const AnimatedProcessFlow = () => {
       interval = setInterval(() => {
         setProgress(prev => {
           if (prev >= 100) {
-            // Move to next step
-            setCurrentStep(current => {
-              const next = (current + 1) % processSteps.length;
-              setCurrentTaskIndex(0); // Reset task index for new step
-              return next;
-            });
-            return 0;
+            // Check if we're on the last step
+            if (currentStep === processSteps.length - 1) {
+              // Stop the demo at 100% completion
+              setIsPlaying(false);
+              return 100;
+            } else {
+              // Move to next step
+              setCurrentStep(current => {
+                const next = current + 1;
+                setCurrentTaskIndex(0); // Reset task index for new step
+                return next;
+              });
+              return 0;
+            }
           }
           return prev + 2; // 2% every 100ms = 5 seconds per step
         });
@@ -67,7 +74,7 @@ const AnimatedProcessFlow = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isPlaying, processSteps.length]);
+  }, [isPlaying, processSteps.length, currentStep]);
 
   // Calculate which tasks should be completed based on progress
   const getCompletedTasksCount = () => {
@@ -255,79 +262,94 @@ const AnimatedProcessFlow = () => {
           <Card className="border-0 shadow-xl bg-white overflow-hidden">
             <CardContent className="p-0">
               <div className="flex flex-col lg:flex-row min-h-[300px]">
-                {/* Left side - Compact Content with Timeline */}
+                {/* Left side - Compact Content */}
                 <div className="lg:w-1/2 p-6">
-                  <div className="flex gap-4">
-                    {/* Timeline Section */}
-                    <div className="flex-shrink-0 w-24">
-                      <div className="space-y-2">
-                        <h5 className="text-xs font-semibold text-gray-700 mb-3">Cronograma</h5>
-                        {[
-                          { step: 1, time: 'Semana 1' },
-                          { step: 2, time: 'Semana 1' },
-                          { step: 3, time: 'Semana 2 e 3' },
-                          { step: 4, time: 'Semana 4' },
-                          { step: 5, time: '3 Meses' }
-                        ].map((item, index) => (
-                          <div key={index} className={`flex items-center gap-2 text-xs ${
-                            index === currentStep ? 'text-orange-600 font-medium' : 'text-gray-500'
-                          }`}>
-                            <div className={`w-1.5 h-1.5 rounded-full ${
-                              index === currentStep ? 'bg-orange-500' : 'bg-gray-300'
-                            }`}></div>
-                            <span className="text-[10px] leading-tight">{item.time}</span>
+                  <div className="flex items-start gap-4">
+                    {/* Large Step Number Circle */}
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white text-lg font-bold">
+                            {String(currentStep + 1).padStart(2, '0')}
                           </div>
-                        ))}
+                        </div>
+                         {isPlaying && (
+                           <>
+                             <div className="absolute inset-0 rounded-full border-4 border-orange-400/30 animate-ping"></div>
+                             <div className="absolute inset-0 rounded-full border-2 border-orange-400/50 animate-pulse"></div>
+                           </>
+                         )}
                       </div>
                     </div>
 
+                    {/* Content */}
                     <div className="flex-1">
-                      <div className="flex items-start gap-3">
-                        {/* Large Step Number Circle */}
-                        <div className="flex-shrink-0">
-                          <div className="relative">
-                            <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center">
-                              <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold">
-                                {String(currentStep + 1).padStart(2, '0')}
-                              </div>
-                            </div>
-                             {isPlaying && (
-                               <>
-                                 <div className="absolute inset-0 rounded-full border-4 border-orange-400/30 animate-ping"></div>
-                                 <div className="absolute inset-0 rounded-full border-2 border-orange-400/50 animate-pulse"></div>
-                               </>
-                             )}
-                          </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="flex-1">
-                          <h3 className="text-lg font-bold text-gray-900 mb-1">
-                            {processSteps[currentStep].title}
-                          </h3>
-                          <p className="text-orange-500 font-semibold text-xs">
-                            {processSteps[currentStep].subtitle}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Progress Indicator */}
-                      {isPlaying && (
-                        <div className="mt-4 space-y-2">
-                          <div className="flex justify-between text-xs text-gray-600">
-                            <span>Progresso da Etapa</span>
-                            <span>{Math.round(progress)}%</span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div 
-                              className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-100"
-                              style={{ width: `${progress}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      )}
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                        {processSteps[currentStep].title}
+                      </h3>
+                      <p className="text-orange-500 font-semibold text-sm">
+                        {processSteps[currentStep].subtitle}
+                      </p>
                     </div>
                   </div>
+
+                  {/* Progress Indicator */}
+                  {isPlaying && (
+                    <div className="mt-6 space-y-3">
+                      <div className="flex justify-between text-xs text-gray-600">
+                        <span>Progresso da Etapa</span>
+                        <span>{Math.round(progress)}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-100"
+                          style={{ width: `${progress}%` }}
+                        ></div>
+                      </div>
+                      
+                      {/* Weekly Timeline */}
+                      <div className="pt-2">
+                        <div className="flex justify-between items-center text-xs">
+                          {[
+                            { label: 'Semana 1', step: 0 },
+                            { label: 'Semana 2', step: 1 },
+                            { label: 'Semana 3', step: 2 },
+                            { label: 'Semana 4', step: 3 },
+                            { label: 'Mês 2 a 4', step: 4 }
+                          ].map((week, index) => {
+                            const isCompleted = currentStep > week.step || (currentStep === week.step && progress === 100);
+                            const isActive = currentStep === week.step;
+                            
+                            return (
+                              <div 
+                                key={index} 
+                                className={`text-center transition-all duration-300 ${
+                                  isCompleted 
+                                    ? 'text-green-600 font-semibold' 
+                                    : isActive 
+                                    ? 'text-orange-600 font-medium' 
+                                    : 'text-gray-400'
+                                }`}
+                              >
+                                {week.label}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        
+                        {/* Timeline line */}
+                        <div className="mt-2 relative">
+                          <div className="w-full h-0.5 bg-gray-300 rounded"></div>
+                          <div 
+                            className="absolute top-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 rounded transition-all duration-500"
+                            style={{ 
+                              width: `${((currentStep + (progress / 100)) / 5) * 100}%` 
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Right side - Task Display */}
