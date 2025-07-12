@@ -35,7 +35,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Margin Improvement',
       metric3_value: '78%',
       metric3_label: 'Engagement Boost',
-      image_url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop',
+      image_url: '/lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png',
       is_active: true,
       is_active_home: true
     },
@@ -94,7 +94,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Melhoria de Margem',
       metric3_value: '78%',
       metric3_label: 'Aumento de Engajamento',
-      image_url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop',
+      image_url: '/lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png',
       is_active: true,
       is_active_home: true
     },
