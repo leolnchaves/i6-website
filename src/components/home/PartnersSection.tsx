@@ -5,18 +5,18 @@ const PartnersSection = () => {
   const { t } = useLanguage();
   const [isPaused, setIsPaused] = useState(false);
 
-  // Client logos with the provided images
+  // Client logos with the new provided images
   const partners = [
-    { name: 'HERING', logo: '/lovable-uploads/7fd47d50-6abb-4203-984a-0fd29cbc913b.png?v=' + Date.now() },
-    { name: 'EMS', logo: '/lovable-uploads/58e286a1-1e55-47cc-8524-dc041be15b81.png' },
-    { name: 'LEGRAND', logo: '/lovable-uploads/373196c0-5b6e-4e60-80c3-a1da99265d12.png' },
-    { name: 'COGNA', logo: '/lovable-uploads/534d8da1-8e73-4707-9c28-3bb33e0fdfb6.png' },
-    { name: 'ACHĒ', logo: '/lovable-uploads/a78ba018-aaab-423f-ac52-89f6cf1ff6ef.png' },
-    { name: 'NATURA&CO', logo: '/lovable-uploads/c8169903-2836-45f3-830c-db6dc7e8ac9e.png' },
-    { name: 'JEQUITI', logo: '/lovable-uploads/05313f6e-5f31-4189-8824-1615d0b72bfc.png' },
-    { name: 'EMBRAER', logo: '/lovable-uploads/6d813ac5-011f-4bff-b35a-6eed9b162869.png' },
-    { name: 'BANCO XYZ', logo: '/lovable-uploads/78e4760f-4843-4f50-b0b1-f93b9cf828f2.png' },
-    { name: 'FINANCORP', logo: '/lovable-uploads/8c0acc2d-915a-484e-b83e-c82c3de47aa5.png' }
+    { name: 'HERING', logo: '/lovable-uploads/43902e38-173c-4443-972d-3508bb019fc8.png' },
+    { name: 'EMS', logo: '/lovable-uploads/1a970fd6-baf7-4b71-9a57-dc12e859a375.png' },
+    { name: 'LEGRAND', logo: '/lovable-uploads/504b43c1-3a9d-4fa6-99be-bf71d174de88.png' },
+    { name: 'COGNA', logo: '/lovable-uploads/ee66fac8-ae04-45ec-be82-6097d7dd55d5.png' },
+    { name: 'ACHĒ', logo: '/lovable-uploads/522cea43-2fde-45f7-89d1-d982e9dee4a5.png' },
+    { name: 'NATURA&CO', logo: '/lovable-uploads/2297d479-bfa8-46e6-8035-5b475ee4bccd.png' },
+    { name: 'JEQUITI', logo: '/lovable-uploads/5b025329-71fc-4701-8319-566e1d2cc76e.png' },
+    { name: 'EMBRAER', logo: '/lovable-uploads/e5e13c1d-3ce5-472b-89e6-0b434fd4bf79.png' },
+    { name: 'PARTNER 1', logo: '/lovable-uploads/cdaaa3c2-99d2-4768-b24c-525ef004fefa.png' },
+    { name: 'PARTNER 2', logo: '/lovable-uploads/c8e82ae8-631b-4310-9884-36f98d8aa8b3.png' }
   ];
 
   // Double the array for seamless loop
