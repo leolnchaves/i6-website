@@ -56,7 +56,7 @@ const MetricsSection = () => {
   }
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[20vh] flex flex-col justify-center">
+    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[22vh] flex flex-col justify-center">
       <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
         <div className="relative py-2 flex items-center justify-center">
           {/* Sliding metrics */}
@@ -91,7 +91,7 @@ const MetricsSection = () => {
       </div>
 
       {/* Scroll arrow identical to HOME */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
         <div className="relative group">
           {/* Glowing circle background */}
           <div className="w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-full backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
