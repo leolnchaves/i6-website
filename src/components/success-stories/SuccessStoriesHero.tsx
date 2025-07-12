@@ -45,14 +45,8 @@ const SuccessStoriesHero = () => {
         }}
       ></div>
       
-      {/* Background effects similar to HOME but more opaque */}
+      {/* Minimal grid pattern overlay */}
       <div className="absolute inset-0">
-        {/* Curved shapes */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-orange-500/15 to-red-500/15 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-l from-orange-400/10 to-yellow-500/10 rounded-full blur-2xl"></div>
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-red-500/8 to-orange-600/8 rounded-full blur-xl"></div>
-        
-        {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
       </div>
       

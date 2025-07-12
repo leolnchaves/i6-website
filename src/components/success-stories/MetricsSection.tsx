@@ -44,7 +44,7 @@ const MetricsSection = () => {
 
   if (loading) {
     return (
-      <section className="w-full bg-gradient-to-b from-slate-800/95 to-slate-900/95 backdrop-blur-sm py-8 overflow-hidden relative">
+      <section className="w-full bg-gradient-to-b from-blue-900/90 to-slate-900/95 backdrop-blur-sm py-8 overflow-hidden relative">
         <div className="container mx-auto px-4">
           <div className="text-center py-6">
             <div className="h-16 bg-white/10 rounded mb-2 mx-auto w-32 animate-pulse" />
@@ -56,7 +56,7 @@ const MetricsSection = () => {
   }
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-800/95 to-slate-900/95 backdrop-blur-sm py-12 overflow-hidden relative">
+    <section className="w-full bg-gradient-to-b from-blue-900/90 to-slate-900/95 backdrop-blur-sm py-12 overflow-hidden relative">
       <div className="container mx-auto px-4">
         <div className="relative py-8 flex items-center justify-center">
           {/* Sliding metrics */}
