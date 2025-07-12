@@ -204,100 +204,97 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
       {/* Detailed Modal */}
       {selectedStory && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+          className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={handleCloseModal}
         >
           <div 
-            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl animate-modal-enter"
+            className="bg-white rounded-xl max-w-3xl w-full max-h-[85vh] relative shadow-xl animate-modal-enter"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <Button
               variant="ghost"
               size="sm"
-              className="absolute top-4 right-4 z-10 rounded-full w-10 h-10 bg-white/90 hover:bg-white"
+              className="absolute top-4 right-4 z-10 rounded-full w-8 h-8 bg-gray-100 hover:bg-gray-200"
               onClick={handleCloseModal}
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </Button>
 
             {/* Header with company info */}
-            <div className="p-8 pb-4">
-              <div className="flex items-center mb-4">
-                <Building2 className="w-5 h-5 text-orange-500 mr-3" />
-                <span className="text-sm font-semibold text-orange-500 uppercase tracking-wider">
+            <div className="p-6 pb-4 border-b border-gray-100">
+              <div className="flex items-center mb-3">
+                <Building2 className="w-4 h-4 text-gray-500 mr-2" />
+                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {selectedStory.industry}
                 </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-auto text-blue-500 hover:bg-blue-50"
-                >
-                  Compartilhar
-                </Button>
               </div>
               
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl font-semibold text-gray-900 mb-2">
                 {selectedStory.company_name}
               </h1>
             </div>
 
             {/* Content */}
-            <div className="px-8 pb-8">
+            <div className="p-6">
               {/* Challenge & Solution */}
-              <div className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">Desafio</h2>
-                <p className="text-gray-700 leading-relaxed mb-6">
-                  {selectedStory.challenge}
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <h2 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wider">Desafio</h2>
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    {selectedStory.challenge}
+                  </p>
+                </div>
                 
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">Solução</h2>
-                <p className="text-gray-700 leading-relaxed">
-                  {selectedStory.solution}
-                </p>
+                <div>
+                  <h2 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wider">Solução</h2>
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    {selectedStory.solution}
+                  </p>
+                </div>
               </div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
-                  <div className="text-3xl font-bold text-green-600 mb-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-2xl font-semibold text-gray-700 mb-1">
                     {selectedStory.metric1_value}
                   </div>
-                  <div className="text-sm text-gray-700 font-medium">
+                  <div className="text-xs text-gray-500 font-medium">
                     {selectedStory.metric1_label}
                   </div>
                 </div>
-                <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-2xl font-semibold text-gray-700 mb-1">
                     {selectedStory.metric2_value}
                   </div>
-                  <div className="text-sm text-gray-700 font-medium">
+                  <div className="text-xs text-gray-500 font-medium">
                     {selectedStory.metric2_label}
                   </div>
                 </div>
-                <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">
+                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-2xl font-semibold text-gray-700 mb-1">
                     {selectedStory.metric3_value}
                   </div>
-                  <div className="text-sm text-gray-700 font-medium">
+                  <div className="text-xs text-gray-500 font-medium">
                     {selectedStory.metric3_label}
                   </div>
                 </div>
               </div>
 
               {/* Customer quote */}
-              <div className="bg-gradient-to-r from-orange-50 to-blue-50 p-8 rounded-xl border border-orange-200">
-                <Quote className="w-10 h-10 text-orange-500 mb-4" />
-                <p className="text-lg text-gray-800 italic leading-relaxed mb-4">
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                <Quote className="w-6 h-6 text-gray-400 mb-3" />
+                <p className="text-gray-800 italic leading-relaxed mb-4">
                   "{selectedStory.customer_quote}"
                 </p>
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-blue-500 rounded-full flex items-center justify-center mr-4">
-                    <User className="w-6 h-6 text-white" />
+                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+                    <User className="w-5 h-5 text-gray-500" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">{selectedStory.customer_name}</p>
-                    <p className="text-gray-600">{selectedStory.customer_title}</p>
+                    <p className="font-medium text-gray-900 text-sm">{selectedStory.customer_name}</p>
+                    <p className="text-gray-600 text-xs">{selectedStory.customer_title}</p>
                   </div>
                 </div>
               </div>
