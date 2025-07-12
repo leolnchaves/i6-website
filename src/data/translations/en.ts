@@ -205,9 +205,9 @@ export const enTranslations = {
   'successStories.common.inventoryTurnover': 'Inventory Turnover',
   
   // Home Featured Stories
-  'home.featuredStories.title': 'Success Stories That',
-  'home.featuredStories.subtitle': 'Transform Industries',
-  'home.featuredStories.description': 'Discover how leading companies achieved remarkable results with our AI solutions',
+  'home.featuredStories.title': 'Visionary Brands',
+  'home.featuredStories.subtitle': 'Driving Scalable Results',
+  'home.featuredStories.description': 'Learn how organizations turn AI into revenue, agility and a competitive edge.',
   'home.featuredStories.learnMore': 'Learn more',
   'home.featuredStories.viewAll': 'View All Success Stories',
   'home.featuredStories.techcorp.description': 'AI-powered predictive maintenance reduced downtime by 75%',

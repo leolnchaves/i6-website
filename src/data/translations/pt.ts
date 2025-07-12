@@ -205,9 +205,9 @@ export const ptTranslations = {
   'successStories.common.inventoryTurnover': 'Giro de Inventário',
   
   // Home Featured Stories
-  'home.featuredStories.title': 'Cases de Sucesso que',
-  'home.featuredStories.subtitle': 'Transformam Indústrias',
-  'home.featuredStories.description': 'Descubra como empresas líderes alcançaram resultados extraordinários com nossas soluções de IA',
+  'home.featuredStories.title': 'Marcas Visionárias',
+  'home.featuredStories.subtitle': 'Gerando Resultados Escaláveis',
+  'home.featuredStories.description': 'Aprenda como organizações transformam IA em receita, agilidade e vantagem competitiva.',
   'home.featuredStories.learnMore': 'Saiba mais',
   'home.featuredStories.viewAll': 'Ver Todos os Cases de Sucesso',
   'home.featuredStories.techcorp.description': 'Manutenção preditiva baseada em IA reduziu tempo de inatividade em 75%',
