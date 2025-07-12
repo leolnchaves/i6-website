@@ -55,8 +55,8 @@ const SegmentFilter: React.FC<SegmentFilterProps> = ({ onSegmentChange, selected
     <section className="py-6 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-4">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Filtrar por Segmento</h3>
-          <p className="text-gray-600">Escolha um segmento para ver cases específicos da indústria</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">Explore by Industry</h3>
+          <p className="text-gray-600">Find success stories tailored to your market context.</p>
         </div>
         
         <div className="flex flex-wrap justify-center gap-3">
