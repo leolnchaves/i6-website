@@ -294,62 +294,84 @@ const AnimatedProcessFlow = () => {
                   </div>
 
                   {/* Progress Indicator */}
-                  {isPlaying && (
-                    <div className="mt-6 space-y-3">
-                      <div className="flex justify-between text-xs text-gray-600">
-                        <span>Progresso da Etapa</span>
-                        <span>{Math.round(progress)}%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-100"
-                          style={{ width: `${progress}%` }}
-                        ></div>
+                  <div className="mt-6 space-y-3">
+                    <div className="flex justify-between text-xs text-gray-600">
+                      <span>Progresso da Etapa</span>
+                      <span>{Math.round(progress)}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-100"
+                        style={{ width: `${progress}%` }}
+                      ></div>
+                    </div>
+                    
+                    {/* Weekly Timeline */}
+                    <div className="pt-2">
+                      <div className="flex justify-between items-center text-xs">
+                        {[
+                          { label: 'Semana 1', steps: [0, 1] }, // Steps 1 e 2
+                          { label: 'Semana 2', steps: [2] },    // Step 3 (parte 1)
+                          { label: 'Semana 3', steps: [2] },    // Step 3 (parte 2)
+                          { label: 'Semana 4', steps: [3] },    // Step 4
+                          { label: '3 Meses', steps: [4] }      // Step 5
+                        ].map((week, index) => {
+                          let isCompleted = false;
+                          let isActive = false;
+                          
+                          if (index === 0) { // Semana 1
+                            isCompleted = currentStep > 1 || (currentStep === 1 && progress === 100);
+                            isActive = currentStep <= 1;
+                          } else if (index === 1) { // Semana 2 
+                            isCompleted = currentStep > 2 || (currentStep === 2 && progress >= 50);
+                            isActive = currentStep === 2 && progress < 50;
+                          } else if (index === 2) { // Semana 3
+                            isCompleted = currentStep > 2 || (currentStep === 2 && progress === 100);
+                            isActive = currentStep === 2 && progress >= 50;
+                          } else if (index === 3) { // Semana 4
+                            isCompleted = currentStep > 3 || (currentStep === 3 && progress === 100);
+                            isActive = currentStep === 3;
+                          } else { // 3 Meses
+                            isCompleted = currentStep > 4 || (currentStep === 4 && progress === 100);
+                            isActive = currentStep === 4;
+                          }
+                          
+                          return (
+                            <div 
+                              key={index} 
+                              className={`text-center transition-all duration-300 ${
+                                isCompleted 
+                                  ? 'text-green-600 font-semibold' 
+                                  : isActive 
+                                  ? 'text-orange-600 font-medium' 
+                                  : 'text-gray-400'
+                              }`}
+                            >
+                              {week.label}
+                            </div>
+                          );
+                        })}
                       </div>
                       
-                      {/* Weekly Timeline */}
-                      <div className="pt-2">
-                        <div className="flex justify-between items-center text-xs">
-                          {[
-                            { label: 'Semana 1', step: 0 },
-                            { label: 'Semana 2', step: 1 },
-                            { label: 'Semana 3', step: 2 },
-                            { label: 'Semana 4', step: 3 },
-                            { label: 'Mês 2 a 4', step: 4 }
-                          ].map((week, index) => {
-                            const isCompleted = currentStep > week.step || (currentStep === week.step && progress === 100);
-                            const isActive = currentStep === week.step;
-                            
-                            return (
-                              <div 
-                                key={index} 
-                                className={`text-center transition-all duration-300 ${
-                                  isCompleted 
-                                    ? 'text-green-600 font-semibold' 
-                                    : isActive 
-                                    ? 'text-orange-600 font-medium' 
-                                    : 'text-gray-400'
-                                }`}
-                              >
-                                {week.label}
-                              </div>
-                            );
-                          })}
-                        </div>
-                        
-                        {/* Timeline line */}
-                        <div className="mt-2 relative">
-                          <div className="w-full h-0.5 bg-gray-300 rounded"></div>
-                          <div 
-                            className="absolute top-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 rounded transition-all duration-500"
-                            style={{ 
-                              width: `${((currentStep + (progress / 100)) / 5) * 100}%` 
-                            }}
-                          ></div>
-                        </div>
+                      {/* Timeline line */}
+                      <div className="mt-2 relative">
+                        <div className="w-full h-0.5 bg-gray-300 rounded"></div>
+                        <div 
+                          className="absolute top-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 rounded transition-all duration-500"
+                          style={{ 
+                            width: `${(() => {
+                              if (currentStep === 0) return (progress / 100) * 20; // 20% for step 1
+                              if (currentStep === 1) return 20 + (progress / 100) * 20; // 40% total for steps 1-2
+                              if (currentStep === 2) return 40 + (progress / 100) * 40; // 80% total for steps 1-3
+                              if (currentStep === 3) return 80 + (progress / 100) * 10; // 90% total for steps 1-4
+                              if (currentStep === 4) return 90 + (progress / 100) * 10; // 100% total
+                              return 100;
+                            })()}%` 
+                          }}
+                        ></div>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
 
                 {/* Right side - Task Display */}
