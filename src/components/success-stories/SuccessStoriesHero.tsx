@@ -11,13 +11,16 @@ const SuccessStoriesHero = () => {
 
   if (loading) {
     return (
-      <section 
-        className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-        style={{ 
-          backgroundImage: `url(${heroBg})`,
-          filter: 'blur(2px)'
-        }}
-      >
+      <section className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden">
+        {/* Background image with blur */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(${heroBg})`,
+            filter: 'blur(5px)'
+          }}
+        ></div>
+        
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto text-white">
@@ -32,13 +35,16 @@ const SuccessStoriesHero = () => {
   }
 
   return (
-    <section 
-      className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-      style={{ 
-        backgroundImage: `url(${heroBg})`,
-        filter: 'blur(2px)'
-      }}
-    >
+    <section className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden">
+      {/* Background image with blur */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ 
+          backgroundImage: `url(${heroBg})`,
+          filter: 'blur(5px)'
+        }}
+      ></div>
+      
       {/* Background effects similar to HOME but more opaque */}
       <div className="absolute inset-0">
         {/* Curved shapes */}
