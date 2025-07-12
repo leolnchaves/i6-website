@@ -68,7 +68,7 @@ const AnimatedProcessFlow = () => {
               return 0;
             }
           }
-          return prev + 2; // 2% every 100ms = 5 seconds per step
+          return prev + 1.4; // 1.4% every 100ms = ~7.1 seconds per step (30% slower)
         });
       }, 100);
     }
@@ -129,7 +129,7 @@ const AnimatedProcessFlow = () => {
               className="flex items-center gap-2"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-              {isPlaying ? 'Pausar Demonstração' : 'Iniciar Demonstração'}
+              {isPlaying ? 'Pause Demo' : 'Start Demo'}
             </Button>
           </div>
         </div>
