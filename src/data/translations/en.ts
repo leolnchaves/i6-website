@@ -7,20 +7,22 @@ export const enTranslations = {
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
   
-  // Hero Section
+  // Hero Section - Updated with CMS data
   'hero.infinite': 'Endless',
   'hero.possibilities': 'Possibilities',
   'hero.poweredByAI': 'Powered by AI',
-  'hero.description': 'Transform your business with cutting-edge artificial intelligence solutions that unlock unlimited potential and drive extraordinary results.',
+  'hero.description': 'Rethink what is possible. Build smarter and move faster. Grow beyond limits with adaptive AI.',
   'hero.startJourney': 'Start Your Journey',
   'hero.watchDemo': 'Watch Demo',
   
-  // Results Section
+  // Results Section - Updated with CMS data
   'results.mainTitle': 'Real AI Impact',
   'results.mainSubtitle': 'Driving Business Growth',
   'results.title': 'Real AI Impact That Drives Business Growth',
-  'results.subtitle1': 'No more GenAI solutions and agents that don\'t deliver real results. No more focus only on software productivity. No more high technical complexity and long integration journeys.',
-  'results.subtitle2': 'Our unique approach combines advanced artificial intelligence with business strategy, delivering measurable impact and real transformation for your company.',
+  'results.subtitle1': 'No more generic AI. No more delays. No more complexity.',
+  'results.subtitle2': 'We deliver real business outcomes: higher revenue, lower costs, faster execution and smarter decisions - all powered by strategic intelligence.',
+  
+  // Results Cards - Updated with CMS data
   'results.conversionRate.title': 'Conversion Rate Optimization',
   'results.conversionRate.description': 'Advanced AI algorithms boost conversion rates through intelligent customer behavior analysis and personalized recommendations',
   'results.crmCost.title': 'CRM Cost Reduction',
@@ -42,14 +44,26 @@ export const enTranslations = {
   'results.rapidImplementation.title': 'Rapid Implementation',
   'results.rapidImplementation.description': '100% API-first and cloud-native AI solutions deliver measurable outcomes in weeks, not months',
   
-  // Stats Section
+  // Stats Section - Updated with CMS data
   'stats.companiesTransformed': 'Companies Transformed',
   'stats.accuracyRate': 'Accuracy Rate',
   'stats.expertSupport': 'Expert Support',
   'stats.topEngine': 'Top engine accuracy',
-  'stats.securityIssue': 'Security Issue',
-  'stats.leadtime': 'Value capture leadtime (month)',
+  'stats.securityIssue': 'Security issues',
+  'stats.leadtime': 'Value capture lead time',
   'stats.explainability': 'AI engine explainability',
+  
+  // Compact Solutions Section - Updated with CMS data  
+  'compactSolutions.title': 'Real AI Intelligence',
+  'compactSolutions.subtitle': 'Driving Competitive Advantage',
+  'compactSolutions.description': 'Go beyond the hype. Turn intelligence into business performance with ready-to-deploy AI solutions.',
+  'compactSolutions.buttonText': 'Explore Solutions',
+  
+  // Stats Values - Updated with CMS data
+  'stats.stat1Value': '97%',
+  'stats.stat2Value': '0%',
+  'stats.stat3Value': '1,5 (month)',
+  'stats.stat4Value': '100%',
   
   // CTA Section
   'cta.title': 'Ready to Transform Your Business?',

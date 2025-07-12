@@ -7,49 +7,63 @@ export const ptTranslations = {
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
   
-  // Hero Section
+  // Hero Section - Updated with CMS data
   'hero.infinite': 'Infinitas',
   'hero.possibilities': 'Possibilidades',
-  'hero.poweredByAI': 'Potencializadas por IA',
-  'hero.description': 'Transforme seu negócio com soluções avançadas de inteligência artificial que desbloqueiam potencial ilimitado e geram resultados extraordinários.',
-  'hero.startJourney': 'Inicie Sua Jornada',
-  'hero.watchDemo': 'Ver Demo',
+  'hero.poweredByAI': 'Impulsionadas pela IA',
+  'hero.description': 'Repense o que é possível. Construa com inteligência. Avance mais rápido. Cresça sem limites com IA adaptativa.',
+  'hero.startJourney': 'Comece sua Jornada',
+  'hero.watchDemo': 'Assitir Demo',
   
-  // Results Section
+  // Results Section - Updated with CMS data
   'results.mainTitle': 'Impacto Real de IA',
   'results.mainSubtitle': 'Impulsionando Crescimento de Negócios',
   'results.title': 'Impacto Real de IA que Impulsiona o Crescimento dos Negócios',
   'results.subtitle1': 'Chega de soluções de GenAI e agentes que não entregam resultados reais. Chega de foco apenas na produtividade de software. Chega de alta complexidade técnica e longas jornadas de integração.',
   'results.subtitle2': 'Nossa abordagem única combina inteligência artificial avançada com estratégia de negócios, entregando impacto mensurável e transformação real para sua empresa.',
+  
+  // Results Cards - Updated with CMS data
   'results.conversionRate.title': 'Otimização da Taxa de Conversão',
   'results.conversionRate.description': 'Algoritmos avançados de IA aumentam as taxas de conversão através de análise inteligente do comportamento do cliente e recomendações personalizadas',
   'results.crmCost.title': 'Redução de Custos de CRM',
   'results.crmCost.description': 'Operações simplificadas e processos automatizados reduzem significativamente as despesas operacionais mantendo a qualidade do serviço',
   'results.avgTicket.title': 'Aumento do Ticket Médio',
-  'results.avgTicket.description': 'Aumento substancial no valor do ticket médio através de vendas cruzadas guiadas por IA com balanceamento de diversidade',
+  'results.avgTicket.description': 'Aumento substancial no valor do ticket médio através de cross-selling guiado por IA com balanceamento de diversidade',
   'results.bounceRate.title': 'Otimização da Taxa de Rejeição',
-  'results.bounceRate.description': 'Redução significativa da taxa de rejeição em funis digitais através da otimização da experiência do usuário orientada por IA',
-  'results.proposalEngagement.title': 'Maior Engajamento em Propostas',
-  'results.proposalEngagement.description': 'Insights orientados por dados e personalização baseada em IA melhoram drasticamente as taxas de sucesso das propostas',
+  'results.bounceRate.description': 'Redução significativa da taxa de rejeição em funis digitais através de otimização da experiência do usuário orientada por IA',
+  'results.proposalEngagement.title': 'Engajamento Aprimorado de Propostas',
+  'results.proposalEngagement.description': 'Insights orientados por dados e personalização alimentada por IA melhoram dramaticamente as taxas de sucesso das propostas',
   'results.realTimeRec.title': 'Recomendações em Tempo Real',
-  'results.realTimeRec.description': 'Recomendações de comportamento preditivo com precisão igual para usuários logados (com histórico) e usuários anônimos (sem histórico)',
+  'results.realTimeRec.description': 'Recomendações preditivas de comportamento com precisão igual para usuários logados (com histórico) e usuários anônimos (sem histórico)',
   'results.productDiscovery.title': 'Descoberta Relevante de Produtos',
-  'results.productDiscovery.description': 'Descoberta de complementaridade de produtos potencializada por IA baseada em padrões de comportamento de navegação e preferências do usuário',
-  'results.dynamicPricing.title': 'Inteligência de Preços Dinâmicos',
-  'results.dynamicPricing.description': 'Modelo de preços auto-reforçado que ajusta preços baseado na demanda, onde ajustes aumentam demanda ou margem, realimentando o sistema',
+  'results.productDiscovery.description': 'Descoberta de complementaridade de produtos alimentada por IA baseada em padrões de comportamento de navegação e preferências do usuário',
+  'results.dynamicPricing.title': 'Inteligência de Precificação Dinâmica',
+  'results.dynamicPricing.description': 'Modelo de precificação auto-reforçante ajustando preços com base na demanda, onde os ajustes aumentam demanda ou margem, realimentando o sistema',
   'results.marketDemand.title': 'Previsão de Demanda de Mercado',
-  'results.marketDemand.description': 'Precisão de previsão potencializada por IA direcionando planos de produção e metas comerciais, otimizando quebras de estoque e giro',
+  'results.marketDemand.description': 'Precisão de previsão alimentada por IA direcionando planos de produção e metas comerciais, otimizando quebras de estoque e rotatividade',
   'results.rapidImplementation.title': 'Implementação Rápida',
   'results.rapidImplementation.description': 'Soluções de IA 100% API-first e cloud-native entregam resultados mensuráveis em semanas, não meses',
   
-  // Stats Section
+  // Stats Section - Updated with CMS data
   'stats.companiesTransformed': 'Empresas Transformadas',
   'stats.accuracyRate': 'Taxa de Precisão',
   'stats.expertSupport': 'Suporte Especializado',
-  'stats.topEngine': 'Precisão de motor top',
-  'stats.securityIssue': 'Questão de Segurança',
-  'stats.leadtime': 'Leadtime de captura de valor (mês)',
-  'stats.explainability': 'Explicabilidade do motor de IA',
+  'stats.topEngine': 'Acurácia média dos modelos',
+  'stats.securityIssue': 'Problemas de segurança',
+  'stats.leadtime': 'Lead time de captura de valor',
+  'stats.explainability': 'Recomendações com explicabilidade',
+  
+  // Compact Solutions Section - Updated with CMS data
+  'compactSolutions.title': 'Soluções de IA',
+  'compactSolutions.subtitle': 'Que Geram Resultados Concretos',
+  'compactSolutions.description': 'Vá além do hype. Transforme inteligência em performance de negócio com soluções de IA prontas para implementar.',
+  'compactSolutions.buttonText': 'Explorar Soluções',
+  
+  // Stats Values - Updated with CMS data
+  'stats.stat1Value': '97%',
+  'stats.stat2Value': '0%',
+  'stats.stat3Value': '1,5 (mês)',
+  'stats.stat4Value': '100%',
   
   // CTA Section
   'cta.title': 'Pronto para Transformar Seu Negócio?',
