@@ -44,9 +44,9 @@ const MetricsSection = () => {
 
   if (loading) {
     return (
-      <section className="w-full bg-slate-900/95 backdrop-blur-sm py-16 overflow-hidden relative min-h-[50vh] flex flex-col justify-center">
-        <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
-          <div className="text-center">
+      <section className="w-full bg-slate-900/95 backdrop-blur-sm py-8 overflow-hidden relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center py-6">
             <div className="h-16 bg-white/10 rounded mb-2 mx-auto w-32 animate-pulse" />
             <div className="h-6 bg-white/5 rounded mx-auto w-48 animate-pulse" />
           </div>
@@ -56,9 +56,9 @@ const MetricsSection = () => {
   }
 
   return (
-    <section className="w-full bg-slate-900/95 backdrop-blur-sm py-16 overflow-hidden relative min-h-[50vh] flex flex-col justify-center">
-      <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
-        <div className="relative h-24 flex items-center justify-center w-full">
+    <section className="w-full bg-slate-900/95 backdrop-blur-sm py-8 overflow-hidden relative">
+      <div className="container mx-auto px-4">
+        <div className="relative py-6 flex items-center justify-center">
           {/* Sliding metrics */}
           <div 
             className="flex transition-transform duration-700 ease-in-out"
@@ -73,14 +73,14 @@ const MetricsSection = () => {
                   index === currentSlide ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
                 }`}>
                   {/* Value with subtle glow effect */}
-                  <div className="text-5xl md:text-6xl font-light text-white mb-2 tracking-tight">
+                  <div className="text-4xl md:text-5xl font-light text-white mb-2 tracking-tight">
                     <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent animate-pulse">
                       {metric.value}
                     </span>
                   </div>
                   
                   {/* Label */}
-                  <div className="text-slate-300 text-lg md:text-xl font-light tracking-wide opacity-90">
+                  <div className="text-slate-300 text-base md:text-lg font-light tracking-wide opacity-90">
                     {metric.label}
                   </div>
                 </div>
@@ -91,7 +91,7 @@ const MetricsSection = () => {
       </div>
 
       {/* Scroll arrow at bottom */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce">
         <div className="relative group">
           {/* Glowing circle background */}
           <div className="w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-full backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
