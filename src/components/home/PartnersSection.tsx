@@ -7,7 +7,7 @@ const PartnersSection = () => {
 
   // Client logos with the provided images
   const partners = [
-    { name: 'HERING', logo: '/lovable-uploads/3615160d-7cc4-4b8a-8a81-ea7cabb7739f.png' },
+    { name: 'HERING', logo: '/lovable-uploads/7fd47d50-6abb-4203-984a-0fd29cbc913b.png' },
     { name: 'EMS', logo: '/lovable-uploads/58e286a1-1e55-47cc-8524-dc041be15b81.png' },
     { name: 'LEGRAND', logo: '/lovable-uploads/373196c0-5b6e-4e60-80c3-a1da99265d12.png' },
     { name: 'COGNA', logo: '/lovable-uploads/534d8da1-8e73-4707-9c28-3bb33e0fdfb6.png' },
