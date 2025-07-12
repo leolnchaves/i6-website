@@ -35,10 +35,10 @@ const HorizontalSolutionCard = ({
   const IconComponent = getIcon(icon);
   const isReversed = index % 2 === 1;
 
-  // Imagens para os cards (primeira é o GIF específico)
+  // Imagens para os cards (primeiras são os GIFs específicos)
   const placeholderImages = [
     '/solution-Anonymous-Visitors.gif',
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop&crop=center',
+    '/solucao-Identified-Users.gif',
     'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center'
