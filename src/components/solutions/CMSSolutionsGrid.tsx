@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useCMSPage } from '@/hooks/useCMSPage';
-import SolutionCard from './SolutionCard';
+import ModernSolutionCard from './ModernSolutionCard';
+import SolutionDetailModal from './SolutionDetailModal';
 import { 
   TrendingUp, 
   Users, 
@@ -43,8 +44,23 @@ const CMSSolutionsGrid = () => {
   const { language } = useLanguage();
   const { pageId, loading: pageLoading } = useCMSPage('solutions');
   const { cards, loading: cardsLoading } = useCMSSolutionsCards(pageId || '', language);
+  const [selectedSolution, setSelectedSolution] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loading = pageLoading || cardsLoading;
+
+  const handleViewDetails = (card: any, iconComponent: LucideIcon) => {
+    setSelectedSolution({
+      ...card,
+      icon: iconComponent
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedSolution(null);
+  };
 
   console.log('CMSSolutionsGrid - Page ID:', pageId);
   console.log('CMSSolutionsGrid - Cards loaded:', cards.length);
@@ -94,31 +110,42 @@ const CMSSolutionsGrid = () => {
   }
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
-          {cards.map((card, index) => {
-            const IconComponent = iconMap[card.icon] || Building2;
-            
-            return (
-              <SolutionCard
-                key={card.id}
-                icon={IconComponent}
-                title={card.title}
-                focus={card.focus}
-                description={card.description}
-                features={card.features}
-                outcome={card.outcome}
-                gradient={card.gradient}
-                bgColor={card.bg_color}
-                borderColor={card.border_color}
-                engine={card.engine}
-              />
-            );
-          })}
+    <>
+      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+        {/* Subtle background elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent"></div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 gap-8 max-w-6xl mx-auto">
+            {cards.map((card, index) => {
+              const IconComponent = iconMap[card.icon] || Building2;
+              
+              return (
+                <ModernSolutionCard
+                  key={card.id}
+                  icon={IconComponent}
+                  title={card.title}
+                  focus={card.focus}
+                  description={card.description}
+                  features={card.features}
+                  outcome={card.outcome}
+                  engine={card.engine}
+                  bgColor={card.bg_color}
+                  index={index}
+                  onViewDetails={() => handleViewDetails(card, IconComponent)}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <SolutionDetailModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        solution={selectedSolution}
+      />
+    </>
   );
 };
 
