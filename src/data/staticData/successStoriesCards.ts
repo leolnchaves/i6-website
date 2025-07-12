@@ -73,7 +73,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Online Sales Growth',
       metric3_value: '3.2x',
       metric3_label: 'Conversion Rate',
-      image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop',
+      image_url: '/lovable-uploads/d0935f4c-9873-49c4-bd9c-ba5054253145.png',
       is_active: true,
       is_active_home: true
     }
@@ -132,7 +132,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Crescimento Vendas Online',
       metric3_value: '3.2x',
       metric3_label: 'Taxa de Conversão',
-      image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop',
+      image_url: '/lovable-uploads/d0935f4c-9873-49c4-bd9c-ba5054253145.png',
       is_active: true,
       is_active_home: true
     }
