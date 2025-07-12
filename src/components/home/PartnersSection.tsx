@@ -16,7 +16,11 @@ const PartnersSection = () => {
     { name: 'JEQUITI', logo: '/lovable-uploads/5b025329-71fc-4701-8319-566e1d2cc76e.png' },
     { name: 'EMBRAER', logo: '/lovable-uploads/e5e13c1d-3ce5-472b-89e6-0b434fd4bf79.png' },
     { name: 'PARTNER 1', logo: '/lovable-uploads/cdaaa3c2-99d2-4768-b24c-525ef004fefa.png' },
-    { name: 'PARTNER 2', logo: '/lovable-uploads/c8e82ae8-631b-4310-9884-36f98d8aa8b3.png' }
+    { name: 'PARTNER 2', logo: '/lovable-uploads/c8e82ae8-631b-4310-9884-36f98d8aa8b3.png' },
+    { name: 'PARTNER 3', logo: '/lovable-uploads/45f18a3e-3b8d-4e93-adcd-606703504921.png' },
+    { name: 'PARTNER 4', logo: '/lovable-uploads/68330096-86f5-4324-bed5-4b1ca5dee086.png' },
+    { name: 'PARTNER 5', logo: '/lovable-uploads/0752a9be-6f61-4536-aa89-dc6c72014ce5.png' },
+    { name: 'PARTNER 6', logo: '/lovable-uploads/56b298ad-94ca-4837-a424-3f110bdecc55.png' }
   ];
 
   // Double the array for seamless loop
