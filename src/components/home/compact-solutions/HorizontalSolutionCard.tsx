@@ -46,14 +46,21 @@ const HorizontalSolutionCard = ({
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
 
-  // Define cores baseadas no índice usando as cores do sistema - versões mais sutis
-  const colorSchemes = [
-    { text: 'text-primary', gradient: 'from-primary/60 to-orange-400/60' },
-    { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' },
-    { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' }
-  ];
+  // Define cores baseadas no índice específico conforme solicitado
+  const getColorScheme = (cardIndex: number) => {
+    // Cards 1, 2, 4: cor laranja (anexo 1)
+    if ([0, 1, 3].includes(cardIndex)) {
+      return { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' };
+    }
+    // Cards 3, 5, 6: cor azulada (anexo 2)  
+    if ([2, 4, 5].includes(cardIndex)) {
+      return { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' };
+    }
+    // Fallback para outros cards
+    return { text: 'text-primary', gradient: 'from-primary/60 to-orange-400/60' };
+  };
   
-  const colorScheme = colorSchemes[index % colorSchemes.length];
+  const colorScheme = getColorScheme(index);
 
   return (
     <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
