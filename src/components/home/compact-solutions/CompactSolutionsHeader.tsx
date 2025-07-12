@@ -11,7 +11,7 @@ const CompactSolutionsHeader = () => {
   // Tentar buscar do CMS primeiro, senão usar as traduções como fallback
   const title = getContent('compactSolutionsHero', 'title') || 'AI Solutions That';
   const subtitle = getContent('compactSolutionsHero', 'subtitle') || 'Drive Concrete Results';
-  const description = getContent('compactSolutionsHero', 'description') || 'Unlock real business value with AI solutions designed to deliver measurable outcomes. From customer intelligence to operational efficiency, our adaptive technology transforms how you compete and grow.';
+  const description = getContent('compactSolutionsHero', 'description') || 'Go beyond the hype. Turn intelligence into competitive edge that drives real business growth.';
 
   console.log('CompactSolutionsHeader - CMS content:', {
     title: getContent('compactSolutionsHero', 'title'),
