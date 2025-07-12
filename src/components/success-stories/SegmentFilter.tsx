@@ -65,7 +65,7 @@ const SegmentFilter: React.FC<SegmentFilterProps> = ({ onSegmentChange, selected
             onClick={() => onSegmentChange(null)}
             className="mb-2"
           >
-            Todos os Segmentos
+            {language === 'en' ? 'All Industries' : 'Todos os Segmentos'}
           </Button>
           
           {availableSegments.map((segment) => (

@@ -104,14 +104,22 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
           <div className="text-center py-8">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
               {selectedSegment 
-                ? `Nenhum case de sucesso encontrado para "${selectedSegment}"`
-                : 'Nenhum case de sucesso disponível'
+                ? (language === 'en' 
+                    ? `No success stories found for "${selectedSegment}"`
+                    : `Nenhum case de sucesso encontrado para "${selectedSegment}"`)
+                : (language === 'en' 
+                    ? 'No success stories available'
+                    : 'Nenhum case de sucesso disponível')
               }
             </h2>
             <p className="text-gray-600 text-sm md:text-base">
               {selectedSegment 
-                ? 'Tente selecionar um segmento diferente ou veja todos os cases.'
-                : 'Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.'
+                ? (language === 'en' 
+                    ? 'Try selecting a different segment or view all stories.'
+                    : 'Tente selecionar um segmento diferente ou veja todos os cases.')
+                : (language === 'en' 
+                    ? 'Success stories will be displayed here when added in the CMS.'
+                    : 'Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.')
               }
             </p>
           </div>
@@ -184,7 +192,9 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
 
                   {/* Explore details with modern arrow - inspired by hero button */}
                   <div className="flex items-center justify-end">
-                    <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">Explore Details</span>
+                    <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">
+                      {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
+                    </span>
                     <div className="relative overflow-hidden">
                       {/* Background that appears on hover */}
                       <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
@@ -243,14 +253,18 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
               {/* Challenge & Solution */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <h2 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wider">Desafio</h2>
+                  <h2 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wider">
+                    {language === 'en' ? 'Challenge' : 'Desafio'}
+                  </h2>
                   <p className="text-gray-700 text-sm leading-relaxed">
                     {selectedStory.challenge}
                   </p>
                 </div>
                 
                 <div>
-                  <h2 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wider">Solução</h2>
+                  <h2 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wider">
+                    {language === 'en' ? 'Solution' : 'Solução'}
+                  </h2>
                   <p className="text-gray-700 text-sm leading-relaxed">
                     {selectedStory.solution}
                   </p>
@@ -311,15 +325,29 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                         <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                           <Building2 className="w-6 h-6 text-blue-600" />
                         </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Implementação Rápida</h3>
-                        <p className="text-sm text-gray-600">Solução implementada em menos de 4 semanas com suporte completo</p>
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          {language === 'en' ? 'Fast Implementation' : 'Implementação Rápida'}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {language === 'en' 
+                            ? 'Solution implemented in less than 4 weeks with full support'
+                            : 'Solução implementada em menos de 4 semanas com suporte completo'
+                          }
+                        </p>
                       </div>
                       <div className="text-center">
                         <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                           <ArrowRight className="w-6 h-6 text-green-600" />
                         </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">ROI Comprovado</h3>
-                        <p className="text-sm text-gray-600">Retorno sobre investimento mensurável desde o primeiro mês</p>
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          {language === 'en' ? 'Proven ROI' : 'ROI Comprovado'}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {language === 'en' 
+                            ? 'Measurable return on investment from the first month'
+                            : 'Retorno sobre investimento mensurável desde o primeiro mês'
+                          }
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -331,19 +359,24 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Projeto Concluído com Sucesso</h3>
+                      <h3 className="font-semibold text-gray-900 mb-2">
+                        {language === 'en' ? 'Project Successfully Completed' : 'Projeto Concluído com Sucesso'}
+                      </h3>
                       <p className="text-sm text-gray-600 max-w-md mx-auto">
-                        Esta implementação demonstra nossa capacidade de entregar soluções que geram impacto real e resultados mensuráveis para nossos clientes.
+                        {language === 'en' 
+                          ? 'This implementation demonstrates our ability to deliver solutions that generate real impact and measurable results for our clients.'
+                          : 'Esta implementação demonstra nossa capacidade de entregar soluções que geram impacto real e resultados mensuráveis para nossos clientes.'
+                        }
                       </p>
                     </div>
                     <div className="flex justify-center items-center gap-6 text-xs text-gray-500">
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Projeto Ativo</span>
+                        <span>{language === 'en' ? 'Active Project' : 'Projeto Ativo'}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>Suporte Contínuo</span>
+                        <span>{language === 'en' ? 'Ongoing Support' : 'Suporte Contínuo'}</span>
                       </div>
                     </div>
                   </div>

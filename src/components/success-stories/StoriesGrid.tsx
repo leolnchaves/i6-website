@@ -78,14 +78,22 @@ const StoriesGrid: React.FC<StoriesGridProps> = ({ selectedSegment }) => {
           <div className="text-center py-16">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
               {selectedSegment 
-                ? `Nenhum case de sucesso encontrado para "${selectedSegment}"`
-                : 'Nenhum case de sucesso disponível'
+                ? (language === 'en' 
+                    ? `No success stories found for "${selectedSegment}"`
+                    : `Nenhum case de sucesso encontrado para "${selectedSegment}"`)
+                : (language === 'en' 
+                    ? 'No success stories available'
+                    : 'Nenhum case de sucesso disponível')
               }
             </h2>
             <p className="text-gray-600 text-sm md:text-base">
               {selectedSegment 
-                ? 'Tente selecionar um segmento diferente ou veja todos os cases.'
-                : 'Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.'
+                ? (language === 'en' 
+                    ? 'Try selecting a different segment or view all stories.'
+                    : 'Tente selecionar um segmento diferente ou veja todos os cases.')
+                : (language === 'en' 
+                    ? 'Success stories will be displayed here when added in the CMS.'
+                    : 'Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.')
               }
             </p>
           </div>
