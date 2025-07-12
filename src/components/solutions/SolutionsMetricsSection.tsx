@@ -9,48 +9,29 @@ const SolutionsMetricsSection = () => {
   
   // Métricas específicas para a página de Solutions
   const solutionsMetrics = {
-    en: {
-      aiEngines: "6+",
-      aiEnginesLabel: "AI Engines Developed",
-      industrySuccess: "95%+",
-      industrySuccessLabel: "Industry Success Rate",
-      deploymentTime: "30%",
-      deploymentTimeLabel: "Faster Deployment",
-      precisionGain: "85%+",
-      precisionGainLabel: "Precision Improvement"
-    },
-    pt: {
-      aiEngines: "6+",
-      aiEnginesLabel: "Motores de IA Desenvolvidos",
-      industrySuccess: "95%+",
-      industrySuccessLabel: "Taxa de Sucesso da Indústria",
-      deploymentTime: "30%",
-      deploymentTimeLabel: "Implementação Mais Rápida",
-      precisionGain: "85%+",
-      precisionGainLabel: "Melhoria na Precisão"
-    }
+    en: [
+      "Specialist AI",
+      "Frictionless integration",
+      "Low technical lift",
+      "API-first",
+      "Cloud-native",
+      "Explainable recommendations",
+      "Results in few weeks"
+    ],
+    pt: [
+      "IA especialista",
+      "Integração sem fricção",
+      "Baixo tech lift",
+      "API-first",
+      "Cloud-native",
+      "Recomendações explicáveis",
+      "Resultados em semanas"
+    ]
   };
   
   const metricsContent = solutionsMetrics[language] || solutionsMetrics.en;
 
-  const metrics = [
-    { 
-      value: metricsContent.aiEngines, 
-      label: metricsContent.aiEnginesLabel
-    },
-    { 
-      value: metricsContent.industrySuccess, 
-      label: metricsContent.industrySuccessLabel
-    },
-    { 
-      value: metricsContent.deploymentTime, 
-      label: metricsContent.deploymentTimeLabel
-    },
-    { 
-      value: metricsContent.precisionGain, 
-      label: metricsContent.precisionGainLabel
-    }
-  ];
+  const metrics = metricsContent.map((text: string) => ({ text }));
 
   // Autoplay functionality
   useEffect(() => {
@@ -81,21 +62,16 @@ const SolutionsMetricsSection = () => {
                 key={index}
                 className="w-full flex-shrink-0 text-center"
               >
-                <div className={`transition-all duration-700 ${
-                  index === currentSlide ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
-                }`}>
-                  {/* Value with subtle glow effect */}
-                  <div className="text-4xl md:text-5xl font-light text-slate-800 mb-1 tracking-tight">
-                    <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
-                      {metric.value}
-                    </span>
-                  </div>
-                  
-                  {/* Label */}
-                  <div className="text-slate-600 text-base md:text-lg font-light tracking-wide opacity-90">
-                    {metric.label}
-                  </div>
-                </div>
+                 <div className={`transition-all duration-700 ${
+                   index === currentSlide ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
+                 }`}>
+                   {/* Centered text with proportional font size */}
+                   <div className="text-2xl md:text-3xl lg:text-4xl font-light text-slate-800 tracking-tight text-center">
+                     <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
+                       {metric.text}
+                     </span>
+                   </div>
+                 </div>
               </div>
             ))}
           </div>
