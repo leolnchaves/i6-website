@@ -6,9 +6,9 @@ const FeaturedStoriesHeader = () => {
 
   return (
     <div className="text-center mb-8">
-      <h2 className="text-5xl font-bold text-gray-900 mb-6">
+      <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
         {t('home.featuredStories.title')}
-        <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
+        <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent leading-tight">
           {t('home.featuredStories.subtitle')}
         </span>
       </h2>
