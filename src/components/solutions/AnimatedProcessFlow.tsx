@@ -101,51 +101,6 @@ const AnimatedProcessFlow = () => {
     }
   };
 
-  // Timeline progress functions
-  const getTimelineProgress = () => {
-    // Step 1: semana 1 (0-25%)
-    // Step 2: Semana 1 (25%)  
-    // Step 3: semana 2 a 3 (25-50%)
-    // Step 4: semana 4 (50-75%)
-    // Step 5: 3 meses (75-100%)
-    
-    const stepProgressMap = [
-      { start: 0, end: 25 },    // Step 1: Semana 1
-      { start: 25, end: 25 },   // Step 2: Semana 1 (mesmo período)
-      { start: 25, end: 50 },   // Step 3: Semana 2-3
-      { start: 50, end: 75 },   // Step 4: Semana 4
-      { start: 75, end: 100 }   // Step 5: 3 meses
-    ];
-    
-    const currentStepMap = stepProgressMap[currentStep];
-    if (!currentStepMap) return 0;
-    
-    const stepProgress = (progress / 100) * (currentStepMap.end - currentStepMap.start);
-    return currentStepMap.start + stepProgress;
-  };
-
-  const getCurrentPhaseDescription = () => {
-    const phases = [
-      "Descoberta e Definição do Ângulo de Negócio",
-      "Coleta e Anonimização de Dados", 
-      "Treinamento e Ajuste Fino do Modelo",
-      "Avaliação de Performance",
-      "Integração e Recomendações"
-    ];
-    return phases[currentStep] || phases[0];
-  };
-
-  const getTimeEstimate = () => {
-    const timeEstimates = [
-      "Semana 1 - Análise inicial e alinhamento",
-      "Semana 1 - Preparação dos dados",
-      "Semanas 2-3 - Desenvolvimento do modelo", 
-      "Semana 4 - Testes e validação",
-      "3 Meses - Implementação completa"
-    ];
-    return timeEstimates[currentStep] || timeEstimates[0];
-  };
-
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -295,48 +250,7 @@ const AnimatedProcessFlow = () => {
           </div>
         </div>
 
-        {/* Weekly Progress Bar */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-white rounded-xl p-6 shadow-lg border">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
-              Cronograma de Implementação
-            </h3>
-            
-            {/* Timeline Progress */}
-            <div className="relative">
-              {/* Progress labels */}
-              <div className="flex justify-between text-xs text-gray-600 mb-2">
-                <span>Semana 1</span>
-                <span>Semana 2-3</span>
-                <span>Semana 4</span>
-                <span>3 Meses</span>
-              </div>
-              
-              {/* Progress bar background */}
-              <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
-                <div 
-                  className="bg-gradient-to-r from-orange-500 to-green-500 h-3 rounded-full transition-all duration-500 relative"
-                  style={{ 
-                    width: `${getTimelineProgress()}%` 
-                  }}
-                >
-                  {/* Progress indicator dot */}
-                  <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-orange-500 rounded-full shadow-md"></div>
-                </div>
-              </div>
-              
-              {/* Current phase description */}
-              <div className="text-center">
-                <p className="text-sm font-medium text-gray-700">
-                  {getCurrentPhaseDescription()}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {getTimeEstimate()}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Current Step Detail Card */}
         <div className="max-w-6xl mx-auto mb-16">
           <Card className="border-0 shadow-xl bg-white overflow-hidden">
             <CardContent className="p-0">
