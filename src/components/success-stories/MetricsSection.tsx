@@ -1,16 +1,15 @@
 
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
+import { successStoriesData } from '@/data/staticData/successStoriesData';
 import { useState, useEffect, useRef } from 'react';
 
 const MetricsSection = () => {
   const { language } = useLanguage();
-  const { getMetricsContent, loading } = useSuccessStoriesContent(language);
   const [currentSlide, setCurrentSlide] = useState(0);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
   
-  const metricsContent = getMetricsContent();
+  const metricsContent = successStoriesData[language]?.metrics || successStoriesData.en.metrics;
 
   const metrics = [
     { 
@@ -41,19 +40,6 @@ const MetricsSection = () => {
       };
     }
   }, [metrics.length]);
-
-  if (loading) {
-    return (
-      <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-2 overflow-hidden relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center py-2">
-            <div className="h-12 bg-gray-400/20 rounded mb-1 mx-auto w-32 animate-pulse" />
-            <div className="h-4 bg-gray-400/10 rounded mx-auto w-48 animate-pulse" />
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[25.2vh] flex flex-col justify-center">

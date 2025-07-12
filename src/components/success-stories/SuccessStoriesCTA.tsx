@@ -2,27 +2,12 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
+import { successStoriesData } from '@/data/staticData/successStoriesData';
 
 const SuccessStoriesCTA = () => {
   const { language } = useLanguage();
-  const { getCTAContent, loading } = useSuccessStoriesContent(language);
   
-  const ctaContent = getCTAContent();
-
-  if (loading) {
-    return (
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="animate-pulse">
-            <div className="h-10 bg-gray-300 rounded mb-6 max-w-lg mx-auto"></div>
-            <div className="h-6 bg-gray-300 rounded mb-8 max-w-2xl mx-auto"></div>
-            <div className="h-12 bg-gray-300 rounded max-w-xs mx-auto"></div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const ctaContent = successStoriesData[language]?.cta || successStoriesData.en.cta;
 
   return (
     <section className="py-20 bg-gray-50">

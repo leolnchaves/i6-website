@@ -1,92 +1,15 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSTestimonials } from '@/hooks/useCMSTestimonials';
-import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { successStoriesData } from '@/data/staticData/successStoriesData';
+import { testimonialsData } from '@/data/staticData/testimonialsData';
 import { Linkedin, Quote } from 'lucide-react';
 
 const TestimonialsSection = () => {
   const { language } = useLanguage();
-  const { getContent } = useSuccessStoriesContent(language);
-  const { testimonials, loading, fetchTestimonials } = useCMSTestimonials();
-  const [pageId, setPageId] = useState<string | null>(null);
-
-  // First, get the page ID for success-stories
-  useEffect(() => {
-    const getPageId = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('cms_pages')
-          .select('id')
-          .eq('slug', 'success-stories')
-          .eq('is_active', true)
-          .single();
-
-        if (error) {
-          console.error('Error fetching page ID:', error);
-          return;
-        }
-
-        if (data) {
-          setPageId(data.id);
-        }
-      } catch (error) {
-        console.error('Error getting page ID:', error);
-      }
-    };
-
-    getPageId();
-  }, []);
-
-  // Then fetch testimonials when we have the page ID
-  useEffect(() => {
-    if (pageId) {
-      fetchTestimonials(pageId, language);
-    }
-  }, [pageId, language, fetchTestimonials]);
-
-  const sectionContent = {
-    title: getContent('testimonialsSection', 'title'),
-    subtitle: getContent('testimonialsSection', 'subtitle')
-  };
-
-
-  if (loading) {
-    return (
-      <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-light tracking-tight text-foreground mb-4">
-            {sectionContent.title}
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {sectionContent.subtitle}
-          </p>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="group animate-pulse">
-              <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500">
-                <div className="flex items-center justify-between mb-4">
-                  <Quote className="w-6 h-6 text-primary/60" />
-                  <div className="w-6 h-6 bg-muted rounded"></div>
-                </div>
-                <div className="space-y-2 mb-6">
-                  <div className="h-3 bg-muted rounded w-full"></div>
-                  <div className="h-3 bg-muted rounded w-full"></div>
-                  <div className="h-3 bg-muted rounded w-3/4"></div>
-                </div>
-                <div className="h-4 bg-muted rounded w-1/2"></div>
-              </div>
-            </div>
-          ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  
+  const sectionContent = successStoriesData[language]?.testimonials || successStoriesData.en.testimonials;
+  const testimonials = testimonialsData[language] || testimonialsData.en;
 
   return (
     <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
@@ -104,7 +27,9 @@ const TestimonialsSection = () => {
           <div className="text-center py-16">
             <div className="relative">
               <Quote className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-              <p className="text-muted-foreground">Nenhum depoimento disponível no momento.</p>
+              <p className="text-muted-foreground">
+                {language === 'en' ? 'No testimonials available at the moment.' : 'Nenhum depoimento disponível no momento.'}
+              </p>
             </div>
           </div>
         ) : (

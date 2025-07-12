@@ -3,8 +3,7 @@ import { X, ArrowRight, User, Building2, Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
-import { useCMSContent } from '@/hooks/useCMSContent';
+import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
 
 interface ModernStoriesGridProps {
   selectedSegment?: string | null;
@@ -30,24 +29,10 @@ interface StoryCard {
 
 const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }) => {
   const { language } = useLanguage();
-  const { pages, fetchPages } = useCMSContent();
-  const { cards, loading, fetchCards } = useCMSSuccessStoriesCards();
-  const [pageId, setPageId] = useState<string>('');
   const [selectedStory, setSelectedStory] = useState<StoryCard | null>(null);
 
-  useEffect(() => {
-    fetchPages();
-  }, [fetchPages]);
-
-  useEffect(() => {
-    if (pages.length > 0) {
-      const successStoriesPage = pages.find(p => p.slug === 'success-stories');
-      if (successStoriesPage) {
-        setPageId(successStoriesPage.id);
-        fetchCards(successStoriesPage.id, language);
-      }
-    }
-  }, [pages, language, fetchCards]);
+  // Get static data
+  const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
 
   // Filter cards based on selected segment
   const filteredCards = selectedSegment 
@@ -70,32 +55,6 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
       document.body.style.overflow = 'unset';
     };
   }, []);
-
-  if (loading) {
-    return (
-      <section className="py-6 md:py-8 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <Card key={index} className="overflow-hidden animate-pulse">
-                <div className="h-2 bg-gray-300"></div>
-                <CardContent className="p-6">
-                  <div className="h-4 bg-gray-300 rounded mb-2 w-20"></div>
-                  <div className="h-6 bg-gray-300 rounded mb-4"></div>
-                  <div className="h-16 bg-gray-300 rounded mb-6"></div>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="h-12 bg-gray-300 rounded"></div>
-                    <div className="h-12 bg-gray-300 rounded"></div>
-                  </div>
-                  <div className="h-8 bg-gray-300 rounded"></div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   if (filteredCards.length === 0) {
     return (

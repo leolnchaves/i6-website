@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
-import { useCMSContent } from '@/hooks/useCMSContent';
+import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
 
 interface SegmentFilterProps {
   onSegmentChange: (segment: string | null) => void;
@@ -12,32 +11,14 @@ interface SegmentFilterProps {
 
 const SegmentFilter: React.FC<SegmentFilterProps> = ({ onSegmentChange, selectedSegment }) => {
   const { language } = useLanguage();
-  const { pages, fetchPages } = useCMSContent();
-  const { cards, fetchCards } = useCMSSuccessStoriesCards();
-  const [pageId, setPageId] = useState<string>('');
   const [availableSegments, setAvailableSegments] = useState<string[]>([]);
 
+  // Extract unique industries from static data
   useEffect(() => {
-    fetchPages();
-  }, [fetchPages]);
-
-  useEffect(() => {
-    if (pages.length > 0) {
-      const successStoriesPage = pages.find(p => p.slug === 'success-stories');
-      if (successStoriesPage) {
-        setPageId(successStoriesPage.id);
-        fetchCards(successStoriesPage.id, language);
-      }
-    }
-  }, [pages, language, fetchCards]);
-
-  // Extract unique industries from cards
-  useEffect(() => {
-    if (cards.length > 0) {
-      const uniqueIndustries = [...new Set(cards.map(card => card.industry))].sort();
-      setAvailableSegments(uniqueIndustries);
-    }
-  }, [cards]);
+    const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
+    const uniqueIndustries = [...new Set(cards.map(card => card.industry))].sort();
+    setAvailableSegments(uniqueIndustries);
+  }, [language]);
 
   const handleSegmentClick = (segment: string) => {
     if (selectedSegment === segment) {
