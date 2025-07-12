@@ -44,8 +44,8 @@ const MetricsSection = () => {
 
   if (loading) {
     return (
-      <section className="w-full bg-slate-900/95 backdrop-blur-sm py-12">
-        <div className="container mx-auto px-4">
+      <section className="w-full bg-slate-900/95 backdrop-blur-sm py-16 overflow-hidden relative min-h-[50vh] flex flex-col justify-center">
+        <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="h-16 bg-white/10 rounded mb-2 mx-auto w-32 animate-pulse" />
             <div className="h-6 bg-white/5 rounded mx-auto w-48 animate-pulse" />
@@ -56,9 +56,9 @@ const MetricsSection = () => {
   }
 
   return (
-    <section className="w-full bg-slate-900/95 backdrop-blur-sm py-12 overflow-hidden relative">
-      <div className="container mx-auto px-4">
-        <div className="relative h-24 flex items-center justify-center">
+    <section className="w-full bg-slate-900/95 backdrop-blur-sm py-16 overflow-hidden relative min-h-[50vh] flex flex-col justify-center">
+      <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
+        <div className="relative h-24 flex items-center justify-center w-full">
           {/* Sliding metrics */}
           <div 
             className="flex transition-transform duration-700 ease-in-out"
@@ -88,23 +88,9 @@ const MetricsSection = () => {
             ))}
           </div>
         </div>
-
-        {/* Minimal dots indicator */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {metrics.map((_, index) => (
-            <div
-              key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentSlide 
-                  ? 'bg-white w-8' 
-                  : 'bg-white/30'
-              }`}
-            />
-          ))}
-        </div>
       </div>
 
-      {/* Scroll arrow at bottom - same as HOME */}
+      {/* Scroll arrow at bottom */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
         <div className="relative group">
           {/* Glowing circle background */}
