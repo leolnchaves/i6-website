@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getProcessSteps } from '@/data/solutions/processData';
-import { CheckCircle, Circle, Play, Pause } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import SandboxEnvironment from './SandboxEnvironment';
@@ -27,7 +27,7 @@ const AnimatedProcessFlow = () => {
             });
             return 0;
           }
-          return prev + 2; // 2% every 100ms = 5 seconds per step
+          return prev + 1; // 1% every 100ms = 10 seconds per step
         });
       }, 100);
     }
@@ -56,13 +56,9 @@ const AnimatedProcessFlow = () => {
   const getStepColor = (status: string) => {
     switch (status) {
       case 'completed': return 'bg-green-500 text-white border-green-500';
-      case 'active': return 'bg-primary text-white border-primary';
-      default: return 'bg-gray-200 text-gray-500 border-gray-300';
+      case 'active': return 'bg-orange-500 text-white border-orange-500';
+      default: return 'bg-gray-300 text-gray-600 border-gray-300';
     }
-  };
-
-  const getConnectorColor = (index: number) => {
-    return index < currentStep ? 'bg-green-500' : 'bg-gray-300';
   };
 
   return (
@@ -76,7 +72,7 @@ const AnimatedProcessFlow = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             {t('solutions.process.title')}
           </h2>
@@ -95,21 +91,18 @@ const AnimatedProcessFlow = () => {
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               {isPlaying ? 'Pausar Demonstração' : 'Iniciar Demonstração'}
             </Button>
-            <div className="text-sm text-gray-600">
-              Passo {currentStep + 1} de {processSteps.length}
-            </div>
           </div>
         </div>
 
-        {/* Process Steps */}
-        <div className="max-w-6xl mx-auto mb-16">
-          {/* Desktop Horizontal Layout */}
+        {/* Horizontal Steps */}
+        <div className="max-w-6xl mx-auto mb-8">
+          {/* Desktop Layout */}
           <div className="hidden lg:block">
             <div className="relative">
               {/* Progress Line */}
-              <div className="absolute top-8 left-0 right-0 h-1 bg-gray-300 rounded-full">
+              <div className="absolute top-6 left-0 right-0 h-1 bg-gray-300 rounded-full">
                 <div 
-                  className="h-full bg-gradient-to-r from-green-500 to-primary rounded-full transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-500"
                   style={{ 
                     width: `${((currentStep + progress / 100) / (processSteps.length - 1)) * 100}%` 
                   }}
@@ -123,35 +116,30 @@ const AnimatedProcessFlow = () => {
                   return (
                     <div 
                       key={step.key}
-                      className="flex flex-col items-center cursor-pointer group"
+                      className="flex flex-col items-center cursor-pointer group max-w-[180px]"
                       onClick={() => handleStepClick(index)}
                     >
                       {/* Step Circle */}
                       <div className={`
-                        w-16 h-16 rounded-full border-4 flex items-center justify-center
-                        transition-all duration-300 shadow-lg group-hover:scale-110
-                        ${getStepColor(status)}
+                        w-12 h-12 rounded-full border-3 flex items-center justify-center
+                        transition-all duration-300 shadow-lg group-hover:scale-110 z-10 bg-white
+                        ${status === 'active' ? 'border-orange-500 text-orange-500' : 
+                          status === 'completed' ? 'border-green-500 text-green-500' : 'border-gray-300 text-gray-400'}
                       `}>
-                        {status === 'completed' ? (
-                          <CheckCircle className="w-8 h-8" />
-                        ) : (
-                          <span className="text-lg font-bold">
-                            {String(index + 1).padStart(2, '0')}
-                          </span>
-                        )}
+                        <span className="text-sm font-bold">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
                       </div>
 
-                      {/* Step Info */}
-                      <div className="mt-4 text-center max-w-xs">
+                      {/* Step Title */}
+                      <div className="mt-4 text-center">
                         <h3 className={`
-                          font-semibold text-sm mb-1 transition-colors
-                          ${status === 'active' ? 'text-primary' : 'text-gray-700'}
+                          font-semibold text-sm leading-tight transition-colors
+                          ${status === 'active' ? 'text-orange-500' : 
+                            status === 'completed' ? 'text-green-600' : 'text-gray-600'}
                         `}>
                           {step.title}
                         </h3>
-                        <p className="text-xs text-gray-500 font-medium bg-gray-100 rounded-full px-3 py-1">
-                          {step.subtitle}
-                        </p>
                       </div>
                     </div>
                   );
@@ -160,88 +148,87 @@ const AnimatedProcessFlow = () => {
             </div>
           </div>
 
-          {/* Mobile Vertical Layout */}
-          <div className="lg:hidden space-y-6">
-            {processSteps.map((step, index) => {
-              const status = getStepStatus(index);
-              return (
-                <div key={step.key} className="flex items-start gap-4">
-                  <div className="flex flex-col items-center">
+          {/* Mobile Layout */}
+          <div className="lg:hidden">
+            <div className="flex overflow-x-auto gap-4 pb-4">
+              {processSteps.map((step, index) => {
+                const status = getStepStatus(index);
+                return (
+                  <div 
+                    key={step.key}
+                    className="flex flex-col items-center cursor-pointer group min-w-[120px] flex-shrink-0"
+                    onClick={() => handleStepClick(index)}
+                  >
                     <div className={`
-                      w-12 h-12 rounded-full border-3 flex items-center justify-center
-                      transition-all duration-300 shadow-md
-                      ${getStepColor(status)}
+                      w-10 h-10 rounded-full border-2 flex items-center justify-center
+                      transition-all duration-300 shadow-md group-hover:scale-110 bg-white
+                      ${status === 'active' ? 'border-orange-500 text-orange-500' : 
+                        status === 'completed' ? 'border-green-500 text-green-500' : 'border-gray-300 text-gray-400'}
                     `}>
-                      {status === 'completed' ? (
-                        <CheckCircle className="w-6 h-6" />
-                      ) : (
-                        <span className="text-sm font-bold">
-                          {index + 1}
-                        </span>
-                      )}
+                      <span className="text-xs font-bold">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
                     </div>
-                    {index < processSteps.length - 1 && (
-                      <div className={`w-1 h-12 mt-2 transition-colors ${getConnectorColor(index)}`}></div>
-                    )}
-                  </div>
-                  
-                  <div className="flex-1 pb-6">
                     <h3 className={`
-                      font-semibold mb-1 transition-colors
-                      ${status === 'active' ? 'text-primary' : 'text-gray-700'}
+                      mt-2 font-medium text-xs text-center leading-tight transition-colors
+                      ${status === 'active' ? 'text-orange-500' : 
+                        status === 'completed' ? 'text-green-600' : 'text-gray-600'}
                     `}>
                       {step.title}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-2">{step.subtitle}</p>
-                    <p className="text-sm text-gray-600">{step.description}</p>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Current Step Details */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center gap-3 mb-4">
-                  <div className={`
-                    w-12 h-12 rounded-full flex items-center justify-center
-                    ${getStepColor(getStepStatus(currentStep))}
-                  `}>
-                    <span className="text-lg font-bold">
-                      {String(currentStep + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                      {processSteps[currentStep].title}
-                    </h3>
-                    <p className="text-primary font-medium">
-                      {processSteps[currentStep].subtitle}
-                    </p>
-                  </div>
-                </div>
-              </div>
+        {/* Current Step Detail Card */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <Card className="border-0 shadow-xl bg-white overflow-hidden">
+            <CardContent className="p-0">
+              <div className="flex flex-col lg:flex-row">
+                {/* Left side - Content */}
+                <div className="flex-1 p-8 lg:p-12">
+                  <div className="flex items-start gap-6">
+                    {/* Large Step Number Circle */}
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center">
+                          <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white text-xl font-bold">
+                            {String(currentStep + 1).padStart(2, '0')}
+                          </div>
+                        </div>
+                        {isPlaying && (
+                          <div className="absolute inset-0 rounded-full border-4 border-orange-300/50 animate-pulse"></div>
+                        )}
+                      </div>
+                    </div>
 
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                    {processSteps[currentStep].description}
-                  </p>
-                  
-                  {/* Progress Bar for Current Step */}
+                    {/* Content */}
+                    <div className="flex-1">
+                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+                        {processSteps[currentStep].title}
+                      </h3>
+                      <p className="text-orange-500 font-semibold text-lg mb-6">
+                        {processSteps[currentStep].subtitle}
+                      </p>
+                      <p className="text-gray-700 text-lg leading-relaxed">
+                        {processSteps[currentStep].description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Progress Indicator */}
                   {isPlaying && (
-                    <div className="space-y-2">
+                    <div className="mt-8 space-y-3">
                       <div className="flex justify-between text-sm text-gray-600">
-                        <span>Progresso do Step</span>
+                        <span>Progresso da Etapa</span>
                         <span>{Math.round(progress)}%</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div 
-                          className="bg-gradient-to-r from-primary to-green-500 h-2 rounded-full transition-all duration-100"
+                          className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-100"
                           style={{ width: `${progress}%` }}
                         ></div>
                       </div>
@@ -249,19 +236,23 @@ const AnimatedProcessFlow = () => {
                   )}
                 </div>
 
-                <div className="flex justify-center">
-                  <div className="relative">
-                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-orange-500/20 flex items-center justify-center">
-                      <div className={`
-                        w-24 h-24 rounded-full flex items-center justify-center text-white text-3xl font-bold
-                        ${processSteps[currentStep].color.replace('from-slate-400 to-slate-500', 'from-primary to-primary')} bg-gradient-to-br
-                      `}>
+                {/* Right side - Visual Element */}
+                <div className="lg:w-80 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center p-8">
+                  <div className="text-center">
+                    <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center mb-4 relative">
+                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white text-3xl font-bold">
                         {String(currentStep + 1).padStart(2, '0')}
                       </div>
+                      {isPlaying && (
+                        <>
+                          <div className="absolute inset-0 rounded-full border-4 border-orange-400/30 animate-ping"></div>
+                          <div className="absolute inset-0 rounded-full border-2 border-orange-400/50 animate-pulse"></div>
+                        </>
+                      )}
                     </div>
-                    {isPlaying && (
-                      <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-pulse"></div>
-                    )}
+                    <div className="text-orange-600 text-sm font-medium">
+                      Etapa {currentStep + 1} de {processSteps.length}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -269,7 +260,7 @@ const AnimatedProcessFlow = () => {
           </Card>
         </div>
 
-        {/* Completeness Indicator */}
+        {/* Overall Progress */}
         <div className="max-w-2xl mx-auto text-center mb-16">
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <h4 className="text-lg font-semibold text-gray-900 mb-4">
@@ -282,7 +273,7 @@ const AnimatedProcessFlow = () => {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <div 
-                  className="bg-gradient-to-r from-green-500 to-primary h-3 rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-orange-500 to-green-500 h-3 rounded-full transition-all duration-500"
                   style={{ 
                     width: `${((currentStep + progress / 100) / processSteps.length) * 100}%` 
                   }}
