@@ -44,9 +44,9 @@ const MetricsSection = () => {
 
   if (loading) {
     return (
-      <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative">
+      <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-2 overflow-hidden relative">
         <div className="container mx-auto px-4">
-          <div className="text-center py-4">
+          <div className="text-center py-2">
             <div className="h-12 bg-gray-400/20 rounded mb-1 mx-auto w-32 animate-pulse" />
             <div className="h-4 bg-gray-400/10 rounded mx-auto w-48 animate-pulse" />
           </div>
@@ -56,9 +56,9 @@ const MetricsSection = () => {
   }
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-6 overflow-hidden relative min-h-[30vh] flex flex-col justify-center">
+    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[20vh] flex flex-col justify-center">
       <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
-        <div className="relative py-4 flex items-center justify-center">
+        <div className="relative py-2 flex items-center justify-center">
           {/* Sliding metrics */}
           <div 
             className="flex transition-transform duration-700 ease-in-out"
