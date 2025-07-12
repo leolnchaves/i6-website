@@ -80,7 +80,7 @@ const LanguageSelector = () => {
       {/* Botão principal */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-200 rounded-md hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 min-w-[70px]"
+        className="flex items-center space-x-2 px-3 py-2 bg-white/80 backdrop-blur-md border border-gray-200/50 rounded-md hover:border-gray-300/70 hover:bg-white/90 transition-all duration-200 min-w-[70px]"
         aria-label={`Current language: ${currentLang.label}`}
       >
         <span style={getFlagStyle()}>
@@ -98,7 +98,7 @@ const LanguageSelector = () => {
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full left-0 mt-1 w-full bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-md shadow-lg z-50 overflow-hidden">
           {languages.map((lang) => (
             <button
               key={lang.code}
