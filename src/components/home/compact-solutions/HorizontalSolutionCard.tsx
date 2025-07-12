@@ -62,8 +62,8 @@ const HorizontalSolutionCard = ({
   const colorScheme = getColorScheme(index);
 
   return (
-    <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[160px]`}>
+    <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-4">
+      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[120px]`}>
         {/* Image Side */}
         <div className="md:w-2/5 relative overflow-hidden">
           <img 
@@ -75,26 +75,26 @@ const HorizontalSolutionCard = ({
         </div>
 
         {/* Content Side */}
-        <div className="md:w-3/5 p-4 flex flex-col justify-start">
-          <span className={`${colorScheme.text} text-xs font-medium tracking-wider uppercase mb-3`}>
+        <div className="md:w-3/5 p-3 flex flex-col justify-center">
+          <span className={`${colorScheme.text} text-xs font-medium tracking-wider uppercase mb-2`}>
             {category}
           </span>
           
-          <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
+          <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">
             {title}
           </h3>
           
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+          <p className="text-gray-600 text-sm leading-relaxed mb-2 line-clamp-2">
             {description}
           </p>
 
-          {/* Features list if available */}
+          {/* Features list if available - mais compacto */}
           {features && features.length > 0 && (
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-1">
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
               {features.slice(0, 4).map((feature, idx) => (
                 <li key={idx} className="text-xs text-gray-500 flex items-start">
-                  <span className="w-1 h-1 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                  <span className="leading-relaxed">{feature}</span>
+                  <span className="w-1 h-1 bg-gray-400 rounded-full mt-1 mr-2 flex-shrink-0"></span>
+                  <span className="leading-tight">{feature}</span>
                 </li>
               ))}
             </ul>
