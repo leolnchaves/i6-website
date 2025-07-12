@@ -61,7 +61,7 @@ export const successStoriesCardsData = {
     {
       id: '3',
       company_name: 'Most traditional fashion brand in LATAM',
-      industry: 'Fashion',
+      industry: 'Retail',
       challenge: 'Personalization challenges for diverse user types and maximizing online engagement across all customer segments.',
       solution: 'Implemented real-time recommendation engine for both logged-in and anonymous users to boost engagement and online sales.',
       customer_name: 'Ana Castillo',
@@ -120,7 +120,7 @@ export const successStoriesCardsData = {
     {
       id: '3',
       company_name: 'Marca de moda mais tradicional da LATAM',
-      industry: 'Fashion',
+      industry: 'Retail',
       challenge: 'Desafios de personalização para tipos diversos de usuários e maximização do engajamento online em todos os segmentos de clientes.',
       solution: 'Implementou motor de recomendação em tempo real para usuários logados e anônimos para aumentar engajamento e vendas online.',
       customer_name: 'Ana Castillo',
