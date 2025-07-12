@@ -13,7 +13,7 @@ export const ptTranslations = {
   'hero.poweredByAI': 'Impulsionadas pela IA',
   'hero.description': 'Repense o que é possível. Construa com inteligência. Avance mais rápido. Cresça sem limites com IA adaptativa.',
   'hero.startJourney': 'Comece sua Jornada',
-  'hero.watchDemo': 'Assitir Demo',
+  'hero.watchDemo': 'Veja o Futuro',
   
   // Results Section - Updated with CMS data
   'results.mainTitle': 'Impacto Real de IA',

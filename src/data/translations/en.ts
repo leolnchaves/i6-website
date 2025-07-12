@@ -13,7 +13,7 @@ export const enTranslations = {
   'hero.poweredByAI': 'Powered by AI',
   'hero.description': 'Rethink what is possible. Build smarter and move faster. Grow beyond limits with adaptive AI.',
   'hero.startJourney': 'Start Your Journey',
-  'hero.watchDemo': 'Watch Demo',
+  'hero.watchDemo': 'See the Future',
   
   // Results Section - Updated with CMS data
   'results.mainTitle': 'Real AI Impact',
