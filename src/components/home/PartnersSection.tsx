@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const PartnersSection = () => {
   const { t } = useLanguage();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Client logos with the provided images
   const partners = [
@@ -19,56 +19,30 @@ const PartnersSection = () => {
     { name: 'FINANCORP', logo: '/lovable-uploads/8c0acc2d-915a-484e-b83e-c82c3de47aa5.png' }
   ];
 
-  // Auto-rotate partners
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % partners.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, [partners.length]);
-
-  // Calculate opacity based on position relative to current index
-  const getOpacity = (index: number) => {
-    const distance = Math.abs(index - currentIndex);
-    const normalizedDistance = Math.min(distance, partners.length - distance);
-    
-    if (normalizedDistance === 0) return 1;
-    if (normalizedDistance === 1) return 0.7;
-    if (normalizedDistance === 2) return 0.4;
-    return 0.15;
-  };
-
-  // Get scale based on position
-  const getScale = (index: number) => {
-    const distance = Math.abs(index - currentIndex);
-    const normalizedDistance = Math.min(distance, partners.length - distance);
-    
-    if (normalizedDistance === 0) return 1.1;
-    if (normalizedDistance === 1) return 1;
-    return 0.9;
-  };
+  // Double the array for seamless loop
+  const doubledPartners = [...partners, ...partners];
 
   return (
-    <section className="py-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+    <section className="py-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-orange-500/5"></div>
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-8">
           
-          {/* Left Side - Title with inspired design */}
-          <div className="lg:w-2/5 text-center lg:text-left">
+          {/* Left Side - Title */}
+          <div className="lg:w-1/3 text-center lg:text-left">
             <div className="relative">
               {/* Background accent */}
-              <div className="absolute -inset-8 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-2xl blur-xl"></div>
+              <div className="absolute -inset-6 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-xl blur-xl"></div>
               
-              <div className="relative bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50">
-                <h2 className="text-4xl lg:text-5xl font-bold text-white mb-5">
-                  <span className="block text-xl lg:text-2xl font-normal mb-2 text-slate-300">
+              <div className="relative bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                  <span className="block text-lg lg:text-xl font-normal mb-1 text-slate-300">
                     OUR
                   </span>
                   <span className="bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
@@ -76,61 +50,57 @@ const PartnersSection = () => {
                   </span>
                 </h2>
                 
-                <div className="w-16 h-1 bg-gradient-to-r from-primary to-orange-500 mb-5"></div>
+                <div className="w-12 h-1 bg-gradient-to-r from-primary to-orange-500 mb-4"></div>
                 
-                <p className="text-slate-300 text-base leading-relaxed">
+                <p className="text-slate-300 text-sm leading-relaxed">
                   Transforming businesses through strategic partnerships and 
-                  innovative solutions that deliver exceptional results.
+                  innovative solutions.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Right Side - Partners Grid with Carousel Effect */}
-          <div className="lg:w-3/5">
-            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
-              {partners.slice(0, 9).map((partner, index) => {
-                const opacity = getOpacity(index);
-                const scale = getScale(index);
-                
-                return (
-                  <div
-                    key={partner.name}
-                    className="aspect-square flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 transition-all duration-700 ease-out hover:bg-white/20 cursor-pointer"
-                    style={{
-                      opacity,
-                      transform: `scale(${scale})`,
-                    }}
-                    onClick={() => setCurrentIndex(index)}
-                  >
-                    <img 
-                      src={partner.logo} 
-                      alt={partner.name}
-                      className={`object-contain transition-all duration-500 filter brightness-0 invert ${
-                        partner.name === 'NATURA&CO' ? 'max-h-8 max-w-20' : 'max-h-10 max-w-24'
-                      }`}
-                      style={{
-                        opacity: opacity * 0.9 + 0.1
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Carousel Indicator */}
-            <div className="flex justify-center mt-6 space-x-2">
-              {partners.slice(0, 9).map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'bg-primary scale-125'
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                  onClick={() => setCurrentIndex(index)}
-                />
-              ))}
+          {/* Right Side - Horizontal Carousel */}
+          <div className="lg:w-2/3 w-full overflow-hidden">
+            <div 
+              className="flex items-center"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              <div 
+                className={`flex animate-marquee ${isPaused ? 'paused' : ''}`}
+                style={{
+                  width: `${doubledPartners.length * 180}px`,
+                  animationDuration: `${doubledPartners.length * 2.5}s`
+                }}
+              >
+                {doubledPartners.map((partner, index) => {
+                  // Calculate opacity based on position in the visible area
+                  const position = (index * 180) % (partners.length * 180);
+                  const centerPosition = (partners.length * 180) / 2;
+                  const distance = Math.abs(position - centerPosition);
+                  const maxDistance = centerPosition;
+                  const opacity = Math.max(0.2, 1 - (distance / maxDistance) * 0.8);
+                  
+                  return (
+                    <div
+                      key={`${partner.name}-${index}`}
+                      className="flex-shrink-0 w-44 h-16 mx-3 flex items-center justify-center transition-all duration-500 cursor-pointer"
+                      style={{ opacity }}
+                    >
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 w-full h-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all duration-300">
+                        <img 
+                          src={partner.logo} 
+                          alt={partner.name}
+                          className={`object-contain filter brightness-0 invert transition-all duration-300 ${
+                            partner.name === 'NATURA&CO' ? 'max-h-6 max-w-16' : 'max-h-8 max-w-20'
+                          }`}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
