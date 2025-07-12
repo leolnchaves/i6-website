@@ -194,19 +194,9 @@ const AnimatedProcessFlow = () => {
                           ${status === 'active' ? 'text-green-600' : 
                             status === 'completed' ? 'text-green-600' : 'text-gray-400'}
                         `}>
-                          {status === 'active' ? (
-                            <span className="text-xs font-bold">
-                              {Math.round(progress)}%
-                            </span>
-                          ) : status === 'completed' ? (
-                            <span className="text-xs font-bold">
-                              100%
-                            </span>
-                          ) : (
-                            <span className="text-sm font-bold">
-                              {String(index + 1).padStart(2, '0')}
-                            </span>
-                          )}
+                          <span className="text-sm font-bold">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
                         </div>
                       </div>
 
