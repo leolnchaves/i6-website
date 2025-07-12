@@ -49,7 +49,7 @@ const PartnersSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+    <section className="py-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-orange-500/5"></div>
       <div className="absolute inset-0">
@@ -58,7 +58,7 @@ const PartnersSection = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+        <div className="flex flex-col lg:flex-row items-center gap-12">
           
           {/* Left Side - Title with inspired design */}
           <div className="lg:w-2/5 text-center lg:text-left">
@@ -66,21 +66,21 @@ const PartnersSection = () => {
               {/* Background accent */}
               <div className="absolute -inset-8 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-2xl blur-xl"></div>
               
-              <div className="relative bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50">
-                <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6">
-                  <span className="block text-2xl lg:text-3xl font-normal mb-2 text-slate-300">
-                    NOSSOS
+              <div className="relative bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50">
+                <h2 className="text-4xl lg:text-5xl font-bold text-white mb-5">
+                  <span className="block text-xl lg:text-2xl font-normal mb-2 text-slate-300">
+                    OUR
                   </span>
                   <span className="bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
-                    PARCEIROS
+                    PARTNERS
                   </span>
                 </h2>
                 
-                <div className="w-16 h-1 bg-gradient-to-r from-primary to-orange-500 mb-6"></div>
+                <div className="w-16 h-1 bg-gradient-to-r from-primary to-orange-500 mb-5"></div>
                 
-                <p className="text-slate-300 text-lg leading-relaxed">
-                  Transformando negócios através de parcerias estratégicas e 
-                  soluções inovadoras que geram resultados excepcionais.
+                <p className="text-slate-300 text-base leading-relaxed">
+                  Transforming businesses through strategic partnerships and 
+                  innovative solutions that deliver exceptional results.
                 </p>
               </div>
             </div>
@@ -88,7 +88,7 @@ const PartnersSection = () => {
 
           {/* Right Side - Partners Grid with Carousel Effect */}
           <div className="lg:w-3/5">
-            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
+            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
               {partners.slice(0, 9).map((partner, index) => {
                 const opacity = getOpacity(index);
                 const scale = getScale(index);
@@ -119,7 +119,7 @@ const PartnersSection = () => {
             </div>
 
             {/* Carousel Indicator */}
-            <div className="flex justify-center mt-8 space-x-2">
+            <div className="flex justify-center mt-6 space-x-2">
               {partners.slice(0, 9).map((_, index) => (
                 <button
                   key={index}
