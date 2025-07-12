@@ -2,7 +2,7 @@
 import HeroSection from '@/components/home/HeroSection';
 import ResultsSection from '@/components/home/ResultsSection';
 import CompactSolutionsSection from '@/components/home/CompactSolutionsSection';
-import StatsSection from '@/components/home/StatsSection';
+import PartnersSection from '@/components/home/PartnersSection';
 import FeaturedStoriesSection from '@/components/home/FeaturedStoriesSection';
 import CTASection from '@/components/home/CTASection';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
@@ -34,8 +34,8 @@ const Home = () => {
       {/* Compact solutions section */}
       <CompactSolutionsSection />
       
-      {/* Statistics and metrics section */}
-      <StatsSection />
+      {/* Partners section */}
+      <PartnersSection />
       
       {/* Featured success stories section */}
       <FeaturedStoriesSection />

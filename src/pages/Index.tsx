@@ -2,7 +2,7 @@
 import HeroSection from '@/components/home/HeroSection';
 import ResultsSection from '@/components/home/ResultsSection';
 import CompactSolutionsSection from '@/components/home/CompactSolutionsSection';
-import StatsSection from '@/components/home/StatsSection';
+import PartnersSection from '@/components/home/PartnersSection';
 import FeaturedStoriesSection from '@/components/home/FeaturedStoriesSection';
 import CTASection from '@/components/home/CTASection';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
@@ -10,7 +10,7 @@ import { logger } from '@/utils/logger';
 
 /**
  * Home page component
- * Main landing page with hero section, results, stats, and featured stories
+ * Main landing page with hero section, results, partners, and featured stories
  * Optimized for performance and includes comprehensive logging
  */
 const Index = () => {
@@ -34,8 +34,8 @@ const Index = () => {
       {/* Compact solutions section */}
       <CompactSolutionsSection />
       
-      {/* Statistics and metrics section */}
-      <StatsSection />
+      {/* Partners section */}
+      <PartnersSection />
       
       {/* Featured success stories section */}
       <FeaturedStoriesSection />
