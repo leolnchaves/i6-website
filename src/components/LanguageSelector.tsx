@@ -1,10 +1,12 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
   const [flagsLoaded, setFlagsLoaded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const languages = [
     { 
@@ -20,6 +22,8 @@ const LanguageSelector = () => {
       label: 'Português'
     }
   ];
+
+  const currentLang = languages.find(lang => lang.code === language) || languages[0];
 
   useEffect(() => {
     // Força o carregamento das fontes de emoji
@@ -44,9 +48,21 @@ const LanguageSelector = () => {
     loadEmojiFont();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.language-selector')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const getFlagStyle = (): React.CSSProperties => ({
     fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Android Emoji", sans-serif',
-    fontSize: '18px',
+    fontSize: '16px',
     lineHeight: '1',
     display: 'inline-block',
     textRendering: 'optimizeSpeed' as any,
@@ -54,25 +70,53 @@ const LanguageSelector = () => {
     fontVariant: 'none'
   });
 
+  const handleLanguageSelect = (langCode: 'en' | 'pt') => {
+    setLanguage(langCode);
+    setIsOpen(false);
+  };
+
   return (
-    <div className="flex items-center space-x-2">
-      {languages.map((lang) => (
-        <button
-          key={lang.code}
-          onClick={() => setLanguage(lang.code as 'en' | 'pt')}
-          className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 hover:scale-110 border-2 ${
-            language === lang.code 
-              ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-lg scale-110' 
-              : 'border-gray-200 hover:border-orange-300 bg-white text-gray-600 hover:bg-orange-50'
-          }`}
-          title={lang.label}
-          aria-label={`Switch to ${lang.label}`}
-        >
-          <span style={getFlagStyle()}>
-            {lang.flag}
-          </span>
-        </button>
-      ))}
+    <div className="relative language-selector">
+      {/* Botão principal */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-200 rounded-md hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 min-w-[70px]"
+        aria-label={`Current language: ${currentLang.label}`}
+      >
+        <span style={getFlagStyle()}>
+          {currentLang.flag}
+        </span>
+        <span className="text-sm font-medium text-gray-700">
+          {currentLang.text}
+        </span>
+        <ChevronDown 
+          className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+            isOpen ? 'rotate-180' : ''
+          }`} 
+        />
+      </button>
+
+      {/* Dropdown menu */}
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => handleLanguageSelect(lang.code as 'en' | 'pt')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 transition-colors duration-150 ${
+                language === lang.code ? 'bg-orange-50 text-orange-600' : 'text-gray-700'
+              }`}
+            >
+              <span style={getFlagStyle()}>
+                {lang.flag}
+              </span>
+              <span className="text-sm font-medium">
+                {lang.text}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
