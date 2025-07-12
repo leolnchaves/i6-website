@@ -143,33 +143,31 @@ const AnimatedProcessFlow = () => {
                       onClick={() => handleStepClick(index)}
                     >
                       {/* Step Circle with Progress */}
-                      <div className="relative">
-                        {/* Progress Ring - Always show background */}
-                        <svg className="absolute inset-0 w-12 h-12 -rotate-90 z-0">
-                          {/* Background circle */}
+                      <div className="relative w-12 h-12">
+                        {/* Progress Ring Background */}
+                        <svg className="absolute inset-0 w-12 h-12 transform -rotate-90">
+                          {/* Background circle - always visible */}
                           <circle
                             cx="24"
                             cy="24"
-                            r="18"
-                            stroke="#e5e7eb"
-                            strokeWidth="3"
+                            r="20"
                             fill="none"
+                            stroke="#e5e7eb"
+                            strokeWidth="2"
                           />
                           {/* Progress circle for active step */}
                           {status === 'active' && (
                             <circle
                               cx="24"
                               cy="24"
-                              r="18"
-                              stroke="#10b981"
-                              strokeWidth="3"
+                              r="20"
                               fill="none"
+                              stroke="#10b981"
+                              strokeWidth="2"
                               strokeLinecap="round"
-                              className="transition-all duration-300"
-                              style={{
-                                strokeDasharray: `${2 * Math.PI * 18}`,
-                                strokeDashoffset: `${2 * Math.PI * 18 * (1 - progress / 100)}`
-                              }}
+                              strokeDasharray={`${2 * Math.PI * 20}`}
+                              strokeDashoffset={`${2 * Math.PI * 20 * (1 - progress / 100)}`}
+                              className="transition-all duration-500 ease-out"
                             />
                           )}
                           {/* Full circle for completed steps */}
@@ -177,22 +175,20 @@ const AnimatedProcessFlow = () => {
                             <circle
                               cx="24"
                               cy="24"
-                              r="18"
-                              stroke="#10b981"
-                              strokeWidth="3"
+                              r="20"
                               fill="none"
-                              style={{
-                                strokeDasharray: `${2 * Math.PI * 18}`,
-                                strokeDashoffset: '0'
-                              }}
+                              stroke="#10b981"
+                              strokeWidth="2"
+                              strokeDasharray={`${2 * Math.PI * 20}`}
+                              strokeDashoffset="0"
                             />
                           )}
                         </svg>
                         
                         {/* Step number circle */}
                         <div className={`
-                          w-12 h-12 rounded-full flex items-center justify-center
-                          transition-all duration-300 shadow-lg group-hover:scale-110 z-10 bg-white relative
+                          absolute inset-0 w-12 h-12 rounded-full flex items-center justify-center
+                          transition-all duration-300 shadow-lg group-hover:scale-110 bg-white
                           ${status === 'active' ? 'text-green-600' : 
                             status === 'completed' ? 'text-green-600' : 'text-gray-400'}
                         `}>
