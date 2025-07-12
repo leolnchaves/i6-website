@@ -208,9 +208,12 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
           onClick={handleCloseModal}
         >
           <div 
-            className="bg-white rounded-xl max-w-3xl w-full max-h-[85vh] relative shadow-xl animate-modal-enter"
+            className="bg-white rounded-xl max-w-3xl w-full max-h-[85vh] relative shadow-xl animate-modal-enter overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Gradient bar on top - matching the card design */}
+            <div className="h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500"></div>
+            
             {/* Close button */}
             <Button
               variant="ghost"
@@ -282,22 +285,43 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                 </div>
               </div>
 
-              {/* Customer quote */}
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <Quote className="w-6 h-6 text-gray-400 mb-3" />
-                <p className="text-gray-800 italic leading-relaxed mb-4">
-                  "{selectedStory.customer_quote}"
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-                    <User className="w-5 h-5 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900 text-sm">{selectedStory.customer_name}</p>
-                    <p className="text-gray-600 text-xs">{selectedStory.customer_title}</p>
+              {/* Customer testimonial or alternative content */}
+              {selectedStory.customer_quote && selectedStory.customer_quote.trim() ? (
+                <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                  <Quote className="w-6 h-6 text-gray-400 mb-3" />
+                  <p className="text-gray-800 italic leading-relaxed mb-4">
+                    "{selectedStory.customer_quote}"
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+                      <User className="w-5 h-5 text-gray-500" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 text-sm">{selectedStory.customer_name}</p>
+                      <p className="text-gray-600 text-xs">{selectedStory.customer_title}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Building2 className="w-6 h-6 text-blue-600" />
+                      </div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Implementação Rápida</h3>
+                      <p className="text-sm text-gray-600">Solução implementada em menos de 4 semanas com suporte completo</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <ArrowRight className="w-6 h-6 text-green-600" />
+                      </div>
+                      <h3 className="font-semibold text-gray-900 mb-2">ROI Comprovado</h3>
+                      <p className="text-sm text-gray-600">Retorno sobre investimento mensurável desde o primeiro mês</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
