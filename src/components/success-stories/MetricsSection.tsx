@@ -56,7 +56,7 @@ const MetricsSection = () => {
   }
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[24vh] flex flex-col justify-center">
+    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[25.2vh] flex flex-col justify-center">
       <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
         <div className="relative py-2 flex items-center justify-center">
           {/* Sliding metrics */}
