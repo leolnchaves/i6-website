@@ -70,14 +70,14 @@ const PartnersSection = () => {
               <div 
                 className={`flex animate-marquee ${isPaused ? 'paused' : ''}`}
                 style={{
-                  width: `${doubledPartners.length * 180}px`,
+                  width: `${doubledPartners.length * 220}px`,
                   animationDuration: `${doubledPartners.length * 2.5}s`
                 }}
               >
                 {doubledPartners.map((partner, index) => {
                   // Calculate opacity based on position in the visible area
-                  const position = (index * 180) % (partners.length * 180);
-                  const centerPosition = (partners.length * 180) / 2;
+                  const position = (index * 220) % (partners.length * 220);
+                  const centerPosition = (partners.length * 220) / 2;
                   const distance = Math.abs(position - centerPosition);
                   const maxDistance = centerPosition;
                   const opacity = Math.max(0.2, 1 - (distance / maxDistance) * 0.8);
@@ -85,16 +85,14 @@ const PartnersSection = () => {
                   return (
                     <div
                       key={`${partner.name}-${index}`}
-                      className="flex-shrink-0 w-44 h-16 mx-3 flex items-center justify-center transition-all duration-500 cursor-pointer"
+                      className="flex-shrink-0 w-52 h-20 mx-4 flex items-center justify-center transition-all duration-500 cursor-pointer"
                       style={{ opacity }}
                     >
-                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 w-full h-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all duration-300">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-5 w-full h-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all duration-300">
                         <img 
                           src={partner.logo} 
                           alt={partner.name}
-                          className={`object-contain filter brightness-0 invert transition-all duration-300 ${
-                            partner.name === 'NATURA&CO' ? 'max-h-6 max-w-16' : 'max-h-8 max-w-20'
-                          }`}
+                          className="object-contain filter brightness-0 invert transition-all duration-300 max-h-10 max-w-28"
                         />
                       </div>
                     </div>
