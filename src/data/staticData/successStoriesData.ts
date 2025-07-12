@@ -45,7 +45,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "What Our Clients Say",
-      subtitle: "Trusted voices on how our expert AI changed the way they operate and grow."
+      subtitle: "Real voices. Trusted results. Powered by specialist AI."
     }
   },
   pt: {
@@ -69,7 +69,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "O Que Nossos Clientes Dizem",
-      subtitle: "Vozes confiáveis sobre como nossa IA especializada mudou a forma como operam e crescem."
+      subtitle: "Vozes reais. Resultados confiáveis. Powered by IA especialista."
     }
   }
 };
