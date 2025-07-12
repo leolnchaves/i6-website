@@ -42,7 +42,7 @@ const HorizontalSolutionCard = ({
     '/solucao-Industrial-Intelligence.gif',
     '/solucao-Predictive-Campaign.gif',
     '/solucao-Smart-Price.gif',
-    'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
+    '/solucao-Adaptive-Demand.gif',
   ];
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
