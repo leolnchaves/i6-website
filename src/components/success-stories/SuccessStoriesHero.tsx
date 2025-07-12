@@ -11,7 +11,7 @@ const SuccessStoriesHero = () => {
 
   if (loading) {
     return (
-      <section className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden">
+      <section className="w-full min-h-[60vh] flex items-center pt-20 relative overflow-hidden">
         {/* Background image with blur */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
@@ -35,7 +35,7 @@ const SuccessStoriesHero = () => {
   }
 
   return (
-    <section className="w-full min-h-[75vh] flex items-center pt-20 relative overflow-hidden">
+    <section className="w-full min-h-[60vh] flex items-center pt-20 relative overflow-hidden">
       {/* Background image with blur */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
