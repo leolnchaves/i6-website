@@ -130,13 +130,13 @@ const AnimatedProcessFlow = () => {
         {/* Horizontal Steps */}
         <div className="max-w-6xl mx-auto mb-8">
           <div className="hidden lg:block">
-            <div className="relative px-6">
+            <div className="relative px-12">
               {/* Progress Line */}
-              <div className="absolute top-6 left-6 right-6 h-1 bg-gray-300 rounded-full">
+              <div className="absolute top-6 h-1 bg-gray-300 rounded-full" style={{ left: '48px', right: '48px' }}>
                 <div 
                   className="h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-500"
                   style={{ 
-                    width: `${((currentStep + progress / 100) / (processSteps.length - 1)) * 100}%` 
+                    width: `${(currentStep / (processSteps.length - 1)) * 100}%` 
                   }}
                 ></div>
               </div>
