@@ -30,19 +30,19 @@ const ResultCard = ({ icon, title, description, solutions, index, backgroundColo
       </div>
       
       <div className="flex-grow">
-        <h3 className="text-sm font-bold text-gray-900 mb-3 leading-tight">
+        <h3 className="text-base font-bold text-gray-900 mb-3 leading-tight">
           {title}
         </h3>
         
-        <p className="text-gray-600 text-xs leading-relaxed mb-4">
+        <p className="text-gray-600 text-sm leading-relaxed mb-4">
           {description}
         </p>
 
         <div className="space-y-2">
-          <h4 className="text-xs font-semibold text-gray-800 mb-2">AI-Driven Outcomes:</h4>
+          <h4 className="text-sm font-semibold text-gray-800 mb-2">AI-Driven Outcomes:</h4>
           <ul className="space-y-1">
             {solutions.map((solution, idx) => (
-              <li key={idx} className="text-[10px] text-gray-600 flex items-start">
+              <li key={idx} className="text-xs text-gray-600 flex items-start">
                 <span className="w-1 h-1 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                 <span className="leading-relaxed">{solution}</span>
               </li>
