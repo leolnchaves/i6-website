@@ -31,12 +31,12 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
       description: "Discover how our AI solutions have revolutionized businesses across various industries, delivering measurable results and sustainable growth."
     },
     metrics: {
-      avgROI: "150%",
-      avgROILabel: "Average ROI Increase",
-      companiesServed: "500+",
-      companiesServedLabel: "Companies Served",
-      costSavings: "$50M+",
-      costSavingsLabel: "Total Cost Savings"
+      avgROI: "20x",
+      avgROILabel: "Average ROI",
+      companiesServed: "-25%",
+      companiesServedLabel: "CRM Cost Reduction",
+      costSavings: "+36%",
+      costSavingsLabel: "New Product Discovery"
     },
     cta: {
       title: "Ready to Transform Your Business?",
@@ -55,12 +55,12 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
       description: "Descubra como nossas soluções de IA revolucionaram negócios em várias indústrias, entregando resultados mensuráveis e crescimento sustentável."
     },
     metrics: {
-      avgROI: "150%",
-      avgROILabel: "Aumento Médio do ROI",
-      companiesServed: "500+",
-      companiesServedLabel: "Empresas Atendidas",
-      costSavings: "$50M+",
-      costSavingsLabel: "Total de Economia de Custos"
+      avgROI: "20x",
+      avgROILabel: "ROI Médio",
+      companiesServed: "-25%",
+      companiesServedLabel: "Redução de Custos CRM",
+      costSavings: "+36%",
+      costSavingsLabel: "Descoberta de Novos Produtos"
     },
     cta: {
       title: "Pronto para Transformar Seu Negócio?",
