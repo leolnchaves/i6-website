@@ -73,7 +73,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
 
   if (loading) {
     return (
-      <section className="py-12 md:py-20 bg-gray-50">
+      <section className="py-6 md:py-8 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((index) => (
@@ -99,9 +99,9 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
 
   if (filteredCards.length === 0) {
     return (
-      <section className="py-12 md:py-20 bg-gray-50">
+      <section className="py-6 md:py-8 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center py-16">
+          <div className="text-center py-8">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
               {selectedSegment 
                 ? `Nenhum case de sucesso encontrado para "${selectedSegment}"`
@@ -122,7 +122,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
 
   return (
     <>
-      <section className="py-12 md:py-20 bg-gray-50">
+      <section className="py-6 md:py-8 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCards.map((story) => (
