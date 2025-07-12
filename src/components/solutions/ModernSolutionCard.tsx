@@ -31,30 +31,18 @@ const ModernSolutionCard = ({
 }: ModernSolutionCardProps) => {
   const isReversed = index % 2 === 1;
 
-  // Imagens para os cards baseadas nos GIFs existentes
-  const placeholderImages = [
-    '/solution-Anonymous-Visitors.gif',
-    '/solucao-Identified-Users.gif',
-    '/solucao-Industrial-Intelligence.gif',
-    '/solucao-Predictive-Campaign.gif',
-    '/solucao-Smart-Price.gif',
-    '/solucao-Adaptive-Demand.gif',
-  ];
-
-  const imageUrl = placeholderImages[index % placeholderImages.length];
-
   // Esquema de cores baseado no índice
   const getColorScheme = (cardIndex: number) => {
     if (cardIndex === 0 || cardIndex === 1 || cardIndex === 3) {
       return { 
         accent: 'text-orange-600', 
-        gradient: 'from-orange-400/20 to-red-400/20',
+        gradient: 'from-orange-400/30 to-red-400/30',
         border: 'border-orange-200'
       };
     } else {
       return { 
         accent: 'text-blue-600', 
-        gradient: 'from-blue-400/20 to-purple-400/20',
+        gradient: 'from-blue-400/30 to-purple-400/30',
         border: 'border-blue-200'
       };
     }
@@ -64,26 +52,38 @@ const ModernSolutionCard = ({
 
   return (
     <Card className={`group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 ${colorScheme.border} overflow-hidden`}>
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[200px]`}>
+      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[180px]`}>
         {/* Visual Side */}
-        <div className="md:w-2/5 relative overflow-hidden bg-gray-50">
-          {/* Background Pattern */}
+        <div className="md:w-2/5 relative overflow-hidden">
+          {/* Modern gradient background */}
           <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.gradient}`}></div>
           
-          {/* GIF Image */}
-          <div className="absolute inset-0 flex items-center justify-center p-6">
-            <img 
-              src={imageUrl}
-              alt={title}
-              className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-sm"
-            />
+          {/* Geometric pattern overlay */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.3)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:15px_15px]"></div>
           </div>
+
+          {/* Central icon with modern styling */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div 
+              className="p-6 rounded-2xl shadow-lg backdrop-blur-sm border border-white/20 group-hover:scale-110 transition-all duration-300"
+              style={{ backgroundColor: bgColor }}
+            >
+              <Icon className="w-12 h-12 text-white" />
+            </div>
+          </div>
+
+          {/* Floating elements for visual interest */}
+          <div className="absolute top-4 right-4 w-3 h-3 bg-white/30 rounded-full"></div>
+          <div className="absolute bottom-6 left-6 w-2 h-2 bg-white/20 rounded-full"></div>
+          <div className="absolute top-1/3 left-4 w-1 h-1 bg-white/40 rounded-full"></div>
 
           {/* Engine Badge */}
           <div className="absolute top-4 left-4">
             <Badge 
               variant="secondary" 
-              className="bg-white/90 backdrop-blur-sm text-gray-700 border-0 shadow-sm"
+              className="bg-white/90 backdrop-blur-sm text-gray-700 border-0 shadow-sm text-xs"
             >
               {engine}
             </Badge>
