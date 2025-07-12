@@ -170,6 +170,12 @@ export const ptTranslations = {
   'solutions.cta.description': 'Pronto para revolucionar seu negócio com IA? Vamos conversar sobre como podemos ajudá-lo a alcançar seus objetivos.',
   'solutions.cta.button': 'Comece Agora',
   
+  // Solutions Card Labels
+  'solutions.card.overview': 'Visão Geral',
+  'solutions.card.keyFeatures': 'Principais Funcionalidades',
+  'solutions.card.businessOutcome': 'Resultado de Negócio',
+  'solutions.card.additionalFeatures': 'funcionalidades adicionais',
+  
   // Success Stories Page
   'successStories.hero.title': 'Cases de Sucesso que',
   'successStories.hero.subtitle': 'Inspiram Inovação',

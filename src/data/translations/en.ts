@@ -170,6 +170,12 @@ export const enTranslations = {
   'solutions.cta.description': 'Ready to revolutionize your business with AI? Let\'s discuss how we can help you achieve your goals.',
   'solutions.cta.button': 'Get Started Now',
   
+  // Solutions Card Labels
+  'solutions.card.overview': 'Overview',
+  'solutions.card.keyFeatures': 'Key Features',
+  'solutions.card.businessOutcome': 'Business Outcome',
+  'solutions.card.additionalFeatures': 'additional features',
+  
   // Success Stories Page
   'successStories.hero.title': 'Success Stories That',
   'successStories.hero.subtitle': 'Inspire Innovation',
