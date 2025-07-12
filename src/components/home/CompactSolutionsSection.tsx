@@ -18,7 +18,7 @@ const CompactSolutionsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <CompactSolutionsHeader />
 
-        <div className="grid grid-cols-1 gap-4 mt-12">
+        <div className="grid grid-cols-1 gap-8 mt-16">
           {cards.map((card, index) => (
             <HorizontalSolutionCard
               key={card.id}
