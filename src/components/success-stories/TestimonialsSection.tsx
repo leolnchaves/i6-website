@@ -15,7 +15,7 @@ const TestimonialsSection = () => {
     <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-light tracking-tight text-foreground mb-4">
+          <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-4">
             {sectionContent.title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
