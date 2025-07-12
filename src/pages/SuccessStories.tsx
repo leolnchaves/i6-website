@@ -6,7 +6,7 @@ import { useState } from 'react';
 import SuccessStoriesHero from '@/components/success-stories/SuccessStoriesHero';
 import MetricsSection from '@/components/success-stories/MetricsSection';
 import SegmentFilter from '@/components/success-stories/SegmentFilter';
-import StoriesGrid from '@/components/success-stories/StoriesGrid';
+import ModernStoriesGrid from '@/components/success-stories/ModernStoriesGrid';
 import TestimonialsSection from '@/components/success-stories/TestimonialsSection';
 import SuccessStoriesCTA from '@/components/success-stories/SuccessStoriesCTA';
 
@@ -45,7 +45,7 @@ const SuccessStories = () => {
       />
       
       {/* Grid of success stories */}
-      <StoriesGrid selectedSegment={selectedSegment} />
+      <ModernStoriesGrid selectedSegment={selectedSegment} />
       
       {/* Customer testimonials section */}
       <TestimonialsSection />
