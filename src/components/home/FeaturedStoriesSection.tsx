@@ -133,7 +133,7 @@ const FeaturedStoriesSection = () => {
         {fallbackCards.length > 0 ? (
           <>
             {/* Carrossel circular customizado */}
-            <div className="relative w-full max-w-6xl mx-auto mb-12 h-[600px] flex items-center justify-center">
+            <div className="relative w-full max-w-6xl mx-auto mb-12 h-[600px] flex items-center justify-center mt-4">
               {/* Container do carrossel */}
               <div className="relative w-full h-full perspective-1000">
                 {fallbackCards.map((card, index) => {

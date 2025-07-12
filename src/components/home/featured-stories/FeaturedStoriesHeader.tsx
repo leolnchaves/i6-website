@@ -5,7 +5,7 @@ const FeaturedStoriesHeader = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="text-center mb-16">
+    <div className="text-center mb-8">
       <h2 className="text-5xl font-bold text-gray-900 mb-6">
         {t('home.featuredStories.title')}
         <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
