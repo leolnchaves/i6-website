@@ -2,23 +2,17 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
 import { useCMSPage } from '@/hooks/useCMSPage';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import CompactSolutionsHeader from './compact-solutions/CompactSolutionsHeader';
 import HorizontalSolutionCard from './compact-solutions/HorizontalSolutionCard';
-import ViewAllSolutionsButton from './compact-solutions/ViewAllSolutionsButton';
 
 const CompactSolutionsSection = () => {
   const { language } = useLanguage();
   const { pageId } = useCMSPage('solutions');
   const { cards, loading } = useCMSSolutionsCards(pageId || '', language);
-  const { getContent } = useCMSPageContent('home', language);
 
   console.log('CompactSolutionsSection - Page ID:', pageId);
   console.log('CompactSolutionsSection - Cards loaded:', cards?.length || 0);
   console.log('CompactSolutionsSection - Loading:', loading);
-
-  // Get button text from CMS with fallback
-  const buttonText = getContent('compactSolutionsHero', 'buttonText', 'Ver Todas as Soluções');
 
   if (loading) {
     return (
@@ -79,9 +73,6 @@ const CompactSolutionsSection = () => {
                 />
               ))}
             </div>
-            
-            {/* View All Solutions Button */}
-            <ViewAllSolutionsButton buttonText={buttonText} />
           </>
         ) : (
           <div className="text-center py-12 mt-16">
