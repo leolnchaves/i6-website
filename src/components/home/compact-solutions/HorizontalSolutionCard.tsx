@@ -47,14 +47,19 @@ const HorizontalSolutionCard = ({
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
 
-  // Define cores baseadas no índice usando as cores do sistema - versões mais sutis
-  const colorSchemes = [
-    { text: 'text-primary', gradient: 'from-primary/60 to-orange-400/60' },
-    { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' },
-    { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' }
-  ];
+  // Define cores baseadas no índice específico conforme solicitado
+  const getColorScheme = (cardIndex: number) => {
+    // Cards 1, 2 e 4 (índices 0, 1, 3) = efeitos laranjas
+    if (cardIndex === 0 || cardIndex === 1 || cardIndex === 3) {
+      return { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' };
+    }
+    // Cards 3, 5 e 6 (índices 2, 4, 5) = efeitos azulados
+    else {
+      return { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' };
+    }
+  };
   
-  const colorScheme = colorSchemes[index % colorSchemes.length];
+  const colorScheme = getColorScheme(index);
 
   return (
     <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
