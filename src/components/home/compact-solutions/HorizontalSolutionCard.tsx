@@ -65,7 +65,7 @@ const HorizontalSolutionCard = ({
     <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-4">
       <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} min-h-[120px]`}>
         {/* Image Side */}
-        <div className="md:w-2/5 relative overflow-hidden">
+        <div className="md:w-2/5 relative overflow-hidden h-32">
           <img 
             src={imageUrl}
             alt={title}
