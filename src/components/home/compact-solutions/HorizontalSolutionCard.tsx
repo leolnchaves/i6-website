@@ -39,7 +39,7 @@ const HorizontalSolutionCard = ({
   const placeholderImages = [
     '/solution-Anonymous-Visitors.gif',
     '/solucao-Identified-Users.gif',
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop&crop=center',
+    '/solucao-Industrial-Intelligence.gif',
     'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
     'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center'
   ];
