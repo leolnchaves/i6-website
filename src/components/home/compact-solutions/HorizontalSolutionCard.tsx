@@ -63,11 +63,7 @@ const HorizontalSolutionCard = ({
           <img 
             src={imageUrl}
             alt={title}
-            className={`w-full group-hover:scale-105 transition-transform duration-300 ${
-              imageUrl.includes('.gif') 
-                ? 'h-[160px] object-cover object-center' 
-                : 'h-full object-cover object-center'
-            }`}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
         </div>
