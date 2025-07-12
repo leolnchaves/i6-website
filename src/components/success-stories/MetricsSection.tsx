@@ -23,6 +23,10 @@ const MetricsSection = () => {
     { 
       value: metricsContent.costSavings, 
       label: metricsContent.costSavingsLabel
+    },
+    { 
+      value: metricsContent.avgTicketIncrease, 
+      label: metricsContent.avgTicketIncreaseLabel
     }
   ];
 

@@ -11,6 +11,8 @@ export interface SuccessStoriesStaticData {
     companiesServedLabel: string;
     costSavings: string;
     costSavingsLabel: string;
+    avgTicketIncrease: string;
+    avgTicketIncreaseLabel: string;
   };
   cta: {
     title: string;
@@ -36,7 +38,9 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
       companiesServed: "-25%",
       companiesServedLabel: "CRM Cost Reduction",
       costSavings: "+36%",
-      costSavingsLabel: "New Product Discovery"
+      costSavingsLabel: "New Product Discovery",
+      avgTicketIncrease: "+27%",
+      avgTicketIncreaseLabel: "Average Ticket Increase"
     },
     cta: {
       title: "Ready to Transform Your Business?",
@@ -60,7 +64,9 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
       companiesServed: "-25%",
       companiesServedLabel: "Redução de Custos CRM",
       costSavings: "+36%",
-      costSavingsLabel: "Descoberta de Novos Produtos"
+      costSavingsLabel: "Descoberta de Novos Produtos",
+      avgTicketIncrease: "+27%",
+      avgTicketIncreaseLabel: "Aumento Médio do Ticket"
     },
     cta: {
       title: "Pronto para Transformar Seu Negócio?",
