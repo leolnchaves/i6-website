@@ -91,7 +91,7 @@ const MetricsSection = () => {
       </div>
 
       {/* Scroll arrow identical to HOME */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-bounce">
         <div className="relative group">
           {/* Glowing circle background */}
           <div className="w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-full backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
