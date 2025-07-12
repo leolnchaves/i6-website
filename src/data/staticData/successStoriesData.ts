@@ -45,7 +45,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "What Our Clients Say",
-      subtitle: "Hear directly from the leaders who've transformed their businesses with Infinity6."
+      subtitle: "Trusted voices on how our expert AI changed the way they operate and grow."
     }
   },
   pt: {
@@ -69,7 +69,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "O Que Nossos Clientes Dizem",
-      subtitle: "Ouça diretamente dos líderes que transformaram seus negócios com a Infinity6."
+      subtitle: "Vozes confiáveis sobre como nossa IA especializada mudou a forma como operam e crescem."
     }
   }
 };
