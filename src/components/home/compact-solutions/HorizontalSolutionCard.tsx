@@ -72,6 +72,19 @@ const HorizontalSolutionCard = ({
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
+          
+          {/* Explore Solution overlay within the image area */}
+          <div className={`absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer`}>
+            <a 
+              href="/solutions"
+              className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2 drop-shadow-md"
+            >
+              <span>Explore Solution</span>
+              <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
         </div>
 
         {/* Content Side */}
@@ -102,18 +115,6 @@ const HorizontalSolutionCard = ({
         </div>
       </div>
 
-      {/* Innovative Bottom Bar with Text - Aligned with card bottom */}
-      <div className={`absolute top-full left-0 right-0 h-8 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer`}>
-        <a 
-          href="/solutions"
-          className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2 drop-shadow-md"
-        >
-          <span>Explore Solution</span>
-          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
-      </div>
     </div>
   );
 };
