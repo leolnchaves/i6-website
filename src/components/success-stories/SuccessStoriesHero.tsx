@@ -17,11 +17,11 @@ const SuccessStoriesHero = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: `url(${heroBg})`,
-            filter: 'blur(5px)'
+            filter: 'blur(10px)'
           }}
         ></div>
         
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 mix-blend-multiply"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto text-white">
             <div className="animate-pulse">
@@ -41,7 +41,7 @@ const SuccessStoriesHero = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ 
           backgroundImage: `url(${heroBg})`,
-          filter: 'blur(5px)'
+          filter: 'blur(10px)'
         }}
       ></div>
       
@@ -56,8 +56,8 @@ const SuccessStoriesHero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
       </div>
       
-      {/* Standard overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
+      {/* Darker overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 mix-blend-multiply"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">
