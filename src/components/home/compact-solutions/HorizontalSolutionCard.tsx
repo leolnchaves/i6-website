@@ -40,9 +40,9 @@ const HorizontalSolutionCard = ({
     '/solution-Anonymous-Visitors.gif',
     '/solucao-Identified-Users.gif',
     '/solucao-Industrial-Intelligence.gif',
-    '/public/solucao-Predictive-Campaign.gif',
-    '/public/solucao-Smart-Price.gif',
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center'
+    '/solucao-Predictive-Campaign.gif',
+    '/solucao-Smart-Price.gif',
+    'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
   ];
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
