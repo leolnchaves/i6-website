@@ -92,7 +92,9 @@ const PartnersSection = () => {
                         <img 
                           src={partner.logo} 
                           alt={partner.name}
-                          className="object-contain filter brightness-0 invert transition-all duration-300 max-h-10 max-w-28"
+                          className={`object-contain filter brightness-0 invert transition-all duration-300 ${
+                            partner.name === 'HERING' ? 'max-h-12 max-w-36' : 'max-h-10 max-w-28'
+                          }`}
                         />
                       </div>
                     </div>
