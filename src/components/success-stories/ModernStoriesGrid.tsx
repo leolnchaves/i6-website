@@ -182,27 +182,15 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                     </div>
                   </div>
 
-                  {/* Explore details with modern arrow - similar to top gradient bar */}
+                  {/* Explore details with modern arrow - inspired by hero button */}
                   <div className="flex items-center justify-end">
                     <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">Explore Details</span>
-                    <div className="relative">
-                      {/* Background gradient that appears on hover - similar to top bar */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <div className="relative overflow-hidden">
+                      {/* Background that appears on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
                       {/* Arrow container */}
-                      <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 group-hover:bg-transparent transition-all duration-500">
-                        <svg 
-                          className="w-5 h-5 text-gray-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1 group-hover:scale-110" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={2} 
-                            d="M13 7l5 5m0 0l-5 5m5-5H6" 
-                          />
-                        </svg>
+                      <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 group-hover:bg-transparent transition-all duration-500">
+                        <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
                       </div>
                     </div>
                   </div>
