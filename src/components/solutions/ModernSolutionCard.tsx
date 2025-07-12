@@ -120,11 +120,14 @@ const ModernSolutionCard = ({
                 <div className="w-1.5 h-6 bg-primary rounded-full"></div>
                 Resultado de Negócio
               </h3>
-              <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg border border-blue-100">
-                <Target className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                <p className="text-blue-800 leading-relaxed text-sm">
-                  {outcome}
-                </p>
+              <div className="relative p-4 bg-gradient-to-r from-gray-50 to-gray-100/50 rounded-lg border border-gray-200/60 backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-orange-500/5 rounded-lg"></div>
+                <div className="relative flex items-start gap-3">
+                  <Target className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-gray-700 leading-relaxed text-sm">
+                    {outcome}
+                  </p>
+                </div>
               </div>
             </div>
           </CardContent>
