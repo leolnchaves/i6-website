@@ -10,6 +10,7 @@ import { TrendingUp, BarChart3, Users, Target, ChevronLeft, ChevronRight } from 
 const FeaturedStoriesSection = () => {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
   // Get static data based on current language
@@ -21,7 +22,7 @@ const FeaturedStoriesSection = () => {
 
   // Autoplay functionality
   useEffect(() => {
-    if (fallbackCards.length > 1) {
+    if (fallbackCards.length > 1 && !isPaused) {
       autoplayRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % fallbackCards.length);
       }, 4000);
@@ -31,8 +32,20 @@ const FeaturedStoriesSection = () => {
           clearInterval(autoplayRef.current);
         }
       };
+    } else if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
     }
-  }, [fallbackCards.length]);
+  }, [fallbackCards.length, isPaused]);
+
+  // Pause/resume handlers
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
 
   // Navigation functions
   const goToNext = () => {
@@ -127,7 +140,11 @@ const FeaturedStoriesSection = () => {
                         opacity,
                       }}
                     >
-                      <Card className="w-[320px] h-[480px] bg-gradient-to-br from-blue-50 to-slate-100 border-0 shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
+                      <Card 
+                        className="w-[320px] h-[480px] bg-gradient-to-br from-blue-50 to-slate-100 border-0 shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                      >
                         <CardContent className="p-0 h-full flex flex-col">
                           {/* Header com categoria */}
                           <div className="p-6 pb-4">
