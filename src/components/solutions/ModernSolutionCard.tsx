@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { LucideIcon, CheckCircle, Target } from 'lucide-react';
+import { LucideIcon, Target } from 'lucide-react';
 
 interface ModernSolutionCardProps {
   icon: LucideIcon;
@@ -98,8 +98,7 @@ const ModernSolutionCard = ({
               </h3>
               <div className="grid grid-cols-1 gap-3">
                 {features.slice(0, 4).map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <div key={idx} className="p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm text-gray-700 leading-relaxed">
                       {feature}
                     </span>
