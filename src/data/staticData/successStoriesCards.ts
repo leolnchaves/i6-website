@@ -54,7 +54,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Revenue Growth',
       metric3_value: '67%',
       metric3_label: 'New Opportunities',
-      image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop',
+      image_url: '/lovable-uploads/74e4b188-8c90-48ac-846c-6c7bf0b65853.png',
       is_active: true,
       is_active_home: true
     },
@@ -113,7 +113,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Crescimento de Receita',
       metric3_value: '67%',
       metric3_label: 'Novas Oportunidades',
-      image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop',
+      image_url: '/lovable-uploads/74e4b188-8c90-48ac-846c-6c7bf0b65853.png',
       is_active: true,
       is_active_home: true
     },
