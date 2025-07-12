@@ -41,26 +41,20 @@ const HorizontalSolutionCard = ({
     '/solucao-Identified-Users.gif',
     '/solucao-Industrial-Intelligence.gif',
     'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop&crop=center',
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center'
+    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop&crop=center',
+    '/solucao-Industrial-Intelligence.gif'
   ];
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
 
-  // Define cores baseadas no índice específico conforme solicitado
-  const getColorScheme = (cardIndex: number) => {
-    // Cards 1, 2, 4: cor laranja (anexo 1)
-    if ([0, 1, 3].includes(cardIndex)) {
-      return { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' };
-    }
-    // Cards 3, 5, 6: cor azulada (anexo 2)  
-    if ([2, 4, 5].includes(cardIndex)) {
-      return { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' };
-    }
-    // Fallback para outros cards
-    return { text: 'text-primary', gradient: 'from-primary/60 to-orange-400/60' };
-  };
+  // Define cores baseadas no índice usando as cores do sistema - versões mais sutis
+  const colorSchemes = [
+    { text: 'text-primary', gradient: 'from-primary/60 to-orange-400/60' },
+    { text: 'text-orange-600', gradient: 'from-orange-400/60 to-red-400/60' },
+    { text: 'text-blue-600', gradient: 'from-blue-400/60 to-purple-400/60' }
+  ];
   
-  const colorScheme = getColorScheme(index);
+  const colorScheme = colorSchemes[index % colorSchemes.length];
 
   return (
     <div className="group bg-white rounded-t-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative mb-6">
