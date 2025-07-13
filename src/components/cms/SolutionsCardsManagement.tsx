@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Plus, Save, Trash2, ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
-import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards';
+// import { useCMSSolutionsCards } from '@/hooks/useCMSSolutionsCards'; // Removed - using static data only
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import ColorPalette from '@/components/cms/visual/ColorPalette';
@@ -113,7 +113,13 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
   selectedPage,
   selectedLanguage,
 }) => {
-  const { cards, loading, saveCard, deleteCard, refetch } = useCMSSolutionsCards(selectedPage, selectedLanguage);
+  // const { cards, loading, saveCard, deleteCard, refetch } = useCMSSolutionsCards(selectedPage, selectedLanguage);
+  // Temporarily disabled - using static data only
+  const cards = [];
+  const loading = false;
+  const saveCard = async () => {};
+  const deleteCard = async () => {};
+  const refetch = async () => {};
   const [formCards, setFormCards] = useState<CardFormData[]>([]);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
@@ -188,7 +194,7 @@ const SolutionsCardsManagement: React.FC<SolutionsCardsManagementProps> = ({
   const removeCard = async (index: number) => {
     const card = formCards[index];
     if (card.id) {
-      await deleteCard(card.id);
+      // await deleteCard(card.id); // Disabled - using static data only
     } else {
       const updatedCards = formCards.filter((_, i) => i !== index);
       const reorderedCards = updatedCards.map((card, i) => ({

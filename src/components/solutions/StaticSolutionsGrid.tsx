@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsCardsData } from '@/data/staticData/solutionsCards';
 import ModernSolutionCard from './ModernSolutionCard';
-import SolutionDetailModal from './SolutionDetailModal';
 import { 
   TrendingUp, 
   Users, 

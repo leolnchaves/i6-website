@@ -1,14 +1,12 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+import { sandboxEnvironmentData } from '@/data/staticData/sandboxEnvironmentData';
 
 const SandboxEnvironment = () => {
   const { language } = useLanguage();
-  const { getContent } = useCMSPageContent('solutions', language);
-
-  // Get CMS content with fallbacks
-  const title = getContent('sandboxEnvironment', 'title', 'Risk-Free Sandbox Environment & Expert Support Included');
-  const description = getContent('sandboxEnvironment', 'description', 'Complete testing environment with expert guidance throughout your journey');
+  
+  // Get static data based on language
+  const content = sandboxEnvironmentData[language] || sandboxEnvironmentData.en;
 
   return (
     <div className="mt-20">
@@ -22,10 +20,10 @@ const SandboxEnvironment = () => {
           <div className="relative z-10">
             <div className="text-center flex flex-col items-center justify-center">
               <h3 className="text-3xl font-bold mb-4 whitespace-nowrap text-center">
-                {title}
+                {content.title}
               </h3>
               <p className="text-orange-100 text-lg leading-relaxed">
-                {description}
+                {content.description}
               </p>
             </div>
           </div>

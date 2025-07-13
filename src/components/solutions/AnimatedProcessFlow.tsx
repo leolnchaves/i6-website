@@ -1,14 +1,28 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { getProcessSteps } from '@/data/solutions/processData';
+import { processStepsData } from '@/data/solutions/processDataStatic';
 import { Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import SandboxEnvironment from './SandboxEnvironment';
 
 const AnimatedProcessFlow = () => {
-  const { t } = useLanguage();
-  const processSteps = getProcessSteps(t);
+  const { language } = useLanguage();
+  const processSteps = processStepsData[language] || processStepsData.en;
+  
+  // Static translations
+  const translations = {
+    en: {
+      title: 'AI Implementation Journey',
+      subtitle: 'Risk-free testing. Concrete potential in 30 days.'
+    },
+    pt: {
+      title: 'Jornada de Implementação de IA',
+      subtitle: 'Testes sem risco. Potencial concreto em 30 dias.'
+    }
+  };
+  
+  const t = translations[language] || translations.en;
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -118,10 +132,10 @@ const AnimatedProcessFlow = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            {t('solutions.process.title')}
+            {t.title}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            {t('solutions.process.subtitle')}
+            {t.subtitle}
           </p>
           
           {/* Animation Controls */}
