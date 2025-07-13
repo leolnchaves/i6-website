@@ -4,7 +4,7 @@
 
 ## E-commerce Platform Optimization
 **Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop
-**Logo:** /content/logos/1.png
+**Logo:** /content/logos/EMS-COR.png
 **Segment:** E-commerce
 **Client:** TechRetail Inc.
 **Description:** Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.
@@ -40,6 +40,7 @@
 
 ## Healthcare Patient Flow Optimization
 **Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop
+**Logo:** /content/logos/1.png
 **Segment:** Healthcare
 **Client:** MedTech Innovations
 **Description:** MedTech Innovations
@@ -57,6 +58,7 @@
 
 ## Financial Fraud Detection System
 **Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop
+**Logo:** /content/logos/1.png
 **Segment:** Finance
 **Client:** Capital Banking Group
 **Description:** Capital Banking Group
@@ -74,6 +76,7 @@
 
 ## Logistics Route Optimization
 **Image:** https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop
+**Logo:** /content/logos/1.png
 **Segment:** Logistics
 **Client:** Global Shipping Solutions
 **Description:** Global Shipping Solutions
@@ -91,6 +94,7 @@
 
 ## Automotive Quality Control
 **Image:** https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop
+**Logo:** /content/logos/1.png
 **Segment:** Automotive
 **Client:** NextGen Motors
 **Description:** NextGen Motors
