@@ -76,12 +76,6 @@ const FeaturedStoriesSection = () => {
     return icons[index % icons.length];
   };
 
-  console.log('FeaturedStoriesSection - All cards:', cards);
-  console.log('FeaturedStoriesSection - Cards with is_active_home=true:', homeCards);
-  console.log('FeaturedStoriesSection - Final cards to display:', fallbackCards);
-
-  console.log('FeaturedStoriesSection - Rendering main content, fallbackCards length:', fallbackCards.length);
-
   return (
     <section className="py-20 bg-white relative overflow-hidden">
       <div className="absolute inset-0">

@@ -1,15 +1,69 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const ScrollAnimation = () => {
   const [time, setTime] = useState(0);
+  const animationFrameRef = useRef<number>();
+  const lastTimeRef = useRef<number>(0);
+  const isVisibleRef = useRef<boolean>(true);
   
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(prevTime => prevTime + 0.016); // ~60fps
-    }, 16);
+    // Intersection Observer to pause animation when not visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisibleRef.current = entries[0].isIntersecting;
+        if (isVisibleRef.current && !animationFrameRef.current) {
+          // Resume animation when becomes visible
+          lastTimeRef.current = performance.now();
+          animate();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    // Create a wrapper element to observe (since we can't observe the component directly)
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'absolute';
+    wrapper.style.top = '0';
+    wrapper.style.left = '0';
+    wrapper.style.width = '1px';
+    wrapper.style.height = '1px';
+    wrapper.style.pointerEvents = 'none';
     
-    return () => clearInterval(interval);
+    // Find the parent hero section and append our observer target
+    const heroSection = document.querySelector('section');
+    if (heroSection) {
+      heroSection.appendChild(wrapper);
+      observer.observe(wrapper);
+    }
+    
+    const animate = () => {
+      if (!isVisibleRef.current) {
+        animationFrameRef.current = undefined;
+        return;
+      }
+      
+      const currentTime = performance.now();
+      const deltaTime = (currentTime - lastTimeRef.current) / 1000; // Convert to seconds
+      lastTimeRef.current = currentTime;
+      
+      setTime(prevTime => prevTime + deltaTime);
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+    
+    // Start the animation
+    lastTimeRef.current = performance.now();
+    animate();
+    
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      observer.disconnect();
+      if (wrapper.parentNode) {
+        wrapper.parentNode.removeChild(wrapper);
+      }
+    };
   }, []);
   
   // Calculate transform values based on time for automatic movement
