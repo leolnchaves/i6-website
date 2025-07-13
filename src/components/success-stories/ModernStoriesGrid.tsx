@@ -287,7 +287,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
             {/* Header with company info and logo */}
             <div className="p-6 pb-4 border-b border-gray-100">
               <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
+                <div className="flex-1 pr-4">
                   <div className="flex items-center mb-3">
                     <Building2 className="w-4 h-4 text-gray-500 mr-2" />
                     <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -299,19 +299,14 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                     {selectedStory.company_name}
                   </h1>
 
-                  {/* About Section - moved closer to company name */}
-                  <div>
-                    <h2 className="text-xs font-semibold text-gray-900 mb-2 uppercase tracking-wider">
-                      {language === 'en' ? 'About' : 'Sobre'}
-                    </h2>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {getCompanyDetails(selectedStory).about}
-                    </p>
-                  </div>
+                  {/* About text - directly below company name */}
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {getCompanyDetails(selectedStory).about}
+                  </p>
                 </div>
                 
-                {/* Client Logo - smaller and positioned in header */}
-                <div className="ml-6 flex-shrink-0">
+                {/* Client Logo - moved slightly left to avoid X button */}
+                <div className="flex-shrink-0 mr-8">
                   <img 
                     src={getCompanyDetails(selectedStory).logo}
                     alt={`${selectedStory.company_name} logo`}
