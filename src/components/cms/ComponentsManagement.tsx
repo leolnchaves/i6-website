@@ -20,7 +20,7 @@ import {
   ChevronRight,
   Edit3
 } from 'lucide-react';
-import FooterManagement from './FooterManagement';
+
 
 const ComponentsManagement = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -52,8 +52,7 @@ const ComponentsManagement = () => {
         'Informações de contato',
         'Links para políticas',
         'Copyright dinâmico'
-      ],
-      editable: true
+      ]
     },
     {
       name: 'Language Context',
@@ -181,11 +180,6 @@ const ComponentsManagement = () => {
     }
   };
 
-  const handleEditComponent = (componentName: string) => {
-    if (componentName === 'Footer') {
-      setActiveTab('footer');
-    }
-  };
 
   return (
     <div className="space-y-8">
@@ -198,9 +192,8 @@ const ComponentsManagement = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-1">
           <TabsTrigger value="overview">Visão Geral</TabsTrigger>
-          <TabsTrigger value="footer">Editar Footer</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-8">
@@ -232,17 +225,6 @@ const ComponentsManagement = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       {getStatusBadge(component.status)}
-                      {component.editable && (
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleEditComponent(component.name)}
-                          className="flex items-center gap-1"
-                        >
-                          <Edit3 className="h-3 w-3" />
-                          Editar
-                        </Button>
-                      )}
                     </div>
                   </div>
 
@@ -371,9 +353,6 @@ const ComponentsManagement = () => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="footer" className="space-y-6">
-          <FooterManagement />
-        </TabsContent>
       </Tabs>
 
       {/* Nota sobre funcionalidade futura */}
@@ -386,8 +365,8 @@ const ComponentsManagement = () => {
             <div>
               <h4 className="font-medium text-blue-900 mb-1">Funcionalidade em Desenvolvimento</h4>
               <p className="text-sm text-blue-700">
-                Esta seção permite a gestão de componentes cross-site. Atualmente você pode editar o conteúdo do Footer. 
-                Em futuras atualizações, será possível configurar outros componentes diretamente através do CMS, 
+                Esta seção permite a visualização dos componentes cross-site implementados no site. 
+                Em futuras atualizações, será possível configurar componentes diretamente através do CMS, 
                 incluindo personalizações de estilo, conteúdo e comportamento.
               </p>
             </div>
