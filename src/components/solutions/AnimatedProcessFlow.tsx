@@ -96,7 +96,11 @@ const AnimatedProcessFlow = () => {
 
   const getStepStatus = (index: number) => {
     if (index < currentStep) return 'completed';
-    if (index === currentStep) return 'active';
+    if (index === currentStep) {
+      // If demo is finished (not playing and progress is 100%), mark as completed
+      if (!isPlaying && progress === 100) return 'completed';
+      return 'active';
+    }
     return 'pending';
   };
 
