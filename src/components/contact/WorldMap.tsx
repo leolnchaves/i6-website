@@ -6,8 +6,28 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const WorldMap = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const isMobile = useIsMobile();
+
+  // Static content - migrated from translations
+  const content = {
+    pt: {
+      title: "Nossa Presença Global",
+      description: "Clique em cada localização para ver informações detalhadas de contato.",
+      headquarters: "Sede",
+      brazil: "Brasil",
+      hoverTip: "Passe o mouse sobre as localizações para mais informações"
+    },
+    en: {
+      title: "Our Global Presence", 
+      description: "Click on each location to see detailed contact information.",
+      headquarters: "Headquarters",
+      brazil: "Brazil",
+      hoverTip: "Hover over locations for more information"
+    }
+  };
+
+  const text = content[language];
 
   // Posição ajustada para apenas Campinas
   const getResponsivePositions = () => {
@@ -28,9 +48,9 @@ const WorldMap = () => {
       id: 'campinas',
       city: 'Campinas',
       state: 'São Paulo', 
-      country: t('contact.map.brazil'),
+      country: text.brazil,
       flag: '🇧🇷',
-      type: t('contact.map.headquarters'),
+      type: text.headquarters,
       unitName: 'infinity6 LATAM',
       position: positions.campinas,
       address: 'Av. Antônio Artioli, 570 - Sala 134 / Prédio A\nCEP 13049-900\nCampinas, SP - Brasil',
@@ -42,10 +62,10 @@ const WorldMap = () => {
     <Card className="border-0 shadow-lg">
       <CardContent className="p-4 sm:p-6 lg:p-8">
         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
-          {t('contact.map.title')}
+          {text.title}
         </h3>
         <p className="text-gray-600 mb-6 text-sm sm:text-base">
-          {t('contact.map.description')}
+          {text.description}
         </p>
         
         <TooltipProvider>
@@ -127,7 +147,7 @@ const WorldMap = () => {
         </TooltipProvider>
         
         <p className="text-sm text-gray-500 mt-4 text-center">
-          {t('contact.map.hoverTip')}
+          {text.hoverTip}
         </p>
       </CardContent>
     </Card>

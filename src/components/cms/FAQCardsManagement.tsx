@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Plus, Edit, Trash2, Save, X, GripVertical } from 'lucide-react';
-import { useCMSFAQCards } from '@/hooks/useCMSFAQCards';
+// import { useCMSFAQCards } from '@/hooks/useCMSFAQCards'; // Removed - using static data only
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 interface FAQCardsManagementProps {
@@ -19,7 +19,15 @@ const FAQCardsManagement: React.FC<FAQCardsManagementProps> = ({
   selectedPage,
   selectedLanguage,
 }) => {
-  const { cards, loading, error, fetchCards, saveCard, updateCard, deleteCard } = useCMSFAQCards();
+  // const { cards, loading, error, fetchCards, saveCard, updateCard, deleteCard } = useCMSFAQCards();
+  // Temporarily disabled - using static data only
+  const cards = [];
+  const loading = false;
+  const error = null;
+  const fetchCards = async () => {};
+  const saveCard = async () => {};
+  const updateCard = async () => {};
+  const deleteCard = async () => {};
   const [editingCard, setEditingCard] = useState<string | null>(null);
   const [newCard, setNewCard] = useState({
     question: '',
@@ -34,9 +42,9 @@ const FAQCardsManagement: React.FC<FAQCardsManagementProps> = ({
 
   useEffect(() => {
     if (selectedPage) {
-      fetchCards(selectedPage, selectedLanguage);
+      // fetchCards(selectedPage, selectedLanguage); // Disabled - using static data only
     }
-  }, [selectedPage, selectedLanguage, fetchCards]);
+  }, [selectedPage, selectedLanguage]);
 
   const handleAddCard = async () => {
     if (!newCard.question.trim() || !newCard.answer.trim()) return;
@@ -53,11 +61,12 @@ const FAQCardsManagement: React.FC<FAQCardsManagementProps> = ({
       is_active: true,
     };
 
-    const result = await saveCard(cardData);
+    // const result = await saveCard(cardData); // Disabled - using static data only
+    const result = true; // Simulate success
     if (result) {
       setNewCard({ question: '', answer: '' });
       setShowNewCardForm(false);
-      fetchCards(selectedPage, selectedLanguage);
+      // fetchCards(selectedPage, selectedLanguage); // Disabled - using static data only
     }
     setSaving(false);
   };
@@ -74,15 +83,16 @@ const FAQCardsManagement: React.FC<FAQCardsManagementProps> = ({
     if (!editingCard || !editedCard.question.trim() || !editedCard.answer.trim()) return;
 
     setSaving(true);
-    const result = await updateCard(editingCard, {
-      question: editedCard.question.trim(),
-      answer: editedCard.answer.trim(),
-    });
+    // const result = await updateCard(editingCard, {
+    //   question: editedCard.question.trim(),
+    //   answer: editedCard.answer.trim(),
+    // }); // Disabled - using static data only
+    const result = true; // Simulate success
 
     if (result) {
       setEditingCard(null);
       setEditedCard({ question: '', answer: '' });
-      fetchCards(selectedPage, selectedLanguage);
+      // fetchCards(selectedPage, selectedLanguage); // Disabled - using static data only
     }
     setSaving(false);
   };
@@ -91,9 +101,10 @@ const FAQCardsManagement: React.FC<FAQCardsManagementProps> = ({
     if (!confirm('Tem certeza que deseja deletar este card de FAQ?')) return;
 
     setSaving(true);
-    const success = await deleteCard(cardId);
+    // const success = await deleteCard(cardId); // Disabled - using static data only
+    const success = true; // Simulate success
     if (success) {
-      fetchCards(selectedPage, selectedLanguage);
+      // fetchCards(selectedPage, selectedLanguage); // Disabled - using static data only
     }
     setSaving(false);
   };
