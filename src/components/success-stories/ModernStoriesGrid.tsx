@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, User, Building2, Quote, Target, TrendingUp, Zap, Shield } from 'lucide-react';
+import { X, ArrowRight, User, Building2, Quote, Target, TrendingUp, Zap, Shield, Users, ShoppingCart, DollarSign, BarChart3 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -80,45 +80,126 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
     };
   };
 
-  // Function to get implemented solutions based on industry
+  // Function to get implemented solutions based on industry using real Solutions data
   const getImplementedSolutions = (story: StoryCard) => {
+    const iconMap = {
+      'users': Users,
+      'shopping-cart': ShoppingCart,
+      'building-2': Building2,
+      'target': Target,
+      'dollar-sign': DollarSign,
+      'bar-chart-3': BarChart3
+    };
+
     const solutionsByIndustry = {
       'E-commerce': [
-        { icon: Target, name: language === 'en' ? 'Smart Recommendations' : 'Recomendações Inteligentes', color: 'bg-blue-100 text-blue-600' },
-        { icon: TrendingUp, name: language === 'en' ? 'Predictive Analytics' : 'Analytics Preditivo', color: 'bg-green-100 text-green-600' },
-        { icon: User, name: language === 'en' ? 'Customer Journey' : 'Jornada do Cliente', color: 'bg-purple-100 text-purple-600' }
+        { 
+          icon: iconMap['users'], 
+          name: language === 'en' ? 'Smart Discovery for Anonymous Visitors' : 'Descoberta Inteligente para Visitantes Anônimos', 
+          color: 'bg-slate-100 text-slate-700' 
+        },
+        { 
+          icon: iconMap['shopping-cart'], 
+          name: language === 'en' ? 'Predictive Personalization' : 'Personalização Preditiva', 
+          color: 'bg-gray-100 text-gray-700' 
+        },
+        { 
+          icon: iconMap['target'], 
+          name: language === 'en' ? 'Predictive Campaign Targeting' : 'Segmentação Preditiva de Campanha', 
+          color: 'bg-stone-100 text-stone-700' 
+        }
       ],
       'Manufacturing': [
-        { icon: Shield, name: language === 'en' ? 'Predictive Maintenance' : 'Manutenção Preditiva', color: 'bg-orange-100 text-orange-600' },
-        { icon: Zap, name: language === 'en' ? 'IoT Monitoring' : 'Monitoramento IoT', color: 'bg-yellow-100 text-yellow-600' },
-        { icon: TrendingUp, name: language === 'en' ? 'Quality Control AI' : 'IA de Controle de Qualidade', color: 'bg-red-100 text-red-600' }
+        { 
+          icon: iconMap['building-2'], 
+          name: language === 'en' ? 'Industrial Recommendation Intelligence' : 'Inteligência de Recomendação Industrial', 
+          color: 'bg-slate-100 text-slate-700' 
+        },
+        { 
+          icon: iconMap['bar-chart-3'], 
+          name: language === 'en' ? 'Adaptive Demand Forecasting' : 'Previsão Adaptativa de Demanda', 
+          color: 'bg-gray-100 text-gray-700' 
+        },
+        { 
+          icon: iconMap['dollar-sign'], 
+          name: language === 'en' ? 'Smart Price Optimization' : 'Otimização Inteligente de Preços', 
+          color: 'bg-stone-100 text-stone-700' 
+        }
       ],
       'Healthcare': [
-        { icon: User, name: language === 'en' ? 'Patient Flow Optimization' : 'Otimização de Fluxo de Pacientes', color: 'bg-teal-100 text-teal-600' },
-        { icon: Target, name: language === 'en' ? 'Resource Allocation' : 'Alocação de Recursos', color: 'bg-indigo-100 text-indigo-600' },
-        { icon: TrendingUp, name: language === 'en' ? 'Demand Forecasting' : 'Previsão de Demanda', color: 'bg-pink-100 text-pink-600' }
+        { 
+          icon: iconMap['bar-chart-3'], 
+          name: language === 'en' ? 'Adaptive Demand Forecasting' : 'Previsão Adaptativa de Demanda', 
+          color: 'bg-slate-100 text-slate-700' 
+        },
+        { 
+          icon: iconMap['target'], 
+          name: language === 'en' ? 'Predictive Campaign Targeting' : 'Segmentação Preditiva de Campanha', 
+          color: 'bg-gray-100 text-gray-700' 
+        },
+        { 
+          icon: iconMap['shopping-cart'], 
+          name: language === 'en' ? 'Predictive Personalization' : 'Personalização Preditiva', 
+          color: 'bg-stone-100 text-stone-700' 
+        }
       ],
       'Finance': [
-        { icon: Shield, name: language === 'en' ? 'Fraud Detection' : 'Detecção de Fraudes', color: 'bg-red-100 text-red-600' },
-        { icon: Target, name: language === 'en' ? 'Risk Assessment' : 'Avaliação de Riscos', color: 'bg-orange-100 text-orange-600' },
-        { icon: Zap, name: language === 'en' ? 'Real-time Monitoring' : 'Monitoramento em Tempo Real', color: 'bg-blue-100 text-blue-600' }
+        { 
+          icon: iconMap['target'], 
+          name: language === 'en' ? 'Predictive Campaign Targeting' : 'Segmentação Preditiva de Campanha', 
+          color: 'bg-slate-100 text-slate-700' 
+        },
+        { 
+          icon: iconMap['shopping-cart'], 
+          name: language === 'en' ? 'Predictive Personalization' : 'Personalização Preditiva', 
+          color: 'bg-gray-100 text-gray-700' 
+        },
+        { 
+          icon: iconMap['users'], 
+          name: language === 'en' ? 'Smart Discovery for Anonymous Visitors' : 'Descoberta Inteligente para Visitantes Anônimos', 
+          color: 'bg-stone-100 text-stone-700' 
+        }
       ],
       'Logistics': [
-        { icon: Target, name: language === 'en' ? 'Route Optimization' : 'Otimização de Rotas', color: 'bg-green-100 text-green-600' },
-        { icon: TrendingUp, name: language === 'en' ? 'Demand Forecasting' : 'Previsão de Demanda', color: 'bg-blue-100 text-blue-600' },
-        { icon: Zap, name: language === 'en' ? 'Smart Delivery' : 'Entrega Inteligente', color: 'bg-purple-100 text-purple-600' }
+        { 
+          icon: iconMap['bar-chart-3'], 
+          name: language === 'en' ? 'Adaptive Demand Forecasting' : 'Previsão Adaptativa de Demanda', 
+          color: 'bg-slate-100 text-slate-700' 
+        },
+        { 
+          icon: iconMap['building-2'], 
+          name: language === 'en' ? 'Industrial Recommendation Intelligence' : 'Inteligência de Recomendação Industrial', 
+          color: 'bg-gray-100 text-gray-700' 
+        },
+        { 
+          icon: iconMap['dollar-sign'], 
+          name: language === 'en' ? 'Smart Price Optimization' : 'Otimização Inteligente de Preços', 
+          color: 'bg-stone-100 text-stone-700' 
+        }
       ],
       'Automotive': [
-        { icon: Shield, name: language === 'en' ? 'Quality Inspection' : 'Inspeção de Qualidade', color: 'bg-red-100 text-red-600' },
-        { icon: Target, name: language === 'en' ? 'Computer Vision' : 'Visão Computacional', color: 'bg-blue-100 text-blue-600' },
-        { icon: TrendingUp, name: language === 'en' ? 'Defect Prevention' : 'Prevenção de Defeitos', color: 'bg-green-100 text-green-600' }
+        { 
+          icon: iconMap['building-2'], 
+          name: language === 'en' ? 'Industrial Recommendation Intelligence' : 'Inteligência de Recomendação Industrial', 
+          color: 'bg-slate-100 text-slate-700' 
+        },
+        { 
+          icon: iconMap['bar-chart-3'], 
+          name: language === 'en' ? 'Adaptive Demand Forecasting' : 'Previsão Adaptativa de Demanda', 
+          color: 'bg-gray-100 text-gray-700' 
+        },
+        { 
+          icon: iconMap['dollar-sign'], 
+          name: language === 'en' ? 'Smart Price Optimization' : 'Otimização Inteligente de Preços', 
+          color: 'bg-stone-100 text-stone-700' 
+        }
       ]
     };
 
     return solutionsByIndustry[story.industry as keyof typeof solutionsByIndustry] || [
-      { icon: Target, name: language === 'en' ? 'AI Solution' : 'Solução de IA', color: 'bg-blue-100 text-blue-600' },
-      { icon: TrendingUp, name: language === 'en' ? 'Analytics' : 'Analytics', color: 'bg-green-100 text-green-600' },
-      { icon: Zap, name: language === 'en' ? 'Automation' : 'Automação', color: 'bg-purple-100 text-purple-600' }
+      { icon: iconMap['users'], name: language === 'en' ? 'Smart Discovery for Anonymous Visitors' : 'Descoberta Inteligente para Visitantes Anônimos', color: 'bg-slate-100 text-slate-700' },
+      { icon: iconMap['shopping-cart'], name: language === 'en' ? 'Predictive Personalization' : 'Personalização Preditiva', color: 'bg-gray-100 text-gray-700' },
+      { icon: iconMap['target'], name: language === 'en' ? 'Predictive Campaign Targeting' : 'Segmentação Preditiva de Campanha', color: 'bg-stone-100 text-stone-700' }
     ];
   };
 
