@@ -1,4 +1,3 @@
-
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -188,129 +187,200 @@ const PrivacyPolicy = () => {
   const currentContent = content[language];
 
   return (
-    <div className="relative overflow-hidden bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16 scroll-reveal">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {currentContent.title}
-            </h1>
-            <p className="text-xl text-gray-600">
-              {currentContent.subtitle}
-            </p>
-            <p className="text-sm text-gray-500 mt-4">
-              {currentContent.lastUpdated}
-            </p>
+    <>
+      <style>{`
+        @keyframes gentle-pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
+        }
+        .gentle-pulse-1 { animation: gentle-pulse 3s ease-in-out infinite; }
+        .gentle-pulse-2 { animation: gentle-pulse 4s ease-in-out infinite 0.5s; }
+        .gentle-pulse-3 { animation: gentle-pulse 3.5s ease-in-out infinite 1s; }
+        .gentle-pulse-4 { animation: gentle-pulse 2.5s ease-in-out infinite 1.5s; }
+        .gentle-pulse-5 { animation: gentle-pulse 4.5s ease-in-out infinite 2s; }
+        .gentle-pulse-6 { animation: gentle-pulse 3.2s ease-in-out infinite 2.5s; }
+        .gentle-pulse-7 { animation: gentle-pulse 2.8s ease-in-out infinite 0.8s; }
+        .gentle-pulse-8 { animation: gentle-pulse 5s ease-in-out infinite 3s; }
+      `}</style>
+      <div className="relative overflow-hidden">
+        {/* Hero-inspired header section */}
+        <section className="relative pt-20 pb-16 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 overflow-hidden">
+          {/* Background effects */}
+          <div className="absolute inset-0">
+            {/* Animated gradient circles */}
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-l from-indigo-400/15 to-blue-500/15 rounded-full blur-2xl"></div>
+            <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-purple-500/10 to-blue-600/10 rounded-full blur-xl"></div>
+            
+            {/* Animated particles */}
+            <div className="absolute top-16 left-16 w-2 h-2 bg-blue-400 rounded-full gentle-pulse-1"></div>
+            <div className="absolute top-24 right-24 w-1 h-1 bg-purple-300 rounded-full gentle-pulse-2"></div>
+            <div className="absolute top-12 right-40 w-1.5 h-1.5 bg-indigo-300 rounded-full gentle-pulse-5"></div>
+            <div className="absolute top-40 left-12 w-1 h-1 bg-blue-500 rounded-full gentle-pulse-7"></div>
+            <div className="absolute top-1/3 left-12 w-2 h-2 bg-purple-400 rounded-full gentle-pulse-3"></div>
+            <div className="absolute top-1/4 right-16 w-1 h-1 bg-blue-500 rounded-full gentle-pulse-4"></div>
+            <div className="absolute bottom-1/4 right-20 w-1.5 h-1.5 bg-indigo-400 rounded-full gentle-pulse-8"></div>
+            <div className="absolute top-1/6 left-1/3 w-1 h-1 bg-purple-300 rounded-full gentle-pulse-2"></div>
+            
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
+            
+            {/* Flowing lines effect */}
+            <div className="absolute inset-0 opacity-20">
+              <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0,20 Q25,10 50,20 T100,20" stroke="url(#gradient1)" strokeWidth="0.5" fill="none" opacity="0.6">
+                  <animate attributeName="d" dur="8s" repeatCount="indefinite" 
+                    values="M0,20 Q25,10 50,20 T100,20;M0,25 Q25,15 50,25 T100,25;M0,20 Q25,10 50,20 T100,20"/>
+                </path>
+                <path d="M0,40 Q25,30 50,40 T100,40" stroke="url(#gradient2)" strokeWidth="0.3" fill="none" opacity="0.4">
+                  <animate attributeName="d" dur="6s" repeatCount="indefinite" 
+                    values="M0,40 Q25,30 50,40 T100,40;M0,45 Q25,35 50,45 T100,45;M0,40 Q25,30 50,40 T100,40"/>
+                </path>
+                <defs>
+                  <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgb(59, 130, 246)" stopOpacity="0.6"/>
+                    <stop offset="50%" stopColor="rgb(147, 51, 234)" stopOpacity="0.8"/>
+                    <stop offset="100%" stopColor="rgb(79, 70, 229)" stopOpacity="0.6"/>
+                  </linearGradient>
+                  <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgb(79, 70, 229)" stopOpacity="0.4"/>
+                    <stop offset="50%" stopColor="rgb(59, 130, 246)" stopOpacity="0.6"/>
+                    <stop offset="100%" stopColor="rgb(147, 51, 234)" stopOpacity="0.4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
           </div>
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-4xl mx-auto text-center text-white">
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg">
+                {currentContent.title}
+              </h1>
+              <p className="text-xl md:text-2xl font-light mb-4 drop-shadow-md opacity-90">
+                {currentContent.subtitle}
+              </p>
+              <p className="text-sm text-blue-200 drop-shadow-sm">
+                {currentContent.lastUpdated}
+              </p>
+            </div>
+          </div>
+        </section>
 
-          <div className="prose prose-lg max-w-none scroll-reveal space-y-8">
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.introduction.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.introduction.text}
-              </p>
-            </section>
+        {/* Content section */}
+        <div className="bg-white relative">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div className="max-w-4xl mx-auto">
+              <div className="prose prose-lg max-w-none scroll-reveal space-y-8">
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.introduction.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.introduction.text}
+                  </p>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.information.title}</h2>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.information.personalTitle}</h3>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.information.personalText}
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                {currentContent.sections.information.personalItems.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.information.technicalTitle}</h3>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.information.technicalText}
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                {currentContent.sections.information.technicalItems.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.information.title}</h2>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.information.personalTitle}</h3>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.information.personalText}
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
+                    {currentContent.sections.information.personalItems.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                  
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.information.technicalTitle}</h3>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.information.technicalText}
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
+                    {currentContent.sections.information.technicalItems.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.usage.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.usage.text}
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                {currentContent.sections.usage.items.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.usage.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.usage.text}
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
+                    {currentContent.sections.usage.items.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.security.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.security.text}
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                {currentContent.sections.security.items.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.security.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.security.text}
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
+                    {currentContent.sections.security.items.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.sharing.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.sharing.text}
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                {currentContent.sections.sharing.items.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.sharing.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.sharing.text}
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
+                    {currentContent.sections.sharing.items.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.rights.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.rights.text}
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                {currentContent.sections.rights.items.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.rights.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.rights.text}
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
+                    {currentContent.sections.rights.items.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.transfers.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.transfers.text}
-              </p>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.transfers.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.transfers.text}
+                  </p>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.changes.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.changes.text}
-              </p>
-            </section>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.changes.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.changes.text}
+                  </p>
+                </section>
 
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.contact.title}</h2>
-              <p className="text-gray-700 mb-4">
-                {currentContent.sections.contact.text}
-              </p>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.email}</strong> privacy@infinity6.ai</p>
-                <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.address}</strong> {currentContent.sections.contact.company}</p>
-                <p className="text-gray-700">{currentContent.sections.contact.dpo}</p>
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.contact.title}</h2>
+                  <p className="text-gray-700 mb-4">
+                    {currentContent.sections.contact.text}
+                  </p>
+                  <div className="bg-gray-50 p-6 rounded-lg">
+                    <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.email}</strong> privacy@infinity6.ai</p>
+                    <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.address}</strong> {currentContent.sections.contact.company}</p>
+                    <p className="text-gray-700">{currentContent.sections.contact.dpo}</p>
+                  </div>
+                </section>
               </div>
-            </section>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
