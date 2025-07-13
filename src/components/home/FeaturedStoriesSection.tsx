@@ -151,10 +151,10 @@ const FeaturedStoriesSection = () => {
                             <div className="inline-block px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium text-gray-600 mb-4">
                               {story.segment}
                             </div>
-                            <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                            <h3 className="text-lg text-gray-900 leading-tight">
                               {story.description}
                             </h3>
-                            <p className="text-sm text-gray-600 mt-1">{story.client}</p>
+                            <p className="text-sm font-bold text-gray-600 mt-1">{story.client}</p>
                           </div>
                           
                           {/* Conteúdo visual */}
