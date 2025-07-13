@@ -1,5 +1,5 @@
 
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo, useState, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -20,14 +20,17 @@ interface FormData {
 
 const ContactForm = memo(() => {
   const { language } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<FormData>();
   
-  // Static content for PT/EN - automatically responds to language changes
-  const content = {
+  // Static content for PT/EN - memoized for stability
+  const content = useMemo(() => ({
     pt: {
       title1: "Transforme seu negócio com",
       title2: "Inteligência Artificial",
@@ -80,11 +83,21 @@ const ContactForm = memo(() => {
         messageMinLength: "Please fill out this field."
       }
     }
-  };
+  }), []);
 
-  const onSubmit = useCallback((data: FormData) => {
-    console.log('Form submitted:', data);
-  }, []);
+  const onSubmit = useCallback(async (data: FormData) => {
+    setIsSubmitting(true);
+    try {
+      console.log('Form submitted:', data);
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      reset();
+    } catch (error) {
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [reset]);
 
   // Automatically uses current language from context - memoized
   const text = useMemo(() => content[language], [language]);
@@ -100,7 +113,7 @@ const ContactForm = memo(() => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-8 pt-0 flex-1 flex flex-col">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
           <div className="flex-1 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -209,10 +222,11 @@ const ContactForm = memo(() => {
 
           <Button 
             type="submit" 
-            className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3 mt-auto"
+            disabled={isSubmitting}
+            className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3 mt-auto disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {text.sendButton}
-            <Send className="ml-2 w-4 h-4" />
+            {isSubmitting ? 'Sending...' : text.sendButton}
+            <Send className={`ml-2 w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
           </Button>
         </form>
       </CardContent>

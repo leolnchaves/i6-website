@@ -27,8 +27,8 @@ const CalendlySection = memo(() => {
     return () => observer.disconnect();
   }, []);
   
-  // Static content for PT/EN - automatically responds to language changes
-  const content = {
+  // Static content for PT/EN - memoized for stability
+  const content = useMemo(() => ({
     pt: {
       title: "Agende uma Conversa",
       description: "Vamos discutir como nossa IA pode transformar seu negócio"
@@ -37,7 +37,7 @@ const CalendlySection = memo(() => {
       title: "Sometimes a quick chat is all it takes.",
       description: "Let's cut to the chase: schedule a session with our experts now!"
     }
-  };
+  }), []);
 
   // Automatically uses current language from context - memoized
   const text = useMemo(() => content[language], [language]);

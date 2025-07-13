@@ -27,8 +27,8 @@ const FAQSection = memo(() => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Static content
-  const content = {
+  // Static content - memoized for stability
+  const content = useMemo(() => ({
     pt: {
       title: "Perguntas Frequentes",
       subtitle: "Perguntas comuns sobre nossas soluções e serviços de IA.",
@@ -167,7 +167,7 @@ const FAQSection = memo(() => {
         }
       ]
     }
-  };
+  }), []);
 
   // Automatically uses current language from context
   const text = useMemo(() => content[language], [language]);

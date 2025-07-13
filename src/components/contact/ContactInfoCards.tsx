@@ -1,52 +1,108 @@
-
-import { Mail, Phone, MapPin } from 'lucide-react';
+import React, { memo, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const ContactInfoCards = () => {
-  const { t } = useLanguage();
+const ContactInfoCards = memo(() => {
+  const { language } = useLanguage();
 
-  const contactInfo = [
-    {
-      icon: <Mail className="w-6 h-6" />,
-      title: t('contact.info.emailUs'),
-      details: "infinity6@infinity6.ai",
-      description: t('contact.info.emailDescription')
+  // Memoized content for stability
+  const content = useMemo(() => ({
+    pt: {
+      email: {
+        title: "Email",
+        description: "Envie-nos uma mensagem",
+        value: "lets.talk@infinity6.ai"
+      },
+      phone: {
+        title: "Telefone",
+        description: "Ligue para nós",
+        value: "+55 19 99999-9999"
+      },
+      address: {
+        title: "Endereço",
+        description: "Visite nosso escritório",
+        value: "Campinas, São Paulo, Brasil"
+      },
+      hours: {
+        title: "Horário",
+        description: "Seg - Sex: 9:00 - 18:00",
+        value: "GMT-3 (Brasília)"
+      }
     },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      title: t('contact.info.callUs'),
-      details: "+55 19 998197775",
-      description: t('contact.info.callDescription')
-    },
-    {
-      icon: <MapPin className="w-6 h-6" />,
-      title: t('contact.info.visitUs'),
-      details: "Campinas, BR",
-      description: t('contact.info.visitDescription')
+    en: {
+      email: {
+        title: "Email",
+        description: "Send us a message",
+        value: "lets.talk@infinity6.ai"
+      },
+      phone: {
+        title: "Phone",
+        description: "Give us a call",
+        value: "+55 19 99999-9999"
+      },
+      address: {
+        title: "Address",
+        description: "Visit our office",
+        value: "Campinas, São Paulo, Brazil"
+      },
+      hours: {
+        title: "Hours",
+        description: "Mon - Fri: 9:00 - 18:00",
+        value: "GMT-3 (Brasília)"
+      }
     }
-  ];
+  }), []);
+
+  const text = useMemo(() => content[language], [content, language]);
+
+  const cards = useMemo(() => [
+    {
+      icon: Mail,
+      ...text.email,
+      color: "text-blue-600"
+    },
+    {
+      icon: Phone,
+      ...text.phone,
+      color: "text-green-600"
+    },
+    {
+      icon: MapPin,
+      ...text.address,
+      color: "text-orange-600"
+    },
+    {
+      icon: Clock,
+      ...text.hours,
+      color: "text-purple-600"
+    }
+  ], [text]);
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {contactInfo.map((info, index) => (
-            <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
-              <CardContent className="p-8">
-                <div className="flex justify-center text-blue-600 mb-4">
-                  {info.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{info.title}</h3>
-                <p className="text-xl font-bold text-gray-900 mb-1">{info.details}</p>
-                <p className="text-gray-600 text-sm">{info.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {cards.map((card, index) => (
+        <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <CardContent className="p-6 text-center">
+            <div className={`w-12 h-12 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center ${card.color}`}>
+              <card.icon className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              {card.title}
+            </h3>
+            <p className="text-sm text-gray-600 mb-2">
+              {card.description}
+            </p>
+            <p className="text-sm font-medium text-gray-800">
+              {card.value}
+            </p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
   );
-};
+});
+
+ContactInfoCards.displayName = 'ContactInfoCards';
 
 export default ContactInfoCards;

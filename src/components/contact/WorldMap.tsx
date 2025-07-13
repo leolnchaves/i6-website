@@ -1,39 +1,24 @@
 
-import React, { memo, useMemo, useState, useRef, useEffect } from 'react';
+import React, { memo, useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import { Mail, Phone, MapPin, Building } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 const WorldMap = memo(() => {
   const { language } = useLanguage();
   const isMobile = useIsMobile();
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { isVisible, elementRef } = useIntersectionObserver();
+  const { isLoaded: imageLoaded } = useImagePreloader(
+    "/lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png",
+    isVisible
+  );
 
-  // Intersection Observer for lazy loading
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Static content - migrated from translations - memoized
-  const content = {
+  // Static content - memoized for stability
+  const content = useMemo(() => ({
     pt: {
       title: "Nossa Presença Global",
       description: "Clique em cada localização para ver informações detalhadas de contato.",
@@ -48,12 +33,12 @@ const WorldMap = memo(() => {
       brazil: "Brazil",
       hoverTip: "Hover over locations for more information"
     }
-  };
+  }), []);
 
   const text = useMemo(() => content[language], [language]);
 
-  // Posição ajustada para apenas Campinas
-  const getResponsivePositions = () => {
+  // Memoized responsive positions
+  const positions = useMemo(() => {
     if (isMobile) {
       return {
         campinas: { top: '68%', left: '35%' }
@@ -62,11 +47,10 @@ const WorldMap = memo(() => {
     return {
       campinas: { top: '68%', left: '32%' }
     };
-  };
+  }, [isMobile]);
 
-  const positions = getResponsivePositions();
-
-  const locations = [
+  // Memoized locations data
+  const locations = useMemo(() => [
     {
       id: 'campinas',
       city: 'Campinas',
@@ -79,7 +63,12 @@ const WorldMap = memo(() => {
       address: 'Av. Antônio Artioli, 570 - Sala 134 / Prédio A\nCEP 13049-900\nCampinas, SP - Brasil',
       email: 'lets.talk@infinity6.ai'
     }
-  ];
+  ], [text.brazil, text.headquarters, positions.campinas]);
+
+  // Memoized location click handler
+  const handleLocationClick = useCallback((locationId: string) => {
+    console.log('Location clicked:', locationId);
+  }, []);
 
   return (
     <Card className="border-0 shadow-lg">
@@ -92,7 +81,7 @@ const WorldMap = memo(() => {
         </p>
         
         <TooltipProvider>
-          <div ref={containerRef} className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+          <div ref={elementRef} className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
             {/* Placeholder while loading */}
             {!imageLoaded && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
@@ -108,7 +97,6 @@ const WorldMap = memo(() => {
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
-                onLoad={() => setImageLoaded(true)}
                 loading="lazy"
               />
             )}
@@ -122,6 +110,7 @@ const WorldMap = memo(() => {
                       top: location.position.top,
                       left: location.position.left,
                     }}
+                    onClick={() => handleLocationClick(location.id)}
                   >
                     <div className="bg-white rounded-lg shadow-lg border p-2 min-w-[90px] sm:min-w-[110px]">
                       <div className="flex items-center gap-1.5 mb-1">
