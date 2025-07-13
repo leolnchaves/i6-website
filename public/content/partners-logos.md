@@ -83,3 +83,9 @@
 ## PARTNER 6
 **Logo:** /content/logos/11.png
 **Name:** PARTNER 6
+
+---
+
+## DIRECIONAL
+**Logo:** /content/logos/direcional.png
+**Name:** DIRECIONAL
