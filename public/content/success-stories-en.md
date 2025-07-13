@@ -1,27 +1,27 @@
 # Success Stories
 
 ## E-commerce
-**Description:** Implemented AI-powered recommendation engine and customer journey analytics to personalize shopping experiences and optimize marketing campaigns in real-time.
+**Description:** AI-powered recommendation engine with personalized customer experiences
 **Client:** TechRetail Inc.
-**Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop
+**Image:** /lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png
 
 ---
 
 ## Manufacturing
-**Description:** Deployed predictive maintenance AI system with IoT sensors to forecast equipment failures and optimize maintenance schedules proactively.
+**Description:** Predictive maintenance system with IoT sensors for equipment optimization
 **Client:** Industrial Solutions Co.
-**Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop
+**Image:** /lovable-uploads/78e4760f-4843-4f50-b0b1-f93b9cf828f2.png
 
 ---
 
 ## Healthcare
-**Description:** Implemented AI-driven patient flow optimization system to predict demand patterns and allocate resources efficiently across departments.
+**Description:** AI-driven patient flow optimization for efficient resource allocation
 **Client:** MedTech Innovations
-**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop
+**Image:** /lovable-uploads/6b931e8f-e382-4984-80d6-7fcf4ebf91d8.png
 
 ---
 
 ## Finance
-**Description:** Implemented machine learning fraud detection system with real-time transaction monitoring and adaptive risk scoring algorithms.
+**Description:** Machine learning fraud detection with real-time transaction monitoring
 **Client:** Capital Banking Group
-**Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop
+**Image:** /lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png
