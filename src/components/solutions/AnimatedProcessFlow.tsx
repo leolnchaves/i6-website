@@ -18,23 +18,23 @@ const AnimatedProcessFlow = () => {
   const getStepTasks = (stepKey: string) => {
     const tasks = {
       discovery: [
-        "Analyzing business requirements and objectives",
-        "Identifying key stakeholders and decision makers", 
-        "Mapping current processes and pain points"
+        "Analyzing business requirements",
+        "Analyzing Pain points & opportunities",
+        "Goal mapping (strike angle)"
       ],
       data: [
+        "Analyzing data structure",
         "Collecting data samples from multiple sources",
-        "Implementing data anonymization protocols",
-        "Ensuring GDPR and privacy compliance"
+        "Implementing data anonymization protocols"
       ],
       training: [
         "Preprocessing and cleaning collected data",
         "Training AI models with optimal parameters",
-        "Cross-validation and performance testing"
+        "Cross-validation and backtest testing"
       ],
       testing: [
         "Running comprehensive model validation tests",
-        "A/B testing with controlled user groups",
+        "Creating potential and scalable results analysis",
         "Performance benchmarking against baselines"
       ],
       integration: [
