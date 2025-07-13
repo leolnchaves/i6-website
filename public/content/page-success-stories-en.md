@@ -7,7 +7,7 @@
 **Logo:** /content/logos/1.png
 **Segment:** E-commerce
 **Client:** TechRetail Inc.
-**Description:** TechRetail Inc.
+**Description:** Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.
 **Challenge:** Low conversion rates and difficulty understanding customer behavior patterns across multiple touchpoints, leading to inefficient marketing spend and poor user experience.
 **Solution:** Implemented AI-powered recommendation engine and customer journey analytics to personalize shopping experiences and optimize marketing campaigns in real-time.
 **Metric1:** 45% Conversion Increase
@@ -25,7 +25,7 @@
 **Logo:** /content/logos/2.png
 **Segment:** Manufacturing
 **Client:** Industrial Solutions Co.
-**Description:** Industrial Solutions Co.
+**Description:** Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.
 **Challenge:** High equipment downtime and unpredictable maintenance costs affecting production efficiency and overall operational expenses.
 **Solution:** Deployed predictive maintenance AI system with IoT sensors to forecast equipment failures and optimize maintenance schedules proactively.
 **Metric1:** 35% Downtime Reduction
