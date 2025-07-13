@@ -34,7 +34,7 @@ const CalendlySection = () => {
         
         <div className="bg-white rounded-lg p-4">
           <iframe
-            src="SEU_LINK_DO_CALENDLY_AQUI"
+            src="https://calendly.com/lets-talk-infinity6/30min"
             width="100%"
             height="600"
             frameBorder="0"
