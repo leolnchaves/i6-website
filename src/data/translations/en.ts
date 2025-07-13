@@ -295,7 +295,7 @@ export const enTranslations = {
   'contact.form.messageSent': 'Message Sent!',
   'contact.form.thankYou': 'Thank you for reaching out. We\'ll get back to you soon.',
   'contact.map.title': 'Our Global Presence',
-  'contact.map.description': 'Find us across three continents. Click on each location to see detailed contact information.',
+  'contact.map.description': 'Click on each location to see detailed contact information.',
   'contact.map.headquarters': 'Headquarters',
   'contact.map.branchOffice': 'Branch Office',
   'contact.map.brazil': 'Brazil',
