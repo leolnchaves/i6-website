@@ -55,10 +55,10 @@ const FAQSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
             {title}
           </h2>
-          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed">
+          <p className="text-xl text-muted-foreground leading-relaxed">
             {subtitle}
           </p>
         </div>
