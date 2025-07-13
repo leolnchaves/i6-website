@@ -56,10 +56,8 @@ const parseMarkdownContent = (content: string): ResultItem[] => {
   const results: ResultItem[] = [];
   const sections = content.split('---').map(section => section.trim()).filter(Boolean);
   
-  // Skip the first section (title)
-  const dataSections = sections.slice(1);
-  
-  for (const section of dataSections) {
+  // Process all sections, including the first one which contains the first card
+  for (const section of sections) {
     const lines = section.split('\n').map(line => line.trim()).filter(Boolean);
     
     let title = '';

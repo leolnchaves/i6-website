@@ -13,7 +13,7 @@
 
 ---
 
-## Hyperpersonalization Intelligence testeeeeee
+## Hyperpersonalization Intelligence
 **Icon:** Target
 **Description:** Engage users with real-time, contextual experiences that convert better.
 
