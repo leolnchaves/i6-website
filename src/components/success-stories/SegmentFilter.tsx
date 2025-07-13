@@ -1,5 +1,5 @@
 
-import { memo, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
@@ -9,13 +9,15 @@ interface SegmentFilterProps {
   selectedSegment: string | null;
 }
 
-const SegmentFilter = memo(({ onSegmentChange, selectedSegment }: SegmentFilterProps) => {
+const SegmentFilter: React.FC<SegmentFilterProps> = ({ onSegmentChange, selectedSegment }) => {
   const { language } = useLanguage();
+  const [availableSegments, setAvailableSegments] = useState<string[]>([]);
 
-  // Memoize available segments calculation
-  const availableSegments = useMemo(() => {
+  // Extract unique industries from static data
+  useEffect(() => {
     const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
-    return [...new Set(cards.map(card => card.industry))].sort();
+    const uniqueIndustries = [...new Set(cards.map(card => card.industry))].sort();
+    setAvailableSegments(uniqueIndustries);
   }, [language]);
 
   const handleSegmentClick = (segment: string) => {
@@ -61,8 +63,6 @@ const SegmentFilter = memo(({ onSegmentChange, selectedSegment }: SegmentFilterP
       </div>
     </section>
   );
-});
-
-SegmentFilter.displayName = 'SegmentFilter';
+};
 
 export default SegmentFilter;

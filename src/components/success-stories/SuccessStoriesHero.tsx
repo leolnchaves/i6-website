@@ -1,16 +1,12 @@
 
-import { memo, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import heroBg from '@/assets/hero-bg.jpg';
 
-const SuccessStoriesHero = memo(() => {
+const SuccessStoriesHero = () => {
   const { language } = useLanguage();
   
-  const heroContent = useMemo(() => 
-    successStoriesData[language]?.hero || successStoriesData.en.hero, 
-    [language]
-  );
+  const heroContent = successStoriesData[language]?.hero || successStoriesData.en.hero;
 
   return (
     <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
@@ -46,8 +42,6 @@ const SuccessStoriesHero = memo(() => {
       </div>
     </section>
   );
-});
-
-SuccessStoriesHero.displayName = 'SuccessStoriesHero';
+};
 
 export default SuccessStoriesHero;

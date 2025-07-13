@@ -1,8 +1,8 @@
 
-import { memo, useState, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
+import { useState } from 'react';
 import SuccessStoriesHero from '@/components/success-stories/SuccessStoriesHero';
 import MetricsSection from '@/components/success-stories/MetricsSection';
 import SegmentFilter from '@/components/success-stories/SegmentFilter';
@@ -15,7 +15,7 @@ import SuccessStoriesCTA from '@/components/success-stories/SuccessStoriesCTA';
  * Showcases customer success stories, metrics, and testimonials
  * Includes performance monitoring and error handling
  */
-const SuccessStories = memo(() => {
+const SuccessStories = () => {
   // Performance monitoring
   const metrics = usePerformanceMonitor('SuccessStoriesPage', 50);
   
@@ -25,13 +25,10 @@ const SuccessStories = memo(() => {
   // Segment filter state
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
   
-  // Memoize log message to prevent recreation
-  const logMessage = useMemo(() => ({ 
-    timestamp: new Date().toISOString() 
-  }), []);
-  
   // Log page visit
-  logger.info('Success Stories page loaded', logMessage, 'SuccessStoriesPage');
+  logger.info('Success Stories page loaded', { 
+    timestamp: new Date().toISOString() 
+  }, 'SuccessStoriesPage');
   
   return (
     <div className="min-h-screen">
@@ -57,8 +54,6 @@ const SuccessStories = memo(() => {
       <SuccessStoriesCTA />
     </div>
   );
-});
-
-SuccessStories.displayName = 'SuccessStories';
+};
 
 export default SuccessStories;
