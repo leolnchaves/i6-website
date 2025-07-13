@@ -1,27 +1,31 @@
-import { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useState } from 'react';
+import { usePartnersContent } from '@/hooks/usePartnersContent';
 
 const PartnersSection = () => {
-  const { t } = useLanguage();
   const [isPaused, setIsPaused] = useState(false);
+  const { partners, loading, error } = usePartnersContent();
 
-  // Client logos with the new provided images
-  const partners = [
-    { name: 'HERING', logo: '/lovable-uploads/43902e38-173c-4443-972d-3508bb019fc8.png' },
-    { name: 'EMS', logo: '/lovable-uploads/1a970fd6-baf7-4b71-9a57-dc12e859a375.png' },
-    { name: 'LEGRAND', logo: '/lovable-uploads/504b43c1-3a9d-4fa6-99be-bf71d174de88.png' },
-    { name: 'COGNA', logo: '/lovable-uploads/ee66fac8-ae04-45ec-be82-6097d7dd55d5.png' },
-    { name: 'ACHĒ', logo: '/lovable-uploads/522cea43-2fde-45f7-89d1-d982e9dee4a5.png' },
-    { name: 'NATURA&CO', logo: '/lovable-uploads/2297d479-bfa8-46e6-8035-5b475ee4bccd.png' },
-    { name: 'JEQUITI', logo: '/lovable-uploads/5b025329-71fc-4701-8319-566e1d2cc76e.png' },
-    { name: 'EMBRAER', logo: '/lovable-uploads/e5e13c1d-3ce5-472b-89e6-0b434fd4bf79.png' },
-    { name: 'PARTNER 1', logo: '/lovable-uploads/cdaaa3c2-99d2-4768-b24c-525ef004fefa.png' },
-    { name: 'PARTNER 2', logo: '/lovable-uploads/c8e82ae8-631b-4310-9884-36f98d8aa8b3.png' },
-    { name: 'PARTNER 3', logo: '/lovable-uploads/45f18a3e-3b8d-4e93-adcd-606703504921.png' },
-    { name: 'PARTNER 4', logo: '/lovable-uploads/68330096-86f5-4324-bed5-4b1ca5dee086.png' },
-    { name: 'PARTNER 5', logo: '/lovable-uploads/0752a9be-6f61-4536-aa89-dc6c72014ce5.png' },
-    { name: 'PARTNER 6', logo: '/lovable-uploads/56b298ad-94ca-4837-a424-3f110bdecc55.png' }
-  ];
+  // Show loading state
+  if (loading) {
+    return (
+      <section className="py-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center text-slate-300">Loading partners...</div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <section className="py-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center text-red-400">Error loading partners: {error}</div>
+        </div>
+      </section>
+    );
+  }
 
   // Double the array for seamless loop
   const doubledPartners = [...partners, ...partners];
