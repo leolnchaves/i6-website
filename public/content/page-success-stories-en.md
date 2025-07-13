@@ -109,3 +109,21 @@
 **CustomerTitle:** Quality Assurance Manager
 
 ---
+
+## Teste
+**Image:** https://images.unsplash.com/photo-1751402059577-463e1c0b4490&fit=crop
+**Logo:** /content/logos/EMS-COR.png
+**Segment:** Teste
+**Client:** Teste Infinity
+**Description:** Infinity é a melhor empresa de tecnologia do mundo.
+**Challenge:** Quality control issues in manufacturing leading to recalls, warranty claims, and brand reputation damage affecting market position.
+**Solution:** Implemented computer vision AI for automated quality inspection and predictive analytics for defect prevention in production lines.
+**Metric1:** 36% New Products Discovery
+**Metric2:** 27% Average Ticket Increase
+**Metric3:** 2x Conversion
+**Solutions:** Industrial Intelligence Infinity, Anonymous Visitors Infinity, Predictive Campaign Infinity
+**Quote:** Our quality standards have reached new heights, and customer confidence in our products has never been stronger.
+**CustomerName:** Leonardo Chaves
+**CustomerTitle:** CEO
+
+---
