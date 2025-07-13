@@ -1,4 +1,4 @@
-# Real AI Impact
+# Real AI Impact TESTE
 
 ## Growth Acceleration
 **Icon:** TrendingUp
@@ -27,7 +27,7 @@
 
 ## Supply & Profitability Optimization
 **Icon:** DollarSign
-**Description:** AAAAA Align pricing, demand, and assortment to improve margin, turnover and sell-out.
+**Description:** Align pricing, demand, and assortment to improve margin, turnover and sell-out.
 
 **Outcomes:**
 - Increase margin or demand with dynamic pricing
