@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ResultCardProps {
   icon: React.ReactNode;
@@ -13,9 +12,6 @@ interface ResultCardProps {
 }
 
 const ResultCard = ({ icon, title, description, solutions, index, backgroundColor, backgroundOpacity }: ResultCardProps) => {
-  const { language } = useLanguage();
-  const outcomesLabel = language === 'pt' ? 'Resultados Orientados por IA:' : 'AI-Driven Outcomes:';
-  
   return (
     <div
       className="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-200 will-change-transform transform hover:scale-[1.02] h-full min-h-[280px] flex flex-col text-left group"
@@ -43,7 +39,7 @@ const ResultCard = ({ icon, title, description, solutions, index, backgroundColo
         </p>
 
         <div className="space-y-2">
-          <h4 className="text-sm font-semibold text-gray-800 mb-2">{outcomesLabel}</h4>
+          <h4 className="text-sm font-semibold text-gray-800 mb-2">AI-Driven Outcomes:</h4>
           <ul className="space-y-1">
             {solutions.map((solution, idx) => (
               <li key={idx} className="text-xs text-gray-600 flex items-start">

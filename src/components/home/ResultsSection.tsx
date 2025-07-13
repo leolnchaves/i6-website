@@ -1,37 +1,68 @@
 
 import React from 'react';
+import { TrendingUp, Award, Target, DollarSign } from 'lucide-react';
+
 import ResultsHeader from './results/ResultsHeader';
 import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
-import { useMarkdownContent } from '@/hooks/useMarkdownContent';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+
 
 const ResultsSection = () => {
-  const { content, loading, error } = useMarkdownContent('results');
 
-  if (loading) {
-    return (
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <LoadingSpinner />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error || !content) {
-    return (
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <p className="text-red-500">Error loading content: {error}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // Static results data - 4 main value propositions
+  const staticResults = [
+    {
+      icon: <TrendingUp className="text-primary text-3xl" />,
+      title: "Growth Acceleration",
+      description: "Accelerate performance with AI that boosts conversions, ticket size and ROI across channels.",
+      solutions: [
+        "Increase conversions by matching the right offer to the right customer",
+        "Grow ticket size with smart, contextual cross-sell",
+        "Maximize ROI by adapting to each sales channel",
+        "Boost LTV by anticipating next-best purchases",
+        "Improve proposal win rates with personalized timing and content"
+      ],
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Target className="text-primary text-3xl" />,
+      title: "Hyperpersonalization Intelligence",
+      description: "Engage users with real-time, contextual experiences that convert better.",
+      solutions: [
+        "Reduce bounce rate with behavior-based journeys",
+        "Help users find relevant products faster",
+        "Personalize offers even for anonymous visitors",
+        "Recover churned users with smart, timely offers"
+      ],
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <DollarSign className="text-primary text-3xl" />,
+      title: "Supply & Profitability Optimization",
+      description: "Align pricing, demand, and assortment to improve margin, turnover and sell-out.",
+      solutions: [
+        "Increase margin or demand with dynamic pricing",
+        "Forecast demand to avoid stockouts and excess",
+        "Boost sell-out with smart, localized assortment"
+      ],
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    },
+    {
+      icon: <Award className="text-primary text-3xl" />,
+      title: "Cost & Commercial Efficiency",
+      description: "Cut costs and scale smarter with fast, AI-powered execution.",
+      solutions: [
+        "Reduce CRM and operational expenses with automation",
+        "Improve sales team performance with AI and gamification",
+        "Launch and scale in weeks with plug-and-play AI"
+      ],
+      backgroundColor: undefined,
+      backgroundOpacity: undefined
+    }
+  ];
 
 
   return (
@@ -39,31 +70,19 @@ const ResultsSection = () => {
       <ResultsBackground />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16 scroll-reveal">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            <span className="block mb-2">{content.title}</span>
-            <span className="block bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent pb-2">
-              {content.subtitle}
-            </span>
-          </h2>
-          <div className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
-            {content.description.map((paragraph, index) => (
-              <p key={index} className={index > 0 ? "mt-4" : ""}>
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
+        <ResultsHeader />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
-          {content.sections.map((section, index) => (
+          {staticResults.map((result, index) => (
             <ResultCard
               key={index}
-              icon={section.icon}
-              title={section.title}
-              description={section.description}
-              solutions={section.outcomes}
+              icon={result.icon}
+              title={result.title}
+              description={result.description}
+              solutions={result.solutions}
               index={index}
+              backgroundColor={result.backgroundColor}
+              backgroundOpacity={result.backgroundOpacity}
             />
           ))}
         </div>
