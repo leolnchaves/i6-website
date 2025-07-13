@@ -1,9 +1,10 @@
 
+import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import heroBg from '@/assets/hero-bg.jpg';
 
-const SuccessStoriesHero = () => {
+const SuccessStoriesHero = memo(() => {
   const { language } = useLanguage();
   
   const heroContent = successStoriesData[language]?.hero || successStoriesData.en.hero;
@@ -42,6 +43,8 @@ const SuccessStoriesHero = () => {
       </div>
     </section>
   );
-};
+});
+
+SuccessStoriesHero.displayName = 'SuccessStoriesHero';
 
 export default SuccessStoriesHero;

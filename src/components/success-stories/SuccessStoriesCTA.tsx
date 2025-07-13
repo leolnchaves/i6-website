@@ -1,10 +1,11 @@
 
+import React, { memo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 
-const SuccessStoriesCTA = () => {
+const SuccessStoriesCTA = memo(() => {
   const { language } = useLanguage();
   
   const ctaContent = successStoriesData[language]?.cta || successStoriesData.en.cta;
@@ -25,6 +26,8 @@ const SuccessStoriesCTA = () => {
       </div>
     </section>
   );
-};
+});
+
+SuccessStoriesCTA.displayName = 'SuccessStoriesCTA';
 
 export default SuccessStoriesCTA;

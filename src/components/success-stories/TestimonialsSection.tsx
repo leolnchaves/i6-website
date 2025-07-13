@@ -1,11 +1,12 @@
 
+import React, { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import { testimonialsData } from '@/data/staticData/testimonialsData';
 import { Linkedin, Quote } from 'lucide-react';
 
-const TestimonialsSection = () => {
+const TestimonialsSection = memo(() => {
   const { language } = useLanguage();
   
   const sectionContent = successStoriesData[language]?.testimonials || successStoriesData.en.testimonials;
@@ -87,6 +88,8 @@ const TestimonialsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+TestimonialsSection.displayName = 'TestimonialsSection';
 
 export default TestimonialsSection;

@@ -1,13 +1,14 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
-import { useState, useEffect, useRef } from 'react';
 
-const MetricsSection = () => {
+const MetricsSection = memo(() => {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   
   const metricsContent = successStoriesData[language]?.metrics || successStoriesData.en.metrics;
 
@@ -30,23 +31,50 @@ const MetricsSection = () => {
     }
   ];
 
-  // Autoplay functionality
+  // Intersection Observer para performance
   useEffect(() => {
-    if (metrics.length > 1) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // Autoplay functionality - apenas quando visível
+  useEffect(() => {
+    if (metrics.length > 1 && isVisible) {
       autoplayRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % metrics.length);
       }, 3000);
-
-      return () => {
-        if (autoplayRef.current) {
-          clearInterval(autoplayRef.current);
-        }
-      };
+    } else {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
     }
-  }, [metrics.length]);
+
+    return () => {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
+    };
+  }, [metrics.length, isVisible]);
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[25.2vh] flex flex-col justify-center">
+    <section 
+      ref={sectionRef}
+      className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[25.2vh] flex flex-col justify-center"
+    >
       <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
         <div className="relative py-2 flex items-center justify-center">
           {/* Sliding metrics */}
@@ -96,6 +124,8 @@ const MetricsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+MetricsSection.displayName = 'MetricsSection';
 
 export default MetricsSection;

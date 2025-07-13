@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
@@ -9,7 +9,7 @@ interface SegmentFilterProps {
   selectedSegment: string | null;
 }
 
-const SegmentFilter: React.FC<SegmentFilterProps> = ({ onSegmentChange, selectedSegment }) => {
+const SegmentFilter: React.FC<SegmentFilterProps> = memo(({ onSegmentChange, selectedSegment }) => {
   const { language } = useLanguage();
   const [availableSegments, setAvailableSegments] = useState<string[]>([]);
 
@@ -63,6 +63,8 @@ const SegmentFilter: React.FC<SegmentFilterProps> = ({ onSegmentChange, selected
       </div>
     </section>
   );
-};
+});
+
+SegmentFilter.displayName = 'SegmentFilter';
 
 export default SegmentFilter;
