@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsCardsData } from '@/data/staticData/solutionsCards';
 import ModernSolutionCard from './ModernSolutionCard';
@@ -20,6 +20,7 @@ import {
   LucideIcon
 } from 'lucide-react';
 
+// Moved outside component to prevent re-creation on each render
 const iconMap: { [key: string]: LucideIcon } = {
   'trending-up': TrendingUp,
   'users': Users,
@@ -37,7 +38,7 @@ const iconMap: { [key: string]: LucideIcon } = {
   'lightbulb': Lightbulb,
 };
 
-const StaticSolutionsGrid = () => {
+const StaticSolutionsGrid = memo(() => {
   const { language } = useLanguage();
   
   // Get static data based on language
@@ -72,6 +73,8 @@ const StaticSolutionsGrid = () => {
       </div>
     </section>
   );
-};
+});
+
+StaticSolutionsGrid.displayName = 'StaticSolutionsGrid';
 
 export default StaticSolutionsGrid;

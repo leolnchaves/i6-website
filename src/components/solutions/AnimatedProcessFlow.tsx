@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { processStepsData } from '@/data/solutions/processDataStatic';
 import { Play, Pause } from 'lucide-react';
@@ -27,6 +27,12 @@ const AnimatedProcessFlow = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+  
+  // Performance optimization refs
+  const animationFrameRef = useRef<number>();
+  const lastTimeRef = useRef<number>(0);
+  const isVisibleRef = useRef<boolean>(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Define tasks for each step (only 3 tasks per step)
   const getStepTasks = (stepKey: string) => {
@@ -60,35 +66,79 @@ const AnimatedProcessFlow = () => {
     return tasks[stepKey as keyof typeof tasks] || [];
   };
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            // Check if we're on the last step
-            if (currentStep === processSteps.length - 1) {
-              // Stop the demo at 100% completion
-              setIsPlaying(false);
-              return 100;
-            } else {
-              // Move to next step
-              setCurrentStep(current => {
-                const next = current + 1;
-                setCurrentTaskIndex(0); // Reset task index for new step
-                return next;
-              });
-              return 0;
-            }
-          }
-          return prev + 1.4; // 1.4% every 100ms = ~7.1 seconds per step (30% slower)
-        });
-      }, 100);
+  // Optimized animation function using requestAnimationFrame
+  const animate = useCallback(() => {
+    if (!isVisibleRef.current || !isPlaying) {
+      animationFrameRef.current = undefined;
+      return;
     }
 
-    return () => clearInterval(interval);
+    const currentTime = performance.now();
+    const deltaTime = currentTime - lastTimeRef.current;
+    
+    // Only update if enough time has passed (targeting ~10fps for smooth animation)
+    if (deltaTime >= 100) {
+      setProgress(prev => {
+        if (prev >= 100) {
+          // Check if we're on the last step
+          if (currentStep === processSteps.length - 1) {
+            // Stop the demo at 100% completion
+            setIsPlaying(false);
+            return 100;
+          } else {
+            // Move to next step
+            setCurrentStep(current => {
+              const next = current + 1;
+              setCurrentTaskIndex(0); // Reset task index for new step
+              return next;
+            });
+            return 0;
+          }
+        }
+        return prev + 1.4; // 1.4% per update = ~7.1 seconds per step
+      });
+      
+      lastTimeRef.current = currentTime;
+    }
+    
+    animationFrameRef.current = requestAnimationFrame(animate);
   }, [isPlaying, processSteps.length, currentStep]);
+
+  useEffect(() => {
+    // Intersection Observer to pause animation when not visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisibleRef.current = entries[0].isIntersecting;
+        if (isVisibleRef.current && isPlaying && !animationFrameRef.current) {
+          // Resume animation when becomes visible
+          lastTimeRef.current = performance.now();
+          animate();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [animate]);
+
+  useEffect(() => {
+    if (isPlaying && isVisibleRef.current) {
+      lastTimeRef.current = performance.now();
+      animate();
+    } else if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = undefined;
+    }
+  }, [isPlaying, animate]);
 
   // Calculate which tasks should be completed based on progress
   const getCompletedTasksCount = () => {
@@ -127,7 +177,7 @@ const AnimatedProcessFlow = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+    <section ref={containerRef} className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">

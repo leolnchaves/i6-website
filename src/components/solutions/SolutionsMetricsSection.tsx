@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect, useRef } from 'react';
 
-const SolutionsMetricsSection = () => {
+const SolutionsMetricsSection = memo(() => {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const isVisibleRef = useRef<boolean>(true);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   // Métricas específicas para a página de Solutions
   const solutionsMetrics = {
@@ -33,23 +35,44 @@ const SolutionsMetricsSection = () => {
 
   const metrics = metricsContent.map((text: string) => ({ text }));
 
-  // Autoplay functionality
+  // Optimized autoplay with visibility detection
   useEffect(() => {
-    if (metrics.length > 1) {
-      autoplayRef.current = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % metrics.length);
-      }, 3000);
-
-      return () => {
-        if (autoplayRef.current) {
-          clearInterval(autoplayRef.current);
+    // Intersection Observer to pause autoplay when not visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisibleRef.current = entries[0].isIntersecting;
+        
+        if (isVisibleRef.current && metrics.length > 1) {
+          // Start autoplay when visible
+          if (autoplayRef.current) clearInterval(autoplayRef.current);
+          autoplayRef.current = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % metrics.length);
+          }, 3000);
+        } else {
+          // Stop autoplay when not visible
+          if (autoplayRef.current) {
+            clearInterval(autoplayRef.current);
+            autoplayRef.current = null;
+          }
         }
-      };
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
+
+    return () => {
+      observer.disconnect();
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+      }
+    };
   }, [metrics.length]);
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[25.2vh] flex flex-col justify-center">
+    <section ref={containerRef} className="w-full bg-gradient-to-b from-slate-200/80 to-gray-300/90 backdrop-blur-sm py-4 overflow-hidden relative min-h-[25.2vh] flex flex-col justify-center">
       <div className="container mx-auto px-4 flex-1 flex items-center justify-center">
         <div className="relative py-2 flex items-center justify-center">
           {/* Sliding metrics */}
@@ -94,6 +117,8 @@ const SolutionsMetricsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+SolutionsMetricsSection.displayName = 'SolutionsMetricsSection';
 
 export default SolutionsMetricsSection;

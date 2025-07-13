@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LucideIcon, Target } from 'lucide-react';
@@ -16,7 +16,7 @@ interface ModernSolutionCardProps {
   index: number;
 }
 
-const ModernSolutionCard = ({ 
+const ModernSolutionCard = memo(({ 
   icon: Icon, 
   title, 
   focus, 
@@ -155,6 +155,8 @@ const ModernSolutionCard = ({
       </div>
     </Card>
   );
-};
+});
+
+ModernSolutionCard.displayName = 'ModernSolutionCard';
 
 export default ModernSolutionCard;

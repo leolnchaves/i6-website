@@ -1,9 +1,10 @@
 
+import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
 import heroBg from '@/assets/hero-bg.jpg';
 
-const SolutionsHero = () => {
+const SolutionsHero = memo(() => {
   const { language } = useLanguage();
   
   // Get static data based on language
@@ -45,6 +46,8 @@ const SolutionsHero = () => {
       </div>
     </section>
   );
-};
+});
+
+SolutionsHero.displayName = 'SolutionsHero';
 
 export default SolutionsHero;
