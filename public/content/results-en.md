@@ -2,7 +2,7 @@
 
 ## Growth Acceleration
 **Icon:** TrendingUp
-**Description:** testando Accelerate performance with AI that boosts conversions, ticket size and ROI across channels.
+**Description:** Accelerate performance with AI that boosts conversions, ticket size and ROI across channels.
 
 **Outcomes:**
 - Increase conversions by matching the right offer to the right customer
