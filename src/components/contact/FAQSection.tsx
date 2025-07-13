@@ -1,12 +1,12 @@
 
 import { useState, useEffect } from 'react';
-import { Search, Plus, Minus } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Search, ChevronDown, MessageCircleQuestion } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import { useCMSFAQCards } from '@/hooks/useCMSFAQCards';
 import { useCMSContent } from '@/hooks/useCMSContent';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const FAQSection = () => {
   const { language, t } = useLanguage();
@@ -48,72 +48,100 @@ const FAQSection = () => {
   const noResults = getContent('contactFAQ', 'noResults', t('contact.faq.noResults'));
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+    <section className="py-24 bg-gradient-to-b from-background to-accent/5 relative">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Modern Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl mb-6 shadow-lg">
+            <MessageCircleQuestion className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6">
             {title}
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {subtitle}
           </p>
         </div>
 
-        {/* Search Filter */}
-        <div className="max-w-2xl mx-auto mb-12">
-          <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
-            {searchTitle}
-          </h3>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
-              type="text"
-              placeholder={searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 py-3 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-lg"
-            />
+        {/* Enhanced Search */}
+        <div className="max-w-2xl mx-auto mb-16">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+            <div className="relative bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-1 shadow-lg">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 z-10" />
+                <Input
+                  type="text"
+                  placeholder={searchPlaceholder}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-12 pr-4 py-4 text-lg bg-transparent border-0 rounded-xl focus:ring-2 focus:ring-primary/20 placeholder:text-muted-foreground/60"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {/* FAQ Cards */}
+        <div className="max-w-4xl mx-auto space-y-4">
           {filteredFaqs.map((faq, index) => (
-            <Card 
-              key={faq.id} 
-              className="cursor-pointer border-0 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-white rounded-xl overflow-hidden"
-              onClick={() => handleCardClick(index)}
+            <Collapsible
+              key={faq.id}
+              open={expandedCard === index}
+              onOpenChange={() => handleCardClick(index)}
             >
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 pr-4 leading-tight flex-1">
-                    {faq.question}
-                  </h3>
-                  <div className="flex-shrink-0 ml-2">
-                    {expandedCard === index ? (
-                      <Minus className="w-5 h-5 text-blue-500" />
-                    ) : (
-                      <Plus className="w-5 h-5 text-blue-500" />
-                    )}
-                  </div>
-                </div>
+              <div className="group relative">
+                {/* Gradient Border Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                 
-                <div className={`overflow-hidden transition-all duration-300 ${
-                  expandedCard === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}>
-                  <div className="pt-2 border-t border-gray-100 mt-3">
-                    <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
-                      {faq.answer}
-                    </p>
-                  </div>
+                <div className="relative bg-card/90 backdrop-blur-sm border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <CollapsibleTrigger className="w-full p-6 text-left hover:bg-accent/30 transition-colors duration-200">
+                    <div className="flex items-center justify-between group">
+                      <div className="flex items-start space-x-4">
+                        <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl flex items-center justify-center">
+                          <span className="text-sm font-bold text-primary">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                        </div>
+                        <h3 className="text-lg md:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-200 leading-tight">
+                          {faq.question}
+                        </h3>
+                      </div>
+                      <ChevronDown 
+                        className={`w-6 h-6 text-muted-foreground group-hover:text-primary transition-all duration-300 flex-shrink-0 ml-4 ${
+                          expandedCard === index ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                  </CollapsibleTrigger>
+                  
+                  <CollapsibleContent className="data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up overflow-hidden">
+                    <div className="px-6 pb-6">
+                      <div className="ml-14 pt-4 border-t border-border/50">
+                        <div className="prose prose-sm max-w-none text-muted-foreground leading-relaxed">
+                          <p className="whitespace-pre-wrap text-base">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </Collapsible>
           ))}
         </div>
 
+        {/* No Results State */}
         {filteredFaqs.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-gray-500 text-lg">
+          <div className="text-center py-16">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-muted/50 rounded-2xl mb-6">
+              <Search className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-xl text-muted-foreground">
               {noResults}
             </p>
           </div>
