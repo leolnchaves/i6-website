@@ -17,7 +17,7 @@
 ## Healthcare
 **Description:** Implemented AI-driven patient flow optimization system to predict demand patterns and allocate resources efficiently across departments.
 **Client:** MedTech Innovations
-**Image:** https://unsplash.com/pt-br/fotografias/um-aglomerado-globular-brilha-intensamente-contra-as-estrelas-FsZoT5CQjm0?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop
 
 ---
 
