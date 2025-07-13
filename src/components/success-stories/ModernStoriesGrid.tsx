@@ -38,37 +38,37 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
         about: language === 'en' 
           ? 'Leading e-commerce platform with over 10 million users worldwide. Winner of Best Digital Innovation Award 2023.'
           : 'Plataforma de e-commerce líder com mais de 10 milhões de usuários mundialmente. Vencedor do Prêmio de Melhor Inovação Digital 2023.',
-        logo: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=120&h=120&fit=crop&auto=format'
+        logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
       },
       'Industrial Solutions Co.': {
         about: language === 'en'
           ? 'Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.'
           : 'Empresa de manufatura Fortune 500 com mais de 25 anos de liderança na indústria. Certificada ISO 9001 com operações globais.',
-        logo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=120&h=120&fit=crop&auto=format'
+        logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
       },
       'MedTech Innovations': {
         about: language === 'en'
           ? 'Premier healthcare technology provider serving 500+ hospitals across North America. FDA approved solutions.'
           : 'Principal provedor de tecnologia em saúde atendendo mais de 500 hospitais na América do Norte. Soluções aprovadas pela FDA.',
-        logo: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=120&h=120&fit=crop&auto=format'
+        logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
       },
       'Capital Banking Group': {
         about: language === 'en'
           ? 'Top-tier financial institution with $50B+ in assets. Recognized for digital transformation excellence and security innovation.'
           : 'Instituição financeira de primeira linha com mais de $50B em ativos. Reconhecida pela excelência em transformação digital e inovação em segurança.',
-        logo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=120&h=120&fit=crop&auto=format'
+        logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
       },
       'Global Shipping Solutions': {
         about: language === 'en'
           ? 'International logistics leader handling 1M+ shipments annually. Green Supply Chain Award recipient.'
           : 'Líder em logística internacional processando mais de 1M de remessas anualmente. Recipiente do Prêmio Green Supply Chain.',
-        logo: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=120&h=120&fit=crop&auto=format'
+        logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
       },
       'NextGen Motors': {
         about: language === 'en'
           ? 'Innovative automotive manufacturer with focus on electric vehicles. Named Sustainability Leader 2023.'
           : 'Fabricante automotivo inovador com foco em veículos elétricos. Nomeado Líder em Sustentabilidade 2023.',
-        logo: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=120&h=120&fit=crop&auto=format'
+        logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
       }
     };
 
@@ -76,7 +76,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
       about: language === 'en' 
         ? 'Industry-leading company recognized for innovation and excellence in their sector.'
         : 'Empresa líder da indústria reconhecida pela inovação e excelência em seu setor.',
-      logo: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=120&h=120&fit=crop&auto=format'
+      logo: '/lovable-uploads/adce63e2-028d-4bad-988c-cf439d1dd41c.png'
     };
   };
 
@@ -454,15 +454,15 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                   {language === 'en' ? 'Implemented Solutions' : 'Soluções Implementadas'}
                 </h2>
                 
-                <div className="flex flex-wrap gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {getImplementedSolutions(selectedStory).map((solution, index) => {
                     const IconComponent = solution.icon;
                     return (
-                      <div key={index} className="flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm transition-shadow duration-200">
+                      <div key={index} className="flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm transition-shadow duration-200 min-h-[40px]">
                         <div className={`w-6 h-6 rounded ${solution.color} flex items-center justify-center mr-2 flex-shrink-0`}>
                           <IconComponent className="w-3 h-3" />
                         </div>
-                        <span className="font-medium text-gray-900 text-xs whitespace-nowrap">
+                        <span className="font-medium text-gray-900 text-xs leading-tight">
                           {solution.name}
                         </span>
                       </div>
