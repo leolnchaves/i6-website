@@ -28,8 +28,8 @@ const ContactForm = () => {
       sendButton: "Enviar Mensagem"
     },
     en: {
-      title1: "Transform your business with",
-      title2: "Artificial Intelligence", 
+      title1: "Growth starts with one message.",
+      title2: "Send yours.",
       name: "Full name",
       email: "Professional email",
       company: "Company",
