@@ -1,22 +1,37 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect, useRef } from 'react';
 
 const SolutionsMetricsSection = () => {
+  const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Static metrics for Solutions page
-  const staticMetrics = [
-    "Specialist AI",
-    "Frictionless integration", 
-    "Low technical lift",
-    "API-first",
-    "Cloud-native",
-    "Explainable recommendations",
-    "Results in few weeks"
-  ];
+  // Métricas específicas para a página de Solutions
+  const solutionsMetrics = {
+    en: [
+      "Specialist AI",
+      "Frictionless integration",
+      "Low technical lift",
+      "API-first",
+      "Cloud-native",
+      "Explainable recommendations",
+      "Results in few weeks"
+    ],
+    pt: [
+      "IA especialista",
+      "Integração sem fricção",
+      "Baixo tech lift",
+      "API-first",
+      "Cloud-native",
+      "Recomendações explicáveis",
+      "Resultados em semanas"
+    ]
+  };
+  
+  const metricsContent = solutionsMetrics[language] || solutionsMetrics.en;
 
-  const metrics = staticMetrics.map((text: string) => ({ text }));
+  const metrics = metricsContent.map((text: string) => ({ text }));
 
   // Autoplay functionality
   useEffect(() => {

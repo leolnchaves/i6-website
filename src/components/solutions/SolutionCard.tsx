@@ -1,6 +1,7 @@
 
 import { CheckCircle, LucideIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface SolutionCardProps {
   icon: LucideIcon;
@@ -27,6 +28,7 @@ const SolutionCard = ({
   borderColor,
   engine
 }: SolutionCardProps) => {
+  const { t } = useLanguage();
 
   // Get icon and badge background color based on selected bgColor from CMS
   const getIconBgColor = (bgColor: string) => {
@@ -110,7 +112,7 @@ const SolutionCard = ({
               style={{ backgroundColor: badgeBgColor }}
             >
               <h4 className="font-semibold text-gray-900 mb-1 text-sm">
-                Business Outcomes:
+                {t('solutions.businessOutcomes')}:
               </h4>
               <p className="text-gray-700 text-sm">{outcome}</p>
             </div>

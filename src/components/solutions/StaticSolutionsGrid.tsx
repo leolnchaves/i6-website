@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsCardsData } from '@/data/staticData/solutionsCards';
 import ModernSolutionCard from './ModernSolutionCard';
 import SolutionDetailModal from './SolutionDetailModal';
@@ -38,8 +39,10 @@ const iconMap: { [key: string]: LucideIcon } = {
 };
 
 const StaticSolutionsGrid = () => {
-  // Use static English data
-  const cards = solutionsCardsData.en;
+  const { language } = useLanguage();
+  
+  // Get static data based on language
+  const cards = solutionsCardsData[language] || solutionsCardsData.en;
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">

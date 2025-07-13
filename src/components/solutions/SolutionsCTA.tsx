@@ -1,11 +1,14 @@
 
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsCTAData } from '@/data/staticData/solutionsCTAData';
 
 const SolutionsCTA = () => {
-  // Use static English content
-  const ctaContent = solutionsCTAData.en;
+  const { language } = useLanguage();
+  
+  // Get static data based on language
+  const ctaContent = solutionsCTAData[language] || solutionsCTAData.en;
 
   return (
     <section className="py-20 bg-gray-50">

@@ -1,8 +1,14 @@
 
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useCMSPageContent } from '@/hooks/useCMSPageContent';
+
 const SandboxEnvironment = () => {
-  // Static content
-  const title = 'Risk-Free Sandbox Environment & Expert Support Included';
-  const description = 'Complete testing environment with expert guidance throughout your journey';
+  const { language } = useLanguage();
+  const { getContent } = useCMSPageContent('solutions', language);
+
+  // Get CMS content with fallbacks
+  const title = getContent('sandboxEnvironment', 'title', 'Risk-Free Sandbox Environment & Expert Support Included');
+  const description = getContent('sandboxEnvironment', 'description', 'Complete testing environment with expert guidance throughout your journey');
 
   return (
     <div className="mt-20">
