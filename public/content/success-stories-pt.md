@@ -1,27 +1,27 @@
 # Casos de Sucesso
 
 ## E-commerce
-**Description:** Aumentou as taxas de conversão em 35% através de personalização com IA e estratégias de preços dinâmicos.
-**Client:** Varejista de Moda
-**Image:** /lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png
+**Description:** Implementou motor de recomendação alimentado por IA e análise de jornada do cliente para personalizar experiências de compra e otimizar campanhas de marketing em tempo real.
+**Client:** TechRetail Inc.
+**Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop
 
 ---
 
 ## Manufatura
-**Description:** Reduziu custos operacionais em 28% com manutenção preditiva e otimização da cadeia de suprimentos.
-**Client:** Corporação Industrial
-**Image:** /lovable-uploads/78e4760f-4843-4f50-b0b1-f93b9cf828f2.png
-
----
-
-## Serviços Financeiros
-**Description:** Melhorou a retenção de clientes em 42% usando análises avançadas e recomendações personalizadas.
-**Client:** Grupo Bancário
-**Image:** /lovable-uploads/6b931e8f-e382-4984-80d6-7fcf4ebf91d8.png
+**Description:** Implementou sistema de IA de manutenção preditiva com sensores IoT para prever falhas de equipamentos e otimizar cronogramas de manutenção proativamente.
+**Client:** Industrial Solutions Co.
+**Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop
 
 ---
 
 ## Saúde
-**Description:** Melhorou os resultados dos pacientes em 31% através de suporte de diagnóstico com IA e otimização de tratamentos.
-**Client:** Centro Médico
-**Image:** /lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png
+**Description:** Implementou sistema de otimização de fluxo de pacientes orientado por IA para prever padrões de demanda e alocar recursos eficientemente entre departamentos.
+**Client:** MedTech Innovations
+**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop
+
+---
+
+## Financeiro
+**Description:** Implementou sistema de detecção de fraude de aprendizado de máquina com monitoramento de transações em tempo real e algoritmos adaptativos de pontuação de risco.
+**Client:** Capital Banking Group
+**Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop

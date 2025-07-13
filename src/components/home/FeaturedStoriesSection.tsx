@@ -1,6 +1,6 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { successStoriesCardsData } from '@/data/staticData/successStoriesCards';
+import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
 import { useState, useEffect, useRef, memo } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
 import ViewAllButton from './featured-stories/ViewAllButton';
@@ -14,12 +14,11 @@ const FeaturedStoriesSection = () => {
   const [isPaused, setIsPaused] = useState(false);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Get static data based on current language
-  const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
+  // Get stories from markdown content
+  const { stories, loading, error } = useSuccessStoriesContent();
   
-  // Filter cards to show only active home cards
-  const homeCards = cards.filter(card => card.is_active_home);
-  const fallbackCards = homeCards.length === 0 ? cards.slice(0, 3) : homeCards;
+  // Use stories directly
+  const fallbackCards = stories;
 
   // Autoplay functionality
   useEffect(() => {
@@ -87,13 +86,21 @@ const FeaturedStoriesSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <FeaturedStoriesHeader />
 
-        {fallbackCards.length > 0 ? (
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 mb-4">Carregando casos de sucesso...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-red-500 mb-4">Erro ao carregar casos de sucesso: {error}</p>
+          </div>
+        ) : fallbackCards.length > 0 ? (
           <>
             {/* Carrossel circular customizado */}
             <div className="relative w-full max-w-6xl mx-auto mb-12 h-[600px] flex items-center justify-center mt-4">
               {/* Container do carrossel */}
               <div className="relative w-full h-full perspective-1000">
-                {fallbackCards.map((card, index) => {
+                {fallbackCards.map((story, index) => {
                   const IconComponent = getCardIcon(index);
                   const position = (index - currentSlide + fallbackCards.length) % fallbackCards.length;
                   
@@ -125,7 +132,7 @@ const FeaturedStoriesSection = () => {
                   
                   return (
                     <div
-                      key={card.id}
+                      key={`story-${index}`}
                       className="absolute top-1/2 left-1/2 transition-all duration-700 ease-in-out will-change-transform"
                       style={{
                         transform: `translate(-50%, -50%) ${transform} scale(${scale})`,
@@ -142,20 +149,20 @@ const FeaturedStoriesSection = () => {
                           {/* Header com categoria */}
                           <div className="p-6 pb-4">
                             <div className="inline-block px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium text-gray-600 mb-4">
-                              {card.industry}
+                              {story.segment}
                             </div>
                             <h3 className="text-lg font-bold text-gray-900 leading-tight">
-                              {card.solution}
+                              {story.description.length > 80 ? story.description.substring(0, 80) + '...' : story.description}
                             </h3>
-                            <p className="text-sm text-gray-600 mt-1">{card.company_name}</p>
+                            <p className="text-sm text-gray-600 mt-1">{story.client}</p>
                           </div>
                           
                           {/* Conteúdo visual */}
                           <div className="flex-1 relative mx-6 mb-6 rounded-2xl overflow-hidden">
-                            {card.image_url ? (
+                            {story.image ? (
                               <LazyImage 
-                                src={card.image_url} 
-                                alt={card.company_name}
+                                src={story.image} 
+                                alt={story.client}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 placeholderClassName="w-full h-full"
                               />
@@ -166,29 +173,10 @@ const FeaturedStoriesSection = () => {
                                   <IconComponent className="w-8 h-8 text-blue-600" />
                                 </div>
                                 
-                                {/* Métricas visuais */}
-                                <div className="grid grid-cols-3 gap-3 w-full">
-                                  <div className="text-center">
-                                    <div className="w-full h-2 bg-white/30 rounded-full mb-2">
-                                      <div className="h-full bg-blue-500 rounded-full" style={{width: '85%'}}></div>
-                                    </div>
-                                    <p className="text-xs text-gray-600 font-medium">{card.metric1_value}</p>
-                                    <p className="text-[10px] text-gray-500">{card.metric1_label}</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <div className="w-full h-2 bg-white/30 rounded-full mb-2">
-                                      <div className="h-full bg-green-500 rounded-full" style={{width: '92%'}}></div>
-                                    </div>
-                                    <p className="text-xs text-gray-600 font-medium">{card.metric2_value}</p>
-                                    <p className="text-[10px] text-gray-500">{card.metric2_label}</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <div className="w-full h-2 bg-white/30 rounded-full mb-2">
-                                      <div className="h-full bg-orange-500 rounded-full" style={{width: '78%'}}></div>
-                                    </div>
-                                    <p className="text-xs text-gray-600 font-medium">{card.metric3_value}</p>
-                                    <p className="text-[10px] text-gray-500">{card.metric3_label}</p>
-                                  </div>
+                                {/* Texto de descrição */}
+                                <div className="text-center">
+                                  <p className="text-sm text-gray-700 font-medium mb-2">{story.segment}</p>
+                                  <p className="text-xs text-gray-600">{story.client}</p>
                                 </div>
                               </div>
                             )}

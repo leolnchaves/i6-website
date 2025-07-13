@@ -1,27 +1,27 @@
 # Success Stories
 
 ## E-commerce
-**Description:** Increased conversion rates by 35% through AI-powered personalization and dynamic pricing strategies.
-**Client:** Fashion Retailer
-**Image:** /lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png
+**Description:** Implemented AI-powered recommendation engine and customer journey analytics to personalize shopping experiences and optimize marketing campaigns in real-time.
+**Client:** TechRetail Inc.
+**Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop
 
 ---
 
 ## Manufacturing
-**Description:** Reduced operational costs by 28% with predictive maintenance and supply chain optimization.
-**Client:** Industrial Corp
-**Image:** /lovable-uploads/78e4760f-4843-4f50-b0b1-f93b9cf828f2.png
-
----
-
-## Financial Services
-**Description:** Improved customer retention by 42% using advanced analytics and personalized recommendations.
-**Client:** Banking Group
-**Image:** /lovable-uploads/6b931e8f-e382-4984-80d6-7fcf4ebf91d8.png
+**Description:** Deployed predictive maintenance AI system with IoT sensors to forecast equipment failures and optimize maintenance schedules proactively.
+**Client:** Industrial Solutions Co.
+**Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop
 
 ---
 
 ## Healthcare
-**Description:** Enhanced patient outcomes by 31% through AI-driven diagnosis support and treatment optimization.
-**Client:** Medical Center
-**Image:** /lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png
+**Description:** Implemented AI-driven patient flow optimization system to predict demand patterns and allocate resources efficiently across departments.
+**Client:** MedTech Innovations
+**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop
+
+---
+
+## Finance
+**Description:** Implemented machine learning fraud detection system with real-time transaction monitoring and adaptive risk scoring algorithms.
+**Client:** Capital Banking Group
+**Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop
