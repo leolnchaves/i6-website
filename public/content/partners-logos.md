@@ -2,87 +2,87 @@
 
 ---
 
-## HERING
-**Logo:** /content/logos/10.png
-**Name:** HERING
-
----
-
-## EMS
-**Logo:** /content/logos/9.png
-**Name:** EMS
-
----
-
-## LEGRAND
-**Logo:** /content/logos/8.png
-**Name:** LEGRAND
-
----
-
-## COGNA
-**Logo:** /content/logos/7.png
-**Name:** COGNA
-
----
-
-## ACHĒ
-**Logo:** /content/logos/6.png
-**Name:** ACHĒ
-
----
-
-## NATURA&CO
-**Logo:** /content/logos/5.png
-**Name:** NATURA&CO
-
----
-
-## JEQUITI
-**Logo:** /content/logos/4.png
-**Name:** JEQUITI
-
----
-
 ## EMBRAER
-**Logo:** /content/logos/3.png
+**Logo:** /content/logos/EMBRAER.png
 **Name:** EMBRAER
 
 ---
 
-## PARTNER 1
-**Logo:** /content/logos/2.png
-**Name:** PARTNER 1
+## EMS
+**Logo:** /content/logos/EMS.png
+**Name:** EMS
 
 ---
 
-## PARTNER 2
-**Logo:** /content/logos/1.png
-**Name:** PARTNER 2
+## BMG
+**Logo:** /content/logos/BMG.png
+**Name:** BMG
 
 ---
 
-## PARTNER 3
-**Logo:** /content/logos/14.png
-**Name:** PARTNER 3
+## HERING
+**Logo:** /content/logos/HERING.png
+**Name:** HERING
 
 ---
 
-## PARTNER 4
-**Logo:** /content/logos/13.png
-**Name:** PARTNER 4
+## ACHĒ
+**Logo:** /content/logos/ACHE.png
+**Name:** ACHĒ
 
 ---
 
-## PARTNER 5
-**Logo:** /content/logos/12.png
-**Name:** PARTNER 5
+## JEQUITI
+**Logo:** /content/logos/JEQUITI.png
+**Name:** JEQTUITI
 
 ---
 
-## PARTNER 6
-**Logo:** /content/logos/11.png
-**Name:** PARTNER 6
+## RABOBANK
+**Logo:** /content/logos/RABOBANK.png
+**Name:** RABOBANK
+
+---
+
+## LEGRAND
+**Logo:** /content/logos/LEGRAND.png
+**Name:** LEGRAND
+
+---
+
+## PELANDO
+**Logo:** /content/logos/PELANDO.png
+**Name:** PELANDO
+
+---
+
+## GERMED
+**Logo:** /content/logos/GERMED.png
+**Name:** GERMED
+
+---
+
+## CONDOR
+**Logo:** /content/logos/CONDOR.png
+**Name:** CONDOR
+
+---
+
+## ANIMA
+**Logo:** /content/logos/ANIMA.png
+**Name:** ANIMA
+
+---
+
+## FORD
+**Logo:** /content/logos/FORD.png
+**Name:** FORD
+
+---
+
+## TICKETMASTER
+**Logo:** /content/logos/TICKETMASTER.png
+**Name:** TICKETMASTER
 
 ---
 
