@@ -1,16 +1,26 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 import heroBg from '@/assets/hero-bg.jpg';
 
 const ContactHero = () => {
-  const { language, t } = useLanguage();
-  const { getContent } = useCMSPageContent('contact', language);
+  const { language } = useLanguage();
+  
+  // Static content - migrated from CMS
+  const content = {
+    pt: {
+      title: "Vamos Iniciar uma",
+      subtitle: "Conversa", 
+      description: "Sua jornada de IA começa aqui!"
+    },
+    en: {
+      title: "Let's Start a",
+      subtitle: "Conversation",
+      description: "Your AI journey starts here!"
+    }
+  };
 
-  // Get content from CMS with fallbacks
-  const title = getContent('contactHero', 'title', t('contact.hero.title'));
-  const subtitle = getContent('contactHero', 'subtitle', t('contact.hero.subtitle'));
-  const description = getContent('contactHero', 'description', t('contact.hero.description'));
+  // Automatically uses current language from context
+  const text = content[language];
 
   return (
     <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
@@ -35,14 +45,14 @@ const ContactHero = () => {
         <div className="text-center max-w-4xl mx-auto text-white">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
             <span className="block mb-2">
-              {title}
+              {text.title}
             </span>
             <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-              {subtitle}
+              {text.subtitle}
             </span>
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 drop-shadow-lg leading-relaxed">
-            {description}
+            {text.description}
           </p>
         </div>
       </div>

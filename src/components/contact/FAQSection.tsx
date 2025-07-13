@@ -1,37 +1,169 @@
 
-import { useState, useEffect } from 'react';
-import { Search, ChevronDown, MessageCircleQuestion } from 'lucide-react';
+import { useState } from 'react';
+import { Search, ChevronDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
-import { useCMSFAQCards } from '@/hooks/useCMSFAQCards';
-import { useCMSContent } from '@/hooks/useCMSContent';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
+interface FAQ {
+  id: number;
+  question: string;
+  answer: string;
+  order: number;
+}
+
 const FAQSection = () => {
-  const { language, t } = useLanguage();
-  const { getContent } = useCMSPageContent('contact', language);
-  const { pages, fetchPages } = useCMSContent();
-  const { cards, fetchCards } = useCMSFAQCards();
-  const [pageId, setPageId] = useState<string>('');
+  const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
-  useEffect(() => {
-    fetchPages();
-  }, [fetchPages]);
-
-  useEffect(() => {
-    if (pages.length > 0) {
-      const contactPage = pages.find(p => p.slug === 'contact');
-      if (contactPage) {
-        setPageId(contactPage.id);
-        fetchCards(contactPage.id, language);
-      }
+  // Static content - migrated from CMS
+  const content = {
+    pt: {
+      title: "Perguntas Frequentes",
+      subtitle: "Perguntas comuns sobre nossas soluções e serviços de IA.",
+      searchTitle: "Buscar FAQs",
+      searchPlaceholder: "Digite para buscar nas perguntas frequentes...",
+      noResults: "Nenhuma pergunta frequente encontrada correspondendo à sua busca. Tente palavras-chave diferentes.",
+      faqs: [
+        {
+          id: 1,
+          question: "Quanto tempo leva a implementação de IA?",
+          answer: "O tempo de implementação varia dependendo da complexidade do projeto. A maioria dos nossos clientes vê implantação completa de 1 a 3 meses, com resultados mensuráveis começando em apenas algumas semanas.",
+          order: 1
+        },
+        {
+          id: 2,
+          question: "Quais indústrias vocês atendem?",
+          answer: "Atendemos uma ampla gama de indústrias, incluindo varejo, manufatura, finanças, saúde, farmacêutica, educação e tecnologia, sempre com uma abordagem business-first.",
+          order: 2
+        },
+        {
+          id: 3,
+          question: "Vocês fornecem suporte contínuo?",
+          answer: "Sim. Oferecemos suporte 24/7, monitoramento proativo, manutenção e otimização contínua para todas nossas soluções de IA.",
+          order: 3
+        },
+        {
+          id: 4,
+          question: "Qual é o ROI típico para suas soluções de IA?",
+          answer: "Nossos clientes comumente veem até 20x ROI no primeiro ano, impulsionado por maior eficiência, decisões mais inteligentes e crescimento de receita.",
+          order: 4
+        },
+        {
+          id: 5,
+          question: "Que tipo de dados preciso para começar?",
+          answer: "Trabalhamos com os dados que você já tem, incluindo dados comportamentais, transacionais, CRM ou de supply. Todos os dados são 100% anonimizados e tratados com segurança. Nossos modelos são robustos a lacunas e podem entregar valor mesmo com conjuntos de dados não estruturados. O primeiro treinamento do modelo é conduzido usando uma amostra dos seus dados, sem exigir integração completa.",
+          order: 5
+        },
+        {
+          id: 6,
+          question: "Seus modelos de IA podem se integrar com nossos sistemas existentes?",
+          answer: "Sim. O Compass Suite é API-first e baseado em nuvem, facilitando a conexão com ERPs, CRMs, plataformas de e-commerce e fontes de dados internas.",
+          order: 6
+        },
+        {
+          id: 7,
+          question: "Preciso de uma equipe de ciência de dados para usar suas soluções?",
+          answer: "Não. Nossas soluções são projetadas para serem usadas por equipes de negócios. Cuidamos da complexidade da IA para que sua equipe possa focar em ação e resultados.",
+          order: 7
+        },
+        {
+          id: 8,
+          question: "Sua IA é explicável e compatível com regulamentações de privacidade de dados?",
+          answer: "Absolutamente. Todos nossos modelos incluem camadas de explicabilidade para garantir transparência e confiança. Somos compatíveis com GDPR, LGPD e outros padrões globais de privacidade de dados.",
+          order: 8
+        },
+        {
+          id: 9,
+          question: "O que torna a Infinity6 diferente de outras empresas de IA?",
+          answer: "Combinamos inteligência preditiva com ação em tempo real, possibilitando decisões inteligentes em toda a jornada - com integração rápida, resultados mensuráveis e sem carga técnica pesada. Também oferecemos uma fase de teste gratuita, provando o potencial concreto de resultados antes de qualquer custo ser incorrido.",
+          order: 9
+        },
+        {
+          id: 10,
+          question: "Vocês podem ajudar a definir nossa estratégia de IA e casos de uso?",
+          answer: "Sim. Nossos especialistas apoiam você na formatação do ângulo de negócio por trás de cada iniciativa de IA. Cuidamos de todo o processo de engenharia de características — transformando dados brutos em sinais preditivos de alto impacto adaptados aos seus objetivos.",
+          order: 10
+        }
+      ]
+    },
+    en: {
+      title: "Frequently Asked Questions",
+      subtitle: "Common questions about our AI solutions and services.",
+      searchTitle: "Search FAQs",
+      searchPlaceholder: "Type to search frequently asked questions...",
+      noResults: "No FAQs found matching your search. Try different keywords.",
+      faqs: [
+        {
+          id: 1,
+          question: "How long does AI implementation take?",
+          answer: "Implementation time varies depending on the project's complexity. Most of our clients see full deployment within 1 to 3 months, with measurable results starting in just a few weeks.",
+          order: 1
+        },
+        {
+          id: 2,
+          question: "What industries do you serve?",
+          answer: "We serve a wide range of industries, including retail, manufacturing, finance, healthcare, pharma, education and technology, always with a business-first approach.",
+          order: 2
+        },
+        {
+          id: 3,
+          question: "Do you provide ongoing support?",
+          answer: "Yes. We offer 24/7 support, proactive monitoring, maintenance and continuous optimization for all our AI solutions.",
+          order: 3
+        },
+        {
+          id: 4,
+          question: "What's the typical ROI for your AI solutions?",
+          answer: "Our clients commonly see up to 20x ROI within the first year, driven by increased efficiency, smarter decisions and revenue growth.",
+          order: 4
+        },
+        {
+          id: 5,
+          question: "What kind of data do I need to get started?",
+          answer: "We work with the data you already have, including behavioral, transactional, CRM or supply data. All data is 100% anonymized and handled securely. Our models are robust to gaps and can deliver value even with unstructured datasets. The first model training is conducted using a sample of your data, without requiring full integration.",
+          order: 5
+        },
+        {
+          id: 6,
+          question: "Can your AI models integrate with our existing systems?",
+          answer: "Yes. The Compass Suite is API-first and cloud-based, making it easy to connect with ERPs, CRMs, e-commerce platforms and internal data sources.",
+          order: 6
+        },
+        {
+          id: 7,
+          question: "Do I need a data science team to use your solutions?",
+          answer: "No. Our solutions are designed to be used by business teams. We take care of the AI complexity so your team can focus on action and results.",
+          order: 7
+        },
+        {
+          id: 8,
+          question: "Is your AI explainable and compliant with data privacy regulations?",
+          answer: "Absolutely. All our models include explainability layers to ensure transparency and trust. We are compliant with GDPR, LGPD and other global data privacy standards.",
+          order: 8
+        },
+        {
+          id: 9,
+          question: "What makes Infinity6 different from other AI companies?",
+          answer: "We combine predictive intelligence with real-time action, enabling smart decisions across the entire journey - with fast integration, measurable results and no heavy tech lift. We also offer a free test phase, proving the concrete potential of results before any cost is incurred.",
+          order: 9
+        },
+        {
+          id: 10,
+          question: "Can you help define our AI strategy and use cases?",
+          answer: "Yes. Our experts support you in shaping the business angle behind each AI initiative. We handle the entire feature engineering process — transforming raw data into high-impact predictive signals tailored to your goals.",
+          order: 10
+        }
+      ]
     }
-  }, [pages, language, fetchCards]);
+  };
 
-  const filteredFaqs = cards.filter(faq =>
+  // Automatically uses current language from context
+  const text = content[language];
+
+  // Filter FAQs based on search term
+  const filteredFaqs = text.faqs.filter(faq =>
     faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
     faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -39,13 +171,6 @@ const FAQSection = () => {
   const handleCardClick = (index: number) => {
     setExpandedCard(expandedCard === index ? null : index);
   };
-
-  // Get content from CMS with fallbacks
-  const title = getContent('contactFAQ', 'title', t('contact.faq.title'));
-  const subtitle = getContent('contactFAQ', 'subtitle', t('contact.faq.subtitle'));
-  const searchTitle = getContent('contactFAQ', 'searchTitle', t('contact.faq.searchTitle'));
-  const searchPlaceholder = getContent('contactFAQ', 'searchPlaceholder', t('contact.faq.searchPlaceholder'));
-  const noResults = getContent('contactFAQ', 'noResults', t('contact.faq.noResults'));
 
   return (
     <section className="py-24 bg-gradient-to-b from-background to-accent/5 relative">
@@ -56,10 +181,10 @@ const FAQSection = () => {
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
-            {title}
+            {text.title}
           </h2>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            {subtitle}
+            {text.subtitle}
           </p>
         </div>
 
@@ -72,7 +197,7 @@ const FAQSection = () => {
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 z-10" />
                 <Input
                   type="text"
-                  placeholder={searchPlaceholder}
+                  placeholder={text.searchPlaceholder}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-12 pr-4 py-4 text-lg bg-transparent border-0 rounded-xl focus:ring-2 focus:ring-primary/20 placeholder:text-muted-foreground/60"
@@ -139,7 +264,7 @@ const FAQSection = () => {
               <Search className="w-8 h-8 text-muted-foreground" />
             </div>
             <p className="text-xl text-muted-foreground">
-              {noResults}
+              {text.noResults}
             </p>
           </div>
         )}
