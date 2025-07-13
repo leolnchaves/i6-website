@@ -9,19 +9,15 @@ const WorldMap = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
 
-  // Posições ajustadas para o novo mapa
+  // Posição ajustada para apenas Campinas
   const getResponsivePositions = () => {
     if (isMobile) {
       return {
-        campinas: { top: '68%', left: '35%' },
-        dover: { top: '35%', left: '25%' },
-        milan: { top: '28%', left: '52%' }
+        campinas: { top: '68%', left: '35%' }
       };
     }
     return {
-      campinas: { top: '68%', left: '32%' },
-      dover: { top: '32%', left: '22%' },
-      milan: { top: '25%', left: '51%' }
+      campinas: { top: '68%', left: '32%' }
     };
   };
 
@@ -31,41 +27,14 @@ const WorldMap = () => {
     {
       id: 'campinas',
       city: 'Campinas',
-      state: 'São Paulo',
+      state: 'São Paulo', 
       country: t('contact.map.brazil'),
       flag: '🇧🇷',
       type: t('contact.map.headquarters'),
       unitName: 'infinity6 LATAM',
       position: positions.campinas,
-      address: 'Rua Exemplo, 123\nCampinas, SP 13010-111\nBrasil',
-      phone: '+55 19 998197775',
-      email: 'infinity6@infinity6.ai'
-    },
-    {
-      id: 'dover',
-      city: 'Dover',
-      state: 'Delaware',
-      country: t('contact.map.usa'),
-      flag: '🇺🇸',
-      type: t('contact.map.branchOffice'),
-      unitName: 'infinity6 NA',
-      position: positions.dover,
-      address: '123 Corporate Blvd\nDover, DE 19901\nEstados Unidos',
-      phone: '+1 (302) 555-0123',
-      email: 'usa@infinity6.ai'
-    },
-    {
-      id: 'milan',
-      city: 'Milão',
-      state: 'Lombardia',
-      country: t('contact.map.italy'),
-      flag: '🇮🇹',
-      type: t('contact.map.branchOffice'),
-      unitName: 'infinity6 EMEA',
-      position: positions.milan,
-      address: 'Via Giuseppe Verdi, 45\n20121 Milano MI\nItália',
-      phone: '+39 02 1234 5678',
-      email: 'italia@infinity6.ai'
+      address: 'Av. Antônio Artioli, 570 - Sala 134 / Prédio A\nCEP 13049-900\nCampinas, SP - Brasil',
+      email: 'lets.talk@infinity6.ai'
     }
   ];
 
@@ -140,14 +109,10 @@ const WorldMap = () => {
                       <p className="text-sm font-semibold text-gray-800 mb-3">{location.unitName}</p>
                     </div>
                     
-                    <div className="text-xs sm:text-sm text-gray-600 space-y-2 pt-2 border-t border-gray-100">
+                     <div className="text-xs sm:text-sm text-gray-600 space-y-2 pt-2 border-t border-gray-100">
                       <div className="flex items-start gap-2">
                         <MapPin className="w-3 h-3 flex-shrink-0 mt-0.5 text-gray-400" />
                         <div className="whitespace-pre-line">{location.address}</div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                        <span className="break-all">{location.phone}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Mail className="w-3 h-3 flex-shrink-0 text-gray-400" />
