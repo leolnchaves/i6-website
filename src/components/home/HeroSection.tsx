@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
@@ -9,6 +9,7 @@ import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
 import heroBg from '@/assets/hero-bg.jpg';
+import './hero/HeroAnimations.css';
 
 /**
  * Hero section component for the home page
@@ -51,22 +52,6 @@ const HeroSection = () => {
 
   return (
     <>
-      <style>{`
-        @keyframes gentle-pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-        .gentle-pulse-1 { animation: gentle-pulse 3s ease-in-out infinite; }
-        .gentle-pulse-2 { animation: gentle-pulse 4s ease-in-out infinite 0.5s; }
-        .gentle-pulse-3 { animation: gentle-pulse 3.5s ease-in-out infinite 1s; }
-        .gentle-pulse-4 { animation: gentle-pulse 2.5s ease-in-out infinite 1.5s; }
-        .gentle-pulse-5 { animation: gentle-pulse 4.5s ease-in-out infinite 2s; }
-        .gentle-pulse-6 { animation: gentle-pulse 3.2s ease-in-out infinite 2.5s; }
-        .gentle-pulse-7 { animation: gentle-pulse 2.8s ease-in-out infinite 0.8s; }
-        .gentle-pulse-8 { animation: gentle-pulse 5s ease-in-out infinite 3s; }
-        .gentle-pulse-9 { animation: gentle-pulse 3.8s ease-in-out infinite 1.2s; }
-        .gentle-pulse-10 { animation: gentle-pulse 4.2s ease-in-out infinite 0.3s; }
-      `}</style>
       {/* Main hero section */}
       <section 
         className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
@@ -172,4 +157,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default memo(HeroSection);

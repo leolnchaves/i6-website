@@ -14,8 +14,8 @@ import { logger } from '@/utils/logger';
  * Optimized for performance and includes comprehensive logging
  */
 const Home = () => {
-  // Performance monitoring for the entire page
-  const metrics = usePerformanceMonitor('HomePage', 50);
+  // Performance monitoring only in development mode
+  const metrics = process.env.NODE_ENV === 'development' ? usePerformanceMonitor('HomePage', 50) : null;
   
   // Log page visit
   logger.info('Home page loaded', { 

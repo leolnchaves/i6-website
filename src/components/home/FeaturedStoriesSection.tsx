@@ -1,11 +1,12 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesCardsData } from '@/data/staticData/successStoriesCards';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
 import ViewAllButton from './featured-stories/ViewAllButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, BarChart3, Users, Target, ChevronLeft, ChevronRight } from 'lucide-react';
+import LazyImage from '@/components/common/LazyImage';
 
 const FeaturedStoriesSection = () => {
   const { language } = useLanguage();
@@ -96,6 +97,11 @@ const FeaturedStoriesSection = () => {
                   const IconComponent = getCardIcon(index);
                   const position = (index - currentSlide + fallbackCards.length) % fallbackCards.length;
                   
+                  // Only render visible cards (center + adjacent) for performance
+                  const shouldRender = position <= 1 || position >= fallbackCards.length - 1;
+                  
+                  if (!shouldRender) return null;
+                  
                   // Definir posições e transformações para cada card
                   let transform = '';
                   let zIndex = 1;
@@ -115,19 +121,12 @@ const FeaturedStoriesSection = () => {
                     zIndex = 5;
                     opacity = 0.7;
                     scale = 0.85;
-                  } else {
-                    // Cards escondidos
-                    const isRight = position < fallbackCards.length / 2;
-                    transform = `translateX(${isRight ? '400px' : '-400px'}) translateZ(-200px) rotateY(${isRight ? '-45deg' : '45deg'})`;
-                    zIndex = 1;
-                    opacity = 0.3;
-                    scale = 0.7;
                   }
                   
                   return (
                     <div
                       key={card.id}
-                      className="absolute top-1/2 left-1/2 transition-all duration-700 ease-in-out transform-gpu"
+                      className="absolute top-1/2 left-1/2 transition-all duration-700 ease-in-out will-change-transform"
                       style={{
                         transform: `translate(-50%, -50%) ${transform} scale(${scale})`,
                         zIndex,
@@ -154,10 +153,11 @@ const FeaturedStoriesSection = () => {
                           {/* Conteúdo visual */}
                           <div className="flex-1 relative mx-6 mb-6 rounded-2xl overflow-hidden">
                             {card.image_url ? (
-                              <img 
+                              <LazyImage 
                                 src={card.image_url} 
                                 alt={card.company_name}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                placeholderClassName="w-full h-full"
                               />
                             ) : (
                               <div className="w-full h-full bg-gradient-to-br from-blue-100 via-cyan-50 to-indigo-100 flex flex-col items-center justify-center p-6">
@@ -242,4 +242,4 @@ const FeaturedStoriesSection = () => {
   );
 };
 
-export default FeaturedStoriesSection;
+export default memo(FeaturedStoriesSection);

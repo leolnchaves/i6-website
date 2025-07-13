@@ -23,6 +23,7 @@ class Logger {
   private logLevel: LogLevel = process.env.NODE_ENV === 'development' ? LogLevel.DEBUG : LogLevel.INFO;
   private logs: LogEntry[] = [];
   private maxLogs = 1000;
+  private isDevelopment = process.env.NODE_ENV === 'development';
 
   /**
    * Set the minimum log level
@@ -32,9 +33,12 @@ class Logger {
   }
 
   /**
-   * Generic log method
+   * Generic log method - optimized for production tree-shaking
    */
   private log(level: LogLevel, message: string, data?: any, component?: string): void {
+    // Early return in production to enable tree-shaking
+    if (!this.isDevelopment) return;
+    
     if (level < this.logLevel) return;
 
     const logEntry: LogEntry = {
@@ -76,45 +80,53 @@ class Logger {
   }
 
   /**
-   * Debug level logging
+   * Debug level logging - removed in production
    */
   debug(message: string, data?: any, component?: string): void {
-    this.log(LogLevel.DEBUG, message, data, component);
+    if (this.isDevelopment) {
+      this.log(LogLevel.DEBUG, message, data, component);
+    }
   }
 
   /**
-   * Info level logging
+   * Info level logging - removed in production
    */
   info(message: string, data?: any, component?: string): void {
-    this.log(LogLevel.INFO, message, data, component);
+    if (this.isDevelopment) {
+      this.log(LogLevel.INFO, message, data, component);
+    }
   }
 
   /**
-   * Warning level logging
+   * Warning level logging - removed in production
    */
   warn(message: string, data?: any, component?: string): void {
-    this.log(LogLevel.WARN, message, data, component);
+    if (this.isDevelopment) {
+      this.log(LogLevel.WARN, message, data, component);
+    }
   }
 
   /**
-   * Error level logging
+   * Error level logging - kept in production for error tracking
    */
   error(message: string, data?: any, component?: string): void {
     this.log(LogLevel.ERROR, message, data, component);
   }
 
   /**
-   * Get all stored logs
+   * Get all stored logs - only available in development
    */
   getLogs(): LogEntry[] {
-    return [...this.logs];
+    return this.isDevelopment ? [...this.logs] : [];
   }
 
   /**
-   * Clear all stored logs
+   * Clear all stored logs - only available in development  
    */
   clearLogs(): void {
-    this.logs = [];
+    if (this.isDevelopment) {
+      this.logs = [];
+    }
   }
 }
 
