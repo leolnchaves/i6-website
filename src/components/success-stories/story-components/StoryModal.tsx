@@ -172,9 +172,9 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
               {language === 'en' ? 'Implemented Solutions' : 'Soluções Implementadas'}
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {getImplementedSolutions(selectedStory).map((solution, index) => (
-                <div key={index} className="flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200 min-h-[44px]">
+                <div key={index} className="flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200 min-h-[44px] w-full">
                   <div className="w-6 h-6 rounded flex items-center justify-center mr-3 flex-shrink-0">
                     <img 
                       src="/lovable-uploads/4f6f8e68-c601-4091-95b2-5da970db21ab.png" 
