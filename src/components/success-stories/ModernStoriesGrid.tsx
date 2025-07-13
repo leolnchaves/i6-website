@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, User, Building2, Quote } from 'lucide-react';
+import { X, ArrowRight, User, Building2, Quote, Target, TrendingUp, Zap, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -30,6 +30,97 @@ interface StoryCard {
 const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }) => {
   const { language } = useLanguage();
   const [selectedStory, setSelectedStory] = useState<StoryCard | null>(null);
+
+  // Function to get company details based on industry/company
+  const getCompanyDetails = (story: StoryCard) => {
+    const companyProfiles = {
+      'TechRetail Inc.': {
+        about: language === 'en' 
+          ? 'Leading e-commerce platform with over 10 million users worldwide. Winner of Best Digital Innovation Award 2023.'
+          : 'Plataforma de e-commerce líder com mais de 10 milhões de usuários mundialmente. Vencedor do Prêmio de Melhor Inovação Digital 2023.',
+        logo: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=120&h=120&fit=crop&auto=format'
+      },
+      'Industrial Solutions Co.': {
+        about: language === 'en'
+          ? 'Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.'
+          : 'Empresa de manufatura Fortune 500 com mais de 25 anos de liderança na indústria. Certificada ISO 9001 com operações globais.',
+        logo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=120&h=120&fit=crop&auto=format'
+      },
+      'MedTech Innovations': {
+        about: language === 'en'
+          ? 'Premier healthcare technology provider serving 500+ hospitals across North America. FDA approved solutions.'
+          : 'Principal provedor de tecnologia em saúde atendendo mais de 500 hospitais na América do Norte. Soluções aprovadas pela FDA.',
+        logo: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=120&h=120&fit=crop&auto=format'
+      },
+      'Capital Banking Group': {
+        about: language === 'en'
+          ? 'Top-tier financial institution with $50B+ in assets. Recognized for digital transformation excellence and security innovation.'
+          : 'Instituição financeira de primeira linha com mais de $50B em ativos. Reconhecida pela excelência em transformação digital e inovação em segurança.',
+        logo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=120&h=120&fit=crop&auto=format'
+      },
+      'Global Shipping Solutions': {
+        about: language === 'en'
+          ? 'International logistics leader handling 1M+ shipments annually. Green Supply Chain Award recipient.'
+          : 'Líder em logística internacional processando mais de 1M de remessas anualmente. Recipiente do Prêmio Green Supply Chain.',
+        logo: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=120&h=120&fit=crop&auto=format'
+      },
+      'NextGen Motors': {
+        about: language === 'en'
+          ? 'Innovative automotive manufacturer with focus on electric vehicles. Named Sustainability Leader 2023.'
+          : 'Fabricante automotivo inovador com foco em veículos elétricos. Nomeado Líder em Sustentabilidade 2023.',
+        logo: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=120&h=120&fit=crop&auto=format'
+      }
+    };
+
+    return companyProfiles[story.company_name as keyof typeof companyProfiles] || {
+      about: language === 'en' 
+        ? 'Industry-leading company recognized for innovation and excellence in their sector.'
+        : 'Empresa líder da indústria reconhecida pela inovação e excelência em seu setor.',
+      logo: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=120&h=120&fit=crop&auto=format'
+    };
+  };
+
+  // Function to get implemented solutions based on industry
+  const getImplementedSolutions = (story: StoryCard) => {
+    const solutionsByIndustry = {
+      'E-commerce': [
+        { icon: Target, name: language === 'en' ? 'Smart Recommendations' : 'Recomendações Inteligentes', color: 'bg-blue-100 text-blue-600' },
+        { icon: TrendingUp, name: language === 'en' ? 'Predictive Analytics' : 'Analytics Preditivo', color: 'bg-green-100 text-green-600' },
+        { icon: User, name: language === 'en' ? 'Customer Journey' : 'Jornada do Cliente', color: 'bg-purple-100 text-purple-600' }
+      ],
+      'Manufacturing': [
+        { icon: Shield, name: language === 'en' ? 'Predictive Maintenance' : 'Manutenção Preditiva', color: 'bg-orange-100 text-orange-600' },
+        { icon: Zap, name: language === 'en' ? 'IoT Monitoring' : 'Monitoramento IoT', color: 'bg-yellow-100 text-yellow-600' },
+        { icon: TrendingUp, name: language === 'en' ? 'Quality Control AI' : 'IA de Controle de Qualidade', color: 'bg-red-100 text-red-600' }
+      ],
+      'Healthcare': [
+        { icon: User, name: language === 'en' ? 'Patient Flow Optimization' : 'Otimização de Fluxo de Pacientes', color: 'bg-teal-100 text-teal-600' },
+        { icon: Target, name: language === 'en' ? 'Resource Allocation' : 'Alocação de Recursos', color: 'bg-indigo-100 text-indigo-600' },
+        { icon: TrendingUp, name: language === 'en' ? 'Demand Forecasting' : 'Previsão de Demanda', color: 'bg-pink-100 text-pink-600' }
+      ],
+      'Finance': [
+        { icon: Shield, name: language === 'en' ? 'Fraud Detection' : 'Detecção de Fraudes', color: 'bg-red-100 text-red-600' },
+        { icon: Target, name: language === 'en' ? 'Risk Assessment' : 'Avaliação de Riscos', color: 'bg-orange-100 text-orange-600' },
+        { icon: Zap, name: language === 'en' ? 'Real-time Monitoring' : 'Monitoramento em Tempo Real', color: 'bg-blue-100 text-blue-600' }
+      ],
+      'Logistics': [
+        { icon: Target, name: language === 'en' ? 'Route Optimization' : 'Otimização de Rotas', color: 'bg-green-100 text-green-600' },
+        { icon: TrendingUp, name: language === 'en' ? 'Demand Forecasting' : 'Previsão de Demanda', color: 'bg-blue-100 text-blue-600' },
+        { icon: Zap, name: language === 'en' ? 'Smart Delivery' : 'Entrega Inteligente', color: 'bg-purple-100 text-purple-600' }
+      ],
+      'Automotive': [
+        { icon: Shield, name: language === 'en' ? 'Quality Inspection' : 'Inspeção de Qualidade', color: 'bg-red-100 text-red-600' },
+        { icon: Target, name: language === 'en' ? 'Computer Vision' : 'Visão Computacional', color: 'bg-blue-100 text-blue-600' },
+        { icon: TrendingUp, name: language === 'en' ? 'Defect Prevention' : 'Prevenção de Defeitos', color: 'bg-green-100 text-green-600' }
+      ]
+    };
+
+    return solutionsByIndustry[story.industry as keyof typeof solutionsByIndustry] || [
+      { icon: Target, name: language === 'en' ? 'AI Solution' : 'Solução de IA', color: 'bg-blue-100 text-blue-600' },
+      { icon: TrendingUp, name: language === 'en' ? 'Analytics' : 'Analytics', color: 'bg-green-100 text-green-600' },
+      { icon: Zap, name: language === 'en' ? 'Automation' : 'Automação', color: 'bg-purple-100 text-purple-600' }
+    ];
+  };
 
   // Get static data
   const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
@@ -193,7 +284,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
               <X className="w-4 h-4" />
             </Button>
 
-            {/* Header with company info */}
+            {/* Header with company info and logo */}
             <div className="p-6 pb-4 border-b border-gray-100">
               <div className="flex items-center mb-3">
                 <Building2 className="w-4 h-4 text-gray-500 mr-2" />
@@ -202,9 +293,30 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                 </span>
               </div>
               
-              <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-                {selectedStory.company_name}
-              </h1>
+              <div className="flex items-start justify-between">
+                <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+                  {selectedStory.company_name}
+                </h1>
+                
+                {/* Client Logo */}
+                <div className="ml-4 flex-shrink-0">
+                  <img 
+                    src={getCompanyDetails(selectedStory).logo}
+                    alt={`${selectedStory.company_name} logo`}
+                    className="w-16 h-16 rounded-lg object-cover border border-gray-200"
+                  />
+                </div>
+              </div>
+
+              {/* About Section */}
+              <div className="mt-4">
+                <h2 className="text-xs font-semibold text-gray-900 mb-2 uppercase tracking-wider">
+                  {language === 'en' ? 'About' : 'Sobre'}
+                </h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {getCompanyDetails(selectedStory).about}
+                </p>
+              </div>
             </div>
 
             {/* Content */}
@@ -258,89 +370,34 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                 </div>
               </div>
 
-              {/* Customer testimonial or alternative content */}
-              {selectedStory.customer_quote && selectedStory.customer_quote.trim() ? (
-                <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                  <Quote className="w-6 h-6 text-gray-400 mb-3" />
-                  <p className="text-gray-800 italic leading-relaxed mb-4">
-                    "{selectedStory.customer_quote}"
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-                      <User className="w-5 h-5 text-gray-500" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900 text-sm">{selectedStory.customer_name}</p>
-                      <p className="text-gray-600 text-xs">{selectedStory.customer_title}</p>
-                    </div>
-                  </div>
+              {/* Implemented Solutions Mini-Cards */}
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                <h2 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">
+                  {language === 'en' ? 'Implemented Solutions' : 'Soluções Implementadas'}
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {getImplementedSolutions(selectedStory).map((solution, index) => {
+                    const IconComponent = solution.icon;
+                    return (
+                      <div key={index} className="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                        <div className={`w-10 h-10 rounded-lg ${solution.color} flex items-center justify-center mb-3`}>
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                        <h3 className="font-medium text-gray-900 text-sm mb-1">
+                          {solution.name}
+                        </h3>
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                          <span className="text-xs text-gray-500">
+                            {language === 'en' ? 'Active' : 'Ativo'}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ) : (
-                // Random selection between two different alternative layouts
-                Math.random() > 0.5 ? (
-                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="text-center">
-                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <Building2 className="w-6 h-6 text-blue-600" />
-                        </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">
-                          {language === 'en' ? 'Fast Implementation' : 'Implementação Rápida'}
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          {language === 'en' 
-                            ? 'Solution implemented in less than 4 weeks with full support'
-                            : 'Solução implementada em menos de 4 semanas com suporte completo'
-                          }
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <ArrowRight className="w-6 h-6 text-green-600" />
-                        </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">
-                          {language === 'en' ? 'Proven ROI' : 'ROI Comprovado'}
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          {language === 'en' 
-                            ? 'Measurable return on investment from the first month'
-                            : 'Retorno sobre investimento mensurável desde o primeiro mês'
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                    <div className="text-center mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
-                        {language === 'en' ? 'Project Successfully Completed' : 'Projeto Concluído com Sucesso'}
-                      </h3>
-                      <p className="text-sm text-gray-600 max-w-md mx-auto">
-                        {language === 'en' 
-                          ? 'This implementation demonstrates our ability to deliver solutions that generate real impact and measurable results for our clients.'
-                          : 'Esta implementação demonstra nossa capacidade de entregar soluções que geram impacto real e resultados mensuráveis para nossos clientes.'
-                        }
-                      </p>
-                    </div>
-                    <div className="flex justify-center items-center gap-6 text-xs text-gray-500">
-                      <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>{language === 'en' ? 'Active Project' : 'Projeto Ativo'}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>{language === 'en' ? 'Ongoing Support' : 'Suporte Contínuo'}</span>
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
+              </div>
             </div>
           </div>
         </div>
