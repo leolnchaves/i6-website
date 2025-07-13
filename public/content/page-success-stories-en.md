@@ -39,7 +39,7 @@
 ---
 
 ## Healthcare Patient Flow Optimization
-**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600
+**Image:** https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600
 **Logo:** /content/logos/1.png
 **Segment:** Healthcare
 **Client:** MedTech Innovations
