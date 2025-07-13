@@ -190,7 +190,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="relative overflow-hidden">
       {/* Hero-inspired header section */}
-      <section className="w-full min-h-[35vh] flex items-center pt-20 relative overflow-hidden">
+      <section className="w-full min-h-[35vh] flex items-center justify-center pt-20 relative overflow-hidden">
         {/* Background image with blur */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
