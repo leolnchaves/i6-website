@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, GripVertical } from 'lucide-react';
-import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards';
+// import { useCMSSuccessStoriesCards } from '@/hooks/useCMSSuccessStoriesCards'; // Removed - using static data only
 import SuccessStoryCardForm from './success-stories/SuccessStoryCardForm';
 import SuccessStoryCardList from './success-stories/SuccessStoryCardList';
 
@@ -17,15 +17,24 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
   selectedPage,
   selectedLanguage,
 }) => {
-  const { cards, loading, fetchCards, createCard, updateCard, deleteCard, reorderCards, updateIsActiveHome } = useCMSSuccessStoriesCards();
+  // const { cards, loading, fetchCards, createCard, updateCard, deleteCard, reorderCards, updateIsActiveHome } = useCMSSuccessStoriesCards();
+  // Temporarily disabled - using static data only
+  const cards = [];
+  const loading = false;
+  const fetchCards = async () => {};
+  const createCard = async () => {};
+  const updateCard = async () => {};
+  const deleteCard = async () => {};
+  const reorderCards = async () => {};
+  const updateIsActiveHome = async () => {};
   const [editingCard, setEditingCard] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (selectedPage) {
-      fetchCards(selectedPage, selectedLanguage);
+      // fetchCards(selectedPage, selectedLanguage); // Disabled - using static data only
     }
-  }, [selectedPage, selectedLanguage, fetchCards]);
+  }, [selectedPage, selectedLanguage]);
 
   const handleCreateCard = () => {
     setEditingCard(null);
@@ -45,14 +54,14 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
   const handleFormSubmit = async (formData: any) => {
     try {
       if (editingCard) {
-        await updateCard(editingCard, formData);
+        // await updateCard(editingCard, formData); // Disabled - using static data only
       } else {
         // Get next card order
         const nextOrder = cards.length > 0 ? Math.max(...cards.map(c => c.card_order)) + 1 : 1;
-        await createCard(selectedPage, selectedLanguage, {
-          ...formData,
-          card_order: nextOrder,
-        });
+        // await createCard(selectedPage, selectedLanguage, {
+        //   ...formData,
+        //   card_order: nextOrder,
+        // }); // Disabled - using static data only
       }
       handleFormClose();
     } catch (error) {
@@ -62,16 +71,16 @@ const SuccessStoriesCardsManagement: React.FC<SuccessStoriesCardsManagementProps
 
   const handleDeleteCard = async (cardId: string) => {
     if (window.confirm('Tem certeza que deseja remover este card?')) {
-      await deleteCard(cardId);
+      // await deleteCard(cardId); // Disabled - using static data only
     }
   };
 
   const handleReorder = async (cardIds: string[]) => {
-    await reorderCards(selectedPage, selectedLanguage, cardIds);
+    // await reorderCards(selectedPage, selectedLanguage, cardIds); // Disabled - using static data only
   };
 
   const handleToggleActiveHome = async (cardId: string, isActiveHome: boolean) => {
-    await updateIsActiveHome(cardId, isActiveHome);
+    // await updateIsActiveHome(cardId, isActiveHome); // Disabled - using static data only
   };
 
   if (loading) {

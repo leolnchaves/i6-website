@@ -20,7 +20,7 @@ const SuccessStories = () => {
   const metrics = usePerformanceMonitor('SuccessStoriesPage', 50);
   
   // Language context
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   
   // Segment filter state
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
