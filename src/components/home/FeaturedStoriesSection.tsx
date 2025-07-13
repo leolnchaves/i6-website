@@ -152,7 +152,7 @@ const FeaturedStoriesSection = () => {
                               {story.segment}
                             </div>
                             <h3 className="text-lg font-bold text-gray-900 leading-tight">
-                              {story.description.length > 80 ? story.description.substring(0, 80) + '...' : story.description}
+                              {story.description}
                             </h3>
                             <p className="text-sm text-gray-600 mt-1">{story.client}</p>
                           </div>
