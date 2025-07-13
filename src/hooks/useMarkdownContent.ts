@@ -34,7 +34,9 @@ export const useMarkdownContent = (): UseMarkdownContentReturn => {
         }
         
         const content = await response.text();
+        console.log('Markdown content loaded:', content.substring(0, 200) + '...');
         const parsedResults = parseMarkdownContent(content);
+        console.log('Parsed results count:', parsedResults.length);
         setResults(parsedResults);
       } catch (err) {
         console.error('Error fetching markdown content:', err);

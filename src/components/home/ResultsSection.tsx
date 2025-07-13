@@ -14,6 +14,8 @@ const ResultsSection = () => {
   const { results, loading, error } = useMarkdownContent();
   const { t } = useLanguage();
 
+  console.log('Results received:', results.length, results);
+
   // Icon mapping
   const iconComponents = {
     TrendingUp: <TrendingUp className="text-primary text-3xl" />,
