@@ -1,6 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { ArrowRight, Building2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import LazyImage from '../optimized/LazyImage';
 
 interface StoryCardData {
   id: string;
@@ -27,9 +28,9 @@ interface StoryCardProps {
 }
 
 const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) => {
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     onClick(story);
-  };
+  }, [story, onClick]);
 
   return (
     <Card 
@@ -42,10 +43,9 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
       <CardContent className="p-6 relative">
         {/* Image placeholder */}
         <div className="w-full h-32 bg-gray-100 rounded-lg mb-4 overflow-hidden">
-          <img 
+          <LazyImage 
             src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop&auto=format"
             alt={story.company_name}
-            className="w-full h-full object-cover opacity-80"
           />
         </div>
 
