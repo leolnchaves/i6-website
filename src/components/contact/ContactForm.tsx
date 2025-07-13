@@ -5,9 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ContactForm = () => {
-  // Static content for PT/EN - can be easily changed
+  const { language } = useLanguage();
+  
+  // Static content for PT/EN - automatically responds to language changes
   const content = {
     pt: {
       title1: "Transforme seu negócio com",
@@ -47,9 +50,8 @@ const ContactForm = () => {
     }
   };
 
-  // You can change this to 'en' for English or 'pt' for Portuguese
-  const currentLang = 'pt';
-  const text = content[currentLang];
+  // Automatically uses current language from context
+  const text = content[language];
 
   return (
     <Card className="border-0 shadow-2xl h-full flex flex-col">

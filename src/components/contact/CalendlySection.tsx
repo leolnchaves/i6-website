@@ -1,8 +1,11 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const CalendlySection = () => {
-  // Static content for PT/EN - can be easily changed for different languages
+  const { language } = useLanguage();
+  
+  // Static content for PT/EN - automatically responds to language changes
   const content = {
     pt: {
       title: "Agende uma Conversa",
@@ -14,9 +17,8 @@ const CalendlySection = () => {
     }
   };
 
-  // You can change this to 'en' for English or 'pt' for Portuguese
-  const currentLang = 'pt'; // Static language selection
-  const text = content[currentLang];
+  // Automatically uses current language from context
+  const text = content[language];
 
   return (
     <Card className="border-0 shadow-2xl bg-gradient-to-r from-blue-600 to-orange-500 text-white">
