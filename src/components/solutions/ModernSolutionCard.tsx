@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo, useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LucideIcon, Target } from 'lucide-react';
@@ -16,6 +16,22 @@ interface ModernSolutionCardProps {
   index: number;
 }
 
+// Memoized translations outside component to prevent recreation
+const translations = {
+  en: {
+    overview: 'Overview',
+    keyFeatures: 'Key Features',
+    additionalFeatures: 'additional features',
+    businessOutcome: 'Business Outcome'
+  },
+  pt: {
+    overview: 'Visão Geral',
+    keyFeatures: 'Características Principais',
+    additionalFeatures: 'características adicionais',
+    businessOutcome: 'Resultado de Negócio'
+  }
+};
+
 const ModernSolutionCard = memo(({ 
   icon: Icon, 
   title, 
@@ -28,26 +44,46 @@ const ModernSolutionCard = memo(({
   index
 }: ModernSolutionCardProps) => {
   const { language } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   
-  // Static translations
-  const translations = {
-    en: {
-      overview: 'Overview',
-      keyFeatures: 'Key Features',
-      additionalFeatures: 'additional features',
-      businessOutcome: 'Business Outcome'
-    },
-    pt: {
-      overview: 'Visão Geral',
-      keyFeatures: 'Características Principais',
-      additionalFeatures: 'características adicionais',
-      businessOutcome: 'Resultado de Negócio'
+  // Memoize translations to prevent recalculation
+  const t = useMemo(() => translations[language] || translations.en, [language]);
+  
+  // Memoize displayed features
+  const displayedFeatures = useMemo(() => features.slice(0, 4), [features]);
+  const additionalCount = useMemo(() => Math.max(0, features.length - 4), [features.length]);
+  
+  // Intersection Observer for performance-optimized animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && !hasAnimated) {
+          // Add staggered animation delay based on index
+          setTimeout(() => {
+            setIsVisible(true);
+            setHasAnimated(true);
+          }, index * 100);
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
     }
-  };
-  
-  const t = translations[language] || translations.en;
+
+    return () => observer.disconnect();
+  }, [index, hasAnimated]);
   return (
-    <Card className="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden min-h-[400px]">
+    <Card 
+      ref={cardRef}
+      className={`group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden min-h-[400px] ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
       <div className="flex flex-col lg:flex-row h-full">
         {/* Left Side - Dark (Product Info) */}
         <div className="lg:w-2/5 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 text-white">
@@ -117,17 +153,17 @@ const ModernSolutionCard = memo(({
                 {t.keyFeatures}
               </h3>
               <div className="grid grid-cols-1 gap-3">
-                {features.slice(0, 4).map((feature, idx) => (
+                {displayedFeatures.map((feature, idx) => (
                   <div key={idx} className="p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm text-gray-700 leading-relaxed">
                       {feature}
                     </span>
                   </div>
                 ))}
-                {features.length > 4 && (
+                {additionalCount > 0 && (
                   <div className="text-center">
                     <span className="text-xs text-gray-500">
-                      +{features.length - 4} {t.additionalFeatures}
+                      +{additionalCount} {t.additionalFeatures}
                     </span>
                   </div>
                 )}

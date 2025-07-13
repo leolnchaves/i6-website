@@ -1,14 +1,18 @@
 
+import { memo, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsCTAData } from '@/data/staticData/solutionsCTAData';
 
-const SolutionsCTA = () => {
+const SolutionsCTA = memo(() => {
   const { language } = useLanguage();
   
-  // Get static data based on language
-  const ctaContent = solutionsCTAData[language] || solutionsCTAData.en;
+  // Memoize CTA content to prevent recalculation
+  const ctaContent = useMemo(() => 
+    solutionsCTAData[language] || solutionsCTAData.en, 
+    [language]
+  );
 
   return (
     <section className="py-20 bg-gray-50">
@@ -26,6 +30,8 @@ const SolutionsCTA = () => {
       </div>
     </section>
   );
-};
+});
+
+SolutionsCTA.displayName = 'SolutionsCTA';
 
 export default SolutionsCTA;
