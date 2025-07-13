@@ -83,7 +83,7 @@ const FAQSection = () => {
         </div>
 
         {/* FAQ Cards */}
-        <div className="max-w-4xl mx-auto space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
           {filteredFaqs.map((faq, index) => (
             <Collapsible
               key={faq.id}
