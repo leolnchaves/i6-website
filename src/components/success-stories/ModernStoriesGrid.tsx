@@ -386,12 +386,12 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                   </p>
                 </div>
                 
-                {/* Client Logo - moved slightly left to avoid X button */}
+                {/* Client Logo - smaller and positioned in header */}
                 <div className="flex-shrink-0 mr-8">
                   <img 
                     src={getCompanyDetails(selectedStory).logo}
                     alt={`${selectedStory.company_name} logo`}
-                    className="w-12 h-12 rounded-lg object-cover border border-gray-200"
+                    className="w-10 h-10 rounded-lg object-contain border border-gray-200 bg-white p-1"
                   />
                 </div>
               </div>
