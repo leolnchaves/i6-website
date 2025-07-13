@@ -2,17 +2,28 @@
 import { Link } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSPageContent } from '@/hooks/useCMSPageContent';
 
 const Footer = () => {
   const { t, language } = useLanguage();
-  const { getContent, loading } = useCMSPageContent('components', language);
+  
+  // Static content - migrated from CMS
+  const footerContent = {
+    pt: {
+      companyDescription: "Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.",
+      contactEmail: "lets.talk@infinity6.ai",
+      contactPhone: "+55 (19) 99819-7775",
+      copyrightText: "© 2024 Infinity6.ai. Todos os direitos reservados."
+    },
+    en: {
+      companyDescription: "Technology that connects data and decisions in real time.\nGrow faster, scale smarter.",
+      contactEmail: "lets.talk@infinity6.ai", 
+      contactPhone: "+55 (19) 99819-7775",
+      copyrightText: "© 2024 Infinity6.ai. All rights reserved."
+    }
+  };
 
-  // Get footer content from CMS with fallbacks
-  const companyDescription = getContent('footer', 'company_description', t('footer.description'));
-  const contactEmail = getContent('footer', 'contact_email', 'hello@infinity6.ai');
-  const contactPhone = getContent('footer', 'contact_phone', '+1 (555) 123-4567');
-  const copyrightText = getContent('footer', 'copyright_text', t('footer.copyright'));
+  // Automatically uses current language from context
+  const footerText = footerContent[language];
 
   const handleLinkClick = () => {
     // Scroll to top when link is clicked
@@ -40,7 +51,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              {loading ? t('footer.description') : companyDescription}
+              {footerText.companyDescription}
             </p>
             
             {/* Social Media Links */}
@@ -130,17 +141,17 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
             <ul className="space-y-2 text-gray-400">
               <li className="hover:text-orange-400 transition-colors duration-300">
-                {loading ? 'hello@infinity6.ai' : contactEmail}
+                {footerText.contactEmail}
               </li>
               <li className="hover:text-orange-400 transition-colors duration-300">
-                {loading ? '+1 (555) 123-4567' : contactPhone}
+                {footerText.contactPhone}
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>{loading ? t('footer.copyright') : copyrightText}</p>
+          <p>{footerText.copyrightText}</p>
         </div>
       </div>
     </footer>
