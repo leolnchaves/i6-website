@@ -12,7 +12,6 @@ import SuccessStories from "./pages/SuccessStories";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
-import CMSAdmin from "./pages/CMSAdmin";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
@@ -57,9 +56,6 @@ const App = () => {
             <Sonner />
             <BrowserRouter>
               <Routes>
-                {/* CMS Admin routes - without Layout wrapper */}
-                <Route path="/cms-admin-i6/*" element={<CMSAdmin />} />
-                
                 {/* Regular site routes - with Layout wrapper */}
                 <Route path="/*" element={
                   <Layout>

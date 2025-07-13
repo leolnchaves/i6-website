@@ -5,7 +5,7 @@ import heroBg from '@/assets/hero-bg.jpg';
 const ContactHero = () => {
   const { language } = useLanguage();
   
-  // Static content - migrated from CMS
+  // Static content
   const content = {
     pt: {
       title: "Vamos Iniciar uma",

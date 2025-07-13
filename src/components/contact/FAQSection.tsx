@@ -17,7 +17,7 @@ const FAQSection = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
-  // Static content - migrated from CMS
+  // Static content
   const content = {
     pt: {
       title: "Perguntas Frequentes",

@@ -7,7 +7,7 @@ export const ptTranslations = {
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
   
-  // Hero Section - Updated with CMS data
+  // Hero Section
   'hero.infinite': 'Infinitas',
   'hero.possibilities': 'Possibilidades',
   'hero.poweredByAI': 'Impulsionadas pela IA',
@@ -15,14 +15,14 @@ export const ptTranslations = {
   'hero.startJourney': 'Comece sua Jornada',
   'hero.watchDemo': 'Veja o Futuro',
   
-  // Results Section - Updated with CMS data
+  // Results Section
   'results.mainTitle': 'Impacto Real de IA',
   'results.mainSubtitle': 'Impulsionando Crescimento de Negócios',
   'results.title': 'Impacto Real de IA que Impulsiona o Crescimento dos Negócios',
   'results.subtitle1': 'Chega de soluções de GenAI e agentes que não entregam resultados reais. Chega de foco apenas na produtividade de software. Chega de alta complexidade técnica e longas jornadas de integração.',
   'results.subtitle2': 'Nossa abordagem única combina inteligência artificial avançada com estratégia de negócios, entregando impacto mensurável e transformação real para sua empresa.',
   
-  // Results Cards - Updated with CMS data
+  // Results Cards
   'results.conversionRate.title': 'Otimização da Taxa de Conversão',
   'results.conversionRate.description': 'Algoritmos avançados de IA aumentam as taxas de conversão através de análise inteligente do comportamento do cliente e recomendações personalizadas',
   'results.crmCost.title': 'Redução de Custos de CRM',
@@ -44,7 +44,7 @@ export const ptTranslations = {
   'results.rapidImplementation.title': 'Implementação Rápida',
   'results.rapidImplementation.description': 'Soluções de IA 100% API-first e cloud-native entregam resultados mensuráveis em semanas, não meses',
   
-  // Stats Section - Updated with CMS data
+  // Stats Section
   'stats.companiesTransformed': 'Empresas Transformadas',
   'stats.accuracyRate': 'Taxa de Precisão',
   'stats.expertSupport': 'Suporte Especializado',
@@ -53,13 +53,13 @@ export const ptTranslations = {
   'stats.leadtime': 'Lead time de captura de valor',
   'stats.explainability': 'Recomendações com explicabilidade',
   
-  // Compact Solutions Section - Updated with CMS data
+  // Compact Solutions Section
   'compactSolutions.title': 'Soluções de IA',
   'compactSolutions.subtitle': 'Que Geram Resultados Concretos',
   'compactSolutions.description': 'Vá além do hype. Transforme inteligência em performance de negócio com soluções de IA prontas para implementar.',
   'compactSolutions.buttonText': 'Explorar Soluções',
   
-  // Stats Values - Updated with CMS data
+  // Stats Values
   'stats.stat1Value': '97%',
   'stats.stat2Value': '0%',
   'stats.stat3Value': '1,5 (mês)',

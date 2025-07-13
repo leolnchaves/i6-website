@@ -44,7 +44,7 @@ const HeroSection = () => {
     }
   };
 
-  // Static demo URL (from CMS data)
+  // Static demo URL
   const getDemoUrl = () => {
     return 'https://www.youtube.com/embed/knNYT11sEk0?autoplay=1&controls=1&showinfo=0&rel=0';
   };

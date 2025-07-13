@@ -30,7 +30,7 @@ const SolutionCard = ({
 }: SolutionCardProps) => {
   const { t } = useLanguage();
 
-  // Get icon and badge background color based on selected bgColor from CMS
+  // Get icon and badge background color based on selected bgColor
   const getIconBgColor = (bgColor: string) => {
     if (bgColor.includes('gray')) return 'rgba(107, 114, 128, 0.15)';
     if (bgColor.includes('orange')) return 'rgba(251, 146, 60, 0.15)';
@@ -41,7 +41,7 @@ const SolutionCard = ({
     return 'rgba(107, 114, 128, 0.15)'; // default gray
   };
 
-  // Get badge background color based on selected bgColor from CMS
+  // Get badge background color based on selected bgColor
   const getBadgeBgColor = (bgColor: string) => {
     if (bgColor.includes('gray')) return 'rgba(107, 114, 128, 0.2)';
     if (bgColor.includes('orange')) return 'rgba(251, 146, 60, 0.2)';

@@ -249,8 +249,8 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
                     ? 'Try selecting a different segment or view all stories.'
                     : 'Tente selecionar um segmento diferente ou veja todos os cases.')
                 : (language === 'en' 
-                    ? 'Success stories will be displayed here when added in the CMS.'
-                    : 'Os cases de sucesso serão exibidos aqui quando forem adicionados no CMS.')
+                    ? 'Success stories will be displayed here when available.'
+                    : 'Os cases de sucesso serão exibidos aqui quando estiverem disponíveis.')
               }
             </p>
           </div>

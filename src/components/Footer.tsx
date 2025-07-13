@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const Footer = () => {
   const { t, language } = useLanguage();
   
-  // Static content - migrated from CMS
+  // Static content
   const footerContent = {
     pt: {
       companyDescription: "Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.",

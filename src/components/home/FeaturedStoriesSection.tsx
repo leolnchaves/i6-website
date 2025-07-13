@@ -239,7 +239,7 @@ const FeaturedStoriesSection = () => {
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-500 mb-4">Nenhum case de sucesso disponível no momento</p>
-            <p className="text-sm text-gray-400">Cards serão exibidos quando houver dados disponíveis no CMS</p>
+            <p className="text-sm text-gray-400">Cards serão exibidos quando houver dados disponíveis</p>
             <ViewAllButton />
           </div>
         )}
