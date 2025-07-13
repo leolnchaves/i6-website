@@ -1,14 +1,48 @@
 import { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { getProcessSteps } from '@/data/solutions/processData';
 import { Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import SandboxEnvironment from './SandboxEnvironment';
 
 const AnimatedProcessFlow = () => {
-  const { t } = useLanguage();
-  const processSteps = getProcessSteps(t);
+  // Static process steps data in English
+  const processSteps = [
+    {
+      key: "discovery",
+      title: "Discovery & Analysis",
+      subtitle: "Understanding your business needs",
+      description: "We analyze your business requirements, identify key objectives, and create a strategic roadmap.",
+      color: "from-slate-400 to-slate-500"
+    },
+    {
+      key: "data",
+      title: "Data Collection & Preparation",
+      subtitle: "Gathering and processing data",
+      description: "We collect, clean, and prepare your data for AI model training with proper anonymization.",
+      color: "from-slate-400 to-slate-500"
+    },
+    {
+      key: "training",
+      title: "AI Model Training",
+      subtitle: "Building intelligent solutions",
+      description: "We train custom AI models using your data with optimal parameters and validation.",
+      color: "from-slate-400 to-slate-500"
+    },
+    {
+      key: "testing",
+      title: "Testing & Validation",
+      subtitle: "Ensuring quality and performance",
+      description: "We run comprehensive tests to validate model performance and ensure reliability.",
+      color: "from-slate-400 to-slate-500"
+    },
+    {
+      key: "integration",
+      title: "Integration & Deployment",
+      subtitle: "Going live with your solution",
+      description: "We seamlessly integrate the AI solution into your existing systems and infrastructure.",
+      color: "from-blue-500 to-blue-600"
+    }
+  ];
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -118,10 +152,10 @@ const AnimatedProcessFlow = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            {t('solutions.process.title')}
+            AI Implementation Process
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            {t('solutions.process.subtitle')}
+            From discovery to deployment, watch how we transform your business with AI
           </p>
           
           {/* Animation Controls */}
@@ -300,7 +334,7 @@ const AnimatedProcessFlow = () => {
                   {/* Progress Indicator */}
                   <div className="mt-6 space-y-3">
                     <div className="flex justify-between text-xs text-gray-600">
-                      <span>Progresso da Etapa</span>
+                      <span>Step Progress</span>
                       <span>{Math.round(progress)}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
@@ -314,28 +348,28 @@ const AnimatedProcessFlow = () => {
                     <div className="pt-2">
                       <div className="flex justify-between items-center text-xs">
                         {[
-                          { label: 'Semana 1', steps: [0, 1] }, // Steps 1 e 2
-                          { label: 'Semana 2', steps: [2] },    // Step 3 (parte 1)
-                          { label: 'Semana 3', steps: [2] },    // Step 3 (parte 2)
-                          { label: 'Semana 4', steps: [3] },    // Step 4
-                          { label: '3 Meses', steps: [4] }      // Step 5
+                          { label: 'Week 1', steps: [0, 1] }, // Steps 1 and 2
+                          { label: 'Week 2', steps: [2] },    // Step 3 (part 1)
+                          { label: 'Week 3', steps: [2] },    // Step 3 (part 2)
+                          { label: 'Week 4', steps: [3] },    // Step 4
+                          { label: '3 Months', steps: [4] }   // Step 5
                         ].map((week, index) => {
                           let isCompleted = false;
                           let isActive = false;
                           
-                          if (index === 0) { // Semana 1
+                          if (index === 0) { // Week 1
                             isCompleted = currentStep > 1 || (currentStep === 1 && progress === 100);
                             isActive = currentStep <= 1;
-                          } else if (index === 1) { // Semana 2 
+                          } else if (index === 1) { // Week 2 
                             isCompleted = currentStep > 2 || (currentStep === 2 && progress >= 50);
                             isActive = currentStep === 2 && progress < 50;
-                          } else if (index === 2) { // Semana 3
+                          } else if (index === 2) { // Week 3
                             isCompleted = currentStep > 2 || (currentStep === 2 && progress === 100);
                             isActive = currentStep === 2 && progress >= 50;
-                          } else if (index === 3) { // Semana 4
+                          } else if (index === 3) { // Week 4
                             isCompleted = currentStep > 3 || (currentStep === 3 && progress === 100);
                             isActive = currentStep === 3;
-                          } else { // 3 Meses
+                          } else { // 3 Months
                             isCompleted = currentStep > 4 || (currentStep === 4 && progress === 100);
                             isActive = currentStep === 4;
                           }
@@ -360,19 +394,19 @@ const AnimatedProcessFlow = () => {
                       {/* Timeline line */}
                       <div className="mt-2 relative">
                         <div className="w-full h-0.5 bg-gray-300 rounded"></div>
-                        <div 
-                          className="absolute top-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 rounded transition-all duration-500"
-                          style={{ 
-                            width: `${(() => {
-                              if (currentStep === 0) return (progress / 100) * 20; // 20% for step 1
-                              if (currentStep === 1) return 20 + (progress / 100) * 20; // 40% total for steps 1-2
-                              if (currentStep === 2) return 40 + (progress / 100) * 40; // 80% total for steps 1-3
-                              if (currentStep === 3) return 80 + (progress / 100) * 10; // 90% total for steps 1-4
-                              if (currentStep === 4) return 90 + (progress / 100) * 10; // 100% total
-                              return 100;
-                            })()}%` 
-                          }}
-                        ></div>
+                         <div 
+                           className="absolute top-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 rounded transition-all duration-500"
+                           style={{ 
+                             width: `${(() => {
+                               if (currentStep === 0) return (progress / 100) * 20; // 20% for step 1
+                               if (currentStep === 1) return 20 + (progress / 100) * 20; // 40% total for steps 1-2
+                               if (currentStep === 2) return 40 + (progress / 100) * 40; // 80% total for steps 1-3
+                               if (currentStep === 3) return 80 + (progress / 100) * 10; // 90% total for steps 1-4
+                               if (currentStep === 4) return 90 + (progress / 100) * 10; // 100% total
+                               return 100;
+                             })()}%` 
+                           }}
+                         ></div>
                       </div>
                     </div>
                   </div>
@@ -380,10 +414,10 @@ const AnimatedProcessFlow = () => {
 
                 {/* Right side - Task Display */}
                 <div className="lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex flex-col justify-center">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                      Tarefas em Execução
-                    </h4>
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                        Tasks in Progress
+                      </h4>
                     
                     {/* Current Tasks Display */}
                     <div className="space-y-3">

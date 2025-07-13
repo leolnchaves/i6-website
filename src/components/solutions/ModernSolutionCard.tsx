@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LucideIcon, Target } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ModernSolutionCardProps {
   icon: LucideIcon;
@@ -27,7 +26,6 @@ const ModernSolutionCard = ({
   bgColor, 
   index
 }: ModernSolutionCardProps) => {
-  const { t } = useLanguage();
   return (
     <Card className="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden min-h-[400px]">
       <div className="flex flex-col lg:flex-row h-full">
@@ -85,7 +83,7 @@ const ModernSolutionCard = ({
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                 <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                {t('solutions.card.overview')}
+                Overview
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm">
                 {description}
@@ -96,7 +94,7 @@ const ModernSolutionCard = ({
             <div className="mb-6 flex-1">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                {t('solutions.card.keyFeatures')}
+                Key Features
               </h3>
               <div className="grid grid-cols-1 gap-3">
                 {features.slice(0, 4).map((feature, idx) => (
@@ -109,7 +107,7 @@ const ModernSolutionCard = ({
                 {features.length > 4 && (
                   <div className="text-center">
                     <span className="text-xs text-gray-500">
-                      +{features.length - 4} {t('solutions.card.additionalFeatures')}
+                      +{features.length - 4} additional features
                     </span>
                   </div>
                 )}
@@ -120,7 +118,7 @@ const ModernSolutionCard = ({
             <div>
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                 <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                {t('solutions.card.businessOutcome')}
+                Business Outcome
               </h3>
               <div className="relative p-4 bg-gradient-to-r from-gray-50 to-gray-100/50 rounded-lg border border-gray-200/60 backdrop-blur-sm">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-orange-500/5 rounded-lg"></div>

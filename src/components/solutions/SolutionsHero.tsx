@@ -1,13 +1,10 @@
 
-import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
 import heroBg from '@/assets/hero-bg.jpg';
 
 const SolutionsHero = () => {
-  const { language } = useLanguage();
-  
-  // Get static data based on language
-  const heroContent = solutionsHeroData[language] || solutionsHeroData.en;
+  // Use static English content
+  const heroContent = solutionsHeroData.en;
 
   return (
     <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
