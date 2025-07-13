@@ -1,8 +1,6 @@
 import React, { useState, memo, useCallback, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
-import { useCompanyDetails } from './hooks/useCompanyDetails';
-import { useSolutionsMapping } from './hooks/useSolutionsMapping';
+import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 import EmptyState from './story-components/EmptyState';
 import { LazyStoryCard, LazyStoryModal } from './optimized/LazyComponents';
 import InViewSection from './optimized/InViewSection';
@@ -28,22 +26,21 @@ interface StoryData {
   customer_name: string;
   customer_title: string;
   image_url: string;
+  solutions: string[];
 }
 
 const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegment }) => {
   const { language } = useLanguage();
   const [selectedStory, setSelectedStory] = useState<StoryData | null>(null);
-  const { getCompanyDetails } = useCompanyDetails();
-  const { getImplementedSolutions } = useSolutionsMapping();
   const { preloadImage } = useImageCache({ maxAge: 24 * 60 * 60 * 1000, maxSize: 100 });
 
-  // Get static data
-  const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
+  // Use markdown content hook
+  const { stories, loading, error } = useSuccessStoriesMarkdown();
 
   // Filter cards based on selected segment
   const filteredCards = selectedSegment 
-    ? cards.filter(card => card.industry === selectedSegment)
-    : cards;
+    ? stories.filter(story => story.segment === selectedSegment)
+    : stories;
 
   const handleCardClick = useCallback((story: StoryData) => {
     setSelectedStory(story);
@@ -55,12 +52,33 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
 
   // Pré-carregar imagens quando o componente monta
   useEffect(() => {
-    const imageUrls = filteredCards.map(() => 
-      'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop&auto=format'
-    );
-    
+    const imageUrls = filteredCards.map(story => story.image);
     imageUrls.forEach(url => preloadImage(url));
   }, [filteredCards, preloadImage]);
+
+  if (loading) {
+    return (
+      <InViewSection className="py-6 md:py-8 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center items-center py-16">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+          </div>
+        </div>
+      </InViewSection>
+    );
+  }
+
+  if (error) {
+    return (
+      <InViewSection className="py-6 md:py-8 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center py-16">
+            <p className="text-gray-600">Error loading success stories: {error}</p>
+          </div>
+        </div>
+      </InViewSection>
+    );
+  }
 
   if (filteredCards.length === 0) {
     return <EmptyState selectedSegment={selectedSegment} language={language} />;
@@ -74,7 +92,24 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
             {filteredCards.map((story) => (
               <LazyStoryCard
                 key={story.id}
-                story={story}
+                story={{
+                  id: story.id,
+                  industry: story.segment,
+                  company_name: story.client,
+                  challenge: story.challenge,
+                  solution: story.solution,
+                  metric1_value: story.metric1.split(' ')[0],
+                  metric1_label: story.metric1.split(' ').slice(1).join(' '),
+                  metric2_value: story.metric2.split(' ')[0],
+                  metric2_label: story.metric2.split(' ').slice(1).join(' '),
+                  metric3_value: story.metric3.split(' ')[0],
+                  metric3_label: story.metric3.split(' ').slice(1).join(' '),
+                  customer_quote: story.quote,
+                  customer_name: story.customerName,
+                  customer_title: story.customerTitle,
+                  image_url: story.image,
+                  solutions: story.solutions
+                }}
                 onClick={handleCardClick}
                 language={language}
               />
@@ -87,8 +122,14 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
         selectedStory={selectedStory}
         onClose={handleCloseModal}
         language={language}
-        getCompanyDetails={getCompanyDetails}
-        getImplementedSolutions={getImplementedSolutions}
+        getCompanyDetails={(id: string) => ({
+          name: stories.find(s => s.id === id)?.client || '',
+          description: stories.find(s => s.id === id)?.description || '',
+          website: '',
+          employees: '',
+          headquarters: ''
+        })}
+        getImplementedSolutions={(solution: string) => stories.find(s => s.solution === solution)?.solutions || []}
       />
     </>
   );
