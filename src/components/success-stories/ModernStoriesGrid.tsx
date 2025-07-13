@@ -130,11 +130,9 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
           const storyData = stories.find(s => s.id === story.id);
           if (!storyData?.solutions) return [];
           
-          // Convert solution names to the expected format with icons and colors
-          return storyData.solutions.map((solutionName: string, index: number) => ({
-            icon: () => <div className="w-3 h-3 bg-current rounded-full" />,
-            name: solutionName,
-            color: index % 4 === 0 ? 'bg-blue-100' : index % 4 === 1 ? 'bg-green-100' : index % 4 === 2 ? 'bg-purple-100' : 'bg-orange-100'
+          // Return simple solution objects with just names
+          return storyData.solutions.map((solutionName: string) => ({
+            name: solutionName
           }));
         }}
       />
