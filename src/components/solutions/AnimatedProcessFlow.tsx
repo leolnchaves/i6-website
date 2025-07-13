@@ -19,7 +19,7 @@ const AnimatedProcessFlow = () => {
     const tasks = {
       discovery: [
         "Analyzing business requirements",
-        "Analyzing Pain points & opportunities",
+        "Analyzing pain points & opportunities",
         "Goal mapping (strike angle)"
       ],
       data: [
