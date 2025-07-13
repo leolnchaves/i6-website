@@ -1,14 +1,15 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useMemo, useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-const LanguageSelector = () => {
+const LanguageSelector = memo(() => {
   const { language, setLanguage } = useLanguage();
   const [flagsLoaded, setFlagsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const languages = [
+  // Memoized languages array - prevents recreation on every render
+  const languages = useMemo(() => [
     { 
       code: 'en', 
       flag: '🇺🇸',
@@ -21,9 +22,13 @@ const LanguageSelector = () => {
       text: 'PT',
       label: 'Português'
     }
-  ];
+  ] as const, []);
 
-  const currentLang = languages.find(lang => lang.code === language) || languages[0];
+  // Memoized current language
+  const currentLang = useMemo(() => 
+    languages.find(lang => lang.code === language) || languages[0], 
+    [language, languages]
+  );
 
   useEffect(() => {
     // Força o carregamento das fontes de emoji
@@ -48,19 +53,21 @@ const LanguageSelector = () => {
     loadEmojiFont();
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest('.language-selector')) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+  // Memoized click outside handler
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.language-selector')) {
+      setIsOpen(false);
+    }
   }, []);
 
-  const getFlagStyle = (): React.CSSProperties => ({
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [handleClickOutside]);
+
+  // Memoized flag style - prevents recreation
+  const getFlagStyle = useMemo((): React.CSSProperties => ({
     fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Android Emoji", sans-serif',
     fontSize: '16px',
     lineHeight: '1',
@@ -68,12 +75,13 @@ const LanguageSelector = () => {
     textRendering: 'optimizeSpeed' as any,
     fontFeatureSettings: '"liga" off, "kern" off',
     fontVariant: 'none'
-  });
+  }), []);
 
-  const handleLanguageSelect = (langCode: 'en' | 'pt') => {
+  // Memoized language selection handler
+  const handleLanguageSelect = useCallback((langCode: 'en' | 'pt') => {
     setLanguage(langCode);
     setIsOpen(false);
-  };
+  }, [setLanguage]);
 
   return (
     <div className="relative language-selector">
@@ -83,7 +91,7 @@ const LanguageSelector = () => {
         className="flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-md border border-white/20 rounded-md hover:border-white/30 hover:bg-white/70 transition-all duration-200 min-w-[70px]"
         aria-label={`Current language: ${currentLang.label}`}
       >
-        <span style={getFlagStyle()}>
+        <span style={getFlagStyle}>
           {currentLang.flag}
         </span>
         <span className="text-sm font-medium text-gray-700">
@@ -106,9 +114,9 @@ const LanguageSelector = () => {
               className={`w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 transition-colors duration-150 ${
                 language === lang.code ? 'bg-orange-50 text-orange-600' : 'text-gray-700'
               }`}
-            >
-              <span style={getFlagStyle()}>
-                {lang.flag}
+              >
+                <span style={getFlagStyle}>
+                  {lang.flag}
               </span>
               <span className="text-sm font-medium">
                 {lang.text}
@@ -119,6 +127,8 @@ const LanguageSelector = () => {
       )}
     </div>
   );
-};
+});
+
+LanguageSelector.displayName = 'LanguageSelector';
 
 export default LanguageSelector;

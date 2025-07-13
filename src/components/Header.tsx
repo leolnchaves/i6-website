@@ -1,33 +1,36 @@
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 
-const Header = () => {
+const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { t } = useLanguage();
 
-  const navigation = [
+  // Memoized navigation array - prevents recreation on every render
+  const navigation = useMemo(() => [
     { name: t('header.home'), href: '/' },
     { name: t('header.solutions'), href: '/solutions' },
     { name: t('header.successStories'), href: '/success-stories' },
     { name: t('header.contact'), href: '/contact' },
-  ];
+  ], [t]);
 
-  const isActive = (path: string) => location.pathname === path;
+  // Memoized active route checker
+  const isActive = useCallback((path: string) => location.pathname === path, [location.pathname]);
 
-  const handleLinkClick = () => {
+  // Memoized link click handler
+  const handleLinkClick = useCallback(() => {
     // Close mobile menu when link is clicked
     setIsMenuOpen(false);
     // Scroll to top immediately
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 50);
-  };
+  }, []);
 
   return (
     <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
@@ -124,6 +127,8 @@ const Header = () => {
       </div>
     </header>
   );
-};
+});
+
+Header.displayName = 'Header';
 
 export default Header;

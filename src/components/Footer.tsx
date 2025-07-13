@@ -2,12 +2,13 @@
 import { Link } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { memo, useMemo, useCallback } from 'react';
 
-const Footer = () => {
+const Footer = memo(() => {
   const { t, language } = useLanguage();
   
-  // Static content
-  const footerContent = {
+  // Memoized static content - prevents recreation on every render
+  const footerContent = useMemo(() => ({
     pt: {
       companyDescription: "Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.",
       contactEmail: "lets.talk@infinity6.ai",
@@ -20,17 +21,18 @@ const Footer = () => {
       contactPhone: "+55 (19) 99819-7775",
       copyrightText: "© 2024 Infinity6.ai. All rights reserved."
     }
-  };
+  }), []);
 
-  // Automatically uses current language from context
-  const footerText = footerContent[language];
+  // Memoized footer text based on current language
+  const footerText = useMemo(() => footerContent[language], [footerContent, language]);
 
-  const handleLinkClick = () => {
+  // Memoized link click handler
+  const handleLinkClick = useCallback(() => {
     // Scroll to top when link is clicked
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 50);
-  };
+  }, []);
 
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
@@ -156,6 +158,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

@@ -1,14 +1,14 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import type { Language, LanguageContextType } from '@/types/language';
 import { translations } from '@/data/translations';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Países e regiões que falam português
+// Países e regiões que falam português - memoized constant
 const PORTUGUESE_LOCALES = [
   'pt', 'pt-BR', 'pt-PT', 'pt-AO', 'pt-MZ', 'pt-CV', 'pt-GW', 'pt-ST', 'pt-TL'
-];
+] as const;
 
 /**
  * Detecta o idioma preferido do usuário baseado nas configurações do navegador
@@ -66,18 +66,28 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  const handleSetLanguage = (lang: Language) => {
+  const handleSetLanguage = useCallback((lang: Language) => {
     console.log('Language manually changed to:', lang);
     setLanguage(lang);
     localStorage.setItem('language', lang);
-  };
+  }, []);
 
-  const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations['en']] || key;
-  };
+  // Memoized translation function - CRITICAL OPTIMIZATION
+  const t = useMemo(() => {
+    return (key: string): string => {
+      return translations[language][key as keyof typeof translations['en']] || key;
+    };
+  }, [language]);
+
+  // Memoized context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    language,
+    setLanguage: handleSetLanguage,
+    t
+  }), [language, handleSetLanguage, t]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );
