@@ -44,8 +44,9 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
         {/* Image placeholder */}
         <div className="w-full h-32 bg-gray-100 rounded-lg mb-4 overflow-hidden">
           <LazyImage 
-            src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop&auto=format"
+            src={story.image_url}
             alt={story.company_name}
+            className="w-full h-full object-cover"
           />
         </div>
 

@@ -3,7 +3,7 @@
 ---
 
 ## Otimização de Plataforma E-commerce
-**Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600
 **Segment:** E-commerce
 **Client:** TechRetail Inc.
 **Description:** TechRetail Inc.
@@ -20,7 +20,7 @@
 ---
 
 ## Manutenção Preditiva em Manufatura
-**Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600
 **Segment:** Manufatura
 **Client:** Industrial Solutions Co.
 **Description:** Industrial Solutions Co.
@@ -37,7 +37,7 @@
 ---
 
 ## Otimização do Fluxo de Pacientes em Saúde
-**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600
 **Segment:** Saúde
 **Client:** MedTech Innovations
 **Description:** MedTech Innovations
@@ -54,7 +54,7 @@
 ---
 
 ## Sistema de Detecção de Fraude Financeira
-**Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600
 **Segment:** Financeiro
 **Client:** Capital Banking Group
 **Description:** Capital Banking Group
@@ -71,7 +71,7 @@
 ---
 
 ## Otimização de Rotas Logísticas
-**Image:** https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600
 **Segment:** Logística
 **Client:** Global Shipping Solutions
 **Description:** Global Shipping Solutions
@@ -88,7 +88,7 @@
 ---
 
 ## Controle de Qualidade Automotivo
-**Image:** https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop
+**Image:** https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600
 **Segment:** Automotivo
 **Client:** NextGen Motors
 **Description:** NextGen Motors
