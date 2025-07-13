@@ -1,15 +1,25 @@
 
 import { useState, useMemo, useCallback, memo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { t } = useLanguage();
+  
+  // Lazy loading optimization for logo image
+  const { isVisible, elementRef } = useIntersectionObserver({ threshold: 0.1 });
+  const { isLoaded: logoLoaded } = useImagePreloader(
+    "/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png",
+    true // Header is always visible, but we preload for cache optimization
+  );
 
   // Memoized navigation array - prevents recreation on every render
   const navigation = useMemo(() => [
@@ -22,31 +32,38 @@ const Header = memo(() => {
   // Memoized active route checker
   const isActive = useCallback((path: string) => location.pathname === path, [location.pathname]);
 
-  // Memoized link click handler
-  const handleLinkClick = useCallback(() => {
+  // Optimized navigation handler - removes setTimeout delay
+  const handleLinkClick = useCallback((href?: string) => {
     // Close mobile menu when link is clicked
     setIsMenuOpen(false);
-    // Scroll to top immediately
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 50);
-  }, []);
+    // Use React Router's navigate for better performance
+    if (href) {
+      navigate(href);
+    }
+    // Immediate scroll to top without setTimeout
+    window.scrollTo(0, 0);
+  }, [navigate]);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+    <header ref={elementRef} className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo with optimized loading */}
           <Link 
             to="/" 
             className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick('/')}
           >
-            <img 
-              src="/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png" 
-              alt="Infinity6" 
-              className="h-12 w-auto"
-            />
+            {logoLoaded ? (
+              <img 
+                src="/lovable-uploads/cc5580c3-aefa-4ec3-add2-d2aa49649a86.png" 
+                alt="Infinity6" 
+                className="h-12 w-auto"
+                loading="eager"
+              />
+            ) : (
+              <div className="h-12 w-24 bg-gray-200 animate-pulse rounded"></div>
+            )}
           </Link>
 
           {/* Desktop Navigation */}
@@ -55,7 +72,7 @@ const Header = memo(() => {
               <Link
                 key={item.name}
                 to={item.href}
-                onClick={handleLinkClick}
+                onClick={() => handleLinkClick(item.href)}
                 className={`text-sm font-medium transition-all duration-300 hover:text-orange-500 relative group ${
                   isActive(item.href) ? 'text-orange-500' : 'text-gray-700'
                 }`}
@@ -102,7 +119,7 @@ const Header = memo(() => {
                 className={`block px-3 py-2 text-base font-medium transition-all duration-300 hover:text-orange-500 hover:bg-orange-50 rounded-lg ${
                   isActive(item.href) ? 'text-orange-500 bg-orange-50' : 'text-gray-700'
                 }`}
-                onClick={handleLinkClick}
+                onClick={() => handleLinkClick(item.href)}
               >
                 {item.name}
               </Link>
