@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FormData {
@@ -100,187 +99,121 @@ const ContactForm = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-8 pt-0 flex-1 flex flex-col">
-        <TooltipProvider>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
-            <div className="flex-1 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <Label htmlFor="name" className="text-sm font-medium text-gray-700 mb-2 block">
-                    {text.name} *
-                  </Label>
-                  <Tooltip open={!!errors.name}>
-                    <TooltipTrigger asChild>
-                      <div className="relative">
-                        <Input
-                          id="name"
-                          type="text"
-                          {...register("name", { 
-                            required: text.errors.nameRequired 
-                          })}
-                          className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.name ? 'border-red-500' : 'border-gray-300'
-                          }`}
-                        />
-                      </div>
-                    </TooltipTrigger>
-                    {errors.name && (
-                      <TooltipContent side="top" className="bg-gray-800 text-white px-3 py-2 rounded shadow-lg">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 bg-orange-400 rounded flex items-center justify-center">
-                            <span className="text-white text-xs font-bold">!</span>
-                          </div>
-                          <span>{errors.name?.message}</span>
-                        </div>
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </div>
-                <div>
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2 block">
-                    {text.email} *
-                  </Label>
-                  <Tooltip open={!!errors.email}>
-                    <TooltipTrigger asChild>
-                      <div className="relative">
-                        <Input
-                          id="email"
-                          type="email"
-                          {...register("email", { 
-                            required: text.errors.emailRequired,
-                            pattern: {
-                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: text.errors.emailInvalid
-                            }
-                          })}
-                          className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.email ? 'border-red-500' : 'border-gray-300'
-                          }`}
-                        />
-                      </div>
-                    </TooltipTrigger>
-                    {errors.email && (
-                      <TooltipContent side="top" className="bg-gray-800 text-white px-3 py-2 rounded shadow-lg">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 bg-orange-400 rounded flex items-center justify-center">
-                            <span className="text-white text-xs font-bold">!</span>
-                          </div>
-                          <span>{errors.email?.message}</span>
-                        </div>
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <Label htmlFor="company" className="text-sm font-medium text-gray-700 mb-2 block">
-                    {text.company}
-                  </Label>
-                  <Input
-                    id="company"
-                    type="text"
-                    {...register("company")}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone" className="text-sm font-medium text-gray-700 mb-2 block">
-                    {text.phone}
-                  </Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    {...register("phone")}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
+          <div className="flex-1 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="subject" className="text-sm font-medium text-gray-700 mb-2 block">
-                  {text.subject} *
+                <Label htmlFor="name" className="text-sm font-medium text-gray-700 mb-2 block">
+                  {text.name} *
                 </Label>
-                <Tooltip open={!!errors.subject}>
-                  <TooltipTrigger asChild>
-                    <div className="relative">
-                      <select
-                        id="subject"
-                        {...register("subject", { 
-                          required: text.errors.subjectRequired 
-                        })}
-                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white ${
-                          errors.subject ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                      >
-                        <option value="">{text.subject}</option>
-                        <option value="general">{text.subjectOptions.general}</option>
-                        <option value="demo">{text.subjectOptions.demo}</option>
-                        <option value="partnership">{text.subjectOptions.partnership}</option>
-                        <option value="support">{text.subjectOptions.support}</option>
-                      </select>
-                    </div>
-                  </TooltipTrigger>
-                  {errors.subject && (
-                    <TooltipContent side="top" className="bg-gray-800 text-white px-3 py-2 rounded shadow-lg">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 bg-orange-400 rounded flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">!</span>
-                        </div>
-                        <span>{errors.subject?.message}</span>
-                      </div>
-                    </TooltipContent>
-                  )}
-                </Tooltip>
+                <Input
+                  id="name"
+                  type="text"
+                  {...register("name", { 
+                    required: text.errors.nameRequired 
+                  })}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.name ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
               </div>
-
               <div>
-                <Label htmlFor="message" className="text-sm font-medium text-gray-700 mb-2 block">
-                  {text.message} *
+                <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2 block">
+                  {text.email} *
                 </Label>
-                <Tooltip open={!!errors.message}>
-                  <TooltipTrigger asChild>
-                    <div className="relative">
-                      <Textarea
-                        id="message"
-                        rows={6}
-                        placeholder={text.messagePlaceholder}
-                        {...register("message", { 
-                          required: text.errors.messageRequired,
-                          minLength: {
-                            value: 10,
-                            message: text.errors.messageMinLength
-                          }
-                        })}
-                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
-                          errors.message ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                      />
-                    </div>
-                  </TooltipTrigger>
-                  {errors.message && (
-                    <TooltipContent side="top" className="bg-gray-800 text-white px-3 py-2 rounded shadow-lg">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 bg-orange-400 rounded flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">!</span>
-                        </div>
-                        <span>{errors.message?.message}</span>
-                      </div>
-                    </TooltipContent>
-                  )}
-                </Tooltip>
+                <Input
+                  id="email"
+                  type="email"
+                  {...register("email", { 
+                    required: text.errors.emailRequired,
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: text.errors.emailInvalid
+                    }
+                  })}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
               </div>
             </div>
 
-            <Button 
-              type="submit" 
-              className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3 mt-auto"
-            >
-              {text.sendButton}
-              <Send className="ml-2 w-4 h-4" />
-            </Button>
-          </form>
-        </TooltipProvider>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="company" className="text-sm font-medium text-gray-700 mb-2 block">
+                  {text.company}
+                </Label>
+                <Input
+                  id="company"
+                  type="text"
+                  {...register("company")}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <Label htmlFor="phone" className="text-sm font-medium text-gray-700 mb-2 block">
+                  {text.phone}
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  {...register("phone")}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="subject" className="text-sm font-medium text-gray-700 mb-2 block">
+                {text.subject} *
+              </Label>
+              <select
+                id="subject"
+                {...register("subject", { 
+                  required: text.errors.subjectRequired 
+                })}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white ${
+                  errors.subject ? 'border-red-500' : 'border-gray-300'
+                }`}
+              >
+                <option value="">{text.subject}</option>
+                <option value="general">{text.subjectOptions.general}</option>
+                <option value="demo">{text.subjectOptions.demo}</option>
+                <option value="partnership">{text.subjectOptions.partnership}</option>
+                <option value="support">{text.subjectOptions.support}</option>
+              </select>
+            </div>
+
+            <div>
+              <Label htmlFor="message" className="text-sm font-medium text-gray-700 mb-2 block">
+                {text.message} *
+              </Label>
+              <Textarea
+                id="message"
+                rows={6}
+                placeholder={text.messagePlaceholder}
+                {...register("message", { 
+                  required: text.errors.messageRequired,
+                  minLength: {
+                    value: 10,
+                    message: text.errors.messageMinLength
+                  }
+                })}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
+                  errors.message ? 'border-red-500' : 'border-gray-300'
+                }`}
+              />
+            </div>
+          </div>
+
+          <Button 
+            type="submit" 
+            className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-lg py-3 mt-auto"
+          >
+            {text.sendButton}
+            <Send className="ml-2 w-4 h-4" />
+          </Button>
+        </form>
       </CardContent>
     </Card>
   );
