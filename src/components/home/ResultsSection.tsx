@@ -1,41 +1,16 @@
 
 import React from 'react';
-import { TrendingUp, Shield, Award, Clock, Target, DollarSign, Eye, ShoppingCart, Search, Users } from 'lucide-react';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useCMSResultsCards } from '@/hooks/useCMSResultsCards';
+import { TrendingUp, Award, Target, DollarSign } from 'lucide-react';
+
 import ResultsHeader from './results/ResultsHeader';
 import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
 
-// Icon mapping for dynamic icon rendering
-const iconMap = {
-  'trending-up': TrendingUp,
-  'shield': Shield,
-  'award': Award,
-  'clock': Clock,
-  'target': Target,
-  'dollar-sign': DollarSign,
-  'eye': Eye,
-  'shopping-cart': ShoppingCart,
-  'search': Search,
-  'users': Users,
-};
 
 const ResultsSection = () => {
-  const { scrollY } = useScrollAnimation();
-  const { t, language } = useLanguage();
-  const { cards, loading } = useCMSResultsCards('home', language);
 
-  console.log('ResultsSection - Total cards fetched:', cards.length);
-  console.log('ResultsSection - Cards data:', cards);
-
-  // Filter only active cards for display on the website
-  const activeCards = cards.filter(card => card.is_active);
-  console.log('ResultsSection - Active cards:', activeCards.length);
-
-  // Fallback data for when CMS data is not available
-  const fallbackResults = [
+  // Static results data - 4 main value propositions
+  const staticResults = [
     {
       icon: <TrendingUp className="text-primary text-3xl" />,
       title: "Growth Acceleration",
@@ -89,15 +64,6 @@ const ResultsSection = () => {
     }
   ];
 
-  // Always use fallback results with 4 category cards for now
-  const resultsToRender = fallbackResults.map(result => ({
-    ...result,
-    icon: React.cloneElement(result.icon as React.ReactElement, {
-      className: "text-primary text-3xl"
-    })
-  }));
-
-  console.log('ResultsSection - Final results to render:', resultsToRender.length);
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
@@ -107,7 +73,7 @@ const ResultsSection = () => {
         <ResultsHeader />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
-          {resultsToRender.map((result, index) => (
+          {staticResults.map((result, index) => (
             <ResultCard
               key={index}
               icon={result.icon}
