@@ -1,15 +1,22 @@
 
+import { memo, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import { testimonialsData } from '@/data/staticData/testimonialsData';
 import { Linkedin, Quote } from 'lucide-react';
 
-const TestimonialsSection = () => {
+const TestimonialsSection = memo(() => {
   const { language } = useLanguage();
   
-  const sectionContent = successStoriesData[language]?.testimonials || successStoriesData.en.testimonials;
-  const testimonials = testimonialsData[language] || testimonialsData.en;
+  const sectionContent = useMemo(() => 
+    successStoriesData[language]?.testimonials || successStoriesData.en.testimonials, 
+    [language]
+  );
+  const testimonials = useMemo(() => 
+    testimonialsData[language] || testimonialsData.en, 
+    [language]
+  );
 
   return (
     <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
@@ -87,6 +94,8 @@ const TestimonialsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+TestimonialsSection.displayName = 'TestimonialsSection';
 
 export default TestimonialsSection;

@@ -1,13 +1,17 @@
 
+import { memo, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 
-const SuccessStoriesCTA = () => {
+const SuccessStoriesCTA = memo(() => {
   const { language } = useLanguage();
   
-  const ctaContent = successStoriesData[language]?.cta || successStoriesData.en.cta;
+  const ctaContent = useMemo(() => 
+    successStoriesData[language]?.cta || successStoriesData.en.cta, 
+    [language]
+  );
 
   return (
     <section className="py-20 bg-gray-50">
@@ -25,6 +29,8 @@ const SuccessStoriesCTA = () => {
       </div>
     </section>
   );
-};
+});
+
+SuccessStoriesCTA.displayName = 'SuccessStoriesCTA';
 
 export default SuccessStoriesCTA;
