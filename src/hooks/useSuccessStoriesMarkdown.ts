@@ -5,6 +5,7 @@ export interface SuccessStoryItem {
   id: string;
   title: string;
   image: string;
+  logo: string;
   segment: string;
   client: string;
   description: string;
@@ -73,6 +74,7 @@ const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
     
     let title = '';
     let image = '';
+    let logo = '';
     let segment = '';
     let client = '';
     let description = '';
@@ -91,6 +93,8 @@ const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
         title = line.substring(3).trim();
       } else if (line.startsWith('**Image:**')) {
         image = line.substring(10).trim();
+      } else if (line.startsWith('**Logo:**')) {
+        logo = line.substring(9).trim();
       } else if (line.startsWith('**Segment:**')) {
         segment = line.substring(12).trim();
       } else if (line.startsWith('**Client:**')) {
@@ -127,6 +131,7 @@ const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
         id,
         title,
         image,
+        logo,
         segment,
         client,
         description,

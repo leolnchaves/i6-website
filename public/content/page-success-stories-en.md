@@ -4,6 +4,7 @@
 
 ## E-commerce Platform Optimization
 **Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop
+**Logo:** /content/logos/1.png
 **Segment:** E-commerce
 **Client:** TechRetail Inc.
 **Description:** TechRetail Inc.
@@ -21,6 +22,7 @@
 
 ## Manufacturing Predictive Maintenance
 **Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop
+**Logo:** /content/logos/2.png
 **Segment:** Manufacturing
 **Client:** Industrial Solutions Co.
 **Description:** Industrial Solutions Co.
