@@ -6,6 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
 import { useCompanyDetails } from './hooks/useCompanyDetails';
 import { useSolutionsMapping } from './hooks/useSolutionsMapping';
+import EmptyState from './story-components/EmptyState';
 
 interface ModernStoriesGridProps {
   selectedSegment?: string | null;
@@ -61,34 +62,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
   }, []);
 
   if (filteredCards.length === 0) {
-    return (
-      <section className="py-6 md:py-8 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center py-8">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
-              {selectedSegment 
-                ? (language === 'en' 
-                    ? `No success stories found for "${selectedSegment}"`
-                    : `Nenhum case de sucesso encontrado para "${selectedSegment}"`)
-                : (language === 'en' 
-                    ? 'No success stories available'
-                    : 'Nenhum case de sucesso disponível')
-              }
-            </h2>
-            <p className="text-gray-600 text-sm md:text-base">
-              {selectedSegment 
-                ? (language === 'en' 
-                    ? 'Try selecting a different segment or view all stories.'
-                    : 'Tente selecionar um segmento diferente ou veja todos os cases.')
-                : (language === 'en' 
-                    ? 'Success stories will be displayed here when available.'
-                    : 'Os cases de sucesso serão exibidos aqui quando estiverem disponíveis.')
-              }
-            </p>
-          </div>
-        </div>
-      </section>
-    );
+    return <EmptyState selectedSegment={selectedSegment} language={language} />;
   }
 
   return (
