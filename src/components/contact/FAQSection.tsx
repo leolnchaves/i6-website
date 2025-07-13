@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useState, useMemo, useCallback, memo } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -12,10 +12,20 @@ interface FAQ {
   order: number;
 }
 
-const FAQSection = () => {
+const FAQSection = memo(() => {
   const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  // Debounce search term
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   // Static content
   const content = {
@@ -160,17 +170,28 @@ const FAQSection = () => {
   };
 
   // Automatically uses current language from context
-  const text = content[language];
+  const text = useMemo(() => content[language], [language]);
 
-  // Filter FAQs based on search term
-  const filteredFaqs = text.faqs.filter(faq =>
-    faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Memoized filter FAQs based on debounced search term
+  const filteredFaqs = useMemo(() => {
+    if (!debouncedSearchTerm.trim()) {
+      return text.faqs;
+    }
+    
+    const searchLower = debouncedSearchTerm.toLowerCase();
+    return text.faqs.filter(faq =>
+      faq.question.toLowerCase().includes(searchLower) ||
+      faq.answer.toLowerCase().includes(searchLower)
+    );
+  }, [text.faqs, debouncedSearchTerm]);
 
-  const handleCardClick = (index: number) => {
+  const handleCardClick = useCallback((index: number) => {
     setExpandedCard(expandedCard === index ? null : index);
-  };
+  }, [expandedCard]);
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
 
   return (
     <section className="py-24 bg-gradient-to-b from-background to-accent/5 relative">
@@ -199,7 +220,7 @@ const FAQSection = () => {
                   type="text"
                   placeholder={text.searchPlaceholder}
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleSearchChange}
                   className="pl-12 pr-4 py-4 text-lg bg-transparent border-0 rounded-xl focus:ring-2 focus:ring-primary/20 placeholder:text-muted-foreground/60"
                 />
               </div>
@@ -271,6 +292,8 @@ const FAQSection = () => {
       </div>
     </section>
   );
-};
+});
+
+FAQSection.displayName = 'FAQSection';
 
 export default FAQSection;

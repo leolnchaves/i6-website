@@ -1,11 +1,12 @@
 
+import React, { memo } from 'react';
 import ContactHero from '@/components/contact/ContactHero';
 import FAQSection from '@/components/contact/FAQSection';
 import ContactForm from '@/components/contact/ContactForm';
 import WorldMap from '@/components/contact/WorldMap';
 import CalendlySection from '@/components/contact/CalendlySection';
 
-const Contact = () => {
+const Contact = memo(() => {
   return (
     <div className="min-h-screen">
       <ContactHero />
@@ -27,6 +28,8 @@ const Contact = () => {
       </section>
     </div>
   );
-};
+});
+
+Contact.displayName = 'Contact';
 
 export default Contact;

@@ -1,8 +1,9 @@
 
+import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import heroBg from '@/assets/hero-bg.jpg';
 
-const ContactHero = () => {
+const ContactHero = memo(() => {
   const { language } = useLanguage();
   
   // Static content
@@ -58,6 +59,8 @@ const ContactHero = () => {
       </div>
     </section>
   );
-};
+});
+
+ContactHero.displayName = 'ContactHero';
 
 export default ContactHero;

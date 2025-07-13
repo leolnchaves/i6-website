@@ -1,4 +1,5 @@
 
+import React, { memo, useCallback, useMemo } from 'react';
 import { Send } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,7 @@ interface FormData {
   message: string;
 }
 
-const ContactForm = () => {
+const ContactForm = memo(() => {
   const { language } = useLanguage();
   const {
     register,
@@ -81,12 +82,12 @@ const ContactForm = () => {
     }
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = useCallback((data: FormData) => {
     console.log('Form submitted:', data);
-  };
+  }, []);
 
-  // Automatically uses current language from context
-  const text = content[language];
+  // Automatically uses current language from context - memoized
+  const text = useMemo(() => content[language], [language]);
 
   return (
     <Card className="border-0 shadow-2xl h-full flex flex-col">
@@ -217,6 +218,8 @@ const ContactForm = () => {
       </CardContent>
     </Card>
   );
-};
+});
+
+ContactForm.displayName = 'ContactForm';
 
 export default ContactForm;

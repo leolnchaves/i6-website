@@ -1,15 +1,38 @@
 
+import React, { memo, useMemo, useState, useRef, useEffect } from 'react';
 import { Mail, Phone, MapPin, Building } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-const WorldMap = () => {
+const WorldMap = memo(() => {
   const { language } = useLanguage();
   const isMobile = useIsMobile();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Static content - migrated from translations
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Static content - migrated from translations - memoized
   const content = {
     pt: {
       title: "Nossa Presença Global",
@@ -27,7 +50,7 @@ const WorldMap = () => {
     }
   };
 
-  const text = content[language];
+  const text = useMemo(() => content[language], [language]);
 
   // Posição ajustada para apenas Campinas
   const getResponsivePositions = () => {
@@ -69,12 +92,26 @@ const WorldMap = () => {
         </p>
         
         <TooltipProvider>
-          <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-            <img 
-              src="/lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png"
-              alt="World Map"
-              className="w-full h-full object-cover"
-            />
+          <div ref={containerRef} className="relative w-full h-64 sm:h-80 lg:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+            {/* Placeholder while loading */}
+            {!imageLoaded && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                <div className="text-gray-400 text-sm">Loading map...</div>
+              </div>
+            )}
+            
+            {/* Lazy loaded image */}
+            {isVisible && (
+              <img 
+                src="/lovable-uploads/d2eae5cc-45c5-4614-b7f8-264dd032a619.png"
+                alt="World Map"
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={() => setImageLoaded(true)}
+                loading="lazy"
+              />
+            )}
             
             {locations.map((location) => (
               <Tooltip key={location.id}>
@@ -152,6 +189,8 @@ const WorldMap = () => {
       </CardContent>
     </Card>
   );
-};
+});
+
+WorldMap.displayName = 'WorldMap';
 
 export default WorldMap;
