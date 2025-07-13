@@ -286,36 +286,38 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
 
             {/* Header with company info and logo */}
             <div className="p-6 pb-4 border-b border-gray-100">
-              <div className="flex items-center mb-3">
-                <Building2 className="w-4 h-4 text-gray-500 mr-2" />
-                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {selectedStory.industry}
-                </span>
-              </div>
-              
-              <div className="flex items-start justify-between">
-                <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-                  {selectedStory.company_name}
-                </h1>
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1">
+                  <div className="flex items-center mb-3">
+                    <Building2 className="w-4 h-4 text-gray-500 mr-2" />
+                    <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {selectedStory.industry}
+                    </span>
+                  </div>
+                  
+                  <h1 className="text-2xl font-semibold text-gray-900 mb-3">
+                    {selectedStory.company_name}
+                  </h1>
+
+                  {/* About Section - moved closer to company name */}
+                  <div>
+                    <h2 className="text-xs font-semibold text-gray-900 mb-2 uppercase tracking-wider">
+                      {language === 'en' ? 'About' : 'Sobre'}
+                    </h2>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {getCompanyDetails(selectedStory).about}
+                    </p>
+                  </div>
+                </div>
                 
-                {/* Client Logo */}
-                <div className="ml-4 flex-shrink-0">
+                {/* Client Logo - smaller and positioned in header */}
+                <div className="ml-6 flex-shrink-0">
                   <img 
                     src={getCompanyDetails(selectedStory).logo}
                     alt={`${selectedStory.company_name} logo`}
-                    className="w-16 h-16 rounded-lg object-cover border border-gray-200"
+                    className="w-12 h-12 rounded-lg object-cover border border-gray-200"
                   />
                 </div>
-              </div>
-
-              {/* About Section */}
-              <div className="mt-4">
-                <h2 className="text-xs font-semibold text-gray-900 mb-2 uppercase tracking-wider">
-                  {language === 'en' ? 'About' : 'Sobre'}
-                </h2>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {getCompanyDetails(selectedStory).about}
-                </p>
               </div>
             </div>
 
@@ -343,25 +345,25 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
               </div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
-                  <div className="text-2xl font-semibold text-gray-700 mb-1">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+                <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-xl font-semibold text-gray-700 mb-1">
                     {selectedStory.metric1_value}
                   </div>
                   <div className="text-xs text-gray-500 font-medium">
                     {selectedStory.metric1_label}
                   </div>
                 </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
-                  <div className="text-2xl font-semibold text-gray-700 mb-1">
+                <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-xl font-semibold text-gray-700 mb-1">
                     {selectedStory.metric2_value}
                   </div>
                   <div className="text-xs text-gray-500 font-medium">
                     {selectedStory.metric2_label}
                   </div>
                 </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
-                  <div className="text-2xl font-semibold text-gray-700 mb-1">
+                <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-xl font-semibold text-gray-700 mb-1">
                     {selectedStory.metric3_value}
                   </div>
                   <div className="text-xs text-gray-500 font-medium">
