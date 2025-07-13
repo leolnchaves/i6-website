@@ -53,19 +53,14 @@ const FAQSection = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Modern Header */}
+        {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl mb-6 shadow-lg">
-            <MessageCircleQuestion className="w-8 h-8 text-white" />
-          </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="block text-foreground mb-2">
-              {title}
-            </span>
-            <span className="block bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 bg-clip-text text-transparent">
-              {subtitle}
-            </span>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+            {title}
           </h2>
+          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed">
+            {subtitle}
+          </p>
         </div>
 
         {/* Enhanced Search */}
