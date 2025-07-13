@@ -7,6 +7,7 @@ import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsDa
 import { useCompanyDetails } from './hooks/useCompanyDetails';
 import { useSolutionsMapping } from './hooks/useSolutionsMapping';
 import EmptyState from './story-components/EmptyState';
+import StoryCard from './story-components/StoryCard';
 
 interface ModernStoriesGridProps {
   selectedSegment?: string | null;
@@ -71,78 +72,12 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCards.map((story) => (
-              <Card 
-                key={story.id} 
-                className="group overflow-hidden cursor-pointer border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 bg-white"
-                onClick={() => handleCardClick(story)}
-              >
-                {/* Hidden gradient bar - only appears on hover */}
-                <div className="h-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 group-hover:h-1 transition-all duration-500"></div>
-                
-                <CardContent className="p-6 relative">
-                  {/* Image placeholder */}
-                  <div className="w-full h-32 bg-gray-100 rounded-lg mb-4 overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop&auto=format"
-                      alt={story.company_name}
-                      className="w-full h-full object-cover opacity-80"
-                    />
-                  </div>
-
-                  {/* Industry tag */}
-                  <div className="flex items-center mb-3">
-                    <Building2 className="w-3 h-3 text-gray-500 mr-2" />
-                    <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      {story.industry}
-                    </span>
-                  </div>
-
-                  {/* Company name */}
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors duration-300">
-                    {story.company_name}
-                  </h3>
-
-                  {/* Brief description */}
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
-                    {story.challenge.length > 100 ? `${story.challenge.substring(0, 100)}...` : story.challenge}
-                  </p>
-
-                  {/* Key metrics - uniform background */}
-                  <div className="grid grid-cols-2 gap-3 mb-5">
-                    <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
-                      <div className="text-xl font-semibold text-gray-700 mb-1">
-                        {story.metric1_value}
-                      </div>
-                      <div className="text-xs text-gray-500 font-medium">
-                        {story.metric1_label}
-                      </div>
-                    </div>
-                    <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
-                      <div className="text-xl font-semibold text-gray-700 mb-1">
-                        {story.metric2_value}
-                      </div>
-                      <div className="text-xs text-gray-500 font-medium">
-                        {story.metric2_label}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Explore details with modern arrow - inspired by hero button */}
-                  <div className="flex items-center justify-end">
-                    <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">
-                      {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
-                    </span>
-                    <div className="relative overflow-hidden">
-                      {/* Background that appears on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
-                      {/* Arrow container */}
-                      <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 group-hover:bg-transparent transition-all duration-500">
-                        <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <StoryCard
+                key={story.id}
+                story={story}
+                onClick={handleCardClick}
+                language={language}
+              />
             ))}
           </div>
         </div>
