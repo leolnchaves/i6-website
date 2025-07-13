@@ -174,11 +174,15 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {getImplementedSolutions(selectedStory).map((solution, index) => (
-                <div key={index} className="flex items-center bg-white px-4 py-3 rounded-lg border border-gray-200 min-h-[60px]">
-                  <div className="w-8 h-8 rounded bg-gray-100 flex items-center justify-center mr-3 flex-shrink-0">
-                    <div className="w-4 h-4 bg-gray-600 rounded-sm" />
+                <div key={index} className="flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200 min-h-[44px]">
+                  <div className="w-6 h-6 rounded flex items-center justify-center mr-3 flex-shrink-0">
+                    <img 
+                      src="/lovable-uploads/4f6f8e68-c601-4091-95b2-5da970db21ab.png" 
+                      alt="Solution" 
+                      className="w-5 h-5 object-contain"
+                    />
                   </div>
-                  <span className="font-medium text-gray-900 text-sm leading-tight">
+                  <span className="font-medium text-gray-900 text-sm leading-tight line-clamp-2 flex-1">
                     {solution.name}
                   </span>
                 </div>
