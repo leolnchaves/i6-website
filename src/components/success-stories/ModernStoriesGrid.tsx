@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
 import { useCompanyDetails } from './hooks/useCompanyDetails';
@@ -11,7 +11,7 @@ interface ModernStoriesGridProps {
   selectedSegment?: string | null;
 }
 
-interface StoryCard {
+interface StoryData {
   id: string;
   industry: string;
   company_name: string;
@@ -29,9 +29,9 @@ interface StoryCard {
   image_url: string;
 }
 
-const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }) => {
+const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegment }) => {
   const { language } = useLanguage();
-  const [selectedStory, setSelectedStory] = useState<StoryCard | null>(null);
+  const [selectedStory, setSelectedStory] = useState<StoryData | null>(null);
   const { getCompanyDetails } = useCompanyDetails();
   const { getImplementedSolutions } = useSolutionsMapping();
 
@@ -43,13 +43,13 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
     ? cards.filter(card => card.industry === selectedSegment)
     : cards;
 
-  const handleCardClick = (story: StoryCard) => {
+  const handleCardClick = useCallback((story: StoryData) => {
     setSelectedStory(story);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedStory(null);
-  };
+  }, []);
 
   if (filteredCards.length === 0) {
     return <EmptyState selectedSegment={selectedSegment} language={language} />;
@@ -81,6 +81,8 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = ({ selectedSegment }
       />
     </>
   );
-};
+});
+
+ModernStoriesGrid.displayName = 'ModernStoriesGrid';
 
 export default ModernStoriesGrid;
