@@ -9,8 +9,8 @@ const CalendlySection = () => {
       description: "Vamos discutir como nossa IA pode transformar seu negócio"
     },
     en: {
-      title: "Schedule a Conversation", 
-      description: "Let's discuss how our AI can transform your business"
+      title: "Sometimes a quick chat is all it takes.",
+      description: "Let's cut to the chase: schedule a session with our experts now!"
     }
   };
 
