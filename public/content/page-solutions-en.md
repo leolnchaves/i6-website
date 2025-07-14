@@ -4,19 +4,19 @@
 
 **Icon:** users
 
-**Target:** Hyperpersonalization Intelligence & Growth Acceleration
+**Target:** a Hyperpersonalization Intelligence & Growth Acceleration
 
-**Title:** Smart Discovery for Anonymous Visitors
+**Title:** a Smart Discovery for Anonymous Visitors
 
-**Overview:** Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
+**Overview:** a Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
 
 **Key Features:**
-- Contextual Affinity Modeling
-- Cold-Start Personalization
-- Anonymous Visitor Intelligence
-- Real-time Recommendations
+- a Contextual Affinity Modeling
+- a Cold-Start Personalization
+- a Anonymous Visitor Intelligence
+- a Real-time Recommendations
 
-**Business Results:** Unlocks product discovery and boosts engagement with zero historical data.
+**Business Results:** a Unlocks product discovery and boosts engagement with zero historical data.
 
 ---
 
