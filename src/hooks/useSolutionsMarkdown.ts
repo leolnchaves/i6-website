@@ -93,10 +93,15 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
         isReadingFeatures = true;
         keyFeatures = [];
       } else if (line.startsWith('**Business Results:**')) {
-        businessResults = line.substring(18).trim();
+        businessResults = line.substring(21).trim();
         isReadingFeatures = false;
       } else if (isReadingFeatures && line.startsWith('- ')) {
-        keyFeatures.push(line.substring(2).trim());
+        // Remove any prefix like "A " from the beginning
+        let feature = line.substring(2).trim();
+        if (feature.startsWith('A ')) {
+          feature = feature.substring(2);
+        }
+        keyFeatures.push(feature);
       } else if (!isReadingFeatures && overview && !line.startsWith('**') && line) {
         // Continue reading overview if it spans multiple lines
         overview += ' ' + line;

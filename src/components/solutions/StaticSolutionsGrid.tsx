@@ -75,33 +75,44 @@ const StaticSolutionsGrid = memo(() => {
     );
   }
 
+  // Debug log
+  console.log('StaticSolutionsGrid rendering with solutions:', solutions);
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
       {/* Subtle background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="space-y-12 max-w-7xl mx-auto">
-          {solutions.map((solution, index) => {
-            const IconComponent = iconMap[solution.icon] || Building2;
-            const bgColor = engineColorMap[solution.engine] || 'bg-blue-500/20';
-            
-            return (
-              <ModernSolutionCard
-                key={solution.id}
-                icon={IconComponent}
-                title={solution.title}
-                focus={solution.target}
-                description={solution.overview}
-                features={solution.keyFeatures}
-                outcome={solution.businessResults}
-                engine={solution.engine}
-                bgColor={bgColor}
-                index={index}
-              />
-            );
-          })}
-        </div>
+        {solutions.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-gray-600">No solutions found</p>
+          </div>
+        ) : (
+          <div className="space-y-12 max-w-7xl mx-auto">
+            {solutions.map((solution, index) => {
+              const IconComponent = iconMap[solution.icon] || Building2;
+              const bgColor = engineColorMap[solution.engine] || 'bg-blue-500/20';
+              
+              console.log('Rendering solution:', solution.title, 'with features:', solution.keyFeatures);
+              
+              return (
+                <ModernSolutionCard
+                  key={solution.id}
+                  icon={IconComponent}
+                  title={solution.title}
+                  focus={solution.target}
+                  description={solution.overview}
+                  features={solution.keyFeatures}
+                  outcome={solution.businessResults}
+                  engine={solution.engine}
+                  bgColor={bgColor}
+                  index={index}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -4,19 +4,19 @@
 
 **Icon:** users
 
-**Target:** AAA Hyperpersonalization Intelligence & Growth Acceleration
+**Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
-**Title:** AAA Smart Discovery for Anonymous Visitors
+**Title:** Smart Discovery for Anonymous Visitors
 
-**Overview:** AAA Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
+**Overview:** Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
 
 **Key Features:**
-- A Contextual Affinity Modeling
-- A Cold-Start Personalization
-- A Anonymous Visitor Intelligence
-- A Real-time Recommendations
+- Contextual Affinity Modeling
+- Cold-Start Personalization
+- Anonymous Visitor Intelligence
+- Real-time Recommendations
 
-**Business Results:** A Unlocks product discovery and boosts engagement with zero historical data.
+**Business Results:** Unlocks product discovery and boosts engagement with zero historical data.
 
 ---
 
