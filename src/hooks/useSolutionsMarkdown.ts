@@ -41,6 +41,7 @@ export const useSolutionsMarkdown = (): UseSolutionsMarkdownReturn => {
         console.log('Solutions markdown content loaded:', content.substring(0, 200) + '...');
         const parsedSolutions = parseMarkdownContent(content);
         console.log('Parsed solutions count:', parsedSolutions.length);
+        console.log('Parsed solutions data:', parsedSolutions);
         setSolutions(parsedSolutions);
       } catch (err) {
         console.error('Error fetching solutions markdown content:', err);
@@ -96,6 +97,9 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
         isReadingFeatures = false;
       } else if (isReadingFeatures && line.startsWith('- ')) {
         keyFeatures.push(line.substring(2).trim());
+      } else if (!isReadingFeatures && overview && !line.startsWith('**') && line) {
+        // Continue reading overview if it spans multiple lines
+        overview += ' ' + line;
       }
     }
     
