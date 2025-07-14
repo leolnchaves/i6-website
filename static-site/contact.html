@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Infinity6 AI Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">Infinity6</a>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="solutions.html" class="text-gray-700 hover:text-primary transition-colors">Soluções</a>
+                    <a href="success-stories.html" class="text-gray-700 hover:text-primary transition-colors">Cases de Sucesso</a>
+                    <a href="contact.html" class="text-primary font-semibold">Contato</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button class="language-selector text-gray-700 hover:text-primary" onclick="toggleLanguage()">PT/EN</button>
+                    <button class="md:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="min-h-[60vh] flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-4xl mx-auto">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="block mb-2">Entre em</span>
+                        <span class="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Contato</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed">
+                        Pronto para transformar seu negócio? Vamos conversar sobre suas necessidades
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Perguntas Frequentes</h2>
+                    <p class="text-lg text-gray-600">Respostas para as dúvidas mais comuns</p>
+                </div>
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold mb-2">Quanto tempo leva para implementar uma solução?</h3>
+                        <p class="text-gray-600">O tempo de implementação varia de 2 a 6 meses, dependendo da complexidade e escopo do projeto. Fornecemos um cronograma detalhado após a análise inicial.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold mb-2">Quais setores vocês atendem?</h3>
+                        <p class="text-gray-600">Atendemos diversos setores incluindo automotivo, varejo, financeiro, saúde, tecnologia e manufatura. Adaptamos nossas soluções para cada indústria específica.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold mb-2">Como garantem a segurança dos dados?</h3>
+                        <p class="text-gray-600">Utilizamos criptografia de ponta a ponta, protocolos de segurança bancária e estamos em conformidade com LGPD, GDPR e outras regulamentações internacionais.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold mb-2">Oferecem suporte após a implementação?</h3>
+                        <p class="text-gray-600">Sim, oferecemos suporte técnico 24/7, treinamento contínuo das equipes e monitoramento proativo dos sistemas implementados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+                    <!-- Contact Form -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Solicite uma Demonstração</h3>
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome *</label>
+                                    <input type="text" id="name" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                                    <input type="email" id="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Empresa</label>
+                                    <input type="text" id="company" name="company" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                                    <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Assunto *</label>
+                                <select id="subject" name="subject" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="">Selecione um assunto</option>
+                                    <option value="demo">Solicitar Demonstração</option>
+                                    <option value="pricing">Informações sobre Preços</option>
+                                    <option value="partnership">Parcerias</option>
+                                    <option value="support">Suporte Técnico</option>
+                                    <option value="other">Outros</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem *</label>
+                                <textarea id="message" name="message" rows="4" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Conte-nos mais sobre suas necessidades..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-primary/90 transition-colors font-semibold">
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                        <div id="form-success" class="hidden text-center py-8">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Mensagem Enviada!</h3>
+                            <p class="text-gray-600">Obrigado pelo seu interesse. Entraremos em contato em breve.</p>
+                        </div>
+                    </div>
+
+                    <!-- Calendly Section -->
+                    <div class="bg-primary/5 rounded-lg p-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Agende uma Reunião</h3>
+                        <p class="text-gray-600 mb-6">
+                            Prefere uma conversa direta? Agende uma reunião com nossos especialistas para discutir suas necessidades específicas.
+                        </p>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-primary mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">Demonstração personalizada</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-primary mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">Análise de necessidades</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-primary mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">Proposta personalizada</span>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 border border-gray-200">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2">Calendário de Reuniões</h4>
+                                <p class="text-gray-600 mb-4">Escolha o melhor horário para conversar</p>
+                                <button class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition-colors font-semibold">
+                                    Agendar Reunião
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Info Cards -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Outras Formas de Contato</h2>
+                    <p class="text-lg text-gray-600">Escolha a forma que preferir para falar conosco</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg p-8 text-center shadow-sm">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Email</h3>
+                        <p class="text-gray-600 mb-4">Envie um email e responderemos em até 24 horas</p>
+                        <a href="mailto:contato@infinity6.ai" class="text-primary font-semibold hover:underline">
+                            contato@infinity6.ai
+                        </a>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 text-center shadow-sm">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Telefone</h3>
+                        <p class="text-gray-600 mb-4">Ligue para falar diretamente com nossa equipe</p>
+                        <a href="tel:+5511999999999" class="text-primary font-semibold hover:underline">
+                            +55 (11) 9999-9999
+                        </a>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 text-center shadow-sm">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Escritório</h3>
+                        <p class="text-gray-600 mb-4">Venha nos visitar em São Paulo</p>
+                        <address class="text-primary font-semibold not-italic">
+                            Av. Paulista, 1000<br>
+                            São Paulo, SP
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold mb-4">Infinity6</div>
+                    <p class="text-gray-400 mb-4">Soluções de IA para o futuro dos negócios</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Soluções</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Smart Price</a></li>
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Industrial Intelligence</a></li>
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Predictive Campaign</a></li>
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Adaptive Demand</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Empresa</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="success-stories.html" class="hover:text-white transition-colors">Cases de Sucesso</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contato</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Política de Privacidade</a></li>
+                        <li><a href="ethics-policy.html" class="hover:text-white transition-colors">Política de Ética</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Contato</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>contato@infinity6.ai</li>
+                        <li>+55 (11) 9999-9999</li>
+                        <li>São Paulo, Brasil</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Infinity6. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            setTimeout(() => {
+                document.getElementById('contact-form').style.display = 'none';
+                document.getElementById('form-success').classList.remove('hidden');
+            }, 1000);
+        });
+
+        function toggleLanguage() {
+            window.location.href = 'contact-en.html';
+        }
+    </script>
+</body>
+</html>

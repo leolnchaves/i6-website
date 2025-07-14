@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cases de Sucesso - Infinity6 AI Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">Infinity6</a>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="solutions.html" class="text-gray-700 hover:text-primary transition-colors">Soluções</a>
+                    <a href="success-stories.html" class="text-primary font-semibold">Cases de Sucesso</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-primary transition-colors">Contato</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button class="language-selector text-gray-700 hover:text-primary" onclick="toggleLanguage()">PT/EN</button>
+                    <button class="md:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="min-h-[60vh] flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-4xl mx-auto">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="block mb-2">Cases de</span>
+                        <span class="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Sucesso</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed">
+                        Descubra como empresas líderes transformaram seus negócios com nossas soluções de IA
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-primary mb-2">150+</div>
+                        <div class="text-gray-600">Projetos Entregues</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-primary mb-2">98%</div>
+                        <div class="text-gray-600">Taxa de Sucesso</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-primary mb-2">5x</div>
+                        <div class="text-gray-600">ROI Médio</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-primary mb-2">24/7</div>
+                        <div class="text-gray-600">Suporte Técnico</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Grid -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Histórias de Transformação</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Conheça os resultados extraordinários alcançados por nossos clientes
+                    </p>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="filter-btn active px-6 py-2 rounded-full bg-primary text-white" data-filter="all">
+                        Todos os Setores
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-colors" data-filter="automotive">
+                        Automotivo
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-colors" data-filter="retail">
+                        Varejo
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-colors" data-filter="finance">
+                        Financeiro
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-colors" data-filter="technology">
+                        Tecnologia
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="stories-grid">
+                    <!-- Embraer Case -->
+                    <div class="story-card bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-8" data-category="automotive">
+                        <div class="flex items-center mb-6">
+                            <img src="/public/content/logos/EMBRAER.png" alt="Embraer" class="h-8 object-contain mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Embraer</h3>
+                                <p class="text-gray-600 text-sm">Indústria Aeronáutica</p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-4">Otimização de Manutenção Preditiva</h4>
+                        <p class="text-gray-600 mb-6">
+                            Implementação de IA para predição de falhas em aeronaves, reduzindo custos de manutenção e aumentando a disponibilidade da frota.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Redução de Custos:</span>
+                                <span class="font-semibold text-green-600">35%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Aumento de Disponibilidade:</span>
+                                <span class="font-semibold text-green-600">25%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ROI:</span>
+                                <span class="font-semibold text-green-600">450%</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Solução: Industrial Intelligence
+                        </div>
+                    </div>
+
+                    <!-- Ford Case -->
+                    <div class="story-card bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-8" data-category="automotive">
+                        <div class="flex items-center mb-6">
+                            <img src="/public/content/logos/FORD.png" alt="Ford" class="h-8 object-contain mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Ford</h3>
+                                <p class="text-gray-600 text-sm">Automotiva</p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-4">Otimização da Cadeia de Suprimentos</h4>
+                        <p class="text-gray-600 mb-6">
+                            IA aplicada para otimizar a cadeia de suprimentos globais, melhorando eficiência logística e reduzindo custos operacionais.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Redução de Custos Logísticos:</span>
+                                <span class="font-semibold text-green-600">28%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Melhoria na Eficiência:</span>
+                                <span class="font-semibold text-green-600">40%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ROI:</span>
+                                <span class="font-semibold text-green-600">380%</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Solução: Adaptive Demand
+                        </div>
+                    </div>
+
+                    <!-- Rabobank Case -->
+                    <div class="story-card bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-8" data-category="finance">
+                        <div class="flex items-center mb-6">
+                            <img src="/public/content/logos/RABOBANK.png" alt="Rabobank" class="h-8 object-contain mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Rabobank</h3>
+                                <p class="text-gray-600 text-sm">Setor Financeiro</p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-4">Detecção de Fraudes com IA</h4>
+                        <p class="text-gray-600 mb-6">
+                            Sistema de IA para detecção de fraudes em tempo real, protegendo clientes e reduzindo perdas financeiras.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Redução de Fraudes:</span>
+                                <span class="font-semibold text-green-600">65%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tempo de Detecção:</span>
+                                <span class="font-semibold text-green-600">-90%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ROI:</span>
+                                <span class="font-semibold text-green-600">520%</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Solução: Predictive Campaign
+                        </div>
+                    </div>
+
+                    <!-- Ticketmaster Case -->
+                    <div class="story-card bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-8" data-category="technology">
+                        <div class="flex items-center mb-6">
+                            <img src="/public/content/logos/TICKETMASTER.png" alt="Ticketmaster" class="h-8 object-contain mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Ticketmaster</h3>
+                                <p class="text-gray-600 text-sm">Tecnologia</p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-4">Pricing Dinâmico Inteligente</h4>
+                        <p class="text-gray-600 mb-6">
+                            IA para otimização de preços em tempo real baseada na demanda, maximizando receitas e melhorando experiência do cliente.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Aumento de Receita:</span>
+                                <span class="font-semibold text-green-600">45%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Melhoria na Conversão:</span>
+                                <span class="font-semibold text-green-600">32%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ROI:</span>
+                                <span class="font-semibold text-green-600">420%</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Solução: Smart Price
+                        </div>
+                    </div>
+
+                    <!-- Hering Case -->
+                    <div class="story-card bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-8" data-category="retail">
+                        <div class="flex items-center mb-6">
+                            <img src="/public/content/logos/HERING.png" alt="Hering" class="h-8 object-contain mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Hering</h3>
+                                <p class="text-gray-600 text-sm">Varejo de Moda</p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-4">Personalização de Campanhas</h4>
+                        <p class="text-gray-600 mb-6">
+                            IA para personalização de campanhas de marketing, aumentando engajamento e conversões através de recomendações inteligentes.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Aumento de Conversão:</span>
+                                <span class="font-semibold text-green-600">38%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Engajamento:</span>
+                                <span class="font-semibold text-green-600">55%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ROI:</span>
+                                <span class="font-semibold text-green-600">340%</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Solução: Predictive Campaign
+                        </div>
+                    </div>
+
+                    <!-- Pelando Case -->
+                    <div class="story-card bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-8" data-category="technology">
+                        <div class="flex items-center mb-6">
+                            <img src="/public/content/logos/PELANDO.png" alt="Pelando" class="h-8 object-contain mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Pelando</h3>
+                                <p class="text-gray-600 text-sm">Marketplace</p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-4">Recomendações Inteligentes</h4>
+                        <p class="text-gray-600 mb-6">
+                            Sistema de recomendações baseado em IA para melhorar a experiência do usuário e aumentar as vendas no marketplace.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Aumento de Vendas:</span>
+                                <span class="font-semibold text-green-600">60%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tempo de Sessão:</span>
+                                <span class="font-semibold text-green-600">+75%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ROI:</span>
+                                <span class="font-semibold text-green-600">490%</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Solução: Predictive Campaign
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">O que nossos clientes dizem</h2>
+                    <p class="text-lg text-gray-600">Depoimentos de quem transformou seus negócios conosco</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                                JD
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">João Dias</div>
+                                <div class="text-gray-600 text-sm">CTO, Embraer</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">
+                            "A solução da Infinity6 revolucionou nossa manutenção preditiva. Conseguimos reduzir custos significativamente e aumentar a disponibilidade da nossa frota."
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                                MS
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Maria Silva</div>
+                                <div class="text-gray-600 text-sm">Diretora de TI, Rabobank</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">
+                            "A detecção de fraudes melhorou drasticamente. O sistema da Infinity6 nos permite proteger nossos clientes de forma proativa e eficiente."
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                                RS
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Roberto Santos</div>
+                                <div class="text-gray-600 text-sm">VP Marketing, Hering</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">
+                            "As campanhas personalizadas aumentaram nosso engajamento em mais de 50%. A IA da Infinity6 realmente entende o comportamento dos nossos clientes."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 bg-primary text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Sua História de Sucesso Começa Aqui</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+                    Junte-se às empresas líderes que já transformaram seus negócios com nossas soluções
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-white text-primary px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
+                        Solicitar Demonstração
+                    </a>
+                    <a href="solutions.html" class="border border-white text-white px-8 py-4 rounded-lg hover:bg-white/10 transition-colors font-semibold">
+                        Ver Nossas Soluções
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold mb-4">Infinity6</div>
+                    <p class="text-gray-400 mb-4">Soluções de IA para o futuro dos negócios</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Soluções</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Smart Price</a></li>
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Industrial Intelligence</a></li>
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Predictive Campaign</a></li>
+                        <li><a href="solutions.html" class="hover:text-white transition-colors">Adaptive Demand</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Empresa</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="success-stories.html" class="hover:text-white transition-colors">Cases de Sucesso</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contato</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Política de Privacidade</a></li>
+                        <li><a href="ethics-policy.html" class="hover:text-white transition-colors">Política de Ética</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Contato</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>contato@infinity6.ai</li>
+                        <li>+55 (11) 9999-9999</li>
+                        <li>São Paulo, Brasil</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Infinity6. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const storyCards = document.querySelectorAll('.story-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active', 'bg-primary', 'text-white'));
+                filterBtns.forEach(b => b.classList.add('bg-gray-200', 'text-gray-700'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+
+                const filter = btn.getAttribute('data-filter');
+                
+                storyCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        function toggleLanguage() {
+            window.location.href = 'success-stories-en.html';
+        }
+    </script>
+</body>
+</html>
