@@ -174,7 +174,7 @@ export const enTranslations = {
   // Solutions Card Labels
   'solutions.card.overview': 'Overview',
   'solutions.card.keyFeatures': 'Key Features',
-  'solutions.card.businessOutcome': 'Business Outcome',
+  'solutions.card.businessOutcome': 'Business Outcomes',
   'solutions.card.additionalFeatures': 'additional features',
   
   // Success Stories Page

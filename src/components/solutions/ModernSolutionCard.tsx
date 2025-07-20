@@ -22,7 +22,7 @@ const translations = {
     overview: 'Overview',
     keyFeatures: 'Key Features',
     additionalFeatures: 'additional features',
-    businessOutcome: 'Business Outcome'
+    businessOutcome: 'Business Outcomes'
   },
   pt: {
     overview: 'Visão Geral',
