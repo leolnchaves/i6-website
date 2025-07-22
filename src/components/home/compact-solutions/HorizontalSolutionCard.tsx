@@ -1,11 +1,4 @@
 import * as LucideIcons from 'lucide-react';
-// Importação das imagens para os cards (ES6 imports para compatibilidade com deploy estático)
-import anonymousVisitors from '@/assets/solution-Anonymous-Visitors.gif';
-import identifiedUsers from '@/assets/solucao-Identified-Users.gif';
-import industrialIntelligence from '@/assets/solucao-Industrial-Intelligence.gif';
-import predictiveCampaign from '@/assets/solucao-Predictive-Campaign.gif';
-import smartPrice from '@/assets/solucao-Smart-Price.gif';
-import adaptiveDemand from '@/assets/solucao-Adaptive-Demand.gif';
 
 interface HorizontalSolutionCardProps {
   title: string;
@@ -42,14 +35,15 @@ const HorizontalSolutionCard = ({
   const IconComponent = getIcon(icon);
   const isReversed = index % 2 === 1;
 
-  // Array de imagens usando os imports ES6
+  // Imagens para os cards (primeiras são os GIFs específicos com BASE_URL para deploy estático)
+  const basePath = import.meta.env.BASE_URL;
   const placeholderImages = [
-    anonymousVisitors,
-    identifiedUsers,
-    industrialIntelligence,
-    predictiveCampaign,
-    smartPrice,
-    adaptiveDemand,
+    `${basePath}solution-Anonymous-Visitors.gif`,
+    `${basePath}solucao-Identified-Users.gif`,
+    `${basePath}solucao-Industrial-Intelligence.gif`,
+    `${basePath}solucao-Predictive-Campaign.gif`,
+    `${basePath}solucao-Smart-Price.gif`,
+    `${basePath}solucao-Adaptive-Demand.gif`,
   ];
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
