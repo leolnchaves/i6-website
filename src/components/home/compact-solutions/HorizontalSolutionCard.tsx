@@ -1,4 +1,11 @@
 import * as LucideIcons from 'lucide-react';
+// Importação das imagens para os cards (ES6 imports para compatibilidade com deploy estático)
+import anonymousVisitors from '@/assets/solution-Anonymous-Visitors.gif';
+import identifiedUsers from '@/assets/solucao-Identified-Users.gif';
+import industrialIntelligence from '@/assets/solucao-Industrial-Intelligence.gif';
+import predictiveCampaign from '@/assets/solucao-Predictive-Campaign.gif';
+import smartPrice from '@/assets/solucao-Smart-Price.gif';
+import adaptiveDemand from '@/assets/solucao-Adaptive-Demand.gif';
 
 interface HorizontalSolutionCardProps {
   title: string;
@@ -35,14 +42,14 @@ const HorizontalSolutionCard = ({
   const IconComponent = getIcon(icon);
   const isReversed = index % 2 === 1;
 
-  // Imagens para os cards (primeiras são os GIFs específicos)
+  // Array de imagens usando os imports ES6
   const placeholderImages = [
-    '/solution-Anonymous-Visitors.gif',
-    '/solucao-Identified-Users.gif',
-    '/solucao-Industrial-Intelligence.gif',
-    '/solucao-Predictive-Campaign.gif',
-    '/solucao-Smart-Price.gif',
-    '/solucao-Adaptive-Demand.gif',
+    anonymousVisitors,
+    identifiedUsers,
+    industrialIntelligence,
+    predictiveCampaign,
+    smartPrice,
+    adaptiveDemand,
   ];
 
   const imageUrl = placeholderImages[index % placeholderImages.length];
@@ -76,7 +83,7 @@ const HorizontalSolutionCard = ({
           {/* Explore Solution overlay within the image area */}
           <div className={`absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-r ${colorScheme.gradient} transform scale-x-0 group-hover:scale-x-100 transition-all duration-500 ease-out origin-left flex items-center justify-center cursor-pointer`}>
             <a 
-              href="/solutions"
+              href={`${import.meta.env.BASE_URL}solutions`}
               className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 hover:underline flex items-center gap-2 drop-shadow-md"
             >
               <span>Explore Solution</span>
