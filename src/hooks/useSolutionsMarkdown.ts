@@ -31,7 +31,7 @@ export const useSolutionsMarkdown = (): UseSolutionsMarkdownReturn => {
         setError(null);
         
         const filename = language === 'pt' ? 'page-solutions-pt.md' : 'page-solutions-en.md';
-        const response = await fetch(import.meta.env.BASE_URL + `content/${filename}`);
+        const response = await fetch(`${import.meta.env.BASE_URL}content/${filename}`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch content: ${response.status}`);
