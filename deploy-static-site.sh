@@ -15,6 +15,9 @@ rm -rf dist
 echo "🔧 Gerando build do Vite..."
 npm run build || { echo "❌ Erro no build. Abortando."; exit 1; }
 
+# 🛠️ Cria fallback 404.html para SPAs (GitHub Pages redirect)
+echo '<script>sessionStorage.redirect = location.href; window.location.href="/i6-website/";</script>' > dist/404.html
+
 echo "🔎 Verificando se a branch '$TARGET_BRANCH' existe..."
 if ! git show-ref --quiet refs/heads/$TARGET_BRANCH; then
   echo "🌱 Criando a branch '$TARGET_BRANCH' a partir da main..."
