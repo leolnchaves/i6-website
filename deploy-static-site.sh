@@ -43,7 +43,7 @@ echo "✅ Commitando e publicando para '$TARGET_BRANCH'..."
 cd $TEMP_DIR
 git add .
 git commit -m "Deploy do site estático via dist" || echo "ℹ️ Nada novo para commit."
-git push origin $TARGET_BRANCH
+git push --force origin $TARGET_BRANCH
 
 echo "🧼 Limpando worktree temporária..."
 cd -
