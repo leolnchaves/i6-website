@@ -5,6 +5,10 @@ set -e
 TARGET_BRANCH="static-site"
 TEMP_DIR="../static-site-temp"
 
+# 🔄 Garante que o main local esteja atualizado
+git checkout main
+git pull origin main
+
 # 🧼 Limpa build anterior
 rm -rf dist
 
