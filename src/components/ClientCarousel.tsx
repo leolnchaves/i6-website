@@ -1,31 +1,22 @@
 
 import { useState } from 'react';
-import clientHering from '@/assets/client-hering.png';
-import clientEms from '@/assets/client-ems.png';
-import clientLegrand from '@/assets/client-legrand.png';
-import clientCogna from '@/assets/client-cogna.png';
-import clientAche from '@/assets/client-ache.png';
-import clientNatura from '@/assets/client-natura.png';
-import clientJequiti from '@/assets/client-jequiti.png';
-import clientEmbraer from '@/assets/client-embraer.png';
-import clientBanco from '@/assets/client-banco.png';
-import clientFinancorp from '@/assets/client-financorp.png';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 const ClientCarousel = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   // Client logos with the provided images
   const clients = [
-    { name: 'HERING', logo: clientHering },
-    { name: 'EMS', logo: clientEms },
-    { name: 'LEGRAND', logo: clientLegrand },
-    { name: 'COGNA', logo: clientCogna },
-    { name: 'ACHĒ', logo: clientAche },
-    { name: 'NATURA&CO', logo: clientNatura },
-    { name: 'JEQUITI', logo: clientJequiti },
-    { name: 'EMBRAER', logo: clientEmbraer },
-    { name: 'BANCO XYZ', logo: clientBanco },
-    { name: 'FINANCORP', logo: clientFinancorp }
+    { name: 'HERING', logo: PROCESSED_ASSETS.CLIENTS.HERING },
+    { name: 'EMS', logo: PROCESSED_ASSETS.CLIENTS.EMS },
+    { name: 'LEGRAND', logo: PROCESSED_ASSETS.CLIENTS.LEGRAND },
+    { name: 'COGNA', logo: PROCESSED_ASSETS.CLIENTS.COGNA },
+    { name: 'ACHĒ', logo: PROCESSED_ASSETS.CLIENTS.ACHE },
+    { name: 'NATURA&CO', logo: PROCESSED_ASSETS.CLIENTS.NATURA },
+    { name: 'JEQUITI', logo: PROCESSED_ASSETS.CLIENTS.JEQUITI },
+    { name: 'EMBRAER', logo: PROCESSED_ASSETS.CLIENTS.EMBRAER },
+    { name: 'BANCO XYZ', logo: PROCESSED_ASSETS.CLIENTS.BANCO },
+    { name: 'FINANCORP', logo: PROCESSED_ASSETS.CLIENTS.FINANCORP }
   ];
 
   // Double the array for seamless loop

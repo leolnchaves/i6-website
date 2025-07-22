@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
-import heroBg from '@/assets/hero-bg.jpg';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 const SolutionsHero = memo(() => {
   const { language } = useLanguage();
@@ -16,7 +16,7 @@ const SolutionsHero = memo(() => {
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{ 
-          backgroundImage: `url(${heroBg})`,
+          backgroundImage: `url(${PROCESSED_ASSETS.HERO_BG})`,
           filter: 'blur(10px)'
         }}
       ></div>

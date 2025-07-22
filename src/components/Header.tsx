@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import logoHeader from '@/assets/logo-header.png';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +18,7 @@ const Header = memo(() => {
   // Lazy loading optimization for logo image
   const { isVisible, elementRef } = useIntersectionObserver({ threshold: 0.1 });
   const { isLoaded: logoLoaded } = useImagePreloader(
-    logoHeader,
+    PROCESSED_ASSETS.LOGO_HEADER,
     true // Header is always visible, but we preload for cache optimization
   );
 
@@ -57,7 +57,7 @@ const Header = memo(() => {
           >
             {logoLoaded ? (
               <img 
-                src={logoHeader} 
+                src={PROCESSED_ASSETS.LOGO_HEADER} 
                 alt="Infinity6" 
                 className="h-12 w-auto"
                 loading="eager"

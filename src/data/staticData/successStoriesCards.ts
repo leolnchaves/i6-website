@@ -1,6 +1,4 @@
-import successStory1 from '@/assets/success-story-1.png';
-import successStory2 from '@/assets/success-story-2.png';
-import successStory3 from '@/assets/success-story-3.png';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 export interface StaticSuccessStoryCard {
   id: string;
@@ -39,7 +37,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Margin Improvement',
       metric3_value: '78%',
       metric3_label: 'Engagement Boost',
-      image_url: successStory1,
+      image_url: PROCESSED_ASSETS.SUCCESS_STORIES.STORY_1,
       is_active: true,
       is_active_home: true
     },
@@ -58,7 +56,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Revenue Growth',
       metric3_value: '67%',
       metric3_label: 'New Opportunities',
-      image_url: successStory2,
+      image_url: PROCESSED_ASSETS.SUCCESS_STORIES.STORY_2,
       is_active: true,
       is_active_home: true
     },
@@ -77,7 +75,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Online Sales Growth',
       metric3_value: '3.2x',
       metric3_label: 'Conversion Rate',
-      image_url: successStory3,
+      image_url: PROCESSED_ASSETS.SUCCESS_STORIES.STORY_3,
       is_active: true,
       is_active_home: true
     }
@@ -98,7 +96,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Melhoria de Margem',
       metric3_value: '78%',
       metric3_label: 'Aumento de Engajamento',
-      image_url: successStory1,
+      image_url: PROCESSED_ASSETS.SUCCESS_STORIES.STORY_1,
       is_active: true,
       is_active_home: true
     },
@@ -117,7 +115,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Crescimento de Receita',
       metric3_value: '67%',
       metric3_label: 'Novas Oportunidades',
-      image_url: successStory2,
+      image_url: PROCESSED_ASSETS.SUCCESS_STORIES.STORY_2,
       is_active: true,
       is_active_home: true
     },
@@ -136,7 +134,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Crescimento Vendas Online',
       metric3_value: '3.2x',
       metric3_label: 'Taxa de Conversão',
-      image_url: successStory3,
+      image_url: PROCESSED_ASSETS.SUCCESS_STORIES.STORY_3,
       is_active: true,
       is_active_home: true
     }

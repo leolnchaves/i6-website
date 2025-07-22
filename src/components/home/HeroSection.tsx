@@ -8,7 +8,7 @@ import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
-import heroBg from '@/assets/hero-bg.jpg';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 import './hero/HeroAnimations.css';
 
 /**
@@ -55,7 +55,7 @@ const HeroSection = () => {
       {/* Main hero section */}
       <section 
         className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
+        style={{ backgroundImage: `url(${PROCESSED_ASSETS.HERO_BG})` }}
       >
         {/* Background effects */}
         <div className="absolute inset-0">

@@ -7,14 +7,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
-import worldMapImage from '@/assets/world-map.png';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 const WorldMap = memo(() => {
   const { language } = useLanguage();
   const isMobile = useIsMobile();
   const { isVisible, elementRef } = useIntersectionObserver();
   const { isLoaded: imageLoaded } = useImagePreloader(
-    worldMapImage,
+    PROCESSED_ASSETS.WORLD_MAP,
     isVisible
   );
 
@@ -93,7 +93,7 @@ const WorldMap = memo(() => {
             {/* Lazy loaded image */}
             {isVisible && (
               <img 
-                src={worldMapImage}
+                src={PROCESSED_ASSETS.WORLD_MAP}
                 alt="World Map"
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'

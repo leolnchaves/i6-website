@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { X, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import solutionIcon from '@/assets/solution-icon.png';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 interface StoryModalData {
   id: string;
@@ -178,7 +178,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
                 <div key={index} className="flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200 min-h-[44px] w-full">
                   <div className="w-6 h-6 rounded flex items-center justify-center mr-3 flex-shrink-0">
                     <img 
-                      src={solutionIcon} 
+                      src={PROCESSED_ASSETS.SOLUTION_ICON} 
                       alt="Solution" 
                       className="w-5 h-5 object-contain"
                     />

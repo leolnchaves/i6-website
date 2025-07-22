@@ -1,6 +1,6 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import heroBg from '@/assets/hero-bg.jpg';
+import { PROCESSED_ASSETS } from '@/utils/assetUtils';
 
 const PrivacyPolicy = () => {
   useScrollAnimation();
@@ -195,7 +195,7 @@ const PrivacyPolicy = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${heroBg})`,
+            backgroundImage: `url(${PROCESSED_ASSETS.HERO_BG})`,
             filter: 'blur(10px)'
           }}
         ></div>
