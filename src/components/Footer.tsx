@@ -5,7 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { memo, useMemo, useCallback } from 'react';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import { PROCESSED_ASSETS } from '@/utils/assetUtils';
+import logoFooter from '@/assets/logo-footer.png';
 
 const Footer = memo(() => {
   const { t, language } = useLanguage();
@@ -14,7 +14,7 @@ const Footer = memo(() => {
   // Lazy loading optimization for footer image
   const { isVisible, elementRef } = useIntersectionObserver({ threshold: 0.1 });
   const { isLoaded: logoLoaded } = useImagePreloader(
-    PROCESSED_ASSETS.LOGO_FOOTER,
+    logoFooter,
     isVisible
   );
   
@@ -60,7 +60,7 @@ const Footer = memo(() => {
             <div className="flex items-center space-x-2 mb-4">
               {isVisible && logoLoaded ? (
                 <img 
-                  src={PROCESSED_ASSETS.LOGO_FOOTER} 
+                  src={logoFooter} 
                   alt="Infinity6" 
                   className="h-8 w-auto"
                   loading="lazy"

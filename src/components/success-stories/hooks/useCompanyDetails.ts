@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { PROCESSED_ASSETS } from '@/utils/assetUtils';
+import companyLogo from '@/assets/company-logo.png';
 
 interface StoryCard {
   id: string;
@@ -33,37 +33,37 @@ export const useCompanyDetails = () => {
         about: language === 'en' 
           ? 'Leading e-commerce platform with over 10 million users worldwide. Winner of Best Digital Innovation Award 2023.'
           : 'Plataforma de e-commerce líder com mais de 10 milhões de usuários mundialmente. Vencedor do Prêmio de Melhor Inovação Digital 2023.',
-        logo: PROCESSED_ASSETS.COMPANY_LOGO
+        logo: companyLogo
       },
       'Industrial Solutions Co.': {
         about: language === 'en'
           ? 'Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.'
           : 'Empresa de manufatura Fortune 500 com mais de 25 anos de liderança na indústria. Certificada ISO 9001 com operações globais.',
-        logo: PROCESSED_ASSETS.COMPANY_LOGO
+        logo: companyLogo
       },
       'MedTech Innovations': {
         about: language === 'en'
           ? 'Premier healthcare technology provider serving 500+ hospitals across North America. FDA approved solutions.'
           : 'Principal provedor de tecnologia em saúde atendendo mais de 500 hospitais na América do Norte. Soluções aprovadas pela FDA.',
-        logo: PROCESSED_ASSETS.COMPANY_LOGO
+        logo: companyLogo
       },
       'Capital Banking Group': {
         about: language === 'en'
           ? 'Top-tier financial institution with $50B+ in assets. Recognized for digital transformation excellence and security innovation.'
           : 'Instituição financeira de primeira linha com mais de $50B em ativos. Reconhecida pela excelência em transformação digital e inovação em segurança.',
-        logo: PROCESSED_ASSETS.COMPANY_LOGO
+        logo: companyLogo
       },
       'Global Shipping Solutions': {
         about: language === 'en'
           ? 'International logistics leader handling 1M+ shipments annually. Green Supply Chain Award recipient.'
           : 'Líder em logística internacional processando mais de 1M de remessas anualmente. Recipiente do Prêmio Green Supply Chain.',
-        logo: PROCESSED_ASSETS.COMPANY_LOGO
+        logo: companyLogo
       },
       'NextGen Motors': {
         about: language === 'en'
           ? 'Innovative automotive manufacturer with focus on electric vehicles. Named Sustainability Leader 2023.'
           : 'Fabricante automotivo inovador com foco em veículos elétricos. Nomeado Líder em Sustentabilidade 2023.',
-        logo: PROCESSED_ASSETS.COMPANY_LOGO
+        logo: companyLogo
       }
     };
 
@@ -71,7 +71,7 @@ export const useCompanyDetails = () => {
       about: language === 'en' 
         ? 'Industry-leading company recognized for innovation and excellence in their sector.'
         : 'Empresa líder da indústria reconhecida pela inovação e excelência em seu setor.',
-      logo: PROCESSED_ASSETS.COMPANY_LOGO
+      logo: companyLogo
     };
   };
 

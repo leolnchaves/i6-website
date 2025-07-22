@@ -1,6 +1,6 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { PROCESSED_ASSETS } from '@/utils/assetUtils';
+import heroBg from '@/assets/hero-bg.jpg';
 
 const EthicsPolicy = () => {
   useScrollAnimation();
@@ -253,7 +253,7 @@ const EthicsPolicy = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${PROCESSED_ASSETS.HERO_BG})`,
+            backgroundImage: `url(${heroBg})`,
             filter: 'blur(10px)'
           }}
         ></div>

@@ -1,7 +1,7 @@
 
 import React, { memo, useState, useRef, useEffect, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { PROCESSED_ASSETS } from '@/utils/assetUtils';
+import heroBg from '@/assets/hero-bg.jpg';
 
 const ContactHero = memo(() => {
   const { language } = useLanguage();
@@ -33,7 +33,7 @@ const ContactHero = memo(() => {
     if (isVisible) {
       const img = new Image();
       img.onload = () => setIsImageLoaded(true);
-      img.src = PROCESSED_ASSETS.HERO_BG;
+      img.src = heroBg;
     }
   }, [isVisible]);
   
@@ -60,7 +60,7 @@ const ContactHero = memo(() => {
       <div 
         className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
         style={{ 
-          backgroundImage: isImageLoaded ? `url(${PROCESSED_ASSETS.HERO_BG})` : 'none',
+          backgroundImage: isImageLoaded ? `url(${heroBg})` : 'none',
           filter: 'blur(10px)',
           opacity: isImageLoaded ? 1 : 0
         }}
