@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=/i6-website/" />
+    <script>
+      const redirectTo = sessionStorage.redirect || "/i6-website/";
+      sessionStorage.redirect = null;
+      window.location.href = redirectTo;
+    </script>
+  </head>
+  <body>
+    <p>Redirecionando...</p>
+  </body>
+</html>
