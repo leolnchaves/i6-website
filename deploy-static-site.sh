@@ -5,6 +5,9 @@ set -e
 TARGET_BRANCH="static-site"
 TEMP_DIR="../static-site-temp"
 
+# 🧼 Limpa build anterior
+rm -rf dist
+
 echo "🔧 Gerando build do Vite..."
 npm run build || { echo "❌ Erro no build. Abortando."; exit 1; }
 
