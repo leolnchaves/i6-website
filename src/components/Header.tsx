@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import logoHeader from '@/assets/logo-header.png';
+import logoHeader from '@/assets/images/logo-header.png';
 
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

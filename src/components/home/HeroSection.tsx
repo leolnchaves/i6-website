@@ -8,7 +8,7 @@ import { useErrorHandler } from '@/hooks/useErrorBoundary';
 import { logger } from '@/utils/logger';
 import VideoModal from '@/components/VideoModal';
 import ScrollAnimation from '@/components/home/hero/ScrollAnimation';
-import heroBg from '@/assets/hero-bg.jpg';
+import heroBg from '@/assets/images/hero-bg.jpg';
 import './hero/HeroAnimations.css';
 
 /**

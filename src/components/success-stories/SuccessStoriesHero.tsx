@@ -2,7 +2,7 @@
 import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
-import heroBg from '@/assets/hero-bg.jpg';
+import heroBg from '@/assets/images/hero-bg.jpg';
 
 const SuccessStoriesHero = memo(() => {
   const { language } = useLanguage();

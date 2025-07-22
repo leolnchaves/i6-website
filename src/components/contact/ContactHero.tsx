@@ -1,7 +1,7 @@
 
 import React, { memo, useState, useRef, useEffect, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import heroBg from '@/assets/hero-bg.jpg';
+import heroBg from '@/assets/images/hero-bg.jpg';
 
 const ContactHero = memo(() => {
   const { language } = useLanguage();

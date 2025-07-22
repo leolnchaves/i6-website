@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
-import worldMapImage from '@/assets/world-map.png';
+import worldMapImage from '@/assets/images/world-map.png';
 
 const WorldMap = memo(() => {
   const { language } = useLanguage();

@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { X, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import solutionIcon from '@/assets/solution-icon.png';
+import solutionIcon from '@/assets/icons/solution-icon.png';
 
 interface StoryModalData {
   id: string;

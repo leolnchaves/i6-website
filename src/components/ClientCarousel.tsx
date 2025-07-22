@@ -1,15 +1,15 @@
 
 import { useState } from 'react';
-import clientHering from '@/assets/client-hering.png';
-import clientEms from '@/assets/client-ems.png';
-import clientLegrand from '@/assets/client-legrand.png';
-import clientCogna from '@/assets/client-cogna.png';
-import clientAche from '@/assets/client-ache.png';
-import clientNatura from '@/assets/client-natura.png';
-import clientJequiti from '@/assets/client-jequiti.png';
-import clientEmbraer from '@/assets/client-embraer.png';
-import clientBanco from '@/assets/client-banco.png';
-import clientFinancorp from '@/assets/client-financorp.png';
+import clientHering from '@/assets/images/client-hering.png';
+import clientEms from '@/assets/images/client-ems.png';
+import clientLegrand from '@/assets/images/client-legrand.png';
+import clientCogna from '@/assets/images/client-cogna.png';
+import clientAche from '@/assets/images/client-ache.png';
+import clientNatura from '@/assets/images/client-natura.png';
+import clientJequiti from '@/assets/images/client-jequiti.png';
+import clientEmbraer from '@/assets/images/client-embraer.png';
+import clientBanco from '@/assets/images/client-banco.png';
+import clientFinancorp from '@/assets/images/client-financorp.png';
 
 const ClientCarousel = () => {
   const [isHovered, setIsHovered] = useState(false);

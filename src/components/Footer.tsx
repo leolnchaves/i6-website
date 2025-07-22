@@ -5,7 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { memo, useMemo, useCallback } from 'react';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import logoFooter from '@/assets/logo-footer.png';
+import logoFooter from '@/assets/images/logo-footer.png';
 
 const Footer = memo(() => {
   const { t, language } = useLanguage();

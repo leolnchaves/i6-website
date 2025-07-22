@@ -1,6 +1,6 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import heroBg from '@/assets/hero-bg.jpg';
+import heroBg from '@/assets/images/hero-bg.jpg';
 
 const EthicsPolicy = () => {
   useScrollAnimation();
