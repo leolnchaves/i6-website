@@ -6,7 +6,7 @@
 
 **Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
-**Title:** Smart Discovery for Anonymous Visitors
+**Title:** TESTE TESTE TESTE Smart Discovery for Anonymous Visitors
 
 **Overview:** Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
 
