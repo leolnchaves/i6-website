@@ -16,7 +16,23 @@ echo "🔧 Gerando build do Vite..."
 npm run build || { echo "❌ Erro no build. Abortando."; exit 1; }
 
 # 🛠️ Cria fallback 404.html para SPAs (GitHub Pages redirect)
-echo '<script>sessionStorage.redirect = location.href; window.location.href="/i6-website/";</script>' > dist/404.html
+cat <<EOF > dist/404.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=/i6-website/" />
+    <script>
+      const redirectTo = sessionStorage.redirect || "/i6-website/";
+      sessionStorage.redirect = null;
+      window.location.href = redirectTo;
+    </script>
+  </head>
+  <body>
+    <p>Redirecionando...</p>
+  </body>
+</html>
+EOF
+
 echo "✅ Fallback 404.html criado em dist/"
 
 # 🧼 Limpa worktree travada se necessário
