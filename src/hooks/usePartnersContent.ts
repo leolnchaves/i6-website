@@ -22,7 +22,7 @@ export const usePartnersContent = (): UsePartnersContentReturn => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('/content/partners-logos.md');
+        const response = await fetch(import.meta.env.BASE_URL + 'content/partners-logos.md');
         
         if (!response.ok) {
           throw new Error(`Failed to fetch content: ${response.status}`);

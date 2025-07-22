@@ -27,7 +27,7 @@ export const useSuccessStoriesContent = (): UseSuccessStoriesContentReturn => {
         setError(null);
         
         const filename = language === 'pt' ? 'success-stories-pt.md' : 'success-stories-en.md';
-        const response = await fetch(`/content/${filename}`);
+        const response = await fetch(import.meta.env.BASE_URL + `content/${filename}`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch content: ${response.status}`);

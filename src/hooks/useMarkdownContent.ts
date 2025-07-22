@@ -27,7 +27,7 @@ export const useMarkdownContent = (): UseMarkdownContentReturn => {
         setError(null);
         
         const filename = language === 'pt' ? 'results-pt.md' : 'results-en.md';
-        const response = await fetch(`/content/${filename}`);
+        const response = await fetch(import.meta.env.BASE_URL + `content/${filename}`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch content: ${response.status}`);
