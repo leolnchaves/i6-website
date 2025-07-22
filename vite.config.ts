@@ -24,6 +24,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   define: {
+    // Properly stringify all environment variables
     __WS_TOKEN__: JSON.stringify(''),
+    // Ensure all environment variables are properly defined
+    'process.env': JSON.stringify({}),
   },
 }));
