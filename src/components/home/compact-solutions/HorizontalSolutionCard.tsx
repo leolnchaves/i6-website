@@ -1,4 +1,5 @@
 import * as LucideIcons from 'lucide-react';
+import { getSolutionGif } from '@/utils/assetUtils';
 
 interface HorizontalSolutionCardProps {
   title: string;
@@ -35,18 +36,8 @@ const HorizontalSolutionCard = ({
   const IconComponent = getIcon(icon);
   const isReversed = index % 2 === 1;
 
-  // Imagens para os cards (primeiras são os GIFs específicos com BASE_URL para deploy estático)
-  const basePath = import.meta.env.BASE_URL;
-  const placeholderImages = [
-    `${basePath}solution-Anonymous-Visitors.gif`,
-    `${basePath}solucao-Identified-Users.gif`,
-    `${basePath}solucao-Industrial-Intelligence.gif`,
-    `${basePath}solucao-Predictive-Campaign.gif`,
-    `${basePath}solucao-Smart-Price.gif`,
-    `${basePath}solucao-Adaptive-Demand.gif`,
-  ];
-
-  const imageUrl = placeholderImages[index % placeholderImages.length];
+  // Get GIF using centralized utility
+  const imageUrl = getSolutionGif(index);
 
   // Define cores baseadas no índice específico conforme solicitado
   const getColorScheme = (cardIndex: number) => {
