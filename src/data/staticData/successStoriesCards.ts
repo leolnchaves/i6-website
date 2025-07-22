@@ -1,3 +1,7 @@
+import successStory1 from '@/assets/success-story-1.png';
+import successStory2 from '@/assets/success-story-2.png';
+import successStory3 from '@/assets/success-story-3.png';
+
 export interface StaticSuccessStoryCard {
   id: string;
   company_name: string;
@@ -35,7 +39,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Margin Improvement',
       metric3_value: '78%',
       metric3_label: 'Engagement Boost',
-      image_url: '/lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png',
+      image_url: successStory1,
       is_active: true,
       is_active_home: true
     },
@@ -54,7 +58,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Revenue Growth',
       metric3_value: '67%',
       metric3_label: 'New Opportunities',
-      image_url: '/lovable-uploads/74e4b188-8c90-48ac-846c-6c7bf0b65853.png',
+      image_url: successStory2,
       is_active: true,
       is_active_home: true
     },
@@ -73,7 +77,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Online Sales Growth',
       metric3_value: '3.2x',
       metric3_label: 'Conversion Rate',
-      image_url: '/lovable-uploads/d0935f4c-9873-49c4-bd9c-ba5054253145.png',
+      image_url: successStory3,
       is_active: true,
       is_active_home: true
     }
@@ -94,7 +98,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Melhoria de Margem',
       metric3_value: '78%',
       metric3_label: 'Aumento de Engajamento',
-      image_url: '/lovable-uploads/45512e07-9b52-443f-a5ec-b84351ff2b9a.png',
+      image_url: successStory1,
       is_active: true,
       is_active_home: true
     },
@@ -113,7 +117,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Crescimento de Receita',
       metric3_value: '67%',
       metric3_label: 'Novas Oportunidades',
-      image_url: '/lovable-uploads/74e4b188-8c90-48ac-846c-6c7bf0b65853.png',
+      image_url: successStory2,
       is_active: true,
       is_active_home: true
     },
@@ -132,7 +136,7 @@ export const successStoriesCardsData = {
       metric2_label: 'Crescimento Vendas Online',
       metric3_value: '3.2x',
       metric3_label: 'Taxa de Conversão',
-      image_url: '/lovable-uploads/d0935f4c-9873-49c4-bd9c-ba5054253145.png',
+      image_url: successStory3,
       is_active: true,
       is_active_home: true
     }

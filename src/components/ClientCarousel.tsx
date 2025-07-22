@@ -1,21 +1,31 @@
 
 import { useState } from 'react';
+import clientHering from '@/assets/client-hering.png';
+import clientEms from '@/assets/client-ems.png';
+import clientLegrand from '@/assets/client-legrand.png';
+import clientCogna from '@/assets/client-cogna.png';
+import clientAche from '@/assets/client-ache.png';
+import clientNatura from '@/assets/client-natura.png';
+import clientJequiti from '@/assets/client-jequiti.png';
+import clientEmbraer from '@/assets/client-embraer.png';
+import clientBanco from '@/assets/client-banco.png';
+import clientFinancorp from '@/assets/client-financorp.png';
 
 const ClientCarousel = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   // Client logos with the provided images
   const clients = [
-    { name: 'HERING', logo: '/lovable-uploads/9194246b-c699-4d07-b09b-6a4d309e7821.png' },
-    { name: 'EMS', logo: '/lovable-uploads/58e286a1-1e55-47cc-8524-dc041be15b81.png' },
-    { name: 'LEGRAND', logo: '/lovable-uploads/373196c0-5b6e-4e60-80c3-a1da99265d12.png' },
-    { name: 'COGNA', logo: '/lovable-uploads/534d8da1-8e73-4707-9c28-3bb33e0fdfb6.png' },
-    { name: 'ACHĒ', logo: '/lovable-uploads/a78ba018-aaab-423f-ac52-89f6cf1ff6ef.png' },
-    { name: 'NATURA&CO', logo: '/lovable-uploads/c8169903-2836-45f3-830c-db6dc7e8ac9e.png' },
-    { name: 'JEQUITI', logo: '/lovable-uploads/05313f6e-5f31-4189-8824-1615d0b72bfc.png' },
-    { name: 'EMBRAER', logo: '/lovable-uploads/6d813ac5-011f-4bff-b35a-6eed9b162869.png' },
-    { name: 'BANCO XYZ', logo: '/lovable-uploads/78e4760f-4843-4f50-b0b1-f93b9cf828f2.png' },
-    { name: 'FINANCORP', logo: '/lovable-uploads/8c0acc2d-915a-484e-b83e-c82c3de47aa5.png' }
+    { name: 'HERING', logo: clientHering },
+    { name: 'EMS', logo: clientEms },
+    { name: 'LEGRAND', logo: clientLegrand },
+    { name: 'COGNA', logo: clientCogna },
+    { name: 'ACHĒ', logo: clientAche },
+    { name: 'NATURA&CO', logo: clientNatura },
+    { name: 'JEQUITI', logo: clientJequiti },
+    { name: 'EMBRAER', logo: clientEmbraer },
+    { name: 'BANCO XYZ', logo: clientBanco },
+    { name: 'FINANCORP', logo: clientFinancorp }
   ];
 
   // Double the array for seamless loop
