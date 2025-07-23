@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   define: {
-    // Use empty string for token
-    __WS_TOKEN__: "''",
+    // Properly stringify the token to avoid syntax errors
+    __WS_TOKEN__: JSON.stringify(''),
   },
 }));
