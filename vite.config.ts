@@ -23,8 +23,4 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  define: {
-    // Properly stringify the token to avoid syntax errors
-    __WS_TOKEN__: JSON.stringify(''),
-  },
 }));
