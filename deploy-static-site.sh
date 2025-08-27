@@ -55,6 +55,9 @@ echo "📦 Copiando arquivos da dist/ para a branch '$TARGET_BRANCH'..."
 rm -rf $TEMP_DIR/*
 cp -r dist/* $TEMP_DIR/
 
+# 🛠️ Cria arquivo .nojekyll para GitHub Pages servir módulos JS corretamente
+touch $TEMP_DIR/.nojekyll
+
 echo "✅ Commitando e publicando para '$TARGET_BRANCH'..."
 cd $TEMP_DIR
 git add .
