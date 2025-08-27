@@ -1,5 +1,6 @@
 
 import { useState, memo } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
@@ -113,14 +114,16 @@ const HeroSection = () => {
               <p>Grow beyond limits with adaptive AI.</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button 
-                size="lg" 
-                className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap"
-                onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
-              >
-                {t('hero.startJourney')}
-                <ArrowRight className="w-5 h-5" />
-              </Button>
+              <Link to="/contact">
+                <Button 
+                  size="lg" 
+                  className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap"
+                  onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
+                >
+                  {t('hero.startJourney')}
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
               <Button 
                 size="lg" 
                 className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-lg font-medium hover:bg-white/30 transition-all w-full sm:w-auto whitespace-nowrap"
