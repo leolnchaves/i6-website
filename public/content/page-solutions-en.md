@@ -1,4 +1,4 @@
-## TESTE Smart Discovery for Anonymous Visitors
+## Smart Discovery for Anonymous Visitors
 
 **Engine:** TESTE i6 RecSys
 
