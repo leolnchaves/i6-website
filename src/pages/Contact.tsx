@@ -1,5 +1,6 @@
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ContactHero from '@/components/contact/ContactHero';
 import FAQSection from '@/components/contact/FAQSection';
 import ContactForm from '@/components/contact/ContactForm';
@@ -7,6 +8,20 @@ import WorldMap from '@/components/contact/WorldMap';
 import CalendlySection from '@/components/contact/CalendlySection';
 
 const Contact = memo(() => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll para o formulário se a URL contém a âncora
+    if (location.hash === '#contact-form') {
+      setTimeout(() => {
+        const formElement = document.getElementById('contact-form');
+        if (formElement) {
+          formElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300); // Aguarda a página carregar
+    }
+  }, [location]);
+
   return (
     <div className="min-h-screen">
       <ContactHero />

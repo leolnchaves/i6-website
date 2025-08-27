@@ -114,22 +114,11 @@ const HeroSection = () => {
               <p>Grow beyond limits with adaptive AI.</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link 
-                to="/contact"
-                onClick={() => {
-                  // Scroll para o formulário após navegar
-                  setTimeout(() => {
-                    const formElement = document.getElementById('contact-form');
-                    if (formElement) {
-                      formElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }, 100);
-                  logger.info('Start journey button clicked', undefined, 'HeroSection');
-                }}
-              >
+              <Link to="/contact#contact-form">
                 <Button 
                   size="lg" 
                   className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap"
+                  onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
                 >
                   {t('hero.startJourney')}
                   <ArrowRight className="w-5 h-5" />
