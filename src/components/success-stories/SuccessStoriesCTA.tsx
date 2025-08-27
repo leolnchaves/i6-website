@@ -1,14 +1,21 @@
 
 import React, { memo } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
+import { logger } from '@/utils/logger';
 
 const SuccessStoriesCTA = memo(() => {
   const { language } = useLanguage();
   
   const ctaContent = successStoriesData[language]?.cta || successStoriesData.en.cta;
+
+  // Handle CTA button click with logging
+  const handleCTAClick = () => {
+    logger.info('Success Stories CTA button clicked', { section: 'success-stories' }, 'SuccessStoriesCTA');
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -19,10 +26,16 @@ const SuccessStoriesCTA = memo(() => {
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
           {ctaContent.description}
         </p>
-        <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
-          {ctaContent.buttonText}
-          <ArrowRight className="ml-2 w-5 h-5" />
-        </Button>
+        <Link to="/contact#contact-form">
+          <Button 
+            size="lg" 
+            onClick={handleCTAClick}
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
+          >
+            {ctaContent.buttonText}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
