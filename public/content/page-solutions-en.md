@@ -149,3 +149,5 @@
 - Inventory and Supply Chain Alignment DADO NOVO
 
 **Business Results:** Enhances demand planning accuracy and agility in fast-changing markets. DADO NOVO
+
+---
