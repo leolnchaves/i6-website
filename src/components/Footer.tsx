@@ -22,13 +22,13 @@ const Footer = memo(() => {
   const footerContent = useMemo(() => ({
     pt: {
       companyDescription: "Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.",
-      contactEmail: "lets.talk@infinity6.ai",
+      contactEmail: "talk@infinity6.ai",
       contactPhone: "+55 (19) 99819-7775",
       copyrightText: "© 2024 Infinity6.ai. Todos os direitos reservados."
     },
     en: {
       companyDescription: "Technology that connects data and decisions in real time.\nGrow faster, scale smarter.",
-      contactEmail: "lets.talk@infinity6.ai", 
+      contactEmail: "talk@infinity6.ai", 
       contactPhone: "+55 (19) 99819-7775",
       copyrightText: "© 2024 Infinity6.ai. All rights reserved."
     }
@@ -160,7 +160,9 @@ const Footer = memo(() => {
             <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
             <ul className="space-y-2 text-gray-400">
               <li className="hover:text-orange-400 transition-colors duration-300">
-                {footerText.contactEmail}
+                <a href={`mailto:${footerText.contactEmail}`} className="hover:underline">
+                  {footerText.contactEmail}
+                </a>
               </li>
               <li className="hover:text-orange-400 transition-colors duration-300">
                 {footerText.contactPhone}
