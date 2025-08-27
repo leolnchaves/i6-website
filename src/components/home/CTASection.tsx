@@ -1,5 +1,6 @@
 
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
@@ -19,7 +20,6 @@ const CTASection = () => {
   // Handle CTA button click with logging
   const handleCTAClick = () => {
     logger.info('CTA button clicked', { section: 'home' }, 'CTASection');
-    // TODO: Implement actual CTA action (navigation, form, etc.)
   };
   
   return (
@@ -39,15 +39,17 @@ const CTASection = () => {
         </p>
         
         {/* CTA Button */}
-        <Button 
-          size="lg" 
-          onClick={handleCTAClick}
-          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105"
-          aria-describedby="cta-description"
-        >
-          {t('cta.button')}
-          <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
-        </Button>
+        <Link to="/contact#contact-form">
+          <Button 
+            size="lg" 
+            onClick={handleCTAClick}
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105"
+            aria-describedby="cta-description"
+          >
+            {t('cta.button')}
+            <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+          </Button>
+        </Link>
         
         {/* Screen reader description */}
         <div id="cta-description" className="sr-only">
