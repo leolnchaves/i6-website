@@ -13,7 +13,21 @@ git pull origin main
 rm -rf dist
 
 echo "🔧 Gerando build do Vite..."
-npm run build || { echo "❌ Erro no build. Abortando."; exit 1; }
+NODE_ENV=production npm run build || { echo "❌ Erro no build. Abortando."; exit 1; }
+
+echo "🔍 Verificando se o build gerou os arquivos corretamente..."
+if [ ! -f "dist/index.html" ]; then
+  echo "❌ Erro: dist/index.html não foi gerado"
+  exit 1
+fi
+
+# Verifica se o index.html aponta para arquivos corretos (não /src/)
+if grep -q '/src/' dist/index.html; then
+  echo "❌ ERRO CRÍTICO: index.html ainda aponta para /src/ em vez dos bundles"
+  echo "Conteúdo do index.html:"
+  cat dist/index.html
+  exit 1
+fi
 
 # 🛠️ Cria fallback 404.html para SPAs (GitHub Pages redirect)
 cat <<EOF > dist/404.html
@@ -84,7 +98,10 @@ if [ ! -f "$TEMP_DIR/index.html" ]; then
 fi
 
 echo "🔍 Verificando referências de assets no index.html..."
-grep -o 'src="/[^"]*\.js"' $TEMP_DIR/index.html || echo "⚠️ Nenhuma referência JS encontrada"
+echo "Conteúdo das tags script:"
+grep -o '<script[^>]*>' $TEMP_DIR/index.html || echo "⚠️ Nenhuma tag script encontrada"
+echo "Assets JS encontrados:"
+find $TEMP_DIR -name "*.js" | head -10
 
 echo "✅ Commitando e publicando para '$TARGET_BRANCH'..."
 cd $TEMP_DIR
