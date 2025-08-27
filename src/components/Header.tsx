@@ -91,6 +91,7 @@ const Header = memo(() => {
               href="https://i6-business-intelliboard.lovable.app/"
               target="_blank"
               rel="noopener noreferrer"
+              className="hidden"
             >
               <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0 rounded-full font-semibold">
                 Business Intelliboard
@@ -128,7 +129,7 @@ const Header = memo(() => {
             <div className="px-3 py-2 flex items-center justify-between">
               <LanguageSelector />
             </div>
-            <div className="px-3 py-2">
+            <div className="px-3 py-2 hidden">
               <a 
                 href="https://i6-business-intelliboard.lovable.app/"
                 target="_blank"
