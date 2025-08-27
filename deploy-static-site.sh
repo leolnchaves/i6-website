@@ -58,6 +58,34 @@ cp -r dist/* $TEMP_DIR/
 # 🛠️ Cria arquivo .nojekyll para GitHub Pages servir módulos JS corretamente
 touch $TEMP_DIR/.nojekyll
 
+# 🛠️ Cria arquivo _headers para configurar MIME types no Netlify/GitHub Pages
+cat <<EOF > $TEMP_DIR/_headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+
+/assets/*.js
+  Content-Type: text/javascript
+
+/assets/*.mjs
+  Content-Type: text/javascript
+
+/assets/*.css
+  Content-Type: text/css
+
+/assets/*.wasm
+  Content-Type: application/wasm
+EOF
+
+# 🛠️ Verifica se o index.html foi gerado corretamente
+if [ ! -f "$TEMP_DIR/index.html" ]; then
+  echo "❌ Erro: index.html não encontrado no build"
+  exit 1
+fi
+
+echo "🔍 Verificando referências de assets no index.html..."
+grep -o 'src="/[^"]*\.js"' $TEMP_DIR/index.html || echo "⚠️ Nenhuma referência JS encontrada"
+
 echo "✅ Commitando e publicando para '$TARGET_BRANCH'..."
 cd $TEMP_DIR
 git add .
