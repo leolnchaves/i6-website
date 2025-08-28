@@ -1,25 +1,39 @@
 
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
 import heroBg from '@/assets/images/hero-bg.jpg';
 
 const SolutionsHero = memo(() => {
   const { language } = useLanguage();
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  
+  // Preload background image immediately
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setIsImageLoaded(true);
+    img.src = heroBg;
+  }, []);
   
   // Get static data based on language
   const heroContent = solutionsHeroData[language] || solutionsHeroData.en;
 
   return (
     <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
-      {/* Background image with blur */}
+      {/* Background image - lazy loaded */}
       <div 
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
         style={{ 
-          backgroundImage: `url(${heroBg})`,
-          filter: 'blur(10px)'
+          backgroundImage: isImageLoaded ? `url(${heroBg})` : 'none',
+          filter: 'blur(10px)',
+          opacity: isImageLoaded ? 1 : 0
         }}
       ></div>
+      
+      {/* Loading placeholder */}
+      {!isImageLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-slate-800"></div>
+      )}
       
       {/* Minimal grid pattern overlay */}
       <div className="absolute inset-0">
@@ -27,7 +41,7 @@ const SolutionsHero = memo(() => {
       </div>
       
       {/* Darker overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 mix-blend-multiply"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">
