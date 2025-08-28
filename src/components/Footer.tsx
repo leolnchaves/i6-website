@@ -164,9 +164,6 @@ const Footer = memo(() => {
                   {footerText.contactEmail}
                 </a>
               </li>
-              <li className="hover:text-orange-400 transition-colors duration-300">
-                {footerText.contactPhone}
-              </li>
             </ul>
           </div>
         </div>
