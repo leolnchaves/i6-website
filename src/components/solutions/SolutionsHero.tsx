@@ -1,48 +1,25 @@
 
-import { memo, useState, useEffect } from 'react';
+import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
 import heroBg from '@/assets/images/hero-bg.jpg';
 
 const SolutionsHero = memo(() => {
   const { language } = useLanguage();
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  
-  // Preload background image aggressively
-  useEffect(() => {
-    // Start preloading immediately
-    const img = new Image();
-    img.onload = () => {
-      // Delay to ensure smooth transition
-      setTimeout(() => setIsImageLoaded(true), 50);
-    };
-    img.src = heroBg;
-    
-    // Fallback timeout
-    const fallbackTimer = setTimeout(() => {
-      setIsImageLoaded(true);
-    }, 500);
-    
-    return () => clearTimeout(fallbackTimer);
-  }, []);
   
   // Get static data based on language
   const heroContent = solutionsHeroData[language] || solutionsHeroData.en;
 
   return (
     <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
-      {/* Background image - preloaded */}
+      {/* Background image with blur */}
       <div 
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-150"
+        className="absolute inset-0 bg-cover bg-center"
         style={{ 
           backgroundImage: `url(${heroBg})`,
-          filter: 'blur(10px)',
-          opacity: isImageLoaded ? 1 : 0
+          filter: 'blur(10px)'
         }}
       ></div>
-      
-      {/* Seamless loading placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
       
       {/* Minimal grid pattern overlay */}
       <div className="absolute inset-0">
@@ -50,7 +27,7 @@ const SolutionsHero = memo(() => {
       </div>
       
       {/* Darker overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 mix-blend-multiply"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">

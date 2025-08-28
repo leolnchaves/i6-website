@@ -28,21 +28,12 @@ const ContactHero = memo(() => {
     return () => observer.disconnect();
   }, []);
 
-  // Preload background image aggressively
+  // Preload background image
   useEffect(() => {
     if (isVisible) {
       const img = new Image();
-      img.onload = () => {
-        setTimeout(() => setIsImageLoaded(true), 50);
-      };
+      img.onload = () => setIsImageLoaded(true);
       img.src = heroBg;
-      
-      // Fallback timeout
-      const fallbackTimer = setTimeout(() => {
-        setIsImageLoaded(true);
-      }, 500);
-      
-      return () => clearTimeout(fallbackTimer);
     }
   }, [isVisible]);
   
@@ -65,18 +56,20 @@ const ContactHero = memo(() => {
 
   return (
     <section ref={containerRef} className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
-      {/* Background image with blur - preloaded */}
+      {/* Background image with blur - lazy loaded */}
       <div 
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-150"
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
         style={{ 
-          backgroundImage: `url(${heroBg})`,
+          backgroundImage: isImageLoaded ? `url(${heroBg})` : 'none',
           filter: 'blur(10px)',
           opacity: isImageLoaded ? 1 : 0
         }}
       ></div>
       
-      {/* Seamless loading placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
+      {/* Loading placeholder */}
+      {!isImageLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
+      )}
       
       {/* Minimal grid pattern overlay */}
       <div className="absolute inset-0">
@@ -84,7 +77,7 @@ const ContactHero = memo(() => {
       </div>
       
       {/* Darker overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 mix-blend-multiply"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">
