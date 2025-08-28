@@ -31,7 +31,7 @@ const SuccessStoriesHero = memo(() => {
       
       {/* Loading placeholder */}
       {!isImageLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-slate-800"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
       )}
       
       {/* Minimal grid pattern overlay */}
