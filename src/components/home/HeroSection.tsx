@@ -1,5 +1,5 @@
 
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,14 @@ const HeroSection = () => {
   
   // Component state
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  // Preload background image immediately
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setIsImageLoaded(true);
+    img.src = heroBg;
+  }, []);
 
   // Handle video modal opening with error handling
   const handleOpenVideoModal = () => {
@@ -55,9 +63,21 @@ const HeroSection = () => {
     <>
       {/* Main hero section */}
       <section 
-        className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
+        className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden"
       >
+        {/* Background image - lazy loaded */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
+          style={{ 
+            backgroundImage: isImageLoaded ? `url(${heroBg})` : 'none',
+            opacity: isImageLoaded ? 1 : 0
+          }}
+        ></div>
+        
+        {/* Loading placeholder */}
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-slate-800"></div>
+        )}
         {/* Background effects */}
         <div className="absolute inset-0">
           {/* Static curved shapes */}
