@@ -1,41 +1,10 @@
 
-import React, { memo, useState, useRef, useEffect, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import heroBg from '@/assets/images/hero-bg.jpg';
 
 const ContactHero = memo(() => {
   const { language } = useLanguage();
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Intersection Observer for viewport detection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Preload background image
-  useEffect(() => {
-    if (isVisible) {
-      const img = new Image();
-      img.onload = () => setIsImageLoaded(true);
-      img.src = heroBg;
-    }
-  }, [isVisible]);
   
   // Static content - memoized for stability
   const content = useMemo(() => ({
@@ -55,21 +24,15 @@ const ContactHero = memo(() => {
   const text = useMemo(() => content[language], [content, language]);
 
   return (
-    <section ref={containerRef} className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
-      {/* Background image with blur - lazy loaded */}
+    <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
+      {/* Background image with blur */}
       <div 
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
+        className="absolute inset-0 bg-cover bg-center"
         style={{ 
-          backgroundImage: isImageLoaded ? `url(${heroBg})` : 'none',
-          filter: 'blur(10px)',
-          opacity: isImageLoaded ? 1 : 0
+          backgroundImage: `url(${heroBg})`,
+          filter: 'blur(10px)'
         }}
       ></div>
-      
-      {/* Loading placeholder */}
-      {!isImageLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
-      )}
       
       {/* Minimal grid pattern overlay */}
       <div className="absolute inset-0">
