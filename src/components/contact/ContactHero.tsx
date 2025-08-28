@@ -28,12 +28,21 @@ const ContactHero = memo(() => {
     return () => observer.disconnect();
   }, []);
 
-  // Preload background image
+  // Preload background image aggressively
   useEffect(() => {
     if (isVisible) {
       const img = new Image();
-      img.onload = () => setIsImageLoaded(true);
+      img.onload = () => {
+        setTimeout(() => setIsImageLoaded(true), 50);
+      };
       img.src = heroBg;
+      
+      // Fallback timeout
+      const fallbackTimer = setTimeout(() => {
+        setIsImageLoaded(true);
+      }, 500);
+      
+      return () => clearTimeout(fallbackTimer);
     }
   }, [isVisible]);
   
@@ -56,20 +65,18 @@ const ContactHero = memo(() => {
 
   return (
     <section ref={containerRef} className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
-      {/* Background image with blur - lazy loaded */}
+      {/* Background image with blur - preloaded */}
       <div 
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-150"
         style={{ 
-          backgroundImage: isImageLoaded ? `url(${heroBg})` : 'none',
+          backgroundImage: `url(${heroBg})`,
           filter: 'blur(10px)',
           opacity: isImageLoaded ? 1 : 0
         }}
       ></div>
       
-      {/* Loading placeholder */}
-      {!isImageLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
-      )}
+      {/* Seamless loading placeholder */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80"></div>
       
       {/* Minimal grid pattern overlay */}
       <div className="absolute inset-0">
