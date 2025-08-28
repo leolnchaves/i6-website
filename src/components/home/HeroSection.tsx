@@ -96,7 +96,7 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
         </div>
         
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-slate-800/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 mix-blend-multiply"></div>
         
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-5xl mx-auto text-center text-white">
