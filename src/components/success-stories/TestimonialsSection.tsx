@@ -72,21 +72,23 @@ const TestimonialsSection = memo(() => {
                     <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
                     <cite className="not-italic">
                       <div className="flex items-center gap-2 mb-1">
-                        <a 
-                          href="https://www.linkedin.com/company/infinity6" 
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                          title="View LinkedIn Profile"
-                        >
-                          <Linkedin className="w-4 h-4" />
-                        </a>
+                        {testimonial.linkedin_url && (
+                          <a 
+                            href={testimonial.linkedin_url} 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
+                            title="View LinkedIn Profile"
+                          >
+                            <Linkedin className="w-4 h-4" />
+                          </a>
+                        )}
                         <span className="font-medium text-foreground">
                           {testimonial.author_name}
                         </span>
                       </div>
                       {testimonial.author_title && (
-                        <div className="text-sm text-muted-foreground ml-6">
+                        <div className={`text-sm text-muted-foreground ${testimonial.linkedin_url ? 'ml-6' : ''}`}>
                           {testimonial.author_title}
                           {testimonial.company_name && (
                             <span className="text-primary/70"> • {testimonial.company_name}</span>

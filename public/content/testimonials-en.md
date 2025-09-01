@@ -5,6 +5,7 @@
 **Author:** Paulo Lima
 **Title:** New Channel Manager
 **Company:** NC Farma
+**LinkedIn:** https://www.linkedin.com/in/paulo-lima-manager
 **Rating:** 5
 
 ---
@@ -14,6 +15,7 @@
 **Author:** Carlos Rodriguez
 **Title:** CTO
 **Company:** DataFlow Solutions
+**LinkedIn:** https://www.linkedin.com/in/carlos-rodriguez-cto
 **Rating:** 5
 
 ---
@@ -23,4 +25,5 @@
 **Author:** Jennifer Liu
 **Title:** VP of Innovation
 **Company:** Future Systems Inc
+**LinkedIn:** https://www.linkedin.com/in/jennifer-liu-innovation
 **Rating:** 5

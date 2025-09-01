@@ -5,6 +5,7 @@
 **Author:** Amanda Foster
 **Title:** CEO
 **Company:** TechVision Corp
+**LinkedIn:** https://www.linkedin.com/in/amanda-foster-ceo
 **Rating:** 5
 
 ---
@@ -14,6 +15,7 @@
 **Author:** Carlos Rodriguez
 **Title:** CTO
 **Company:** DataFlow Solutions
+**LinkedIn:** https://www.linkedin.com/in/carlos-rodriguez-cto
 **Rating:** 5
 
 ---
@@ -23,4 +25,5 @@
 **Author:** Jennifer Liu
 **Title:** VP de Inovação
 **Company:** Future Systems Inc
+**LinkedIn:** https://www.linkedin.com/in/jennifer-liu-innovation
 **Rating:** 5

@@ -7,6 +7,7 @@ export interface TestimonialItem {
   author_name: string;
   author_title?: string;
   company_name?: string;
+  linkedin_url?: string;
   rating: number;
 }
 
@@ -72,6 +73,8 @@ const parseMarkdownContent = (content: string): TestimonialItem[] => {
         testimonial.author_title = trimmedLine.replace('**Title:**', '').trim();
       } else if (trimmedLine.startsWith('**Company:**')) {
         testimonial.company_name = trimmedLine.replace('**Company:**', '').trim();
+      } else if (trimmedLine.startsWith('**LinkedIn:**')) {
+        testimonial.linkedin_url = trimmedLine.replace('**LinkedIn:**', '').trim();
       } else if (trimmedLine.startsWith('**Rating:**')) {
         const rating = parseInt(trimmedLine.replace('**Rating:**', '').trim());
         if (!isNaN(rating)) {
