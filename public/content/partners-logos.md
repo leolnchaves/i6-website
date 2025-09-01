@@ -86,6 +86,6 @@
 
 ---
 
-## DIRECIONAL
-**Logo:** /content/logos/direcional.png
-**Name:** DIRECIONAL
+## ESFERA
+**Logo:** /content/logos/esfera.png
+**Name:** ESFERA
