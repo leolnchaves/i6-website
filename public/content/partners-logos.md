@@ -80,12 +80,6 @@
 
 ---
 
-## CLOSE-UP
-**Logo:** /content/logos/close-up.png
-**Name:** CLOSE-UP
-
----
-
 ## ANIMA
 **Logo:** /content/logos/ANIMA.png
 **Name:** ANIMA
