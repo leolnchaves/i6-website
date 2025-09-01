@@ -26,6 +26,24 @@
 
 ---
 
+## ESFERA
+**Logo:** /content/logos/esfera.png
+**Name:** ESFERA
+
+---
+
+## TICKETMASTER
+**Logo:** /content/logos/TICKETMASTER.png
+**Name:** TICKETMASTER
+
+---
+
+## LIVE
+**Logo:** /content/logos/live.png
+**Name:** LIVE
+
+---
+
 ## ACHĒ
 **Logo:** /content/logos/ACHE.png
 **Name:** ACHĒ
@@ -79,20 +97,3 @@
 **Name:** FORD
 
 ---
-
-## TICKETMASTER
-**Logo:** /content/logos/TICKETMASTER.png
-**Name:** TICKETMASTER
-
----
-
-## ESFERA
-**Logo:** /content/logos/esfera.png
-**Name:** ESFERA
-
----
-
-## LIVE
-**Logo:** /content/logos/live.png
-**Name:** LIVE
-
