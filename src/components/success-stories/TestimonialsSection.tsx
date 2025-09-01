@@ -3,14 +3,14 @@ import React, { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
-import { testimonialsData } from '@/data/staticData/testimonialsData';
+import { useTestimonialsMarkdown } from '@/hooks/useTestimonialsMarkdown';
 import { Linkedin, Quote } from 'lucide-react';
 
 const TestimonialsSection = memo(() => {
   const { language } = useLanguage();
+  const { testimonials, loading, error } = useTestimonialsMarkdown();
   
   const sectionContent = successStoriesData[language]?.testimonials || successStoriesData.en.testimonials;
-  const testimonials = testimonialsData[language] || testimonialsData.en;
 
   return (
     <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
@@ -24,7 +24,25 @@ const TestimonialsSection = memo(() => {
           </p>
         </div>
 
-        {testimonials.length === 0 ? (
+        {loading ? (
+          <div className="text-center py-16">
+            <div className="relative">
+              <Quote className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3 animate-pulse" />
+              <p className="text-muted-foreground">
+                {language === 'en' ? 'Loading testimonials...' : 'Carregando depoimentos...'}
+              </p>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-16">
+            <div className="relative">
+              <Quote className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+              <p className="text-muted-foreground">
+                {language === 'en' ? 'Error loading testimonials.' : 'Erro ao carregar depoimentos.'}
+              </p>
+            </div>
+          </div>
+        ) : testimonials.length === 0 ? (
           <div className="text-center py-16">
             <div className="relative">
               <Quote className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
