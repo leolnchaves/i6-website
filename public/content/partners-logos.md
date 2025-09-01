@@ -91,3 +91,9 @@
 **Name:** FORD
 
 ---
+
+## CLOSE-UP
+**Logo:** /content/logos/close-up.png
+**Name:** CLOSE-UP
+
+---
