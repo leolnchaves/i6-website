@@ -32,6 +32,7 @@ export const usePartnersContent = (): UsePartnersContentReturn => {
         console.log('Partners markdown content loaded:', content.substring(0, 200) + '...');
         const parsedPartners = parsePartnersContent(content);
         console.log('Parsed partners count:', parsedPartners.length);
+        console.log('Partners order from MD:', parsedPartners.map(p => p.name));
         setPartners(parsedPartners);
       } catch (err) {
         console.error('Error fetching partners content:', err);
