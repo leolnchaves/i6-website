@@ -79,7 +79,7 @@ const PartnersSection = () => {
                 className={`flex animate-marquee ${isPaused ? 'paused' : ''}`}
                 style={{
                   width: `${doubledPartners.length * 220}px`,
-                  animationDuration: `${doubledPartners.length * 2.5}s`
+                  animationDuration: `${doubledPartners.length * 1.5}s`
                 }}
               >
                 {doubledPartners.map((partner, index) => {
