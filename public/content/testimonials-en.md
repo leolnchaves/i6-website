@@ -5,7 +5,7 @@
 **Author:** Paulo Lima
 **Title:** New Channel Manager
 **Company:** NC Farma
-**LinkedIn:** https://www.linkedin.com/in/paulo-lima-manager
+**LinkedIn:** https://www.linkedin.com/in/pauloelima/?originalSubdomain=br
 **Rating:** 5
 
 ---
