@@ -1,10 +1,10 @@
 # Testimonials
 
 ## Testimonial 1
-**Quote:** Infinity6's AI solutions transformed our entire business model. The predictive analytics capabilities have given us unprecedented insights into market trends and customer behavior.
-**Author:** Amanda Foster
-**Title:** CEO
-**Company:** TechVision Corp
+**Quote:** High technical capacity team with excellent business vision, developing creative and effective solutions.
+**Author:** Paulo Lima
+**Title:** New Channel Manager
+**Company:** NC Farma
 **Rating:** 5
 
 ---
