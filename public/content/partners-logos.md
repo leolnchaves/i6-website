@@ -62,9 +62,9 @@
 
 ---
 
-## CONDOR
-**Logo:** /content/logos/CONDOR.png
-**Name:** CONDOR
+## CLOSE-UP
+**Logo:** /content/logos/close-up.png
+**Name:** CLOSE-UP
 
 ---
 
