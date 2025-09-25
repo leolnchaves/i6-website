@@ -21,7 +21,7 @@ const SolutionsMetricsSection = memo(() => {
       "Results in few weeks"
     ],
     pt: [
-      "IA especialista",
+      "IA aplicada",
       "Integração sem fricção",
       "Baixo tech lift",
       "API-first",
