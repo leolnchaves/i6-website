@@ -2,7 +2,7 @@
 
 ---
 
-## E-commerce Platform Optimization
+## Market Place Excellence: Driving Success for Pharmacies
 **Image:** /content/success-stories/ecommerce.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** Manufacturing
