@@ -24,7 +24,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ## Manufacturing Predictive Maintenance
 **Image:** /content/success-stories/manufacturing.jpg
-**Logo:** /content/logos/2.png
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Manufacturing
 **Client:** Industrial Solutions Co.
 **Description:** Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.
@@ -42,7 +42,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ## Healthcare Patient Flow Optimization
 **Image:** /content/success-stories/healthcare.jpg
-**Logo:** /content/logos/1.png
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Healthcare
 **Client:** MedTech Innovations
 **Description:** MedTech Innovations
@@ -60,7 +60,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ## Financial Fraud Detection System
 **Image:** /content/success-stories/finance.jpg
-**Logo:** /content/logos/1.png
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Finance
 **Client:** Capital Banking Group
 **Description:** Capital Banking Group
@@ -78,7 +78,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ## Logistics Route Optimization
 **Image:** /content/success-stories/logistics.jpg
-**Logo:** /content/logos/1.png
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Logistics
 **Client:** Global Shipping Solutions
 **Description:** Global Shipping Solutions
@@ -96,7 +96,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ## Automotive Quality Control
 **Image:** /content/success-stories/automotive.jpg
-**Logo:** /content/logos/1.png
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Automotive
 **Client:** NextGen Motors
 **Description:** NextGen Motors
@@ -114,7 +114,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ## Teste
 **Image:** /content/success-stories/teste.jpg
-**Logo:** /content/logos/EMS-COR.png
+**Logo:**/content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Teste
 **Client:** Teste Infinity
 **Description:** Infinity é a melhor empresa de tecnologia do mundo.
