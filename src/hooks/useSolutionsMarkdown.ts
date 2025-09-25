@@ -61,13 +61,16 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
   const solutions: SolutionItem[] = [];
   const sections = content.split('---').map(section => section.trim()).filter(Boolean);
   
+  console.log('Total sections found:', sections.length);
+  console.log('First section preview:', sections[0]?.substring(0, 200));
+  
   // Process all sections, including the first one which contains the first solution
   for (const section of sections) {
     const lines = section.split('\n').map(line => line.trim()).filter(Boolean);
+    console.log('Processing section with lines:', lines.length);
     
     let title = '';
     let engine = '';
-    let icon = '';
     let target = '';
     let overview = '';
     let keyFeatures: string[] = [];
@@ -82,8 +85,6 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
         }
       } else if (line.startsWith('**Engine:**')) {
         engine = line.substring(11).trim();
-      } else if (line.startsWith('**Icon:**')) {
-        icon = line.substring(9).trim();
       } else if (line.startsWith('**Target:**')) {
         target = line.substring(11).trim();
       } else if (line.startsWith('**Title:**')) {
@@ -111,22 +112,29 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
       }
     }
     
-    if (title && engine && icon) {
+    console.log('Section parsed:', { title, engine, target, overview: overview.substring(0, 50) });
+    
+    if (title && engine) {
       // Generate ID from title
       const id = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+      
+      console.log('Adding solution:', { id, title, engine });
       
       solutions.push({
         id,
         title,
         engine,
-        icon,
+        icon: '', // Empty string since we removed icons
         target,
         overview,
         keyFeatures,
         businessResults
       });
+    } else {
+      console.log('Skipping section - missing required fields:', { title: !!title, engine: !!engine });
     }
   }
   
+  console.log('Final solutions array:', solutions);
   return solutions;
 };
