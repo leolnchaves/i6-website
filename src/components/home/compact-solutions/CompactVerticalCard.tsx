@@ -51,42 +51,59 @@ const CompactVerticalCard = ({
   };
 
   const getColorScheme = (cardIndex: number) => {
-    // Cards do meio (índices ímpares) têm gradiente invertido
-    if (cardIndex % 2 === 1) {
+    // Para criar faixa contínua, ajustamos os gradientes para se conectarem
+    if (cardIndex % 3 === 0) {
+      // Primeiro card da linha: gradiente da esquerda para o centro
       return { 
-        bg: 'from-orange-50/30 via-orange-100/40 to-orange-200/60', // Invertido: claro → escuro
+        bg: 'from-orange-200/60 via-orange-100/50 to-orange-50/40', 
+        iconBg: 'from-orange-500/90 to-orange-600/90',
+        accent: 'text-orange-700',
+        border: 'border-orange-200/50 hover:border-orange-300/70'
+      };
+    } else if (cardIndex % 3 === 1) {
+      // Card do meio: gradiente uniforme no centro
+      return { 
+        bg: 'from-orange-100/50 via-orange-100/50 to-orange-100/50',
+        iconBg: 'from-orange-500/90 to-orange-600/90',
+        accent: 'text-orange-700',
+        border: 'border-orange-200/50 hover:border-orange-300/70'
+      };
+    } else {
+      // Terceiro card da linha: gradiente do centro para a direita
+      return { 
+        bg: 'from-orange-50/40 via-orange-100/50 to-orange-200/60',
         iconBg: 'from-orange-500/90 to-orange-600/90',
         accent: 'text-orange-700',
         border: 'border-orange-200/50 hover:border-orange-300/70'
       };
     }
-    // Cards das laterais (índices pares) mantêm gradiente normal
-    return { 
-      bg: 'from-orange-200/60 via-orange-100/40 to-orange-50/30', // Normal: escuro → claro
-      iconBg: 'from-orange-500/90 to-orange-600/90',
-      accent: 'text-orange-700',
-      border: 'border-orange-200/50 hover:border-orange-300/70'
-    };
   };
 
   const MainIcon = getIcon(icon);
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
-  // Curva S normal para cards pares, invertida para cards ímpares (meio)
+  // Ajustar curvas para criar continuidade visual
   const getCurvedBackground = (cardIndex: number) => {
-    // Cards do meio (índices ímpares) têm curva invertida
-    if (cardIndex % 2 === 1) {
+    if (cardIndex % 3 === 0) {
+      // Primeiro card: curva suave à direita
       return {
-        clipPath: 'polygon(0% 70%, 25% 55%, 50% 35%, 75% 25%, 100% 20%, 100% 0%, 0% 0%)',
+        clipPath: 'polygon(0% 25%, 25% 20%, 50% 30%, 75% 25%, 100% 30%, 100% 0%, 0% 0%)',
+        height: 'h-64'
+      };
+    } else if (cardIndex % 3 === 1) {
+      // Card do meio: curva balanceada
+      return {
+        clipPath: 'polygon(0% 30%, 25% 25%, 50% 35%, 75% 25%, 100% 30%, 100% 0%, 0% 0%)',
+        height: 'h-64'
+      };
+    } else {
+      // Terceiro card: curva suave à esquerda
+      return {
+        clipPath: 'polygon(0% 30%, 25% 25%, 50% 30%, 75% 20%, 100% 25%, 100% 0%, 0% 0%)',
         height: 'h-64'
       };
     }
-    // Cards das laterais (índices pares) têm curva normal
-    return {
-      clipPath: 'polygon(0% 20%, 25% 25%, 50% 40%, 75% 55%, 100% 70%, 100% 0%, 0% 0%)',
-      height: 'h-64'
-    };
   };
 
   const curvedShape = getCurvedBackground(index);
