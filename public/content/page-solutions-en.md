@@ -46,7 +46,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** building-2
+**Icon:** /src/assets/icons/industrial-intelligence.png
 
 **Target:** Supply & Profitability Optimization
 

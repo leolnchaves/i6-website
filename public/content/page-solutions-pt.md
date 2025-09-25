@@ -46,7 +46,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** /src/assets/icons/building.png
+**Icon:** /src/assets/icons/industrial-intelligence.png
 
 **Target:** B2B, B2B2C
 
