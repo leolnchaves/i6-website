@@ -33,6 +33,7 @@ export const usePartnersContent = (): UsePartnersContentReturn => {
         const parsedPartners = parsePartnersContent(content);
         console.log('Parsed partners count:', parsedPartners.length);
         console.log('Partners order from MD:', parsedPartners.map(p => p.name));
+        console.log('Partners with logos:', parsedPartners.map(p => ({ name: p.name, logo: p.logo })));
         setPartners(parsedPartners);
       } catch (err) {
         console.error('Error fetching partners content:', err);

@@ -3,7 +3,7 @@
 ---
 
 ## EMBRAER
-**Logo:** /content/logos/EMBRAER.png
+**Logo:** /content/logos/embraer.png
 **Name:** EMBRAER
 
 ---
@@ -46,7 +46,7 @@
 
 ## JEQUITI
 **Logo:** /content/logos/JEQUITI.png
-**Name:** JEQTUITI
+**Name:** JEQUITI
 
 ---
 
@@ -87,7 +87,7 @@
 ---
 
 ## ALPARGATAS
-**Logo:** /content/logos/alpargatas.png
+**Logo:** /content/logos/ALPARGATAS.png
 **Name:** ALPARGATAS
 
 ---
