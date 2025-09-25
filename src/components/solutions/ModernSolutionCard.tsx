@@ -5,7 +5,6 @@ import { Target, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ModernSolutionCardProps {
-  icon: string; // Image path only
   title: string;
   focus: string;
   description: string;
@@ -33,7 +32,6 @@ const translations = {
 };
 
 const ModernSolutionCard = memo(({ 
-  icon, 
   title,
   focus, 
   description, 
@@ -99,15 +97,6 @@ const ModernSolutionCard = memo(({
             <h3 className="font-bold text-2xl text-gray-900 mb-2 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500">
               {title}
             </h3>
-          </div>
-          
-          {/* Large Background Image - Top right positioned */}
-          <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none">
-            <img 
-              src={icon} 
-              alt={`${title} icon`}
-              className="w-40 h-40 object-contain"
-            />
           </div>
         </div>
 

@@ -56,8 +56,6 @@ const StaticSolutionsGrid = memo(() => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {solutions.map((solution, index) => {
-              // Use image path directly
-              const iconPath = solution.icon;
               const bgColor = engineColorMap[solution.engine] || 'bg-blue-500/20';
               
               console.log('Rendering solution:', solution.title, 'with features:', solution.keyFeatures);
@@ -65,7 +63,6 @@ const StaticSolutionsGrid = memo(() => {
               return (
                 <ModernSolutionCard
                   key={solution.id}
-                  icon={iconPath}
                   title={solution.title}
                   focus={solution.target}
                   description={solution.overview}

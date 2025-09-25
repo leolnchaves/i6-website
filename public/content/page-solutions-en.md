@@ -2,8 +2,6 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** /src/assets/icons/hat-glasses.png
-
 **Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
 **Title:** Smart Discovery for Anonymous Visitors
@@ -23,8 +21,6 @@
 ## Predictive Personalization for Identified Users
 
 **Engine:** i6 RecSys
-
-**Icon:** /src/assets/icons/shopping-cart.png
 
 **Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
@@ -46,8 +42,6 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** /src/assets/icons/industrial-intelligence.png
-
 **Target:** Supply & Profitability Optimization
 
 **Title:** Industrial Recommendation Intelligence
@@ -67,8 +61,6 @@
 ## Predictive Campaign Targeting
 
 **Engine:** i6 RecSys
-
-**Icon:** /src/assets/icons/target.png
 
 **Target:** Growth Acceleration
 
@@ -90,8 +82,6 @@
 
 **Engine:** i6 ElasticPrice
 
-**Icon:** /src/assets/icons/dollar.png
-
 **Target:** Supply & Profitability Optimization
 
 **Title:** Smart Price Optimization
@@ -111,8 +101,6 @@
 ## Adaptive Demand Forecasting
 
 **Engine:** i6 Previsio
-
-**Icon:** /src/assets/icons/chart.png
 
 **Target:** Supply & Profitability Optimization
 

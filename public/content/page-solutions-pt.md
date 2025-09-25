@@ -2,8 +2,6 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** /src/assets/icons/hat-glasses.png
-
 **Target:** B2B, B2C
 
 **Title:** Descoberta Inteligente para Visitantes Anônimos
@@ -23,8 +21,6 @@
 ## Personalização Preditiva para Usuários Identificados
 
 **Engine:** i6 RecSys
-
-**Icon:** /src/assets/icons/shopping-cart.png
 
 **Target:** B2B, B2C, B2B2C, D2C
 
@@ -46,8 +42,6 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** /src/assets/icons/industrial-intelligence.png
-
 **Target:** B2B, B2B2C
 
 **Title:** Inteligência de Recomendação Industrial
@@ -67,8 +61,6 @@
 ## Segmentação Preditiva de Campanha
 
 **Engine:** i6 RecSys
-
-**Icon:** /src/assets/icons/target.png
 
 **Target:** B2B, B2C
 
@@ -90,8 +82,6 @@
 
 **Engine:** i6 ElasticPrice
 
-**Icon:** /src/assets/icons/dollar.png
-
 **Target:** B2B, B2C, B2B2C, D2C
 
 **Title:** Otimização Inteligente de Preços
@@ -111,8 +101,6 @@
 ## Previsão Adaptativa de Demanda
 
 **Engine:** i6 Previsio
-
-**Icon:** /src/assets/icons/chart.png
 
 **Target:** B2B, B2C
 
