@@ -33,7 +33,8 @@ const SuccessStoriesHero = memo(() => {
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
             <span className="block mb-2">{heroContent.title}</span>
             <span className="block bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent pb-2">
-              {heroContent.subtitle}
+              <span className="block">{heroContent.subtitle.split('.')[0]}.</span>
+              <span className="block">{heroContent.subtitle.split('.')[1]?.trim()}</span>
             </span>
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 drop-shadow-lg leading-relaxed">
