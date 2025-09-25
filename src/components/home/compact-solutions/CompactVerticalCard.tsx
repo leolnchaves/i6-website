@@ -146,45 +146,10 @@ const CompactVerticalCard = ({
       ></div>
 
       <CardContent className="relative p-8 text-center z-10">
-        {/* GIFs animados seguindo a curva S do fundo */}
-        <div className="relative mb-8 mx-auto w-full h-32 overflow-hidden">
-          {/* GIF animado fluindo pela curva S */}
-          <div className="absolute inset-0">
-            <img 
-              src="/solucao-Smart-Price.gif" 
-              alt="Smart Price Animation"
-              className="w-8 h-8 object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
-              style={{
-                position: 'absolute',
-                animation: `flowAlongCurve${(index % 3) + 1} 6s ease-in-out infinite`,
-                animationDelay: '0s'
-              }}
-            />
-            <img 
-              src="/solucao-Adaptive-Demand.gif" 
-              alt="Adaptive Demand Animation"
-              className="w-8 h-8 object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
-              style={{
-                position: 'absolute',
-                animation: `flowAlongCurve${(index % 3) + 1} 6s ease-in-out infinite`,
-                animationDelay: '2s'
-              }}
-            />
-            <img 
-              src="/solucao-Identified-Users.gif" 
-              alt="Identified Users Animation"
-              className="w-8 h-8 object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
-              style={{
-                position: 'absolute',
-                animation: `flowAlongCurve${(index % 3) + 1} 6s ease-in-out infinite`,
-                animationDelay: '4s'
-              }}
-            />
-          </div>
-          
-          {/* Ícone principal centralizado */}
-          <div className={`relative z-10 mx-auto w-16 h-16 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300 flex items-center justify-center`}>
-            <MainIcon size={24} className="text-white" />
+        {/* Ícone principal centralizado */}
+        <div className="relative mb-8 mx-auto w-20 h-20 flex items-center justify-center">
+          <div className={`relative z-10 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+            <MainIcon size={32} className="text-white" />
           </div>
         </div>
 
