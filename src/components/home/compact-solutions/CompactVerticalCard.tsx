@@ -50,42 +50,43 @@ const CompactVerticalCard = ({
   };
 
   const getColorScheme = (cardIndex: number) => {
+    // Gradient transition from blue to green across all cards
     const schemes = [
       { 
-        bg: 'from-blue-100 via-blue-50 to-cyan-50', 
-        iconBg: 'from-blue-500 to-cyan-500',
-        accent: 'text-blue-600',
-        border: 'border-blue-200 hover:border-blue-300'
+        bg: 'from-blue-200/60 via-blue-100/40 to-blue-50/30', 
+        iconBg: 'from-blue-500/90 to-blue-600/90',
+        accent: 'text-blue-700',
+        border: 'border-blue-200/50 hover:border-blue-300/70'
       },
       { 
-        bg: 'from-purple-100 via-purple-50 to-pink-50', 
-        iconBg: 'from-purple-500 to-pink-500',
-        accent: 'text-purple-600',
-        border: 'border-purple-200 hover:border-purple-300'
+        bg: 'from-purple-200/60 via-purple-100/40 to-pink-50/30', 
+        iconBg: 'from-purple-500/90 to-pink-500/90',
+        accent: 'text-purple-700',
+        border: 'border-purple-200/50 hover:border-purple-300/70'
       },
       { 
-        bg: 'from-green-100 via-green-50 to-emerald-50', 
-        iconBg: 'from-green-500 to-emerald-500',
-        accent: 'text-green-600',
-        border: 'border-green-200 hover:border-green-300'
+        bg: 'from-emerald-200/60 via-emerald-100/40 to-green-50/30', 
+        iconBg: 'from-emerald-500/90 to-green-500/90',
+        accent: 'text-emerald-700',
+        border: 'border-emerald-200/50 hover:border-emerald-300/70'
       },
       { 
-        bg: 'from-orange-100 via-orange-50 to-amber-50', 
-        iconBg: 'from-orange-500 to-amber-500',
-        accent: 'text-orange-600',
-        border: 'border-orange-200 hover:border-orange-300'
+        bg: 'from-cyan-200/60 via-cyan-100/40 to-teal-50/30', 
+        iconBg: 'from-cyan-500/90 to-teal-500/90',
+        accent: 'text-cyan-700',
+        border: 'border-cyan-200/50 hover:border-cyan-300/70'
       },
       { 
-        bg: 'from-teal-100 via-teal-50 to-cyan-50', 
-        iconBg: 'from-teal-500 to-cyan-500',
-        accent: 'text-teal-600',
-        border: 'border-teal-200 hover:border-teal-300'
+        bg: 'from-teal-200/60 via-teal-100/40 to-emerald-50/30', 
+        iconBg: 'from-teal-500/90 to-emerald-600/90',
+        accent: 'text-teal-700',
+        border: 'border-teal-200/50 hover:border-teal-300/70'
       },
       { 
-        bg: 'from-indigo-100 via-indigo-50 to-purple-50', 
-        iconBg: 'from-indigo-500 to-purple-500',
-        accent: 'text-indigo-600',
-        border: 'border-indigo-200 hover:border-indigo-300'
+        bg: 'from-green-200/60 via-green-100/40 to-lime-50/30', 
+        iconBg: 'from-green-500/90 to-lime-500/90',
+        accent: 'text-green-700',
+        border: 'border-green-200/50 hover:border-green-300/70'
       }
     ];
     return schemes[cardIndex % schemes.length];
