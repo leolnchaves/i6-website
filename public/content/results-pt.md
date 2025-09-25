@@ -25,14 +25,14 @@
 
 ---
 
-## Otimização de Suprimentos e Lucratividade
+## Otimização de Supply & Lucratividade
 **Icon:** DollarSign
-**Description:** Alinhe preços, demanda e sortimento para melhorar margem, giro e sell-out.
+**Description:** Alinhe precificação, demanda e sortimento para melhorar margem, giro e sell-out.
 
 **Outcomes:**
-- Aumente margem ou demanda com preços dinâmicos
-- Preveja demanda para evitar faltas e excessos
-- Impulsione sell-out com sortimento inteligente e localizado
+- Aumente margem ou demanda com pricing dinâmico
+- Preveja demanda para evitar rupturas e excesso de estoque
+- Acelere o sell-out com sortimento inteligente e localizado
 
 ---
 
