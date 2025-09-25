@@ -146,17 +146,17 @@ const CompactVerticalCard = ({
         }}
       ></div>
 
-      {/* Faixa lateral hover com gradiente do menu */}
-      <div className="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-orange-500 to-blue-500 opacity-0 group-hover:opacity-100 group-hover:w-16 transition-all duration-300 flex items-center justify-center">
+      {/* Faixa inferior hover com gradiente do menu */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-blue-500 opacity-0 group-hover:opacity-100 group-hover:h-12 transition-all duration-300 flex items-center justify-center rounded-b-3xl">
         <Link 
           to="/solutions"
-          className="text-white text-xs font-medium writing-mode-vertical transform rotate-180 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 hover:text-orange-200"
+          className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 hover:text-orange-200"
         >
           Saiba Mais
         </Link>
       </div>
 
-      <CardContent className="relative p-8 text-center z-10">
+      <CardContent className="relative p-8 text-center z-10 min-h-[280px] flex flex-col justify-between">
 
         {/* Título */}
         <h3 className="font-bold text-xl text-gray-900 mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
