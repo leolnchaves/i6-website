@@ -22,19 +22,21 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 
 ---
 
-## Manufacturing Predictive Maintenance
-**Image:** /content/success-stories/manufacturing.jpg
+## Elevating Customer Engagement: Enhancing Online Sales
+**Image:** /content/success-stories/case-retail-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Manufacturing
-**Client:** Industrial Solutions Co.
-**Description:** Fortune 500 manufacturing company with 25+ years of industry leadership. ISO 9001 certified with global operations.
-**Challenge:** High equipment downtime and unpredictable maintenance costs affecting production efficiency and overall operational expenses.
-**Solution:** Deployed predictive maintenance AI system with IoT sensors to forecast equipment failures and optimize maintenance schedules proactively.
-**Metric1:** 35% Downtime Reduction
-**Metric2:** $2M Annual Savings
+**Segment:** Retail
+**Client:** The most traditional fashion brand in Latin America.
+**Description:** With over 140 years of history, the company has established itself as one of the leading fashion retailers in the region.
+**Challenge:** In the competitive fashion retail landscape, a leading company sought to boost customer engagement and drive online sales. They aimed to implement a solution that delivers highly relevant and diverse product recommendations in real-time, moving beyond basic suggestions to anticipate and fulfill customer needs.
+A significant challenge was providing personalized recommendations to both logged-in users and anonymous visitors, ensuring a seamless and engaging experience for all customers.
+**Solution:** To drive digital sales growth, the initiative focuses on consolidating customer behaviors from both logged-in users and anonymous visitors. By predicting purchasing patterns through real-time product recommendations aligned with customer navigation and interaction feedback, the retailer aims to enhance customer engagement.
+This strategy seeks to increase the average basket size through effective cross-selling and up-selling, creating a personalized and dynamic shopping experience that resonates with each customer’s unique preferences.
+**Metric1:** 50% New Products Discovery
+**Metric2:** 11% Recommended Items-to-Cart
 **Metric3:** 50% Maintenance Efficiency
-**Solutions:** Industrial Intelligence, Adaptive Demand, Predictive Campaign
-**Quote:** Predictive maintenance has revolutionized our operations and saved us millions in unexpected downtime costs.
+**Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users
+**Quote:** Elevating Customer Engagement: Enhancing Online Sales
 **CustomerName:** Michael Chen
 **CustomerTitle:** Operations Director
 
