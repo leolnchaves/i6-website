@@ -112,9 +112,24 @@ const CompactVerticalCard = ({
       {
         clipPath: 'polygon(0% 20%, 25% 25%, 50% 40%, 75% 55%, 100% 70%, 100% 0%, 0% 0%)',
         height: 'h-60'
+      },
+      // Card 4: começa baixo à esquerda (70%), termina alto à direita (25%) - curva S ascendente
+      {
+        clipPath: 'polygon(0% 70%, 25% 55%, 50% 30%, 75% 20%, 100% 25%, 100% 0%, 0% 0%)',
+        height: 'h-66'
+      },
+      // Card 5: começa alto à esquerda (25%), termina baixo à direita (65%) - curva S descendente
+      {
+        clipPath: 'polygon(0% 25%, 25% 30%, 50% 45%, 75% 60%, 100% 65%, 100% 0%, 0% 0%)',
+        height: 'h-62'
+      },
+      // Card 6: começa baixo à esquerda (65%), termina alto à direita (30%) - curva S ascendente
+      {
+        clipPath: 'polygon(0% 65%, 25% 50%, 50% 35%, 75% 25%, 100% 30%, 100% 0%, 0% 0%)',
+        height: 'h-64'
       }
     ];
-    return shapes[cardIndex % 3];
+    return shapes[cardIndex % shapes.length];
   };
 
   const curvedShape = getCurvedBackground(index);
