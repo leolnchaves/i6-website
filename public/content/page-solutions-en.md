@@ -130,24 +130,3 @@
 
 ---
 
-## Adaptive DADO NOVO
-
-**Engine:** i6 Previsio
-
-**Icon:** bar-chart-3
-
-**Target:** Supply & Profitability Optimization DADO NOVO
-
-**Title:** Adaptive Demand Forecasting DADO NOVO
-
-**Overview:** Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality and behaviors, empowering supply chain and commercial planning. DADO NOVO
-
-**Key Features:**
-- Self-Reinforcing Forecast Model DADO NOVO
-- Extended Projection (N+M) DADO NOVO
-- Seasonality and Trend Detection DADO NOVO
-- Inventory and Supply Chain Alignment DADO NOVO
-
-**Business Results:** Enhances demand planning accuracy and agility in fast-changing markets. DADO NOVO
-
----
