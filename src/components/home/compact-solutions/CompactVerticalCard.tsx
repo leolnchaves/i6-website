@@ -95,22 +95,22 @@ const CompactVerticalCard = ({
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
-  // Formas curvas diferentes para cada posição
+  // Formas curvas conectadas para criar continuidade visual
   const getCurvedBackground = (cardIndex: number) => {
     const shapes = [
-      // Card 1: forma curvada começando alto à esquerda, descendo à direita
+      // Card 1: começa alto à esquerda (20%), termina baixo à direita (70%)
       {
-        clipPath: 'ellipse(80% 60% at 20% 30%)',
+        clipPath: 'polygon(0% 20%, 100% 70%, 100% 0%, 0% 0%)',
         height: 'h-32'
       },
-      // Card 2: forma curvada começando baixo à esquerda, subindo à direita  
+      // Card 2: começa baixo à esquerda (70%), termina alto à direita (25%)
       {
-        clipPath: 'ellipse(85% 65% at 80% 40%)',
+        clipPath: 'polygon(0% 70%, 100% 25%, 100% 0%, 0% 0%)',
         height: 'h-36'
       },
-      // Card 3: forma curvada começando alto à esquerda, descendo à direita
+      // Card 3: começa alto à esquerda (25%), termina baixo à direita (65%)
       {
-        clipPath: 'ellipse(75% 55% at 30% 35%)',
+        clipPath: 'polygon(0% 25%, 100% 65%, 100% 0%, 0% 0%)',
         height: 'h-28'
       }
     ];
