@@ -59,7 +59,7 @@ This strategy seeks to increase the average basket size through effective cross-
 ---
 
 ## Precision Sales Forecast: Streamlining Results and Operations
-**Image:** /content/success-stories/case-farma-2.jpg
+**Image:** /content/success-stories/case-forecast-1.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** Manufacturing
 **Client:** EMS Farma
