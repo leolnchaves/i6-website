@@ -42,21 +42,21 @@ This strategy seeks to increase the average basket size through effective cross-
 
 ---
 
-## Healthcare Patient Flow Optimization
-**Image:** /content/success-stories/healthcare.jpg
+## Assortment Precision: Sales Uplift through Optimized Predictions
+**Image:** /content/success-stories/case-foods-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Healthcare
-**Client:** MedTech Innovations
-**Description:** MedTech Innovations
-**Challenge:** Inefficient patient flow management leading to long wait times, resource waste, and decreased patient satisfaction scores.
-**Solution:** Implemented AI-driven patient flow optimization system to predict demand patterns and allocate resources efficiently across departments.
-**Metric1:** 40% Wait Time Reduction
-**Metric2:** 25% Resource Efficiency
-**Metric3:** 90% Patient Satisfaction
-**Solutions:** Adaptive Demand, Predictive Campaign, Industrial Intelligence
-**Quote:** Our patients now experience significantly shorter wait times and our staff can focus on providing better care.
-**CustomerName:** Dr. Emily Rodriguez
-**CustomerTitle:** Chief Medical Officer
+**Segment:** Manufacturing 
+**Client:** The world's second-largest prepared foods producer
+**Description:** One of the world’s largest food conglomerates, operating in over 150 countries and leading several product categories in Latin America.
+**Challenge:** The challenge was to provide strategic, AI-driven product recommendations with clear reasoning that could optimize the selection and volumes for each point of sale, leveraging insights like seasonality and market trends. By refining the predictive accuracy, we aimed to enhance not only the efficiency of product assortments but also to identify new opportunities for sales expansion, aligning smarter decision-making with increased market potential.
+**Solution:** Our goal was clear: to drive sales growth by improving the efficiency of assortment prediction while incorporating more intelligence into the entire sales process, optimizing a truly unique, value-added experience for the points of sale.
+**Metric1:** 7,2% Direct Sales Uplift
+**Metric2:** 55% New Products Suggestions
+**Metric3:** -
+**Solutions:** Predictive Personalization for Identified Users
+**Quote:** Assortment Precision: Sales Uplift through Optimized Predictions
+**CustomerName:** -
+**CustomerTitle:** -
 
 ---
 
