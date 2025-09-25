@@ -150,7 +150,7 @@ const CompactVerticalCard = ({
       <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-blue-500 opacity-0 group-hover:opacity-100 group-hover:h-12 transition-all duration-300 flex items-center justify-center rounded-b-3xl z-20">
         <Link 
           to={`/solutions#${title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
-          className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 hover:text-orange-200 cursor-pointer hover:scale-105 transform transition-transform duration-200 px-6 py-2 rounded-lg bg-black/20 backdrop-blur-sm"
+          className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 hover:text-orange-200 cursor-pointer hover:scale-105 transform transition-transform duration-200 px-6 py-2"
         >
           Saiba Mais
         </Link>
