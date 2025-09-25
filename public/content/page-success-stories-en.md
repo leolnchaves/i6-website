@@ -3,7 +3,7 @@
 ---
 
 ## Market Place Excellence: Driving Success for Pharmacies
-**Image:** /content/success-stories/ecommerce.jpg
+**Image:** /content/success-stories/case-ems-farmacia.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** Manufacturing
 **Client:** EMS Farma
