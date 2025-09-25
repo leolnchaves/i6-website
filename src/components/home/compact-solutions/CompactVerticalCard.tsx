@@ -96,8 +96,38 @@ const CompactVerticalCard = ({
   const colorScheme = getColorScheme(index);
 
   return (
-    <Card className={`group relative overflow-hidden border-2 ${colorScheme.border} hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-3xl bg-white`}>
-      <CardContent className="p-8 text-center">
+    <Card className={`group relative overflow-visible border-2 ${colorScheme.border} hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-3xl bg-white`}>
+      {/* Faixas fluidas de conexão */}
+      <div className="absolute -inset-8 pointer-events-none overflow-hidden">
+        {/* Faixa horizontal que flui da direita para esquerda */}
+        <div 
+          className={`absolute top-1/3 w-32 h-8 bg-gradient-to-r ${colorScheme.iconBg} opacity-20 rounded-full blur-sm`}
+          style={{
+            animation: 'flowRight 12s ease-in-out infinite',
+            animationDelay: `${index * 2}s`
+          }}
+        ></div>
+        
+        {/* Faixa diagonal que flui da esquerda para direita */}
+        <div 
+          className={`absolute top-2/3 w-24 h-6 bg-gradient-to-l ${colorScheme.iconBg} opacity-15 rounded-full blur-sm transform rotate-12`}
+          style={{
+            animation: 'flowLeft 15s ease-in-out infinite',
+            animationDelay: `${index * 1.5}s`
+          }}
+        ></div>
+        
+        {/* Elemento de conexão ondulado */}
+        <div 
+          className={`absolute top-1/2 left-1/2 w-20 h-20 bg-gradient-to-br ${colorScheme.bg} opacity-30 rounded-full blur-md transform -translate-x-1/2 -translate-y-1/2`}
+          style={{
+            animation: 'waveMove 8s ease-in-out infinite',
+            animationDelay: `${index * 0.8}s`
+          }}
+        ></div>
+      </div>
+
+      <CardContent className="relative p-8 text-center z-10">
         {/* Círculo principal com ícones flutuantes */}
         <div className="relative mb-8 mx-auto w-40 h-40 flex items-center justify-center">
           {/* Círculo de fundo com gradiente */}
