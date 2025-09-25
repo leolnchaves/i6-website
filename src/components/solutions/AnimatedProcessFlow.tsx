@@ -38,9 +38,9 @@ const AnimatedProcessFlow = () => {
   const isVisibleRef = useRef<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Define tasks for each step (only 3 tasks per step)
+  // Define tasks for each step (only 3 tasks per step) with translations
   const getStepTasks = (stepKey: string) => {
-    const tasks = {
+    const tasksEn = {
       discovery: [
         "Analyzing business requirements",
         "Mapping goals and strategic angle",
@@ -67,6 +67,36 @@ const AnimatedProcessFlow = () => {
         "Real-time monitoring and alerting setup"
       ]
     };
+    
+    const tasksPt = {
+      discovery: [
+        "Analisando requisitos de negócio",
+        "Mapeando objetivos e ângulo estratégico",
+        "Criando ambiente isolado e seguro"
+      ],
+      data: [
+        "Analisando estrutura de dados",
+        "Coletando amostras de dados de múltiplas fontes",
+        "Implementando protocolos de anonimização de dados"
+      ],
+      training: [
+        "Pré-processando e limpando dados coletados",
+        "Treinando modelos de IA com parâmetros ótimos",
+        "Validação cruzada e testes de backtest"
+      ],
+      testing: [
+        "Executando testes abrangentes de validação de modelo",
+        "Criando análise de resultados potenciais e escaláveis",
+        "Benchmarking de performance contra baselines"
+      ],
+      integration: [
+        "Implementação perfeita em seu ecossistema digital",
+        "Integração de API com sistemas existentes",
+        "Configuração de monitoramento e alertas em tempo real"
+      ]
+    };
+    
+    const tasks = language === 'pt' ? tasksPt : tasksEn;
     return tasks[stepKey as keyof typeof tasks] || [];
   };
 
