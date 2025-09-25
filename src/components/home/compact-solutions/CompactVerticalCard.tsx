@@ -95,45 +95,41 @@ const CompactVerticalCard = ({
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
+  // Lógica do fundo em gradiente baseado na posição do card
+  const getBackgroundPath = (cardIndex: number) => {
+    const patterns = [
+      // Card 1: alto esquerda -> baixo direita
+      { start: 'top-4 left-0', end: 'bottom-4 right-0', path: 'from-top-left to-bottom-right' },
+      // Card 2: baixo esquerda -> alto direita  
+      { start: 'bottom-4 left-0', end: 'top-4 right-0', path: 'from-bottom-left to-top-right' },
+      // Card 3: alto esquerda -> baixo direita
+      { start: 'top-4 left-0', end: 'bottom-4 right-0', path: 'from-top-left to-bottom-right' }
+    ];
+    return patterns[cardIndex % 3];
+  };
+
+  const backgroundPattern = getBackgroundPath(index);
+
   return (
-    <Card className={`group relative overflow-visible border-2 ${colorScheme.border} hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-3xl bg-white`}>
-      {/* Faixas fluidas de conexão */}
-      <div className="absolute -inset-8 pointer-events-none overflow-hidden">
-        {/* Faixa horizontal que flui da direita para esquerda */}
+    <Card className={`group relative overflow-hidden border-2 ${colorScheme.border} hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-3xl bg-white`}>
+      {/* Fundo opaco com padrão de gráfico */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.bg} opacity-60 group-hover:opacity-80 transition-opacity duration-300 rounded-3xl`}>
+        {/* Linha conectora que simula um gráfico */}
         <div 
-          className={`absolute top-1/3 w-32 h-8 bg-gradient-to-r ${colorScheme.iconBg} opacity-20 rounded-full blur-sm`}
+          className={`absolute w-full h-1 bg-gradient-to-r ${colorScheme.iconBg} opacity-40 transform`}
           style={{
-            animation: 'flowRight 12s ease-in-out infinite',
-            animationDelay: `${index * 2}s`
-          }}
-        ></div>
-        
-        {/* Faixa diagonal que flui da esquerda para direita */}
-        <div 
-          className={`absolute top-2/3 w-24 h-6 bg-gradient-to-l ${colorScheme.iconBg} opacity-15 rounded-full blur-sm transform rotate-12`}
-          style={{
-            animation: 'flowLeft 15s ease-in-out infinite',
-            animationDelay: `${index * 1.5}s`
-          }}
-        ></div>
-        
-        {/* Elemento de conexão ondulado */}
-        <div 
-          className={`absolute top-1/2 left-1/2 w-20 h-20 bg-gradient-to-br ${colorScheme.bg} opacity-30 rounded-full blur-md transform -translate-x-1/2 -translate-y-1/2`}
-          style={{
-            animation: 'waveMove 8s ease-in-out infinite',
-            animationDelay: `${index * 0.8}s`
+            top: index % 2 === 0 ? '20%' : '80%',
+            left: '0',
+            right: '0',
+            transform: `rotate(${index % 2 === 0 ? '15deg' : '-15deg'})`
           }}
         ></div>
       </div>
 
       <CardContent className="relative p-8 text-center z-10">
-        {/* Círculo principal com ícones flutuantes */}
+        {/* Área do ícone principal sem círculo de fundo */}
         <div className="relative mb-8 mx-auto w-40 h-40 flex items-center justify-center">
-          {/* Círculo de fundo com gradiente */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.bg} rounded-full shadow-lg group-hover:shadow-xl transition-shadow duration-300`}></div>
-          
-          {/* Ícone principal no centro */}
+          {/* Ícone principal centralizado */}
           <div className={`relative z-10 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
             <MainIcon size={32} className="text-white" />
           </div>
