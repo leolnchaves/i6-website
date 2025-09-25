@@ -18,6 +18,7 @@ Nossa missão foi consolidar dados de farmácias e clientes, entregando previsõ
 **Quote:** Excelência em Marketplace: Impulsionando Resultados para Farmácias  
 **CustomerName:** Paulo Lima  
 **CustomerTitle:** New Channel Manager  
+**ShowHome:** True
 
 ---
 
@@ -37,6 +38,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Quote:** Elevando o Engajamento do Cliente: Acelerando Vendas Online  
 **CustomerName:** -  
 **CustomerTitle:** -  
+**ShowHome:** True
 
 ---
 
@@ -55,6 +57,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Quote:** Precisão no Sortimento: Aumento de Vendas com Previsões Otimizadas  
 **CustomerName:** -  
 **CustomerTitle:** -  
+**ShowHome:** True
 
 ---
 
@@ -73,6 +76,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Quote:** Previsão de Vendas Precisa: Otimizando Resultados e Operações  
 **CustomerName:** -  
 **CustomerTitle:** -  
+**ShowHome:** True
 
 ---
 
@@ -91,6 +95,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Quote:** Maximizando Cross-Sell com Propensão de Compra Inteligente  
 **CustomerName:** -  
 **CustomerTitle:** -  
+**ShowHome:** True
 
 ---
 
@@ -109,5 +114,6 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Quote:** Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas  
 **CustomerName:** -  
 **CustomerTitle:** -  
+**ShowHome:** False
 
 ---
