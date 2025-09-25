@@ -50,43 +50,43 @@ const CompactVerticalCard = ({
   };
 
   const getColorScheme = (cardIndex: number) => {
-    // Gradient transition from blue to green across all cards
+    // Gradient transition from orange to blue (matching menu hover gradient)
     const schemes = [
       { 
-        bg: 'from-blue-200/60 via-blue-100/40 to-blue-50/30', 
-        iconBg: 'from-blue-500/90 to-blue-600/90',
-        accent: 'text-blue-700',
-        border: 'border-blue-200/50 hover:border-blue-300/70'
+        bg: 'from-orange-200/60 via-orange-100/40 to-orange-50/30', 
+        iconBg: 'from-orange-500/90 to-orange-600/90',
+        accent: 'text-orange-700',
+        border: 'border-orange-200/50 hover:border-orange-300/70'
       },
       { 
-        bg: 'from-purple-200/60 via-purple-100/40 to-pink-50/30', 
-        iconBg: 'from-purple-500/90 to-pink-500/90',
-        accent: 'text-purple-700',
-        border: 'border-purple-200/50 hover:border-purple-300/70'
+        bg: 'from-amber-200/60 via-amber-100/40 to-yellow-50/30', 
+        iconBg: 'from-amber-500/90 to-yellow-500/90',
+        accent: 'text-amber-700',
+        border: 'border-amber-200/50 hover:border-amber-300/70'
       },
       { 
-        bg: 'from-emerald-200/60 via-emerald-100/40 to-green-50/30', 
-        iconBg: 'from-emerald-500/90 to-green-500/90',
-        accent: 'text-emerald-700',
-        border: 'border-emerald-200/50 hover:border-emerald-300/70'
-      },
-      { 
-        bg: 'from-cyan-200/60 via-cyan-100/40 to-teal-50/30', 
-        iconBg: 'from-cyan-500/90 to-teal-500/90',
+        bg: 'from-cyan-200/60 via-cyan-100/40 to-sky-50/30', 
+        iconBg: 'from-cyan-500/90 to-sky-500/90',
         accent: 'text-cyan-700',
         border: 'border-cyan-200/50 hover:border-cyan-300/70'
       },
       { 
-        bg: 'from-teal-200/60 via-teal-100/40 to-emerald-50/30', 
-        iconBg: 'from-teal-500/90 to-emerald-600/90',
-        accent: 'text-teal-700',
-        border: 'border-teal-200/50 hover:border-teal-300/70'
+        bg: 'from-sky-200/60 via-sky-100/40 to-blue-50/30', 
+        iconBg: 'from-sky-500/90 to-blue-500/90',
+        accent: 'text-sky-700',
+        border: 'border-sky-200/50 hover:border-sky-300/70'
       },
       { 
-        bg: 'from-green-200/60 via-green-100/40 to-lime-50/30', 
-        iconBg: 'from-green-500/90 to-lime-500/90',
-        accent: 'text-green-700',
-        border: 'border-green-200/50 hover:border-green-300/70'
+        bg: 'from-blue-200/60 via-blue-100/40 to-indigo-50/30', 
+        iconBg: 'from-blue-500/90 to-indigo-500/90',
+        accent: 'text-blue-700',
+        border: 'border-blue-200/50 hover:border-blue-300/70'
+      },
+      { 
+        bg: 'from-indigo-200/60 via-indigo-100/40 to-blue-50/30', 
+        iconBg: 'from-indigo-500/90 to-blue-600/90',
+        accent: 'text-indigo-700',
+        border: 'border-indigo-200/50 hover:border-indigo-300/70'
       }
     ];
     return schemes[cardIndex % schemes.length];
