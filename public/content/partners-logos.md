@@ -32,12 +32,6 @@
 
 ---
 
-## TICKETMASTER
-**Logo:** /content/logos/TICKETMASTER.png
-**Name:** TICKETMASTER
-
----
-
 ## LIVE
 **Logo:** /content/logos/live.png
 **Name:** LIVE
@@ -80,12 +74,6 @@
 
 ---
 
-## ANIMA
-**Logo:** /content/logos/ANIMA.png
-**Name:** ANIMA
-
----
-
 ## FORD
 **Logo:** /content/logos/FORD.png
 **Name:** FORD
@@ -95,5 +83,11 @@
 ## CLOSE-UP
 **Logo:** /content/logos/close-up.png
 **Name:** CLOSE-UP
+
+---
+
+## ALPARGATAS
+**Logo:** /content/logos/alpargatas.png
+**Name:** ALPARGATAS
 
 ---
