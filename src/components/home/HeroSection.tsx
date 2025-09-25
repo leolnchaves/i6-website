@@ -1,4 +1,3 @@
-
 import { useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -19,10 +18,16 @@ import './hero/HeroAnimations.css';
  */
 const HeroSection = () => {
   // Hooks for functionality
-  const { scrollY } = useScrollAnimation();
-  const { t } = useLanguage();
-  const { handleError } = useErrorHandler('HeroSection');
-  
+  const {
+    scrollY
+  } = useScrollAnimation();
+  const {
+    t
+  } = useLanguage();
+  const {
+    handleError
+  } = useErrorHandler('HeroSection');
+
   // Component state
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
@@ -32,7 +37,9 @@ const HeroSection = () => {
       logger.info('Opening video modal', undefined, 'HeroSection');
       setIsVideoModalOpen(true);
     } catch (error) {
-      handleError(error as Error, { componentStack: 'handleOpenVideoModal' });
+      handleError(error as Error, {
+        componentStack: 'handleOpenVideoModal'
+      });
     }
   };
 
@@ -42,7 +49,9 @@ const HeroSection = () => {
       logger.info('Closing video modal', undefined, 'HeroSection');
       setIsVideoModalOpen(false);
     } catch (error) {
-      handleError(error as Error, { componentStack: 'handleCloseVideoModal' });
+      handleError(error as Error, {
+        componentStack: 'handleCloseVideoModal'
+      });
     }
   };
 
@@ -50,14 +59,11 @@ const HeroSection = () => {
   const getDemoUrl = () => {
     return 'https://www.youtube.com/embed/knNYT11sEk0?autoplay=1&controls=1&showinfo=0&rel=0';
   };
-
-  return (
-    <>
+  return <>
       {/* Main hero section */}
-      <section 
-        className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
+      <section className="w-full min-h-screen flex items-center pt-20 relative overflow-hidden bg-cover bg-center" style={{
+      backgroundImage: `url(${heroBg})`
+    }}>
         {/* Background effects */}
         <div className="absolute inset-0">
           {/* Static curved shapes */}
@@ -110,25 +116,18 @@ const HeroSection = () => {
               {t('hero.poweredByAI')}
             </h3>
             <div className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto mb-12">
-              <p className="mb-0">Rethink what's possible. Build smarter. Move faster.</p>
+              <p className="mb-0">Repense o que é possível. Construa com inteligência. Avance mais rápido.
+            </p>
               <p>Grow beyond limits with adaptive AI.</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact#contact-form">
-                <Button 
-                  size="lg" 
-                  className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap"
-                  onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}
-                >
+                <Button size="lg" className="bg-primary text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap" onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}>
                   {t('hero.startJourney')}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Button 
-                size="lg" 
-                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-lg font-medium hover:bg-white/30 transition-all w-full sm:w-auto whitespace-nowrap"
-                onClick={handleOpenVideoModal}
-              >
+              <Button size="lg" className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-lg font-medium hover:bg-white/30 transition-all w-full sm:w-auto whitespace-nowrap" onClick={handleOpenVideoModal}>
                 {t('hero.watchDemo')}
               </Button>
             </div>
@@ -151,13 +150,7 @@ const HeroSection = () => {
       </section>
 
       {/* Video modal component */}
-      <VideoModal 
-        isOpen={isVideoModalOpen} 
-        onClose={handleCloseVideoModal}
-        videoUrl={getDemoUrl()}
-      />
-    </>
-  );
+      <VideoModal isOpen={isVideoModalOpen} onClose={handleCloseVideoModal} videoUrl={getDemoUrl()} />
+    </>;
 };
-
 export default memo(HeroSection);
