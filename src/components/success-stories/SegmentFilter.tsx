@@ -36,8 +36,12 @@ const SegmentFilter: React.FC<SegmentFilterProps> = memo(({ onSegmentChange, sel
     <section className="py-6 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-4">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Explore by Industry</h3>
-          <p className="text-gray-600">Find success stories tailored to your market context.</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            {language === 'en' ? 'Explore by Industry' : 'Explore por Indústria'}
+          </h3>
+          <p className="text-gray-600">
+            {language === 'en' ? 'Find success stories tailored to your market context.' : 'Encontre casos de sucesso adaptados ao contexto do seu mercado.'}
+          </p>
         </div>
         
         <div className="flex flex-wrap justify-center gap-3">
