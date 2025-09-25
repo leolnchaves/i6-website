@@ -2,7 +2,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { successStoriesCardsData } from '@/data/staticData/successStoriesCardsData';
+import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 
 interface SegmentFilterProps {
   onSegmentChange: (segment: string | null) => void;
@@ -12,13 +12,15 @@ interface SegmentFilterProps {
 const SegmentFilter: React.FC<SegmentFilterProps> = memo(({ onSegmentChange, selectedSegment }) => {
   const { language } = useLanguage();
   const [availableSegments, setAvailableSegments] = useState<string[]>([]);
+  const { stories, loading } = useSuccessStoriesMarkdown();
 
-  // Extract unique industries from static data
+  // Extract unique segments from markdown data
   useEffect(() => {
-    const cards = successStoriesCardsData[language] || successStoriesCardsData.en;
-    const uniqueIndustries = [...new Set(cards.map(card => card.industry))].sort();
-    setAvailableSegments(uniqueIndustries);
-  }, [language]);
+    if (stories.length > 0) {
+      const uniqueSegments = [...new Set(stories.map(story => story.segment))].sort();
+      setAvailableSegments(uniqueSegments);
+    }
+  }, [stories]);
 
   const handleSegmentClick = (segment: string) => {
     if (selectedSegment === segment) {
