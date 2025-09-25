@@ -110,7 +110,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
               <img 
                 src={getCompanyDetails(selectedStory).logo}
                 alt={`${selectedStory.company_name} logo`}
-                className="w-10 h-10 rounded-lg object-contain border border-gray-200 bg-white p-1"
+                className="w-16 h-16 rounded-lg object-contain border border-gray-200 bg-white p-2"
               />
             </div>
           </div>
