@@ -1,7 +1,7 @@
 import { memo, useMemo, useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Target, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ModernSolutionCardProps {
@@ -133,11 +133,10 @@ const ModernSolutionCard = memo(({
           </h4>
           <div className="relative p-4 bg-gradient-to-br from-blue-50/40 to-orange-50/30 rounded-2xl border border-gray-200/30 backdrop-blur-sm group-hover:shadow-sm transition-all duration-500">
             <div className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <ArrowRight className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
               <p className="text-gray-700 leading-relaxed text-sm flex-1">
                 {outcome}
               </p>
-              <ArrowRight className="w-4 h-4 text-orange-500 mt-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           </div>
         </div>
