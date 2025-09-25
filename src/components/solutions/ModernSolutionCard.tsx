@@ -80,10 +80,13 @@ const ModernSolutionCard = memo(({
   return (
     <Card 
       ref={cardRef}
-      className={`group relative overflow-hidden border-0 shadow-md hover:shadow-xl transition-all duration-700 hover:scale-[1.02] bg-white/90 backdrop-blur-sm rounded-3xl ${
+      className={`group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] bg-white/95 backdrop-blur-sm rounded-3xl ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
-      style={{ animationDelay: `${index * 0.15}s` }}
+      style={{ 
+        animationDelay: `${index * 0.15}s`,
+        boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 10px -2px rgba(0, 0, 0, 0.04)'
+      }}
     >
       {/* Soft gradient background overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-orange-50/20 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
