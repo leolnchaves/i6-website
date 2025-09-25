@@ -1,6 +1,6 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSuccessStoriesContent } from '@/hooks/useSuccessStoriesContent';
+import { useHomeSuccessStories } from '@/hooks/useHomeSuccessStories';
 import { useState, useEffect, useRef, memo } from 'react';
 import FeaturedStoriesHeader from './featured-stories/FeaturedStoriesHeader';
 import ViewAllButton from './featured-stories/ViewAllButton';
@@ -15,7 +15,7 @@ const FeaturedStoriesSection = () => {
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
   // Get stories from markdown content
-  const { stories, loading, error } = useSuccessStoriesContent();
+  const { stories, loading, error } = useHomeSuccessStories();
   
   // Use stories directly
   const fallbackCards = stories;
@@ -152,7 +152,7 @@ const FeaturedStoriesSection = () => {
                               {story.segment}
                             </div>
                             <h3 className="text-lg text-gray-900 leading-tight">
-                              {story.description}
+                              {story.quote}
                             </h3>
                             <p className="text-sm font-bold text-gray-600 mt-1">{story.client}</p>
                           </div>
