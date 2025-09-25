@@ -1,111 +1,113 @@
-# Casos de Sucesso
+# Histórias de Sucesso
 
 ---
 
-## Otimização de Plataforma E-commerce
-**Image:** /content/success-stories/ecommerce.jpg
-**Logo:** /content/logos/EMS-COR.png
-**Segment:** E-commerce
-**Client:** TechRetail Inc.
-**Description:** TechRetail Inc.
-**Challenge:** Baixas taxas de conversão e dificuldade em entender padrões de comportamento do cliente em múltiplos pontos de contato, levando a gastos ineficientes com marketing e má experiência do usuário.
-**Solution:** Implementou motor de recomendação alimentado por IA e análise de jornada do cliente para personalizar experiências de compra e otimizar campanhas de marketing em tempo real.
-**Metric1:** 45% Aumento de Conversão
-**Metric2:** 60% Crescimento de Receita
-**Metric3:** 30% Retenção de Clientes
-**Solutions:** Anonymous Visitors, Identified Users, Predictive Campaign, Smart Price
-**Quote:** A solução de IA transformou nossa compreensão do comportamento do cliente e melhorou drasticamente nossas taxas de conversão.
-**CustomerName:** Sarah Johnson
-**CustomerTitle:** Diretora de Marketing
+## Excelência em Marketplace: Impulsionando Resultados para Farmácias
+**Image:** /content/success-stories/case-ems-farmacia.jpg  
+**Logo:** /content/logos/EMS-COR.png  
+**Segment:** Indústria  
+**Client:** EMS Farma  
+**Description:** Uma das maiores farmacêuticas do Brasil, também é um player estratégico no mercado global.  
+**Challenge:** A empresa buscava aumentar o engajamento e melhorar margens de venda em seu marketplace digital, que conecta farmácias a distribuidores. Para isso, era necessário compreender mais profundamente o comportamento dos clientes.  
+Nossa missão foi consolidar dados de farmácias e clientes, entregando previsões de compra precisas e recomendações acionáveis para otimizar o uso de recursos, evitar rupturas e elevar a eficiência operacional.  
+**Solution:** Nosso objetivo foi transformar o marketplace digital em um verdadeiro parceiro de confiança das farmácias, oferecendo recomendações de compra baseadas em dados e de alto impacto. Com sugestões relevantes, criamos oportunidades de cross-sell e up-sell, ampliando o engajamento e aumentando o tamanho médio da cesta. Essa iniciativa foi desenhada para maximizar a lucratividade das farmácias e reforçar seu relacionamento com a indústria. O sucesso se mede em mais sell-out, maiores margens e uma jornada de compra eficiente e fluida.  
+**Metric1:** +23% Valor Médio de Ticket  
+**Metric2:** +36% Conversão em Novos SKUs  
+**Metric3:** -  
+**Solutions:** Industrial Recommendation Intelligence  
+**Quote:** Excelência em Marketplace: Impulsionando Resultados para Farmácias  
+**CustomerName:** Paulo Lima  
+**CustomerTitle:** New Channel Manager  
 
 ---
 
-## Manutenção Preditiva em Manufatura
-**Image:** /content/success-stories/manufacturing.jpg
-**Logo:** /content/logos/2.png
-**Segment:** Manufatura
-**Client:** Industrial Solutions Co.
-**Description:** Industrial Solutions Co.
-**Challenge:** Alto tempo de inatividade de equipamentos e custos de manutenção imprevisíveis afetando a eficiência da produção e despesas operacionais gerais.
-**Solution:** Implementou sistema de IA de manutenção preditiva com sensores IoT para prever falhas de equipamentos e otimizar cronogramas de manutenção proativamente.
-**Metric1:** 35% Redução de Inatividade
-**Metric2:** $2M Economia Anual
-**Metric3:** 50% Eficiência de Manutenção
-**Solutions:** Industrial Intelligence, Adaptive Demand, Predictive Campaign
-**Quote:** A manutenção preditiva revolucionou nossas operações e nos poupou milhões em custos de inatividade inesperados.
-**CustomerName:** Michael Chen
-**CustomerTitle:** Diretor de Operações
+## Elevando o Engajamento do Cliente: Acelerando Vendas Online
+**Image:** /content/success-stories/case-retail-1.jpg  
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png  
+**Segment:** Varejo  
+**Client:** A marca de moda mais tradicional da América Latina  
+**Description:** Com mais de 140 anos de história, a empresa se consolidou como um dos maiores varejistas de moda da região.  
+**Challenge:** Em um cenário competitivo, a companhia buscava aumentar engajamento e impulsionar vendas digitais. A meta era oferecer recomendações altamente relevantes e diversas em tempo real, antecipando e atendendo necessidades do cliente. O grande desafio: entregar personalização tanto para usuários logados quanto para visitantes anônimos, garantindo uma experiência fluida para todos.  
+**Solution:** Para acelerar o crescimento digital, a estratégia consolidou comportamentos de clientes logados e anônimos. Através de recomendações em tempo real, alinhadas à navegação e às interações, o varejista passou a prever padrões de compra e aumentar o engajamento.  
+Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell inteligentes, criando uma experiência de compra personalizada e dinâmica que reflete preferências individuais.  
+**Metric1:** +50% Descoberta de Novos Produtos  
+**Metric2:** +11% Itens no Carrinho  
+**Metric3:** -  
+**Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users  
+**Quote:** Elevando o Engajamento do Cliente: Acelerando Vendas Online  
+**CustomerName:** -  
+**CustomerTitle:** -  
 
 ---
 
-## Otimização do Fluxo de Pacientes em Saúde
-**Image:** /content/success-stories/healthcare.jpg
-**Logo:** /content/logos/1.png
-**Segment:** Saúde
-**Client:** MedTech Innovations
-**Description:** MedTech Innovations
-**Challenge:** Gerenciamento ineficiente do fluxo de pacientes levando a longos tempos de espera, desperdício de recursos e diminuição das pontuações de satisfação do paciente.
-**Solution:** Implementou sistema de otimização de fluxo de pacientes orientado por IA para prever padrões de demanda e alocar recursos eficientemente entre departamentos.
-**Metric1:** 40% Redução do Tempo de Espera
-**Metric2:** 25% Eficiência de Recursos
-**Metric3:** 90% Satisfação do Paciente
-**Solutions:** Adaptive Demand, Predictive Campaign, Industrial Intelligence
-**Quote:** Nossos pacientes agora experimentam tempos de espera significativamente menores e nossa equipe pode se concentrar em fornecer melhor cuidado.
-**CustomerName:** Dra. Emily Rodriguez
-**CustomerTitle:** Diretora Médica
+## Precisão no Sortimento: Aumento de Vendas com Previsões Otimizadas
+**Image:** /content/success-stories/case-foods-1.jpg  
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png  
+**Segment:** Indústria  
+**Client:** O segundo maior produtor de alimentos preparados do mundo  
+**Description:** Um dos maiores conglomerados de alimentos do planeta, presente em mais de 150 países e líder em várias categorias na América Latina.  
+**Challenge:** O desafio era oferecer recomendações estratégicas e inteligentes de produtos, com explicações claras, otimizando o mix e o volume de cada ponto de venda — considerando sazonalidade e tendências de mercado. Ao refinar a acurácia preditiva, buscávamos não apenas maior eficiência no sortimento, mas também identificar novas oportunidades de expansão, alinhando inteligência de decisão com maior potencial de mercado.  
+**Solution:** Nosso objetivo foi claro: gerar crescimento de vendas ao aprimorar a eficiência das previsões de sortimento, incorporando mais inteligência ao processo comercial e criando uma experiência única e de alto valor para cada ponto de venda.  
+**Metric1:** +7,2% Aumento Direto nas Vendas  
+**Metric2:** +55% Sugestões de Novos Produtos  
+**Metric3:** -  
+**Solutions:** Predictive Personalization for Identified Users  
+**Quote:** Precisão no Sortimento: Aumento de Vendas com Previsões Otimizadas  
+**CustomerName:** -  
+**CustomerTitle:** -  
 
 ---
 
-## Sistema de Detecção de Fraude Financeira
-**Image:** /content/success-stories/finance.jpg
-**Logo:** /content/logos/1.png
-**Segment:** Financeiro
-**Client:** Capital Banking Group
-**Description:** Capital Banking Group
-**Challenge:** Processos manuais de detecção de fraude resultando em altas taxas de falsos positivos e perdas financeiras significativas de transações fraudulentas não detectadas.
-**Solution:** Implementou sistema de detecção de fraude de aprendizado de máquina com monitoramento de transações em tempo real e algoritmos adaptativos de pontuação de risco.
-**Metric1:** 75% Taxa de Detecção de Fraude
-**Metric2:** 50% Redução de Falsos Positivos
-**Metric3:** $5M Prevenção de Perdas Anuais
-**Solutions:** Anonymous Visitors, Identified Users, Smart Price, Predictive Campaign
-**Quote:** O sistema de detecção de fraude de IA melhorou drasticamente nossa postura de segurança enquanto reduziu o atrito do cliente.
-**CustomerName:** Robert Kim
-**CustomerTitle:** Diretor de Risco
+## Previsão de Vendas Precisa: Otimizando Resultados e Operações
+**Image:** /content/success-stories/case-forecast-1.jpg  
+**Logo:** /content/logos/EMS-COR.png  
+**Segment:** Indústria  
+**Client:** EMS Farma  
+**Description:** Uma das maiores farmacêuticas do Brasil e referência global.  
+**Challenge:** A empresa enfrentava grandes desafios para gerar previsões de vendas precisas para inteligência de mercado e S&OP (Sales and Operations Planning) relacionados ao sell-out. Essa falta de precisão afetava o planejamento de produção, a definição de metas comerciais e a eficiência no custo de aquisição de clientes (CAC). Nossa missão foi consolidar diversas fontes de dados (históricos, comportamento de mercado, estoques, transações, pesquisas externas etc.) em uma previsão unificada e confiável por produto e ponto de venda.  
+**Solution:** Nosso objetivo foi entregar uma previsão de vendas de médio prazo com alta acurácia e granularidade (SKU + PDV), calibrando o motor para fatores como market share, lucratividade, sazonalidade e promoções. Com esse nível de precisão, a empresa pôde otimizar produção, estratégias comerciais e investimentos, ganhando confiança para orquestrar toda a sua cadeia de valor — da produção às decisões de venda e investimento.  
+**Metric1:** 82% Acurácia na Previsão de Sell-out  
+**Metric2:** +100M em Economia de Estoque  
+**Metric3:** -  
+**Solutions:** Adaptive Demand Forecasting  
+**Quote:** Previsão de Vendas Precisa: Otimizando Resultados e Operações  
+**CustomerName:** -  
+**CustomerTitle:** -  
 
 ---
 
-## Otimização de Rotas Logísticas
-**Image:** /content/success-stories/logistics.jpg
-**Logo:** /content/logos/1.png
-**Segment:** Logística
-**Client:** Global Shipping Solutions
-**Description:** Global Shipping Solutions
-**Challenge:** Planejamento de rotas ineficiente e agendamento de entregas levando a altos custos de combustível, entregas atrasadas e baixa satisfação do cliente.
-**Solution:** Implementou sistema de otimização de rotas e previsão de demanda alimentado por IA para melhorar a eficiência de entrega e reduzir custos operacionais.
-**Metric1:** 30% Redução do Custo de Combustível
-**Metric2:** 95% Entregas no Prazo
-**Metric3:** 20% Otimização de Capacidade
-**Solutions:** Adaptive Demand, Predictive Campaign, Smart Price
-**Quote:** Nossa eficiência de entrega nunca foi melhor, e nossos clientes estão notando a melhoria na qualidade do serviço.
-**CustomerName:** Lisa Thompson
-**CustomerTitle:** Diretora de Logística
+## Maximizando Cross-Sell com Propensão de Compra Inteligente
+**Image:** /content/success-stories/case-finance-1.jpg  
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png  
+**Segment:** Finanças  
+**Client:** Top 3 em inovação no Brasil e líder em crédito consignado  
+**Description:** Uma das instituições financeiras mais relevantes do país, com forte presença no mercado nacional e internacional.  
+**Challenge:** O banco buscava refinar sua estratégia comercial com recomendações mais precisas de produtos e canais de relacionamento. Com um portfólio diverso, o desafio era aumentar cross-sell e up-sell, garantindo ofertas relevantes no melhor canal de comunicação — consolidando históricos de comportamento de clientes.  
+**Solution:** A solução elevou significativamente a eficiência do CRM ao otimizar toda a jornada do cliente e aumentar taxas de cross-sell e up-sell. O objetivo foi criar interações mais inteligentes e personalizadas, garantindo que cada cliente recebesse ofertas relevantes no momento certo e pelo canal preferido.  
+**Metric1:** +12x Uplift em Conversão  
+**Metric2:** -50% Custos de CRM  
+**Metric3:** -  
+**Solutions:** Predictive Campaign Targeting, Predictive Personalization for Identified Users  
+**Quote:** Maximizando Cross-Sell com Propensão de Compra Inteligente  
+**CustomerName:** -  
+**CustomerTitle:** -  
 
 ---
 
-## Controle de Qualidade Automotivo
-**Image:** /content/success-stories/automotive.jpg
-**Logo:** /content/logos/1.png
-**Segment:** Automotivo
-**Client:** NextGen Motors
-**Description:** NextGen Motors
-**Challenge:** Problemas de controle de qualidade na fabricação levando a recalls, reivindicações de garantia e danos à reputação da marca afetando a posição no mercado.
-**Solution:** Implementou IA de visão computacional para inspeção automatizada de qualidade e análise preditiva para prevenção de defeitos nas linhas de produção.
-**Metric1:** 80% Detecção de Defeitos
-**Metric2:** 60% Redução de Recalls
-**Metric3:** $3M Economia em Custos de Qualidade
-**Solutions:** Industrial Intelligence, Anonymous Visitors, Predictive Campaign
-**Quote:** Nossos padrões de qualidade atingiram novos patamares, e a confiança do cliente em nossos produtos nunca foi tão forte.
-**CustomerName:** David Park
-**CustomerTitle:** Gerente de Garantia de Qualidade
+## Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas
+**Image:** /content/success-stories/case-retail-2.jpg  
+**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png  
+**Segment:** Varejo  
+**Client:** Uma das maiores marcas de cosméticos do Brasil  
+**Description:** Um dos principais players de beleza do país, reconhecido por seu modelo de vendas diretas em larga escala e lançamentos frequentes de produtos via catálogos.  
+**Challenge:** O grande desafio era a previsibilidade de demanda. A necessidade de criar catálogos de compra com muita antecedência exigia definir planos de produção e estoque precocemente e repassá-los aos fabricantes. A baixa acurácia gerava excesso ou falta de produtos, impactando eficiência e resultados.  
+**Solution:** Implementamos um motor avançado de previsão de demanda, adaptado ao ciclo do negócio. Todos os SKUs foram classificados em três níveis — Gold, Silver e Bronze — permitindo maior granularidade e elevando drasticamente a acurácia da previsão.  
+**Metric1:** +80% Acurácia de Previsão  
+**Metric2:** -60% Redução de Recall  
+**Metric3:** -  
+**Solutions:** Adaptive Demand Forecasting  
+**Quote:** Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas  
+**CustomerName:** -  
+**CustomerTitle:** -  
 
 ---
