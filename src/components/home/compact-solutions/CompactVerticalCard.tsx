@@ -64,8 +64,16 @@ const CompactVerticalCard = ({
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
-  // Todos os cards usam a mesma forma curva S (primeiro card)
+  // Curva S normal para cards pares, invertida para cards ímpares (meio)
   const getCurvedBackground = (cardIndex: number) => {
+    // Cards do meio (índices ímpares) têm curva invertida
+    if (cardIndex % 2 === 1) {
+      return {
+        clipPath: 'polygon(0% 70%, 25% 55%, 50% 35%, 75% 25%, 100% 20%, 100% 0%, 0% 0%)',
+        height: 'h-64'
+      };
+    }
+    // Cards das laterais (índices pares) têm curva normal
     return {
       clipPath: 'polygon(0% 20%, 25% 25%, 50% 40%, 75% 55%, 100% 70%, 100% 0%, 0% 0%)',
       height: 'h-64'
