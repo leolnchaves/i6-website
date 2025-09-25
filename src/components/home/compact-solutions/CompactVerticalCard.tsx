@@ -95,36 +95,39 @@ const CompactVerticalCard = ({
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
-  // Lógica do fundo em gradiente baseado na posição do card
-  const getBackgroundPath = (cardIndex: number) => {
-    const patterns = [
-      // Card 1: alto esquerda -> baixo direita
-      { start: 'top-4 left-0', end: 'bottom-4 right-0', path: 'from-top-left to-bottom-right' },
-      // Card 2: baixo esquerda -> alto direita  
-      { start: 'bottom-4 left-0', end: 'top-4 right-0', path: 'from-bottom-left to-top-right' },
-      // Card 3: alto esquerda -> baixo direita
-      { start: 'top-4 left-0', end: 'bottom-4 right-0', path: 'from-top-left to-bottom-right' }
+  // Formas curvas diferentes para cada posição
+  const getCurvedBackground = (cardIndex: number) => {
+    const shapes = [
+      // Card 1: forma curvada começando alto à esquerda, descendo à direita
+      {
+        clipPath: 'ellipse(80% 60% at 20% 30%)',
+        height: 'h-32'
+      },
+      // Card 2: forma curvada começando baixo à esquerda, subindo à direita  
+      {
+        clipPath: 'ellipse(85% 65% at 80% 40%)',
+        height: 'h-36'
+      },
+      // Card 3: forma curvada começando alto à esquerda, descendo à direita
+      {
+        clipPath: 'ellipse(75% 55% at 30% 35%)',
+        height: 'h-28'
+      }
     ];
-    return patterns[cardIndex % 3];
+    return shapes[cardIndex % 3];
   };
 
-  const backgroundPattern = getBackgroundPath(index);
+  const curvedShape = getCurvedBackground(index);
 
   return (
     <Card className={`group relative overflow-hidden border-2 ${colorScheme.border} hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-3xl bg-white`}>
-      {/* Fundo opaco com padrão de gráfico */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.bg} opacity-60 group-hover:opacity-80 transition-opacity duration-300 rounded-3xl`}>
-        {/* Linha conectora que simula um gráfico */}
-        <div 
-          className={`absolute w-full h-1 bg-gradient-to-r ${colorScheme.iconBg} opacity-40 transform`}
-          style={{
-            top: index % 2 === 0 ? '20%' : '80%',
-            left: '0',
-            right: '0',
-            transform: `rotate(${index % 2 === 0 ? '15deg' : '-15deg'})`
-          }}
-        ></div>
-      </div>
+      {/* Fundo curvo apenas no topo */}
+      <div 
+        className={`absolute top-0 left-0 right-0 ${curvedShape.height} bg-gradient-to-br ${colorScheme.bg} opacity-80 group-hover:opacity-90 transition-opacity duration-300`}
+        style={{
+          clipPath: curvedShape.clipPath
+        }}
+      ></div>
 
       <CardContent className="relative p-8 text-center z-10">
         {/* Área do ícone principal sem círculo de fundo */}
