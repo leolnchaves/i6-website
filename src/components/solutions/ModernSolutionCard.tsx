@@ -105,15 +105,13 @@ const ModernSolutionCard = memo(({
             </h3>
           </div>
           
-          {/* Right side - Large Image Icon */}
-          <div className="relative group-hover:scale-105 transition-transform duration-500">
-            <div className="w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500">
-              <img 
-                src={icon} 
-                alt={`${title} icon`}
-                className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
-              />
-            </div>
+          {/* Large Background Image */}
+          <div className="absolute -top-4 -right-4 opacity-10 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none">
+            <img 
+              src={icon} 
+              alt={`${title} icon`}
+              className="w-32 h-32 object-contain"
+            />
           </div>
         </div>
 
