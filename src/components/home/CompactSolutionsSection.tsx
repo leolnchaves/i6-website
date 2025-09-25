@@ -7,7 +7,25 @@ import CompactVerticalCard from './compact-solutions/CompactVerticalCard';
 
 const CompactSolutionsSection = () => {
   const { language } = useLanguage();
-  const { solutions, loading } = useSolutionsMarkdown();
+  const { solutions, loading, error } = useSolutionsMarkdown();
+  
+  console.log('CompactSolutionsSection rendering:', { solutions: solutions?.length, loading, error });
+  
+  // Se houver erro, renderiza com fallback dos cards estáticos
+  if (error) {
+    console.error('Error loading solutions from markdown, using fallback:', error);
+    return (
+      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <CompactSolutionsHeader />
+          <div className="text-center mt-16">
+            <p className="text-gray-600">Erro ao carregar soluções. Tente recarregar a página.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
   
   if (loading) {
     return (
