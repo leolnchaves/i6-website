@@ -6,10 +6,9 @@
 
 **Outcomes:**
 - Aumente conversões conectando a oferta certa ao cliente certo
-- Expanda o ticket médio com cross-sell contextual e inteligente
 - Maximize o ROI adaptando-se a cada canal de vendas
+- Expanda o ticket médio com cross-sell contextual e inteligente
 - Eleve o LTV antecipando próximas compras ideais
-- Melhore taxas de sucesso em propostas com timing e conteúdo personalizados
 
 ---
 
@@ -33,6 +32,7 @@
 - Aumente margem ou demanda com pricing dinâmico
 - Preveja demanda para evitar rupturas e excesso de estoque
 - Acelere o sell-out com sortimento inteligente e localizado
+- Alinhe previsões com capacidade para aumentar eficiência
 
 ---
 
@@ -41,7 +41,7 @@
 **Description:** Escale vendas com máxima eficiência, eliminando desperdícios e acelerando a execução com IA.
 
 **Outcomes:**
-- Elimine esforços comerciais ineficientes ao priorizar clientes e canais de maior propensão
-- Reduza custos de aquisição (CAC) com campanhas otimizadas e segmentação preditiva
-- Evite rupturas e excesso de estoque com previsões precisas e sortimento inteligente
+- Reduza despesas de CRM e operacionais com automação
+- Melhore a performance da equipe de vendas com IA e gamificação
+- Acelere vendas priorizando leads de alta propensão
 - Lance e escale em semanas com IA plug-and-play

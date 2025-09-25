@@ -1,4 +1,4 @@
-# Real AI Impact TESTE
+# Real AI Impact
 
 ## Growth Acceleration
 **Icon:** TrendingUp
@@ -6,10 +6,9 @@
 
 **Outcomes:**
 - Increase conversions by matching the right offer to the right customer
-- Grow ticket size with smart, contextual cross-sell
 - Maximize ROI by adapting to each sales channel
+- Grow ticket size with smart, contextual cross-sell
 - Boost LTV by anticipating next-best purchases
-- Improve proposal win rates with personalized timing and content
 
 ---
 
@@ -33,6 +32,7 @@
 - Increase margin or demand with dynamic pricing
 - Forecast demand to avoid stockouts and excess
 - Boost sell-out with smart, localized assortment
+- Align forecasts with capacity to boost efficiency
 
 ---
 
@@ -41,7 +41,7 @@
 **Description:** Scale sales with maximum efficiency, cutting waste and accelerating execution with AI.
 
 **Outcomes:**
-- Eliminate inefficient sales efforts by prioritizing high-propensity customers and channels
-- Reduce acquisition costs (CAC) with optimized campaigns and predictive segmentation
-- Prevent stockouts and overstock with precise forecasting and smart assortment
+- Reduce CRM and operational expenses with automation
+- Improve sales team performance with AI and gamification
+- Accelerate sales by prioritizing high-propensity leads
 - Launch and scale in weeks with plug-and-play AI

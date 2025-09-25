@@ -51,14 +51,16 @@ const ResultCard = ({ title, description, solutions, index, cardImage }: ResultC
           {description}
         </p>
         
-        {/* Apenas 1 resultado principal */}
-        <div className="mt-auto pt-2 border-t border-gray-100">
-          <div className="flex items-start gap-2">
-            <div className="w-1 h-1 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
-            <span className="text-xs text-gray-600 leading-relaxed line-clamp-1">
-              {solutions[0]}
-            </span>
-          </div>
+        {/* Lista de resultados */}
+        <div className="mt-auto pt-2 border-t border-gray-100 space-y-1">
+          {solutions.slice(0, 4).map((solution, idx) => (
+            <div key={idx} className="flex items-start gap-2">
+              <div className="w-1 h-1 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
+              <span className="text-xs text-gray-600 leading-relaxed">
+                {solution}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
