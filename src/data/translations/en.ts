@@ -58,7 +58,7 @@ export const enTranslations = {
   
   // Compact Solutions Section  
   'compactSolutions.title': 'Strategic AI Solutions, Built for Results',
-  'compactSolutions.subtitle': 'Driving Competitive Advantage',
+  'compactSolutions.subtitle': 'Unlock Competitive Advantage',
   'compactSolutions.description': 'Go beyond the hype. Turn intelligence into business performance with ready-to-deploy AI solutions.',
   'compactSolutions.buttonText': 'Explore Solutions',
   
