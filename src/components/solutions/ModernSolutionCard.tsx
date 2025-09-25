@@ -88,20 +88,20 @@ const ModernSolutionCard = memo(({
     >
       {/* Soft gradient background overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-orange-50/20 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+      
+      {/* Animated line at top border */}
+      <div className="absolute top-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-full transition-all duration-700 ease-out rounded-t-3xl" />
 
       <CardContent className="p-8 relative z-10">
         {/* Header Section - Title only */}
-        <div className="mb-6 relative">
+        <div className="mb-6">
           <h3 className="font-bold text-2xl text-gray-900 mb-4 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500">
             {title}
           </h3>
-          
-          {/* Animated line centered between title and description */}
-          <div className="absolute top-12 right-0 w-0 h-1 bg-gradient-to-l from-blue-500 to-orange-500 group-hover:w-3/4 transition-all duration-700 ease-out" />
         </div>
 
         {/* Description */}
-        <div className="mb-6 pt-2">
+        <div className="mb-6">
           <p className="text-gray-600 leading-relaxed text-sm group-hover:text-gray-700 transition-colors duration-300">
             {description}
           </p>
