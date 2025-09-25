@@ -90,21 +90,18 @@ const ModernSolutionCard = memo(({
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-orange-50/20 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
 
       <CardContent className="p-8 relative z-10">
-        {/* Header Section - Large icon on right, titles on left */}
-        <div className="flex items-start justify-between mb-8">
-          {/* Left side - Titles */}
-          <div className="flex-1 pr-4">
-            <h3 className="font-bold text-2xl text-gray-900 mb-2 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500">
-              {title}
-            </h3>
-            
-            {/* Animated line between title and description */}
-            <div className="w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-3/4 transition-all duration-700 ease-out mb-2" />
-          </div>
+        {/* Header Section - Title only */}
+        <div className="mb-6 relative">
+          <h3 className="font-bold text-2xl text-gray-900 mb-4 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500">
+            {title}
+          </h3>
+          
+          {/* Animated line centered between title and description */}
+          <div className="absolute top-12 right-0 w-0 h-1 bg-gradient-to-l from-blue-500 to-orange-500 group-hover:w-3/4 transition-all duration-700 ease-out" />
         </div>
 
         {/* Description */}
-        <div className="mb-6">
+        <div className="mb-6 pt-2">
           <p className="text-gray-600 leading-relaxed text-sm group-hover:text-gray-700 transition-colors duration-300">
             {description}
           </p>
@@ -145,6 +142,7 @@ const ModernSolutionCard = memo(({
           </div>
         </div>
 
+        {/* Bottom accent line */}
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-24 transition-all duration-700 rounded-t-full" />
       </CardContent>
     </Card>
