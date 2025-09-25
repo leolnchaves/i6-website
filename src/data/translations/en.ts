@@ -11,7 +11,7 @@ export const enTranslations = {
   'hero.infinite': 'Endless',
   'hero.possibilities': 'Possibilities',
   'hero.poweredByAI': 'Powered by AI',
-  'hero.description': 'Rethink what is possible. Build smarter and move faster. Grow beyond limits with adaptive AI.',
+  'hero.description': 'Rethink what\'s possible. Build smarter. Move faster. Grow beyond limits with adaptive AI.',
   'hero.rethinkLine1': 'Rethink what\'s possible. Build smarter. Move faster.',
   'hero.rethinkLine2': 'Grow beyond limits with adaptive AI.',
   'hero.startJourney': 'Start Your Journey',
