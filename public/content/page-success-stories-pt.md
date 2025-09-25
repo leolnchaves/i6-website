@@ -100,7 +100,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 ---
 
 ## Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas
-**Image:** /content/success-stories/case-retail-2.jpg  
+**Image:** /content/success-stories/case-retail-forecast.jpg  
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png  
 **Segment:** Varejo  
 **Client:** Uma das maiores marcas de cosméticos do Brasil  
