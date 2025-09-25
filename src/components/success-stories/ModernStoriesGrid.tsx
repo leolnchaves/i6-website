@@ -27,6 +27,7 @@ interface StoryData {
   customer_title: string;
   image_url: string;
   solutions: string[];
+  logo?: string;
 }
 
 const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegment }) => {
@@ -108,7 +109,8 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
                   customer_name: story.customerName,
                   customer_title: story.customerTitle,
                   image_url: story.image,
-                  solutions: story.solutions
+                  solutions: story.solutions,
+                  logo: story.logo
                 }}
                 onClick={handleCardClick}
                 language={language}

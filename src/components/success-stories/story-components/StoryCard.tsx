@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { ArrowRight, Building2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import LazyImage from '../optimized/LazyImage';
-import { useCompanyDetails } from '../hooks/useCompanyDetails';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 interface StoryCardData {
   id: string;
@@ -20,6 +20,7 @@ interface StoryCardData {
   customer_name: string;
   customer_title: string;
   image_url: string;
+  logo?: string;
 }
 
 interface StoryCardProps {
@@ -29,7 +30,6 @@ interface StoryCardProps {
 }
 
 const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) => {
-  const { getCompanyDetails } = useCompanyDetails();
   const handleClick = useCallback(() => {
     onClick(story);
   }, [story, onClick]);
@@ -94,11 +94,13 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
         <div className="flex items-center justify-between">
           {/* Company Logo */}
           <div className="flex-shrink-0">
-            <img 
-              src={getCompanyDetails(story).logo}
-              alt={`${story.company_name} logo`}
-              className="w-8 h-8 object-contain"
-            />
+            {story.logo && (
+              <img 
+                src={getPublicAssetUrl(story.logo)}
+                alt={`${story.company_name} logo`}
+                className="w-8 h-8 object-contain"
+              />
+            )}
           </div>
           
           {/* Details section */}
