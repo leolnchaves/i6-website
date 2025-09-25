@@ -96,37 +96,37 @@ const CompactVerticalCard = ({
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
-  // Formas curvas conectadas para criar continuidade visual
+  // Formas curvas conectadas para criar continuidade visual perfeita
   const getCurvedBackground = (cardIndex: number) => {
     const shapes = [
-      // Card 1: começa alto à esquerda (15%), termina baixo à direita (75%) - curva S descendente
-      {
-        clipPath: 'polygon(0% 15%, 25% 20%, 50% 35%, 75% 60%, 100% 75%, 100% 0%, 0% 0%)',
-        height: 'h-64'
-      },
-      // Card 2: começa baixo à esquerda (75%), termina alto à direita (20%) - curva S ascendente
-      {
-        clipPath: 'polygon(0% 75%, 25% 60%, 50% 35%, 75% 25%, 100% 20%, 100% 0%, 0% 0%)',
-        height: 'h-68'
-      },
-      // Card 3: começa alto à esquerda (20%), termina baixo à direita (70%) - curva S descendente
+      // Card 1: começa alto à esquerda (20%), termina baixo à direita (70%)
       {
         clipPath: 'polygon(0% 20%, 25% 25%, 50% 40%, 75% 55%, 100% 70%, 100% 0%, 0% 0%)',
+        height: 'h-64'
+      },
+      // Card 2: começa baixo à esquerda (70%), termina alto à direita (25%)
+      {
+        clipPath: 'polygon(0% 70%, 25% 55%, 50% 35%, 75% 30%, 100% 25%, 100% 0%, 0% 0%)',
+        height: 'h-68'
+      },
+      // Card 3: começa alto à esquerda (25%), termina baixo à direita (65%)
+      {
+        clipPath: 'polygon(0% 25%, 25% 30%, 50% 45%, 75% 55%, 100% 65%, 100% 0%, 0% 0%)',
         height: 'h-60'
       },
-      // Card 4: começa baixo à esquerda (70%), termina alto à direita (25%) - curva S ascendente
-      {
-        clipPath: 'polygon(0% 70%, 25% 55%, 50% 30%, 75% 20%, 100% 25%, 100% 0%, 0% 0%)',
-        height: 'h-66'
-      },
-      // Card 5: começa alto à esquerda (25%), termina baixo à direita (65%) - curva S descendente
-      {
-        clipPath: 'polygon(0% 25%, 25% 30%, 50% 45%, 75% 60%, 100% 65%, 100% 0%, 0% 0%)',
-        height: 'h-62'
-      },
-      // Card 6: começa baixo à esquerda (65%), termina alto à direita (30%) - curva S ascendente
+      // Card 4: começa baixo à esquerda (65%), termina alto à direita (30%)
       {
         clipPath: 'polygon(0% 65%, 25% 50%, 50% 35%, 75% 25%, 100% 30%, 100% 0%, 0% 0%)',
+        height: 'h-66'
+      },
+      // Card 5: começa alto à esquerda (30%), termina baixo à direita (60%)
+      {
+        clipPath: 'polygon(0% 30%, 25% 35%, 50% 45%, 75% 55%, 100% 60%, 100% 0%, 0% 0%)',
+        height: 'h-62'
+      },
+      // Card 6: começa baixo à esquerda (60%), termina alto à direita (35%)
+      {
+        clipPath: 'polygon(0% 60%, 25% 45%, 50% 30%, 75% 25%, 100% 35%, 100% 0%, 0% 0%)',
         height: 'h-64'
       }
     ];
