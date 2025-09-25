@@ -6,7 +6,7 @@ export interface SandboxEnvironmentData {
 export const sandboxEnvironmentData = {
   en: {
     title: 'Risk-Free Testing with Expert Support',
-    description: 'Complete testing environment with expert guidance throughout your journey'
+    description: 'Complete isolated testing environment with expert guidance throughout your journey'
   },
   pt: {
     title: 'Teste sem riscos. Evolua com orientação especializada.',
