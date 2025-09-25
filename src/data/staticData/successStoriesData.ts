@@ -30,7 +30,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     hero: {
       title: "AI Shaping Industries",
       subtitle: "Driven by Results",
-      description: "Discover how our AI cases are redefining how businesses grow, compete and lead."
+      description: "Discover how our AI cases are continuously redefining how businesses grow, compete and lead."
     },
     metrics: {
       avgROI: "20x",
