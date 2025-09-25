@@ -70,7 +70,7 @@ export const ptTranslations = {
   
   // CTA Section
   'cta.title': 'Pronto para Transformar Seu Negócio?',
-  'cta.description': 'Junte-se a empresas que já desbloquearam seu potencial infinito.',
+  'cta.description': 'Junte-se a centenas de empresas que já desbloquearam seu potencial infinito.',
   'cta.button': 'Comece Hoje',
   
   // Video Modal
