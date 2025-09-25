@@ -33,7 +33,7 @@ A significant challenge was providing personalized recommendations to both logge
 **Solution:** To drive digital sales growth, the initiative focuses on consolidating customer behaviors from both logged-in users and anonymous visitors. By predicting purchasing patterns through real-time product recommendations aligned with customer navigation and interaction feedback, the retailer aims to enhance customer engagement.
 This strategy seeks to increase the average basket size through effective cross-selling and up-selling, creating a personalized and dynamic shopping experience that resonates with each customer’s unique preferences.
 **Metric1:** 50% New Products Discovery
-**Metric2:** 11% Recommended Items-to-Cart
+**Metric2:** 11% Items-to-Cart
 **Metric3:** 50% Maintenance Efficiency
 **Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users
 **Quote:** Elevating Customer Engagement: Enhancing Online Sales
