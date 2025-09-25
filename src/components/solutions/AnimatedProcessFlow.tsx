@@ -63,7 +63,7 @@ const AnimatedProcessFlow = () => {
       ],
       integration: [
         "Seamless integration across your digital ecosystem",
-        "**Fast value capture with trained models**",
+        "**Fast value capture with business-trained models**",
         "Real-time monitoring and alerting setup"
       ]
     };
@@ -91,7 +91,7 @@ const AnimatedProcessFlow = () => {
       ],
       integration: [
         "Integração perfeita em seu ecossistema digital",
-        "**Captura rápida de valor com modelos treinados**",
+        "**Captura rápida de valor com modelos treinados para negócio**",
         "Configuração de monitoramento e alertas em tempo real"
       ]
     };
