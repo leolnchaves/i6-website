@@ -27,12 +27,13 @@ const ResultCard = ({ title, description, solutions, index, cardImage }: ResultC
       <div className="p-4 h-full flex flex-col min-h-[200px]">
         {/* Header com imagem */}
         <div className="flex justify-start items-start mb-3">
-          <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
             {cardImage ? (
               <img 
                 src={cardImage} 
                 alt={title}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-contain"
+                style={{ mixBlendMode: 'multiply' }}
               />
             ) : (
               <span className="text-lg">📊</span>
