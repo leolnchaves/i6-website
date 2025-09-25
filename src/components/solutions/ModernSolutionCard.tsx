@@ -100,7 +100,7 @@ const ModernSolutionCard = memo(({
         <div className="flex items-start justify-between mb-8">
           {/* Left side - Titles */}
           <div className="flex-1 pr-4">
-            <h3 className="font-bold text-2xl text-gray-900 mb-2 leading-tight">
+            <h3 className="font-bold text-2xl text-gray-900 mb-2 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500">
               {title}
             </h3>
           </div>
