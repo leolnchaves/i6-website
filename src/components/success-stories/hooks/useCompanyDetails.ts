@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import companyLogo from '@/assets/company-logo.png';
+import companyLogo from '@/assets/images/company-logo.png';
 
 interface StoryCard {
   id: string;
