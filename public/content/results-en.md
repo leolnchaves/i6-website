@@ -36,7 +36,7 @@
 
 ---
 
-## Commercial Efficiency & Cost Reduction
+## Commercial Performance
 **Icon:** Award
 **Description:** Scale sales with maximum efficiency, cutting waste and accelerating execution with AI.
 

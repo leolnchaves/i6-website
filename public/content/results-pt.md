@@ -36,7 +36,7 @@
 
 ---
 
-## Eficiência Comercial & Redução de Custos
+## Performance Comercial
 **Icon:** Award
 **Description:** Escale vendas com máxima eficiência, eliminando desperdícios e acelerando a execução com IA.
 
