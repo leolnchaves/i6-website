@@ -100,7 +100,7 @@ This strategy seeks to increase the average basket size through effective cross-
 ---
 
 ## Demand Forecast Accuracy: Enhancing Production and Sales Planning
-**Image:** /content/success-stories/case-retail-2.jpg
+**Image:** /content/success-stories/case-retail-forecast.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Retail
 **Client:** Top leading cosmetics brand in Brazil
