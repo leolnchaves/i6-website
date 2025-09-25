@@ -68,7 +68,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-xl max-w-3xl w-full max-h-[85vh] relative shadow-xl animate-modal-enter overflow-hidden"
+        className="bg-white rounded-xl max-w-3xl w-full min-h-[50vh] max-h-[90vh] relative shadow-xl animate-modal-enter flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Gradient bar on top - matching the card design */}
@@ -117,7 +117,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6 overflow-y-auto flex-1">
           {/* Challenge & Solution */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
