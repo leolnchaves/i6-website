@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { TrendingUp, Award, Target, DollarSign } from 'lucide-react';
 import { useMarkdownContent } from '@/hooks/useMarkdownContent';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
@@ -9,6 +8,12 @@ import ResultsHeader from './results/ResultsHeader';
 import ResultCard from './results/ResultCard';
 import ResultsBackground from './results/ResultsBackground';
 
+// Import impact card images
+import growthAccelerationIcon from '@/assets/icons/growth-acceleration.png';
+import hyperpersonalizationIcon from '@/assets/icons/hyperpersonalization.png';
+import supplyOptimizationIcon from '@/assets/icons/supply-optimization.png';
+import commercialEfficiencyIcon from '@/assets/icons/commercial-efficiency.png';
+
 
 const ResultsSection = () => {
   const { results, loading, error } = useMarkdownContent();
@@ -16,12 +21,12 @@ const ResultsSection = () => {
 
   console.log('Results received:', results.length, results);
 
-  // Icon mapping
-  const iconComponents = {
-    TrendingUp: <TrendingUp className="text-primary text-3xl" />,
-    Target: <Target className="text-primary text-3xl" />,
-    DollarSign: <DollarSign className="text-primary text-3xl" />,
-    Award: <Award className="text-primary text-3xl" />
+  // Images mapping in order of presentation
+  const cardImages = {
+    TrendingUp: growthAccelerationIcon,
+    Target: hyperpersonalizationIcon,
+    DollarSign: supplyOptimizationIcon,
+    Award: commercialEfficiencyIcon
   };
 
   if (loading) {
@@ -64,13 +69,14 @@ const ResultsSection = () => {
           {results.map((result, index) => (
             <ResultCard
               key={index}
-              icon={iconComponents[result.icon as keyof typeof iconComponents] || iconComponents.TrendingUp}
+              icon={null}
               title={result.title}
               description={result.description}
               solutions={result.outcomes}
               index={index}
               backgroundColor={undefined}
               backgroundOpacity={undefined}
+              cardImage={cardImages[result.icon as keyof typeof cardImages] || cardImages.TrendingUp}
             />
           ))}
         </div>
