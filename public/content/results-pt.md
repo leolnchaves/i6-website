@@ -36,11 +36,12 @@
 
 ---
 
-## Eficiência de Custos e Comercial
+## Eficiência Comercial & Redução de Custos
 **Icon:** Award
-**Description:** Corte custos e escale com inteligência através de execução rápida e alimentada por IA.
+**Description:** Escale vendas com máxima eficiência, eliminando desperdícios e acelerando a execução com IA.
 
 **Outcomes:**
-- Reduza despesas de CRM e operacionais com automação
-- Melhore performance do time de vendas com IA e gamificação
+- Elimine esforços comerciais ineficientes ao priorizar clientes e canais de maior propensão
+- Reduza custos de aquisição (CAC) com campanhas otimizadas e segmentação preditiva
+- Evite rupturas e excesso de estoque com previsões precisas e sortimento inteligente
 - Lance e escale em semanas com IA plug-and-play

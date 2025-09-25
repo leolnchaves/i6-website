@@ -36,11 +36,12 @@
 
 ---
 
-## Cost & Commercial Efficiency
+## Commercial Efficiency & Cost Reduction
 **Icon:** Award
-**Description:** Cut costs and scale smarter with fast, AI-powered execution.
+**Description:** Scale sales with maximum efficiency, cutting waste and accelerating execution with AI.
 
 **Outcomes:**
-- Reduce CRM and operational expenses with automation
-- Improve sales team performance with AI and gamification
+- Eliminate inefficient sales efforts by prioritizing high-propensity customers and channels
+- Reduce acquisition costs (CAC) with optimized campaigns and predictive segmentation
+- Prevent stockouts and overstock with precise forecasting and smart assortment
 - Launch and scale in weeks with plug-and-play AI
