@@ -2,7 +2,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** users
+**Icon:** /src/assets/icons/hat-glasses.png
 
 **Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
@@ -24,7 +24,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** shopping-cart
+**Icon:** /src/assets/icons/shopping-cart.png
 
 **Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
@@ -68,7 +68,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** target
+**Icon:** /src/assets/icons/target.png
 
 **Target:** Growth Acceleration
 
@@ -90,7 +90,7 @@
 
 **Engine:** i6 ElasticPrice
 
-**Icon:** dollar-sign
+**Icon:** /src/assets/icons/dollar.png
 
 **Target:** Supply & Profitability Optimization
 
@@ -112,7 +112,7 @@
 
 **Engine:** i6 Previsio
 
-**Icon:** bar-chart-3
+**Icon:** /src/assets/icons/chart.png
 
 **Target:** Supply & Profitability Optimization
 
