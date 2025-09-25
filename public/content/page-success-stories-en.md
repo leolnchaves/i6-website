@@ -26,7 +26,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 **Image:** /content/success-stories/case-retail-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Retail
-**Client:** The most traditional fashion brand in Latin America.
+**Client:** The most traditional fashion brand in Latin America
 **Description:** With over 140 years of history, the company has established itself as one of the leading fashion retailers in the region.
 **Challenge:** In the competitive fashion retail landscape, a leading company sought to boost customer engagement and drive online sales. They aimed to implement a solution that delivers highly relevant and diverse product recommendations in real-time, moving beyond basic suggestions to anticipate and fulfill customer needs.
 A significant challenge was providing personalized recommendations to both logged-in users and anonymous visitors, ensuring a seamless and engaging experience for all customers.
