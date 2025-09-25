@@ -16,7 +16,7 @@ Success is defined by increased sell-out volumes, higher margins and a seamless,
 **Metric2:** 36% New SKU Conversion
 **Metric3:** -
 **Solutions:** Industrial Recommendation Intelligence
-**Quote:** The AI solution transformed our understanding of customer behavior and dramatically improved our conversion rates.
+**Quote:** Market Place Excellence: Driving Success for Pharmacies
 **CustomerName:** Paulo Lima
 **CustomerTitle:** New Channel Manager
 
