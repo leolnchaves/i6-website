@@ -30,114 +30,146 @@ const CompactVerticalCard = ({
     const IconComponent = LucideIcons[iconKey] as React.ComponentType<any>;
     
     if (IconComponent && typeof IconComponent === 'function') {
-      return <IconComponent size={24} className="text-white" />;
+      return IconComponent;
     }
     
-    return <LucideIcons.Brain size={24} className="text-white" />;
+    return LucideIcons.Brain;
   };
 
-  const placeholderImages = [
-    '/solution-Anonymous-Visitors.gif',
-    '/solucao-Identified-Users.gif',
-    '/solucao-Predictive-Campaign.gif',
-    '/solucao-Smart-Price.gif',
-    '/solucao-Adaptive-Demand.gif',
-    '/solucao-Industrial-Intelligence.gif'
-  ];
+  const getRelatedIcons = (mainIcon: string) => {
+    const iconSets = {
+      'trending-up': [LucideIcons.BarChart3, LucideIcons.Target, LucideIcons.TrendingUp],
+      'users': [LucideIcons.Users, LucideIcons.UserCheck, LucideIcons.UserPlus],
+      'brain': [LucideIcons.Brain, LucideIcons.Zap, LucideIcons.Lightbulb],
+      'shopping-cart': [LucideIcons.ShoppingCart, LucideIcons.CreditCard, LucideIcons.Package],
+      'settings': [LucideIcons.Settings, LucideIcons.Sliders, LucideIcons.Cog],
+      'factory': [LucideIcons.Factory, LucideIcons.Cpu, LucideIcons.Bot]
+    };
+    
+    return iconSets[mainIcon as keyof typeof iconSets] || [LucideIcons.Sparkles, LucideIcons.Star, LucideIcons.Zap];
+  };
 
   const getColorScheme = (cardIndex: number) => {
     const schemes = [
-      { icon: 'from-blue-500 to-blue-600', hover: 'from-blue-50 to-blue-100' },
-      { icon: 'from-purple-500 to-purple-600', hover: 'from-purple-50 to-purple-100' },
-      { icon: 'from-green-500 to-green-600', hover: 'from-green-50 to-green-100' },
-      { icon: 'from-orange-500 to-orange-600', hover: 'from-orange-50 to-orange-100' },
-      { icon: 'from-teal-500 to-teal-600', hover: 'from-teal-50 to-teal-100' },
-      { icon: 'from-indigo-500 to-indigo-600', hover: 'from-indigo-50 to-indigo-100' }
+      { 
+        bg: 'from-blue-100 via-blue-50 to-cyan-50', 
+        iconBg: 'from-blue-500 to-cyan-500',
+        accent: 'text-blue-600',
+        border: 'border-blue-200 hover:border-blue-300'
+      },
+      { 
+        bg: 'from-purple-100 via-purple-50 to-pink-50', 
+        iconBg: 'from-purple-500 to-pink-500',
+        accent: 'text-purple-600',
+        border: 'border-purple-200 hover:border-purple-300'
+      },
+      { 
+        bg: 'from-green-100 via-green-50 to-emerald-50', 
+        iconBg: 'from-green-500 to-emerald-500',
+        accent: 'text-green-600',
+        border: 'border-green-200 hover:border-green-300'
+      },
+      { 
+        bg: 'from-orange-100 via-orange-50 to-amber-50', 
+        iconBg: 'from-orange-500 to-amber-500',
+        accent: 'text-orange-600',
+        border: 'border-orange-200 hover:border-orange-300'
+      },
+      { 
+        bg: 'from-teal-100 via-teal-50 to-cyan-50', 
+        iconBg: 'from-teal-500 to-cyan-500',
+        accent: 'text-teal-600',
+        border: 'border-teal-200 hover:border-teal-300'
+      },
+      { 
+        bg: 'from-indigo-100 via-indigo-50 to-purple-50', 
+        iconBg: 'from-indigo-500 to-purple-500',
+        accent: 'text-indigo-600',
+        border: 'border-indigo-200 hover:border-indigo-300'
+      }
     ];
     return schemes[cardIndex % schemes.length];
   };
 
+  const MainIcon = getIcon(icon);
+  const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
-  const imageUrl = placeholderImages[index % placeholderImages.length];
 
   return (
-    <Card className="group relative overflow-hidden border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-2xl bg-white">
-      {/* Gradiente de hover sutil no fundo */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.hover} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
-      
-      <CardContent className="relative p-6 z-10">
-        {/* Header com ícone e categoria */}
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className={`p-3 bg-gradient-to-br ${colorScheme.icon} rounded-xl shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
-              {getIcon(icon)}
-            </div>
-            <div className="bg-gray-100 group-hover:bg-white/80 px-3 py-1.5 rounded-full transition-colors duration-300">
-              <span className="text-xs font-medium text-gray-700 group-hover:text-primary">
-                {category}
-              </span>
-            </div>
+    <Card className={`group relative overflow-hidden border-2 ${colorScheme.border} hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-3xl bg-white`}>
+      <CardContent className="p-8 text-center">
+        {/* Círculo principal com ícones flutuantes */}
+        <div className="relative mb-8 mx-auto w-40 h-40 flex items-center justify-center">
+          {/* Círculo de fundo com gradiente */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.bg} rounded-full shadow-lg group-hover:shadow-xl transition-shadow duration-300`}></div>
+          
+          {/* Ícone principal no centro */}
+          <div className={`relative z-10 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+            <MainIcon size={32} className="text-white" />
           </div>
           
-          {/* GIF animado pequeno e elegante */}
-          <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow duration-300">
-            <img
-              src={imageUrl}
-              alt={title}
-              className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-          </div>
+          {/* Ícones flutuantes */}
+          {relatedIcons.map((IconComp, idx) => {
+            const positions = [
+              { top: '15%', left: '20%', delay: '0s' },
+              { top: '25%', right: '15%', delay: '0.2s' },
+              { bottom: '20%', left: '15%', delay: '0.4s' }
+            ];
+            const pos = positions[idx] || positions[0];
+            
+            return (
+              <div
+                key={idx}
+                className="absolute opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+                style={{
+                  ...pos,
+                  animationDelay: pos.delay,
+                  animation: 'float 3s ease-in-out infinite'
+                }}
+              >
+                <div className="p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-md">
+                  <IconComp size={16} className={colorScheme.accent} />
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Título principal */}
-        <h3 className="font-bold text-xl text-gray-900 group-hover:text-primary mb-3 leading-tight transition-colors duration-300">
+        {/* Categoria */}
+        <div className="mb-3">
+          <span className={`inline-block px-3 py-1 text-xs font-medium ${colorScheme.accent} bg-white/80 rounded-full border border-current/20`}>
+            {category}
+          </span>
+        </div>
+
+        {/* Título */}
+        <h3 className="font-bold text-xl text-gray-900 mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
           {title}
         </h3>
         
         {/* Descrição */}
-        <p className="text-gray-600 group-hover:text-gray-700 text-sm leading-relaxed mb-5 transition-colors duration-300">
+        <p className="text-gray-600 text-sm leading-relaxed mb-6">
           {description}
         </p>
 
-        {/* Features como lista elegante */}
+        {/* Features como indicadores */}
         {features && features.length > 0 && (
-          <div className="space-y-2 mb-5">
-            {features.slice(0, 3).map((feature, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <div className={`w-1.5 h-1.5 bg-gradient-to-r ${colorScheme.icon} rounded-full`}></div>
-                <span className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                  {feature}
-                </span>
-              </div>
+          <div className="flex justify-center gap-1 mb-6">
+            {features.slice(0, 3).map((_, idx) => (
+              <div
+                key={idx}
+                className={`w-2 h-2 bg-gradient-to-r ${colorScheme.iconBg} rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300`}
+                style={{ animationDelay: `${idx * 0.1}s` }}
+              ></div>
             ))}
-            {features.length > 3 && (
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                <span className="text-xs text-gray-500">
-                  +{features.length - 3} funcionalidades
-                </span>
-              </div>
-            )}
           </div>
         )}
 
-        {/* Outcome como destaque final */}
+        {/* Outcome como call-to-action */}
         {outcome && (
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-200 to-transparent h-px top-0"></div>
-            <div className="pt-4">
-              <div className="flex items-start gap-2">
-                <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-white text-xs">✓</span>
-                </div>
-                <p className="text-xs text-primary font-medium leading-relaxed">
-                  {outcome}
-                </p>
-              </div>
-            </div>
+          <div className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${colorScheme.iconBg} text-white text-xs font-medium rounded-full group-hover:shadow-lg transition-shadow duration-300`}>
+            <LucideIcons.ArrowRight size={14} />
+            <span>Saiba mais</span>
           </div>
         )}
       </CardContent>
