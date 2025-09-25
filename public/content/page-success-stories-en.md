@@ -60,21 +60,23 @@ This strategy seeks to increase the average basket size through effective cross-
 
 ---
 
-## Financial Fraud Detection System
-**Image:** /content/success-stories/finance.jpg
+## Precision Sales Forecast: Streamlining Results and Operations
+**Image:** /content/success-stories/case-farma-2.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Finance
-**Client:** Capital Banking Group
-**Description:** Capital Banking Group
-**Challenge:** Manual fraud detection processes resulting in high false positive rates and significant financial losses from undetected fraudulent transactions.
-**Solution:** Implemented machine learning fraud detection system with real-time transaction monitoring and adaptive risk scoring algorithms.
-**Metric1:** 75% Fraud Detection Rate
-**Metric2:** 50% False Positive Reduction
-**Metric3:** $5M Annual Loss Prevention
-**Solutions:** Anonymous Visitors, Identified Users, Smart Price, Predictive Campaign
-**Quote:** The AI fraud detection system has dramatically improved our security posture while reducing customer friction.
-**CustomerName:** Robert Kim
-**CustomerTitle:** Chief Risk Officer
+**Segment:** Manufacturing
+**Client:** EMS Farma
+**Description:** One of the largest pharmaceutical companies in Brazil, this organization is a key player in the global market.
+**Challenge:** The company faced significant challenges in generating highly accurate forecasts for market intelligence and S&OP (Sales and Operations Planning) related to sell-out. This lack of precision created opportunities for improvement in production planning, commercial target setting and cost of customer acquisition (CAC) efficiency.
+Our role was to deliver a solution that consolidated various data sources (historical data, market behavior, inventory levels, transactional data, external market research, etc.) into a unified and accurate sales forecast for each product and point of sale (PDV).
+**Solution:** Our goal was to deliver a medium-term, high-accuracy sales forecast at a highly granular level (SKU + Point of Sale), fine-tuning the engine to account for factors such as market share, profitability, seasonality and promotions.
+By achieving this level of precision, we aimed to help the company optimize production planning, commercial strategies, and investments. The success of this initiative would give the company the confidence to streamline its entire value chain, driving efficiency from production to sales and investment decisions.
+**Metric1:** 82% Sell-out Forecast Projection
+**Metric2:** +100M Inventory Loss Savings
+**Metric3:** -
+**Solutions:** Adaptive Demand Forecasting
+**Quote:** Precision Sales Forecast: Streamlining Results and Operations
+**CustomerName:** -
+**CustomerTitle:** -
 
 ---
 
