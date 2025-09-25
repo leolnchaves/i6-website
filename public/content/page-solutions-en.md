@@ -1,14 +1,14 @@
 ## Smart Discovery for Anonymous Visitors
 
-**Engine:** TESTE i6 RecSys
+**Engine:** i6 RecSys
 
 **Icon:** users
 
 **Target:** Hyperpersonalization Intelligence & Growth Acceleration
 
-**Title:** TESTE TESTE TESTE Smart Discovery for Anonymous Visitors
+**Title:** Smart Discovery for Anonymous Visitors
 
-**Overview:** TESTE Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
+**Overview:** Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
 
 **Key Features:**
 - TESTE Contextual Affinity Modeling
@@ -16,7 +16,7 @@
 - Anonymous Visitor Intelligence
 - Real-time Recommendations
 
-**Business Results:** TESTE Unlocks product discovery and boosts engagement with zero historical data.
+**Business Results:** Unlocks product discovery and boosts engagement with zero historical data.
 
 ---
 
@@ -52,7 +52,7 @@
 
 **Title:** Industrial Recommendation Intelligence
 
-**Overview:** Align commercial targets with intelligent recommendations that optimize assortment, pricing and POS behavior, all in real time.
+**Overview:** Align commercial targets with intelligent recommendations that optimize assortment, pricing and POS behavior: all in real time.
 
 **Key Features:**
 - Assortment Optimization
