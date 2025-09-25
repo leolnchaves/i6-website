@@ -142,6 +142,9 @@ const ModernSolutionCard = memo(({
           </div>
         </div>
 
+        {/* Animated line on hover */}
+        <div className="absolute top-1/2 right-0 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-3/4 transition-all duration-700 ease-out transform -translate-y-1/2" />
+
         {/* Bottom accent line */}
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-24 transition-all duration-700 rounded-t-full" />
       </CardContent>
