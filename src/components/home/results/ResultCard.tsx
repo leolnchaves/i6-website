@@ -47,12 +47,12 @@ const ResultCard = ({ title, description, solutions, index, cardImage }: ResultC
         </h3>
         
         {/* Descrição breve */}
-        <p className="text-gray-600 text-xs leading-relaxed mb-3 flex-grow line-clamp-3">
+        <p className="text-gray-600 text-xs leading-relaxed mb-3 line-clamp-3">
           {description}
         </p>
         
-        {/* Lista de resultados */}
-        <div className="mt-auto pt-2 border-t border-gray-100 space-y-1">
+        {/* Lista de resultados com espaçamento fixo */}
+        <div className="pt-2 border-t border-gray-100 space-y-1 flex-grow">
           {solutions.slice(0, 4).map((solution, idx) => (
             <div key={idx} className="flex items-start gap-2">
               <div className="w-1 h-1 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
