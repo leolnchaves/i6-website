@@ -163,12 +163,6 @@ const CompactVerticalCard = ({
           })}
         </div>
 
-        {/* Categoria */}
-        <div className="mb-3">
-          <span className={`inline-block px-3 py-1 text-xs font-medium ${colorScheme.accent} bg-white/80 rounded-full border border-current/20`}>
-            {category}
-          </span>
-        </div>
 
         {/* Título */}
         <h3 className="font-bold text-xl text-gray-900 mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
