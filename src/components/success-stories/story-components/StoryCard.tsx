@@ -58,9 +58,9 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
           </span>
         </div>
 
-        {/* Company name */}
+        {/* Quote */}
         <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors duration-300">
-          {story.company_name}
+          {story.customer_quote}
         </h3>
 
         {/* Brief description */}
