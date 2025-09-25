@@ -5,11 +5,11 @@
 **Description:** Acelere a performance com IA que aumenta conversões, ticket médio e ROI em todos os canais.
 
 **Outcomes:**
-- Aumente conversões combinando a oferta certa ao cliente certo
-- Aumente o ticket médio com cross-sell inteligente e contextual
-- Maximize ROI adaptando-se a cada canal de vendas
-- Impulsione LTV antecipando próximas melhores compras
-- Melhore taxas de fechamento com timing e conteúdo personalizados
+- Aumente conversões conectando a oferta certa ao cliente certo
+- Expanda o ticket médio com cross-sell contextual e inteligente
+- Maximize o ROI adaptando-se a cada canal de vendas
+- Eleve o LTV antecipando próximas compras ideais
+- Melhore taxas de sucesso em propostas com timing e conteúdo personalizados
 
 ---
 
