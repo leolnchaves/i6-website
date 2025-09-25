@@ -8,8 +8,7 @@
 **Segment:** Manufacturing
 **Client:** EMS Farma
 **Description:** One of the largest pharmaceutical companies in Brazil, this organization is a key player in the global market.
-**Challenge:** The company sought to boost engagement and improve sales margins through their digital marketplace connecting pharmacies to distributors. To achieve this, deeper insights into customer behavior were needed.
-Our mission is to consolidate pharmacy and client data, delivering precise purchase predictions and actionable recommendations to optimize resource use, prevent stockouts and enhance operational efficiency.
+**Challenge:** The company sought to boost engagement and improve sales margins through their digital marketplace connecting pharmacies to distributors. To achieve this, deeper insights into customer behavior were needed. Our mission is to consolidate pharmacy and client data, delivering precise purchase predictions and actionable recommendations to optimize resource use, prevent stockouts and enhance operational efficiency.
 **Solution:** Our goal is to transform the digital marketplace into a trusted advisor for pharmacies, delivering high-impact, data-driven purchase suggestions. By enhancing resource use and creating opportunities for cross-sell and up-sell, we aim to increase engagement and expand basket sizes. This initiative focuses on helping pharmacies maximize profitability while strengthening their reliance on the industry as a key partner. Success is defined by increased sell-out volumes, higher margins and a seamless, efficient purchasing experience.
 **Metric1:** 23% Average Ticket Value
 **Metric2:** 36% New SKU Conversion
