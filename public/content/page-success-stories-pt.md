@@ -8,8 +8,7 @@
 **Segment:** Indústria  
 **Client:** EMS Farma  
 **Description:** Uma das maiores farmacêuticas do Brasil, também é um player estratégico no mercado global.  
-**Challenge:** A empresa buscava aumentar o engajamento e melhorar margens de venda em seu marketplace digital, que conecta farmácias a distribuidores. Para isso, era necessário compreender mais profundamente o comportamento dos clientes.  
-Nossa missão foi consolidar dados de farmácias e clientes, entregando previsões de compra precisas e recomendações acionáveis para otimizar o uso de recursos, evitar rupturas e elevar a eficiência operacional.  
+**Challenge:** A empresa buscava aumentar o engajamento e melhorar margens de venda em seu marketplace digital, que conecta farmácias a distribuidores. Para isso, era necessário compreender mais profundamente o comportamento dos clientes. Nossa missão foi consolidar dados de farmácias e clientes, entregando previsões de compra precisas e recomendações acionáveis para otimizar o uso de recursos, evitar rupturas e elevar a eficiência operacional.  
 **Solution:** Nosso objetivo foi transformar o marketplace digital em um verdadeiro parceiro de confiança das farmácias, oferecendo recomendações de compra baseadas em dados e de alto impacto. Com sugestões relevantes, criamos oportunidades de cross-sell e up-sell, ampliando o engajamento e aumentando o tamanho médio da cesta. Essa iniciativa foi desenhada para maximizar a lucratividade das farmácias e reforçar seu relacionamento com a indústria. O sucesso se mede em mais sell-out, maiores margens e uma jornada de compra eficiente e fluida.  
 **Metric1:** +23% Valor Médio de Ticket  
 **Metric2:** +36% Conversão em Novos SKUs  
