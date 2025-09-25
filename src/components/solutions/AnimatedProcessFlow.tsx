@@ -14,11 +14,15 @@ const AnimatedProcessFlow = () => {
   const translations = {
     en: {
       title: 'AI Implementation Journey',
-      subtitle: 'Risk-free testing. Concrete potential in 30 days.'
+      subtitle: 'Risk-free testing. Concrete potential in 30 days.',
+      startDemo: 'Start Demo',
+      pauseDemo: 'Pause Demo'
     },
     pt: {
       title: 'Jornada de Implementação de IA',
-      subtitle: 'Testes sem risco. Potencial concreto em 30 dias.'
+      subtitle: 'Testes sem risco. Potencial concreto em 30 dias.',
+      startDemo: 'Inicie a Demo',
+      pauseDemo: 'Pausar Demo'
     }
   };
   
@@ -197,7 +201,7 @@ const AnimatedProcessFlow = () => {
               className="flex items-center gap-2"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-              {isPlaying ? 'Pause Demo' : 'Start Demo'}
+              {isPlaying ? t.pauseDemo : t.startDemo}
             </Button>
           </div>
         </div>
