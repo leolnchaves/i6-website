@@ -51,87 +51,25 @@ const CompactVerticalCard = ({
   };
 
   const getColorScheme = (cardIndex: number) => {
-    // Gradient transition from orange to blue (matching menu hover gradient)
-    const schemes = [
-      { 
-        bg: 'from-orange-200/60 via-orange-100/40 to-orange-50/30', 
-        iconBg: 'from-orange-500/90 to-orange-600/90',
-        accent: 'text-orange-700',
-        border: 'border-orange-200/50 hover:border-orange-300/70'
-      },
-      { 
-        bg: 'from-amber-200/60 via-amber-100/40 to-yellow-50/30', 
-        iconBg: 'from-amber-500/90 to-yellow-500/90',
-        accent: 'text-amber-700',
-        border: 'border-amber-200/50 hover:border-amber-300/70'
-      },
-      { 
-        bg: 'from-cyan-200/60 via-cyan-100/40 to-sky-50/30', 
-        iconBg: 'from-cyan-500/90 to-sky-500/90',
-        accent: 'text-cyan-700',
-        border: 'border-cyan-200/50 hover:border-cyan-300/70'
-      },
-      { 
-        bg: 'from-sky-200/60 via-sky-100/40 to-blue-50/30', 
-        iconBg: 'from-sky-500/90 to-blue-500/90',
-        accent: 'text-sky-700',
-        border: 'border-sky-200/50 hover:border-sky-300/70'
-      },
-      { 
-        bg: 'from-blue-200/60 via-blue-100/40 to-indigo-50/30', 
-        iconBg: 'from-blue-500/90 to-indigo-500/90',
-        accent: 'text-blue-700',
-        border: 'border-blue-200/50 hover:border-blue-300/70'
-      },
-      { 
-        bg: 'from-indigo-200/60 via-indigo-100/40 to-blue-50/30', 
-        iconBg: 'from-indigo-500/90 to-blue-600/90',
-        accent: 'text-indigo-700',
-        border: 'border-indigo-200/50 hover:border-indigo-300/70'
-      }
-    ];
-    return schemes[cardIndex % schemes.length];
+    // Todos os cards usam o mesmo esquema de cor laranja (primeiro card)
+    return { 
+      bg: 'from-orange-200/60 via-orange-100/40 to-orange-50/30', 
+      iconBg: 'from-orange-500/90 to-orange-600/90',
+      accent: 'text-orange-700',
+      border: 'border-orange-200/50 hover:border-orange-300/70'
+    };
   };
 
   const MainIcon = getIcon(icon);
   const relatedIcons = getRelatedIcons(icon);
   const colorScheme = getColorScheme(index);
 
-  // Formas curvas conectadas para criar continuidade visual perfeita
+  // Todos os cards usam a mesma forma curva S (primeiro card)
   const getCurvedBackground = (cardIndex: number) => {
-    const shapes = [
-      // Card 1: começa alto à esquerda (20%), termina baixo à direita (70%)
-      {
-        clipPath: 'polygon(0% 20%, 25% 25%, 50% 40%, 75% 55%, 100% 70%, 100% 0%, 0% 0%)',
-        height: 'h-64'
-      },
-      // Card 2: começa baixo à esquerda (70%), termina alto à direita (25%)
-      {
-        clipPath: 'polygon(0% 70%, 25% 55%, 50% 35%, 75% 30%, 100% 25%, 100% 0%, 0% 0%)',
-        height: 'h-68'
-      },
-      // Card 3: começa alto à esquerda (25%), termina baixo à direita (65%)
-      {
-        clipPath: 'polygon(0% 25%, 25% 30%, 50% 45%, 75% 55%, 100% 65%, 100% 0%, 0% 0%)',
-        height: 'h-60'
-      },
-      // Card 4: começa baixo à esquerda (65%), termina alto à direita (30%)
-      {
-        clipPath: 'polygon(0% 65%, 25% 50%, 50% 35%, 75% 25%, 100% 30%, 100% 0%, 0% 0%)',
-        height: 'h-66'
-      },
-      // Card 5: começa alto à esquerda (30%), termina baixo à direita (60%)
-      {
-        clipPath: 'polygon(0% 30%, 25% 35%, 50% 45%, 75% 55%, 100% 60%, 100% 0%, 0% 0%)',
-        height: 'h-62'
-      },
-      // Card 6: começa baixo à esquerda (60%), termina alto à direita (35%)
-      {
-        clipPath: 'polygon(0% 60%, 25% 45%, 50% 30%, 75% 25%, 100% 35%, 100% 0%, 0% 0%)',
-        height: 'h-64'
-      }
-    ];
-    return shapes[cardIndex % shapes.length];
+    return {
+      clipPath: 'polygon(0% 20%, 25% 25%, 50% 40%, 75% 55%, 100% 70%, 100% 0%, 0% 0%)',
+      height: 'h-64'
+    };
   };
 
   const curvedShape = getCurvedBackground(index);
