@@ -18,6 +18,7 @@ Our mission is to consolidate pharmacy and client data, delivering precise purch
 **Quote:** Market Place Excellence: Driving Success for Pharmacies
 **CustomerName:** Paulo Lima
 **CustomerTitle:** New Channel Manager
+**ShowHome:** True
 
 ---
 
@@ -37,6 +38,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Quote:** Elevating Customer Engagement: Enhancing Online Sales
 **CustomerName:** -
 **CustomerTitle:** -
+**ShowHome:** True
 
 ---
 
@@ -55,6 +57,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Quote:** Assortment Precision: Sales Uplift through Optimized Predictions
 **CustomerName:** -
 **CustomerTitle:** -
+**ShowHome:** True
 
 ---
 
@@ -73,6 +76,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Quote:** Precision Sales Forecast: Streamlining Results and Operations
 **CustomerName:** -
 **CustomerTitle:** -
+**ShowHome:** True
 
 ---
 
@@ -91,6 +95,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Quote:** Maximizing Cross-Sell with Smart Buying Propensity
 **CustomerName:** -
 **CustomerTitle:** -
+**ShowHome:** True
 
 ---
 
@@ -109,5 +114,6 @@ This strategy seeks to increase the average basket size through effective cross-
 **Quote:**Demand Forecast Accuracy: Enhancing Production and Sales Planning
 **CustomerName:** -
 **CustomerTitle:** -
+**ShowHome:** False
 
 ---
