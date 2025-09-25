@@ -5,7 +5,7 @@ import { LucideIcon, Target, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ModernSolutionCardProps {
-  icon: LucideIcon;
+  icon: LucideIcon | string; // Can be Lucide icon or image path
   title: string;
   focus: string;
   description: string;
@@ -33,8 +33,8 @@ const translations = {
 };
 
 const ModernSolutionCard = memo(({ 
-  icon: Icon, 
-  title, 
+  icon, 
+  title,
   focus, 
   description, 
   features, 
@@ -108,10 +108,21 @@ const ModernSolutionCard = memo(({
             </p>
           </div>
           
-          {/* Right side - Large Icon */}
+          {/* Right side - Large Icon or Image */}
           <div className="relative group-hover:scale-105 transition-transform duration-500">
             <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-2xl flex items-center justify-center border border-gray-200/40 shadow-sm group-hover:shadow-md transition-all duration-500">
-              <Icon className="w-10 h-10 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />
+              {typeof icon === 'string' ? (
+                <img 
+                  src={icon} 
+                  alt={`${title} icon`}
+                  className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
+                />
+              ) : (
+                (() => {
+                  const IconComponent = icon as LucideIcon;
+                  return <IconComponent className="w-10 h-10 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />;
+                })()
+              )}
             </div>
           </div>
         </div>

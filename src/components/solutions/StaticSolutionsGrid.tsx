@@ -91,7 +91,9 @@ const StaticSolutionsGrid = memo(() => {
         ) : (
           <div className="space-y-12 max-w-7xl mx-auto">
             {solutions.map((solution, index) => {
-              const IconComponent = iconMap[solution.icon] || Building2;
+              // Check if icon is an image path or a Lucide icon name
+              const isImageIcon = solution.icon.startsWith('/') || solution.icon.includes('.');
+              const IconComponent = isImageIcon ? solution.icon : (iconMap[solution.icon] || Building2);
               const bgColor = engineColorMap[solution.engine] || 'bg-blue-500/20';
               
               console.log('Rendering solution:', solution.title, 'with features:', solution.keyFeatures);

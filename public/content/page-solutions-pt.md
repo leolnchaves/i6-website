@@ -2,7 +2,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** users
+**Icon:** /src/assets/icons/hat-glasses.png
 
 **Target:** B2B, B2C
 
