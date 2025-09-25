@@ -39,7 +39,7 @@ const ResultCard = ({ icon, title, description, solutions, index, backgroundColo
         </p>
 
         <div className="space-y-2">
-          <h4 className="text-sm font-semibold text-gray-800 mb-2">AI-Driven Outcomes:</h4>
+          <h4 className="text-sm font-semibold text-gray-800 mb-2">Resultados orientados por IA:</h4>
           <ul className="space-y-1">
             {solutions.map((solution, idx) => (
               <li key={idx} className="text-xs text-gray-600 flex items-start">
