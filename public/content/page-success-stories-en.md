@@ -34,11 +34,11 @@ A significant challenge was providing personalized recommendations to both logge
 This strategy seeks to increase the average basket size through effective cross-selling and up-selling, creating a personalized and dynamic shopping experience that resonates with each customer’s unique preferences.
 **Metric1:** 50% New Products Discovery
 **Metric2:** 11% Items-to-Cart
-**Metric3:** 50% Maintenance Efficiency
+**Metric3:** -
 **Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users
 **Quote:** Elevating Customer Engagement: Enhancing Online Sales
-**CustomerName:** Michael Chen
-**CustomerTitle:** Operations Director
+**CustomerName:** -
+**CustomerTitle:** -
 
 ---
 
