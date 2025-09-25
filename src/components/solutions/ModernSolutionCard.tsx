@@ -93,35 +93,20 @@ const ModernSolutionCard = memo(({
       <div className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-br from-orange-400/20 to-blue-400/20 rounded-full opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
 
       <CardContent className="p-8 relative z-10">
-        {/* Header Section */}
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-4">
-            {/* Icon Container with modern styling */}
-            <div className="relative group-hover:scale-110 transition-transform duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-2xl flex items-center justify-center border border-gray-200/50 backdrop-blur-sm shadow-sm group-hover:shadow-lg transition-all duration-500">
-                <Icon className="w-8 h-8 text-gray-700 group-hover:text-blue-600 transition-colors duration-300" />
-              </div>
-              {/* Subtle glow effect */}
-              <div className="absolute -inset-1 bg-gradient-to-br from-blue-500/5 to-orange-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+        {/* Header Section - Simplified */}
+        <div className="flex items-center gap-6 mb-8">
+          {/* Icon Container with harmonious styling */}
+          <div className="relative group-hover:scale-105 transition-transform duration-500">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-orange-50 rounded-xl flex items-center justify-center border border-gray-200/40 shadow-sm group-hover:shadow-md transition-all duration-500">
+              <Icon className="w-7 h-7 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
             </div>
-            
-            {/* Title and Focus */}
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <Badge 
-                  variant="secondary" 
-                  className="bg-gradient-to-r from-gray-100 to-gray-50 text-gray-600 border-gray-200/50 text-xs px-3 py-1 font-medium tracking-wide"
-                >
-                  {engine}
-                </Badge>
-              </div>
-              <h3 className="font-bold text-xl text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-700 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500 leading-tight">
-                {title}
-              </h3>
-              <p className="text-sm text-gray-500 mt-1 font-medium tracking-wide uppercase">
-                {focus}
-              </p>
-            </div>
+          </div>
+          
+          {/* Title Only */}
+          <div className="flex-1">
+            <h3 className="font-bold text-2xl text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-700 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500 leading-tight">
+              {title}
+            </h3>
           </div>
         </div>
 
