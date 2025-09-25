@@ -62,7 +62,7 @@ This strategy seeks to increase the average basket size through effective cross-
 
 ## Precision Sales Forecast: Streamlining Results and Operations
 **Image:** /content/success-stories/case-farma-2.jpg
-**Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
+**Logo:** /content/logos/EMS-COR.png
 **Segment:** Manufacturing
 **Client:** EMS Farma
 **Description:** One of the largest pharmaceutical companies in Brazil, this organization is a key player in the global market.
