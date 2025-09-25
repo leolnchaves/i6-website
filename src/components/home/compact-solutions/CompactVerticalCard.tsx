@@ -157,12 +157,6 @@ const CompactVerticalCard = ({
       </div>
 
       <CardContent className="relative p-8 text-center z-10">
-        {/* Ícone principal centralizado */}
-        <div className="relative mb-8 mx-auto w-20 h-20 flex items-center justify-center">
-          <div className={`relative z-10 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-            <MainIcon size={32} className="text-white" />
-          </div>
-        </div>
 
         {/* Título */}
         <h3 className="font-bold text-xl text-gray-900 mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
