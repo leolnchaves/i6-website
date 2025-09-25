@@ -147,18 +147,18 @@ const FeaturedStoriesSection = () => {
                       >
                         <CardContent className="p-0 h-full flex flex-col">
                           {/* Header com categoria */}
-                          <div className="p-6 pb-4">
+                          <div className="p-6 pb-4 flex-1">
                             <div className="inline-block px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium text-gray-600 mb-4">
                               {story.segment}
                             </div>
-                            <h3 className="text-lg text-gray-900 leading-tight">
+                            <h3 className="text-lg text-gray-900 leading-tight mb-4">
                               {story.quote}
                             </h3>
-                            <p className="text-sm font-bold text-gray-600 mt-1">{story.client}</p>
+                            <p className="text-sm font-bold text-gray-600">{story.client}</p>
                           </div>
                           
-                          {/* Conteúdo visual */}
-                          <div className="flex-1 relative mx-6 mb-6 rounded-2xl overflow-hidden">
+                          {/* Imagem posicionada no bottom com altura fixa */}
+                          <div className="mx-6 mb-6 h-32 rounded-lg overflow-hidden bg-gray-100">
                             {story.image ? (
                               <LazyImage 
                                 src={story.image} 
@@ -167,15 +167,15 @@ const FeaturedStoriesSection = () => {
                                 placeholderClassName="w-full h-full"
                               />
                             ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-blue-100 via-cyan-50 to-indigo-100 flex flex-col items-center justify-center p-6">
+                              <div className="w-full h-full bg-gradient-to-br from-blue-100 via-cyan-50 to-indigo-100 flex flex-col items-center justify-center p-4">
                                 {/* Ícone principal */}
-                                <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
-                                  <IconComponent className="w-8 h-8 text-blue-600" />
+                                <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-transform duration-300">
+                                  <IconComponent className="w-6 h-6 text-blue-600" />
                                 </div>
                                 
                                 {/* Texto de descrição */}
                                 <div className="text-center">
-                                  <p className="text-sm text-gray-700 font-medium mb-2">{story.segment}</p>
+                                  <p className="text-xs text-gray-700 font-medium mb-1">{story.segment}</p>
                                   <p className="text-xs text-gray-600">{story.client}</p>
                                 </div>
                               </div>
