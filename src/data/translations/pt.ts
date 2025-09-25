@@ -57,7 +57,7 @@ export const ptTranslations = {
   'stats.explainability': 'Recomendações com explicabilidade',
   
   // Compact Solutions Section
-  'compactSolutions.title': 'IA Aplicada, Criada para Resultados',
+  'compactSolutions.title': 'IA Aplicada, Modelada para Resultados',
   'compactSolutions.subtitle': 'Destrave sua Vantagem Competitiva',
   'compactSolutions.description': 'Vá além do hype. Transforme inteligência em performance de negócio com soluções de IA ready-to-deploy.',
   'compactSolutions.buttonText': 'Explorar Soluções',
