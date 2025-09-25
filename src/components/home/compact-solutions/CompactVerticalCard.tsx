@@ -101,17 +101,17 @@ const CompactVerticalCard = ({
       // Card 1: começa alto à esquerda (20%), termina baixo à direita (70%)
       {
         clipPath: 'polygon(0% 20%, 100% 70%, 100% 0%, 0% 0%)',
-        height: 'h-32'
+        height: 'h-48'
       },
       // Card 2: começa baixo à esquerda (70%), termina alto à direita (25%)
       {
         clipPath: 'polygon(0% 70%, 100% 25%, 100% 0%, 0% 0%)',
-        height: 'h-36'
+        height: 'h-52'
       },
       // Card 3: começa alto à esquerda (25%), termina baixo à direita (65%)
       {
         clipPath: 'polygon(0% 25%, 100% 65%, 100% 0%, 0% 0%)',
-        height: 'h-28'
+        height: 'h-44'
       }
     ];
     return shapes[cardIndex % 3];
