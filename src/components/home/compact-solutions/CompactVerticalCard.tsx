@@ -47,12 +47,12 @@ const CompactVerticalCard = ({
 
   const getColorScheme = (cardIndex: number) => {
     const schemes = [
-      { bg: 'from-blue-600 to-blue-700', accent: 'bg-blue-500/20' },
-      { bg: 'from-purple-600 to-purple-700', accent: 'bg-purple-500/20' },
-      { bg: 'from-green-600 to-green-700', accent: 'bg-green-500/20' },
-      { bg: 'from-orange-600 to-orange-700', accent: 'bg-orange-500/20' },
-      { bg: 'from-teal-600 to-teal-700', accent: 'bg-teal-500/20' },
-      { bg: 'from-indigo-600 to-indigo-700', accent: 'bg-indigo-500/20' }
+      { icon: 'from-blue-500 to-blue-600', hover: 'from-blue-50 to-blue-100' },
+      { icon: 'from-purple-500 to-purple-600', hover: 'from-purple-50 to-purple-100' },
+      { icon: 'from-green-500 to-green-600', hover: 'from-green-50 to-green-100' },
+      { icon: 'from-orange-500 to-orange-600', hover: 'from-orange-50 to-orange-100' },
+      { icon: 'from-teal-500 to-teal-600', hover: 'from-teal-50 to-teal-100' },
+      { icon: 'from-indigo-500 to-indigo-600', hover: 'from-indigo-50 to-indigo-100' }
     ];
     return schemes[cardIndex % schemes.length];
   };
@@ -61,69 +61,85 @@ const CompactVerticalCard = ({
   const imageUrl = placeholderImages[index % placeholderImages.length];
 
   return (
-    <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] rounded-xl bg-white">
-      <CardContent className="p-0">
-        {/* Header com gif pequeno */}
-        <div className={`relative h-32 bg-gradient-to-br ${colorScheme.bg} overflow-hidden`}>
-          <div className="absolute inset-0 bg-black/20"></div>
-          <img
-            src={imageUrl}
-            alt={title}
-            className="absolute top-2 right-2 w-16 h-16 object-cover rounded-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-          
-          {/* Categoria e ícone */}
-          <div className="absolute top-4 left-4 flex items-center gap-3">
-            <div className={`p-2 ${colorScheme.accent} rounded-lg backdrop-blur-sm`}>
+    <Card className="group relative overflow-hidden border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-xl transition-all duration-500 hover:scale-[1.02] rounded-2xl bg-white">
+      {/* Gradiente de hover sutil no fundo */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.hover} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
+      
+      <CardContent className="relative p-6 z-10">
+        {/* Header com ícone e categoria */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className={`p-3 bg-gradient-to-br ${colorScheme.icon} rounded-xl shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
               {getIcon(icon)}
             </div>
-            <div className="text-white/90 text-xs font-medium bg-white/20 px-2 py-1 rounded-full backdrop-blur-sm">
-              {category}
+            <div className="bg-gray-100 group-hover:bg-white/80 px-3 py-1.5 rounded-full transition-colors duration-300">
+              <span className="text-xs font-medium text-gray-700 group-hover:text-primary">
+                {category}
+              </span>
             </div>
+          </div>
+          
+          {/* GIF animado pequeno e elegante */}
+          <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow duration-300">
+            <img
+              src={imageUrl}
+              alt={title}
+              className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
           </div>
         </div>
 
-        {/* Conteúdo principal */}
-        <div className="p-5">
-          <h3 className="font-bold text-lg text-gray-900 mb-3 leading-tight group-hover:text-primary transition-colors duration-300">
-            {title}
-          </h3>
-          
-          <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
-            {description}
-          </p>
+        {/* Título principal */}
+        <h3 className="font-bold text-xl text-gray-900 group-hover:text-primary mb-3 leading-tight transition-colors duration-300">
+          {title}
+        </h3>
+        
+        {/* Descrição */}
+        <p className="text-gray-600 group-hover:text-gray-700 text-sm leading-relaxed mb-5 transition-colors duration-300">
+          {description}
+        </p>
 
-          {/* Features como badges */}
-          {features && features.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-4">
-              {features.slice(0, 2).map((feature, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
-                >
+        {/* Features como lista elegante */}
+        {features && features.length > 0 && (
+          <div className="space-y-2 mb-5">
+            {features.slice(0, 3).map((feature, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <div className={`w-1.5 h-1.5 bg-gradient-to-r ${colorScheme.icon} rounded-full`}></div>
+                <span className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
                   {feature}
                 </span>
-              ))}
-              {features.length > 2 && (
-                <span className="text-xs text-gray-500 px-2 py-1">
-                  +{features.length - 2} mais
+              </div>
+            ))}
+            {features.length > 3 && (
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                <span className="text-xs text-gray-500">
+                  +{features.length - 3} funcionalidades
                 </span>
-              )}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
+        )}
 
-          {/* Outcome como footer */}
-          {outcome && (
-            <div className="border-t border-gray-100 pt-3 mt-3">
-              <p className="text-xs text-primary font-medium">
-                💡 {outcome}
-              </p>
+        {/* Outcome como destaque final */}
+        {outcome && (
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-200 to-transparent h-px top-0"></div>
+            <div className="pt-4">
+              <div className="flex items-start gap-2">
+                <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs">✓</span>
+                </div>
+                <p className="text-xs text-primary font-medium leading-relaxed">
+                  {outcome}
+                </p>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
