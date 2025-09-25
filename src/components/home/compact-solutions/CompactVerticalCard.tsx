@@ -173,18 +173,6 @@ const CompactVerticalCard = ({
           {description}
         </p>
 
-        {/* Features como indicadores */}
-        {features && features.length > 0 && (
-          <div className="flex justify-center gap-1 mb-6">
-            {features.slice(0, 3).map((_, idx) => (
-              <div
-                key={idx}
-                className={`w-2 h-2 bg-gradient-to-r ${colorScheme.iconBg} rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300`}
-                style={{ animationDelay: `${idx * 0.1}s` }}
-              ></div>
-            ))}
-          </div>
-        )}
 
         {/* Outcome como call-to-action */}
         {outcome && (
