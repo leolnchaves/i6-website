@@ -62,8 +62,8 @@ const AnimatedProcessFlow = () => {
         "Performance benchmarking against baselines"
       ],
       integration: [
-        "Seamless deployment across your digital ecosystem",
-        "API integration with existing systems",
+        "Seamless integration across your digital ecosystem",
+        "**Fast value capture with trained models**",
         "Real-time monitoring and alerting setup"
       ]
     };
@@ -90,8 +90,8 @@ const AnimatedProcessFlow = () => {
         "Benchmarking de performance contra baselines"
       ],
       integration: [
-        "Implementação perfeita em seu ecossistema digital",
-        "Integração de API com sistemas existentes",
+        "Integração perfeita em seu ecossistema digital",
+        "**Captura rápida de valor com modelos treinados**",
         "Configuração de monitoramento e alertas em tempo real"
       ]
     };

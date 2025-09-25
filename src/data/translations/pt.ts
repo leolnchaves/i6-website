@@ -159,7 +159,7 @@ export const ptTranslations = {
   'solutions.process.testing.description': 'Testes abrangentes para garantir performance e precisão ideais',
   'solutions.process.integration.title': 'Integração e Recomendações',
   'solutions.process.integration.subtitle': 'Integração Ativa de Canal Digital',
-  'solutions.process.integration.description': 'Implantação perfeita através do seu ecossistema digital',
+  'solutions.process.integration.description': 'Integração perfeita através do seu ecossistema digital',
   
   // Solutions Sandbox
   'solutions.sandbox.title': 'Ambiente Sandbox Sem Risco e Suporte Especializado Incluído',

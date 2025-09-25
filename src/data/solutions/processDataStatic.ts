@@ -40,7 +40,7 @@ export const processStepsData = {
       key: "integration",
       title: "Integration & Recommendations",
       subtitle: "Active Digital Channel Integration",
-      description: "Seamless deployment across your digital ecosystem",
+      description: "Seamless integration across your digital ecosystem",
       color: "from-blue-500 to-blue-600"
     }
   ],
@@ -77,7 +77,7 @@ export const processStepsData = {
       key: "integration",
       title: "Integração e Recomendações",
       subtitle: "Integração Ativa de Canal Digital",
-      description: "Implantação perfeita através do seu ecossistema digital",
+      description: "Integração perfeita através do seu ecossistema digital",
       color: "from-blue-500 to-blue-600"
     }
   ]

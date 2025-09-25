@@ -159,7 +159,7 @@ export const enTranslations = {
   'solutions.process.testing.description': 'Comprehensive testing to ensure optimal performance and accuracy',
   'solutions.process.integration.title': 'Integration & Recommendations',
   'solutions.process.integration.subtitle': 'Active Digital Channel Integration',
-  'solutions.process.integration.description': 'Seamless deployment across your digital ecosystem',
+  'solutions.process.integration.description': 'Seamless integration across your digital ecosystem',
   
   // Solutions Sandbox
   'solutions.sandbox.title': 'Risk-Free Sandbox Environment & Expert Support Included',
