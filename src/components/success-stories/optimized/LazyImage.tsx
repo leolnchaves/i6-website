@@ -44,11 +44,13 @@ const LazyImage: React.FC<LazyImageProps> = memo(({
   }, []);
 
   const handleLoad = () => {
+    console.log('LazyImage: Image loaded successfully', src);
     setIsLoaded(true);
     onLoad?.();
   };
 
   const handleError = () => {
+    console.log('LazyImage: Image failed to load', src);
     setHasError(true);
     onError?.();
   };
