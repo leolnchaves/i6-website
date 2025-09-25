@@ -18,11 +18,11 @@ export const ptTranslations = {
   'hero.watchDemo': 'Veja o Futuro',
   
   // Results Section
-  'results.mainTitle': 'Impacto Real de IA',
-  'results.mainSubtitle': 'Impulsionando Crescimento de Negócios',
+  'results.mainTitle': 'Impacto Real da IA',
+  'results.mainSubtitle': 'Escalando o Crescimento dos Negócios',
   'results.title': 'Impacto Real de IA que Impulsiona o Crescimento dos Negócios',
-  'results.subtitle1': 'Chega de soluções de GenAI e agentes que não entregam resultados reais. Chega de foco apenas na produtividade de software. Chega de alta complexidade técnica e longas jornadas de integração.',
-  'results.subtitle2': 'Nossa abordagem única combina inteligência artificial avançada com estratégia de negócios, entregando impacto mensurável e transformação real para sua empresa.',
+  'results.subtitle1': 'Chega de inteligência superficial. Chega de atrasos. Chega de complexidade.',
+  'results.subtitle2': 'Nós entregamos resultados que realmente importam: mais vendas, melhores margens, operações mais ágeis e estratégias mais eficientes - tudo com inteligência aplicada.',
   'results.error.loading': 'Não foi possível carregar o conteúdo. Tente novamente mais tarde.',
   
   // Results Cards
