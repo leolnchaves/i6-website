@@ -96,20 +96,23 @@ const ModernSolutionCard = memo(({
       <div className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-br from-orange-400/20 to-blue-400/20 rounded-full opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
 
       <CardContent className="p-8 relative z-10">
-        {/* Header Section - Simplified */}
-        <div className="flex items-center gap-6 mb-8">
-          {/* Icon Container with harmonious styling */}
-          <div className="relative group-hover:scale-105 transition-transform duration-500">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-orange-50 rounded-xl flex items-center justify-center border border-gray-200/40 shadow-sm group-hover:shadow-md transition-all duration-500">
-              <Icon className="w-7 h-7 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
-            </div>
-          </div>
-          
-          {/* Title Only */}
-          <div className="flex-1">
-            <h3 className="font-bold text-2xl text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-700 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500 leading-tight">
+        {/* Header Section - Large icon on right, titles on left */}
+        <div className="flex items-start justify-between mb-8">
+          {/* Left side - Titles */}
+          <div className="flex-1 pr-4">
+            <h3 className="font-bold text-2xl text-gray-900 mb-2 leading-tight">
               {title}
             </h3>
+            <p className="text-orange-500 font-medium text-sm tracking-wide">
+              {focus}
+            </p>
+          </div>
+          
+          {/* Right side - Large Icon */}
+          <div className="relative group-hover:scale-105 transition-transform duration-500">
+            <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-2xl flex items-center justify-center border border-gray-200/40 shadow-sm group-hover:shadow-md transition-all duration-500">
+              <Icon className="w-10 h-10 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />
+            </div>
           </div>
         </div>
 
