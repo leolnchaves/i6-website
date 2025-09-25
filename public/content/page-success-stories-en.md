@@ -94,38 +94,20 @@ This strategy seeks to increase the average basket size through effective cross-
 
 ---
 
-## Automotive Quality Control
-**Image:** /content/success-stories/automotive.jpg
+## Demand Forecast Accuracy: Enhancing Production and Sales Planning
+**Image:** /content/success-stories/case-retail-2.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Automotive
-**Client:** NextGen Motors
-**Description:** NextGen Motors
-**Challenge:** Quality control issues in manufacturing leading to recalls, warranty claims, and brand reputation damage affecting market position.
-**Solution:** Implemented computer vision AI for automated quality inspection and predictive analytics for defect prevention in production lines.
-**Metric1:** 80% Defect Detection
+**Segment:** Retail
+**Client:** Top leading cosmetics brand in Brazil
+**Description:** A major cosmetics player, recognized for its large-scale direct sales model and frequent product launches through purchase catalogs.
+**Challenge:** The company faced significant challenges in demand predictability. Due to the need to create purchase catalogs well in advance, it had to define production and inventory plans early and share them with manufacturers. The lack of accurate forecasting often resulted in overstock or shortages, directly affecting efficiency and sales performance.
+**Solution:** Advanced demand forecasting engine tailored to the company’s unique business cycle. All SKUs were classified into three levels — Gold, Silver, and Bronze — enabling granular control and drastically improving forecast accuracy.
+**Metric1:** +80% Forecast Accuracy
 **Metric2:** 60% Recall Reduction
-**Metric3:** $3M Quality Cost Savings
-**Solutions:** Industrial Intelligence, Anonymous Visitors, Predictive Campaign
-**Quote:** Our quality standards have reached new heights, and customer confidence in our products has never been stronger.
-**CustomerName:** David Park
-**CustomerTitle:** Quality Assurance Manager
-
----
-
-## Teste
-**Image:** /content/success-stories/teste.jpg
-**Logo:**/content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Teste
-**Client:** Teste Infinity
-**Description:** Infinity é a melhor empresa de tecnologia do mundo.
-**Challenge:** Quality control issues in manufacturing leading to recalls, warranty claims, and brand reputation damage affecting market position.
-**Solution:** Implemented computer vision AI for automated quality inspection and predictive analytics for defect prevention in production lines.
-**Metric1:** 36% New Products Discovery
-**Metric2:** 27% Average Ticket Increase
-**Metric3:** 2x Conversion
-**Solutions:** Industrial Intelligence Infinity, Anonymous Visitors Infinity, Predictive Campaign Infinity
-**Quote:** Our quality standards have reached new heights, and customer confidence in our products has never been stronger.
-**CustomerName:** Leonardo Chaves
-**CustomerTitle:** CEO
+**Metric3:** -
+**Solutions:** Adaptive Demand Forecasting
+**Quote:**Demand Forecast Accuracy: Enhancing Production and Sales Planning
+**CustomerName:** -
+**CustomerTitle:** -
 
 ---
