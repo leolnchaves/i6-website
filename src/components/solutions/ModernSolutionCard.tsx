@@ -90,10 +90,6 @@ const ModernSolutionCard = memo(({
     >
       {/* Soft gradient background overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-orange-50/20 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
-      
-      {/* Floating decorative elements */}
-      <div className="absolute top-6 right-6 w-3 h-3 bg-gradient-to-br from-blue-400/20 to-orange-400/20 rounded-full opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
-      <div className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-br from-orange-400/20 to-blue-400/20 rounded-full opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
 
       <CardContent className="p-8 relative z-10">
         {/* Header Section - Large icon on right, titles on left */}
