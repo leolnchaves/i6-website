@@ -8,7 +8,7 @@ export const solutionsHeroData: Record<string, SolutionsHeroData> = {
   en: {
     mainTitle: 'Transform Your Business with',
     mainSubtitle: 'AI-Powered Solutions',
-    description: 'Explore solutions that optimize performance, guide smarter decisions, and fuel sustainable growth across your business.'
+    description: 'Explore solutions that optimize performance, guide smarter decisions and fuel sustainable growth across your business.'
   },
   pt: {
     mainTitle: 'Transforme Seu Negócio com',
