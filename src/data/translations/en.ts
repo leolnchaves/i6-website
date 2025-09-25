@@ -57,7 +57,7 @@ export const enTranslations = {
   'stats.explainability': 'AI engine explainability',
   
   // Compact Solutions Section  
-  'compactSolutions.title': 'Strategic AI Solutions, Built for Results',
+  'compactSolutions.title': 'Applied AI, Built for Results',
   'compactSolutions.subtitle': 'Unlock Competitive Advantage',
   'compactSolutions.description': 'Go beyond the hype. Turn intelligence into business performance with ready-to-deploy AI solutions.',
   'compactSolutions.buttonText': 'Explore Solutions',
