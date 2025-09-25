@@ -165,13 +165,6 @@ const CompactVerticalCard = ({
         </p>
 
 
-        {/* Outcome como call-to-action */}
-        {outcome && (
-          <div className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${colorScheme.iconBg} text-white text-xs font-medium rounded-full group-hover:shadow-lg transition-shadow duration-300`}>
-            <LucideIcons.ArrowRight size={14} />
-            <span>Saiba mais</span>
-          </div>
-        )}
       </CardContent>
     </Card>
   );
