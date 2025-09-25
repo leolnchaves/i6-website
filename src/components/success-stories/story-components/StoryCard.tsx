@@ -2,6 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { ArrowRight, Building2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import LazyImage from '../optimized/LazyImage';
+import { useCompanyDetails } from '../hooks/useCompanyDetails';
 
 interface StoryCardData {
   id: string;
@@ -28,6 +29,7 @@ interface StoryCardProps {
 }
 
 const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) => {
+  const { getCompanyDetails } = useCompanyDetails();
   const handleClick = useCallback(() => {
     onClick(story);
   }, [story, onClick]);
@@ -88,17 +90,29 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
           </div>
         </div>
 
-        {/* Explore details with modern arrow - inspired by hero button */}
-        <div className="flex items-center justify-end">
-          <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">
-            {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
-          </span>
-          <div className="relative overflow-hidden">
-            {/* Background that appears on hover */}
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
-            {/* Arrow container */}
-            <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 group-hover:bg-transparent transition-all duration-500">
-              <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
+        {/* Explore details with company logo and modern arrow */}
+        <div className="flex items-center justify-between">
+          {/* Company Logo */}
+          <div className="flex-shrink-0">
+            <img 
+              src={getCompanyDetails(story).logo}
+              alt={`${story.company_name} logo`}
+              className="w-8 h-8 object-contain"
+            />
+          </div>
+          
+          {/* Details section */}
+          <div className="flex items-center">
+            <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">
+              {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
+            </span>
+            <div className="relative overflow-hidden">
+              {/* Background that appears on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
+              {/* Arrow container */}
+              <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 group-hover:bg-transparent transition-all duration-500">
+                <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
+              </div>
             </div>
           </div>
         </div>
