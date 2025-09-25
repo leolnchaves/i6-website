@@ -11,8 +11,8 @@ export const solutionsHeroData: Record<string, SolutionsHeroData> = {
     description: 'Explore solutions that optimize performance, guide smarter decisions and fuel sustainable growth across your business.'
   },
   pt: {
-    mainTitle: 'Transforme Seu Negócio com',
-    mainSubtitle: 'Soluções Alimentadas por IA',
-    description: 'Descubra nossa suíte abrangente de soluções de inteligência artificial projetadas para otimizar suas operações, aprimorar a tomada de decisões e impulsionar o crescimento sustentável em todos os setores do seu negócio.'
+    mainTitle: 'Transforme seu Negócio com',
+    mainSubtitle: 'Soluções de IA Aplicadas',
+    description: 'Descubra como nossas soluções otimizam a performance, apoiam decisões mais inteligentes e impulsionam um crescimento sustentável em toda a sua empresa.'
   }
 };
