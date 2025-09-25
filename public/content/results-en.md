@@ -26,7 +26,7 @@
 
 ## Supply & Profitability Optimization
 **Icon:** DollarSign
-**Description:** Align pricing, demand, and assortment to improve margin, turnover and sell-out.
+**Description:** Align pricing, demand and assortment to improve margin, turnover and sell-out.
 
 **Outcomes:**
 - Increase margin or demand with dynamic pricing
