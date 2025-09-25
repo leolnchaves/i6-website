@@ -15,12 +15,16 @@ interface ResultCardProps {
 const ResultCard = ({ title, description, solutions, index, cardImage }: ResultCardProps) => {
   return (
     <div
-      className="bg-white rounded-xl border-2 border-transparent bg-gradient-to-r from-orange-500 to-blue-500 p-[1px] hover:shadow-md transition-all duration-300 transform hover:scale-[1.02] h-full"
+      className="bg-white rounded-xl border border-gray-100/50 shadow-sm hover:shadow-lg hover:border-gray-200/60 transition-all duration-300 transform hover:scale-[1.02] h-full relative overflow-hidden"
       style={{ 
-        animationDelay: `${index * 0.1}s`
+        animationDelay: `${index * 0.1}s`,
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(251, 146, 60, 0.04)'
       }}
     >
-      <div className="bg-white rounded-xl p-4 h-full flex flex-col min-h-[200px]">
+      {/* Linha de destaque sutil no topo */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-400/30 via-blue-400/30 to-orange-400/30"></div>
+      
+      <div className="p-4 h-full flex flex-col min-h-[200px]">
         {/* Header com imagem e número */}
         <div className="flex justify-between items-start mb-3">
           <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
