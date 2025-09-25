@@ -9,68 +9,60 @@ interface ResultCardProps {
   index: number;
   backgroundColor?: string;
   backgroundOpacity?: number;
-  cardImage?: string; // Nova prop para imagem do card
+  cardImage?: string;
 }
 
-const ResultCard = ({ icon, title, description, solutions, index, backgroundColor, backgroundOpacity, cardImage }: ResultCardProps) => {
+const ResultCard = ({ title, description, solutions, index, cardImage }: ResultCardProps) => {
   return (
     <div
-      className="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 will-change-transform transform hover:scale-[1.02] h-full min-h-[320px] flex flex-col overflow-hidden group"
+      className="bg-white rounded-2xl border-2 border-transparent bg-gradient-to-r from-orange-500 to-blue-500 p-[2px] hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] h-full"
       style={{ 
-        animationDelay: `${index * 0.1}s`,
-        backfaceVisibility: 'hidden',
-        perspective: '1000px'
+        animationDelay: `${index * 0.1}s`
       }}
     >
-      {/* Imagem do topo */}
-      <div className="relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
-        {cardImage ? (
-          <img 
-            src={cardImage} 
-            alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-            {React.cloneElement(icon as React.ReactElement, {
-              className: "text-primary text-4xl"
-            })}
+      <div className="bg-white rounded-2xl p-6 h-full flex flex-col min-h-[280px]">
+        {/* Área da imagem/ícone */}
+        <div className="flex justify-between items-start mb-4">
+          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+            {cardImage ? (
+              <img 
+                src={cardImage} 
+                alt={title}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
+                <span className="text-2xl">📊</span>
+              </div>
+            )}
           </div>
-        )}
-        
-        {/* Data no canto superior direito */}
-        <div className="absolute top-4 right-4 text-gray-600 text-xs font-medium bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg">
-          {`${index + 1}º`}
+          
+          {/* Número do card no canto */}
+          <div className="text-right">
+            <div className="text-2xl font-bold text-gray-800">{index + 1}</div>
+            <div className="text-xs text-gray-500 uppercase tracking-wide">RESULTADO</div>
+          </div>
         </div>
-      </div>
-      
-      {/* Conteúdo do card */}
-      <div className="flex-grow p-6 flex flex-col">
-        <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
+        
+        {/* Título principal */}
+        <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight">
           {title}
         </h3>
         
-        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+        {/* Descrição */}
+        <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
           {description}
         </p>
-
-        {/* Lista de resultados compacta */}
-        <div className="mt-auto">
-          <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-            Resultados orientados por IA
-          </h4>
+        
+        {/* Lista de resultados - apenas os 2 primeiros */}
+        <div className="mt-auto border-t border-gray-100 pt-4">
           <div className="space-y-2">
-            {solutions.slice(0, 3).map((solution, idx) => (
+            {solutions.slice(0, 2).map((solution, idx) => (
               <div key={idx} className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 flex-shrink-0"></div>
-                <span className="text-xs text-gray-600 leading-relaxed line-clamp-2">{solution}</span>
+                <div className="w-1 h-1 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-xs text-gray-600 leading-relaxed">{solution}</span>
               </div>
             ))}
-            {solutions.length > 3 && (
-              <div className="text-xs text-gray-400 italic">
-                +{solutions.length - 3} mais resultados...
-              </div>
-            )}
           </div>
         </div>
       </div>
