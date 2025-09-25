@@ -146,36 +146,46 @@ const CompactVerticalCard = ({
       ></div>
 
       <CardContent className="relative p-8 text-center z-10">
-        {/* Área do ícone principal sem círculo de fundo */}
-        <div className="relative mb-8 mx-auto w-40 h-40 flex items-center justify-center">
-          {/* Ícone principal centralizado */}
-          <div className={`relative z-10 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-            <MainIcon size={32} className="text-white" />
+        {/* GIFs animados seguindo a curva S do fundo */}
+        <div className="relative mb-8 mx-auto w-full h-32 overflow-hidden">
+          {/* GIF animado fluindo pela curva S */}
+          <div className="absolute inset-0">
+            <img 
+              src="/solucao-Smart-Price.gif" 
+              alt="Smart Price Animation"
+              className="w-8 h-8 object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                position: 'absolute',
+                animation: `flowAlongCurve${(index % 3) + 1} 6s ease-in-out infinite`,
+                animationDelay: '0s'
+              }}
+            />
+            <img 
+              src="/solucao-Adaptive-Demand.gif" 
+              alt="Adaptive Demand Animation"
+              className="w-8 h-8 object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                position: 'absolute',
+                animation: `flowAlongCurve${(index % 3) + 1} 6s ease-in-out infinite`,
+                animationDelay: '2s'
+              }}
+            />
+            <img 
+              src="/solucao-Identified-Users.gif" 
+              alt="Identified Users Animation"
+              className="w-8 h-8 object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                position: 'absolute',
+                animation: `flowAlongCurve${(index % 3) + 1} 6s ease-in-out infinite`,
+                animationDelay: '4s'
+              }}
+            />
           </div>
           
-          {/* Ícones flutuantes em órbita */}
-          {relatedIcons.map((IconComp, idx) => {
-            const orbitAnimations = ['orbit1', 'orbit2', 'orbit3'];
-            const durations = ['8s', '10s', '12s'];
-            const delays = ['0s', '1s', '2s'];
-            
-            return (
-              <div
-                key={idx}
-                className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  animation: `${orbitAnimations[idx]} ${durations[idx]} linear infinite`,
-                  animationDelay: delays[idx]
-                }}
-              >
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="p-2 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 group-hover:shadow-xl transition-shadow duration-300">
-                    <IconComp size={18} className={colorScheme.accent} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {/* Ícone principal centralizado */}
+          <div className={`relative z-10 mx-auto w-16 h-16 p-4 bg-gradient-to-br ${colorScheme.iconBg} rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300 flex items-center justify-center`}>
+            <MainIcon size={24} className="text-white" />
+          </div>
         </div>
 
 

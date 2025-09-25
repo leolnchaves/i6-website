@@ -45,6 +45,31 @@
   100% { transform: rotate(600deg) translateX(50px) rotate(-600deg) scale(1); }
 }
 
+/* Animações para GIFs fluindo pela curva S */
+@keyframes flowAlongCurve1 {
+  0% { left: 0%; top: 20%; opacity: 0.6; }
+  25% { left: 25%; top: 25%; opacity: 0.8; }
+  50% { left: 50%; top: 40%; opacity: 1; }
+  75% { left: 75%; top: 55%; opacity: 0.8; }
+  100% { left: 100%; top: 70%; opacity: 0.6; }
+}
+
+@keyframes flowAlongCurve2 {
+  0% { left: 0%; top: 70%; opacity: 0.6; }
+  25% { left: 25%; top: 55%; opacity: 0.8; }
+  50% { left: 50%; top: 35%; opacity: 1; }
+  75% { left: 75%; top: 30%; opacity: 0.8; }
+  100% { left: 100%; top: 25%; opacity: 0.6; }
+}
+
+@keyframes flowAlongCurve3 {
+  0% { left: 0%; top: 25%; opacity: 0.6; }
+  25% { left: 25%; top: 30%; opacity: 0.8; }
+  50% { left: 50%; top: 45%; opacity: 1; }
+  75% { left: 75%; top: 55%; opacity: 0.8; }
+  100% { left: 100%; top: 65%; opacity: 0.6; }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {
