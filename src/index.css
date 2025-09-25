@@ -70,6 +70,12 @@
   100% { left: 100%; top: 65%; opacity: 0.6; }
 }
 
+/* Texto vertical para faixa lateral */
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {

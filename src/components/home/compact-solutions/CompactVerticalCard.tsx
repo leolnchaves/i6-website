@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import * as LucideIcons from 'lucide-react';
 
@@ -145,6 +146,16 @@ const CompactVerticalCard = ({
         }}
       ></div>
 
+      {/* Faixa lateral hover com gradiente do menu */}
+      <div className="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-orange-500 to-blue-500 opacity-0 group-hover:opacity-100 group-hover:w-16 transition-all duration-300 flex items-center justify-center">
+        <Link 
+          to="/solutions"
+          className="text-white text-xs font-medium writing-mode-vertical transform rotate-180 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 hover:text-orange-200"
+        >
+          Saiba Mais
+        </Link>
+      </div>
+
       <CardContent className="relative p-8 text-center z-10">
         {/* Ícone principal centralizado */}
         <div className="relative mb-8 mx-auto w-20 h-20 flex items-center justify-center">
@@ -152,7 +163,6 @@ const CompactVerticalCard = ({
             <MainIcon size={32} className="text-white" />
           </div>
         </div>
-
 
         {/* Título */}
         <h3 className="font-bold text-xl text-gray-900 mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
@@ -163,7 +173,6 @@ const CompactVerticalCard = ({
         <p className="text-gray-600 text-sm leading-relaxed mb-6">
           {description}
         </p>
-
 
       </CardContent>
     </Card>
