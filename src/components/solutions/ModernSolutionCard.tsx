@@ -106,11 +106,11 @@ const ModernSolutionCard = memo(({
           </div>
           
           {/* Large Background Image */}
-          <div className="absolute -top-4 -right-4 opacity-10 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none">
+          <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none">
             <img 
               src={icon} 
               alt={`${title} icon`}
-              className="w-32 h-32 object-contain"
+              className="w-24 h-24 object-contain"
             />
           </div>
         </div>
