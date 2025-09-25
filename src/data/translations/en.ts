@@ -22,7 +22,7 @@ export const enTranslations = {
   'results.mainSubtitle': 'Scaling Business Growth',
   'results.title': 'Real AI Impact That Drives Business Growth',
   'results.subtitle1': 'No more surface-level intelligence. No more delays. No more complexity.',
-  'results.subtitle2': 'We deliver real business outcomes: higher revenue, lower costs, faster execution and smarter decisions - all powered by strategic intelligence.',
+  'results.subtitle2': 'We enable business results that matter: more sales, better margins, faster operations and smarter strategies - with applied intelligence.',
   'results.error.loading': 'Unable to load content. Please try again later.',
   
   // Results Cards
