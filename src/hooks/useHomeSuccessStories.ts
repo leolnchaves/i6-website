@@ -36,8 +36,10 @@ export const useHomeSuccessStories = (): UseHomeSuccessStoriesReturn => {
         
         const content = await response.text();
         console.log('Home Success Stories content loaded:', content.substring(0, 200) + '...');
+        console.log('Full content length:', content.length);
         const parsedStories = parseMarkdownContent(content);
         console.log('Parsed home stories count:', parsedStories.length);
+        console.log('Parsed stories:', parsedStories);
         setStories(parsedStories);
       } catch (err) {
         console.error('Error fetching home success stories content:', err);
