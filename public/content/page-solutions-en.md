@@ -9,7 +9,7 @@
 **Overview:** Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
 
 **Key Features:**
-- TESTE Contextual Affinity Modeling
+- Contextual Affinity Modeling
 - Cold-Start Personalization
 - Anonymous Visitor Intelligence
 - Real-time Recommendations
