@@ -140,7 +140,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
           </div>
 
           {/* Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
             <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
               <div className="text-xl font-semibold text-gray-700 mb-1">
                 {selectedStory.metric1_value}
@@ -155,14 +155,6 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
               </div>
               <div className="text-xs text-gray-500 font-medium">
                 {selectedStory.metric2_label}
-              </div>
-            </div>
-            <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
-              <div className="text-xl font-semibold text-gray-700 mb-1">
-                {selectedStory.metric3_value}
-              </div>
-              <div className="text-xs text-gray-500 font-medium">
-                {selectedStory.metric3_label}
               </div>
             </div>
           </div>
