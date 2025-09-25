@@ -116,9 +116,8 @@ const HeroSection = () => {
               {t('hero.poweredByAI')}
             </h3>
             <div className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto mb-12">
-              <p className="mb-0">Repense o que é possível. Construa com inteligência. Avance mais rápido.
-            </p>
-              <p>Grow beyond limits with adaptive AI.</p>
+              <p className="mb-0">{t('hero.rethinkLine1')}</p>
+              <p>{t('hero.rethinkLine2')}</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact#contact-form">

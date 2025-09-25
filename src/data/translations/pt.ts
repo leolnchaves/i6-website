@@ -12,6 +12,8 @@ export const ptTranslations = {
   'hero.possibilities': 'Possibilidades',
   'hero.poweredByAI': 'Impulsionadas pela IA',
   'hero.description': 'Repense o que é possível. Construa com inteligência. Avance mais rápido. Cresça sem limites com IA adaptativa.',
+  'hero.rethinkLine1': 'Repense o que é possível. Construa com inteligência. Avance mais rápido.',
+  'hero.rethinkLine2': 'Grow beyond limits with adaptive AI.',
   'hero.startJourney': 'Comece sua Jornada',
   'hero.watchDemo': 'Veja o Futuro',
   
