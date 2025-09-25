@@ -24,13 +24,13 @@ const Footer = memo(() => {
       companyDescription: "Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.",
       contactEmail: "talk@infinity6.ai",
       contactPhone: "+55 (19) 99819-7775",
-      copyrightText: "© 2024 Infinity6.ai. Todos os direitos reservados."
+      copyrightText: "© 2025 Infinity6.ai. Todos os direitos reservados."
     },
     en: {
       companyDescription: "Technology that connects data and decisions in real time.\nGrow faster, scale smarter.",
       contactEmail: "talk@infinity6.ai", 
       contactPhone: "+55 (19) 99819-7775",
-      copyrightText: "© 2024 Infinity6.ai. All rights reserved."
+      copyrightText: "© 2025 Infinity6.ai. All rights reserved."
     }
   }), []);
 
