@@ -51,9 +51,18 @@ const CompactVerticalCard = ({
   };
 
   const getColorScheme = (cardIndex: number) => {
-    // Todos os cards usam o mesmo esquema de cor laranja (primeiro card)
+    // Cards do meio (índices ímpares) têm gradiente invertido
+    if (cardIndex % 2 === 1) {
+      return { 
+        bg: 'from-orange-50/30 via-orange-100/40 to-orange-200/60', // Invertido: claro → escuro
+        iconBg: 'from-orange-500/90 to-orange-600/90',
+        accent: 'text-orange-700',
+        border: 'border-orange-200/50 hover:border-orange-300/70'
+      };
+    }
+    // Cards das laterais (índices pares) mantêm gradiente normal
     return { 
-      bg: 'from-orange-200/60 via-orange-100/40 to-orange-50/30', 
+      bg: 'from-orange-200/60 via-orange-100/40 to-orange-50/30', // Normal: escuro → claro
       iconBg: 'from-orange-500/90 to-orange-600/90',
       accent: 'text-orange-700',
       border: 'border-orange-200/50 hover:border-orange-300/70'
