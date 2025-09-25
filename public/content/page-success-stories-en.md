@@ -5,7 +5,7 @@
 ## E-commerce Platform Optimization
 **Image:** /content/success-stories/ecommerce.jpg
 **Logo:** /content/logos/EMS-COR.png
-**Segment:** Farma
+**Segment:** Manufacturing
 **Client:** EMS Farma
 **Description:** One of the largest pharmaceutical companies in Brazil, this organization is a key player in the global market.
 **Challenge:** The company sought to boost engagement and improve sales margins through their digital marketplace connecting pharmacies to distributors. To achieve this, deeper insights into customer behavior were needed.
