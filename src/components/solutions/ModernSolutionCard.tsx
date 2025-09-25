@@ -51,9 +51,8 @@ const ModernSolutionCard = memo(({
   // Memoize translations to prevent recalculation
   const t = useMemo(() => translations[language] || translations.en, [language]);
   
-  // Memoize displayed features
-  const displayedFeatures = useMemo(() => features.slice(0, 3), [features]);
-  const additionalCount = useMemo(() => Math.max(0, features.length - 3), [features.length]);
+  // Show all features
+  const displayedFeatures = useMemo(() => features, [features]);
   
   // Intersection Observer for performance-optimized animations
   useEffect(() => {
@@ -148,13 +147,6 @@ const ModernSolutionCard = memo(({
                 </span>
               </div>
             ))}
-            {additionalCount > 0 && (
-              <div className="text-center pt-2">
-                <span className="text-xs text-gray-500 bg-gray-100/50 px-3 py-1 rounded-full">
-                  +{additionalCount} {t.additionalFeatures}
-                </span>
-              </div>
-            )}
           </div>
         </div>
 
