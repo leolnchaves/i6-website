@@ -54,7 +54,7 @@ const StaticSolutionsGrid = memo(() => {
             <p className="text-gray-600">No solutions found</p>
           </div>
         ) : (
-          <div className="space-y-12 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {solutions.map((solution, index) => {
               // Use image path directly
               const iconPath = solution.icon;
