@@ -15,15 +15,15 @@ interface ResultCardProps {
 const ResultCard = ({ title, description, solutions, index, cardImage }: ResultCardProps) => {
   return (
     <div
-      className="bg-white rounded-2xl border-2 border-transparent bg-gradient-to-r from-orange-500 to-blue-500 p-[2px] hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] h-full"
+      className="bg-white rounded-xl border-2 border-transparent bg-gradient-to-r from-orange-500 to-blue-500 p-[1px] hover:shadow-md transition-all duration-300 transform hover:scale-[1.02] h-full"
       style={{ 
         animationDelay: `${index * 0.1}s`
       }}
     >
-      <div className="bg-white rounded-2xl p-6 h-full flex flex-col min-h-[280px]">
-        {/* Área da imagem/ícone */}
-        <div className="flex justify-between items-start mb-4">
-          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+      <div className="bg-white rounded-xl p-4 h-full flex flex-col min-h-[200px]">
+        {/* Header com imagem e número */}
+        <div className="flex justify-between items-start mb-3">
+          <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
             {cardImage ? (
               <img 
                 src={cardImage} 
@@ -31,38 +31,32 @@ const ResultCard = ({ title, description, solutions, index, cardImage }: ResultC
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
-              <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">📊</span>
-              </div>
+              <span className="text-lg">📊</span>
             )}
           </div>
           
-          {/* Número do card no canto */}
-          <div className="text-right">
-            <div className="text-2xl font-bold text-gray-800">{index + 1}</div>
-            <div className="text-xs text-gray-500 uppercase tracking-wide">RESULTADO</div>
+          <div className="text-right ml-2">
+            <div className="text-lg font-bold text-gray-800">{index + 1}</div>
           </div>
         </div>
         
-        {/* Título principal */}
-        <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight">
+        {/* Título compacto */}
+        <h3 className="text-sm font-bold text-gray-900 mb-2 leading-tight line-clamp-2">
           {title}
         </h3>
         
-        {/* Descrição */}
-        <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+        {/* Descrição breve */}
+        <p className="text-gray-600 text-xs leading-relaxed mb-3 flex-grow line-clamp-3">
           {description}
         </p>
         
-        {/* Lista de resultados - apenas os 2 primeiros */}
-        <div className="mt-auto border-t border-gray-100 pt-4">
-          <div className="space-y-2">
-            {solutions.slice(0, 2).map((solution, idx) => (
-              <div key={idx} className="flex items-start gap-2">
-                <div className="w-1 h-1 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-xs text-gray-600 leading-relaxed">{solution}</span>
-              </div>
-            ))}
+        {/* Apenas 1 resultado principal */}
+        <div className="mt-auto pt-2 border-t border-gray-100">
+          <div className="flex items-start gap-2">
+            <div className="w-1 h-1 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
+            <span className="text-xs text-gray-600 leading-relaxed line-clamp-1">
+              {solutions[0]}
+            </span>
           </div>
         </div>
       </div>
