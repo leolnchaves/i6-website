@@ -5,6 +5,7 @@ import CompactSolutionsSection from '@/components/home/CompactSolutionsSection';
 import PartnersSection from '@/components/home/PartnersSection';
 import FeaturedStoriesSection from '@/components/home/FeaturedStoriesSection';
 import CTASection from '@/components/home/CTASection';
+import IconProcessor from '@/components/debug/IconProcessor';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
 
@@ -42,6 +43,9 @@ const Index = () => {
       
       {/* Call-to-action section */}
       <CTASection />
+      
+      {/* Debug: Icon processor (only in development) */}
+      {process.env.NODE_ENV === 'development' && <IconProcessor />}
     </div>
   );
 };
