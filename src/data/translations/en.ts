@@ -70,7 +70,7 @@ export const enTranslations = {
   
   // CTA Section
   'cta.title': 'Ready to Transform Your Business?',
-  'cta.description': 'Join hundreds of companies that have already unlocked their infinite potential.',
+  'cta.description': 'Join companies that have already unlocked their infinite potential.',
   'cta.button': 'Get Started Today',
   
   // Video Modal
