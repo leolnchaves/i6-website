@@ -3,7 +3,7 @@
 ---
 
 ## E-commerce Platform Optimization
-**Image:** https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600
+**Image:** /content/success-stories/ecommerce.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** E-commerce
 **Client:** TechRetail Inc.
@@ -21,7 +21,7 @@
 ---
 
 ## Manufacturing Predictive Maintenance
-**Image:** https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600
+**Image:** /content/success-stories/manufacturing.jpg
 **Logo:** /content/logos/2.png
 **Segment:** Manufacturing
 **Client:** Industrial Solutions Co.
@@ -39,7 +39,7 @@
 ---
 
 ## Healthcare Patient Flow Optimization
-**Image:** https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600
+**Image:** /content/success-stories/healthcare.jpg
 **Logo:** /content/logos/1.png
 **Segment:** Healthcare
 **Client:** MedTech Innovations
@@ -57,7 +57,7 @@
 ---
 
 ## Financial Fraud Detection System
-**Image:** https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600
+**Image:** /content/success-stories/finance.jpg
 **Logo:** /content/logos/1.png
 **Segment:** Finance
 **Client:** Capital Banking Group
@@ -75,7 +75,7 @@
 ---
 
 ## Logistics Route Optimization
-**Image:** https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600
+**Image:** /content/success-stories/logistics.jpg
 **Logo:** /content/logos/1.png
 **Segment:** Logistics
 **Client:** Global Shipping Solutions
@@ -93,7 +93,7 @@
 ---
 
 ## Automotive Quality Control
-**Image:** https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600
+**Image:** /content/success-stories/automotive.jpg
 **Logo:** /content/logos/1.png
 **Segment:** Automotive
 **Client:** NextGen Motors
@@ -111,7 +111,7 @@
 ---
 
 ## Teste
-**Image:** https://images.unsplash.com/photo-1751402059577-463e1c0b4490?w=800&h=600
+**Image:** /content/success-stories/teste.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** Teste
 **Client:** Teste Infinity
