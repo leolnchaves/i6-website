@@ -151,9 +151,14 @@ const FeaturedStoriesSection = () => {
                             <div className="inline-block px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium text-gray-600 mb-4">
                               {story.segment}
                             </div>
-                            <h3 className="text-lg text-gray-900 leading-tight mb-4">
+                            <h3 className="text-lg text-gray-900 leading-tight mb-3">
                               {story.quote}
                             </h3>
+                            {story.challenge && (
+                              <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+                                {story.challenge}
+                              </p>
+                            )}
                             <p className="text-sm font-bold text-gray-600">{story.client}</p>
                           </div>
                           

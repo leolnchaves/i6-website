@@ -5,6 +5,7 @@ export interface HomeSuccessStoryItem {
   segment: string;
   quote: string;
   client: string;
+  challenge?: string;
   image: string;
 }
 
@@ -63,6 +64,7 @@ const parseMarkdownContent = (content: string): HomeSuccessStoryItem[] => {
     let segment = '';
     let quote = '';
     let client = '';
+    let challenge = '';
     let image = '';
     let showHome = false;
     
@@ -73,6 +75,8 @@ const parseMarkdownContent = (content: string): HomeSuccessStoryItem[] => {
         quote = line.substring(10).trim();
       } else if (line.startsWith('**Client:**')) {
         client = line.substring(11).trim();
+      } else if (line.startsWith('**Challenge:**')) {
+        challenge = line.substring(14).trim();
       } else if (line.startsWith('**Image:**')) {
         image = line.substring(10).trim();
       } else if (line.startsWith('**ShowHome:**')) {
@@ -82,7 +86,7 @@ const parseMarkdownContent = (content: string): HomeSuccessStoryItem[] => {
     
     // Only include stories where ShowHome is True
     if (segment && quote && client && image && showHome) {
-      stories.push({ segment, quote, client, image });
+      stories.push({ segment, quote, client, challenge, image });
     }
   }
   
