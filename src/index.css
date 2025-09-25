@@ -9,6 +9,24 @@
   50% { transform: translateY(-10px); }
 }
 
+@keyframes orbit1 {
+  0% { transform: rotate(0deg) translateX(60px) rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) translateX(65px) rotate(-180deg) scale(1.1); }
+  100% { transform: rotate(360deg) translateX(60px) rotate(-360deg) scale(1); }
+}
+
+@keyframes orbit2 {
+  0% { transform: rotate(120deg) translateX(55px) rotate(-120deg) scale(1); }
+  50% { transform: rotate(300deg) translateX(60px) rotate(-300deg) scale(1.1); }
+  100% { transform: rotate(480deg) translateX(55px) rotate(-480deg) scale(1); }
+}
+
+@keyframes orbit3 {
+  0% { transform: rotate(240deg) translateX(50px) rotate(-240deg) scale(1); }
+  50% { transform: rotate(60deg) translateX(55px) rotate(-60deg) scale(1.1); }
+  100% { transform: rotate(600deg) translateX(50px) rotate(-600deg) scale(1); }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {

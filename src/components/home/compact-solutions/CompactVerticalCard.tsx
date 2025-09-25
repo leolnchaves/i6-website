@@ -108,27 +108,25 @@ const CompactVerticalCard = ({
             <MainIcon size={32} className="text-white" />
           </div>
           
-          {/* Ícones flutuantes */}
+          {/* Ícones flutuantes em órbita */}
           {relatedIcons.map((IconComp, idx) => {
-            const positions = [
-              { top: '15%', left: '20%', delay: '0s' },
-              { top: '25%', right: '15%', delay: '0.2s' },
-              { bottom: '20%', left: '15%', delay: '0.4s' }
-            ];
-            const pos = positions[idx] || positions[0];
+            const orbitAnimations = ['orbit1', 'orbit2', 'orbit3'];
+            const durations = ['8s', '10s', '12s'];
+            const delays = ['0s', '1s', '2s'];
             
             return (
               <div
                 key={idx}
-                className="absolute opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+                className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
-                  ...pos,
-                  animationDelay: pos.delay,
-                  animation: 'float 3s ease-in-out infinite'
+                  animation: `${orbitAnimations[idx]} ${durations[idx]} linear infinite`,
+                  animationDelay: delays[idx]
                 }}
               >
-                <div className="p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-md">
-                  <IconComp size={16} className={colorScheme.accent} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div className="p-2 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 group-hover:shadow-xl transition-shadow duration-300">
+                    <IconComp size={18} className={colorScheme.accent} />
+                  </div>
                 </div>
               </div>
             );
