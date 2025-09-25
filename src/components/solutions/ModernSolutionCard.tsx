@@ -99,7 +99,7 @@ const ModernSolutionCard = memo(({
             </h3>
             
             {/* Animated line between title and description */}
-            <div className="w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-3/4 transition-all duration-700 ease-out mb-4" />
+            <div className="w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-3/4 transition-all duration-700 ease-out mb-2" />
           </div>
         </div>
 
