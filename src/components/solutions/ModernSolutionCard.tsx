@@ -1,7 +1,7 @@
 import { memo, useMemo, useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { LucideIcon, Target } from 'lucide-react';
+import { LucideIcon, Target, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ModernSolutionCardProps {
@@ -21,14 +21,14 @@ const translations = {
   en: {
     overview: 'Overview',
     keyFeatures: 'Key Features',
-    additionalFeatures: 'additional features',
-    businessOutcome: 'Business Outcomes'
+    additionalFeatures: 'more features',
+    businessOutcome: 'Expected Results'
   },
   pt: {
     overview: 'Visão Geral',
     keyFeatures: 'Características Principais',
-    additionalFeatures: 'características adicionais',
-    businessOutcome: 'Resultado de Negócio'
+    additionalFeatures: 'mais características',
+    businessOutcome: 'Resultados Esperados'
   }
 };
 
@@ -52,8 +52,8 @@ const ModernSolutionCard = memo(({
   const t = useMemo(() => translations[language] || translations.en, [language]);
   
   // Memoize displayed features
-  const displayedFeatures = useMemo(() => features.slice(0, 4), [features]);
-  const additionalCount = useMemo(() => Math.max(0, features.length - 4), [features.length]);
+  const displayedFeatures = useMemo(() => features.slice(0, 3), [features]);
+  const additionalCount = useMemo(() => Math.max(0, features.length - 3), [features.length]);
   
   // Intersection Observer for performance-optimized animations
   useEffect(() => {
@@ -65,7 +65,7 @@ const ModernSolutionCard = memo(({
           setTimeout(() => {
             setIsVisible(true);
             setHasAnimated(true);
-          }, index * 100);
+          }, index * 150);
         }
       },
       { threshold: 0.1, rootMargin: '50px' }
@@ -77,118 +77,107 @@ const ModernSolutionCard = memo(({
 
     return () => observer.disconnect();
   }, [index, hasAnimated]);
+
   return (
     <Card 
       ref={cardRef}
-      className={`group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden min-h-[400px] ${
+      className={`group relative overflow-hidden border-0 shadow-md hover:shadow-xl transition-all duration-700 hover:scale-[1.02] bg-white/90 backdrop-blur-sm rounded-3xl ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
+      style={{ animationDelay: `${index * 0.15}s` }}
     >
-      <div className="flex flex-col lg:flex-row h-full">
-        {/* Left Side - Dark (Product Info) */}
-        <div className="lg:w-2/5 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 text-white">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
-          </div>
+      {/* Soft gradient background overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-orange-50/20 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+      
+      {/* Floating decorative elements */}
+      <div className="absolute top-6 right-6 w-3 h-3 bg-gradient-to-br from-blue-400/20 to-orange-400/20 rounded-full opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
+      <div className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-br from-orange-400/20 to-blue-400/20 rounded-full opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
 
-          <div className="relative z-10 p-8 h-full flex flex-col justify-between">
-            {/* Engine Badge */}
-            <div className="mb-6">
-              <Badge 
-                variant="secondary" 
-                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 text-sm px-3 py-1"
-              >
-                {engine}
-              </Badge>
-            </div>
-
-            {/* Central Icon and Info */}
-            <div className="flex-1 flex flex-col justify-center items-center text-center space-y-6">
-              {/* Icon */}
-              <div 
-                className="p-6 rounded-2xl shadow-xl backdrop-blur-sm border border-white/20 group-hover:scale-110 transition-all duration-300"
-                style={{ backgroundColor: bgColor }}
-              >
-                <Icon className="w-16 h-16 text-white" />
+      <CardContent className="p-8 relative z-10">
+        {/* Header Section */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-4">
+            {/* Icon Container with modern styling */}
+            <div className="relative group-hover:scale-110 transition-transform duration-500">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-2xl flex items-center justify-center border border-gray-200/50 backdrop-blur-sm shadow-sm group-hover:shadow-lg transition-all duration-500">
+                <Icon className="w-8 h-8 text-gray-700 group-hover:text-blue-600 transition-colors duration-300" />
               </div>
-
-              {/* Category */}
-              <div className="space-y-2">
-                <p className="text-sm text-gray-300 uppercase tracking-wider font-medium">
-                  {focus}
-                </p>
-                
-                {/* Title */}
-                <h2 className="text-2xl font-bold leading-tight">
-                  {title}
-                </h2>
-              </div>
+              {/* Subtle glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-br from-blue-500/5 to-orange-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
             </div>
-
-            {/* Floating decorative elements */}
-            <div className="absolute top-6 right-6 w-2 h-2 bg-white/20 rounded-full"></div>
-            <div className="absolute bottom-8 left-6 w-1 h-1 bg-white/30 rounded-full"></div>
-          </div>
-        </div>
-
-        {/* Right Side - White (Details) */}
-        <div className="lg:w-3/5 bg-white">
-          <CardContent className="p-8 h-full flex flex-col">
-            {/* Overview */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                {t.overview}
+            
+            {/* Title and Focus */}
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <Badge 
+                  variant="secondary" 
+                  className="bg-gradient-to-r from-gray-100 to-gray-50 text-gray-600 border-gray-200/50 text-xs px-3 py-1 font-medium tracking-wide"
+                >
+                  {engine}
+                </Badge>
+              </div>
+              <h3 className="font-bold text-xl text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-700 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500 leading-tight">
+                {title}
               </h3>
-              <p className="text-gray-600 leading-relaxed text-sm">
-                {description}
+              <p className="text-sm text-gray-500 mt-1 font-medium tracking-wide uppercase">
+                {focus}
               </p>
             </div>
-
-            {/* Features */}
-            <div className="mb-6 flex-1">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                {t.keyFeatures}
-              </h3>
-              <div className="grid grid-cols-1 gap-3">
-                {displayedFeatures.map((feature, idx) => (
-                  <div key={idx} className="p-3 bg-gray-50 rounded-lg">
-                    <span className="text-sm text-gray-700 leading-relaxed">
-                      {feature}
-                    </span>
-                  </div>
-                ))}
-                {additionalCount > 0 && (
-                  <div className="text-center">
-                    <span className="text-xs text-gray-500">
-                      +{additionalCount} {t.additionalFeatures}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Business Outcome */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                {t.businessOutcome}
-              </h3>
-              <div className="relative p-4 bg-gradient-to-r from-gray-50 to-gray-100/50 rounded-lg border border-gray-200/60 backdrop-blur-sm">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-orange-500/5 rounded-lg"></div>
-                <div className="relative flex items-start gap-3">
-                  <Target className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <p className="text-gray-700 leading-relaxed text-sm">
-                    {outcome}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
+          </div>
         </div>
-      </div>
+
+        {/* Description */}
+        <div className="mb-6">
+          <p className="text-gray-600 leading-relaxed text-sm group-hover:text-gray-700 transition-colors duration-300">
+            {description}
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div className="mb-6">
+          <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-orange-500 rounded-full"></div>
+            {t.keyFeatures}
+          </h4>
+          <div className="space-y-2">
+            {displayedFeatures.map((feature, idx) => (
+              <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50/80 hover:bg-gray-100/60 transition-colors duration-300 border border-gray-100/50">
+                <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm text-gray-700 leading-relaxed">
+                  {feature}
+                </span>
+              </div>
+            ))}
+            {additionalCount > 0 && (
+              <div className="text-center pt-2">
+                <span className="text-xs text-gray-500 bg-gray-100/50 px-3 py-1 rounded-full">
+                  +{additionalCount} {t.additionalFeatures}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Business Outcome */}
+        <div className="relative">
+          <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-orange-500 rounded-full"></div>
+            {t.businessOutcome}
+          </h4>
+          <div className="relative p-4 bg-gradient-to-br from-blue-50/40 to-orange-50/30 rounded-2xl border border-gray-200/30 backdrop-blur-sm group-hover:shadow-sm transition-all duration-500">
+            <div className="flex items-start gap-3">
+              <Target className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <p className="text-gray-700 leading-relaxed text-sm flex-1">
+                {outcome}
+              </p>
+              <ArrowRight className="w-4 h-4 text-orange-500 mt-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom accent line */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-24 transition-all duration-700 rounded-t-full" />
+      </CardContent>
     </Card>
   );
 });
