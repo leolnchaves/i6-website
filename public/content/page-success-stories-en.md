@@ -80,21 +80,23 @@ By achieving this level of precision, we aimed to help the company optimize prod
 
 ---
 
-## Logistics Route Optimization
-**Image:** /content/success-stories/logistics.jpg
+## Maximizing Cross-Sell with Smart Buying Propensity
+**Image:** /content/success-stories/case-finance-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Logistics
-**Client:** Global Shipping Solutions
-**Description:** Global Shipping Solutions
-**Challenge:** Inefficient route planning and delivery scheduling leading to high fuel costs, delayed deliveries, and poor customer satisfaction.
-**Solution:** Deployed AI-powered route optimization and demand forecasting system to improve delivery efficiency and reduce operational costs.
-**Metric1:** 30% Fuel Cost Reduction
-**Metric2:** 95% On-Time Deliveries
-**Metric3:** 20% Capacity Optimization
-**Solutions:** Adaptive Demand, Predictive Campaign, Smart Price
-**Quote:** Our delivery efficiency has never been better, and our customers are noticing the improved service quality.
-**CustomerName:** Lisa Thompson
-**CustomerTitle:** Logistics Director
+**Segment:** Finance
+**Client:** Top 3 banks in innovation in Brazil and a leader in payroll loans
+**Description:** A leading financial institution that maintains a strong presence in both domestic and international markets.
+**Challenge:** The bank sought a solution to refine its sales strategy by improving the accuracy of product recommendations and customer outreach.
+With a diverse portfolio of products and services, the bank faced the challenge of increasing cross-sell and up-sell opportunities while ensuring that each customer receives the most relevant offerings through the best communication channel, achieved by consolidating diverse consumer behavior data.
+**Solution:** Significantly enhance CRM efficiency by optimizing the entire customer journey and increasing cross-sell and up-sell rates for products and services.
+The goal was not just to boost sales but to create smarter, more personalized interactions, ensuring that each customer receives timely and relevant offers through their preferred channels.
+**Metric1:** 12x Conveersion Uplift
+**Metric2:** 50% Less CRM Costs
+**Metric3:** -
+**Solutions:** Predictive Campaign Targeting, Predictive Personalization for Identified Users
+**Quote:** Maximizing Cross-Sell with Smart Buying Propensity
+**CustomerName:** -
+**CustomerTitle:** -
 
 ---
 
