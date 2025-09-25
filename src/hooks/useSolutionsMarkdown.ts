@@ -76,7 +76,10 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
     
     for (const line of lines) {
       if (line.startsWith('## ')) {
-        title = line.substring(3).trim();
+        // Use section header as fallback title
+        if (!title) {
+          title = line.substring(3).trim();
+        }
       } else if (line.startsWith('**Engine:**')) {
         engine = line.substring(11).trim();
       } else if (line.startsWith('**Icon:**')) {
@@ -84,8 +87,8 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
       } else if (line.startsWith('**Target:**')) {
         target = line.substring(11).trim();
       } else if (line.startsWith('**Title:**')) {
-        // Skip as we already have title from header
-        continue;
+        // Use the Title field when available (overrides section header)
+        title = line.substring(11).trim();
       } else if (line.startsWith('**Overview:**')) {
         overview = line.substring(13).trim();
         isReadingFeatures = false;
