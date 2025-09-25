@@ -25,8 +25,8 @@ const ResultCard = ({ title, description, solutions, index, cardImage }: ResultC
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-400/30 via-blue-400/30 to-orange-400/30"></div>
       
       <div className="p-4 h-full flex flex-col min-h-[200px]">
-        {/* Header com imagem e número */}
-        <div className="flex justify-between items-start mb-3">
+        {/* Header com imagem */}
+        <div className="flex justify-start items-start mb-3">
           <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
             {cardImage ? (
               <img 
@@ -37,10 +37,6 @@ const ResultCard = ({ title, description, solutions, index, cardImage }: ResultC
             ) : (
               <span className="text-lg">📊</span>
             )}
-          </div>
-          
-          <div className="text-right ml-2">
-            <div className="text-lg font-bold text-gray-800">{index + 1}</div>
           </div>
         </div>
         
