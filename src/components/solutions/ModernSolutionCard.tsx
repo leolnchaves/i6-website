@@ -108,16 +108,16 @@ const ModernSolutionCard = memo(({
         </div>
 
         {/* Features Grid */}
-        <div className="mb-6">
-          <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        <div className="mb-4">
+          <h4 className="text-sm font-semibold text-gray-800 mb-2 flex items-center gap-2">
             <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-orange-500 rounded-full"></div>
             {t.keyFeatures}
           </h4>
-          <div className="space-y-2">
+          <div className="space-y-1">
             {displayedFeatures.map((feature, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50/80 hover:bg-gray-100/60 transition-colors duration-300 border border-gray-100/50">
-                <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-sm text-gray-700 leading-relaxed">
+              <div key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-gray-50/80 hover:bg-gray-100/60 transition-colors duration-300 border border-gray-100/50">
+                <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
+                <span className="text-xs text-gray-700 leading-relaxed">
                   {feature}
                 </span>
               </div>
