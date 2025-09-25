@@ -2,41 +2,6 @@ import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSolutionsMarkdown } from '@/hooks/useSolutionsMarkdown';
 import ModernSolutionCard from './ModernSolutionCard';
-import { 
-  TrendingUp, 
-  Users, 
-  DollarSign, 
-  BarChart3, 
-  Target, 
-  Award, 
-  Zap, 
-  Building2, 
-  Globe, 
-  Rocket,
-  Brain,
-  ShoppingCart,
-  LineChart,
-  Lightbulb,
-  LucideIcon
-} from 'lucide-react';
-
-// Moved outside component to prevent re-creation on each render
-const iconMap: { [key: string]: LucideIcon } = {
-  'trending-up': TrendingUp,
-  'users': Users,
-  'dollar-sign': DollarSign,
-  'bar-chart-3': BarChart3,
-  'target': Target,
-  'award': Award,
-  'zap': Zap,
-  'building-2': Building2,
-  'globe': Globe,
-  'rocket': Rocket,
-  'brain': Brain,
-  'shopping-cart': ShoppingCart,
-  'line-chart': LineChart,
-  'lightbulb': Lightbulb,
-};
 
 // Engine-based color mapping to maintain design consistency
 const engineColorMap: { [key: string]: string } = {
@@ -91,9 +56,8 @@ const StaticSolutionsGrid = memo(() => {
         ) : (
           <div className="space-y-12 max-w-7xl mx-auto">
             {solutions.map((solution, index) => {
-              // Check if icon is an image path or a Lucide icon name
-              const isImageIcon = solution.icon.startsWith('/') || solution.icon.includes('.');
-              const IconComponent = isImageIcon ? solution.icon : (iconMap[solution.icon] || Building2);
+              // Use image path directly
+              const iconPath = solution.icon;
               const bgColor = engineColorMap[solution.engine] || 'bg-blue-500/20';
               
               console.log('Rendering solution:', solution.title, 'with features:', solution.keyFeatures);
@@ -101,7 +65,7 @@ const StaticSolutionsGrid = memo(() => {
               return (
                 <ModernSolutionCard
                   key={solution.id}
-                  icon={IconComponent}
+                  icon={iconPath}
                   title={solution.title}
                   focus={solution.target}
                   description={solution.overview}

@@ -24,7 +24,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** shopping-cart
+**Icon:** /src/assets/icons/shopping-cart.png
 
 **Target:** B2B, B2C, B2B2C, D2C
 
@@ -46,7 +46,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** building-2
+**Icon:** /src/assets/icons/building.png
 
 **Target:** B2B, B2B2C
 
@@ -68,7 +68,7 @@
 
 **Engine:** i6 RecSys
 
-**Icon:** target
+**Icon:** /src/assets/icons/target.png
 
 **Target:** B2B, B2C
 
@@ -90,7 +90,7 @@
 
 **Engine:** i6 ElasticPrice
 
-**Icon:** dollar-sign
+**Icon:** /src/assets/icons/dollar.png
 
 **Target:** B2B, B2C, B2B2C, D2C
 
@@ -112,7 +112,7 @@
 
 **Engine:** i6 Previsio
 
-**Icon:** bar-chart-3
+**Icon:** /src/assets/icons/chart.png
 
 **Target:** B2B, B2C
 
