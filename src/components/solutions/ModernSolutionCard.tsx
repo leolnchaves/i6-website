@@ -103,9 +103,6 @@ const ModernSolutionCard = memo(({
             <h3 className="font-bold text-2xl text-gray-900 mb-2 leading-tight">
               {title}
             </h3>
-            <p className="text-orange-500 font-medium text-sm tracking-wide">
-              {focus}
-            </p>
           </div>
           
           {/* Right side - Large Image Icon */}
