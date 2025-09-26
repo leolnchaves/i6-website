@@ -123,25 +123,25 @@ const TestimonialsSection = memo(() => {
                 })
               ]}
             >
-              <CarouselContent className="-ml-6">
+              <CarouselContent className="-ml-4">
                 {testimonials.map((testimonial) => (
-                  <CarouselItem key={testimonial.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={testimonial.id} className="pl-4 md:basis-1/2 lg:basis-1/4">
                     <div className="group h-full">
-                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[320px]">
+                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[280px]">
                         
                         {/* Header with Quote only */}
-                        <div className="flex items-center justify-between mb-4">
-                          <Quote className="w-6 h-6 text-primary/60" />
+                        <div className="flex items-center justify-between mb-3">
+                          <Quote className="w-5 h-5 text-primary/60" />
                         </div>
 
                         {/* Quote text - takes up available space */}
-                        <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light flex-grow">
+                        <blockquote className="text-sm leading-relaxed text-foreground/90 mb-4 font-light flex-grow">
                           "{testimonial.quote}"
                         </blockquote>
 
                         {/* Author info with LinkedIn - always at bottom */}
                         <div className="mt-auto">
-                          <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
+                          <div className="w-6 h-px bg-gradient-to-r from-primary/60 to-transparent mb-2"></div>
                           <cite className="not-italic">
                             <div className="flex items-center gap-2 mb-1">
                               {testimonial.linkedin_url && (
@@ -152,15 +152,15 @@ const TestimonialsSection = memo(() => {
                                   className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
                                   title="View LinkedIn Profile"
                                 >
-                                  <Linkedin className="w-4 h-4" />
+                                  <Linkedin className="w-3 h-3" />
                                 </a>
                               )}
-                              <span className="font-medium text-foreground">
+                              <span className="font-medium text-foreground text-sm">
                                 {testimonial.author_name}
                               </span>
                             </div>
                             {testimonial.author_title && (
-                              <div className={`text-sm text-muted-foreground ${testimonial.linkedin_url ? 'ml-6' : ''}`}>
+                              <div className={`text-xs text-muted-foreground ${testimonial.linkedin_url ? 'ml-5' : ''}`}>
                                 {testimonial.author_title}
                                 {testimonial.company_name && (
                                   <span className="text-primary/70"> • {testimonial.company_name}</span>
@@ -171,7 +171,7 @@ const TestimonialsSection = memo(() => {
                         </div>
 
                         {/* Subtle decorative element */}
-                        <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                        <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                       </div>
                     </div>
                   </CarouselItem>
