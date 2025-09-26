@@ -63,6 +63,11 @@ export const ptTranslations = {
   'compactSolutions.buttonText': 'Explorar Soluções',
   'compactSolutions.learnMore': 'Saiba Mais',
   
+  // Partners Section
+  'partners.our': 'NOSSOS',
+  'partners.title': 'PARCEIROS',
+  'partners.description': 'Transformando negócios através de parcerias estratégicas e soluções inovadoras.',
+  
   // Stats Values
   'stats.stat1Value': '97%',
   'stats.stat2Value': '0%',

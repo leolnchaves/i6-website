@@ -63,6 +63,11 @@ export const enTranslations = {
   'compactSolutions.buttonText': 'Explore Solutions',
   'compactSolutions.learnMore': 'Learn More',
   
+  // Partners Section
+  'partners.our': 'OUR',
+  'partners.title': 'PARTNERS',
+  'partners.description': 'Transforming businesses through strategic partnerships and innovative solutions.',
+  
   // Stats Values
   'stats.stat1Value': '97%',
   'stats.stat2Value': '0%',

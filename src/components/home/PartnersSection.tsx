@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { usePartnersContent } from '@/hooks/usePartnersContent';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const PartnersSection = () => {
   const [isPaused, setIsPaused] = useState(false);
   const { partners, loading, error } = usePartnersContent();
+  const { t } = useLanguage();
 
   // Show loading state
   if (loading) {
@@ -51,18 +53,17 @@ const PartnersSection = () => {
               <div className="relative bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
                 <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
                   <span className="block text-lg lg:text-xl font-normal mb-1 text-slate-300">
-                    OUR
+                    {t('partners.our')}
                   </span>
                   <span className="bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
-                    PARTNERS
+                    {t('partners.title')}
                   </span>
                 </h2>
                 
                 <div className="w-12 h-1 bg-gradient-to-r from-primary to-orange-500 mb-4"></div>
                 
                 <p className="text-slate-300 text-sm leading-relaxed">
-                  Transforming businesses through strategic partnerships and 
-                  innovative solutions.
+                  {t('partners.description')}
                 </p>
               </div>
             </div>
