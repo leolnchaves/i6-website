@@ -152,29 +152,16 @@ const ContactForm = memo(() => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="company" className="text-sm font-medium text-gray-700 mb-2 block">
-                  {text.company}
-                </Label>
-                <Input
-                  id="company"
-                  type="text"
-                  {...register("company")}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone" className="text-sm font-medium text-gray-700 mb-2 block">
-                  {text.phone}
-                </Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  {...register("phone")}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
+            <div>
+              <Label htmlFor="company" className="text-sm font-medium text-gray-700 mb-2 block">
+                {text.company}
+              </Label>
+              <Input
+                id="company"
+                type="text"
+                {...register("company")}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
 
             <div>
