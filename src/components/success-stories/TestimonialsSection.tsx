@@ -58,19 +58,19 @@ const TestimonialsSection = memo(() => {
           <div className={`flex justify-center gap-6 max-w-6xl mx-auto ${testimonials.length === 1 ? 'max-w-md' : testimonials.length === 2 ? 'max-w-2xl' : 'max-w-5xl'}`}>
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="group flex-1 max-w-sm">
-                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative">
+                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col">
                   
                   {/* Header with Quote only */}
                   <div className="flex items-center justify-between mb-4">
                     <Quote className="w-6 h-6 text-primary/60" />
                   </div>
 
-                  {/* Quote text */}
-                  <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light">
+                  {/* Quote text - takes up available space */}
+                  <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light flex-grow">
                     "{testimonial.quote}"
                   </blockquote>
 
-                  {/* Author info with LinkedIn */}
+                  {/* Author info with LinkedIn - always at bottom */}
                   <div className="mt-auto">
                     <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
                     <cite className="not-italic">
@@ -124,20 +124,20 @@ const TestimonialsSection = memo(() => {
               <CarouselContent className="-ml-6">
                 {testimonials.map((testimonial) => (
                   <CarouselItem key={testimonial.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                    <div className="group">
-                      <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative">
+                    <div className="group h-full">
+                      <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col">
                         
                         {/* Header with Quote only */}
                         <div className="flex items-center justify-between mb-4">
                           <Quote className="w-6 h-6 text-primary/60" />
                         </div>
 
-                        {/* Quote text */}
-                        <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light">
+                        {/* Quote text - takes up available space */}
+                        <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light flex-grow">
                           "{testimonial.quote}"
                         </blockquote>
 
-                        {/* Author info with LinkedIn */}
+                        {/* Author info with LinkedIn - always at bottom */}
                         <div className="mt-auto">
                           <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
                           <cite className="not-italic">
