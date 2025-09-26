@@ -112,6 +112,9 @@ const TestimonialsSection = memo(() => {
           <div className="max-w-6xl mx-auto relative">
             <Carousel 
               className="w-full"
+              opts={{
+                loop: true,
+              }}
               plugins={[
                 Autoplay({
                   delay: 7000,
