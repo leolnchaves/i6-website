@@ -2,9 +2,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useState, memo, useMemo, useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const LanguageSelector = memo(() => {
   const { language, setLanguage } = useLanguage();
+  const isMobile = useIsMobile();
   const [flagsLoaded, setFlagsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -106,7 +108,7 @@ const LanguageSelector = memo(() => {
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full bg-white/90 backdrop-blur-md border border-white/20 rounded-md shadow-lg z-50 min-w-max">
+        <div className={`absolute ${isMobile ? 'bottom-full mb-1' : 'top-full mt-1'} left-0 w-full bg-white/90 backdrop-blur-md border border-white/20 rounded-md shadow-lg z-50 min-w-max`}>
           {languages.map((lang) => (
             <button
               key={lang.code}
