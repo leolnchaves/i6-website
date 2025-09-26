@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 import * as LucideIcons from 'lucide-react';
 
 interface CompactVerticalCardProps {
@@ -22,6 +23,7 @@ const CompactVerticalCard = ({
   features,
   outcome 
 }: CompactVerticalCardProps) => {
+  const { t } = useLanguage();
   
   const getIcon = (iconName: string) => {
     const iconKey = iconName.split('-').map(word => 
@@ -107,7 +109,7 @@ const CompactVerticalCard = ({
           to={`/solutions#${title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
           className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 hover:text-orange-200 cursor-pointer hover:scale-105 transform transition-transform duration-200 px-6 py-2"
         >
-          Saiba Mais
+          {t('compactSolutions.learnMore')}
         </Link>
       </div>
 
