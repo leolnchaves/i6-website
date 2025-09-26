@@ -75,7 +75,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "O Que Nossos Clientes Dizem",
-      subtitle: "Vozes reais. Resultados confiáveis. Powered by IA especialista."
+      subtitle: "Vozes reais. Resultados confiáveis. A força da IA especialista."
     }
   }
 };
