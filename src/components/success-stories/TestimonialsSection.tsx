@@ -177,10 +177,10 @@ const TestimonialsSection = memo(() => {
               </CarouselContent>
               
               {/* Custom navigation buttons - positioned outside the carousel content */}
-              <CarouselPrevious className="absolute -left-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group">
+              <CarouselPrevious className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group">
                 <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-gray-900" />
               </CarouselPrevious>
-              <CarouselNext className="absolute -right-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group">
+              <CarouselNext className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group">
                 <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-gray-900" />
               </CarouselNext>
             </Carousel>
