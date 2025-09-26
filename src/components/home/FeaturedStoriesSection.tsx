@@ -194,13 +194,13 @@ const FeaturedStoriesSection = () => {
               </div>
               
               {/* Indicadores */}
-              <div className="flex justify-center mt-8 gap-2">
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
                 {fallbackCards.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                      index === currentSlide ? 'bg-primary w-6' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                      index === currentSlide ? 'bg-blue-600' : 'bg-white/60'
                     }`}
                   />
                 ))}
