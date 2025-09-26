@@ -4,7 +4,7 @@
 **Quote:** Time com alta capacidade técnica e excelente visão de negócio, desenvolvendo soluções criativas e eficazes.
 **Author:** Paulo Lima
 **Title:** Gerente de Novos Canais
-**Company:** EMS Farma
+**Company:** Grupo NC
 **LinkedIn:** https://www.linkedin.com/in/pauloelima/
 **Rating:** 5
 
