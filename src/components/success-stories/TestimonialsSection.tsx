@@ -69,58 +69,105 @@ const TestimonialsSection = memo(() => {
           </div>
         ) : testimonials.length <= 3 ? (
           // Center testimonials when 3 or less
-          <div className={`flex justify-center gap-6 max-w-6xl mx-auto ${testimonials.length === 1 ? 'max-w-md' : testimonials.length === 2 ? 'max-w-2xl' : 'max-w-5xl'}`}>
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="group flex-1 max-w-sm">
-                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col">
-                  
-                  {/* Header with Quote only */}
-                  <div className="flex items-center justify-between mb-4">
-                    <Quote className="w-6 h-6 text-primary/60" />
-                  </div>
-
-                  {/* Quote text - takes up available space */}
-                  <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light flex-grow">
-                    "{testimonial.quote}"
-                  </blockquote>
-
-                  {/* Author info with LinkedIn - always at bottom */}
-                  <div className="mt-auto">
-                    <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
-                    <cite className="not-italic">
-                      <div className="flex items-center gap-2 mb-1">
-                        {testimonial.linkedin_url && (
-                          <a 
-                            href={testimonial.linkedin_url} 
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                            title="View LinkedIn Profile"
-                          >
-                            <Linkedin className="w-4 h-4" />
-                          </a>
-                        )}
-                        <span className="font-medium text-foreground">
-                          {testimonial.author_name}
-                        </span>
-                      </div>
-                      {testimonial.author_title && (
-                        <div className={`text-sm text-muted-foreground ${testimonial.linkedin_url ? 'ml-6' : ''}`}>
-                          {testimonial.author_title}
-                          {testimonial.company_name && (
-                            <span className="text-primary/70"> • {testimonial.company_name}</span>
+          <>
+            {/* Mobile: show a single compact card */}
+            <div className="sm:hidden">
+              {testimonials[0] && (
+                <div className="group max-w-sm mx-auto">
+                  <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[240px]">
+                    {/* Header with Quote only */}
+                    <div className="flex items-center justify-between mb-3">
+                      <Quote className="w-4 h-4 text-primary/60" />
+                    </div>
+                    {/* Quote text - compact with clamp */}
+                    <blockquote className="text-sm leading-relaxed text-foreground/90 mb-4 font-light flex-grow line-clamp-4">
+                      "{testimonials[0].quote}"
+                    </blockquote>
+                    {/* Author info */}
+                    <div className="mt-auto">
+                      <div className="w-6 h-px bg-gradient-to-r from-primary/60 to-transparent mb-2" />
+                      <cite className="not-italic">
+                        <div className="flex items-center gap-2 mb-1">
+                          {testimonials[0].linkedin_url && (
+                            <a
+                              href={testimonials[0].linkedin_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
+                              title="View LinkedIn Profile"
+                            >
+                              <Linkedin className="w-3 h-3" />
+                            </a>
                           )}
+                          <span className="font-medium text-foreground text-sm">
+                            {testimonials[0].author_name}
+                          </span>
                         </div>
-                      )}
-                    </cite>
+                        {testimonials[0].author_title && (
+                          <div className={`text-xs text-muted-foreground leading-tight ${testimonials[0].linkedin_url ? 'ml-5' : ''}`}>
+                            {testimonials[0].author_title}
+                            {testimonials[0].company_name && (
+                              <span className="text-primary/70"> • {testimonials[0].company_name}</span>
+                            )}
+                          </div>
+                        )}
+                      </cite>
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500" />
                   </div>
-
-                  {/* Subtle decorative element */}
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
+            </div>
+
+            {/* Desktop / Tablet: original centered list */}
+            <div className={`hidden sm:flex justify-center gap-6 max-w-6xl mx-auto ${testimonials.length === 1 ? 'max-w-md' : testimonials.length === 2 ? 'max-w-2xl' : 'max-w-5xl'}`}>
+              {testimonials.map((testimonial) => (
+                <div key={testimonial.id} className="group flex-1 max-w-sm">
+                  <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col">
+                    {/* Header with Quote only */}
+                    <div className="flex items-center justify-between mb-4">
+                      <Quote className="w-6 h-6 text-primary/60" />
+                    </div>
+                    {/* Quote text - takes up available space */}
+                    <blockquote className="text-base leading-relaxed text-foreground/90 mb-6 font-light flex-grow">
+                      "{testimonial.quote}"
+                    </blockquote>
+                    {/* Author info with LinkedIn - always at bottom */}
+                    <div className="mt-auto">
+                      <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent mb-3"></div>
+                      <cite className="not-italic">
+                        <div className="flex items-center gap-2 mb-1">
+                          {testimonial.linkedin_url && (
+                            <a 
+                              href={testimonial.linkedin_url} 
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
+                              title="View LinkedIn Profile"
+                            >
+                              <Linkedin className="w-4 h-4" />
+                            </a>
+                          )}
+                          <span className="font-medium text-foreground">
+                            {testimonial.author_name}
+                          </span>
+                        </div>
+                        {testimonial.author_title && (
+                          <div className={`text-sm text-muted-foreground ${testimonial.linkedin_url ? 'ml-6' : ''}`}>
+                            {testimonial.author_title}
+                            {testimonial.company_name && (
+                              <span className="text-primary/70"> • {testimonial.company_name}</span>
+                            )}
+                          </div>
+                        )}
+                      </cite>
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         ) : (
           // Carousel for more than 3 testimonials
           <div className="max-w-7xl mx-auto relative px-4 sm:px-8 md:px-16 lg:px-24">
