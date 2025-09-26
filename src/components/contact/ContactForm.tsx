@@ -93,11 +93,17 @@ const ContactForm = memo(() => {
   const onSubmit = useCallback(async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Create a hidden form and submit it traditionally to avoid CORS issues
+      // Create a hidden iframe to submit the form without redirecting
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'hidden_iframe';
+      document.body.appendChild(iframe);
+
+      // Create a hidden form and submit it to the iframe
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = 'https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec';
-      form.target = '_blank'; // Open in new tab to avoid leaving the page
+      form.target = 'hidden_iframe';
       form.style.display = 'none';
 
       // Add form fields
@@ -119,7 +125,12 @@ const ContactForm = memo(() => {
 
       document.body.appendChild(form);
       form.submit();
-      document.body.removeChild(form);
+      
+      // Clean up after a short delay
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 1000);
 
       // Show success message
       setIsSuccess(true);
