@@ -12,8 +12,21 @@ const TestimonialsSection = memo(() => {
   const { language } = useLanguage();
   const { testimonials, loading, error } = useTestimonialsMarkdown();
   const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
   
   const sectionContent = successStoriesData[language]?.testimonials || successStoriesData.en.testimonials;
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   return (
     <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
@@ -178,19 +191,18 @@ const TestimonialsSection = memo(() => {
                 ))}
               </CarouselContent>
               
-              {/* Navigation buttons - same style as FeaturedStoriesSection */}
-              <button
-                onClick={() => api?.scrollPrev()}
-                className="absolute left-2 sm:left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group"
-              >
-                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-gray-900" />
-              </button>
-              <button
-                onClick={() => api?.scrollNext()}
-                className="absolute right-2 sm:right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group"
-              >
-                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-gray-900" />
-              </button>
+              {/* Navigation dots */}
+              <div className="flex justify-center mt-8 gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => api?.scrollTo(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                      index === current ? 'bg-primary w-6' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                    }`}
+                  />
+                ))}
+              </div>
             </Carousel>
           </div>
         )}
