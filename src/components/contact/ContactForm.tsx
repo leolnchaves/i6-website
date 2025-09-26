@@ -93,35 +93,51 @@ const ContactForm = memo(() => {
   const onSubmit = useCallback(async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('company', data.company || '');
-      formData.append('message', data.message);
-      formData.append('subscription', data.subject);
+      // Create a hidden form and submit it traditionally to avoid CORS issues
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec';
+      form.target = '_blank'; // Open in new tab to avoid leaving the page
+      form.style.display = 'none';
 
-      const response = await fetch('https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec', {
-        method: 'POST',
-        body: formData
+      // Add form fields
+      const fields = [
+        { name: 'name', value: data.name },
+        { name: 'email', value: data.email },
+        { name: 'company', value: data.company || '' },
+        { name: 'message', value: data.message },
+        { name: 'subscription', value: data.subject }
+      ];
+
+      fields.forEach(field => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = field.name;
+        input.value = field.value;
+        form.appendChild(input);
       });
 
-      if (response.ok) {
-        console.log('Form submitted successfully');
-        setIsSuccess(true);
-        toast({
-          title: text.successMessage,
-          description: "",
-        });
-        reset();
-      } else {
-        console.error('Form submission failed:', response.statusText);
-      }
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+
+      // Show success message
+      setIsSuccess(true);
+      const successMessage = language === 'pt' 
+        ? "Mensagem enviada com sucesso! Entraremos em contato em breve."
+        : "Message sent successfully! We will contact you soon.";
+      
+      toast({
+        title: successMessage,
+        description: "",
+      });
+      reset();
     } catch (error) {
       console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
     }
-  }, [reset]);
+  }, [reset, toast, language]);
 
   // Automatically uses current language from context - memoized
   const text = useMemo(() => content[language], [language]);
