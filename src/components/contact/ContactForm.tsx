@@ -93,7 +93,7 @@ const ContactForm = memo(() => {
       formData.append('email', data.email);
       formData.append('company', data.company || '');
       formData.append('message', data.message);
-      formData.append('subscription', 'False');
+      formData.append('subscription', data.subject);
 
       const response = await fetch('https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec', {
         method: 'POST',
