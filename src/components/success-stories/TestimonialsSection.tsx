@@ -109,7 +109,7 @@ const TestimonialsSection = memo(() => {
           </div>
         ) : (
           // Carousel for more than 3 testimonials
-          <div className="max-w-6xl mx-auto relative">
+          <div className="max-w-7xl mx-auto relative px-16">
             <Carousel 
               className="w-full"
               opts={{
@@ -125,7 +125,7 @@ const TestimonialsSection = memo(() => {
                 {testimonials.map((testimonial) => (
                   <CarouselItem key={testimonial.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
                     <div className="group h-full">
-                      <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col">
+                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[320px]">
                         
                         {/* Header with Quote only */}
                         <div className="flex items-center justify-between mb-4">
@@ -176,11 +176,11 @@ const TestimonialsSection = memo(() => {
                 ))}
               </CarouselContent>
               
-              {/* Custom navigation buttons */}
-              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm border border-gray-200 hover:bg-white hover:shadow-lg transition-all duration-300 w-12 h-12 rounded-full flex items-center justify-center text-gray-600 hover:text-gray-900">
+              {/* Custom navigation buttons - positioned outside the carousel content */}
+              <CarouselPrevious className="absolute -left-12 top-1/2 -translate-y-1/2 bg-card/90 backdrop-blur-sm border border-border/50 hover:bg-card hover:shadow-lg transition-all duration-300 w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground">
                 <ChevronLeft className="w-5 h-5" />
               </CarouselPrevious>
-              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm border border-gray-200 hover:bg-white hover:shadow-lg transition-all duration-300 w-12 h-12 rounded-full flex items-center justify-center text-gray-600 hover:text-gray-900">
+              <CarouselNext className="absolute -right-12 top-1/2 -translate-y-1/2 bg-card/90 backdrop-blur-sm border border-border/50 hover:bg-card hover:shadow-lg transition-all duration-300 w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground">
                 <ChevronRight className="w-5 h-5" />
               </CarouselNext>
             </Carousel>
