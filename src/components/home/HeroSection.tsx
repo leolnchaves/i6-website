@@ -126,7 +126,7 @@ const HeroSection = () => {
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Button size="lg" className="bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-lg font-medium shadow-lg hover:bg-white/30 hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap" onClick={handleOpenVideoModal}>
+              <Button size="lg" className="bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-lg font-medium shadow-lg hover:bg-white/30 hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap h-[42px] sm:h-11" onClick={handleOpenVideoModal}>
                 {t('hero.watchDemo')}
               </Button>
             </div>
