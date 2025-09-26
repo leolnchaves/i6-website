@@ -155,7 +155,7 @@ const FeaturedStoriesSection = () => {
                               {story.quote}
                             </h3>
                             {story.challenge && (
-                              <p className="text-xs text-gray-600 mb-3 line-clamp-8">
+                              <p className="text-xs text-gray-600 mb-3 line-clamp-6">
                                 {story.challenge}
                               </p>
                             )}
