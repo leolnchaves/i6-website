@@ -136,19 +136,19 @@ const TestimonialsSection = memo(() => {
                 })
               ]}
             >
-              <CarouselContent className="-ml-3">
+              <CarouselContent className="-ml-2 md:-ml-3">
                 {testimonials.map((testimonial) => (
-                  <CarouselItem key={testimonial.id} className="pl-3 basis-full sm:basis-1/2 lg:basis-[30%]">
+                  <CarouselItem key={testimonial.id} className="pl-2 md:pl-3 basis-full sm:basis-1/2 lg:basis-[30%]">
                     <div className="group h-full">
-                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[280px]">
+                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 md:p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[240px] md:min-h-[280px]">
                         
                         {/* Header with Quote only */}
                         <div className="flex items-center justify-between mb-3">
-                          <Quote className="w-5 h-5 text-primary/60" />
+                          <Quote className="w-4 h-4 md:w-5 md:h-5 text-primary/60" />
                         </div>
 
                         {/* Quote text - takes up available space */}
-                        <blockquote className="text-sm leading-relaxed text-foreground/90 mb-4 font-light flex-grow">
+                        <blockquote className="text-sm md:text-sm leading-relaxed text-foreground/90 mb-4 font-light flex-grow line-clamp-4 md:line-clamp-none">
                           "{testimonial.quote}"
                         </blockquote>
 
@@ -173,7 +173,7 @@ const TestimonialsSection = memo(() => {
                               </span>
                             </div>
                             {testimonial.author_title && (
-                              <div className={`text-xs text-muted-foreground ${testimonial.linkedin_url ? 'ml-5' : ''}`}>
+                              <div className={`text-xs text-muted-foreground leading-tight ${testimonial.linkedin_url ? 'ml-5' : ''}`}>
                                 {testimonial.author_title}
                                 {testimonial.company_name && (
                                   <span className="text-primary/70"> • {testimonial.company_name}</span>
