@@ -1,29 +1,21 @@
 # Depoimentos
 
 ## Depoimento 1
-**Quote:** As soluções de IA da Infinity6 transformaram todo o nosso modelo de negócios. As capacidades de análise preditiva nos deram insights sem precedentes sobre tendências de mercado e comportamento do cliente.
-**Author:** Amanda Foster
-**Title:** CEO
-**Company:** TechVision Corp
-**LinkedIn:** https://www.linkedin.com/in/amanda-foster-ceo
+**Quote:** Time com alta capacidade técnica e excelente visão de negócio, desenvolvendo soluções criativas e eficazes.
+**Author:** Paulo Lima
+**Title:** Gerente de Novos Canais
+**Company:** EMS Farma
+**LinkedIn:** https://www.linkedin.com/in/pauloelima/
 **Rating:** 5
 
 ---
 
 ## Depoimento 2
-**Quote:** A implementação foi perfeita e os resultados foram imediatos. Vimos uma melhoria de 40% na eficiência operacional no primeiro trimestre.
-**Author:** Carlos Rodriguez
-**Title:** CTO
-**Company:** DataFlow Solutions
-**LinkedIn:** https://www.linkedin.com/in/carlos-rodriguez-cto
+**Quote:** A EMS tem liderado a adoção de IA na indústria farmacêutica, e a parceria com a Infinity6 reforça esse protagonismo. Em poucas semanas, conseguimos transformar dados em ações inteligentes que geram impacto imediato e mensurável.
+**Author:** Marcus Sanchez
+**Title:** Acionista EMS Farma
+**Company:** EMS Farma
+**LinkedIn:** https://www.linkedin.com/in/marcus-sanchez-0710ba1b3/
 **Rating:** 5
 
 ---
-
-## Depoimento 3
-**Quote:** Trabalhar com a Infinity6 foi um divisor de águas para nossa organização. A expertise da equipe e dedicação ao nosso sucesso é incomparável na indústria.
-**Author:** Jennifer Liu
-**Title:** VP de Inovação
-**Company:** Future Systems Inc
-**LinkedIn:** https://www.linkedin.com/in/jennifer-liu-innovation
-**Rating:** 5
