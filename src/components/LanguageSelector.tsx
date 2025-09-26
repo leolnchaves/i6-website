@@ -106,7 +106,7 @@ const LanguageSelector = memo(() => {
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full bg-white/80 backdrop-blur-md border border-white/20 rounded-md shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full left-0 mt-1 w-full bg-white/90 backdrop-blur-md border border-white/20 rounded-md shadow-lg z-50 min-w-max">
           {languages.map((lang) => (
             <button
               key={lang.code}
