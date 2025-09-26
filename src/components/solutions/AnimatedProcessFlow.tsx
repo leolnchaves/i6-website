@@ -326,13 +326,13 @@ const AnimatedProcessFlow = () => {
 
           {/* Mobile Layout */}
           <div className="lg:hidden">
-            <div className="flex overflow-x-auto gap-4 pb-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 px-4 pb-4">
               {processSteps.map((step, index) => {
                 const status = getStepStatus(index);
                 return (
                   <div 
                     key={step.key}
-                    className="flex flex-col items-center cursor-pointer group min-w-[120px] flex-shrink-0"
+                    className="flex flex-col items-center cursor-pointer group min-w-[100px] sm:min-w-[120px] flex-shrink-0"
                     onClick={() => handleStepClick(index)}
                   >
                     <div className={`
