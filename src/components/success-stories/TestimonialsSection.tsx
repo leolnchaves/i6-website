@@ -1,16 +1,17 @@
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import { useTestimonialsMarkdown } from '@/hooks/useTestimonialsMarkdown';
 import { Linkedin, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 
 const TestimonialsSection = memo(() => {
   const { language } = useLanguage();
   const { testimonials, loading, error } = useTestimonialsMarkdown();
+  const [api, setApi] = React.useState<CarouselApi>();
   
   const sectionContent = successStoriesData[language]?.testimonials || successStoriesData.en.testimonials;
 
@@ -109,8 +110,9 @@ const TestimonialsSection = memo(() => {
           </div>
         ) : (
           // Carousel for more than 3 testimonials
-          <div className="max-w-7xl mx-auto relative px-16">
+          <div className="max-w-7xl mx-auto relative">
             <Carousel 
+              setApi={setApi}
               className="w-full"
               opts={{
                 loop: true,
@@ -176,13 +178,19 @@ const TestimonialsSection = memo(() => {
                 ))}
               </CarouselContent>
               
-              {/* Custom navigation buttons - positioned outside the carousel content */}
-              <CarouselPrevious className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group">
+              {/* Navigation buttons - same style as FeaturedStoriesSection */}
+              <button
+                onClick={() => api?.scrollPrev()}
+                className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group"
+              >
                 <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-gray-900" />
-              </CarouselPrevious>
-              <CarouselNext className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group">
+              </button>
+              <button
+                onClick={() => api?.scrollNext()}
+                className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors duration-200 group"
+              >
                 <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-gray-900" />
-              </CarouselNext>
+              </button>
             </Carousel>
           </div>
         )}
