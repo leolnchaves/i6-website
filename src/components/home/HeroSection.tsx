@@ -120,7 +120,7 @@ const HeroSection = () => {
               <p>{t('hero.rethinkLine2')}</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/contact#contact-form">
+              <Link to="/contact#contact-form" className="block w-full sm:w-auto">
                 <Button size="lg" className="bg-primary text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2 w-full sm:w-auto whitespace-nowrap h-11" onClick={() => logger.info('Start journey button clicked', undefined, 'HeroSection')}>
                   {t('hero.startJourney')}
                   <ArrowRight className="w-5 h-5" />
