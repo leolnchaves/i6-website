@@ -88,10 +88,24 @@ const ContactForm = memo(() => {
   const onSubmit = useCallback(async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      console.log('Form submitted:', data);
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      reset();
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('company', data.company || '');
+      formData.append('message', data.message);
+      formData.append('subscription', 'False');
+
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+        reset();
+      } else {
+        console.error('Form submission failed:', response.statusText);
+      }
     } catch (error) {
       console.error('Form submission error:', error);
     } finally {
