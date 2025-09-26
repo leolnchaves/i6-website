@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 export interface SuccessStoryItem {
   id: string;
@@ -39,7 +40,7 @@ export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => 
         setError(null);
         
         const filename = language === 'pt' ? 'page-success-stories-pt.md' : 'page-success-stories-en.md';
-        const response = await fetch(`${import.meta.env.BASE_URL}content/${filename}`);
+        const response = await fetch(`${import.meta.env.BASE_URL}content/${filename}`, { cache: 'no-store' });
         
         if (!response.ok) {
           throw new Error(`Failed to fetch content: ${response.status}`);
@@ -49,7 +50,12 @@ export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => 
         console.log('Success stories markdown content loaded:', content.substring(0, 200) + '...');
         const parsedStories = parseMarkdownContent(content);
         console.log('Parsed success stories count:', parsedStories.length);
-        setStories(parsedStories);
+        const version = String(content.length);
+        const normalizedStories = parsedStories.map(s => ({
+          ...s,
+          image: getPublicAssetUrl(s.image) + `?v=${version}`
+        }));
+        setStories(normalizedStories);
       } catch (err) {
         console.error('Error fetching success stories markdown content:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
