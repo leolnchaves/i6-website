@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface FormData {
   name: string;
@@ -20,7 +21,9 @@ interface FormData {
 
 const ContactForm = memo(() => {
   const { language } = useLanguage();
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const {
     register,
@@ -48,6 +51,7 @@ const ContactForm = memo(() => {
       message: "Mensagem",
       messagePlaceholder: "Descreva como podemos ajudar seu negócio...",
       sendButton: "Enviar Mensagem",
+      successMessage: "Mensagem enviada com sucesso! Entraremos em contato em breve.",
       errors: {
         nameRequired: "Preencha este campo.",
         emailRequired: "Preencha este campo.",
@@ -74,6 +78,7 @@ const ContactForm = memo(() => {
       message: "Message",
       messagePlaceholder: "Describe how we can help your business...",
       sendButton: "Send Message",
+      successMessage: "Message sent successfully! We will contact you soon.",
       errors: {
         nameRequired: "Please fill out this field.",
         emailRequired: "Please fill out this field.",
@@ -102,6 +107,11 @@ const ContactForm = memo(() => {
 
       if (response.ok) {
         console.log('Form submitted successfully');
+        setIsSuccess(true);
+        toast({
+          title: text.successMessage,
+          description: "",
+        });
         reset();
       } else {
         console.error('Form submission failed:', response.statusText);
@@ -219,6 +229,17 @@ const ContactForm = memo(() => {
                 }`}
               />
             </div>
+
+            {isSuccess && (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  {text.successMessage}
+                </div>
+              </div>
+            )}
           </div>
 
           <Button 
