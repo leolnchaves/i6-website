@@ -86,7 +86,7 @@ const FAQSection = memo(() => {
         },
         {
           id: 9,
-          question: "O que torna a Infinity6 diferente de outras empresas de IA?",
+          question: "O que torna a infinity6 diferente de outras empresas de IA?",
           answer: "Combinamos inteligência preditiva com ação em tempo real, possibilitando decisões inteligentes em toda a jornada - com integração rápida, resultados mensuráveis e sem carga técnica pesada. Também oferecemos uma fase de teste gratuita, provando o potencial concreto de resultados antes de qualquer custo ser incorrido.",
           order: 9
         },
@@ -155,7 +155,7 @@ const FAQSection = memo(() => {
         },
         {
           id: 9,
-          question: "What makes Infinity6 different from other AI companies?",
+          question: "What makes infinity6 different from other AI companies?",
           answer: "We combine predictive intelligence with real-time action, enabling smart decisions across the entire journey - with fast integration, measurable results and no heavy tech lift. We also offer a free test phase, proving the concrete potential of results before any cost is incurred.",
           order: 9
         },
