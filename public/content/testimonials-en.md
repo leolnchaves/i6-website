@@ -5,25 +5,17 @@
 **Author:** Paulo Lima
 **Title:** New Channel Manager
 **Company:** NC Farma
-**LinkedIn:** https://www.linkedin.com/in/pauloelima/?originalSubdomain=br
+**LinkedIn:** https://www.linkedin.com/in/pauloelima/
 **Rating:** 5
 
 ---
 
 ## Testimonial 2
-**Quote:** The implementation was seamless and the results were immediate. We saw a 40% improvement in operational efficiency within the first quarter.
-**Author:** Carlos Rodriguez
-**Title:** CTO
-**Company:** DataFlow Solutions
-**LinkedIn:** https://www.linkedin.com/in/carlos-rodriguez-cto
+**Quote:** EMS has been leading the adoption of AI in the pharmaceutical industry, and the partnership with Infinity6 reinforces this leadership. In just a few weeks, we were able to turn data into intelligent actions that generate immediate and measurable impact.
+**Author:** Marcus Sanchez
+**Title:** EMS Pharma Shareholder
+**Company:** EMS Pharma
+**LinkedIn:** https://www.linkedin.com/in/marcus-sanchez-0710ba1b3/
 **Rating:** 5
 
 ---
-
-## Testimonial 3
-**Quote:** Working with Infinity6 has been a game-changer for our organization. Their team's expertise and dedication to our success is unmatched in the industry.
-**Author:** Jennifer Liu
-**Title:** VP of Innovation
-**Company:** Future Systems Inc
-**LinkedIn:** https://www.linkedin.com/in/jennifer-liu-innovation
-**Rating:** 5
