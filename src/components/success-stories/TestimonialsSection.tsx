@@ -110,7 +110,7 @@ const TestimonialsSection = memo(() => {
           </div>
         ) : (
           // Carousel for more than 3 testimonials
-          <div className="max-w-7xl mx-auto relative px-16">
+          <div className="max-w-7xl mx-auto relative px-24">
             <Carousel 
               setApi={setApi}
               className="w-full"
@@ -123,9 +123,9 @@ const TestimonialsSection = memo(() => {
                 })
               ]}
             >
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-3">
                 {testimonials.map((testimonial) => (
-                  <CarouselItem key={testimonial.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={testimonial.id} className="pl-3 md:basis-1/2 lg:basis-[30%]">
                     <div className="group h-full">
                        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[280px]">
                         
