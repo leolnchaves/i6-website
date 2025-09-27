@@ -3,7 +3,7 @@
 ---
 
 ## EMBRAER
-**Logo:** /content/logos/embraer.png
+**Logo:** /content/logos/embraer-white.png
 **Name:** EMBRAER
 
 ---
