@@ -19,3 +19,13 @@
 **Rating:** 5
 
 ---
+
+## Testimonial 3
+**Quote:** Através da parceria com a infinity6, estamos avançando exponencialmente na aplicação de IA especializada em resultados de negócio. O Pedido Inteligente é um exemplo que amplia nossa capacidade de prever, decidir e agir em escala.
+**Author:** Diego Neufert
+**Title:** VP de Tecnologia
+**Company:** Grupo NC
+**LinkedIn:** https://br.linkedin.com/in/neufert
+**Rating:** 5
+
+---
