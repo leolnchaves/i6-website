@@ -103,7 +103,7 @@ const PartnersSection = () => {
                           alt={partner.name}
                           className={`object-contain transition-all duration-300 ${
                             partner.name === 'HERING' ? 'max-h-12 max-w-36' : 'max-h-10 max-w-28'
-                          } filter brightness-0 invert opacity-90 contrast-125`}
+                          } filter brightness-150 contrast-200 saturate-0`}
                         />
                       </div>
                     </div>
