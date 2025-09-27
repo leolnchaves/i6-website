@@ -44,11 +44,6 @@
 
 ---
 
-## EMBRAER
-**Logo:** /content/logos/embraer-white.png
-**Name:** EMBRAER
-
----
 
 ## RABOBANK
 **Logo:** /content/logos/RABOBANK.png
