@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { usePartnersContent } from '@/hooks/usePartnersContent';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 const PartnersSection = () => {
   const [isPaused, setIsPaused] = useState(false);
@@ -99,7 +100,7 @@ const PartnersSection = () => {
                     >
                       <div className="bg-white/10 backdrop-blur-sm rounded-lg p-5 w-full h-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all duration-300">
                         <img 
-                          src={partner.logo} 
+                          src={getPublicAssetUrl(partner.logo)} 
                           alt={partner.name}
                           className={`object-contain transition-all duration-300 ${
                             partner.name === 'HERING' ? 'max-h-12 max-w-36' : 'max-h-10 max-w-28'
