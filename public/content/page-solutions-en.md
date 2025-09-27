@@ -34,7 +34,7 @@
 - Cross-sell and Up-sell Intelligence
 - Profile Enrichment and Scoring
 
-**Business Results:** Increases customer lifetime value with intelligent, behavior-based personalization.
+**Business Results:** Increase customer LTV with intelligent, behavior-based personalization, translated into higher conversion.
 
 ---
 
@@ -46,7 +46,7 @@
 
 **Title:** Industrial Recommendation Intelligence
 
-**Overview:** Align commercial targets with intelligent recommendations that optimize assortment, pricing and POS behavior: all in real time.
+**Overview:** Align commercial objectives with intelligent recommendations that optimize assortment, pricing and POS behavior — all in real time.
 
 **Key Features:**
 - Assortment Optimization
@@ -54,7 +54,7 @@
 - Commercial Target Alignment
 - POS Behavioral Forecasting
 
-**Business Results:** Drives product relevance and sell-out, aligned with revenue and margin goals.
+**Business Results:** Generate product relevance and sell-out with intelligent orders, delivering the right mix aligned with POS performance, commercial targets, revenue and margin.
 
 ---
 
@@ -66,7 +66,7 @@
 
 **Title:** Predictive Campaign Targeting
 
-**Overview:** Identify and activate only the users most likely to convert before your campaign even begins. Reduce CAC and increase effectiveness with precision targeting.
+**Overview:** Identify and activate only the users with the highest likelihood of conversion before the campaign even begins. Drastically reduce CAC and increase conversion effectiveness with precise segmentation.
 
 **Key Features:**
 - Propensity Modeling
@@ -74,7 +74,7 @@
 - Campaign Audience Refinement
 - Lead Activation Strategy
 
-**Business Results:** Maximizes ROI by targeting the right customer at the right time.
+**Business Results:** Maximize ROI by targeting and impacting the right customer, at the right time, with the right product.
 
 ---
 
@@ -94,7 +94,7 @@
 - Price Sensitivity Calibration
 - Margin Optimization Engine
 
-**Business Results:** Improves margin, sales velocity, and competitiveness through intelligent pricing.
+**Business Results:** Improve margin, sales cycle speed and competitiveness through behavior-driven intelligent pricing.
 
 ---
 
@@ -106,7 +106,7 @@
 
 **Title:** Adaptive Demand Forecasting
 
-**Overview:** Forecast demand with precision and adaptability. Our self-adjusting models project future sales based on trends, seasonality and behaviors, empowering supply chain and commercial planning.
+**Overview:** Accurately forecast demand with adaptive models. Our self-adjusting algorithms project future sales based on trends, seasonality and behaviors — empowering supply chain and commercial planning.
 
 **Key Features:**
 - Self-Reinforcing Forecast Model
@@ -114,7 +114,7 @@
 - Seasonality and Trend Detection
 - Inventory and Supply Chain Alignment
 
-**Business Results:** Enhances demand planning accuracy and agility in fast-changing markets.
+**Business Results:** Enhance demand planning by guiding production plans and commercial targets with precision, ensuring agility in fast-changing markets.
 
 ---
 
