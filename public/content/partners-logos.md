@@ -2,12 +2,6 @@
 
 ---
 
-## EMBRAER
-**Logo:** /content/logos/embraer-white.png
-**Name:** EMBRAER
-
----
-
 ## EMS
 **Logo:** /content/logos/EMS-white.png
 **Name:** EMS
