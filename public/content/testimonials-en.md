@@ -19,3 +19,13 @@
 **Rating:** 5
 
 ---
+
+## Testimonial 3
+**Quote:** Through our partnership with infinity6, we are exponentially advancing in the application of AI specialized in business results. The Intelligent Order is one example that enhances our ability to predict, decide and act at scale.
+**Author:** Diego Neufert
+**Title:** Technology VP
+**Company:** Grupo NC
+**LinkedIn:** https://br.linkedin.com/in/neufert
+**Rating:** 5
+
+---
