@@ -49,6 +49,7 @@ const ContactForm = memo(() => {
         support: "Suporte técnico"
       },
       message: "Mensagem",
+      messageMinChar: "(mínimo 10 caracteres)",
       messagePlaceholder: "Descreva como podemos ajudar seu negócio...",
       sendButton: "Enviar Mensagem",
       successMessage: "Mensagem enviada com sucesso! Entraremos em contato em breve.",
@@ -76,6 +77,7 @@ const ContactForm = memo(() => {
         support: "Technical support"
       },
       message: "Message",
+      messageMinChar: "(minimum 10 characters)",
       messagePlaceholder: "Describe how we can help your business...",
       sendButton: "Send Message",
       successMessage: "Message sent successfully! We will contact you soon.",
@@ -238,7 +240,7 @@ const ContactForm = memo(() => {
 
             <div>
               <Label htmlFor="message" className="text-sm font-medium text-gray-700 mb-2 block">
-                {text.message} * <span className="text-xs text-gray-500 font-normal">(mínimo 10 caracteres)</span>
+                {text.message} * <span className="text-xs text-gray-500 font-normal">{text.messageMinChar}</span>
               </Label>
               <Textarea
                 id="message"
