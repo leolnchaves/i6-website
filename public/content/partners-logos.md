@@ -9,7 +9,7 @@
 ---
 
 ## EMS
-**Logo:** /content/logos/EMS.png
+**Logo:** /content/logos/EMS-white.png
 **Name:** EMS
 
 ---
