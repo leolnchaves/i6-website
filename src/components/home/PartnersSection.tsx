@@ -77,12 +77,10 @@ const PartnersSection = () => {
               onMouseLeave={() => setIsPaused(false)}
             >
               <div 
-                className={`flex ${isPaused ? '' : 'animate-marquee'}`}
+                className={`flex animate-marquee ${isPaused ? 'paused' : ''}`}
                 style={{
                   width: `${doubledPartners.length * 220}px`,
-                  animationDuration: `${partners.length * 3}s`,
-                  animationIterationCount: 'infinite',
-                  animationTimingFunction: 'linear'
+                  animationDuration: `${doubledPartners.length * 1.5}s`
                 }}
               >
                 {doubledPartners.map((partner, index) => {
@@ -99,13 +97,13 @@ const PartnersSection = () => {
                       className="flex-shrink-0 w-52 h-20 mx-4 flex items-center justify-center transition-all duration-500 cursor-pointer"
                       style={{ opacity }}
                     >
-                      <div className="bg-white/95 backdrop-blur-sm rounded-lg p-4 w-full h-full flex items-center justify-center border border-white/20 hover:bg-white transition-all duration-300 shadow-lg">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-5 w-full h-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all duration-300">
                         <img 
                           src={partner.logo} 
                           alt={partner.name}
                           className={`object-contain transition-all duration-300 ${
                             partner.name === 'HERING' ? 'max-h-12 max-w-36' : 'max-h-10 max-w-28'
-                          }`}
+                          } filter brightness-0 invert opacity-90 contrast-125`}
                         />
                       </div>
                     </div>
