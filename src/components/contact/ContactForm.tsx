@@ -238,7 +238,7 @@ const ContactForm = memo(() => {
 
             <div>
               <Label htmlFor="message" className="text-sm font-medium text-gray-700 mb-2 block">
-                {text.message} *
+                {text.message} * <span className="text-xs text-gray-500 font-normal">(mínimo 10 caracteres)</span>
               </Label>
               <Textarea
                 id="message"
