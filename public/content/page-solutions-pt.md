@@ -34,7 +34,7 @@
 - Inteligência de Cross-sell e Up-sell
 - Enriquecimento e Pontuação de Perfil
 
-**Business Results:** Aumenta valor de vida do cliente com personalização inteligente baseada em comportamento.
+**Business Results:** Aumente LTV do cliente com personalização inteligente baseada em comportamento, traduzida em mais conversão.
 
 ---
 
@@ -46,7 +46,7 @@
 
 **Title:** Inteligência de Recomendação Industrial
 
-**Overview:** Alinhe objetivos comerciais com recomendações inteligentes que otimizam sortimento, preços e comportamento de PDV, tudo em tempo real.
+**Overview:** Alinhe objetivos comerciais com recomendações inteligentes que otimizam sortimento, preços e comportamento de PDV: tudo em tempo real.
 
 **Key Features:**
 - Otimização de Sortimento
@@ -54,7 +54,7 @@
 - Alinhamento de Objetivos Comerciais
 - Previsão Comportamental de PDV
 
-**Business Results:** Gera relevância de produtos e sell-out, alinhado com objetivos de receita e margem.
+**Business Results:** Gere relevância de produtos e sell-out - pedidos inteligentes com mix adequado à performance do PDV, alinhado com objetivos de metas comerciais, receita e margem.
 
 ---
 
@@ -66,7 +66,7 @@
 
 **Title:** Segmentação Preditiva de Campanha
 
-**Overview:** Identifique e ative apenas os usuários com maior probabilidade de conversão antes mesmo da campanha começar. Reduza CAC e aumente efetividade com segmentação precisa.
+**Overview:** Identifique e ative apenas os usuários com maior probabilidade de conversão antes mesmo da campanha começar. Reduza drasticamente o CAC e aumente efetividade de conversão com segmentação precisa.
 
 **Key Features:**
 - Modelagem de Propensão
@@ -74,7 +74,7 @@
 - Refinamento de Audiência de Campanha
 - Estratégia de Ativação de Leads
 
-**Business Results:** Maximiza ROI segmentando o cliente certo no momento certo.
+**Business Results:** Maximize ROI segmentando e impactando o cliente certo, no momento certo e com o produto certo.
 
 ---
 
@@ -94,7 +94,7 @@
 - Calibração de Sensibilidade de Preço
 - Engine de Otimização de Margem
 
-**Business Results:** Melhora margem, velocidade de vendas e competitividade através de precificação inteligente.
+**Business Results:** Melhore margem, velocidade no ciclo de vendas e competitividade através de precificação inteligente orientada a comportamento.
 
 ---
 
@@ -114,4 +114,4 @@
 - Detecção de Sazonalidade e Tendências
 - Alinhamento de Estoque e Supply Chain
 
-**Business Results:** Melhora precisão do planejamento de demanda e agilidade em mercados que mudam rapidamente.
+**Business Results:** Melhore o planejamento de demanda, orientando planos de produção e metas comerciais com precisão, garantindo agilidade em mercados que mudam rapidamente.
