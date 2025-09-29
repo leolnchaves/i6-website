@@ -13,7 +13,7 @@
 **Metric1:** +23% Valor Médio de Ticket  
 **Metric2:** +36% Conversão em Novos SKUs  
 **Metric3:** -  
-**Solutions:** Industrial Recommendation Intelligence  
+**Solutions:** Inteligência de Recomendação Industrial  
 **Quote:** Excelência em Marketplace: Impulsionando Resultados para Farmácias  
 **CustomerName:** Paulo Lima  
 **CustomerTitle:** New Channel Manager  
@@ -33,7 +33,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Metric1:** +50% Descoberta de Novos Produtos  
 **Metric2:** +11% Itens no Carrinho  
 **Metric3:** -  
-**Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users  
+**Solutions:** Descoberta Inteligente para Visitantes Anônimos, Personalização Preditiva para Usuários Identificados 
 **Quote:** Elevando o Engajamento do Cliente: Acelerando Vendas Online  
 **CustomerName:** -  
 **CustomerTitle:** -  
@@ -52,7 +52,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Metric1:** +7,2% Aumento Direto nas Vendas  
 **Metric2:** +55% Sugestões de Novos Produtos  
 **Metric3:** -  
-**Solutions:** Predictive Personalization for Identified Users  
+**Solutions:** Personalização Preditiva para Usuários Identificados
 **Quote:** Precisão no Sortimento: Aumento de Vendas com Previsões Otimizadas  
 **CustomerName:** -  
 **CustomerTitle:** -  
@@ -71,7 +71,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Metric1:** 82% Acurácia na Previsão de Sell-out  
 **Metric2:** +100M em Economia de Estoque  
 **Metric3:** -  
-**Solutions:** Adaptive Demand Forecasting  
+**Solutions:** Previsão Adaptativa de Demanda  
 **Quote:** Previsão de Vendas Precisa: Otimizando Resultados e Operações  
 **CustomerName:** -  
 **CustomerTitle:** -  
@@ -90,7 +90,7 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Metric1:** +12x Uplift em Conversão  
 **Metric2:** -50% Custos de CRM  
 **Metric3:** -  
-**Solutions:** Predictive Campaign Targeting, Predictive Personalization for Identified Users  
+**Solutions:** Segmentação Preditiva de Campanha, Personalização Preditiva para Usuários Identificados 
 **Quote:** Maximizando Cross-Sell com Propensão de Compra Inteligente  
 **CustomerName:** -  
 **CustomerTitle:** -  
@@ -106,10 +106,10 @@ Essa abordagem elevou o tamanho médio da cesta por meio de cross-sell e up-sell
 **Description:** Um dos principais players de beleza do país, reconhecido por seu modelo de vendas diretas em larga escala e lançamentos frequentes de produtos via catálogos.  
 **Challenge:** O grande desafio era a previsibilidade de demanda. A necessidade de criar catálogos de compra com muita antecedência exigia definir planos de produção e estoque precocemente e repassá-los aos fabricantes. A baixa acurácia gerava excesso ou falta de produtos, impactando eficiência e resultados.  
 **Solution:** Implementamos um motor avançado de previsão de demanda, adaptado ao ciclo do negócio. Todos os SKUs foram classificados em três níveis — Gold, Silver e Bronze — permitindo maior granularidade e elevando drasticamente a acurácia da previsão.  
-**Metric1:** +80% Acurácia de Previsão  
-**Metric2:** -60% Redução de Recall  
+**Metric1:** +70% Acurácia de Previsão  
+**Metric2:** -  
 **Metric3:** -  
-**Solutions:** Adaptive Demand Forecasting  
+**Solutions:** Previsão Adaptativa de Demanda 
 **Quote:** Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas  
 **CustomerName:** -  
 **CustomerTitle:** -  
