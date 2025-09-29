@@ -13,7 +13,7 @@
 **Metric1:** 23% Average Ticket Value
 **Metric2:** 36% New SKU Conversion
 **Metric3:** -
-**Solutions:** Inteligência de Recomendação Industrial
+**Solutions:** Industrial Recommendation Intelligence
 **Quote:** Market Place Excellence: Driving Success for Pharmacies
 **CustomerName:** Paulo Lima
 **CustomerTitle:** New Channel Manager
@@ -33,7 +33,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Metric1:** 50% New Products Discovery
 **Metric2:** 11% Items-to-Cart
 **Metric3:** -
-**Solutions:** Descoberta Inteligente para Visitantes Anônimos, Personalização Preditiva para Usuários Identificados
+**Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users
 **Quote:** Elevating Customer Engagement: Enhancing Online Sales
 **CustomerName:** -
 **CustomerTitle:** -
@@ -52,7 +52,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Metric1:** 7,2% Direct Sales Uplift
 **Metric2:** 55% New Products Suggestions
 **Metric3:** -
-**Solutions:** Personalização Preditiva para Usuários Identificados
+**Solutions:** Predictive Personalization for Identified Users
 **Quote:** Assortment Precision: Sales Uplift through Optimized Predictions
 **CustomerName:** -
 **CustomerTitle:** -
@@ -71,7 +71,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Metric1:** 82% Sell-out Forecast Projection
 **Metric2:** +100M Inventory Loss Savings
 **Metric3:** -
-**Solutions:** Previsão Adaptativa de Demanda
+**Solutions:** Adaptive Demand Forecasting
 **Quote:** Precision Sales Forecast: Streamlining Results and Operations
 **CustomerName:** -
 **CustomerTitle:** -
@@ -90,7 +90,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Metric1:** 12x Conveersion Uplift
 **Metric2:** 50% Less CRM Costs
 **Metric3:** -
-**Solutions:** Segmentação Preditiva de Campanha, Personalização Preditiva para Usuários Identificados
+**Solutions:** Predictive Campaign Targeting, Predictive Personalization for Identified Users
 **Quote:** Maximizing Cross-Sell with Smart Buying Propensity
 **CustomerName:** -
 **CustomerTitle:** -
@@ -109,7 +109,7 @@ This strategy seeks to increase the average basket size through effective cross-
 **Metric1:** +70% Forecast Accuracy
 **Metric2:** -
 **Metric3:** -
-**Solutions:** Previsão Adaptativa de Demanda
+**Solutions:** Adaptive Demand Forecasting
 **Quote:**Demand Forecast Accuracy: Enhancing Production and Sales Planning
 **CustomerName:** -
 **CustomerTitle:** -
