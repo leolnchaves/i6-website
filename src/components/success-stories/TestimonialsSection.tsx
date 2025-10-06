@@ -87,7 +87,7 @@ const TestimonialsSection = memo(() => {
                 {testimonials.map((testimonial) => (
                   <CarouselItem key={testimonial.id} className="pl-2 md:pl-3 basis-full sm:basis-1/2 lg:basis-[30%]">
                     <div className="group h-full">
-                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 md:p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[240px] md:min-h-[280px]">
+                       <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 md:p-4 h-full transition-all duration-500 hover:bg-card/80 hover:border-border hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative flex flex-col min-h-[280px]">
                         
                         {/* Header with Quote only */}
                         <div className="flex items-center justify-between mb-3">
@@ -95,7 +95,7 @@ const TestimonialsSection = memo(() => {
                         </div>
 
                         {/* Quote text - takes up available space */}
-                        <blockquote className="text-sm md:text-sm leading-relaxed text-foreground/90 mb-4 font-light flex-grow line-clamp-4 md:line-clamp-none">
+                        <blockquote className="text-sm md:text-sm leading-relaxed text-foreground/90 mb-4 font-light flex-grow">
                           "{testimonial.quote}"
                         </blockquote>
 
