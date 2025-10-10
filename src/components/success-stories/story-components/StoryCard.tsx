@@ -96,7 +96,7 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
           <div className="flex-shrink-0">
             {story.logo && (
               <img 
-                src={getPublicAssetUrl(story.logo)}
+                src={story.logo}
                 alt={`${story.company_name} logo`}
                 className="w-8 h-8 object-contain"
               />
