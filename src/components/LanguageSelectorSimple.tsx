@@ -10,13 +10,13 @@ const LanguageSelector = memo(() => {
   const languages = useMemo(() => [
     { 
       code: 'en', 
-      flag: '🇺🇸',
+      flag: <svg width="20" height="15" viewBox="0 0 7410 3900"><rect width="7410" height="3900" fill="#b22234"/><path d="M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0" stroke="#fff" strokeWidth="300"/><rect width="2964" height="2100" fill="#3c3b6e"/><g fill="#fff">{[...Array(9)].map((_, i) => [...Array(11)].map((_, j) => <circle key={`${i}-${j}`} cx={247 + j * 247} cy={247 + i * 247} r="83"/>))}</g></svg>,
       text: 'EN',
       label: 'English'
     },
     { 
       code: 'pt', 
-      flag: '🇧🇷',
+      flag: <svg width="20" height="14" viewBox="0 0 720 504"><rect width="720" height="504" fill="#009b3a"/><rect width="720" height="168" y="168" fill="#fedf00"/><path d="M360,252 L120,378 L120,126 Z" fill="#002776"/><circle cx="360" cy="252" r="70.2" fill="#002776"/><ellipse cx="360" cy="252" rx="84" ry="88.2" fill="none" stroke="#fff" strokeWidth="5.4"/><path d="M230,220 Q250,280 360,260 Q470,280 490,220" fill="none" stroke="#fff" strokeWidth="5.4"/></svg>,
       text: 'PT',
       label: 'Português'
     }
@@ -28,16 +28,6 @@ const LanguageSelector = memo(() => {
     [language, languages]
   );
 
-  // Memoized flag style - prevents recreation
-  const getFlagStyle = useMemo((): React.CSSProperties => ({
-    fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Android Emoji", sans-serif',
-    fontSize: '16px',
-    lineHeight: '1',
-    display: 'inline-block',
-    textRendering: 'optimizeSpeed' as any,
-    fontFeatureSettings: '"liga" off, "kern" off',
-    fontVariant: 'none'
-  }), []);
 
   // Optimized language selection handler
   const handleLanguageSelect = useCallback((langCode: 'en' | 'pt') => {
@@ -55,7 +45,7 @@ const LanguageSelector = memo(() => {
           }`}
           aria-label={`Switch to ${lang.label}`}
         >
-          <span style={getFlagStyle}>
+          <span className="flex items-center">
             {lang.flag}
           </span>
           <span className="text-sm font-medium">
