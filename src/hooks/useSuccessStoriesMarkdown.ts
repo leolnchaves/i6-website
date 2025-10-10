@@ -53,7 +53,8 @@ export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => 
         const version = String(content.length);
         const normalizedStories = parsedStories.map(s => ({
           ...s,
-          image: getPublicAssetUrl(s.image) + `?v=${version}`
+          image: getPublicAssetUrl(s.image) + `?v=${version}`,
+          logo: getPublicAssetUrl(s.logo) + `?v=${version}`
         }));
         setStories(normalizedStories);
       } catch (err) {
