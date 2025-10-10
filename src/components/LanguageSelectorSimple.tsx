@@ -16,7 +16,7 @@ const LanguageSelector = memo(() => {
     },
     { 
       code: 'pt', 
-      flag: <svg width="20" height="14" viewBox="0 0 720 504"><rect width="720" height="504" fill="#009b3a"/><rect width="720" height="168" y="168" fill="#fedf00"/><path d="M360,252 L120,378 L120,126 Z" fill="#002776"/><circle cx="360" cy="252" r="70.2" fill="#002776"/><ellipse cx="360" cy="252" rx="84" ry="88.2" fill="none" stroke="#fff" strokeWidth="5.4"/><path d="M230,220 Q250,280 360,260 Q470,280 490,220" fill="none" stroke="#fff" strokeWidth="5.4"/></svg>,
+      flag: <svg width="20" height="14" viewBox="0 0 720 504"><rect width="720" height="504" fill="#009b3a"/><path d="M360,42 L660,252 L360,462 L60,252 Z" fill="#fedf00"/><circle cx="360" cy="252" r="90" fill="#002776"/><path d="M280,252 Q315,222 360,232 Q405,222 440,252" fill="none" stroke="#fff" strokeWidth="8"/><circle cx="310" cy="200" r="3" fill="#fff"/><circle cx="340" cy="210" r="3" fill="#fff"/><circle cx="380" cy="210" r="3" fill="#fff"/><circle cx="410" cy="200" r="3" fill="#fff"/><circle cx="330" cy="260" r="3" fill="#fff"/><circle cx="390" cy="260" r="3" fill="#fff"/><circle cx="360" cy="290" r="3" fill="#fff"/></svg>,
       text: 'PT',
       label: 'Português'
     }
