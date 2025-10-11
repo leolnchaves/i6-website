@@ -30,7 +30,7 @@ export const useTestimonialsMarkdown = (): UseTestimonialsMarkdownReturn => {
         setError(null);
         
         const fileName = `testimonials-${language}.md`;
-        const response = await fetch(`/content/${fileName}`);
+        const response = await fetch(`${import.meta.env.BASE_URL}content/${fileName}`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch testimonials: ${response.statusText}`);
