@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found - infinity6 AI Solutions</title>
+    <!-- GitHub Pages SPA redirect script for 404 handling -->
+    <script>
+      // Store the path for SPA routing
+      sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
+      // Redirect to index with path encoded in search
+      location.replace(
+        location.origin + 
+        '/?/' + 
+        encodeURIComponent(location.pathname + location.search).replace(/~/g, '~0').replace(/&/g, '~and~') +
+        location.hash
+      );
+    </script>
+  </head>
+  <body>
+    <!-- This content will only show if JavaScript is disabled -->
+    <noscript>
+      <h1>Page Not Found</h1>
+      <p>Please enable JavaScript to be redirected to the homepage.</p>
+      <a href="/">Go to Homepage</a>
+    </noscript>
+  </body>
+</html>

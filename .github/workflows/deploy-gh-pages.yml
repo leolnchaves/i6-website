@@ -63,6 +63,12 @@ jobs:
       - name: Copy CNAME to dist
         run: cp public/CNAME dist/CNAME
         
+      - name: Copy 404.html to dist
+        run: cp dist/index.html dist/404.html
+        
+      - name: Copy sitemap to dist
+        run: cp public/sitemap.xml dist/sitemap.xml
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
