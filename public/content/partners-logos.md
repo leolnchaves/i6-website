@@ -26,18 +26,6 @@
 
 ---
 
-## LIVE
-**Logo:** /content/logos/live.png
-**Name:** LIVE
-
----
-
-## ACHĒ
-**Logo:** /content/logos/ACHE.png
-**Name:** ACHĒ
-
----
-
 ## JEQUITI
 **Logo:** /content/logos/JEQUITI.png
 **Name:** JEQUITI
@@ -59,12 +47,6 @@
 ## LEGRAND
 **Logo:** /content/logos/LEGRAND.png
 **Name:** LEGRAND
-
----
-
-## PELANDO
-**Logo:** /content/logos/PELANDO.png
-**Name:** PELANDO
 
 ---
 
