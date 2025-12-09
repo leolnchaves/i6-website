@@ -12,7 +12,7 @@ const ContactInfoCards = memo(() => {
       email: {
         title: "Email",
         description: "Envie-nos uma mensagem",
-        value: "lets.talk@infinity6.ai"
+        value: "partner@infinity6.ai"
       },
       phone: {
         title: "Telefone",
@@ -34,7 +34,7 @@ const ContactInfoCards = memo(() => {
       email: {
         title: "Email",
         description: "Send us a message",
-        value: "lets.talk@infinity6.ai"
+        value: "partner@infinity6.ai"
       },
       phone: {
         title: "Phone",
