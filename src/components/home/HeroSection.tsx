@@ -57,7 +57,7 @@ const HeroSection = () => {
 
   // Static demo URL
   const getDemoUrl = () => {
-    return 'https://www.youtube.com/embed/knNYT11sEk0?autoplay=1&controls=1&showinfo=0&rel=0';
+    return 'https://www.youtube.com/embed/DqSDbxyr6yE?autoplay=1&controls=1&showinfo=0&rel=0';
   };
   return <>
       {/* Main hero section */}
