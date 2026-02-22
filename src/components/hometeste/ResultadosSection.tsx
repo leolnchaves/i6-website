@@ -1,5 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
+const rotations = ['-1.5deg', '1deg', '-0.5deg', '1.5deg'];
+
 const ResultadosSection = () => {
   const { language } = useLanguage();
 
@@ -49,28 +51,37 @@ const ResultadosSection = () => {
   }[language];
 
   return (
-    <section className="py-24 md:py-32 bg-white">
+    <section className="py-24 md:py-32 bg-[#0B1224]">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1224] text-center mb-16">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-16">
           {copy.title}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {copy.cases.map((c) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start overflow-visible">
+          {copy.cases.map((c, i) => (
             <div
               key={c.segment}
-              className="rounded-2xl bg-[#0F172A] p-6 flex flex-col"
+              className="group rounded-3xl border-l-4 border-[#F4845F] bg-gradient-to-br from-[#0F172A] to-[#162038] p-6 flex flex-col shadow-[0_0_30px_rgba(244,132,95,0.06)] transition-all duration-300 hover:!rotate-0 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(244,132,95,0.15)] cursor-default"
+              style={{ transform: `rotate(${rotations[i]})` }}
             >
-              <span className="text-[10px] uppercase tracking-[0.2em] text-[#F4845F] font-semibold mb-5">
+              <span className="inline-block bg-[#F4845F]/10 text-[#F4845F] rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold mb-5 w-fit">
                 {c.segment}
               </span>
-              <ul className="flex flex-col gap-3">
-                {c.metrics.map((m, j) => (
-                  <li key={j} className="text-white/90 text-sm leading-relaxed">
-                    <span className="text-[#F4845F] font-bold">{m.split(' ')[0]}</span>{' '}
-                    {m.split(' ').slice(1).join(' ')}
-                  </li>
-                ))}
+              <ul className="flex flex-col gap-0">
+                {c.metrics.map((m, j) => {
+                  const parts = m.split(' ');
+                  const value = parts[0];
+                  const label = parts.slice(1).join(' ');
+                  return (
+                    <li
+                      key={j}
+                      className={`py-3 ${j < c.metrics.length - 1 ? 'border-b border-white/5' : ''}`}
+                    >
+                      <span className="text-base font-bold text-[#F4845F] block">{value}</span>
+                      <span className="text-white/60 text-sm">{label}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
