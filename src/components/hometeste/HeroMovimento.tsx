@@ -41,6 +41,14 @@ const HeroMovimento = () => {
           {copy.cta}
         </Link>
       </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+        <div className="w-7 h-12 rounded-full border border-[#F4845F]/40 pt-2 flex items-start justify-center shadow-[0_0_15px_rgba(244,132,95,0.15)]">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#F4845F] animate-scroll-dot-move" />
+        </div>
+        <span className="text-[#F4845F]/50 text-[10px] tracking-[0.3em] uppercase animate-pulse-soft">scroll</span>
+      </div>
     </section>
   );
 };
