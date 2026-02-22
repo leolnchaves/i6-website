@@ -39,7 +39,7 @@ const TeseSection = () => {
         { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
         { value: 11, label: 'das marcas personalizam experiências com dados' },
       ],
-      bridge: 'Dados, sozinhos, não criam vantagem competitiva. O problema não é falta de dado, é falta de movimento.',
+      bridge: 'Dados, sozinhos, não criam vantagem competitiva.\nO problema não é falta de dado, é falta de movimento.',
       poke: '',
     },
     en: {
@@ -49,7 +49,7 @@ const TeseSection = () => {
         { value: 31, label: 'of companies use data for strategic decisions' },
         { value: 11, label: 'of brands personalize experiences with data' },
       ],
-      bridge: "Data alone doesn't create competitive advantage. The problem isn't lack of data — it's lack of movement.",
+      bridge: "Data alone doesn't create competitive advantage.\nThe problem isn't lack of data — it's lack of movement.",
       poke: '',
     },
   }[language];
@@ -70,7 +70,7 @@ const TeseSection = () => {
           ))}
         </div>
 
-        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed whitespace-pre-line">
           {copy.bridge}
         </p>
         <p className="mt-4 text-base text-[#F4845F] font-medium italic">
