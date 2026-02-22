@@ -141,7 +141,7 @@ const SinaisSection = () => {
           </div>
 
           {/* Right: GIF + Popups */}
-          <div className="relative flex justify-center overflow-hidden lg:overflow-visible">
+          <div className="relative flex flex-col items-center overflow-hidden lg:overflow-visible">
             {/* Glow behind GIF */}
             <div className="absolute inset-0 bg-[#F4845F]/5 rounded-2xl blur-3xl scale-110" />
 
@@ -149,21 +149,28 @@ const SinaisSection = () => {
             <img
               src={getPublicAssetUrl('images/i6signal-demo.gif')}
               alt="i6Signal demo"
-              className="relative z-10 w-full max-w-xl rounded-xl shadow-2xl border border-white/10"
+              className="relative z-10 w-full rounded-xl shadow-2xl border border-white/10"
             />
+
+            {/* Descriptive text below GIF */}
+            <p className="relative z-10 text-white/40 text-xs md:text-sm text-center mt-4 max-w-md mx-auto italic">
+              {language === 'pt'
+                ? 'Interface conversacional preditiva que transforma, em tempo real, sinais de IA aplicada em decisões acionáveis.'
+                : 'Predictive conversational interface that transforms, in real time, applied AI signals into actionable decisions.'}
+            </p>
 
             {/* Animated popups - hidden on mobile */}
             <div className="hidden lg:block">
               {copy.popups.slice(0, 7).map((text, i) => {
                 const rotations = ['-2deg', '1.5deg', '-1deg', '2deg', '-1.5deg', '0.5deg', '-0.5deg'];
                 const positions = [
-                  { top: '2%', right: '2%' },
-                  { top: '18%', left: '5%' },
-                  { top: '35%', right: '0%' },
-                  { top: '52%', left: '2%' },
-                  { top: '68%', right: '5%' },
-                  { bottom: '8%', left: '8%' },
-                  { bottom: '2%', right: '10%' },
+                  { top: '5%', right: '3%' },
+                  { top: '20%', left: '3%' },
+                  { top: '38%', right: '5%' },
+                  { top: '55%', left: '5%' },
+                  { top: '72%', right: '3%' },
+                  { bottom: '10%', left: '10%' },
+                  { bottom: '5%', right: '8%' },
                 ];
                 return (
                   <div
@@ -172,7 +179,7 @@ const SinaisSection = () => {
                     style={{
                       ...positions[i],
                       transform: `rotate(${rotations[i]})`,
-                      animation: `popup-cycle 20s ${i * 2.5}s infinite ease-in-out`,
+                      animation: `popup-cycle 30s ${i * 4}s infinite ease-in-out`,
                       opacity: 0,
                     }}
                   >
