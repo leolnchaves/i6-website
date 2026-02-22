@@ -70,8 +70,10 @@ const TeseSection = () => {
           ))}
         </div>
 
-        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed whitespace-pre-line">
-          {copy.bridge}
+        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed">
+          {copy.bridge.split('\n')[0]}
+          <br />
+          <span className="text-[#F4845F]">{copy.bridge.split('\n')[1]}</span>
         </p>
         <p className="mt-4 text-base text-[#F4845F] font-medium italic">
           {copy.poke}
