@@ -26,10 +26,11 @@ const FooterNovo = () => {
       ? '© 2025 Infinity6.ai. Todos os direitos reservados.'
       : '© 2025 Infinity6.ai. All rights reserved.';
 
-  const navLinks = [
+  const navLinks: { to: string; label: string; external?: boolean }[] = [
     { to: '/hometeste', label: t('header.home') },
     { to: '/solutions', label: t('header.solutions') },
     { to: '/success-stories', label: t('header.successStories') },
+    { to: 'https://huggingface.co/i6-aiworks', label: t('header.community'), external: true },
     { to: '/contact', label: t('header.contact') },
   ];
 
@@ -67,9 +68,15 @@ const FooterNovo = () => {
             <ul className="space-y-2">
               {navLinks.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
-                    {l.label}
-                  </Link>
+                  {l.external ? (
+                    <a href={l.to} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                      {l.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
