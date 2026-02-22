@@ -16,7 +16,7 @@ const CTAFinal = () => {
   }[language];
 
   return (
-    <section className="relative py-24 md:py-32 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">
+    <section className="relative py-14 md:py-20 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
         <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug whitespace-pre-line">
           {copy.line}

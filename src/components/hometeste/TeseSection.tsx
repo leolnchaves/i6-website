@@ -55,7 +55,7 @@ const TeseSection = () => {
   }[language];
 
   return (
-    <section className="py-24 md:py-32 bg-white">
+    <section className="py-14 md:py-20 bg-white">
       <div className="container mx-auto px-6 max-w-5xl text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1224] leading-snug whitespace-pre-line">
           {copy.question}
