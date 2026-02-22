@@ -158,7 +158,7 @@ const SinaisSection = () => {
             />
 
             {/* Animated popups - hidden on mobile */}
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               {copy.popups.slice(0, 7).map((text, i) => {
                 const rotations = ['-2deg', '1.5deg', '-1deg', '2deg', '-1.5deg', '0.5deg', '-0.5deg'];
                 const positions = [
