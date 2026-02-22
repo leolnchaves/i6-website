@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
 import NotFound from "./pages/NotFound";
+import HomeTeste from "./pages/HomeTeste";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
@@ -56,6 +57,9 @@ const App = () => {
             <Sonner />
             <BrowserRouter basename={import.meta.env.BASE_URL}>
               <Routes>
+                {/* Nova home independente - fora do Layout */}
+                <Route path="/hometeste" element={<HomeTeste />} />
+                
                 {/* Regular site routes - with Layout wrapper */}
                 <Route path="/*" element={
                   <Layout>
