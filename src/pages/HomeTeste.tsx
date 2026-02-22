@@ -14,8 +14,8 @@ const HomeTeste = () => (
       <HeroMovimento />
       <TeseSection />
       <SinaisSection />
-      <ClientesSection />
       <ResultadosSection />
+      <ClientesSection />
       <CTAFinal />
     </main>
     <FooterNovo />
