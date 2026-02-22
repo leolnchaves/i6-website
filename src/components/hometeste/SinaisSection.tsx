@@ -4,7 +4,7 @@ import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 const signalIcons = [TrendingUp, Eye, DollarSign, Target, UserX, Zap];
 
-const capabilityIcons = [Cog, Database, BarChart3, Boxes];
+const capabilityIcons = [Cog, Database, Boxes];
 
 const SinaisSection = () => {
   const { language } = useLanguage();
@@ -14,10 +14,10 @@ const SinaisSection = () => {
       badge: 'SINAIS',
       title: 'Somos especialistas em aplicar IA para transformar dados em decisões que geram resultado.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
+      i6signal: 'i6Signal – Interface conversacional preditiva que transforma, em tempo real, sinais de IA aplicada em decisões acionáveis.',
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
         'Base fundacional multi-segmentada.',
-        'i6Signal, interface conversacional preditiva.',
         'APIs de ativação imediata.',
       ],
       cards: [
@@ -45,10 +45,10 @@ const SinaisSection = () => {
       badge: 'SIGNALS',
       title: 'We specialize in applying AI to transform data into decisions that drive results.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
+      i6signal: 'i6Signal – Predictive conversational interface that transforms, in real time, applied AI signals into actionable decisions.',
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
         'Multi-segmented foundational base.',
-        'i6Signal, predictive conversational interface.',
         'Instant activation APIs.',
       ],
       cards: [
@@ -74,20 +74,6 @@ const SinaisSection = () => {
     },
   }[language];
 
-  // Popup positions around the GIF area (right side and below)
-  const popupPositions = [
-    { top: '-8%', right: '-35%', maxWidth: '200px' },
-    { top: '12%', right: '-40%', maxWidth: '210px' },
-    { top: '35%', right: '-38%', maxWidth: '190px' },
-    { top: '58%', right: '-35%', maxWidth: '205px' },
-    { top: '80%', right: '-30%', maxWidth: '195px' },
-    { bottom: '-18%', left: '5%', maxWidth: '200px' },
-    { bottom: '-18%', left: '30%', maxWidth: '210px' },
-    { bottom: '-18%', right: '20%', maxWidth: '190px' },
-    { top: '5%', left: '-30%', maxWidth: '195px' },
-    { top: '50%', left: '-32%', maxWidth: '200px' },
-  ];
-
   return (
     <section className="py-24 md:py-32 bg-[#0F172A]">
       <div className="container mx-auto px-6 max-w-6xl">
@@ -106,7 +92,7 @@ const SinaisSection = () => {
           {copy.subtitle}
         </p>
 
-        {/* 6 signal cards - right after title */}
+        {/* 6 signal cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {copy.cards.map((text, i) => {
             const Icon = signalIcons[i];
@@ -122,8 +108,23 @@ const SinaisSection = () => {
           })}
         </div>
 
+        {/* i6Signal highlight bullet - full width */}
+        <div className="mb-2">
+          <div className="flex items-start gap-4 p-6 rounded-2xl bg-white/[0.03] border border-[#F4845F]/20">
+            <BarChart3 className="w-7 h-7 text-[#F4845F] mt-0.5 flex-shrink-0" />
+            <p className="text-white/90 text-base md:text-lg leading-relaxed font-medium">
+              {copy.i6signal}
+            </p>
+          </div>
+        </div>
+
+        {/* Vertical connector line */}
+        <div className="flex justify-end pr-[30%] lg:pr-[35%] mb-2">
+          <div className="w-px h-10 bg-gradient-to-b from-[#F4845F]/40 to-[#F4845F]/10" />
+        </div>
+
         {/* Two-column: Capabilities + GIF with popups */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-10 items-start">
           {/* Left: Capabilities */}
           <div className="space-y-0">
             {copy.capabilities.map((text, i) => {
@@ -151,13 +152,6 @@ const SinaisSection = () => {
               alt="i6Signal demo"
               className="relative z-10 w-full rounded-xl shadow-2xl border border-white/10"
             />
-
-            {/* Descriptive text below GIF */}
-            <p className="relative z-10 text-white/40 text-xs md:text-sm text-center mt-4 max-w-md mx-auto italic">
-              {language === 'pt'
-                ? 'Interface conversacional preditiva que transforma, em tempo real, sinais de IA aplicada em decisões acionáveis.'
-                : 'Predictive conversational interface that transforms, in real time, applied AI signals into actionable decisions.'}
-            </p>
 
             {/* Animated popups - hidden on mobile */}
             <div className="hidden lg:block">
