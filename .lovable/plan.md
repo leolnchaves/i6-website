@@ -1,45 +1,43 @@
 
 
-# Redesign da Secao Resultados - Ordem e Cards Modernos
+# Ajustes na Secao Sinais - Bullet i6Signal em destaque e GIF maior
 
-## Mudancas
+## Mudancas em `src/components/hometeste/SinaisSection.tsx`
 
-### 1. Reordenar em `src/pages/HomeTeste.tsx`
+### 1. Bullet do i6Signal em destaque, full-width
 
-Mover `ResultadosSection` para antes de `ClientesSection`. A ordem ficara:
+- Separar o terceiro capability ("i6Signal, interface conversacional preditiva.") dos demais bullets
+- Colocar esse bullet **acima** do bloco de duas colunas (capabilities + GIF), ocupando toda a largura da tela
+- Atualizar o texto para:
+  - PT: "i6Signal - Interface conversacional preditiva que transforma, em tempo real, sinais de IA aplicada em decisoes acionaveis."
+  - EN: "i6Signal - Predictive conversational interface that transforms, in real time, applied AI signals into actionable decisions."
+- Estilizar com o icone BarChart3 (mesmo atual), texto maior (`text-base md:text-lg`), com uma linha/borda inferior que "desce" visualmente em direcao ao GIF, criando conexao visual
+- Adicionar uma linha vertical decorativa (`border-l-2 border-[#F4845F]/30`) saindo desse bullet em direcao ao GIF abaixo
+
+### 2. Demais bullets permanecem iguais
+
+- Os 3 bullets restantes (Motores de IA, Base fundacional, APIs de ativacao) ficam na coluna esquerda como estao hoje, sem esticar
+- Remover o bullet do i6Signal da lista de capabilities para nao duplicar
+
+### 3. GIF maior no desktop
+
+- Alterar o grid de `lg:grid-cols-2` para `lg:grid-cols-[1fr_1.4fr]` para dar mais espaco ao GIF no desktop
+- Reduzir o `gap` de `lg:gap-16` para `lg:gap-10` para o GIF ficar mais proximo dos bullets
+- Remover o texto descritivo abaixo do GIF (ja que agora o bullet acima cumpre esse papel)
+
+### 4. Layout final
 
 ```text
-HeroMovimento
-TeseSection
-SinaisSection
-ResultadosSection   <-- movido para cima
-ClientesSection
-CTAFinal
+[Badge]
+[Titulo + Subtitulo]
+[6 cards em grid]
+
+[===== i6Signal bullet full-width com linha conectora =====]
+         |
+         v
+[3 bullets restantes]  [GIF grande com popups]
 ```
 
-### 2. Redesign completo dos cards em `src/components/hometeste/ResultadosSection.tsx`
-
-Substituir os cards retangulares por cards com visual mais organico e dinamico:
-
-- **Fundo da secao**: Manter dark `bg-[#0B1224]` para continuidade
-- **Titulo**: Branco, centralizado
-- **Cards com rotacoes sutis variadas**: Cada card tera uma rotacao CSS diferente (`-1.5deg`, `1deg`, `-0.5deg`, `1.5deg`) criando sensacao de "jogados sobre a mesa"
-- **Hover**: No hover, card volta para `rotate(0)` com `scale(1.03)` e sombra alaranjada sutil
-- **Bordas**: `rounded-3xl` com borda esquerda coral (`border-l-4 border-[#F4845F]`)
-- **Fundo dos cards**: Gradiente sutil `from-[#0F172A] to-[#162038]`
-- **Glow**: `shadow-[0_0_30px_rgba(244,132,95,0.06)]`
-- **Segment badge**: Pill arredondado `bg-[#F4845F]/10 text-[#F4845F] rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em]`
-- **Metricas**: Numero/valor em `text-base font-bold text-[#F4845F]`, restante do texto em `text-white/60 text-sm` abaixo, separados por `border-b border-white/5`
-- **Container**: `overflow-visible` com `items-start` para permitir rotacoes sem corte
-
-### Detalhes tecnicos
-
-Em `ResultadosSection.tsx`:
-- Adicionar array de rotacoes `['-1.5deg', '1deg', '-0.5deg', '1.5deg']`
-- Cada card usa `style={{ transform: rotate(...) }}` com `transition-all duration-300`
-- Hover via group/hover com `hover:rotate-0 hover:scale-[1.03]`
-- Grid `lg:grid-cols-4` com `gap-8` e `items-start`
-
 ## Arquivos alterados
-- `src/pages/HomeTeste.tsx` - reordenar ResultadosSection antes de ClientesSection
-- `src/components/hometeste/ResultadosSection.tsx` - redesign completo dos cards com rotacoes e visual moderno
+- `src/components/hometeste/SinaisSection.tsx`
+
