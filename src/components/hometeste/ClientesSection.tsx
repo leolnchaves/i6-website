@@ -27,13 +27,13 @@ const ClientesSection = () => {
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10" />
 
-        <div className="flex items-center gap-16 animate-marquee motion-safe:animate-marquee" style={{ animationDuration: '35s' }}>
+        <div className="flex items-center gap-20 animate-marquee motion-safe:animate-marquee" style={{ animationDuration: '35s' }}>
           {doubled.map((p, i) => (
             <img
               key={`${p.name}-${i}`}
               src={`${import.meta.env.BASE_URL}${p.logo.startsWith('/') ? p.logo.slice(1) : p.logo}`}
               alt={p.name}
-              className="h-8 sm:h-10 w-auto object-contain opacity-50 hover:opacity-100 transition-opacity shrink-0"
+              className="h-10 sm:h-12 w-auto max-w-[140px] object-contain opacity-60 hover:opacity-100 transition-opacity shrink-0"
               loading="lazy"
             />
           ))}
