@@ -109,8 +109,8 @@ const SinaisSection = () => {
         </div>
 
         {/* i6Signal highlight bullet - full width */}
-        <div className="mb-2">
-          <div className="flex items-start gap-4 p-6 rounded-2xl bg-white/[0.03] border border-[#F4845F]/20">
+        <div className="mb-0">
+          <div className="flex items-start gap-4 p-6 bg-white/[0.03] border-b border-[#F4845F]/20">
             <BarChart3 className="w-7 h-7 text-[#F4845F] mt-0.5 flex-shrink-0" />
             <p className="text-white/90 text-base md:text-lg leading-relaxed font-medium">
               {copy.i6signal}
@@ -119,14 +119,14 @@ const SinaisSection = () => {
         </div>
 
         {/* Vertical connector line */}
-        <div className="flex justify-end pr-[30%] lg:pr-[35%] mb-2">
+        <div className="flex justify-end pr-[30%] lg:pr-[35%] mb-0">
           <div className="w-px h-10 bg-gradient-to-b from-[#F4845F]/40 to-[#F4845F]/10" />
         </div>
 
         {/* Two-column: Capabilities + GIF with popups */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-10 items-end">
           {/* Left: Capabilities */}
-          <div className="space-y-0">
+          <div className="space-y-0 order-2 lg:order-1">
             {copy.capabilities.map((text, i) => {
               const Icon = capabilityIcons[i];
               return (
@@ -142,7 +142,7 @@ const SinaisSection = () => {
           </div>
 
           {/* Right: GIF + Popups */}
-          <div className="relative flex flex-col items-center overflow-hidden lg:overflow-visible">
+          <div className="relative flex flex-col items-center overflow-hidden lg:overflow-visible order-1 lg:order-2">
             {/* Glow behind GIF */}
             <div className="absolute inset-0 bg-[#F4845F]/5 rounded-2xl blur-3xl scale-110" />
 
