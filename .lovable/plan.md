@@ -1,23 +1,21 @@
 
 
-## Substituir logos EMS e Multi
+## Mover copyright para abaixo dos links de politicas
 
 ### O que sera feito
 
-1. Copiar a imagem enviada da **Multi** (`image-38.png`) para `public/content/logos/multi.png`, substituindo o arquivo atual
-2. Copiar a imagem enviada da **EMS** (`image-39.png`) para `public/content/logos/ems-new.png`, substituindo o arquivo atual
+Mover o texto de copyright (linha 94-96) para dentro da coluna Brand (col-span-2), logo abaixo dos links de Privacy/Ethics. Remover o bloco separado com `border-t`. Isso fara com que o copyright fique alinhado na mesma coluna da marca, e a altura total do footer ficara determinada pela coluna de Links Rapidos, sem espaco extra embaixo.
 
-### Por que funciona sem alterar codigo
+### Detalhes tecnicos
 
-O arquivo `public/content/partners-logos.md` ja referencia esses caminhos:
-- EMS: `/content/logos/ems-new.png`
-- Multi: `/content/logos/multi.png`
+**Arquivo: `src/components/hometeste/FooterNovo.tsx`**
 
-Os componentes `PartnersSection` e `ClientesSection` leem esse markdown e usam esses caminhos. Ao substituir os arquivos nos mesmos caminhos, as novas logos aparecerao automaticamente.
+1. Dentro da div "Brand" (linha 42-63), adicionar o copyright logo apos os links de politicas (depois da linha 62), com um `mt-3` para leve espacamento:
+   ```html
+   <p className="text-white/30 text-xs mt-3">{copyright}</p>
+   ```
 
-### Arquivos alterados
-- `public/content/logos/multi.png` (substituido pelo upload)
-- `public/content/logos/ems-new.png` (substituido pelo upload)
+2. Remover o bloco separado do copyright (linhas 93-96) que tem o `border-t`.
 
-Nenhum arquivo de codigo precisa ser modificado.
+3. Reduzir o padding vertical do container de `py-14` para `py-10` para compactar a altura geral e alinhar melhor com a altura da coluna de Links Rapidos.
 
