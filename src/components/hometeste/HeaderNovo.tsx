@@ -32,7 +32,7 @@ const HeaderNovo = () => {
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/hometeste" className="shrink-0">
-          <img src={logoHeader} alt="Infinity6" className="h-7 w-auto" />
+          <img src={logoHeader} alt="Infinity6" className="h-7 w-auto brightness-0 invert" />
         </Link>
 
         {/* Desktop */}
