@@ -12,7 +12,7 @@ const SinaisSection = () => {
   const copy = {
     pt: {
       badge: 'SINAIS',
-      title: 'Somos especialistas em aplicar IA para transformar dados em decisões que geram resultado.',
+      title: 'Especialistas em aplicar IA para\ntransformar dados em decisões reais.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
       i6signal: 'i6Signal – Interface conversacional preditiva que transforma, em tempo real, sinais de IA aplicada em decisões acionáveis.',
       capabilities: [
@@ -43,7 +43,7 @@ const SinaisSection = () => {
     },
     en: {
       badge: 'SIGNALS',
-      title: 'We specialize in applying AI to transform data into decisions that drive results.',
+      title: 'Specialists in applying AI to\ntransform data into real decisions.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
       i6signal: 'i6Signal – Predictive conversational interface that transforms, in real time, applied AI signals into actionable decisions.',
       capabilities: [
@@ -85,7 +85,7 @@ const SinaisSection = () => {
         </div>
 
         {/* Title + Subtitle */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug max-w-3xl mb-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug max-w-3xl mb-4 whitespace-pre-line">
           {copy.title}
         </h2>
         <p className="text-white/50 text-base md:text-lg max-w-2xl mb-12">
