@@ -15,7 +15,7 @@ const ClientesSection = () => {
   const doubled = [...partners, ...partners];
 
   return (
-    <section className="py-16 md:py-20 bg-slate-50">
+    <section className="py-10 md:py-14 bg-slate-50">
       <div className="container mx-auto px-6 mb-10">
         <p className="text-center text-sm uppercase tracking-widest text-slate-500">
           {title}

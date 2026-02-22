@@ -75,7 +75,7 @@ const SinaisSection = () => {
   }[language];
 
   return (
-    <section className="py-24 md:py-32 bg-[#0F172A]">
+    <section className="py-14 md:py-20 bg-[#0F172A]">
       <div className="container mx-auto px-6 max-w-6xl">
         {/* Badge */}
         <div className="mb-6">
