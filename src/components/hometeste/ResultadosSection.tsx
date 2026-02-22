@@ -9,7 +9,7 @@ const ResultadosSection = () => {
       cases: [
         {
           segment: 'Farma',
-          metrics: ['2.200 SKUs otimizados', '50 mil PDVs cobertos', 'R$ 100 MM em savings'],
+          metrics: ['2.200 SKUs otimizados', '95 mil PDVs cobertos', 'R$ 100 MM em savings'],
         },
         {
           segment: 'Varejo',
@@ -30,7 +30,7 @@ const ResultadosSection = () => {
       cases: [
         {
           segment: 'Pharma',
-          metrics: ['2,200 optimized SKUs', '50K points of sale', 'R$ 100M in savings'],
+          metrics: ['2,200 optimized SKUs', '95K points of sale', 'R$ 100M in savings'],
         },
         {
           segment: 'Retail',
