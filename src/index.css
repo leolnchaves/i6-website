@@ -695,24 +695,3 @@ html {
   0%, 100% { transform: translateX(0px) scaleY(1); }
   50% { transform: translateX(-30px) scaleY(0.98); }
 }
-
-/* Popup insight cycle animation */
-@keyframes popup-cycle {
-  0% { opacity: 0; transform: translateY(6px) scale(0.95); }
-  8% { opacity: 1; transform: translateY(0) scale(1); }
-  25% { opacity: 1; transform: translateY(0) scale(1); }
-  33% { opacity: 0; transform: translateY(-4px) scale(0.97); }
-  100% { opacity: 0; transform: translateY(6px) scale(0.95); }
-}
-
-.popup-insight {
-  opacity: 0;
-  animation: popup-cycle 20s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .popup-insight {
-    animation: none;
-    opacity: 1;
-  }
-}
