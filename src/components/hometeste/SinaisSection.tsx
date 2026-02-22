@@ -12,8 +12,8 @@ const SinaisSection = () => {
   const copy = {
     pt: {
       badge: 'SINAIS',
-      titleLine1: 'Somos especialistas em aplicar IA para transformar',
-      titleLine2: 'dados em decisões antecipadas.',
+      titleLine1: 'Somos especialistas em aplicar IA para',
+      titleLine2: 'transformar dados em decisões antecipadas.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
       i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
@@ -44,8 +44,8 @@ const SinaisSection = () => {
     },
     en: {
       badge: 'SIGNALS',
-      titleLine1: 'We are specialists in applying AI to transform',
-      titleLine2: 'data into anticipated decisions.',
+      titleLine1: 'We are specialists in applying AI to',
+      titleLine2: 'transform data into anticipated decisions.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
       i6signal: 'i6Signal\nConversational interface that transforms predictive signals into actionable decisions in real time.',
       capabilities: [
