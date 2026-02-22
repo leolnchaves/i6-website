@@ -1,43 +1,34 @@
 
 
-# Hero com Movimento - Curvas Fluidas Inspiradas no Deck
+# Ajustes na Hero - Centralizar texto e clarear curvas
 
----
+## Mudancas
 
-## O que muda
+### 1. Centralizar texto e CTA (`HeroMovimento.tsx`)
+- Remover `FlowingParticles` (import e uso)
+- Remover `lg:text-left`, `lg:ml-[40%]`, `lg:mr-12` do container de texto
+- Manter `text-center` e `mx-auto` para centralizar em todas as telas
+- Adicionar `lg:mx-auto` para garantir centralizacao em desktop tambem
 
-A hero atual tem apenas ondas sutis no fundo e particulas pequenas - pouco impacto visual. As referencias mostram **curvas organicas fluidas e entrelaçadas** no lado esquerdo, como fios de dados em movimento. Vamos recriar isso com SVG animado.
+### 2. Clarear curvas com tom sobre tom (`WaveBackground.tsx`)
+Aumentar opacidades das curvas mantendo variacao entre elas:
+- Curvas coral: subir de 0.07-0.22 para 0.18-0.40 (tons variados de laranja)
+- Curvas brancas: subir de 0.05-0.15 para 0.12-0.25 (tons claros, peach/salmon)
+- Manter cada curva com intensidade diferente para efeito tom sobre tom
 
----
-
-## Novo componente: FlowingCurves
-
-Substituir o `WaveBackground` atual por um novo componente com curvas SVG inspiradas nas referencias:
-
-- **8-12 linhas curvas** (paths SVG) posicionadas no lado esquerdo da hero, fluindo verticalmente com ondulacoes organicas
-- Cada linha com stroke branco/coral semi-transparente (opacidade entre 0.08 e 0.25)
-- Diferentes espessuras (stroke-width de 0.5 a 2)
-- **Animacao**: cada curva ondula suavemente com keyframes distintos (translateX oscilante + morphing sutil do path), velocidades entre 8s e 20s, criando efeito de "fios de dados fluindo"
-- Posicionamento: ocupa ~35% do lado esquerdo, crescendo de baixo pra cima com curvatura em S
-- `prefers-reduced-motion` respeitado
-
-## Ajustes no HeroMovimento
-
-- Mover o conteudo textual levemente para a direita (em telas grandes) para criar assimetria, como nas referencias onde o texto fica no centro-direita
-- Manter o layout centralizado em mobile
+Mapa de cores atualizado:
+- Curva 1: `rgba(244,132,95, 0.25)` - coral medio
+- Curva 2: `rgba(255,180,140, 0.18)` - peach claro
+- Curva 3: `rgba(244,132,95, 0.35)` - coral forte
+- Curva 4: `rgba(255,160,110, 0.14)` - salmon claro
+- Curva 5: `rgba(232,118,74, 0.20)` - laranja escuro
+- Curva 6: `rgba(255,200,170, 0.22)` - peach bem claro
+- Curva 7: `rgba(244,132,95, 0.15)` - coral suave
+- Curva 8: `rgba(255,170,130, 0.18)` - salmon medio
+- Curva 9: `rgba(244,132,95, 0.40)` - coral mais forte
+- Curva 10: `rgba(255,190,155, 0.12)` - peach sutil
 
 ## Arquivos alterados
-
-1. **`src/components/hometeste/WaveBackground.tsx`** - Reescrito com as curvas fluidas SVG animadas (multiplos paths com strokes finos ondulando)
-2. **`src/components/hometeste/HeroMovimento.tsx`** - Layout ajustado: texto deslocado para direita em desktop, mantendo centralizado em mobile
-3. **`src/index.css`** - Adicionar keyframes para as curvas (`curve-flow-1` ate `curve-flow-4` com translateX e scaleY oscilantes)
-
-## Detalhe tecnico das curvas
-
-- SVG viewBox cobrindo toda a hero (0 0 800 900)
-- Paths desenhados como curvas Bezier em S vertical, similar ao deck
-- Cada path com `stroke` branco ou coral, sem `fill`
-- Animacao via CSS: `transform-origin` no centro de cada curva, `translateX` oscilando +/- 15-30px com `ease-in-out infinite`
-- Diferentes `animation-delay` para cada curva criar efeito de onda organica
-- `stroke-dasharray` e `stroke-dashoffset` opcionais para efeito de "desenho" inicial
+- `src/components/hometeste/HeroMovimento.tsx` - centralizar + remover particulas
+- `src/components/hometeste/WaveBackground.tsx` - clarear cores das curvas
 
