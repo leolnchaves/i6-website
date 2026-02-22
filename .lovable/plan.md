@@ -1,34 +1,114 @@
 
 
-# Ajustes na Hero - Centralizar texto e clarear curvas
+# Redesign da Secao "Sinais" - Layout Bold com GIF e Popups Animados
 
-## Mudancas
+## Visao geral
 
-### 1. Centralizar texto e CTA (`HeroMovimento.tsx`)
-- Remover `FlowingParticles` (import e uso)
-- Remover `lg:text-left`, `lg:ml-[40%]`, `lg:mr-12` do container de texto
-- Manter `text-center` e `mx-auto` para centralizar em todas as telas
-- Adicionar `lg:mx-auto` para garantir centralizacao em desktop tambem
+Transformar a secao atual (grid de 6 cards + linha de texto infra) em um layout inspirado na referencia: titulo bold a esquerda, lista de capabilities com icones, GIF do i6Signal ao centro, e popups de insights animados que aparecem e desaparecem ao redor.
 
-### 2. Clarear curvas com tom sobre tom (`WaveBackground.tsx`)
-Aumentar opacidades das curvas mantendo variacao entre elas:
-- Curvas coral: subir de 0.07-0.22 para 0.18-0.40 (tons variados de laranja)
-- Curvas brancas: subir de 0.05-0.15 para 0.12-0.25 (tons claros, peach/salmon)
-- Manter cada curva com intensidade diferente para efeito tom sobre tom
+## Estrutura do novo layout
 
-Mapa de cores atualizado:
-- Curva 1: `rgba(244,132,95, 0.25)` - coral medio
-- Curva 2: `rgba(255,180,140, 0.18)` - peach claro
-- Curva 3: `rgba(244,132,95, 0.35)` - coral forte
-- Curva 4: `rgba(255,160,110, 0.14)` - salmon claro
-- Curva 5: `rgba(232,118,74, 0.20)` - laranja escuro
-- Curva 6: `rgba(255,200,170, 0.22)` - peach bem claro
-- Curva 7: `rgba(244,132,95, 0.15)` - coral suave
-- Curva 8: `rgba(255,170,130, 0.18)` - salmon medio
-- Curva 9: `rgba(244,132,95, 0.40)` - coral mais forte
-- Curva 10: `rgba(255,190,155, 0.12)` - peach sutil
+```text
++----------------------------------------------------------+
+| SINAIS (badge)                                           |
+|                                                          |
+| Titulo bold grande                  [popup]    [popup]   |
+| Subtitulo descritivo                                     |
+|                                                          |
+|  [icon] Motores de IA com fine-tuning    +----------+    |
+|  [icon] Base multi-segmentada            | GIF do   |    |
+|  [icon] i6Signal conversacional          | i6Signal |    |
+|  [icon] APIs de ativacao imediata        +----------+    |
+|                                     [popup]    [popup]   |
+|                                                          |
+|     [popup]   [popup]   [popup]   [popup]                |
++----------------------------------------------------------+
+```
+
+## Mudancas detalhadas
+
+### 1. Copiar o GIF para o projeto
+- Copiar `user-uploads://image-17.png` para `src/assets/images/i6signal-demo.png` (e a imagem do GIF do signal precisa ser referenciada - o usuario mencionou que o anexo e um GIF animado, mas o arquivo e PNG; usaremos como imagem estatica da plataforma)
+
+### 2. Reescrever `SinaisSection.tsx` completamente
+
+**Titulo e subtitulo** (alinhados a esquerda em desktop):
+- Badge "SINAIS" com fundo coral
+- Titulo grande e bold
+- Subtitulo descritivo
+
+**Lista de capabilities** (lado esquerdo):
+- 4 itens com icones (Cog, Database, BarChart3, Boxes) e textos curtos
+- Separados por linha sutil
+- Substituem a linha infra atual
+
+**GIF/Imagem central** (lado direito):
+- Imagem do i6Signal com borda arredondada e sombra
+- Botao de play overlay (opcional, como na referencia)
+
+**Popups animados** (ao redor do GIF):
+- ~10 popups com insights de negocio (textos curtos como "SKU critico com alta probabilidade de ruptura", "Aceleracao de demanda detectada", etc.)
+- Cada popup aparece com fade-in, fica visivel por ~3-4s, depois fade-out
+- Posicionados em posicoes absolutas ao redor do GIF (direita e abaixo)
+- Staggered timing: cada popup tem delay diferente, ciclo total ~15-20s
+- Borda coral arredondada, fundo branco, texto escuro
+- CSS animations com keyframes para o ciclo appear/stay/disappear
+- `prefers-reduced-motion` respeitado
+
+**Layout responsivo**:
+- Desktop: 2 colunas (texto+capabilities | GIF+popups)
+- Mobile: empilhado verticalmente, popups simplificados
+
+### 3. Adicionar keyframes em `index.css`
+- `popup-cycle`: 0% opacity:0 -> 10% opacity:1 -> 70% opacity:1 -> 80% opacity:0 -> 100% opacity:0
+- Cada popup usa animation-delay diferente para criar o efeito sequencial
+
+### 4. Fundo da secao
+- Mudar de `bg-[#0F172A]` (escuro) para `bg-white` ou `bg-gray-50` (claro, como na referencia)
+- Textos passam a ser escuros
+
+## Conteudo dos popups (PT/EN)
+
+**PT:**
+- Previsao de sell-out superior a cobertura atual de estoque
+- Aumento de volume recomendado sem impacto negativo em giro
+- Mudanca de sazonalidade antecipada para esta regiao
+- SKU critico com alta probabilidade de ruptura
+- PDVs similares operam com mix mais eficiente
+- Mix atual nao acompanha o padrao de compra do PDV
+- SKU com alta demanda prevista ausente no mix atual
+- Oportunidade de pedido adicional com alto potencial de giro
+- Aceleracao de demanda detectada
+- Substituicao de SKUs sugerida para otimizar giro e margem
+
+**EN:**
+- Sell-out forecast exceeds current stock coverage
+- Volume increase recommended without negative turnover impact
+- Seasonality shift anticipated for this region
+- Critical SKU with high stockout probability
+- Similar stores operate with more efficient mix
+- Current mix doesn't match store purchase pattern
+- High-demand SKU missing from current mix
+- Additional order opportunity with high turnover potential
+- Demand acceleration detected
+- SKU substitution suggested to optimize turnover and margin
+
+## Conteudo das capabilities (PT/EN)
+
+**PT:**
+- Motores de IA proprietarios com fine-tuning.
+- Base fundacional multi-segmentada.
+- i6Signal, interface conversacional preditiva.
+- APIs de ativacao imediata.
+
+**EN:**
+- Proprietary AI engines with fine-tuning.
+- Multi-segmented foundational base.
+- i6Signal, predictive conversational interface.
+- Instant activation APIs.
 
 ## Arquivos alterados
-- `src/components/hometeste/HeroMovimento.tsx` - centralizar + remover particulas
-- `src/components/hometeste/WaveBackground.tsx` - clarear cores das curvas
+- `src/assets/images/i6signal-demo.png` - novo (copia do upload)
+- `src/components/hometeste/SinaisSection.tsx` - reescrito com novo layout
+- `src/index.css` - keyframes para animacao dos popups
 
