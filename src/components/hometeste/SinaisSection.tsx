@@ -102,12 +102,28 @@ const SinaisSection = () => {
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug max-w-3xl mb-4">
           {copy.title}
         </h2>
-        <p className="text-white/50 text-base md:text-lg max-w-2xl mb-16">
+        <p className="text-white/50 text-base md:text-lg max-w-2xl mb-12">
           {copy.subtitle}
         </p>
 
+        {/* 6 signal cards - right after title */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+          {copy.cards.map((text, i) => {
+            const Icon = signalIcons[i];
+            return (
+              <div
+                key={i}
+                className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-300 hover:shadow-[0_0_24px_rgba(244,132,95,0.12)]"
+              >
+                <Icon className="w-7 h-7 text-[#F4845F] mb-4 group-hover:scale-110 transition-transform" />
+                <p className="text-white/80 text-sm leading-relaxed">{text}</p>
+              </div>
+            );
+          })}
+        </div>
+
         {/* Two-column: Capabilities + GIF with popups */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Left: Capabilities */}
           <div className="space-y-0">
             {copy.capabilities.map((text, i) => {
@@ -125,7 +141,7 @@ const SinaisSection = () => {
           </div>
 
           {/* Right: GIF + Popups */}
-          <div className="relative flex justify-center">
+          <div className="relative flex justify-center overflow-hidden lg:overflow-visible">
             {/* Glow behind GIF */}
             <div className="absolute inset-0 bg-[#F4845F]/5 rounded-2xl blur-3xl scale-110" />
 
@@ -133,44 +149,41 @@ const SinaisSection = () => {
             <img
               src={getPublicAssetUrl('images/i6signal-demo.gif')}
               alt="i6Signal demo"
-              className="relative z-10 w-full max-w-md rounded-xl shadow-2xl border border-white/10"
+              className="relative z-10 w-full max-w-xl rounded-xl shadow-2xl border border-white/10"
             />
 
             {/* Animated popups - hidden on mobile */}
             <div className="hidden lg:block">
-              {copy.popups.map((text, i) => (
-                <div
-                  key={i}
-                  className="absolute z-20 px-3 py-2 rounded-lg bg-[#0F172A]/90 border border-[#F4845F]/40 shadow-lg backdrop-blur-sm"
-                  style={{
-                    ...popupPositions[i],
-                    animation: `popup-cycle 10s ${i * 1.2}s infinite ease-in-out`,
-                    opacity: 0,
-                  }}
-                >
-                  <p className="text-white/90 text-[11px] leading-tight whitespace-nowrap">
-                    {text}
-                  </p>
-                </div>
-              ))}
+              {copy.popups.slice(0, 7).map((text, i) => {
+                const rotations = ['-2deg', '1.5deg', '-1deg', '2deg', '-1.5deg', '0.5deg', '-0.5deg'];
+                const positions = [
+                  { top: '2%', right: '2%' },
+                  { top: '18%', left: '5%' },
+                  { top: '35%', right: '0%' },
+                  { top: '52%', left: '2%' },
+                  { top: '68%', right: '5%' },
+                  { bottom: '8%', left: '8%' },
+                  { bottom: '2%', right: '10%' },
+                ];
+                return (
+                  <div
+                    key={i}
+                    className="absolute z-20 px-4 py-2.5 rounded-lg bg-[#0F172A]/90 border border-[#F4845F]/40 shadow-lg backdrop-blur-sm max-w-[260px]"
+                    style={{
+                      ...positions[i],
+                      transform: `rotate(${rotations[i]})`,
+                      animation: `popup-cycle 20s ${i * 2.5}s infinite ease-in-out`,
+                      opacity: 0,
+                    }}
+                  >
+                    <p className="text-white/90 text-xs leading-snug">
+                      {text}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
-
-        {/* Original 6 signal cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {copy.cards.map((text, i) => {
-            const Icon = signalIcons[i];
-            return (
-              <div
-                key={i}
-                className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-300 hover:shadow-[0_0_24px_rgba(244,132,95,0.12)]"
-              >
-                <Icon className="w-7 h-7 text-[#F4845F] mb-4 group-hover:scale-110 transition-transform" />
-                <p className="text-white/80 text-sm leading-relaxed">{text}</p>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>
