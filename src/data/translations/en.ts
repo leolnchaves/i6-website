@@ -4,6 +4,7 @@ export const enTranslations = {
   'header.home': 'Home',
   'header.solutions': 'Solutions',
   'header.successStories': 'Success Stories',
+  'header.community': 'Community',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
   

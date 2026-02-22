@@ -15,10 +15,11 @@ const HeaderNovo = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const links = [
+  const links: { to: string; label: string; external?: boolean }[] = [
     { to: '/hometeste', label: t('header.home') },
     { to: '/solutions', label: t('header.solutions') },
     { to: '/success-stories', label: t('header.successStories') },
+    { to: 'https://huggingface.co/i6-aiworks', label: t('header.community'), external: true },
     { to: '/contact', label: t('header.contact') },
   ];
 
@@ -39,12 +40,23 @@ const HeaderNovo = () => {
         <ul className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <li key={l.to}>
-              <Link
-                to={l.to}
-                className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
-              >
-                {l.label}
-              </Link>
+              {l.external ? (
+                <a
+                  href={l.to}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link
+                  to={l.to}
+                  className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
+                >
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
@@ -81,13 +93,25 @@ const HeaderNovo = () => {
           <ul className="flex flex-col gap-4">
             {links.map((l) => (
               <li key={l.to}>
-                <Link
-                  to={l.to}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
-                >
-                  {l.label}
-                </Link>
+                {l.external ? (
+                  <a
+                    href={l.to}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMenuOpen(false)}
+                    className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={l.to}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+                  >
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
