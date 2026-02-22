@@ -14,7 +14,7 @@ const SinaisSection = () => {
       badge: 'SINAIS',
       title: 'Somos especialistas em aplicar IA para\ntransformar dados em decisões reais.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
-      i6signal: 'i6Signal. Interface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
+      i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
         'Base fundacional multi-segmentada.',
@@ -45,7 +45,7 @@ const SinaisSection = () => {
       badge: 'SIGNALS',
       title: 'We are specialists in applying AI to\ntransform data into real decisions.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
-      i6signal: 'i6Signal. Conversational interface that transforms predictive signals into actionable decisions in real time.',
+      i6signal: 'i6Signal\nConversational interface that transforms predictive signals into actionable decisions in real time.',
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
         'Multi-segmented foundational base.',
@@ -112,8 +112,10 @@ const SinaisSection = () => {
         <div className="mb-0">
           <div className="flex items-start gap-4 p-6 bg-white/[0.03] border-b border-[#F4845F]/20">
             <BarChart3 className="w-7 h-7 text-[#F4845F] mt-0.5 flex-shrink-0" />
-            <p className="text-white/90 text-base md:text-lg leading-relaxed font-medium">
-              {copy.i6signal}
+            <p className="text-white/90 text-base md:text-lg leading-relaxed">
+              <span className="font-medium">{copy.i6signal.split('\n')[0]}</span>
+              <br />
+              <span className="font-normal">{copy.i6signal.split('\n')[1]}</span>
             </p>
           </div>
         </div>
