@@ -695,3 +695,10 @@ html {
   0%, 100% { transform: translateX(0px) scaleY(1); }
   50% { transform: translateX(-30px) scaleY(0.98); }
 }
+
+/* Popup cycle animation for SinaisSection */
+@keyframes popup-cycle {
+  0%, 100% { opacity: 0; transform: translateY(8px); }
+  10%, 70% { opacity: 1; transform: translateY(0); }
+  85% { opacity: 0; transform: translateY(-4px); }
+}
