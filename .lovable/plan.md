@@ -1,21 +1,23 @@
 
 
-## Mostrar popups no tablet, esconder no mobile
+## Substituir logos EMS e Multi
 
-### Problema
-Atualmente os popups usam `hidden lg:block`, o que os esconde em telas menores que 1024px (tanto tablet quanto mobile).
+### O que sera feito
 
-### Solucao
-Trocar `hidden lg:block` para `hidden md:block` na linha 161. Isso faz com que:
-- **Desktop (>=1024px)**: popups visiveis (como ja esta)
-- **Tablet (768px-1023px)**: popups visiveis (novo comportamento)
-- **Mobile (<768px)**: popups escondidos (mantido)
+1. Copiar a imagem enviada da **Multi** (`image-38.png`) para `public/content/logos/multi.png`, substituindo o arquivo atual
+2. Copiar a imagem enviada da **EMS** (`image-39.png`) para `public/content/logos/ems-new.png`, substituindo o arquivo atual
 
-### Detalhes tecnicos
+### Por que funciona sem alterar codigo
 
-**Arquivo: `src/components/hometeste/SinaisSection.tsx`**
+O arquivo `public/content/partners-logos.md` ja referencia esses caminhos:
+- EMS: `/content/logos/ems-new.png`
+- Multi: `/content/logos/multi.png`
 
-- Linha 161: trocar `hidden lg:block` para `hidden md:block`
+Os componentes `PartnersSection` e `ClientesSection` leem esse markdown e usam esses caminhos. Ao substituir os arquivos nos mesmos caminhos, as novas logos aparecerao automaticamente.
 
-Apenas uma linha precisa ser alterada.
+### Arquivos alterados
+- `public/content/logos/multi.png` (substituido pelo upload)
+- `public/content/logos/ems-new.png` (substituido pelo upload)
+
+Nenhum arquivo de codigo precisa ser modificado.
 
