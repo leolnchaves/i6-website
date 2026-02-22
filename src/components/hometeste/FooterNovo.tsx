@@ -91,7 +91,7 @@ const FooterNovo = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-10 pt-8 text-center text-white/30 text-xs">
+        <div className="border-t border-white/10 mt-6 pt-4 text-center text-white/30 text-xs">
           {copyright}
         </div>
       </div>
