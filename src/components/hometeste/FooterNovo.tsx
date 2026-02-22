@@ -36,7 +36,7 @@ const FooterNovo = () => {
 
   return (
     <footer className="bg-[#0B1224] text-white">
-      <div className="container mx-auto px-6 py-14">
+      <div className="container mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
@@ -60,6 +60,7 @@ const FooterNovo = () => {
                 {t('footer.ethics')}
               </Link>
             </div>
+            <p className="text-white/30 text-xs mt-3">{copyright}</p>
           </div>
 
           {/* Nav */}
@@ -91,9 +92,6 @@ const FooterNovo = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-6 pt-4 text-center text-white/30 text-xs">
-          {copyright}
-        </div>
       </div>
     </footer>
   );
