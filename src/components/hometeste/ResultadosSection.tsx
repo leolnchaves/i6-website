@@ -6,43 +6,75 @@ const ResultadosSection = () => {
   const copy = {
     pt: {
       title: 'Resultados em movimento: onde a IA encontra o crescimento do negócio.',
-      cases: [
+        cases: [
         {
           segment: 'Farma',
-          metrics: ['2.200 SKUs otimizados', '95 mil PDVs cobertos', 'R$ 100 MM em savings'],
+          metrics: [
+            { value: '2.200', label: 'SKUs otimizados' },
+            { value: '95 mil', label: 'PDVs cobertos' },
+            { value: 'R$ 100 milhões em savings', label: 'ao antecipar sinais de incineração, ruptura e overstocking.' },
+          ],
         },
         {
           segment: 'Varejo',
-          metrics: ['+36% positivação', '+23% ticket médio', 'Receita incremental comprovada'],
+          metrics: [
+            { value: '+36%', label: 'positivação' },
+            { value: '+23%', label: 'ticket médio' },
+            { value: 'Receita incremental', label: 'comprovada' },
+          ],
         },
         {
           segment: 'Financeiro',
-          metrics: ['-57% custo de CRM', '12x mais conversão', 'ROI em 90 dias'],
+          metrics: [
+            { value: '-57%', label: 'custo de CRM' },
+            { value: '12x', label: 'mais conversão' },
+            { value: 'ROI', label: 'em 90 dias' },
+          ],
         },
         {
           segment: 'Fashion',
-          metrics: ['+2,6% conversão', '40% receita incremental', 'Preço dinâmico otimizado'],
+          metrics: [
+            { value: '+2,6%', label: 'conversão' },
+            { value: '40%', label: 'receita incremental' },
+            { value: 'Preço dinâmico', label: 'otimizado' },
+          ],
         },
       ],
     },
     en: {
       title: 'Results in motion: where AI meets business growth.',
-      cases: [
+        cases: [
         {
           segment: 'Pharma',
-          metrics: ['2,200 optimized SKUs', '95K points of sale', 'R$ 100M in savings'],
+          metrics: [
+            { value: '2,200', label: 'optimized SKUs' },
+            { value: '95K', label: 'points of sale' },
+            { value: 'R$ 100 million in savings', label: 'by anticipating incineration, stockout and overstocking signals.' },
+          ],
         },
         {
           segment: 'Retail',
-          metrics: ['+36% activation rate', '+23% average ticket', 'Proven incremental revenue'],
+          metrics: [
+            { value: '+36%', label: 'activation rate' },
+            { value: '+23%', label: 'average ticket' },
+            { value: 'Proven incremental', label: 'revenue' },
+          ],
         },
         {
           segment: 'Finance',
-          metrics: ['-57% CRM cost', '12x more conversion', 'ROI in 90 days'],
+          metrics: [
+            { value: '-57%', label: 'CRM cost' },
+            { value: '12x', label: 'more conversion' },
+            { value: 'ROI', label: 'in 90 days' },
+          ],
         },
         {
           segment: 'Fashion',
-          metrics: ['+2.6% conversion', '40% incremental revenue', 'Dynamic pricing optimized'],
+          metrics: [
+            { value: '+2.6%', label: 'conversion' },
+            { value: '40%', label: 'incremental revenue' },
+            { value: 'Dynamic pricing', label: 'optimized' },
+          ],
         },
       ],
     },
@@ -66,16 +98,13 @@ const ResultadosSection = () => {
               </span>
               <ul className="flex flex-col gap-0">
                 {c.metrics.map((m, j) => {
-                  const parts = m.split(' ');
-                  const value = parts[0];
-                  const label = parts.slice(1).join(' ');
                   return (
                     <li
                       key={j}
                       className={`py-3 ${j < c.metrics.length - 1 ? 'border-b border-white/5' : ''}`}
                     >
-                      <span className="text-base font-bold text-[#F4845F] block">{value}</span>
-                      <span className="text-white/60 text-sm">{label}</span>
+                      <span className="text-base font-bold text-[#F4845F] block">{m.value}</span>
+                      <span className="text-white/60 text-sm">{m.label}</span>
                     </li>
                   );
                 })}
