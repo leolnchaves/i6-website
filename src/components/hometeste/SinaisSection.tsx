@@ -14,7 +14,7 @@ const SinaisSection = () => {
       badge: 'SINAIS',
       title: 'Especialistas em aplicar IA para\ntransformar dados em decisões reais.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
-      i6signal: 'i6Signal – Interface conversacional preditiva que transforma, em tempo real, sinais de IA aplicada em decisões acionáveis.',
+      i6signal: 'i6Signal. Interface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
         'Base fundacional multi-segmentada.',
@@ -45,7 +45,7 @@ const SinaisSection = () => {
       badge: 'SIGNALS',
       title: 'Specialists in applying AI to\ntransform data into real decisions.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
-      i6signal: 'i6Signal – Predictive conversational interface that transforms, in real time, applied AI signals into actionable decisions.',
+      i6signal: 'i6Signal. Conversational interface that transforms predictive signals into actionable decisions in real time.',
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
         'Multi-segmented foundational base.',
