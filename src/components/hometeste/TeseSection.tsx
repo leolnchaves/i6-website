@@ -73,7 +73,16 @@ const TeseSection = () => {
         <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed">
           {copy.bridge.split('\n')[0]}
           <br />
-          <span className="text-[#F4845F]">{copy.bridge.split('\n')[1]}</span>
+          <span className="text-[#F4845F]">
+            {copy.bridge.split('\n')[1]?.split(/(é falta de movimento|it's lack of movement)/i).map((part, i) =>
+              /é falta de movimento|it's lack of movement/i.test(part) ? (
+                <span key={i} className="font-bold relative">
+                  <span className="absolute inset-0 blur-md bg-[#F4845F]/25 rounded-lg" aria-hidden="true" />
+                  <span className="relative">{part}</span>
+                </span>
+              ) : <span key={i}>{part}</span>
+            )}
+          </span>
         </p>
         <p className="mt-4 text-base text-[#F4845F] font-medium italic">
           {copy.poke}
