@@ -26,7 +26,7 @@ const HeroMovimento = () => {
       <WaveBackground />
       <FlowingParticles />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center lg:text-left px-6 max-w-4xl mx-auto lg:ml-[40%] lg:mr-12">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight">
           {copy.title}
         </h1>

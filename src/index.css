@@ -674,3 +674,24 @@ html {
   50% { transform: translateY(-10px) translateX(-10px); opacity: 0.2; }
   75% { transform: translateY(-40px) translateX(5px); opacity: 0.3; }
 }
+
+/* Hometeste - flowing curves */
+@keyframes curve-flow-1 {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(25px); }
+}
+
+@keyframes curve-flow-2 {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(-20px); }
+}
+
+@keyframes curve-flow-3 {
+  0%, 100% { transform: translateX(0px) scaleY(1); }
+  50% { transform: translateX(15px) scaleY(1.02); }
+}
+
+@keyframes curve-flow-4 {
+  0%, 100% { transform: translateX(0px) scaleY(1); }
+  50% { transform: translateX(-30px) scaleY(0.98); }
+}
