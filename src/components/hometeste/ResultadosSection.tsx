@@ -1,7 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const rotations = ['-1.5deg', '1deg', '-0.5deg', '1.5deg'];
-
 const ResultadosSection = () => {
   const { language } = useLanguage();
 
@@ -57,12 +55,11 @@ const ResultadosSection = () => {
           {copy.title}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start overflow-visible">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {copy.cases.map((c, i) => (
             <div
               key={c.segment}
-              className="group rounded-3xl border-l-4 border-[#F4845F] bg-gradient-to-br from-[#0F172A] to-[#162038] p-6 flex flex-col shadow-[0_0_30px_rgba(244,132,95,0.06)] transition-all duration-300 hover:!rotate-0 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(244,132,95,0.15)] cursor-default"
-              style={{ transform: `rotate(${rotations[i]})` }}
+              className="group rounded-3xl border-l-4 border-[#F4845F] bg-gradient-to-br from-[#0F172A] to-[#162038] p-6 flex flex-col shadow-[0_0_30px_rgba(244,132,95,0.06)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(244,132,95,0.15)] cursor-default"
             >
               <span className="inline-block bg-[#F4845F]/10 text-[#F4845F] rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold mb-5 w-fit">
                 {c.segment}
