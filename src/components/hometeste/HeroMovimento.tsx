@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import WaveBackground from './WaveBackground';
-import FlowingParticles from './FlowingParticles';
 
 const HeroMovimento = () => {
   const { language } = useLanguage();
@@ -24,9 +23,8 @@ const HeroMovimento = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1224] overflow-hidden">
       <WaveBackground />
-      <FlowingParticles />
 
-      <div className="relative z-10 text-center lg:text-left px-6 max-w-4xl mx-auto lg:ml-[40%] lg:mr-12">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight">
           {copy.title}
         </h1>
