@@ -3,73 +3,49 @@
 ---
 
 ## EMS
-**Logo:** /content/logos/EMS-white.png
+**Logo:** /content/logos/ems-new.png
 **Name:** EMS
 
 ---
 
+## MULTI
+**Logo:** /content/logos/multi.png
+**Name:** Multi
+
+---
+
+## BIOLAB
+**Logo:** /content/logos/biolab.png
+**Name:** Biolab
+
+---
+
 ## BMG
-**Logo:** /content/logos/BMG.png
-**Name:** BMG
+**Logo:** /content/logos/bmg-new.png
+**Name:** Banco BMG
 
 ---
 
-## HERING
-**Logo:** /content/logos/HERING.png
-**Name:** HERING
-
----
-
-## ESFERA
-**Logo:** /content/logos/esfera.png
-**Name:** ESFERA
-
----
-
-## JEQUITI
-**Logo:** /content/logos/JEQUITI.png
-**Name:** JEQUITI
-
----
-
-## EMBRAER
-**Logo:** /content/logos/embraer-white.png
-**Name:** EMBRAER
-
----
-
-## RABOBANK
-**Logo:** /content/logos/RABOBANK.png
-**Name:** RABOBANK
-
----
-
-## LEGRAND
-**Logo:** /content/logos/LEGRAND.png
-**Name:** LEGRAND
+## UNICRED
+**Logo:** /content/logos/unicred.png
+**Name:** Unicred
 
 ---
 
 ## GERMED
-**Logo:** /content/logos/GERMED.png
-**Name:** GERMED
+**Logo:** /content/logos/germed-new.png
+**Name:** Germed
 
 ---
 
-## FORD
-**Logo:** /content/logos/FORD.png
-**Name:** FORD
-
----
-
-## CLOSE-UP
-**Logo:** /content/logos/close-up.png
-**Name:** CLOSE-UP
+## LEGRAND
+**Logo:** /content/logos/legrand-new.png
+**Name:** Legrand
 
 ---
 
 ## ALPARGATAS
-**Logo:** /content/logos/ALPARGATAS.png
-**Name:** ALPARGATAS
+**Logo:** /content/logos/alpargatas-new.png
+**Name:** Alpargatas
 
 ---
