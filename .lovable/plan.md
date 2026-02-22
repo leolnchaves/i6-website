@@ -1,22 +1,30 @@
 
-# Tornar a secao de clientes mais clara com logos coloridas
 
-## Mudancas em `src/components/hometeste/ClientesSection.tsx`
+# Reduzir distancias entre secoes
 
-### 1. Fundo claro
-- Trocar `bg-[#0B1224]` por `bg-white` (ou `bg-slate-50` para um branco levemente acinzentado)
-- Atualizar as faixas de fade nas bordas para usar a mesma cor clara: `from-white` em vez de `from-[#0B1224]`
+## Objetivo
+Diminuir o padding vertical de todas as secoes (exceto a Hero que mantem `min-h-screen`).
 
-### 2. Texto do titulo
-- Trocar `text-white/40` por `text-slate-500` para contraste no fundo claro
+## Mudancas
 
-### 3. Logos com cor original
-- Remover os filtros `brightness-0 invert` que forçam as logos a ficarem brancas/cinzas
-- Manter apenas `opacity-50 hover:opacity-100` para um efeito sutil de hover
-- Isso vai mostrar as logos nas cores originais dos arquivos
+### 1. TeseSection (`src/components/hometeste/TeseSection.tsx`)
+- De `py-24 md:py-32` para `py-14 md:py-20`
 
-### Resultado
-Secao com fundo branco/claro, titulo em cinza escuro, e logos coloridas com hover que aumenta a opacidade.
+### 2. SinaisSection (`src/components/hometeste/SinaisSection.tsx`)
+- De `py-24 md:py-32` para `py-14 md:py-20`
 
-## Arquivo alterado
-- `src/components/hometeste/ClientesSection.tsx`
+### 3. ResultadosSection (`src/components/hometeste/ResultadosSection.tsx`)
+- De `py-24 md:py-32` para `py-14 md:py-20`
+
+### 4. ClientesSection (`src/components/hometeste/ClientesSection.tsx`)
+- De `py-16 md:py-20` para `py-10 md:py-14`
+
+### 5. CTAFinal (`src/components/hometeste/CTAFinal.tsx`)
+- De `py-24 md:py-32` para `py-14 md:py-20`
+
+### 6. HeroMovimento (sem alteracao)
+- Mantem `min-h-screen` para ocupar 100% da tela
+
+## Resultado
+Secoes mais proximas, layout mais compacto e fluido, com a Hero mantendo a ocupacao total da viewport.
+
