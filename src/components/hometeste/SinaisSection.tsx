@@ -26,7 +26,7 @@ const SinaisSection = () => {
         'Detecte intenção de compra antes do clique',
         'Ajuste preço ao movimento real do mercado',
         'Priorize esforço comercial onde o retorno é maior',
-        'Preveja churn antes da perda',
+        'Reoriente mix e oferta ideal em tempo real',
         'Antecipe janelas ideais de ativação',
       ],
       popups: [
@@ -58,7 +58,7 @@ const SinaisSection = () => {
         'Detect purchase intent before the click',
         'Adjust pricing to real market movement',
         'Focus sales effort where ROI is highest',
-        'Predict churn before the loss',
+        'Reorient mix and ideal offer in real time',
         'Anticipate ideal activation windows',
       ],
       popups: [
