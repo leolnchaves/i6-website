@@ -35,22 +35,22 @@ const TeseSection = () => {
     pt: {
       question: 'Seus dados geram vantagem competitiva\nou só alimentam dashboards?',
       stats: [
-        { value: 31, label: 'das empresas não usam IA preditiva' },
-        { value: 11, label: 'das campanhas atingem o público certo' },
-        { value: 11, label: 'dos estoques são otimizados por dados' },
+        { value: 11, label: 'da receita vem de monetização de dados' },
+        { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
+        { value: 11, label: 'das marcas personalizam experiências com dados' },
       ],
-      bridge: 'Resultado aparece quando dados começam a antecipar — não apenas registrar.',
-      poke: 'Não é culpa sua. Mas continuar assim é uma escolha.',
+      bridge: 'Dados, sozinhos, não criam vantagem competitiva. O problema não é falta de dado, é falta de movimento.',
+      poke: '',
     },
     en: {
       question: 'Does your data drive competitive advantage\nor just feed dashboards?',
       stats: [
-        { value: 31, label: "of companies don't use predictive AI" },
-        { value: 11, label: 'of campaigns reach the right audience' },
-        { value: 11, label: 'of inventories are data-optimized' },
+        { value: 11, label: 'of revenue comes from data monetization' },
+        { value: 31, label: 'of companies use data for strategic decisions' },
+        { value: 11, label: 'of brands personalize experiences with data' },
       ],
-      bridge: 'Results come when data starts anticipating — not just recording.',
-      poke: "It's not your fault. But staying this way is a choice.",
+      bridge: "Data alone doesn't create competitive advantage. The problem isn't lack of data — it's lack of movement.",
+      poke: '',
     },
   }[language];
 
