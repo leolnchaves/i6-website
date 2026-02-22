@@ -1,30 +1,23 @@
 
 
-# Reduzir distancias entre secoes
-
-## Objetivo
-Diminuir o padding vertical de todas as secoes (exceto a Hero que mantem `min-h-screen`).
+# Adicionar menu "Comunidade" no HeaderNovo
 
 ## Mudancas
 
-### 1. TeseSection (`src/components/hometeste/TeseSection.tsx`)
-- De `py-24 md:py-32` para `py-14 md:py-20`
+### 1. Traducoes (`src/data/translations/pt.ts` e `src/data/translations/en.ts`)
+- Adicionar chave `header.community` com valor `"Comunidade"` (PT) e `"Community"` (EN)
 
-### 2. SinaisSection (`src/components/hometeste/SinaisSection.tsx`)
-- De `py-24 md:py-32` para `py-14 md:py-20`
+### 2. HeaderNovo (`src/components/hometeste/HeaderNovo.tsx`)
+- Inserir um novo item no array `links`, entre "Cases de Sucesso" e "Contato":
+  - `{ to: 'https://huggingface.co/i6-aiworks', label: t('header.community'), external: true }`
+- Atualizar a renderizacao dos links para tratar links externos com `<a href="..." target="_blank" rel="noopener noreferrer">` em vez de `<Link to="...">`
 
-### 3. ResultadosSection (`src/components/hometeste/ResultadosSection.tsx`)
-- De `py-24 md:py-32` para `py-14 md:py-20`
+### 3. FooterNovo (`src/components/hometeste/FooterNovo.tsx`)
+- Adicionar o mesmo item "Comunidade" no array `navLinks` do footer, tambem como link externo
 
-### 4. ClientesSection (`src/components/hometeste/ClientesSection.tsx`)
-- De `py-16 md:py-20` para `py-10 md:py-14`
-
-### 5. CTAFinal (`src/components/hometeste/CTAFinal.tsx`)
-- De `py-24 md:py-32` para `py-14 md:py-20`
-
-### 6. HeroMovimento (sem alteracao)
-- Mantem `min-h-screen` para ocupar 100% da tela
-
-## Resultado
-Secoes mais proximas, layout mais compacto e fluido, com a Hero mantendo a ocupacao total da viewport.
+### Detalhes tecnicos
+- O array `links` passara a ter uma propriedade `external?: boolean`
+- Na renderizacao, um condicional decide entre `<Link>` (interno) e `<a>` (externo)
+- O link externo abre em nova aba (`target="_blank"`)
+- URL de destino: `https://huggingface.co/i6-aiworks`
 
