@@ -5,7 +5,7 @@ const ResultadosSection = () => {
 
   const copy = {
     pt: {
-      title: 'Resultados que falam sozinhos',
+      title: 'Resultados em movimento: onde a IA encontra o crescimento do negócio.',
       cases: [
         {
           segment: 'Farma',
@@ -26,7 +26,7 @@ const ResultadosSection = () => {
       ],
     },
     en: {
-      title: 'Results that speak for themselves',
+      title: 'Results in motion: where AI meets business growth.',
       cases: [
         {
           segment: 'Pharma',
