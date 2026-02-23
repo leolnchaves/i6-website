@@ -411,22 +411,22 @@ const MixComparison = ({ comparison }: { comparison: { category: string; current
     <table className="w-full text-sm border-collapse">
       <thead>
         <tr className="border-b border-gray-200">
-          <th className="text-left py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Categoria</th>
-          <th className="text-center py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Atual</th>
-          <th className="text-center py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Recomendado</th>
-          <th className="text-center py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Direção</th>
+          <th className="text-left py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Categoria</th>
+          <th className="text-center py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Atual</th>
+          <th className="text-center py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Recomendado</th>
+          <th className="text-center py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Tendência</th>
         </tr>
       </thead>
       <tbody>
         {comparison.map((c, i) => (
           <tr key={i} className="border-b border-gray-100">
-            <td className="py-2.5 px-3 text-gray-800">{c.category}</td>
-            <td className="py-2.5 px-3 text-center text-gray-500">{c.current}</td>
-            <td className="py-2.5 px-3 text-center text-orange-500 font-medium">{c.recommended}</td>
-            <td className="py-2.5 px-3 text-center">
-              {c.direction === 'up' && <span className="text-green-500">▲</span>}
-              {c.direction === 'down' && <span className="text-red-500">▼</span>}
-              {c.direction === 'stable' && <span className="text-gray-300">●</span>}
+            <td className="py-2.5 px-3 text-gray-900">{c.category}</td>
+            <td className="py-2.5 px-3 text-center text-gray-900">{c.current}</td>
+            <td className="py-2.5 px-3 text-center text-gray-900 font-medium">{c.recommended}</td>
+            <td className="py-2.5 px-3 text-center text-gray-900 font-bold">
+              {c.direction === 'up' && '+'}
+              {c.direction === 'down' && '−'}
+              {c.direction === 'stable' && '='}
             </td>
           </tr>
         ))}
