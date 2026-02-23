@@ -6,7 +6,7 @@
 
 **Title:** Turn Anonymous Traffic into Real Revenue
 
-**Overview:** Most of your traffic never identifies itself. That doesn't mean they're not ready to buy. Infinity6 converts real-time behavioral signals into concrete sales opportunities, increasing conversion and average ticket even without customer history. You stop depending on login to sell better.
+**Overview:** Most of your traffic never identifies itself. That doesn't mean they're not ready to buy. We can convert real-time behavioral signals into concrete sales opportunities, increasing conversion and average ticket even without customer history. You stop depending on login to sell better.
 
 **Key Features:**
 - Understand purchase intent from the first click
