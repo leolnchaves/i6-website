@@ -16,7 +16,7 @@ const HeaderNovo = () => {
   }, []);
 
   const links: { to: string; label: string; external?: boolean }[] = [
-    { to: '/hometeste', label: t('header.home') },
+    { to: '/', label: t('header.home') },
     { to: '/solutions', label: t('header.solutions') },
     { to: '/success-stories', label: t('header.successStories') },
     { to: 'https://huggingface.co/i6-aiworks', label: t('header.community'), external: true },
@@ -32,7 +32,7 @@ const HeaderNovo = () => {
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
-        <Link to="/hometeste" className="shrink-0">
+        <Link to="/" className="shrink-0">
           <img src={logoHeader} alt="Infinity6" className="h-12 w-auto brightness-0 invert" />
         </Link>
 
