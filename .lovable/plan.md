@@ -1,56 +1,36 @@
 
-## Ondas verticais na lateral esquerda da pagina inteira
 
-### Conceito
+## Corrigir visibilidade e posicionamento das ondas verticais
 
-Mover as ondas da posicao horizontal no hero para a posicao **vertical na lateral esquerda**, cobrindo toda a altura da pagina de Solutions. As ondas ficam como um background fixo/absoluto colado na borda esquerda. As secoes (hero, metricas, grid, process flow, CTA) ficam por cima com seus proprios backgrounds, mas nos espacos entre secoes ou em areas com fundo transparente, as ondas continuam visiveis.
+### Problemas identificados (pela screenshot)
 
-### Mudancas
+1. **Opacidade muito baixa** -- as ondas estao quase invisiveis contra o fundo escuro
+2. **Nao encostam na borda esquerda** -- as ondas estao deslocadas para dentro, com um gap entre elas e a lateral da pagina
 
-**1. Criar `src/components/solutions/VerticalWaves.tsx`**
+### Mudancas em `src/components/solutions/VerticalWaves.tsx`
 
-Novo componente que substitui o HorizontalWaves:
-- Container: `fixed left-0 top-0 h-full pointer-events-none z-[1]` com largura de ~200-250px
-- SVG com `viewBox="0 0 500 2000"` (estreito e alto, invertido do horizontal)
-- Rotacionar a logica dos paths: o eixo principal agora e vertical (Y vai de 0 a 2000), e as ondulacoes acontecem no eixo X (oscilando em torno de x~250)
-- Manter as mesmas 8 layers com mesmas amplitudes e opacidades, mas agora na horizontal:
-  - Layers pequenas: oscilam entre x~230 e x~270
-  - Layers medias: oscilam entre x~150 e x~350
-  - Layers grandes: oscilam entre x~50 e x~420
-- Manter animacoes SMIL (`<animate>` no atributo `d`) com mesmas duracoes
-- Manter respiracao CSS, agora usando `translateX` em vez de `translateY`
+**Aumentar opacidade de todos os 8 paths:**
 
-**2. Editar `src/pages/Solutions.tsx`**
+| Layer | Opacidade atual | Nova opacidade |
+|-------|----------------|----------------|
+| 1 (pequena, rapida) | 0.18 | 0.40 |
+| 2 (pequena, media) | 0.14 | 0.35 |
+| 3 (media, media) | 0.12 | 0.30 |
+| 4 (media, lenta) | 0.10 | 0.28 |
+| 5 (grande, lenta) | 0.08 | 0.25 |
+| 6 (grande, muito lenta) | 0.06 | 0.22 |
+| 7 (compacta, forte) | 0.22 | 0.45 |
+| 8 (media, sutil) | 0.09 | 0.28 |
 
-- Adicionar `relative` ao container principal
-- Importar e renderizar `VerticalWaves` como filho direto do container principal (fora de qualquer secao), com `position: fixed` para que acompanhe o scroll
-- Garantir que as secoes tenham `position: relative` e `z-index` maior para ficarem por cima
+**Encostar na borda esquerda:**
 
-**3. Editar `src/components/solutions/SolutionsHero.tsx`**
+- Mudar o `viewBox` de `"0 0 500 2000"` para `"250 0 500 2000"` -- isso corta a metade esquerda vazia do SVG, fazendo com que o centro dos paths (x=250) fique na borda esquerda da tela
+- As ondulacoes vao se expandir para a direita a partir da borda, coladas na lateral
 
-- Remover o import e uso do `HorizontalWaves` (as ondas agora vem do nivel da pagina)
+Alternativamente, pode-se mover o container com `left-[-110px]` para deslocar o SVG para a esquerda, mas ajustar o viewBox e mais limpo.
 
-**4. Editar `src/index.css`**
+### Resultado
 
-- Adicionar keyframes de respiracao horizontal:
-  - `wave-breathe-x-1`: translateX oscilando entre -8px e 8px
-  - `wave-breathe-x-2`: translateX oscilando entre -5px e 5px
-  - `wave-breathe-x-3`: translateX oscilando entre -12px e 12px
+- Ondas visiveis e claras contra o fundo navy
+- Coladas na borda esquerda da viewport, como um "sinal vivo" saindo da lateral da pagina
 
-### Estrutura dos paths verticais
-
-Cada path agora segue o eixo Y de cima para baixo. Exemplo de um path pequeno:
-
-```text
-M250,0 C235,100 265,250 240,400 C230,550 268,700 245,850 ...continuando ate Y=2000
-```
-
-Os pontos de controle oscilam no eixo X em torno do centro (250), criando ondulacoes laterais conforme descem pela pagina.
-
-### Resultado visual
-
-- Faixa de ondas animadas na lateral esquerda da tela inteira
-- As ondas acompanham o scroll (position fixed)
-- As secoes da pagina cobrem as ondas com seus backgrounds
-- Nos gaps e areas com background transparente/semitransparente, as ondas aparecem como identidade visual continua
-- Efeito de "sinal vivo" percorrendo toda a pagina
