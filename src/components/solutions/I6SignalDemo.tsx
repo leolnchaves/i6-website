@@ -1,6 +1,10 @@
 import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Home, Database, Brain, LayoutGrid, Send, ChevronRight } from 'lucide-react';
+import {
+  Home, Database, Brain, LayoutGrid, Send, ChevronRight, ChevronDown,
+  Heart, BookOpen, RotateCcw, Settings, BarChart3, Upload, Target,
+  Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
+} from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix';
@@ -16,10 +20,11 @@ const content = {
     sectionTitle: 'Veja o i6Signal em ação',
     sectionSubtitle: 'Explore como a inteligência preditiva do i6Signal entrega insights acionáveis em tempo real.',
     placeholder: 'Digite sua pergunta...',
-    sidebar: ['Home', 'Data Ingestion', 'i6 Signal', 'Widgets'],
+    sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Análise Executiva',
     recommendedActions: 'Ações Recomendadas',
-    suggestedQuestions: 'Perguntas Sugeridas (Nível Tático)',
+    suggestedQuestions: 'Perguntas Sugeridas',
+    emptyState: 'Qual insight preditivo vamos descobrir hoje?',
     scenarios: {
       supply: {
         label: 'Supply',
@@ -142,10 +147,11 @@ const content = {
     sectionTitle: 'See i6Signal in action',
     sectionSubtitle: 'Explore how i6Signal\'s predictive intelligence delivers actionable insights in real time.',
     placeholder: 'Type your question...',
-    sidebar: ['Home', 'Data Ingestion', 'i6 Signal', 'Widgets'],
+    sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Executive Analysis',
     recommendedActions: 'Recommended Actions',
-    suggestedQuestions: 'Suggested Questions (Tactical Level)',
+    suggestedQuestions: 'Suggested Questions',
+    emptyState: 'What predictive insight shall we discover today?',
     scenarios: {
       supply: {
         label: 'Supply',
@@ -266,29 +272,29 @@ const content = {
   },
 };
 
-// ─── Sub-components ──────────────────────────────────────────────
+// ─── Sub-components (light theme) ────────────────────────────────
 
 const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-x-auto my-4">
     <table className="w-full text-sm border-collapse">
       <thead>
-        <tr className="border-b border-white/10">
+        <tr className="border-b border-gray-200">
           {data.headers.map((h, i) => (
-            <th key={i} className="text-left py-2 px-3 text-white/60 font-medium text-xs uppercase tracking-wider">{h}</th>
+            <th key={i} className="text-left py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.rows.map((row, ri) => {
           const prob = parseInt(row[2]);
-          const probColor = prob >= 80 ? 'text-red-400' : prob >= 60 ? 'text-yellow-400' : 'text-green-400';
+          const probColor = prob >= 80 ? 'text-red-500' : prob >= 60 ? 'text-amber-500' : 'text-green-500';
           return (
-            <tr key={ri} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-              <td className="py-2.5 px-3 text-white/80 font-mono text-xs">{row[0]}</td>
-              <td className="py-2.5 px-3 text-white/90">{row[1]}</td>
+            <tr key={ri} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+              <td className="py-2.5 px-3 text-gray-600 font-mono text-xs">{row[0]}</td>
+              <td className="py-2.5 px-3 text-gray-800">{row[1]}</td>
               <td className={`py-2.5 px-3 font-bold ${probColor}`}>{row[2]}</td>
-              <td className="py-2.5 px-3 text-white/70">{row[3]}</td>
-              <td className="py-2.5 px-3 text-[#F4845F] font-medium">{row[4]}</td>
+              <td className="py-2.5 px-3 text-gray-500">{row[3]}</td>
+              <td className="py-2.5 px-3 text-orange-500 font-medium">{row[4]}</td>
             </tr>
           );
         })}
@@ -302,30 +308,30 @@ const ForecastChart = ({ data, note, lang }: { data: { month: string; seasonalit
     <div className="h-[220px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-          <XAxis dataKey="month" stroke="rgba(255,255,255,0.4)" tick={{ fontSize: 12 }} />
-          <YAxis stroke="rgba(255,255,255,0.4)" tick={{ fontSize: 12 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+          <XAxis dataKey="month" stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} />
+          <YAxis stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
           <Tooltip
-            contentStyle={{ backgroundColor: '#0d1a2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
-            labelStyle={{ color: 'rgba(255,255,255,0.6)' }}
+            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+            labelStyle={{ color: '#6b7280' }}
           />
-          <Legend wrapperStyle={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }} />
-          <Line type="monotone" dataKey="seasonality" name={lang === 'pt' ? 'Sazonalidade' : 'Seasonality'} stroke="#F4845F" strokeWidth={2.5} dot={{ r: 4, fill: '#F4845F' }} />
-          <Line type="monotone" dataKey="trend" name={lang === 'pt' ? 'Tendência' : 'Trend'} stroke="#38bdf8" strokeWidth={2.5} dot={{ r: 4, fill: '#38bdf8' }} />
+          <Legend wrapperStyle={{ color: '#6b7280', fontSize: '12px' }} />
+          <Line type="monotone" dataKey="seasonality" name={lang === 'pt' ? 'Sazonalidade' : 'Seasonality'} stroke="#f97316" strokeWidth={2.5} dot={{ r: 4, fill: '#f97316' }} />
+          <Line type="monotone" dataKey="trend" name={lang === 'pt' ? 'Tendência' : 'Trend'} stroke="#3b82f6" strokeWidth={2.5} dot={{ r: 4, fill: '#3b82f6' }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
-    <p className="text-white/50 text-xs mt-3 leading-relaxed">{note}</p>
+    <p className="text-gray-400 text-xs mt-3 leading-relaxed">{note}</p>
   </div>
 );
 
 const PricingMetrics = ({ metrics }: { metrics: { label: string; value: string; sub: string }[] }) => (
   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 my-4">
     {metrics.map((m, i) => (
-      <div key={i} className="bg-white/5 rounded-lg p-3 border border-white/10">
-        <p className="text-white/50 text-xs">{m.label}</p>
-        <p className="text-white text-xl font-bold mt-1">{m.value}</p>
-        <p className="text-[#F4845F] text-xs mt-0.5">{m.sub}</p>
+      <div key={i} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+        <p className="text-gray-400 text-xs">{m.label}</p>
+        <p className="text-gray-900 text-xl font-bold mt-1">{m.value}</p>
+        <p className="text-orange-500 text-xs mt-0.5">{m.sub}</p>
       </div>
     ))}
   </div>
@@ -334,19 +340,19 @@ const PricingMetrics = ({ metrics }: { metrics: { label: string; value: string; 
 const ComercialRanking = ({ ranking }: { ranking: { rank: number; territory: string; gap: string; score: number; potential: string }[] }) => (
   <div className="space-y-2 my-4">
     {ranking.map((r) => (
-      <div key={r.rank} className="flex items-center gap-3 bg-white/5 rounded-lg p-3 border border-white/10">
-        <div className="w-8 h-8 rounded-full bg-[#F4845F]/20 text-[#F4845F] flex items-center justify-center font-bold text-sm flex-shrink-0">
+      <div key={r.rank} className="flex items-center gap-3 bg-gray-50 rounded-lg p-3 border border-gray-200">
+        <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center font-bold text-sm flex-shrink-0">
           {r.rank}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-white font-medium text-sm">{r.territory}</p>
-          <p className="text-white/50 text-xs">Gap: {r.gap} · Potential: {r.potential}</p>
+          <p className="text-gray-800 font-medium text-sm">{r.territory}</p>
+          <p className="text-gray-400 text-xs">Gap: {r.gap} · Potential: {r.potential}</p>
         </div>
         <div className="text-right flex-shrink-0">
-          <div className="w-12 h-1.5 bg-white/10 rounded-full overflow-hidden">
-            <div className="h-full bg-[#F4845F] rounded-full" style={{ width: `${r.score}%` }} />
+          <div className="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-orange-500 rounded-full" style={{ width: `${r.score}%` }} />
           </div>
-          <p className="text-white/40 text-[10px] mt-0.5">{r.score}/100</p>
+          <p className="text-gray-400 text-[10px] mt-0.5">{r.score}/100</p>
         </div>
       </div>
     ))}
@@ -357,23 +363,23 @@ const MixComparison = ({ comparison }: { comparison: { category: string; current
   <div className="overflow-x-auto my-4">
     <table className="w-full text-sm border-collapse">
       <thead>
-        <tr className="border-b border-white/10">
-          <th className="text-left py-2 px-3 text-white/60 font-medium text-xs uppercase tracking-wider">Categoria</th>
-          <th className="text-center py-2 px-3 text-white/60 font-medium text-xs uppercase tracking-wider">Atual</th>
-          <th className="text-center py-2 px-3 text-white/60 font-medium text-xs uppercase tracking-wider">Recomendado</th>
-          <th className="text-center py-2 px-3 text-white/60 font-medium text-xs uppercase tracking-wider">Direção</th>
+        <tr className="border-b border-gray-200">
+          <th className="text-left py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Categoria</th>
+          <th className="text-center py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Atual</th>
+          <th className="text-center py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Recomendado</th>
+          <th className="text-center py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">Direção</th>
         </tr>
       </thead>
       <tbody>
         {comparison.map((c, i) => (
-          <tr key={i} className="border-b border-white/5">
-            <td className="py-2.5 px-3 text-white/90">{c.category}</td>
-            <td className="py-2.5 px-3 text-center text-white/70">{c.current}</td>
-            <td className="py-2.5 px-3 text-center text-[#F4845F] font-medium">{c.recommended}</td>
+          <tr key={i} className="border-b border-gray-100">
+            <td className="py-2.5 px-3 text-gray-800">{c.category}</td>
+            <td className="py-2.5 px-3 text-center text-gray-500">{c.current}</td>
+            <td className="py-2.5 px-3 text-center text-orange-500 font-medium">{c.recommended}</td>
             <td className="py-2.5 px-3 text-center">
-              {c.direction === 'up' && <span className="text-green-400">▲</span>}
-              {c.direction === 'down' && <span className="text-red-400">▼</span>}
-              {c.direction === 'stable' && <span className="text-white/40">●</span>}
+              {c.direction === 'up' && <span className="text-green-500">▲</span>}
+              {c.direction === 'down' && <span className="text-red-500">▼</span>}
+              {c.direction === 'stable' && <span className="text-gray-300">●</span>}
             </td>
           </tr>
         ))}
@@ -381,6 +387,20 @@ const MixComparison = ({ comparison }: { comparison: { category: string; current
     </table>
   </div>
 );
+
+// ─── Sidebar menu items ──────────────────────────────────────────
+
+const sidebarMenuItems = [
+  { icon: Home, labelIndex: 0, active: false },
+  { icon: Upload, labelIndex: 1, active: false },
+  { icon: Target, labelIndex: 2, active: false },
+  { icon: Database, labelIndex: 3, active: false },
+  { icon: Brain, labelIndex: 4, active: true },
+  { icon: LayoutGrid, labelIndex: 5, active: false },
+];
+
+// Wizard icons for favorites bar
+const wizardIcons = [Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap, Target];
 
 // ─── Main component ──────────────────────────────────────────────
 
@@ -440,13 +460,6 @@ const I6SignalDemo = memo(() => {
     startAnimation(sc);
   };
 
-  const sidebarItems = [
-    { icon: Home, label: t.sidebar[0], active: false },
-    { icon: Database, label: t.sidebar[1], active: false },
-    { icon: Brain, label: t.sidebar[2], active: true },
-    { icon: LayoutGrid, label: t.sidebar[3], active: false },
-  ];
-
   return (
     <section className="py-16 md:py-24 px-4 relative z-[10]">
       <div className="max-w-6xl mx-auto">
@@ -461,104 +474,201 @@ const I6SignalDemo = memo(() => {
         </div>
 
         {/* Demo Container */}
-        <div className="rounded-xl border border-white/10 overflow-hidden bg-[#080f1e] shadow-2xl">
-          <div className="flex h-[560px] md:h-[520px]">
-            {/* Sidebar — hidden on mobile */}
-            <div className="hidden md:flex flex-col w-48 bg-[#060d1a] border-r border-white/10 py-4 flex-shrink-0">
-              <div className="px-4 mb-6">
-                <span className="text-[#F4845F] font-bold text-lg">i6</span>
-                <span className="text-white font-bold text-lg">Signal</span>
+        <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10">
+          {/* ── Intelliboard Header ── */}
+          <div className="flex items-center justify-between px-4 md:px-6 py-3" style={{ background: 'linear-gradient(135deg, #0F1F36, #1E4A94, #0F1F36)' }}>
+            <div className="flex items-center gap-2">
+              <span className="text-orange-400 font-bold text-xl">i6</span>
+              <span className="text-white font-bold text-lg tracking-tight">Intelliboard</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-orange-400 text-[10px] font-semibold uppercase tracking-wide">GRUPO ALPHATEK S.A.</p>
+                <p className="text-white text-xs font-medium">Ricardo Mendes</p>
+                <p className="text-white/50 text-[10px]">ricardo@alphatek.com.br</p>
               </div>
-              <nav className="flex-1 space-y-1 px-2">
-                {sidebarItems.map((item) => (
-                  <div
-                    key={item.label}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                      item.active
-                        ? 'bg-[#F4845F]/10 text-[#F4845F] font-medium'
-                        : 'text-white/40 hover:text-white/60 hover:bg-white/5'
-                    }`}
-                  >
-                    <item.icon className="w-4 h-4 flex-shrink-0" />
-                    <span>{item.label}</span>
+              <div className="h-9 w-9 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 ring-2 ring-white/40 flex items-center justify-center text-white text-xs font-bold">
+                RM
+              </div>
+            </div>
+          </div>
+
+          {/* ── Main body ── */}
+          <div className="flex h-[520px] md:h-[500px]">
+            {/* Sidebar — light theme, hidden on mobile */}
+            <div className="hidden md:flex flex-col w-52 bg-white border-r border-gray-200 flex-shrink-0">
+              {/* Angle dropdown */}
+              <div className="px-3 py-3 border-b border-gray-100">
+                <div className="flex items-center gap-2 px-2 py-2 rounded-lg bg-orange-50/60 border-l-2 border-orange-500">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-gray-800 text-xs font-semibold uppercase tracking-wide">ÂNGULO</p>
+                    <p className="text-gray-500 text-[10px]">Forecast</p>
                   </div>
-                ))}
+                  <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
+                </div>
+              </div>
+
+              {/* Menu items */}
+              <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto">
+                {sidebarMenuItems.map((item) => {
+                  const label = t.sidebar[item.labelIndex];
+                  return (
+                    <div
+                      key={label}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs transition-colors cursor-default ${
+                        item.active
+                          ? 'bg-gradient-to-r from-orange-50 to-blue-50 text-orange-600 font-semibold border-l-2 border-orange-500'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      <item.icon className="w-4 h-4 flex-shrink-0" />
+                      <span className="truncate">{label}</span>
+                    </div>
+                  );
+                })}
               </nav>
+
+              {/* Footer */}
+              <div className="border-t border-gray-100 px-2 py-2 space-y-0.5">
+                <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-gray-500 hover:bg-gray-50 cursor-default">
+                  <BarChart3 className="w-4 h-4" />
+                  <span className="truncate">Billing Analytics</span>
+                </div>
+                <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-gray-500 hover:bg-gray-50 cursor-default">
+                  <BarChart3 className="w-4 h-4" />
+                  <span>Analytics</span>
+                </div>
+                <div className="flex items-center justify-between px-3 py-2">
+                  <Settings className="w-4 h-4 text-gray-400" />
+                  <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                    <ChevronRight className="w-4 h-4 rotate-180" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col min-w-0">
+            {/* Favorites bar — hidden on mobile */}
+            <div className="hidden md:flex flex-col w-10 bg-white/95 backdrop-blur-sm border-r border-gray-200/50 flex-shrink-0 items-center py-3 gap-1.5">
+              {/* Wizard icons */}
+              {wizardIcons.map((WizIcon, i) => (
+                <button
+                  key={i}
+                  className="h-7 w-7 rounded-full flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-orange-500 transition-colors"
+                >
+                  <WizIcon className="h-3.5 w-3.5" />
+                </button>
+              ))}
+              {/* Separator */}
+              <div className="w-5 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-1" />
+              {/* Heart favorites */}
+              {[0, 1, 2, 3, 4].map((i) => (
+                <button key={`heart-${i}`} className="h-6 w-6 rounded-full flex items-center justify-center text-orange-300 hover:text-orange-500 transition-colors">
+                  <Heart className="h-3.5 w-3.5 fill-current" />
+                </button>
+              ))}
+            </div>
+
+            {/* Main Chat Area — white background */}
+            <div className="flex-1 flex flex-col min-w-0 bg-white">
               {/* Chat content */}
-              <div ref={chatRef} className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
-                {/* User message */}
-                {(phase === 'typing' || phase === 'responding') && (
-                  <div className="flex justify-end animate-fade-in">
-                    <div className="bg-[#F4845F]/15 border border-[#F4845F]/20 rounded-2xl rounded-tr-md px-4 py-2.5 max-w-[85%]">
-                      <p className="text-white text-sm">{typedText}<span className={phase === 'typing' ? 'animate-pulse' : 'hidden'}>|</span></p>
+              <div ref={chatRef} className="flex-1 overflow-y-auto px-4 md:px-8 lg:px-16 pt-6 pb-6">
+                <div className="max-w-4xl mx-auto space-y-4">
+                  {/* Empty state or user message */}
+                  {phase === 'idle' && (
+                    <div className="flex items-center justify-center pt-20 pb-10">
+                      <p className="text-xl text-gray-300 font-light tracking-wide">{t.emptyState}</p>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* AI Response */}
-                {showResponse && (
-                  <div className="animate-fade-in">
-                    <div className="bg-white/[0.03] border border-white/10 rounded-2xl rounded-tl-md px-4 md:px-5 py-4 max-w-full">
-                      {/* Title */}
-                      <h3 className="text-white font-bold text-base md:text-lg mb-3">{scenario.title}</h3>
-
-                      {/* Executive Analysis */}
-                      <h4 className="text-[#F4845F] font-semibold text-sm mb-1.5">{t.executiveAnalysis}</h4>
-                      <p className="text-white/70 text-sm leading-relaxed mb-3">{scenario.analysis}</p>
-
-                      {/* Visualization */}
-                      {activeScenario === 'supply' && 'table' in scenario && (
-                        <SupplyTable data={(scenario as typeof t.scenarios.supply).table} />
-                      )}
-                      {activeScenario === 'forecast' && 'chartData' in scenario && (
-                        <ForecastChart
-                          data={(scenario as typeof t.scenarios.forecast).chartData}
-                          note={(scenario as typeof t.scenarios.forecast).chartNote}
-                          lang={lang}
-                        />
-                      )}
-                      {activeScenario === 'pricing' && 'metrics' in scenario && (
-                        <PricingMetrics metrics={(scenario as typeof t.scenarios.pricing).metrics} />
-                      )}
-                      {activeScenario === 'comercial' && 'ranking' in scenario && (
-                        <ComercialRanking ranking={(scenario as typeof t.scenarios.comercial).ranking} />
-                      )}
-                      {activeScenario === 'mix' && 'comparison' in scenario && (
-                        <MixComparison comparison={(scenario as typeof t.scenarios.mix).comparison} />
-                      )}
-
-                      {/* Recommended Actions */}
-                      <h4 className="text-[#F4845F] font-semibold text-sm mt-4 mb-2">{t.recommendedActions}</h4>
-                      <ol className="space-y-1.5 text-sm">
-                        {scenario.actions.map((a, i) => (
-                          <li key={i} className="text-white/70 flex gap-2">
-                            <span className="text-[#F4845F] font-bold flex-shrink-0">{i + 1}.</span>
-                            <span><strong className="text-white/90">{a.bold}</strong> {a.text}</span>
-                          </li>
-                        ))}
-                      </ol>
-
-                      {/* Suggested Questions */}
-                      <h4 className="text-white/50 font-semibold text-xs mt-4 mb-1.5">{t.suggestedQuestions}</h4>
-                      <ul className="space-y-1">
-                        {scenario.questions.map((q, i) => (
-                          <li key={i} className="text-white/40 text-xs flex items-start gap-1.5">
-                            <ChevronRight className="w-3 h-3 mt-0.5 text-[#F4845F]/50 flex-shrink-0" />
-                            <span>{q}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  {/* User message */}
+                  {(phase === 'typing' || phase === 'responding') && (
+                    <div className="flex justify-end animate-fade-in">
+                      <div className="bg-gradient-to-br from-orange-50/80 to-blue-50/60 border border-gray-200/50 rounded-2xl px-4 py-2.5 max-w-[85%] shadow-sm">
+                        <p className="text-gray-800 text-sm">{typedText}<span className={phase === 'typing' ? 'animate-pulse text-orange-400' : 'hidden'}>|</span></p>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+
+                  {/* Loading dots */}
+                  {phase === 'typing' && typedText === t.scenarios[activeScenario].question && (
+                    <div className="flex gap-1.5 px-2 py-3">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                  )}
+
+                  {/* AI Response */}
+                  {showResponse && (
+                    <div className="animate-fade-in">
+                      <div className="max-w-full">
+                        {/* Title */}
+                        <h3 className="text-gray-900 font-bold text-base md:text-lg mb-3">{scenario.title}</h3>
+
+                        {/* Executive Analysis */}
+                        <h4 className="text-orange-500 font-semibold text-sm mb-1.5">{t.executiveAnalysis}</h4>
+                        <p className="text-gray-600 text-sm leading-relaxed mb-3">{scenario.analysis}</p>
+
+                        {/* Visualization */}
+                        {activeScenario === 'supply' && 'table' in scenario && (
+                          <SupplyTable data={(scenario as typeof t.scenarios.supply).table} />
+                        )}
+                        {activeScenario === 'forecast' && 'chartData' in scenario && (
+                          <ForecastChart
+                            data={(scenario as typeof t.scenarios.forecast).chartData}
+                            note={(scenario as typeof t.scenarios.forecast).chartNote}
+                            lang={lang}
+                          />
+                        )}
+                        {activeScenario === 'pricing' && 'metrics' in scenario && (
+                          <PricingMetrics metrics={(scenario as typeof t.scenarios.pricing).metrics} />
+                        )}
+                        {activeScenario === 'comercial' && 'ranking' in scenario && (
+                          <ComercialRanking ranking={(scenario as typeof t.scenarios.comercial).ranking} />
+                        )}
+                        {activeScenario === 'mix' && 'comparison' in scenario && (
+                          <MixComparison comparison={(scenario as typeof t.scenarios.mix).comparison} />
+                        )}
+
+                        {/* Recommended Actions */}
+                        <h4 className="text-orange-500 font-semibold text-sm mt-4 mb-2">{t.recommendedActions}</h4>
+                        <ol className="space-y-1.5 text-sm">
+                          {scenario.actions.map((a, i) => (
+                            <li key={i} className="text-gray-600 flex gap-2">
+                              <span className="text-orange-500 font-bold flex-shrink-0">{i + 1}.</span>
+                              <span><strong className="text-gray-800">{a.bold}</strong> {a.text}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* Scenario tabs + input */}
-              <div className="border-t border-white/10 bg-[#060d1a] p-3 md:p-4">
+              {/* Suggested Questions bar */}
+              {showResponse && (
+                <div className="px-4 md:pl-14 py-2.5 bg-gradient-to-br from-orange-50/80 to-amber-50/80 border-t border-orange-200/30">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <Lightbulb className="w-3.5 h-3.5 text-orange-500" />
+                    <span className="text-xs font-medium text-orange-800">{t.suggestedQuestions}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {scenario.questions.slice(0, 3).map((q, i) => (
+                      <button
+                        key={i}
+                        className="text-[11px] text-gray-600 hover:bg-orange-100/50 hover:text-orange-900 px-2.5 py-1 rounded-lg transition-colors text-left"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Scenario tabs + Input bar */}
+              <div className="border-t border-gray-200/50 bg-white/95 backdrop-blur-sm p-3 md:p-4 md:pl-14">
+                {/* Scenario tabs */}
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
                     <button
@@ -566,22 +676,29 @@ const I6SignalDemo = memo(() => {
                       onClick={() => handleScenarioClick(sc)}
                       className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                         activeScenario === sc
-                          ? 'bg-[#F4845F] text-white'
-                          : 'bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/70'
+                          ? 'bg-orange-500 text-white shadow-sm'
+                          : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
                       }`}
                     >
                       {t.scenarios[sc].label}
                     </button>
                   ))}
                 </div>
-                <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                {/* Input row */}
+                <div className="flex items-center gap-2">
+                  <button className="h-10 w-10 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors flex-shrink-0">
+                    <BookOpen className="w-4 h-4" />
+                  </button>
+                  <button className="h-10 w-10 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors flex-shrink-0">
+                    <RotateCcw className="w-4 h-4" />
+                  </button>
                   <input
                     type="text"
                     readOnly
                     placeholder={t.placeholder}
-                    className="flex-1 bg-transparent text-white/60 text-sm placeholder:text-white/30 outline-none"
+                    className="flex-1 h-12 rounded-full border border-gray-200 bg-white px-5 text-sm text-gray-700 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all"
                   />
-                  <button className="bg-[#F4845F] hover:bg-[#e5734f] text-white rounded-lg p-2 transition-colors flex-shrink-0">
+                  <button className="h-12 w-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-md hover:shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all flex items-center justify-center flex-shrink-0">
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
