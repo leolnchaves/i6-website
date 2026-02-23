@@ -77,7 +77,7 @@ const content = {
       },
       pricing: {
         label: 'Pricing',
-        question: 'Qual o preço ótimo para o produto X nesta região?',
+        question: 'Qual o preço ótimo para o Ibuprofeno 400mg nesta região?',
         title: 'Otimização de Preço — Ibuprofeno 400mg (Região Sudeste)',
         analysis: 'A análise de elasticidade-preço para o Ibuprofeno 400mg na Região Sudeste indica que o preço atual de R$ 18,90 está 7% acima do ponto ótimo. A redução para R$ 17,50 maximizaria a margem de contribuição total, com aumento estimado de 12% no volume e ganho líquido de R$ 43.000/mês na região.',
         metrics: [
@@ -229,7 +229,7 @@ const content = {
       },
       pricing: {
         label: 'Pricing',
-        question: 'What is the optimal price for product X in this region?',
+        question: 'What is the optimal price for Ibuprofen 400mg in this region?',
         title: 'Price Optimization — Ibuprofen 400mg (Southeast Region)',
         analysis: 'Price elasticity analysis for Ibuprofen 400mg in the Southeast Region indicates the current price of $3.80 is 7% above the optimal point. Reducing to $3.50 would maximize total contribution margin, with an estimated 12% volume increase and net gain of $8,600/month in the region.',
         metrics: [
