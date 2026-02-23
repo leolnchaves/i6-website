@@ -8,7 +8,7 @@ const CTAFinal = () => {
     pt: {
       lineStart: 'Seus dados já têm as respostas.\nSó falta ',
       lineHighlight: 'movimento.',
-      cta: 'Movimente seus dados',
+      cta: 'Pronto para transformar dados em lucro?',
     },
     en: {
       lineStart: 'Your data already has the answers.\nAll it needs is ',
