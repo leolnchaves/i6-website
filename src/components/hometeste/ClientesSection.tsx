@@ -6,8 +6,8 @@ const ClientesSection = () => {
   const { language } = useLanguage();
 
   const title = language === 'pt'
-    ? 'Empresas que já se movimentam com a gente'
-    : 'Companies already moving with us';
+    ? 'Líderes que dominam a Inteligência de Movimento.'
+    : 'Leaders who master Movement Intelligence.';
 
   if (loading || partners.length === 0) return null;
 
