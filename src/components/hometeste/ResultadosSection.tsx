@@ -115,12 +115,16 @@ const ResultadosSection = () => {
                           </div>
                         </div>
                       ) : m.richLabel ? (
-                        <span className="text-white/60 text-sm">
-                          <span className="text-base font-bold text-[#F4845F]">+36%</span>{' '}
-                          {language === 'pt' ? 'positivação de produtos' : 'product activation'}{' '}
-                          <span className="text-base font-bold text-[#F4845F]">+23%</span>{' '}
-                          {language === 'pt' ? 'ticket médio por PDV.' : 'average ticket per POS.'}
-                        </span>
+                        <div className="flex gap-4">
+                          <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4845F]">+36%</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'positivação de produtos' : 'product activation'}</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4845F]">+23%</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'ticket médio por PDV.' : 'average ticket per POS.'}</span>
+                          </div>
+                        </div>
                       ) : (
                         <>
                           <span className="text-base font-bold text-[#F4845F] block">{m.value}</span>
