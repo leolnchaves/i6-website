@@ -147,9 +147,9 @@ const content = {
       },
       pdv: {
         label: 'Comportamento',
-        question: 'Qual o comportamento de compra e recompra da Losartana Potássica 50mg na região do Vale do Paraíba?',
-        title: 'Comportamento de Compra e Recompra — Losartana Potássica 50mg (Vale do Paraíba)',
-        analysis: 'A análise de comportamento de PDV na região do Vale do Paraíba revela que a Losartana Potássica 50mg apresenta taxa de recompra crescente nos últimos 6 meses, passando de 62% em setembro para 78% em fevereiro. O ciclo médio de recompra é de 28 dias, alinhado à posologia padrão. Farmácias com programa de fidelidade apresentam taxa de recompra 15pp superior à média regional, indicando forte correlação entre ações de retenção e recorrência.',
+        question: 'Qual o comportamento de compra e recompra da Losartana Potássica 50mg na região de São Paulo?',
+        title: 'Comportamento de Compra e Recompra — Losartana Potássica 50mg (São Paulo)',
+        analysis: 'A análise de comportamento de PDV na região de São Paulo revela que a Losartana Potássica 50mg apresenta taxa de recompra crescente nos últimos 6 meses, passando de 62% em setembro para 78% em fevereiro. O ciclo médio de recompra é de 28 dias, alinhado à posologia padrão. Farmácias com programa de fidelidade apresentam taxa de recompra 15pp superior à média regional, indicando forte correlação entre ações de retenção e recorrência.',
         barChartData: [
           { month: 'Set', compra: 4200, recompra: 2600 },
           { month: 'Out', compra: 4500, recompra: 2950 },
@@ -302,9 +302,9 @@ const content = {
       },
       pdv: {
         label: 'Behavior',
-        question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the Paraíba Valley region?',
-        title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (Paraíba Valley)',
-        analysis: 'POS behavior analysis in the Paraíba Valley region reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
+        question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the São Paulo region?',
+        title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (São Paulo)',
+        analysis: 'POS behavior analysis in the São Paulo region reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
         barChartData: [
           { month: 'Sep', compra: 4200, recompra: 2600 },
           { month: 'Oct', compra: 4500, recompra: 2950 },
