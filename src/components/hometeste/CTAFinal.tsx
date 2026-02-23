@@ -13,7 +13,7 @@ const CTAFinal = () => {
     en: {
       lineStart: 'Your data already has the answers.\nAll it needs is ',
       lineHighlight: 'movement.',
-      cta: 'Move your data',
+      cta: 'Ready to turn data into profit?',
     },
   }[language];
 
