@@ -14,7 +14,7 @@ We transform real-time behavioral signals into immediate commercial decisions, i
 - Deliver contextual product recommendations in real time  
 - Activate the right offer at the decision moment  
 
-**Business Impact:**  
+**Business Results:**  
 Higher conversion from existing traffic. Incremental revenue without increasing acquisition spend.
 
 ---
@@ -35,7 +35,7 @@ We anticipate the next purchase, activate cross-sell and upsell opportunities at
 - Reduce churn through proactive activation  
 - Orchestrate personalization across channels  
 
-**Business Impact:**  
+**Business Results:**  
 Higher LTV. Increased purchase frequency. More predictable recurring revenue.
 
 ---
@@ -56,7 +56,7 @@ We align assortment, pricing, and commercial targets in real time, transforming 
 - Alignment with revenue and margin targets  
 - Behavioral forecasting at POS level  
 
-**Business Impact:**  
+**Business Results:**  
 Faster sell-out. Reduced stock distortion. Stronger margin performance across locations.
 
 ---
@@ -77,7 +77,7 @@ We identify customers with the highest probability of conversion before activati
 - Intelligent lead prioritization  
 - Timing optimization for activation  
 
-**Business Impact:**  
+**Business Results:**  
 Higher conversion rates. Lower acquisition costs. Stronger return on marketing investment.
 
 ---
@@ -98,7 +98,7 @@ We dynamically adjust prices based on demand behavior, elasticity, and lifecycle
 - Lifecycle-aware pricing strategy  
 - Margin optimization logic  
 
-**Business Impact:**  
+**Business Results:**  
 Improved margin. Healthier volume. Stronger competitive positioning.
 
 ---
@@ -119,7 +119,7 @@ We use adaptive, self-learning models to anticipate demand shifts, seasonality, 
 - Trend and seasonality detection  
 - Inventory and supply chain alignment  
 
-**Business Impact:**  
+**Business Results:**  
 Higher forecast accuracy. Reduced stock imbalance. Greater operational agility.
 
 ---
