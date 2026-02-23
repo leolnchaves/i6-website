@@ -9,7 +9,7 @@ const SolutionsHero = memo(() => {
   const heroContent = solutionsHeroData[language] || solutionsHeroData.en;
 
   return (
-    <section className="w-full min-h-[70vh] flex items-center pt-20 pb-32 relative bg-[#0B1224]">
+    <section className="w-full min-h-[70vh] flex items-center justify-center pt-24 pb-40 relative bg-[#0B1224]">
       <HorizontalWaves />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
