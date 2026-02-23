@@ -2,7 +2,6 @@
 import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
-import HorizontalWaves from '@/components/solutions/HorizontalWaves';
 
 const SolutionsHero = memo(() => {
   const { language } = useLanguage();
@@ -10,7 +9,6 @@ const SolutionsHero = memo(() => {
 
   return (
     <section className="w-full min-h-screen flex items-center justify-center pt-24 pb-52 relative bg-[#0B1224]">
-      <HorizontalWaves />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">

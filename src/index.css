@@ -739,3 +739,19 @@ html {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
 }
+
+/* Vertical waves - horizontal breathing animations */
+@keyframes wave-breathe-x-1 {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(8px); }
+}
+
+@keyframes wave-breathe-x-2 {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(-5px); }
+}
+
+@keyframes wave-breathe-x-3 {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(12px); }
+}
