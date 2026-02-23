@@ -80,12 +80,15 @@ const content = {
         question: 'Qual o preço ótimo para o Ibuprofeno 400mg nesta região?',
         title: 'Otimização de Preço — Ibuprofeno 400mg (Região Sudeste)',
         analysis: 'A análise de elasticidade-preço para o Ibuprofeno 400mg na Região Sudeste indica que o preço atual de R$ 18,90 está 7% acima do ponto ótimo. A redução para R$ 17,50 maximizaria a margem de contribuição total, com aumento estimado de 12% no volume e ganho líquido de R$ 43.000/mês na região.',
-        metrics: [
-          { label: 'Preço Atual', value: 'R$ 18,90', sub: 'Acima do ótimo' },
-          { label: 'Preço Ótimo', value: 'R$ 17,50', sub: 'Maximiza margem total' },
-          { label: 'Elasticidade', value: '-1.34', sub: 'Demanda elástica' },
-          { label: 'Ganho Estimado', value: '+R$ 43k/mês', sub: '+12% volume' },
-        ],
+        table: {
+          headers: ['Indicador', 'Valor', 'Observação'],
+          rows: [
+            ['Preço Atual', 'R$ 18,90', 'Acima do ótimo'],
+            ['Preço Ótimo', 'R$ 17,50', 'Maximiza margem total'],
+            ['Elasticidade', '-1.34', 'Demanda elástica'],
+            ['Ganho Estimado', '+R$ 43k/mês', '+12% volume'],
+          ],
+        },
         actions: [
           { bold: 'Implementar preço sugerido', text: 'de R$ 17,50 em fase piloto em 50 PDVs da Grande SP.' },
           { bold: 'Monitorar elasticidade cruzada', text: '— avaliar impacto em genéricos concorrentes.' },
@@ -232,12 +235,15 @@ const content = {
         question: 'What is the optimal price for Ibuprofen 400mg in this region?',
         title: 'Price Optimization — Ibuprofen 400mg (Southeast Region)',
         analysis: 'Price elasticity analysis for Ibuprofen 400mg in the Southeast Region indicates the current price of $3.80 is 7% above the optimal point. Reducing to $3.50 would maximize total contribution margin, with an estimated 12% volume increase and net gain of $8,600/month in the region.',
-        metrics: [
-          { label: 'Current Price', value: '$3.80', sub: 'Above optimal' },
-          { label: 'Optimal Price', value: '$3.50', sub: 'Maximizes total margin' },
-          { label: 'Elasticity', value: '-1.34', sub: 'Elastic demand' },
-          { label: 'Est. Gain', value: '+$8.6k/mo', sub: '+12% volume' },
-        ],
+        table: {
+          headers: ['Indicator', 'Value', 'Note'],
+          rows: [
+            ['Current Price', '$3.80', 'Above optimal'],
+            ['Optimal Price', '$3.50', 'Maximizes total margin'],
+            ['Elasticity', '-1.34', 'Elastic demand'],
+            ['Est. Gain', '+$8.6k/mo', '+12% volume'],
+          ],
+        },
         actions: [
           { bold: 'Implement suggested price', text: 'of $3.50 in a pilot phase across 50 POS in the metro area.' },
           { bold: 'Monitor cross-elasticity', text: '— assess impact on competing generics.' },
@@ -338,10 +344,9 @@ const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[][] } }
       <tbody>
         {data.rows.map((row, ri) => (
           <tr key={ri} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-            <td className="py-2.5 px-3 text-gray-600 font-mono text-xs">{row[0]}</td>
-            <td className="py-2.5 px-3 text-gray-800">{row[1]}</td>
-            <td className="py-2.5 px-3 text-gray-800 font-bold">{row[2]}</td>
-            <td className="py-2.5 px-3 text-gray-800">{row[3]}</td>
+            {row.map((cell, ci) => (
+              <td key={ci} className={`py-2.5 px-3 ${ci === 0 ? 'text-gray-600 font-mono text-xs' : ci === 2 ? 'text-gray-800 font-bold' : 'text-gray-800'}`}>{cell}</td>
+            ))}
           </tr>
         ))}
       </tbody>
@@ -371,17 +376,8 @@ const ForecastChart = ({ data, note, lang }: { data: { month: string; seasonalit
   </div>
 );
 
-const PricingMetrics = ({ metrics }: { metrics: { label: string; value: string; sub: string }[] }) => (
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 my-4">
-    {metrics.map((m, i) => (
-      <div key={i} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-        <p className="text-gray-400 text-xs">{m.label}</p>
-        <p className="text-gray-900 text-xl font-bold mt-1">{m.value}</p>
-        <p className="text-orange-500 text-xs mt-0.5">{m.sub}</p>
-      </div>
-    ))}
-  </div>
-);
+
+
 
 const ComercialRanking = ({ ranking }: { ranking: { rank: number; territory: string; gap: string; score: number; potential: string }[] }) => (
   <div className="space-y-2 my-4">
@@ -796,8 +792,8 @@ const I6SignalDemo = memo(() => {
                             lang={lang}
                           />
                         )}
-                        {activeScenario === 'pricing' && 'metrics' in scenario && (
-                          <PricingMetrics metrics={(scenario as typeof t.scenarios.pricing).metrics} />
+                        {activeScenario === 'pricing' && 'table' in scenario && (
+                          <SupplyTable data={(scenario as typeof t.scenarios.pricing).table} />
                         )}
                         {activeScenario === 'comercial' && 'ranking' in scenario && (
                           <ComercialRanking ranking={(scenario as typeof t.scenarios.comercial).ranking} />
