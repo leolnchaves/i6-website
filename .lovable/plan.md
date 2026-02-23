@@ -1,50 +1,51 @@
 
-# Ajustar cenario Supply: horizonte de 3 meses e remover coluna "Acao Sugerida"
 
-## Mudancas
+# Redesign do seletor de cenarios: barra continua com blur
 
-### Arquivo: `src/components/solutions/I6SignalDemo.tsx`
+## Problema
+Os botoes individuais com gap entre eles ocupam muito espaco vertical e nao ficam harmonicos. O usuario quer voltar ao layout texto em cima / botoes embaixo, mas com os botoes compactados numa barra continua estilo segmented control.
 
-**1. Dados PT (linhas 32-54)**
+## Solucao
+Substituir os botoes individuais por uma barra unica com backdrop-blur escuro, onde cada opcao e um segmento. A opcao selecionada recebe um highlight com blur laranja. Isso reduz o espaco vertical e cria um visual mais coeso.
 
-- Pergunta: "Quais SKUs estao em risco de ruptura nos proximos 3 meses?"
-- Titulo: "Analise de Risco de Ruptura -- Proximo Trimestre (Mar-Mai/2026)"
-- Analise: reescrita para horizonte trimestral, com linguagem de planejamento em vez de emergencia
-- Tabela: remover coluna "Acao Sugerida" (headers e cada row passam de 5 para 4 colunas)
-- Acoes recomendadas: ajustadas para horizonte trimestral
+## Detalhes tecnicos
 
-**2. Dados EN (linhas 184-206)**
+### Arquivo: `src/components/solutions/I6SignalDemo.tsx` (linhas 618-636)
 
-- Mesmas mudancas em ingles
+Substituir o bloco do subtitle + scenario selector por:
 
-**3. Componente SupplyTable (linhas 328-355)**
+```tsx
+{/* Subtitle */}
+<p className="text-white/40 text-sm max-w-md mb-4 leading-relaxed">{t.sectionSubtitle}</p>
 
-- Remover a renderizacao da 5a coluna (`row[4]`) com cor laranja
-- Manter todas as cores de texto como preto/cinza escuro (remover `text-red-500`, `text-amber-500`, `text-green-500` da coluna de probabilidade)
-
----
-
-### Detalhes tecnicos
-
-**PT - Novos dados:**
-```
-question: 'Quais SKUs estao em risco de ruptura nos proximos 3 meses?'
-title: 'Analise de Risco de Ruptura -- Proximo Trimestre (Mar-Mai/2026)'
-analysis: 'A projecao de demanda vs capacidade de reposicao para os proximos 90 dias indica 5 SKUs com probabilidade elevada de ruptura. O SKU 44210 (Dipirona 500mg) lidera o risco (94%) devido a sazonalidade de outono e lead time de 22 dias do fornecedor principal. O impacto acumulado estimado e de R$ 510.000 em receita no trimestre caso nenhuma acao preventiva seja tomada.'
-headers: ['SKU', 'Produto', 'Prob. Ruptura', 'Estoque (dias)']
-rows sem a 5a coluna, com valores de estoque ajustados para horizonte trimestral:
-  ['44210', 'Dipirona 500mg 20cp', '94%', '18']
-  ['31087', 'Omeprazol 20mg 28cp', '87%', '24']
-  ['28901', 'Losartana 50mg 30cp', '72%', '38']
-  ['55432', 'Amoxicilina 500mg 21cp', '61%', '45']
-  ['19876', 'Metformina 850mg 30cp', '48%', '62']
+{/* Scenario selector - continuous bar */}
+<div className="flex justify-center mb-6">
+  <div className="inline-flex rounded-full p-1 backdrop-blur-md bg-white/5 border border-white/10">
+    {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
+      <button
+        key={sc}
+        onClick={() => handleScenarioClick(sc)}
+        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+          activeScenario === sc
+            ? 'bg-orange-500/80 backdrop-blur-sm text-white shadow-lg shadow-orange-500/30'
+            : 'text-white/60 hover:text-white/90'
+        }`}
+      >
+        {t.scenarios[sc].label}
+      </button>
+    ))}
+  </div>
+</div>
 ```
 
-Acoes ajustadas para planejamento trimestral (ex: renegociar contratos, ajustar forecast, revisar politica de estoque de seguranca).
+Mudancas principais:
+- Layout volta a texto em cima, botoes embaixo (sem flex-row)
+- Subtitulo visivel sempre (remove `hidden md:block`), com `max-w-md` e `mb-4` compacto
+- Barra unica com `inline-flex rounded-full` e `backdrop-blur-md bg-white/5 border border-white/10` (blur escuro)
+- Padding interno `p-1` para que os segmentos fiquem "dentro" da barra
+- Botao ativo: `bg-orange-500/80 backdrop-blur-sm` (blur laranja)
+- Botao inativo: sem background, apenas texto `text-white/60`
+- `py-1.5` em vez de `py-2` para compactar a altura
+- Remove gap entre botoes (sao contiguos dentro da barra)
+- Reduz espaco total: menos mb, menos padding vertical
 
-**EN - Mesma estrutura traduzida.**
-
-**SupplyTable - cores sempre pretas:**
-- Headers: `text-gray-700` (em vez de `text-gray-500`)
-- Todas as colunas de dados: `text-gray-800` (remover probColor condicional e cor laranja da ultima coluna)
-- Renderizar apenas 4 colunas (indices 0-3)
