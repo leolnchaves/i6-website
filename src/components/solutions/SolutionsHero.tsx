@@ -16,12 +16,15 @@ const SolutionsHero = memo(() => {
         <div className="text-center max-w-4xl mx-auto text-white">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="block mb-2">
-              {heroContent.mainTitle}
+              {heroContent.mainTitle}{' '}
+              <span className="text-[#F4845F]" style={{
+                textShadow: '0 0 30px rgba(244,132,95,0.3), 0 0 60px rgba(244,132,95,0.15)'
+              }}>
+                {heroContent.mainSubtitle}
+              </span>
             </span>
-            <span className="block text-[#F4845F]" style={{
-              textShadow: '0 0 30px rgba(244,132,95,0.3), 0 0 60px rgba(244,132,95,0.15)'
-            }}>
-              {heroContent.mainSubtitle}
+            <span className="block">
+              {heroContent.mainSuffix}
             </span>
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-white/60 mb-8 leading-relaxed">
