@@ -26,7 +26,7 @@
 
 **Title:** Transforme Dados de Clientes em Receita Recorrente
 
-**Overview:** Você já tem dados dos seus clientes. O problema é que a maior parte deles é subutilizada. A Infinity6 antecipa o próximo movimento de cada cliente, ativa a oferta certa no momento certo e desbloqueia oportunidades de cross-sell e upsell que aumentam retenção, frequência e lifetime value. Pare de reagir ao comportamento passado. Comece a conduzir a próxima compra.
+**Overview:** Você já tem dados dos seus clientes. O problema é que a maior parte deles é subutilizada. Antecipamos o próximo movimento de cada cliente, ativando a oferta certa no momento certo e desbloqueando oportunidades de cross-sell e upsell que aumentam retenção, frequência e lifetime value. Pare de reagir ao comportamento passado. Comece a conduzir a próxima compra.
 
 **Key Features:**
 - Antecipe necessidades dos clientes antes que eles peçam
