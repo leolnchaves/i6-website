@@ -19,7 +19,7 @@ const RESPONSE_DELAY = 600;
 const content = {
   pt: {
     sectionTitle: 'Veja o i6Signal em ação',
-    sectionSubtitle: 'Explore como a inteligência preditiva do i6Signal entrega insights acionáveis em tempo real.',
+    sectionSubtitle: 'Explore como a inteligência preditiva do i6Signal entrega insights acionáveis em tempo real',
     placeholder: 'Digite sua pergunta...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Análise Executiva',
@@ -518,7 +518,7 @@ const I6SignalDemo = memo(() => {
         {/* Section Header */}
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{t.sectionTitle}</h2>
-          <p className="text-white/50 max-w-2xl mx-auto">{t.sectionSubtitle}</p>
+          <p className="text-white/50 max-w-4xl mx-auto">{t.sectionSubtitle}</p>
         </div>
 
         {/* Demo Container */}
