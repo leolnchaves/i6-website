@@ -1,39 +1,33 @@
 
-## Internationalization of English Scenario Responses
+
+## Add Cookie Banner to New Pages (HomeTeste and Solutions)
 
 ### Problem
-The English versions of i6Signal scenarios contain Brazilian city names and regional references that would be confusing to international audiences. Portuguese versions should remain unchanged.
+The cookie consent banner only appears on pages wrapped by `Layout` (success-stories, contact, privacy-policy, etc.). The two new pages -- **HomeTeste** (`/`) and **Solutions** (`/solutions`) -- bypass `Layout` and use their own `HeaderNovo`/`FooterNovo`, so the cookie banner never renders on them.
 
-### Scenarios to Update (English only)
+### Solution
+Add the `CookieConsentManager` component directly to both `HomeTeste.tsx` and `Solutions.tsx`.
 
-**File:** `src/components/solutions/I6SignalDemo.tsx`
+### Changes
 
-#### 1. Commercial (lines 258-278) - MAIN ISSUE
-Current Brazilian cities in chart data and actions:
-- "Metro BH" / "Campinas" / "Curitiba" / "P. Alegre"
+**1. `src/pages/HomeTeste.tsx`**
+- Import `CookieConsentManager`
+- Add `<CookieConsentManager />` at the end of the component's JSX (before the closing wrapper div)
 
-Replace with internationally recognizable cities:
-- "New York" / "Chicago" / "Los Angeles" / "Miami"
+**2. `src/pages/Solutions.tsx`**
+- Import `CookieConsentManager`
+- Add `<CookieConsentManager />` at the end of the component's JSX (before the closing wrapper div)
 
-Update actions accordingly:
-- "Metro BH" references become "New York"
-- "Campinas" becomes "Chicago"
-- "Curitiba" becomes "Los Angeles"
+### Technical Details
 
-#### 2. Mix (lines 280-301)
-- "South region" / "South Region" -- replace with "West Coast" or "Western Region"
-- Keep the same data, just change the region name in question, title, analysis, and actions
+Both files get the same two-line change pattern:
 
-#### 3. Forecast (line 228)
-- Question "South vs Northeast" -- replace with "East Coast vs West Coast"
+```typescript
+// Add import
+import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
-#### 4. Pricing (lines 233-256)
-- "Southeast Region" -- replace with "Northeast Region" (US context) or keep generic "the region"
-- "metro area" is fine (generic)
-- "South Region" in questions -- replace with "West Coast"
+// Add before closing </div>
+<CookieConsentManager />
+```
 
-#### 5. Behavior (lines 303-327)
-- "Sao Paulo region" -- already well-known, but could optionally change to "Greater New York area" for full consistency
-
-### Summary of Changes
-All edits are in the EN translation object only (approx. lines 195-328). The PT translations (lines 40-170) remain completely untouched. Changes are purely text replacements in strings -- no structural or logic changes.
+No changes to the cookie banner itself or the Layout component. The banner already handles its own show/hide logic via `useCookieConsent` and `localStorage`.
