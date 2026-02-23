@@ -34,9 +34,9 @@ const ResultadosSection = () => {
         {
           segment: 'Fashion',
           metrics: [
-            { value: '+2,6%', label: 'conversão' },
-            { value: '40%', label: 'receita incremental' },
-            { value: 'Preço dinâmico', label: 'otimizado' },
+            { value: '11.000', label: 'SKUs otimizados' },
+            { value: 'Apenas 5%', label: 'do tráfego total do site' },
+            { value: '', label: '', richLabel: true, richType: 'fashion' },
           ],
         },
       ],
@@ -71,9 +71,9 @@ const ResultadosSection = () => {
         {
           segment: 'Fashion',
           metrics: [
-            { value: '+2.6%', label: 'conversion' },
-            { value: '40%', label: 'incremental revenue' },
-            { value: 'Dynamic pricing', label: 'optimized' },
+            { value: '11,000', label: 'optimized SKUs' },
+            { value: 'Only 5%', label: 'of total site traffic' },
+            { value: '', label: '', richLabel: true, richType: 'fashion' },
           ],
         },
       ],
@@ -112,6 +112,17 @@ const ResultadosSection = () => {
                           <div className="flex flex-col">
                             <span className="text-base font-bold text-[#F4845F]">12x</span>
                             <span className="text-white/60 text-sm">{language === 'pt' ? 'mais conversão na esteira de campanhas' : 'more conversion in campaign pipeline'}</span>
+                          </div>
+                        </div>
+                      ) : m.richLabel && m.richType === 'fashion' ? (
+                        <div className="flex gap-4">
+                          <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4845F]">+2,6%</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'mais vendas que a curadoria humana de looks.' : 'more sales than human look curation.'}</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '40% da receita adicional' : '40% of additional revenue'}</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'obtida pelo modelo' : 'obtained by the model'}</span>
                           </div>
                         </div>
                       ) : m.richLabel ? (
