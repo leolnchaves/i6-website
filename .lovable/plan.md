@@ -1,44 +1,30 @@
 
 
-# Corrigir fluxo: digitar no input, animar botao, depois exibir no chat
+# Corrigir comportamento dos botoes de cenario e perguntas sugeridas
 
-## Problema atual
-Quando o usuario clica numa pergunta sugerida, o texto aparece diretamente no board de respostas. O efeito de digitacao no input existe mas o `startAnimation` limpa o input imediatamente e comeca a digitar no chat.
+## Problema
+- Os botoes de cenario (Supply, Forecast, Pricing, Comercial, Mix) chamam `startAnimation` diretamente, pulando a animacao de digitacao no input e clique no botao Send.
+- As perguntas sugeridas sao clicaveis quando deveriam ser apenas informativas.
 
-## Solucao
+## Mudancas no arquivo `src/components/solutions/I6SignalDemo.tsx`
 
-### Arquivo: `src/components/solutions/I6SignalDemo.tsx`
+### 1. Modificar `handleScenarioClick` (linha 491-494)
+Usar o mesmo fluxo que `handleSuggestedQuestionClick` usa hoje:
+- Limpar o chat atual (phase idle, showResponse false, typedText vazio)
+- Definir `pendingQuestion` com a pergunta do cenario clicado
+- Definir `pendingScenario` com o cenario clicado
+- Ativar `isFillingInput` para iniciar a digitacao no input
 
-### 1. Novo estado para animacao do botao Send
-- Adicionar `isSendAnimating` (boolean) para controlar o efeito visual no botao Send (scale/pulse)
-
-### 2. Modificar o useEffect de input filling (linhas 458-478)
-Quando a digitacao no input terminar:
-- Em vez de chamar `startAnimation` diretamente, primeiro ativar `isSendAnimating = true`
-- Aguardar ~400ms (efeito visual do botao)
-- Depois chamar `startAnimation` com o cenario pendente
-- Resetar `isSendAnimating = false`
-
-Fluxo revisado:
-```text
-inputText completo
-  → setIsSendAnimating(true)
-  → aguarda 400ms
-  → setIsSendAnimating(false)
-  → startAnimation(pendingScenario) — agora sim exibe no chat
-```
-
-### 3. Adicionar animacao visual no botao Send (linha 747)
-- Quando `isSendAnimating === true`, aplicar classes de animacao: `scale-110 ring-2 ring-orange-300` ou similar para simular o "clique"
-- Usar `transition-transform` para suavizar
-
-### 4. Garantir que startAnimation limpa o input corretamente
-- `startAnimation` ja faz `setInputText('')` (linha 430) — isso esta correto pois nesse ponto o texto ja deve sair do input e ir para o chat
+### 2. Tornar perguntas sugeridas nao clicaveis (linhas 702-709)
+- Trocar `<button>` por `<span>` ou `<div>`
+- Remover `onClick`
+- Remover estilos de hover e cursor-pointer
+- Manter apenas estilo visual informativo
 
 ### Resultado esperado
-1. Usuario clica na pergunta sugerida
-2. Texto aparece caractere a caractere no campo de input (parte inferior)
-3. Botao Send (seta laranja) recebe animacao de "clique" (scale + glow)
-4. Texto desaparece do input e aparece no board do chat como mensagem do usuario
-5. Loading dots, depois resposta do assistente
+1. Usuario clica em "Forecast" (botao de cenario)
+2. Texto da pergunta do Forecast digita caractere a caractere no campo de input
+3. Botao Send anima (scale + glow)
+4. Texto vai para o board de respostas com typing effect e resposta
+5. Perguntas sugeridas aparecem como texto informativo, sem interacao
 
