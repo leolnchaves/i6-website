@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 const VerticalWaves = memo(() => {
   return (
-    <div className="fixed left-0 top-0 h-full w-[220px] pointer-events-none z-[5]">
+    <div className="fixed left-0 top-0 h-full w-[220px] pointer-events-none z-[1]">
       <svg
         viewBox="250 0 500 2000"
         fill="none"
