@@ -755,3 +755,19 @@ html {
   0%, 100% { transform: translateX(0px); }
   50% { transform: translateX(12px); }
 }
+
+/* Scroll hint pulse animation */
+@keyframes scroll-hint-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 8px 30px rgba(249, 115, 22, 0.45);
+  }
+}
+
+.animate-scroll-hint-pulse {
+  animation: scroll-hint-pulse 1.8s ease-in-out infinite;
+}

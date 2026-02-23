@@ -666,12 +666,12 @@ const I6SignalDemo = memo(() => {
               {/* Scroll up indicator */}
               {showScrollHint && (
                 <div 
-                  className="absolute top-3 right-4 z-20 cursor-pointer animate-fade-in"
+                  className="absolute top-3 right-4 z-20 cursor-pointer animate-scroll-hint-pulse"
                   onClick={() => chatRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
-                  <div className="flex items-center gap-2 bg-orange-50 border border-orange-300 rounded-lg px-3 py-2 shadow-md">
-                    <ChevronUp className="w-4 h-4 text-orange-500 animate-bounce" />
-                    <span className="text-orange-600 text-xs font-medium">
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-400 rounded-xl px-4 py-2.5 shadow-lg shadow-orange-200/50">
+                    <ChevronUp className="w-5 h-5 text-orange-500 animate-bounce" style={{ animationDuration: '0.8s' }} />
+                    <span className="text-orange-600 text-sm font-bold tracking-wide">
                       {lang === 'pt' ? 'Navegue pelo conteúdo' : 'Scroll through content'}
                     </span>
                   </div>
