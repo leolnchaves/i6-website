@@ -25,7 +25,7 @@ const HeroMovimento = () => {
       <WaveBackground />
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold text-white leading-tight tracking-tight">
           {copy.title}
         </h1>
         <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
