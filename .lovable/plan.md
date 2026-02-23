@@ -1,38 +1,35 @@
 
 
-# Novo cenario "Comportamento" com grafico de barras de compra/recompra
+# Fix: Manter "anticipate" na primeira linha do hero (EN)
 
-## Resumo
-Adicionar um sexto cenario ao I6SignalDemo com o botao chamado **"Comportamento"** (PT) / **"Behavior"** (EN). O cenario mostra comportamento de compra e recompra de Losartana Potassica 50mg na regiao do Vale do Paraiba, com um grafico de barras usando Recharts.
+## Problema
+No ingles, o titulo esta quebrando em 3 linhas:
+1. "Solutions that"
+2. "anticipate"
+3. "the market."
 
-## Mudancas
+O esperado e que fique em 2 linhas, como no PT:
+1. "Solutions that anticipate"
+2. "the market."
 
-### 1. Atualizar tipo e imports (I6SignalDemo.tsx)
+## Causa
+O componente `SolutionsHero.tsx` usa `<span className="block mb-2">` para o primeiro bloco de texto, o que forca a quebra de linha apos o subtitle. Porem, como o titulo + subtitle ("Solutions that anticipate") e longo em tamanhos de fonte grandes, o browser quebra antes do "anticipate".
 
-- Linha 11: adicionar `'pdv'` ao tipo `Scenario`
-- Linha 9: adicionar `BarChart, Bar` aos imports do recharts
+## Solucao
+Usar `whitespace-nowrap` no primeiro `<span>` para garantir que "Solutions that anticipate" nunca quebre em duas linhas. Isso funciona porque tanto em PT quanto em EN o texto da primeira linha cabe na tela com o tamanho de fonte atual.
 
-### 2. Adicionar dados do cenario nos objetos de traducao
+## Detalhes tecnicos
 
-**PT:**
-- `label: 'Comportamento'`
-- question sobre compra/recompra de Losartana Potassica 50mg no Vale do Paraiba
-- title, analysis, actions, questions seguindo a mesma estrutura dos outros cenarios
-- `barChartData`: array com 6 meses (Set-Fev), campos `month`, `compra`, `recompra`
-- `barChartNote`: nota do grafico
+**Arquivo:** `src/components/solutions/SolutionsHero.tsx` (linha 18)
 
-**EN:**
-- `label: 'Behavior'`
-- Traducao equivalente de todos os campos
+Alterar:
+```tsx
+<span className="block mb-2">
+```
+Para:
+```tsx
+<span className="block mb-2 whitespace-nowrap">
+```
 
-### 3. Criar componente PdvBarChart
-
-Sub-componente inline usando `BarChart`, `Bar`, `XAxis`, `YAxis`, `CartesianGrid`, `Tooltip`, `Legend`, `ResponsiveContainer` do Recharts. Duas barras lado a lado: laranja para Compra, azul para Recompra.
-
-### 4. Renderizar o grafico na area de resposta
-
-Adicionar condicional `activeScenario === 'pdv'` para renderizar o `PdvBarChart` na mesma posicao onde os outros cenarios renderizam suas visualizacoes.
-
-### Arquivo modificado
-- `src/components/solutions/I6SignalDemo.tsx`
+Isso garante que "Solutions that anticipate" e "Solucoes que antecipam" fiquem sempre em uma unica linha, com "the market." / "o mercado." na segunda linha.
 
