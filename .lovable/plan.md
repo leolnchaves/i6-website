@@ -1,46 +1,39 @@
 
 
-## Expandir ondas para cobrir toda a secao hero + metricas
+## Corrigir ondas: manter concentradas, aumentar amplitude de algumas
 
-### O que muda
+### Problema
 
-As ondas atualmente ficam confinadas numa faixa de ~220px na fronteira entre hero e metricas. A ideia e expandi-las verticalmente para que ocupem praticamente toda a altura do hero (invadindo titulo e subtitulo) e tambem desçam ate a secao de metricas -- tudo com opacidade baixa para nao competir com o texto.
+As ondas foram espalhadas verticalmente (y de 80 a 440), cada uma numa faixa propria. O efeito correto e manter todas concentradas na mesma zona central (~250), mas algumas com amplitude de onda muito maior -- seus picos sobem ate a zona do titulo e seus vales descem ate as metricas.
 
-### Abordagem
+### Conceito
 
-**1. Editar `src/components/solutions/HorizontalWaves.tsx`**
+Todas as 8 ondas compartilham a mesma linha base (centro em y~250). A diferenca entre elas e a **amplitude**:
 
-- Aumentar a altura do container de `h-[180px] md:h-[220px]` para `h-[500px] md:h-[600px]`
-- Ajustar o posicionamento: em vez de `bottom-0 translate-y-1/2`, usar algo como `bottom-0 translate-y-[30%]` para que as ondas subam ate a area do titulo e desçam ate as metricas
-- Expandir o viewBox vertical: de `0 0 2800 200` para `0 0 2800 500`
-- Redistribuir os 5 paths existentes ao longo de toda a altura (y entre ~50 e ~450)
-- Adicionar 2-3 paths extras na parte superior (zona do titulo) com opacidade muito baixa (0.04 a 0.08) -- essas sao as que "invadem" o titulo
-- Adicionar 1-2 paths extras na parte inferior (zona das metricas) com opacidade baixa (0.06 a 0.10)
-- Total: ~8 paths, distribuidos verticalmente
-- Manter `stroke` (sem fill), manter as animacoes de `wave-slide-N`
+- **Ondas pequenas** (maioria): oscilam entre y~220 e y~280 -- ficam compactas no centro
+- **Ondas medias** (2-3): oscilam entre y~150 e y~350 -- se estendem um pouco mais
+- **Ondas grandes** (2): oscilam entre y~50 e y~420 -- picos sobem ate o titulo, vales descem ate as metricas
 
-**2. Nenhuma mudanca nos outros arquivos**
+Todas partem e retornam ao centro. O efeito visual e um "feixe" de linhas concentradas que ocasionalmente se expandem com picos dramaticos.
 
-O `SolutionsHero.tsx` e o `SolutionsMetricsSection.tsx` ja estao configurados corretamente (sem overflow-hidden, bg-transparent nas metricas). So o componente de ondas precisa crescer.
+### Mudanca unica
 
-### Distribuicao vertical dos paths
+**Editar `src/components/solutions/HorizontalWaves.tsx`**
+
+Reescrever os 8 paths para que todos tenham centro em ~250 mas com amplitudes diferentes:
 
 ```text
-y~80   ---- onda muito sutil (0.04) ---- invade titulo
-y~130  ---- onda sutil (0.06) ---------- invade titulo  
-y~180  ---- onda leve (0.08) ----------- entre titulo e centro
-y~230  ---- onda media (0.14) ---------- centro (foco principal)
-y~280  ---- onda media-forte (0.22) ---- centro
-y~330  ---- onda forte (0.30) ---------- centro-baixo
-y~380  ---- onda mais forte (0.35) ----- invade metricas
-y~430  ---- onda sutil (0.10) ---------- invade metricas
+Layer 1: centro 250, amplitude pequena (230-270)  -- onda sutil, base
+Layer 2: centro 250, amplitude pequena (220-280)  -- onda sutil, base
+Layer 3: centro 250, amplitude media (180-320)    -- se estende um pouco
+Layer 4: centro 250, amplitude media (160-340)    -- se estende um pouco
+Layer 5: centro 250, amplitude grande (80-400)    -- pico sobe ate titulo
+Layer 6: centro 250, amplitude grande (50-420)    -- pico sobe ate titulo
+Layer 7: centro 250, amplitude pequena (210-290)  -- onda compacta, forte
+Layer 8: centro 250, amplitude media (150-350)    -- se estende, sutil
 ```
 
-As ondas no centro mantem opacidade mais alta (foco visual). As que invadem titulo e metricas sao bem sutis para nao atrapalhar a leitura.
+As ondas de amplitude grande tem opacidade baixa (0.06-0.10) para nao competir com o texto. As compactas no centro mantem opacidade mais alta (0.20-0.35).
 
-### Detalhes tecnicos
+Manter container, viewBox, animacoes e strokeWidth iguais -- so muda os paths `d="..."` e as opacidades.
 
-- Cada path usa curvas Bezier irregulares (mantendo o estilo organico atual)
-- Os paths superiores tem `strokeWidth` menor (1.5) e os centrais mantem (2.5-3)
-- Reutilizar os mesmos keyframes `wave-slide-1` a `wave-slide-5`, alternando entre os paths
-- Sem mudancas no CSS
