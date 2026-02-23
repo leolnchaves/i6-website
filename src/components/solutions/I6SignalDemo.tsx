@@ -414,6 +414,10 @@ const I6SignalDemo = memo(() => {
   const [phase, setPhase] = useState<Phase>('idle');
   const [typedText, setTypedText] = useState('');
   const [showResponse, setShowResponse] = useState(false);
+  const [inputText, setInputText] = useState('');
+  const [isFillingInput, setIsFillingInput] = useState(false);
+  const [pendingQuestion, setPendingQuestion] = useState('');
+  const [pendingScenario, setPendingScenario] = useState<Scenario | null>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
   const scenario = t.scenarios[activeScenario];
@@ -423,6 +427,7 @@ const I6SignalDemo = memo(() => {
     setPhase('typing');
     setTypedText('');
     setShowResponse(false);
+    setInputText('');
   }, []);
 
   // Typing effect
@@ -450,6 +455,28 @@ const I6SignalDemo = memo(() => {
     }
   }, [showResponse]);
 
+  // Input filling effect (typing into input field)
+  useEffect(() => {
+    if (!isFillingInput || !pendingQuestion) return;
+    if (inputText.length < pendingQuestion.length) {
+      const timer = setTimeout(() => {
+        setInputText(pendingQuestion.slice(0, inputText.length + 1));
+      }, TYPING_SPEED);
+      return () => clearTimeout(timer);
+    } else {
+      // Typing complete — wait then trigger chat animation
+      const timer = setTimeout(() => {
+        setIsFillingInput(false);
+        setPendingQuestion('');
+        if (pendingScenario) {
+          startAnimation(pendingScenario);
+          setPendingScenario(null);
+        }
+      }, RESPONSE_DELAY);
+      return () => clearTimeout(timer);
+    }
+  }, [isFillingInput, inputText, pendingQuestion, pendingScenario, startAnimation]);
+
   // Auto-start on mount
   useEffect(() => {
     const timer = setTimeout(() => startAnimation('supply'), 800);
@@ -459,6 +486,30 @@ const I6SignalDemo = memo(() => {
   const handleScenarioClick = (sc: Scenario) => {
     if (sc === activeScenario && phase === 'responding') return;
     startAnimation(sc);
+  };
+
+  const handleSuggestedQuestionClick = (questionText: string) => {
+    // Find which scenario this question belongs to
+    const scenarios = Object.keys(t.scenarios) as Scenario[];
+    let targetScenario: Scenario = activeScenario;
+    for (const sc of scenarios) {
+      if (t.scenarios[sc].questions.includes(questionText)) {
+        // Use current scenario's question text for the chat, but we need to find matching scenario
+        // Actually the suggested questions are follow-ups, so we keep current scenario context
+        // We'll just type the question into input and replay current scenario
+        targetScenario = sc;
+        break;
+      }
+    }
+    // Clear current chat
+    setPhase('idle');
+    setShowResponse(false);
+    setTypedText('');
+    // Start filling input
+    setInputText('');
+    setPendingQuestion(questionText);
+    setPendingScenario(targetScenario);
+    setIsFillingInput(true);
   };
 
   return (
@@ -650,7 +701,8 @@ const I6SignalDemo = memo(() => {
                             {scenario.questions.slice(0, 3).map((q, i) => (
                               <button
                                 key={i}
-                                className="text-[11px] text-gray-600 hover:bg-orange-100/50 hover:text-orange-900 px-2.5 py-1 rounded-lg transition-colors text-left"
+                                onClick={() => handleSuggestedQuestionClick(q)}
+                                className="text-[11px] text-gray-600 hover:bg-orange-100/50 hover:text-orange-900 px-2.5 py-1 rounded-lg transition-colors text-left cursor-pointer"
                               >
                                 {q}
                               </button>
@@ -692,6 +744,7 @@ const I6SignalDemo = memo(() => {
                   <input
                     type="text"
                     readOnly
+                    value={inputText}
                     placeholder={t.placeholder}
                     className="flex-1 h-12 rounded-full border border-gray-200 bg-white px-5 text-sm text-gray-700 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all"
                   />
