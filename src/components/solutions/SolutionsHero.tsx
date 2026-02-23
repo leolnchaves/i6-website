@@ -2,15 +2,15 @@
 import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsHeroData } from '@/data/staticData/solutionsHeroData';
-import WaveBackground from '@/components/hometeste/WaveBackground';
+import HorizontalWaves from '@/components/solutions/HorizontalWaves';
 
 const SolutionsHero = memo(() => {
   const { language } = useLanguage();
   const heroContent = solutionsHeroData[language] || solutionsHeroData.en;
 
   return (
-    <section className="w-full min-h-[70vh] flex items-center pt-20 relative overflow-hidden bg-[#0B1224]">
-      <WaveBackground />
+    <section className="w-full min-h-[70vh] flex items-center pt-20 pb-32 relative overflow-hidden bg-[#0B1224]">
+      <HorizontalWaves />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">
