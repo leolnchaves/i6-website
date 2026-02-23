@@ -4,7 +4,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import HeaderNovo from '@/components/hometeste/HeaderNovo';
 import FooterNovo from '@/components/hometeste/FooterNovo';
 import SolutionsHero from '@/components/solutions/SolutionsHero';
-import SolutionsMetricsSection from '@/components/solutions/SolutionsMetricsSection';
 import StaticSolutionsGrid from '@/components/solutions/StaticSolutionsGrid';
 import ProcessFlow from '@/components/solutions/ProcessFlow';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
@@ -19,11 +18,14 @@ const Solutions = memo(() => {
       <div className="relative z-[2]">
         <HeaderNovo />
         <SolutionsHero />
-        <SolutionsMetricsSection />
-        <StaticSolutionsGrid />
+        <div className="relative z-[10]">
+          <StaticSolutionsGrid />
+        </div>
         <ProcessFlow />
         <SolutionsCTA />
-        <FooterNovo />
+        <div className="relative z-[10]">
+          <FooterNovo />
+        </div>
       </div>
     </div>
   );
