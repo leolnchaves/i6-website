@@ -490,7 +490,15 @@ const I6SignalDemo = memo(() => {
 
   const handleScenarioClick = (sc: Scenario) => {
     if (sc === activeScenario && phase === 'responding') return;
-    startAnimation(sc);
+    // Clear current chat
+    setPhase('idle');
+    setShowResponse(false);
+    setTypedText('');
+    // Start filling input with scenario question
+    setInputText('');
+    setPendingQuestion(t.scenarios[sc].question);
+    setPendingScenario(sc);
+    setIsFillingInput(true);
   };
 
   const handleSuggestedQuestionClick = (questionText: string) => {
@@ -700,13 +708,12 @@ const I6SignalDemo = memo(() => {
                           </div>
                           <div className="flex flex-wrap gap-1.5">
                             {scenario.questions.slice(0, 3).map((q, i) => (
-                              <button
+                              <span
                                 key={i}
-                                onClick={() => handleSuggestedQuestionClick(q)}
-                                className="text-[11px] text-gray-600 hover:bg-orange-100/50 hover:text-orange-900 px-2.5 py-1 rounded-lg transition-colors text-left cursor-pointer"
+                                className="text-[11px] text-gray-500 px-2.5 py-1 rounded-lg text-left"
                               >
                                 {q}
-                              </button>
+                              </span>
                             ))}
                           </div>
                         </div>
