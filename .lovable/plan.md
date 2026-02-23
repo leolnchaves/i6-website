@@ -1,40 +1,41 @@
 
 
-## Atualizar card Varejo na secao de Resultados
+## Atualizar card Financeiro na secao de Resultados
 
 ### O que sera feito
 
-Alterar os 3 metrics do card "Varejo" (e "Retail" em ingles):
+Alterar os 3 metrics do card "Financeiro" (e "Finance" em ingles):
 
-1. `+36% positivacao` -> `1400` (bold laranja) + `SKUs otimizados`
-2. `+23% ticket medio` -> `50 mil` (bold laranja) + `comportamentos de PDVs mapeados`
-3. `Receita incremental comprovada` -> Uma unica linha com dois pares bold+texto: `+36%` positivacao de produtos `+23%` ticket medio por PDV.
+1. `-57% custo de CRM` -> `10 milhoes` (bold laranja) + `de comportamentos de clientes mapeados`
+2. `12x mais conversao` -> `+1 bilhao` (bold laranja) + `de transacoes treinadas`
+3. `ROI em 90 dias` -> Formato especial com dois pares bold+texto, similar ao card Varejo:
+   - `-57%` (bold laranja, em cima) + `de custo de CRM` (texto abaixo)
+   - `12x` (bold laranja, em cima) + `mais conversao na esteira de campanhas` (texto abaixo)
+   - Tudo na mesma linha/bloco
 
-### Desafio tecnico
+### Solucao tecnica
 
-O terceiro metric precisa de um formato especial: dois valores bold laranja intercalados com texto normal, tudo na mesma linha. A estrutura atual (`value` + `label`) nao suporta isso.
-
-### Solucao
-
-Adicionar um campo opcional `richLabel` (tipo JSX/ReactNode) ao tipo dos metrics. Quando `richLabel` estiver presente, renderizar ele no lugar do par `value`/`label` padrao.
+Reutilizar o pattern `richLabel` ja existente no card Varejo. A terceira metrica do Financeiro tera `richLabel: true` e um tipo de renderizacao especifico (`richType: 'finance'`) para diferenciar do formato do Varejo.
 
 ### Detalhes tecnicos
 
 **Arquivo: `src/components/hometeste/ResultadosSection.tsx`**
 
-1. Atualizar dados PT do Varejo (linhas 20-24):
-   - Metric 1: `{ value: '1.400', label: 'SKUs otimizados' }`
-   - Metric 2: `{ value: '50 mil', label: 'comportamentos de PDVs mapeados' }`
-   - Metric 3: `{ value: '', label: '', richLabel: true }` (flag para renderizacao especial)
+1. Atualizar dados PT do Financeiro (linhas 28-31):
+   - Metric 1: `{ value: '10 milhoes', label: 'de comportamentos de clientes mapeados' }`
+   - Metric 2: `{ value: '+1 bilhao', label: 'de transacoes treinadas' }`
+   - Metric 3: `{ value: '', label: '', richLabel: true, richType: 'finance' }`
 
-2. Atualizar dados EN do Retail (linhas 57-61):
-   - Metric 1: `{ value: '1,400', label: 'optimized SKUs' }`
-   - Metric 2: `{ value: '50K', label: 'mapped POS behaviors' }`
-   - Metric 3: `{ value: '', label: '', richLabel: true }`
+2. Atualizar dados EN do Finance (linhas 65-68):
+   - Metric 1: `{ value: '10 million', label: 'mapped customer behaviors' }`
+   - Metric 2: `{ value: '+1 billion', label: 'trained transactions' }`
+   - Metric 3: `{ value: '', label: '', richLabel: true, richType: 'finance' }`
 
-3. Criar constantes para o conteudo rich do terceiro metric (PT e EN) e renderizar com JSX inline no componente:
-   - PT: `<span bold>+36%</span> positivacao de produtos <span bold>+23%</span> ticket medio por PDV.`
-   - EN: `<span bold>+36%</span> product activation <span bold>+23%</span> average ticket per POS.`
-
-4. Na renderizacao (linha 100-110), adicionar condicao: se o metric tiver `richLabel`, renderizar o JSX especial em vez do par `value`/`label` padrao.
+3. Na renderizacao (linhas 106-112), expandir a condicao `richLabel` para verificar `richType`:
+   - Se `richType === 'finance'`: renderizar dois blocos lado a lado (usando flex), cada um com o valor bold laranja em cima e o texto descritivo embaixo:
+     ```
+     -57%              12x
+     de custo de CRM   mais conversao na esteira de campanhas
+     ```
+   - Se nao tem `richType` (Varejo): manter o formato inline atual com `+36%` e `+23%`.
 
