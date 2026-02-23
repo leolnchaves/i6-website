@@ -26,9 +26,9 @@ const ResultadosSection = () => {
         {
           segment: 'Financeiro',
           metrics: [
-            { value: '-57%', label: 'custo de CRM' },
-            { value: '12x', label: 'mais conversão' },
-            { value: 'ROI', label: 'em 90 dias' },
+            { value: '10 milhões', label: 'de comportamentos de clientes mapeados' },
+            { value: '+1 bilhão', label: 'de transações treinadas' },
+            { value: '', label: '', richLabel: true, richType: 'finance' },
           ],
         },
         {
@@ -63,9 +63,9 @@ const ResultadosSection = () => {
         {
           segment: 'Finance',
           metrics: [
-            { value: '-57%', label: 'CRM cost' },
-            { value: '12x', label: 'more conversion' },
-            { value: 'ROI', label: 'in 90 days' },
+            { value: '10 million', label: 'mapped customer behaviors' },
+            { value: '+1 billion', label: 'trained transactions' },
+            { value: '', label: '', richLabel: true, richType: 'finance' },
           ],
         },
         {
@@ -103,11 +103,22 @@ const ResultadosSection = () => {
                       key={j}
                       className={`py-3 ${j < c.metrics.length - 1 ? 'border-b border-white/5' : ''}`}
                     >
-                      {m.richLabel ? (
+                      {m.richLabel && m.richType === 'finance' ? (
+                        <div className="flex gap-4">
+                          <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4845F]">-57%</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'de custo de CRM' : 'CRM cost'}</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4845F]">12x</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'mais conversão na esteira de campanhas' : 'more conversion in campaign pipeline'}</span>
+                          </div>
+                        </div>
+                      ) : m.richLabel ? (
                         <span className="text-white/60 text-sm">
-                          <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '+36%' : '+36%'}</span>{' '}
+                          <span className="text-base font-bold text-[#F4845F]">+36%</span>{' '}
                           {language === 'pt' ? 'positivação de produtos' : 'product activation'}{' '}
-                          <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '+23%' : '+23%'}</span>{' '}
+                          <span className="text-base font-bold text-[#F4845F]">+23%</span>{' '}
                           {language === 'pt' ? 'ticket médio por PDV.' : 'average ticket per POS.'}
                         </span>
                       ) : (
