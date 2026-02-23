@@ -427,28 +427,20 @@ const I6SignalDemo = memo(() => {
   const startAnimation = useCallback((sc: Scenario) => {
     setActiveScenario(sc);
     setPhase('typing');
-    setTypedText('');
+    setTypedText(t.scenarios[sc].question);
     setShowResponse(false);
     setInputText('');
-  }, []);
+  }, [t.scenarios]);
 
-  // Typing effect
+  // Typing phase - wait then show response
   useEffect(() => {
     if (phase !== 'typing') return;
-    const question = t.scenarios[activeScenario].question;
-    if (typedText.length < question.length) {
-      const timer = setTimeout(() => {
-        setTypedText(question.slice(0, typedText.length + 1));
-      }, TYPING_SPEED);
-      return () => clearTimeout(timer);
-    } else {
-      const timer = setTimeout(() => {
-        setPhase('responding');
-        setShowResponse(true);
-      }, RESPONSE_DELAY);
-      return () => clearTimeout(timer);
-    }
-  }, [phase, typedText, activeScenario, t.scenarios]);
+    const timer = setTimeout(() => {
+      setPhase('responding');
+      setShowResponse(true);
+    }, RESPONSE_DELAY);
+    return () => clearTimeout(timer);
+  }, [phase]);
 
   // Auto-scroll to bottom and show scroll hint
   useEffect(() => {
@@ -678,7 +670,7 @@ const I6SignalDemo = memo(() => {
                   {(phase === 'typing' || phase === 'responding') && (
                     <div className="flex justify-end animate-fade-in">
                       <div className="bg-gradient-to-br from-orange-50/80 to-blue-50/60 border border-gray-200/50 rounded-2xl px-4 py-2.5 max-w-[85%] shadow-sm">
-                        <p className="text-gray-800 text-sm">{typedText}<span className={phase === 'typing' ? 'animate-pulse text-orange-400' : 'hidden'}>|</span></p>
+                        <p className="text-gray-800 text-sm">{typedText}</p>
                       </div>
                     </div>
                   )}
