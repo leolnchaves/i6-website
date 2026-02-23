@@ -15,8 +15,10 @@ const Solutions = memo(() => {
   return (
     <div className="min-h-screen bg-[#0B1224] relative">
       <VerticalWaves />
-      <div className="relative z-[2]">
-        <HeaderNovo />
+      <div className="relative">
+        <div className="relative z-[20]">
+          <HeaderNovo />
+        </div>
         <SolutionsHero />
         <div className="relative z-[10]">
           <StaticSolutionsGrid />
