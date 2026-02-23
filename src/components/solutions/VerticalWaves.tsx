@@ -5,7 +5,7 @@ const VerticalWaves = memo(() => {
   return (
     <div className="fixed left-0 top-0 h-full w-[220px] pointer-events-none z-[5]">
       <svg
-        viewBox="0 0 500 2000"
+        viewBox="250 0 500 2000"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="h-full w-full"
@@ -14,7 +14,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 1 — small amplitude, fast */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.18)"
+          stroke="rgba(244,132,95,0.40)"
           strokeWidth="1.5"
           className="animate-[wave-breathe-x-1_6s_ease-in-out_infinite]"
         >
@@ -34,7 +34,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 2 — small amplitude, medium */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.14)"
+          stroke="rgba(244,132,95,0.35)"
           strokeWidth="1.2"
           className="animate-[wave-breathe-x-2_8s_ease-in-out_infinite]"
         >
@@ -54,7 +54,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 3 — medium amplitude, medium */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.12)"
+          stroke="rgba(244,132,95,0.30)"
           strokeWidth="1.8"
           className="animate-[wave-breathe-x-1_7s_ease-in-out_infinite]"
         >
@@ -74,7 +74,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 4 — medium amplitude, slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.10)"
+          stroke="rgba(244,132,95,0.28)"
           strokeWidth="1.5"
           className="animate-[wave-breathe-x-2_9s_ease-in-out_infinite]"
         >
@@ -94,7 +94,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 5 — large amplitude, slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.08)"
+          stroke="rgba(244,132,95,0.25)"
           strokeWidth="2.2"
           className="animate-[wave-breathe-x-3_10s_ease-in-out_infinite]"
         >
@@ -114,7 +114,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 6 — large amplitude, very slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.06)"
+          stroke="rgba(244,132,95,0.22)"
           strokeWidth="2.5"
           className="animate-[wave-breathe-x-1_12s_ease-in-out_infinite]"
         >
@@ -134,7 +134,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 7 — compact, strong, fast */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.22)"
+          stroke="rgba(244,132,95,0.45)"
           strokeWidth="1.0"
           className="animate-[wave-breathe-x-2_5s_ease-in-out_infinite]"
         >
@@ -154,7 +154,7 @@ const VerticalWaves = memo(() => {
         {/* Layer 8 — medium, subtle, slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.09)"
+          stroke="rgba(244,132,95,0.28)"
           strokeWidth="1.8"
           className="animate-[wave-breathe-x-3_11s_ease-in-out_infinite]"
         >
