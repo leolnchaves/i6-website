@@ -25,7 +25,7 @@ const Solutions = memo(() => {
         </div>
         <ProcessFlow />
         <SolutionsCTA />
-        <div className="relative z-[10]">
+        <div className="relative z-[20]">
           <FooterNovo />
         </div>
       </div>
