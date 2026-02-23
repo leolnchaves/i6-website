@@ -16,16 +16,16 @@ export const solutionsCardsData = {
   en: [
     {
       id: '1',
-      title: 'Smart Discovery for Anonymous Visitors',
-      description: 'Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.',
+      title: 'Turn Anonymous Traffic into Real Revenue',
+      description: 'Most of your traffic never identifies itself. That doesn\'t mean they\'re not ready to buy.\n\nInfinity6 converts real-time behavioral signals into concrete sales opportunities, increasing conversion and average ticket even without customer history.\n\nYou stop depending on login to sell better.',
       icon: 'users',
       features: [
-        'Contextual Affinity Modeling',
-        'Cold-Start Personalization',
-        'Anonymous Visitor Intelligence',
-        'Real-time Recommendations'
+        'Understand purchase intent from the first click',
+        'Increase conversion without relying on logged-in users',
+        'Recommend products with context, not guesswork',
+        'Activate opportunities at the exact moment of decision'
       ],
-      outcome: 'Unlocks product discovery and boosts engagement with zero historical data.',
+      outcome: 'More top-of-funnel conversion. More revenue without increasing media spend.',
       focus: 'Hyperpersonalization Intelligence & Growth Acceleration',
       engine: 'i6 RecSys',
       bgColor: 'bg-blue-100/60',
@@ -126,16 +126,16 @@ export const solutionsCardsData = {
   pt: [
     {
       id: '1',
-      title: 'Descoberta Inteligente para Visitantes Anônimos',
-      description: 'Transforme tráfego anônimo em compradores engajados. Nosso engine usa sinais em tempo real e contexto para gerar recomendações de alto valor sem necessidade de histórico prévio do usuário.',
+      title: 'Transforme Tráfego Anônimo em Receita Real',
+      description: 'Grande parte do seu tráfego nunca se identifica. Isso não significa que ele não esteja pronto para comprar.\n\nA Infinity6 converte sinais comportamentais em tempo real em oportunidades concretas de venda, aumentando conversão e ticket médio mesmo quando não existe histórico do cliente.\n\nVocê deixa de depender de login para vender melhor.',
       icon: 'users',
       features: [
-        'Modelagem de Afinidade Contextual',
-        'Personalização Cold-Start',
-        'Inteligência de Visitantes Anônimos',
-        'Recomendações em Tempo Real'
+        'Entenda a intenção de compra desde o primeiro clique',
+        'Aumente conversão sem depender de base logada',
+        'Recomende produtos com contexto, não com achismo',
+        'Ative oportunidades no momento exato da decisão'
       ],
-      outcome: 'Desbloqueie descoberta de produtos e aumente o engajamento com zero dados históricos.',
+      outcome: 'Mais conversão no topo do funil. Mais receita sem aumentar mídia.',
       focus: 'B2B, B2C',
       engine: 'i6 RecSys',
       bgColor: 'bg-blue-100/60',
