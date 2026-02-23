@@ -615,18 +615,20 @@ const I6SignalDemo = memo(() => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{t.sectionTitle}</h2>
         </div>
 
-        {/* Subtitle + Scenario selector */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-          <p className="text-white/40 text-sm max-w-xs hidden md:block leading-relaxed">{t.sectionSubtitle}</p>
-          <div className="flex flex-wrap justify-center md:justify-end gap-2">
+        {/* Subtitle */}
+        <p className="text-white/40 text-sm max-w-md mb-4 leading-relaxed text-center mx-auto">{t.sectionSubtitle}</p>
+
+        {/* Scenario selector - continuous bar */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex rounded-full p-1 backdrop-blur-md bg-white/5 border border-white/10">
             {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
               <button
                 key={sc}
                 onClick={() => handleScenarioClick(sc)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                   activeScenario === sc
-                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
-                    : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+                    ? 'bg-orange-500/80 backdrop-blur-sm text-white shadow-lg shadow-orange-500/30'
+                    : 'text-white/60 hover:text-white/90'
                 }`}
               >
                 {t.scenarios[sc].label}
