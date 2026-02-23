@@ -1,44 +1,35 @@
 
-import { memo, useMemo } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { solutionsCTAData } from '@/data/staticData/solutionsCTAData';
-import { logger } from '@/utils/logger';
 
 const SolutionsCTA = memo(() => {
   const { language } = useLanguage();
-  
-  // Memoize CTA content to prevent recalculation
-  const ctaContent = useMemo(() => 
-    solutionsCTAData[language] || solutionsCTAData.en, 
-    [language]
-  );
 
-  // Handle CTA button click with logging
-  const handleCTAClick = () => {
-    logger.info('Solutions CTA button clicked', { section: 'solutions' }, 'SolutionsCTA');
-  };
+  const copy = {
+    pt: {
+      lineStart: 'Seus dados já têm as respostas.\nSó falta ',
+      lineHighlight: 'movimento.',
+      cta: 'Pronto para transformar dados em lucro?',
+    },
+    en: {
+      lineStart: 'Your data already has the answers.\nAll it needs is ',
+      lineHighlight: 'movement.',
+      cta: 'Ready to turn data into profit?',
+    },
+  }[language];
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          {ctaContent.title}
-        </h2>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          {ctaContent.description}
+    <section className="relative py-14 md:py-20 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">
+      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
+        <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug whitespace-pre-line">
+          {copy.lineStart}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
         </p>
-        <Link to="/contact#contact-form">
-          <Button 
-            size="lg" 
-            onClick={handleCTAClick}
-            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
-          >
-            {ctaContent.button}
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+        <Link
+          to="/contact"
+          className="inline-block mt-10 px-8 py-4 bg-white text-[#0B1224] font-semibold rounded-full transition-all hover:scale-105 hover:shadow-xl"
+        >
+          {copy.cta}
         </Link>
       </div>
     </section>

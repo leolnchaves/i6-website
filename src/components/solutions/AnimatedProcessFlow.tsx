@@ -3,26 +3,28 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { processStepsData } from '@/data/solutions/processDataStatic';
 import { Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import SandboxEnvironment from './SandboxEnvironment';
 
 const AnimatedProcessFlow = () => {
   const { language } = useLanguage();
   const processSteps = processStepsData[language] || processStepsData.en;
   
-  // Static translations
   const translations = {
     en: {
       title: 'AI Implementation Journey',
       subtitle: 'Risk-free testing. Concrete potential in 30 days.',
       startDemo: 'Start Demo',
-      pauseDemo: 'Pause Demo'
+      pauseDemo: 'Pause Demo',
+      stepProgress: 'Step Progress',
+      tasksRunning: 'Tasks Running'
     },
     pt: {
       title: 'Jornada de Implementação de IA',
       subtitle: 'Testes sem risco. Potencial concreto em 30 dias.',
       startDemo: 'Inicie a Demo',
-      pauseDemo: 'Pausar Demo'
+      pauseDemo: 'Pausar Demo',
+      stepProgress: 'Progresso da Etapa',
+      tasksRunning: 'Tarefas em Execução'
     }
   };
   
@@ -32,13 +34,11 @@ const AnimatedProcessFlow = () => {
   const [progress, setProgress] = useState(0);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   
-  // Performance optimization refs
   const animationFrameRef = useRef<number>();
   const lastTimeRef = useRef<number>(0);
   const isVisibleRef = useRef<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Define tasks for each step (only 3 tasks per step) with translations
   const getStepTasks = (stepKey: string) => {
     const tasksEn = {
       discovery: [
@@ -100,7 +100,6 @@ const AnimatedProcessFlow = () => {
     return tasks[stepKey as keyof typeof tasks] || [];
   };
 
-  // Optimized animation function using requestAnimationFrame
   const animate = useCallback(() => {
     if (!isVisibleRef.current || !isPlaying) {
       animationFrameRef.current = undefined;
@@ -110,26 +109,22 @@ const AnimatedProcessFlow = () => {
     const currentTime = performance.now();
     const deltaTime = currentTime - lastTimeRef.current;
     
-    // Only update if enough time has passed (targeting ~10fps for smooth animation)
     if (deltaTime >= 100) {
       setProgress(prev => {
         if (prev >= 100) {
-          // Check if we're on the last step
           if (currentStep === processSteps.length - 1) {
-            // Stop the demo at 100% completion
             setIsPlaying(false);
             return 100;
           } else {
-            // Move to next step
             setCurrentStep(current => {
               const next = current + 1;
-              setCurrentTaskIndex(0); // Reset task index for new step
+              setCurrentTaskIndex(0);
               return next;
             });
             return 0;
           }
         }
-        return prev + 1.4; // 1.4% per update = ~7.1 seconds per step
+        return prev + 1.4;
       });
       
       lastTimeRef.current = currentTime;
@@ -139,12 +134,10 @@ const AnimatedProcessFlow = () => {
   }, [isPlaying, processSteps.length, currentStep]);
 
   useEffect(() => {
-    // Intersection Observer to pause animation when not visible
     const observer = new IntersectionObserver(
       (entries) => {
         isVisibleRef.current = entries[0].isIntersecting;
         if (isVisibleRef.current && isPlaying && !animationFrameRef.current) {
-          // Resume animation when becomes visible
           lastTimeRef.current = performance.now();
           animate();
         }
@@ -174,7 +167,6 @@ const AnimatedProcessFlow = () => {
     }
   }, [isPlaying, animate]);
 
-  // Calculate which tasks should be completed based on progress
   const getCompletedTasksCount = () => {
     const totalTasks = getStepTasks(processSteps[currentStep].key).length;
     return Math.floor((progress / 100) * totalTasks);
@@ -195,40 +187,30 @@ const AnimatedProcessFlow = () => {
   const getStepStatus = (index: number) => {
     if (index < currentStep) return 'completed';
     if (index === currentStep) {
-      // If demo is finished (not playing and progress is 100%), mark as completed
       if (!isPlaying && progress === 100) return 'completed';
       return 'active';
     }
     return 'pending';
   };
 
-  const getStepColor = (status: string) => {
-    switch (status) {
-      case 'completed': return 'bg-green-500 text-white border-green-500';
-      case 'active': return 'bg-orange-500 text-white border-orange-500';
-      default: return 'bg-gray-300 text-gray-600 border-gray-300';
-    }
-  };
-
   return (
-    <section ref={containerRef} className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+    <section ref={containerRef} className="py-20 bg-[#0B1224] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             {t.title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-white/60 max-w-3xl mx-auto mb-8">
             {t.subtitle}
           </p>
           
-          {/* Animation Controls */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <Button
               onClick={toggleAnimation}
               variant="outline"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border-[#F4845F]/50 text-[#F4845F] hover:bg-[#F4845F]/10 hover:text-[#F4845F] bg-transparent"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               {isPlaying ? t.pauseDemo : t.startDemo}
@@ -240,8 +222,6 @@ const AnimatedProcessFlow = () => {
         <div className="max-w-6xl mx-auto mb-8">
           <div className="hidden lg:block">
             <div className="relative px-12">
-
-              {/* Steps */}
               <div className="flex justify-between relative">
                 {processSteps.map((step, index) => {
                   const status = getStepStatus(index);
@@ -251,55 +231,28 @@ const AnimatedProcessFlow = () => {
                       className="flex flex-col items-center cursor-pointer group max-w-[180px]"
                       onClick={() => handleStepClick(index)}
                     >
-                      {/* Step Circle with Progress */}
                       <div className="relative w-12 h-12">
-                        {/* Progress Ring Background */}
                         <svg className="absolute inset-0 w-12 h-12 transform -rotate-90">
-                          {/* Background circle - always visible */}
-                          <circle
-                            cx="24"
-                            cy="24"
-                            r="20"
-                            fill="none"
-                            stroke="#e5e7eb"
-                            strokeWidth="2"
-                          />
-                          {/* Progress circle for active step */}
+                          <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2" />
                           {status === 'active' && (
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r="20"
-                              fill="none"
-                              stroke="#10b981"
-                              strokeWidth="2"
-                              strokeLinecap="round"
+                            <circle cx="24" cy="24" r="20" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round"
                               strokeDasharray={`${2 * Math.PI * 20}`}
                               strokeDashoffset={`${2 * Math.PI * 20 * (1 - progress / 100)}`}
                               className="transition-all duration-500 ease-out"
                             />
                           )}
-                          {/* Full circle for completed steps */}
                           {status === 'completed' && (
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r="20"
-                              fill="none"
-                              stroke="#10b981"
-                              strokeWidth="2"
-                              strokeDasharray={`${2 * Math.PI * 20}`}
-                              strokeDashoffset="0"
+                            <circle cx="24" cy="24" r="20" fill="none" stroke="#10b981" strokeWidth="2"
+                              strokeDasharray={`${2 * Math.PI * 20}`} strokeDashoffset="0"
                             />
                           )}
                         </svg>
                         
-                        {/* Step number circle */}
                         <div className={`
                           absolute inset-0 w-12 h-12 rounded-full flex items-center justify-center
-                          transition-all duration-300 shadow-lg group-hover:scale-110 bg-white
-                          ${status === 'active' ? 'text-green-600' : 
-                            status === 'completed' ? 'text-green-600' : 'text-gray-400'}
+                          transition-all duration-300 shadow-lg group-hover:scale-110 bg-white/5 border border-white/10
+                          ${status === 'active' ? 'text-[#F4845F]' : 
+                            status === 'completed' ? 'text-green-400' : 'text-white/30'}
                         `}>
                           <span className="text-sm font-bold">
                             {String(index + 1).padStart(2, '0')}
@@ -307,12 +260,11 @@ const AnimatedProcessFlow = () => {
                         </div>
                       </div>
 
-                      {/* Step Title */}
                       <div className="mt-4 text-center">
                         <h3 className={`
                           font-semibold text-sm leading-tight transition-colors
-                          ${status === 'active' ? 'text-orange-500' : 
-                            status === 'completed' ? 'text-green-600' : 'text-gray-600'}
+                          ${status === 'active' ? 'text-[#F4845F]' : 
+                            status === 'completed' ? 'text-green-400' : 'text-white/40'}
                         `}>
                           {step.title}
                         </h3>
@@ -337,9 +289,9 @@ const AnimatedProcessFlow = () => {
                   >
                     <div className={`
                       w-10 h-10 rounded-full border-2 flex items-center justify-center
-                      transition-all duration-300 shadow-md group-hover:scale-110 bg-white
-                      ${status === 'active' ? 'border-orange-500 text-orange-500' : 
-                        status === 'completed' ? 'border-green-500 text-green-500' : 'border-gray-300 text-gray-400'}
+                      transition-all duration-300 shadow-md group-hover:scale-110 bg-white/5
+                      ${status === 'active' ? 'border-[#F4845F] text-[#F4845F]' : 
+                        status === 'completed' ? 'border-green-400 text-green-400' : 'border-white/20 text-white/30'}
                     `}>
                       <span className="text-xs font-bold">
                         {String(index + 1).padStart(2, '0')}
@@ -347,8 +299,8 @@ const AnimatedProcessFlow = () => {
                     </div>
                     <h3 className={`
                       mt-2 font-medium text-xs text-center leading-tight transition-colors
-                      ${status === 'active' ? 'text-orange-500' : 
-                        status === 'completed' ? 'text-green-600' : 'text-gray-600'}
+                      ${status === 'active' ? 'text-[#F4845F]' : 
+                        status === 'completed' ? 'text-green-400' : 'text-white/40'}
                     `}>
                       {step.title}
                     </h3>
@@ -361,179 +313,171 @@ const AnimatedProcessFlow = () => {
 
         {/* Current Step Detail Card */}
         <div className="max-w-6xl mx-auto mb-16">
-          <Card className="border-0 shadow-xl bg-white overflow-hidden">
-            <CardContent className="p-0">
-              <div className="flex flex-col lg:flex-row min-h-[300px]">
-                {/* Left side - Compact Content */}
-                <div className="lg:w-1/2 p-6">
-                  <div className="flex items-start gap-4">
-                    {/* Large Step Number Circle */}
-                    <div className="flex-shrink-0">
-                      <div className="relative">
-                        <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
-                          <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white text-lg font-bold">
-                            {String(currentStep + 1).padStart(2, '0')}
-                          </div>
+          <div className="border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm overflow-hidden">
+            <div className="flex flex-col lg:flex-row min-h-[300px]">
+              {/* Left side */}
+              <div className="lg:w-1/2 p-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="relative">
+                      <div className="w-16 h-16 rounded-full bg-[#F4845F]/20 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-[#F4845F] flex items-center justify-center text-white text-lg font-bold">
+                          {String(currentStep + 1).padStart(2, '0')}
                         </div>
-                         {isPlaying && (
-                           <>
-                             <div className="absolute inset-0 rounded-full border-4 border-orange-400/30 animate-ping"></div>
-                             <div className="absolute inset-0 rounded-full border-2 border-orange-400/50 animate-pulse"></div>
-                           </>
-                         )}
                       </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        {processSteps[currentStep].title}
-                      </h3>
-                      <p className="text-orange-500 font-semibold text-sm">
-                        {processSteps[currentStep].subtitle}
-                      </p>
+                       {isPlaying && (
+                         <>
+                           <div className="absolute inset-0 rounded-full border-4 border-[#F4845F]/30 animate-ping"></div>
+                           <div className="absolute inset-0 rounded-full border-2 border-[#F4845F]/50 animate-pulse"></div>
+                         </>
+                       )}
                     </div>
                   </div>
 
-                  {/* Progress Indicator */}
-                  <div className="mt-6 space-y-3">
-                    <div className="flex justify-between text-xs text-gray-600">
-                      <span>Progresso da Etapa</span>
-                      <span>{Math.round(progress)}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-100"
-                        style={{ width: `${progress}%` }}
-                      ></div>
-                    </div>
-                    
-                    {/* Weekly Timeline */}
-                    <div className="pt-2">
-                      <div className="flex justify-between items-center text-xs">
-                        {[
-                          { label: 'Semana 1', steps: [0, 1] }, // Steps 1 e 2
-                          { label: 'Semana 2', steps: [2] },    // Step 3 (parte 1)
-                          { label: 'Semana 3', steps: [2] },    // Step 3 (parte 2)
-                          { label: 'Semana 4', steps: [3] },    // Step 4
-                          { label: '3 Meses', steps: [4] }      // Step 5
-                        ].map((week, index) => {
-                          let isCompleted = false;
-                          let isActive = false;
-                          
-                          if (index === 0) { // Semana 1
-                            isCompleted = currentStep > 1 || (currentStep === 1 && progress === 100);
-                            isActive = currentStep <= 1;
-                          } else if (index === 1) { // Semana 2 
-                            isCompleted = currentStep > 2 || (currentStep === 2 && progress >= 50);
-                            isActive = currentStep === 2 && progress < 50;
-                          } else if (index === 2) { // Semana 3
-                            isCompleted = currentStep > 2 || (currentStep === 2 && progress === 100);
-                            isActive = currentStep === 2 && progress >= 50;
-                          } else if (index === 3) { // Semana 4
-                            isCompleted = currentStep > 3 || (currentStep === 3 && progress === 100);
-                            isActive = currentStep === 3;
-                          } else { // 3 Meses
-                            isCompleted = currentStep > 4 || (currentStep === 4 && progress === 100);
-                            isActive = currentStep === 4;
-                          }
-                          
-                          return (
-                            <div 
-                              key={index} 
-                              className={`text-center transition-all duration-300 ${
-                                isCompleted 
-                                  ? 'text-green-600 font-semibold' 
-                                  : isActive 
-                                  ? 'text-orange-600 font-medium' 
-                                  : 'text-gray-400'
-                              }`}
-                            >
-                              {week.label}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      
-                      {/* Timeline line */}
-                      <div className="mt-2 relative">
-                        <div className="w-full h-0.5 bg-gray-300 rounded"></div>
-                        <div 
-                          className="absolute top-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 rounded transition-all duration-500"
-                          style={{ 
-                            width: `${(() => {
-                              if (currentStep === 0) return (progress / 100) * 20; // 20% for step 1
-                              if (currentStep === 1) return 20 + (progress / 100) * 20; // 40% total for steps 1-2
-                              if (currentStep === 2) return 40 + (progress / 100) * 40; // 80% total for steps 1-3
-                              if (currentStep === 3) return 80 + (progress / 100) * 10; // 90% total for steps 1-4
-                              if (currentStep === 4) return 90 + (progress / 100) * 10; // 100% total
-                              return 100;
-                            })()}%` 
-                          }}
-                        ></div>
-                      </div>
-                    </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {processSteps[currentStep].title}
+                    </h3>
+                    <p className="text-[#F4845F] font-semibold text-sm">
+                      {processSteps[currentStep].subtitle}
+                    </p>
                   </div>
                 </div>
 
-                {/* Right side - Task Display */}
-                <div className="lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex flex-col justify-center">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                      Tarefas em Execução
-                    </h4>
-                    
-                    {/* Current Tasks Display */}
-                    <div className="space-y-3">
-                      {getStepTasks(processSteps[currentStep].key).map((task, index) => {
-                        const completedTasks = getCompletedTasksCount();
-                        const isCompleted = index < completedTasks;
-                        const isActive = index === completedTasks && progress < 100;
-
+                <div className="mt-6 space-y-3">
+                  <div className="flex justify-between text-xs text-white/40">
+                    <span>{t.stepProgress}</span>
+                    <span>{Math.round(progress)}%</span>
+                  </div>
+                  <div className="w-full bg-white/10 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-[#F4845F] to-[#E8764A] h-2 rounded-full transition-all duration-100"
+                      style={{ width: `${progress}%` }}
+                    ></div>
+                  </div>
+                  
+                  {/* Weekly Timeline */}
+                  <div className="pt-2">
+                    <div className="flex justify-between items-center text-xs">
+                      {[
+                        { label: language === 'pt' ? 'Semana 1' : 'Week 1', steps: [0, 1] },
+                        { label: language === 'pt' ? 'Semana 2' : 'Week 2', steps: [2] },
+                        { label: language === 'pt' ? 'Semana 3' : 'Week 3', steps: [2] },
+                        { label: language === 'pt' ? 'Semana 4' : 'Week 4', steps: [3] },
+                        { label: language === 'pt' ? '3 Meses' : '3 Months', steps: [4] }
+                      ].map((week, index) => {
+                        let isCompleted = false;
+                        let isActive = false;
+                        
+                        if (index === 0) {
+                          isCompleted = currentStep > 1 || (currentStep === 1 && progress === 100);
+                          isActive = currentStep <= 1;
+                        } else if (index === 1) {
+                          isCompleted = currentStep > 2 || (currentStep === 2 && progress >= 50);
+                          isActive = currentStep === 2 && progress < 50;
+                        } else if (index === 2) {
+                          isCompleted = currentStep > 2 || (currentStep === 2 && progress === 100);
+                          isActive = currentStep === 2 && progress >= 50;
+                        } else if (index === 3) {
+                          isCompleted = currentStep > 3 || (currentStep === 3 && progress === 100);
+                          isActive = currentStep === 3;
+                        } else {
+                          isCompleted = currentStep > 4 || (currentStep === 4 && progress === 100);
+                          isActive = currentStep === 4;
+                        }
+                        
                         return (
                           <div 
-                            key={index}
-                            className={`
-                              flex items-start gap-3 p-3 rounded-lg transition-all duration-500
-                              ${isActive && isPlaying 
-                                ? 'bg-orange-100 border-l-4 border-orange-500 transform translate-x-2' 
-                                : isCompleted
-                                ? 'bg-green-50 border-l-4 border-green-500'
-                                : 'bg-white border-l-4 border-gray-200 opacity-60'
-                              }
-                            `}
+                            key={index} 
+                            className={`text-center transition-all duration-300 ${
+                              isCompleted 
+                                ? 'text-green-400 font-semibold' 
+                                : isActive 
+                                ? 'text-[#F4845F] font-medium' 
+                                : 'text-white/30'
+                            }`}
                           >
-                            <div className={`
-                              w-2 h-2 rounded-full mt-2 flex-shrink-0
-                              ${isActive && isPlaying 
-                                ? 'bg-orange-500 animate-pulse' 
-                                : isCompleted
-                                ? 'bg-green-500'
-                                : 'bg-gray-300'
-                              }
-                            `}></div>
-                            <p className={`
-                              text-sm leading-relaxed
-                              ${isActive && isPlaying 
-                                ? 'text-orange-700 font-medium' 
-                                : isCompleted
-                                ? 'text-green-700'
-                                : 'text-gray-500'
-                              }
-                            `}>
-                              {task}
-                            </p>
+                            {week.label}
                           </div>
                         );
                       })}
                     </div>
+                    
+                    <div className="mt-2 relative">
+                      <div className="w-full h-0.5 bg-white/10 rounded"></div>
+                      <div 
+                        className="absolute top-0 h-0.5 bg-gradient-to-r from-[#F4845F] to-green-400 rounded transition-all duration-500"
+                        style={{ 
+                          width: `${(() => {
+                            if (currentStep === 0) return (progress / 100) * 20;
+                            if (currentStep === 1) return 20 + (progress / 100) * 20;
+                            if (currentStep === 2) return 40 + (progress / 100) * 40;
+                            if (currentStep === 3) return 80 + (progress / 100) * 10;
+                            if (currentStep === 4) return 90 + (progress / 100) * 10;
+                            return 100;
+                          })()}%` 
+                        }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
 
+              {/* Right side - Tasks */}
+              <div className="lg:w-1/2 bg-white/5 border-t lg:border-t-0 lg:border-l border-white/10 p-6 flex flex-col justify-center">
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white/80 mb-4">
+                    {t.tasksRunning}
+                  </h4>
+                  
+                  <div className="space-y-3">
+                    {getStepTasks(processSteps[currentStep].key).map((task, index) => {
+                      const completedTasks = getCompletedTasksCount();
+                      const isCompleted = index < completedTasks;
+                      const isActive = index === completedTasks && progress < 100;
+
+                      return (
+                        <div 
+                          key={index}
+                          className={`
+                            flex items-start gap-3 p-3 rounded-lg transition-all duration-500
+                            ${isActive && isPlaying 
+                              ? 'bg-[#F4845F]/10 border-l-4 border-[#F4845F] transform translate-x-2' 
+                              : isCompleted
+                              ? 'bg-green-500/10 border-l-4 border-green-400'
+                              : 'bg-white/5 border-l-4 border-white/10 opacity-60'
+                            }
+                          `}
+                        >
+                          <div className={`
+                            w-2 h-2 rounded-full mt-2 flex-shrink-0
+                            ${isActive && isPlaying 
+                              ? 'bg-[#F4845F] animate-pulse' 
+                              : isCompleted
+                              ? 'bg-green-400'
+                              : 'bg-white/20'
+                            }
+                          `}></div>
+                          <p className={`
+                            text-sm leading-relaxed
+                            ${isActive && isPlaying 
+                              ? 'text-[#F4845F] font-medium' 
+                              : isCompleted
+                              ? 'text-green-400'
+                              : 'text-white/40'
+                            }
+                          `}>
+                            {task}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Sandbox Environment */}
         <SandboxEnvironment />
