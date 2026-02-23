@@ -71,32 +71,28 @@ const ModernSolutionCard = memo(({
       {/* Coral accent bar at top */}
       <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
 
-      <div className="p-8 relative z-10">
+      <div className="p-5 relative z-10">
         {/* Title */}
-        <div className="mb-6">
-          <h3 className="font-bold text-2xl text-white mb-4 leading-tight group-hover:text-[#F4845F] transition-colors duration-500">
-            {title}
-          </h3>
-        </div>
+        <h3 className="font-bold text-lg text-white mb-2 leading-tight group-hover:text-[#F4845F] transition-colors duration-500">
+          {title}
+        </h3>
 
         {/* Description */}
-        <div className="mb-6">
-          <p className="text-white/60 leading-relaxed text-sm group-hover:text-white/70 transition-colors duration-300">
-            {description}
-          </p>
-        </div>
+        <p className="text-white/60 leading-relaxed text-xs mb-4 group-hover:text-white/70 transition-colors duration-300 line-clamp-3">
+          {description}
+        </p>
 
         {/* Features */}
-        <div className="mb-4">
-          <h4 className="text-sm font-semibold text-white/80 mb-2 flex items-center gap-2">
-            <div className="w-1 h-4 bg-[#F4845F] rounded-full"></div>
+        <div className="mb-3">
+          <h4 className="text-xs font-semibold text-white/80 mb-1.5 flex items-center gap-1.5">
+            <div className="w-1 h-3 bg-[#F4845F] rounded-full"></div>
             {t.keyFeatures}
           </h4>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {displayedFeatures.map((feature, idx) => (
-              <div key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors duration-300 border border-white/5">
-                <div className="w-1.5 h-1.5 bg-[#F4845F] rounded-full mt-1.5 flex-shrink-0"></div>
-                <span className="text-xs text-white/70 leading-relaxed">
+              <div key={idx} className="flex items-start gap-1.5 py-1 px-1.5 rounded bg-white/5 border border-white/5">
+                <div className="w-1 h-1 bg-[#F4845F] rounded-full mt-1.5 flex-shrink-0"></div>
+                <span className="text-[11px] text-white/70 leading-snug">
                   {feature}
                 </span>
               </div>
@@ -106,14 +102,14 @@ const ModernSolutionCard = memo(({
 
         {/* Business Outcome */}
         <div className="relative">
-          <h4 className="text-sm font-semibold text-white/80 mb-3 flex items-center gap-2">
-            <div className="w-1 h-4 bg-[#F4845F] rounded-full"></div>
+          <h4 className="text-xs font-semibold text-white/80 mb-1.5 flex items-center gap-1.5">
+            <div className="w-1 h-3 bg-[#F4845F] rounded-full"></div>
             {t.businessOutcome}
           </h4>
-          <div className="relative p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:border-[#F4845F]/30 transition-all duration-500">
-            <div className="flex items-start gap-3">
-              <ArrowRight className="w-5 h-5 text-[#F4845F] mt-0.5 flex-shrink-0" />
-              <p className="text-white/70 leading-relaxed text-sm flex-1">
+          <div className="relative p-3 bg-white/5 rounded-xl border border-white/10 group-hover:border-[#F4845F]/30 transition-all duration-500">
+            <div className="flex items-start gap-2">
+              <ArrowRight className="w-4 h-4 text-[#F4845F] mt-0.5 flex-shrink-0" />
+              <p className="text-white/70 leading-snug text-xs flex-1">
                 {outcome}
               </p>
             </div>
