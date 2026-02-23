@@ -30,7 +30,7 @@ const content = {
       supply: {
         label: 'Supply',
         question: 'Quais SKUs estão em risco de ruptura nos próximos 3 meses?',
-        title: 'Análise de Risco de Ruptura — Próximo Trimestre (Mar-Mai/2026)',
+        title: 'Análise de Risco de Ruptura — Próximo Trimestre',
         analysis: 'A projeção de demanda vs capacidade de reposição para os próximos 90 dias indica 5 SKUs com probabilidade elevada de ruptura. O SKU 44210 (Dipirona 500mg) lidera o risco (94%) devido à sazonalidade de outono e lead time de 22 dias do fornecedor principal. O impacto acumulado estimado é de R$ 510.000 em receita no trimestre caso nenhuma ação preventiva seja tomada.',
         table: {
           headers: ['SKU', 'Produto', 'Prob. Ruptura', 'Estoque (dias)'],
@@ -45,7 +45,7 @@ const content = {
         actions: [
           { bold: 'Renegociar contratos', text: 'com fornecedor do SKU 44210 — garantir lead time máximo de 15 dias e lote mínimo flexível para o trimestre.' },
           { bold: 'Ajustar forecast', text: 'dos SKUs 31087 e 28901 — incorporar curva sazonal de outono ao modelo de reposição.' },
-          { bold: 'Revisar estoque de segurança', text: '— elevar cobertura mínima para 30 dias nos 5 SKUs críticos durante o período Mar-Mai.' },
+          { bold: 'Revisar estoque de segurança', text: '— elevar cobertura mínima para 30 dias nos 5 SKUs críticos durante o próximo trimestre.' },
         ],
         questions: [
           'Qual o impacto financeiro acumulado das rupturas dos últimos 30 dias?',
@@ -182,7 +182,7 @@ const content = {
       supply: {
         label: 'Supply',
         question: 'Which SKUs are at risk of stockout in the next 3 months?',
-        title: 'Stockout Risk Analysis — Next Quarter (Mar-May/2026)',
+        title: 'Stockout Risk Analysis — Next Quarter',
         analysis: 'Demand projection vs replenishment capacity for the next 90 days indicates 5 SKUs with elevated stockout probability. SKU 44210 (Dipyrone 500mg) leads the risk (94%) due to autumn seasonality and 22-day lead time from the primary supplier. The estimated cumulative impact is $102,000 in quarterly revenue if no preventive action is taken.',
         table: {
           headers: ['SKU', 'Product', 'Stockout Prob.', 'Stock (days)'],
@@ -197,7 +197,7 @@ const content = {
         actions: [
           { bold: 'Renegotiate contracts', text: 'with SKU 44210 supplier — secure max 15-day lead time and flexible minimum lot for the quarter.' },
           { bold: 'Adjust forecast', text: 'for SKUs 31087 and 28901 — incorporate autumn seasonal curve into replenishment model.' },
-          { bold: 'Review safety stock', text: '— raise minimum coverage to 30 days for the 5 critical SKUs during Mar-May period.' },
+          { bold: 'Review safety stock', text: '— raise minimum coverage to 30 days for the 5 critical SKUs during the next quarter.' },
         ],
         questions: [
           'What is the accumulated financial impact of stockouts in the last 30 days?',
