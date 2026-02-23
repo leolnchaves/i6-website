@@ -19,7 +19,7 @@ const HeaderNovo = () => {
     { to: '/', label: t('header.home') },
     { to: '/solutions', label: t('header.solutions') },
     { to: '/success-stories', label: t('header.successStories') },
-    { to: 'https://huggingface.co/i6-aiworks', label: t('header.community'), external: true },
+    { to: 'https://huggingface.co/infinity6', label: t('header.community'), external: true },
     { to: '/contact', label: t('header.contact') },
   ];
 
