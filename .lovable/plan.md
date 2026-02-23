@@ -1,21 +1,23 @@
 
-# Compactar Seção Resultados para caber em uma tela
+# Alinhar bullets e GIF no topo e na base (desktop)
 
-## Objetivo
-Reduzir padding, margens e tamanhos de fonte para que titulo + 4 cards caibam em um unico viewport sem scroll.
+## Problema
+Atualmente o grid usa `items-end`, fazendo com que os bullets e o GIF se alinhem apenas pela base. O usuario quer que ambas as colunas comecem alinhadas no topo e terminem alinhadas na base.
 
-## Alteracoes no arquivo `src/components/hometeste/ResultadosSection.tsx`
+## Solucao
 
-| Elemento | Atual | Novo |
-|----------|-------|------|
-| Section padding (linha 84) | `py-14 md:py-20` | `py-8 md:py-12` |
-| Titulo margin-bottom (linha 86) | `mb-16` | `mb-8` |
-| Titulo tamanho (linha 86) | `text-2xl sm:text-3xl md:text-4xl` | `text-xl sm:text-2xl md:text-3xl` |
-| Grid gap (linha 94) | `gap-5` | `gap-4` |
-| Card padding (linha 98) | `p-8` | `p-5` |
-| Badge margin-bottom (linha 100) | `mb-5` | `mb-3` |
-| Metric item padding (linha 108) | `py-4` | `py-2.5` |
-| Metric values (linhas 113, 117, etc.) | `text-lg` | `text-base` |
-| Metric labels (linhas 114, 118, etc.) | `text-sm` | `text-xs` |
+No arquivo `src/components/hometeste/SinaisSection.tsx`, linha 139:
 
-Nenhum conteudo textual sera alterado. Apenas classes de espacamento e tipografia sao reduzidas.
+1. **Trocar `items-end` por `items-stretch`** no grid container -- isso faz ambas as colunas ocuparem a mesma altura.
+2. **Adicionar `justify-between`** na coluna dos bullets (`space-y-0` -> remover e usar `flex flex-col justify-between h-full`) para distribuir os 6 bullets uniformemente ao longo da altura, alinhando o primeiro bullet com o topo do GIF e o ultimo com a base.
+3. **Na coluna do GIF**, garantir que o container tambem preencha a altura com `h-full` e use `justify-center` ou `justify-start` para o GIF ficar alinhado ao topo.
+
+### Alteracoes especificas
+
+| Linha | Atual | Novo |
+|-------|-------|------|
+| 139 | `items-end` | `items-stretch` |
+| 141 | `space-y-0 order-2 lg:order-1` | `flex flex-col justify-between order-2 lg:order-1` |
+| 157 | `relative flex flex-col items-center overflow-hidden lg:overflow-visible order-1 lg:order-2` | `relative flex flex-col items-center justify-start overflow-hidden lg:overflow-visible order-1 lg:order-2` |
+
+Isso fara com que os bullets se distribuam verticalmente para ocupar a mesma altura do GIF, alinhando topo com topo e base com base.
