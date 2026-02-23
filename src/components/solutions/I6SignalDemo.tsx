@@ -29,23 +29,23 @@ const content = {
     scenarios: {
       supply: {
         label: 'Supply',
-        question: 'Quais SKUs estão em risco de ruptura esta semana?',
-        title: 'Análise de Risco de Ruptura — Semana 09/2026',
-        analysis: 'Com base nos dados de sell-out, estoque em CD e lead time de reposição, identificamos 5 SKUs com probabilidade elevada de ruptura nos próximos 7 dias. O SKU 44210 (Dipirona 500mg) apresenta o maior risco (94%), com estoque atual cobrindo apenas 1,8 dias de venda média. Recomenda-se ação imediata para evitar perda estimada de R$ 127.000 em receita semanal.',
+        question: 'Quais SKUs estão em risco de ruptura nos próximos 3 meses?',
+        title: 'Análise de Risco de Ruptura — Próximo Trimestre (Mar-Mai/2026)',
+        analysis: 'A projeção de demanda vs capacidade de reposição para os próximos 90 dias indica 5 SKUs com probabilidade elevada de ruptura. O SKU 44210 (Dipirona 500mg) lidera o risco (94%) devido à sazonalidade de outono e lead time de 22 dias do fornecedor principal. O impacto acumulado estimado é de R$ 510.000 em receita no trimestre caso nenhuma ação preventiva seja tomada.',
         table: {
-          headers: ['SKU', 'Produto', 'Prob. Ruptura', 'Estoque (dias)', 'Ação Sugerida'],
+          headers: ['SKU', 'Produto', 'Prob. Ruptura', 'Estoque (dias)'],
           rows: [
-            ['44210', 'Dipirona 500mg 20cp', '94%', '1.8', 'Pedido emergencial'],
-            ['31087', 'Omeprazol 20mg 28cp', '87%', '2.1', 'Antecipar reposição'],
-            ['28901', 'Losartana 50mg 30cp', '72%', '3.4', 'Monitorar diariamente'],
-            ['55432', 'Amoxicilina 500mg 21cp', '61%', '4.2', 'Revisar previsão'],
-            ['19876', 'Metformina 850mg 30cp', '48%', '5.7', 'Acompanhar'],
+            ['44210', 'Dipirona 500mg 20cp', '94%', '18'],
+            ['31087', 'Omeprazol 20mg 28cp', '87%', '24'],
+            ['28901', 'Losartana 50mg 30cp', '72%', '38'],
+            ['55432', 'Amoxicilina 500mg 21cp', '61%', '45'],
+            ['19876', 'Metformina 850mg 30cp', '48%', '62'],
           ],
         },
         actions: [
-          { bold: 'Pedido emergencial', text: 'para SKU 44210 — acionar fornecedor com entrega expressa em até 48h.' },
-          { bold: 'Antecipação de reposição', text: 'do SKU 31087 — renegociar janela de entrega de 5 para 3 dias.' },
-          { bold: 'Dashboard de monitoramento', text: '— ativar alertas automáticos para SKUs com cobertura < 3 dias.' },
+          { bold: 'Renegociar contratos', text: 'com fornecedor do SKU 44210 — garantir lead time máximo de 15 dias e lote mínimo flexível para o trimestre.' },
+          { bold: 'Ajustar forecast', text: 'dos SKUs 31087 e 28901 — incorporar curva sazonal de outono ao modelo de reposição.' },
+          { bold: 'Revisar estoque de segurança', text: '— elevar cobertura mínima para 30 dias nos 5 SKUs críticos durante o período Mar-Mai.' },
         ],
         questions: [
           'Qual o impacto financeiro acumulado das rupturas dos últimos 30 dias?',
@@ -181,23 +181,23 @@ const content = {
     scenarios: {
       supply: {
         label: 'Supply',
-        question: 'Which SKUs are at risk of stockout this week?',
-        title: 'Stockout Risk Analysis — Week 09/2026',
-        analysis: 'Based on sell-out data, DC inventory, and replenishment lead time, we identified 5 SKUs with elevated stockout probability in the next 7 days. SKU 44210 (Dipyrone 500mg) presents the highest risk (94%), with current stock covering only 1.8 days of average sales. Immediate action is recommended to avoid an estimated $25,000 weekly revenue loss.',
+        question: 'Which SKUs are at risk of stockout in the next 3 months?',
+        title: 'Stockout Risk Analysis — Next Quarter (Mar-May/2026)',
+        analysis: 'Demand projection vs replenishment capacity for the next 90 days indicates 5 SKUs with elevated stockout probability. SKU 44210 (Dipyrone 500mg) leads the risk (94%) due to autumn seasonality and 22-day lead time from the primary supplier. The estimated cumulative impact is $102,000 in quarterly revenue if no preventive action is taken.',
         table: {
-          headers: ['SKU', 'Product', 'Stockout Prob.', 'Stock (days)', 'Suggested Action'],
+          headers: ['SKU', 'Product', 'Stockout Prob.', 'Stock (days)'],
           rows: [
-            ['44210', 'Dipyrone 500mg 20ct', '94%', '1.8', 'Emergency order'],
-            ['31087', 'Omeprazole 20mg 28ct', '87%', '2.1', 'Accelerate replenishment'],
-            ['28901', 'Losartan 50mg 30ct', '72%', '3.4', 'Monitor daily'],
-            ['55432', 'Amoxicillin 500mg 21ct', '61%', '4.2', 'Review forecast'],
-            ['19876', 'Metformin 850mg 30ct', '48%', '5.7', 'Track'],
+            ['44210', 'Dipyrone 500mg 20ct', '94%', '18'],
+            ['31087', 'Omeprazole 20mg 28ct', '87%', '24'],
+            ['28901', 'Losartan 50mg 30ct', '72%', '38'],
+            ['55432', 'Amoxicillin 500mg 21ct', '61%', '45'],
+            ['19876', 'Metformin 850mg 30ct', '48%', '62'],
           ],
         },
         actions: [
-          { bold: 'Emergency order', text: 'for SKU 44210 — contact supplier for express delivery within 48h.' },
-          { bold: 'Accelerate replenishment', text: 'for SKU 31087 — renegotiate delivery window from 5 to 3 days.' },
-          { bold: 'Monitoring dashboard', text: '— activate automatic alerts for SKUs with coverage < 3 days.' },
+          { bold: 'Renegotiate contracts', text: 'with SKU 44210 supplier — secure max 15-day lead time and flexible minimum lot for the quarter.' },
+          { bold: 'Adjust forecast', text: 'for SKUs 31087 and 28901 — incorporate autumn seasonal curve into replenishment model.' },
+          { bold: 'Review safety stock', text: '— raise minimum coverage to 30 days for the 5 critical SKUs during Mar-May period.' },
         ],
         questions: [
           'What is the accumulated financial impact of stockouts in the last 30 days?',
@@ -331,24 +331,19 @@ const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[][] } }
       <thead>
         <tr className="border-b border-gray-200">
           {data.headers.map((h, i) => (
-            <th key={i} className="text-left py-2 px-3 text-gray-500 font-medium text-xs uppercase tracking-wider">{h}</th>
+            <th key={i} className="text-left py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider">{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {data.rows.map((row, ri) => {
-          const prob = parseInt(row[2]);
-          const probColor = prob >= 80 ? 'text-red-500' : prob >= 60 ? 'text-amber-500' : 'text-green-500';
-          return (
-            <tr key={ri} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-              <td className="py-2.5 px-3 text-gray-600 font-mono text-xs">{row[0]}</td>
-              <td className="py-2.5 px-3 text-gray-800">{row[1]}</td>
-              <td className={`py-2.5 px-3 font-bold ${probColor}`}>{row[2]}</td>
-              <td className="py-2.5 px-3 text-gray-500">{row[3]}</td>
-              <td className="py-2.5 px-3 text-orange-500 font-medium">{row[4]}</td>
-            </tr>
-          );
-        })}
+        {data.rows.map((row, ri) => (
+          <tr key={ri} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+            <td className="py-2.5 px-3 text-gray-600 font-mono text-xs">{row[0]}</td>
+            <td className="py-2.5 px-3 text-gray-800">{row[1]}</td>
+            <td className="py-2.5 px-3 text-gray-800 font-bold">{row[2]}</td>
+            <td className="py-2.5 px-3 text-gray-800">{row[3]}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
