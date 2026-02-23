@@ -513,7 +513,7 @@ const I6SignalDemo = memo(() => {
   };
 
   return (
-    <section className="py-16 md:py-24 px-4 relative z-[10]">
+    <section className="py-6 md:py-10 px-4 relative z-[10]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-10">
