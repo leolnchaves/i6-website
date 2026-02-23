@@ -647,7 +647,7 @@ const I6SignalDemo = memo(() => {
               {/* Scroll up indicator */}
               {showScrollHint && (
                 <div 
-                  className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 cursor-pointer animate-fade-in"
+                  className="absolute top-3 right-4 z-20 flex flex-col items-center gap-1 cursor-pointer animate-fade-in"
                   onClick={() => chatRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
                   <div className="w-6 h-10 rounded-full border border-orange-400/40 pt-1.5 flex items-start justify-center shadow-[0_0_12px_rgba(244,132,95,0.15)] bg-white/80 backdrop-blur-sm">
