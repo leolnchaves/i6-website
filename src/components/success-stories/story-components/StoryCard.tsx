@@ -1,8 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { ArrowRight, Building2 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
 import LazyImage from '../optimized/LazyImage';
-import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 interface StoryCardData {
   id: string;
@@ -30,22 +28,20 @@ interface StoryCardProps {
 }
 
 const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) => {
-  const handleClick = useCallback(() => {
-    onClick(story);
-  }, [story, onClick]);
+  const handleClick = useCallback(() => onClick(story), [story, onClick]);
 
   return (
-    <Card 
-      className="group overflow-hidden cursor-pointer border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 bg-white"
+    <div
+      className="group overflow-hidden cursor-pointer rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-500 transform hover:-translate-y-1"
       onClick={handleClick}
     >
-      {/* Hidden gradient bar - only appears on hover */}
-      <div className="h-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 group-hover:h-1 transition-all duration-500"></div>
-      
-      <CardContent className="p-6 relative">
-        {/* Image placeholder */}
-        <div className="w-full h-32 bg-gray-100 rounded-lg mb-4 overflow-hidden">
-          <LazyImage 
+      {/* Hover gradient bar */}
+      <div className="h-0 bg-gradient-to-r from-[#F4845F] to-[#3B82F6] group-hover:h-1 transition-all duration-500"></div>
+
+      <div className="p-6 relative">
+        {/* Image */}
+        <div className="w-full h-32 bg-white/5 rounded-lg mb-4 overflow-hidden">
+          <LazyImage
             src={story.image_url}
             alt={story.company_name}
             className="w-full h-full object-cover"
@@ -54,72 +50,59 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
 
         {/* Industry tag */}
         <div className="flex items-center mb-3">
-          <Building2 className="w-3 h-3 text-gray-500 mr-2" />
-          <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <Building2 className="w-3 h-3 text-white/40 mr-2" />
+          <span className="text-xs font-medium text-white/40 uppercase tracking-wider">
             {story.industry}
           </span>
         </div>
 
         {/* Quote */}
-        <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors duration-300">
+        <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-white/90 transition-colors duration-300">
           {story.customer_quote}
         </h3>
 
-        {/* Brief description */}
-        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+        {/* Description */}
+        <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">
           {story.challenge.length > 100 ? `${story.challenge.substring(0, 100)}...` : story.challenge}
         </p>
 
-        {/* Key metrics - uniform background */}
+        {/* Key metrics */}
         <div className="grid grid-cols-2 gap-3 mb-5">
-          <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
-            <div className="text-xl font-semibold text-gray-700 mb-1">
-              {story.metric1_value}
-            </div>
-            <div className="text-xs text-gray-500 font-medium">
-              {story.metric1_label}
-            </div>
+          <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+            <div className="text-xl font-semibold text-[#F4845F] mb-1">{story.metric1_value}</div>
+            <div className="text-xs text-white/50 font-medium">{story.metric1_label}</div>
           </div>
-          <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-100">
-            <div className="text-xl font-semibold text-gray-700 mb-1">
-              {story.metric2_value}
-            </div>
-            <div className="text-xs text-gray-500 font-medium">
-              {story.metric2_label}
-            </div>
+          <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+            <div className="text-xl font-semibold text-[#F4845F] mb-1">{story.metric2_value}</div>
+            <div className="text-xs text-white/50 font-medium">{story.metric2_label}</div>
           </div>
         </div>
 
-        {/* Explore details with company logo and modern arrow */}
+        {/* Footer */}
         <div className="flex items-center justify-between">
-          {/* Company Logo */}
           <div className="flex-shrink-0">
             {story.logo && (
-              <img 
+              <img
                 src={story.logo}
                 alt={`${story.company_name} logo`}
-                className="w-8 h-8 object-contain"
+                className="w-8 h-8 object-contain brightness-0 invert opacity-60"
               />
             )}
           </div>
-          
-          {/* Details section */}
           <div className="flex items-center">
-            <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300 mr-3">
+            <span className="text-sm font-medium text-white/50 group-hover:text-white/70 transition-colors duration-300 mr-3">
               {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
             </span>
             <div className="relative overflow-hidden">
-              {/* Background that appears on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
-              {/* Arrow container */}
-              <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 group-hover:bg-transparent transition-all duration-500">
-                <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#F4845F] to-[#3B82F6] rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
+              <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 group-hover:bg-transparent transition-all duration-500">
+                <ArrowRight className="w-4 h-4 text-white/60 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
               </div>
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 });
 
