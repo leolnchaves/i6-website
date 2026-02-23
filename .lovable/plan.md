@@ -1,18 +1,28 @@
 
-# Layout dos Cards de Resultados: Grid 2x2
+# Adicionar 3 novos bullets na seção de capabilities (Sinais)
 
-## Problema
-Os 4 cards em uma unica linha (4 colunas) continuam com textos apertados e muitas quebras de linha, mesmo apos ajustes de padding e gap.
+## O que muda
 
-## Solucao
-Mudar o grid de `lg:grid-cols-4` para `lg:grid-cols-2`, criando um layout de 2 cards por linha em 2 linhas. Isso dara o dobro de largura para cada card, eliminando as quebras de linha excessivas.
+Inserir 3 novos bullets entre "Base fundacional multi-segmentada." e "APIs de ativacao imediata." nos dois idiomas (PT e EN).
+
+### Novos bullets (PT)
+1. "Relevancia imediata ate para comportamentos sem historico."
+2. "Balanceamento entre personalizacao e diversidade."
+3. "Explicabilidade comportamental argumentativa"
+
+### Novos bullets (EN) - traducao equivalente
+1. "Immediate relevance even for behaviors without history."
+2. "Balance between personalization and diversity."
+3. "Argumentative behavioral explainability"
 
 ## Detalhes Tecnicos
 
-Alteracao no arquivo `src/components/hometeste/ResultadosSection.tsx`:
+Arquivo: `src/components/hometeste/SinaisSection.tsx`
 
-- Mudar a classe do grid de `lg:grid-cols-4` para `lg:grid-cols-2`
-- Linha aproximada 94: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5` -> `grid grid-cols-1 sm:grid-cols-2 gap-5`
-- Remover `lg:grid-cols-4` pois `sm:grid-cols-2` ja cobre o layout desejado de 2 colunas
+1. **Expandir o array `capabilityIcons`** (linha 7): adicionar 3 icones para os novos items. Sugestao: `Zap`, `Target`, `BarChart3` ou outros icones ja importados que facam sentido semantico (ex: `Sparkles` para relevancia, `Scale` para balanceamento, `MessageSquare` para explicabilidade). Importar novos icones se necessario.
 
-Nenhum texto sera alterado. Apenas a classe CSS do grid muda.
+2. **Expandir `capabilities` no copy PT** (linhas 20-24): inserir os 3 novos textos apos "Base fundacional multi-segmentada." e antes de "APIs de ativacao imediata."
+
+3. **Expandir `capabilities` no copy EN** (linhas 53-57): inserir as traducoes correspondentes na mesma posicao.
+
+4. **Array de icones** atualizado de 3 para 6 icones para corresponder aos 6 bullets.
