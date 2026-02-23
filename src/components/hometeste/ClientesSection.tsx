@@ -6,7 +6,7 @@ const ClientesSection = () => {
   const { language } = useLanguage();
 
   const title = language === 'pt'
-    ? 'Líderes que dominam a Inteligência de Movimento.'
+    ? 'Líderes que já dominam a Inteligência de Movimento.'
     : 'Leaders who master Movement Intelligence.';
 
   if (loading || partners.length === 0) return null;
