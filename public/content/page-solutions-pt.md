@@ -14,7 +14,7 @@ Transformamos sinais comportamentais em tempo real em decisões comerciais imedi
 - Entregar recomendações contextuais em tempo real  
 - Ativar a melhor oferta no momento da decisão  
 
-**Business Impact:**  
+**Business Results:**  
 Maior conversão no tráfego existente. Receita incremental sem aumentar investimento em aquisição.
 
 ---
@@ -35,7 +35,7 @@ Antecipamos a próxima compra, ativamos oportunidades de cross-sell e up-sell no
 - Reduzir churn com ativação proativa  
 - Orquestrar personalização em todos os canais  
 
-**Business Impact:**  
+**Business Results:**  
 Maior LTV. Mais frequência de compra. Receita recorrente mais previsível.
 
 ---
@@ -56,7 +56,7 @@ Alinhamos sortimento, precificação e metas comerciais em tempo real, transform
 - Alinhamento com metas de receita e margem  
 - Previsão comportamental no nível do PDV  
 
-**Business Impact:**  
+**Business Results:**  
 Sell-out mais rápido. Redução de distorções de estoque. Melhor performance de margem por loja.
 
 ---
@@ -77,7 +77,7 @@ Identificamos os clientes com maior probabilidade de conversão antes da ativaç
 - Refinamento inteligente de audiência  
 - Priorização estratégica de leads  
 
-**Business Impact:**  
+**Business Results:**  
 Maior taxa de conversão. Menor custo de aquisição. ROI de marketing maximizado.
 
 ---
@@ -98,7 +98,7 @@ Ajustamos preços dinamicamente com base em comportamento, elasticidade e estág
 - Estratégia de preço por ciclo de vida  
 - Otimização inteligente de margem  
 
-**Business Impact:**  
+**Business Results:**  
 Margem ampliada. Volume saudável. Maior competitividade de mercado.
 
 ---
@@ -119,7 +119,7 @@ Utilizamos modelos adaptativos e autoaprendizes para antecipar mudanças de dema
 - Detecção de tendências e sazonalidade  
 - Alinhamento entre estoque e supply chain  
 
-**Business Impact:**  
+**Business Results:**  
 Maior acurácia de previsão. Redução de rupturas e excessos. Mais agilidade operacional.
 
 ---
