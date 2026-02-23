@@ -1,43 +1,33 @@
 
+# Animar o indicador "Scroll through content"
 
-# Tornar o indicador de scroll mais visivel no i6Signal
+O objetivo e tornar o indicador de scroll mais visivel e envolvente, com animacoes que chamem a atencao do usuario.
 
-## O que muda
+## Mudancas planejadas
 
-Substituir o pequeno icone de scroll (bolinha + texto "scroll") por um box mais aparente com texto descritivo, posicionado no canto superior direito da area de chat.
+### 1. Adicionar animacao pulsante ao container (I6SignalDemo.tsx)
 
-## Mudanca no arquivo `src/components/solutions/I6SignalDemo.tsx`
+Substituir a aparencia estatica do indicador por uma combinacao de animacoes:
 
-### Substituir o indicador atual (linhas 648-658)
+- **Pulse/glow**: o container tera um efeito de brilho pulsante (shadow laranja que aumenta e diminui)
+- **Scale breathing**: o botao vai crescer e diminuir levemente de forma continua
+- **Bounce do icone**: manter o bounce no ChevronUp mas tornar mais pronunciado
+- **Gradiente animado**: fundo com gradiente que se move
 
-Trocar o indicador minimalista por um box com fundo, borda, icone de seta e texto bilíngue:
+### 2. Novas animacoes CSS (index.css)
 
-```tsx
-{showScrollHint && (
-  <div 
-    className="absolute top-3 right-4 z-20 cursor-pointer animate-fade-in"
-    onClick={() => chatRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-  >
-    <div className="flex items-center gap-2 bg-orange-50 border border-orange-300 rounded-lg px-3 py-2 shadow-md">
-      <ChevronUp className="w-4 h-4 text-orange-500 animate-bounce" />
-      <span className="text-orange-600 text-xs font-medium">
-        {lang === 'pt' ? 'Navegue pelo conteúdo' : 'Scroll through content'}
-      </span>
-    </div>
-  </div>
-)}
-```
+Adicionar keyframes:
 
-O box tera:
-- Fundo laranja claro (`bg-orange-50`) com borda laranja (`border-orange-300`)
-- Icone `ChevronUp` animado com bounce
-- Texto descritivo em portugues ou ingles conforme o idioma ativo
-- Sombra para destaque visual
-- Clique leva ao topo da resposta
+- `scroll-hint-pulse`: escala de 1.0 a 1.06 com glow shadow laranja pulsante
+- `scroll-hint-glow`: box-shadow laranja que aparece e desaparece
 
-### Verificar import do ChevronUp
-Confirmar que `ChevronUp` ja esta importado do `lucide-react`. Se nao estiver, adicionar ao import existente.
+### Detalhes tecnicos
 
-## Resultado
-O usuario vera um box claro e legivel no canto superior direito com o texto "Navegue pelo conteúdo" (ou "Scroll through content" em ingles), tornando evidente que pode rolar para cima.
+**I6SignalDemo.tsx** (linhas ~667-678):
+- Trocar classes do container wrapper para incluir `animate-scroll-hint-pulse`
+- Adicionar classe de glow ao div interno com borda
+- Aumentar levemente o tamanho do texto e padding para maior visibilidade
 
+**index.css**:
+- Adicionar `@keyframes scroll-hint-pulse` com transform scale e box-shadow animados
+- Adicionar classe `.animate-scroll-hint-pulse`
