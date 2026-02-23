@@ -19,7 +19,7 @@ const RESPONSE_DELAY = 600;
 const content = {
   pt: {
     sectionTitle: 'i6Signal - Inteligência de Movimento em Ação',
-    sectionSubtitle: 'Explore como a inteligência preditiva do i6Signal entrega insights acionáveis em tempo real',
+    sectionSubtitle: 'Explore como transformamos sinais em decisões acionáveis que movem receita, margem e performance comercial em tempo real.',
     placeholder: 'Digite sua pergunta...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Análise Executiva',
@@ -146,7 +146,7 @@ const content = {
   },
   en: {
     sectionTitle: 'i6Signal - Movement Intelligence in Action',
-    sectionSubtitle: 'Explore how i6Signal\'s predictive intelligence delivers actionable insights in real time.',
+    sectionSubtitle: 'Explore how we turn signals into actionable decisions that move revenue, margin, and commercial performance in real time.',
     placeholder: 'Type your question...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Executive Analysis',
