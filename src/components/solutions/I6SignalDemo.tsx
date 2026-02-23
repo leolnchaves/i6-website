@@ -545,7 +545,7 @@ const I6SignalDemo = memo(() => {
           </div>
 
           {/* ── Main body ── */}
-          <div className="flex h-[600px] md:h-[650px]">
+          <div className="flex h-[450px] md:h-[500px]">
             {/* Sidebar — light theme, hidden on mobile */}
             <div className="hidden md:flex flex-col w-52 bg-white border-r border-gray-200 flex-shrink-0">
               {/* Angle dropdown */}
