@@ -1,121 +1,125 @@
-## Turn Anonymous Traffic into Real Revenue
+## Turn Anonymous Traffic into Revenue Growth
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** B2B, B2C  
 
-**Target:** B2B, B2C
+**Overview:**  
+Most companies lose revenue at the top of the funnel because they cannot identify who is browsing. Anonymous traffic is treated as noise. We treat it as opportunity.
 
-**Title:** Turn Anonymous Traffic into Real Revenue
-
-**Overview:** Most of your traffic never identifies itself. That doesn't mean they're not ready to buy. We can convert real-time behavioral signals into concrete sales opportunities, increasing conversion and average ticket even without customer history. You stop depending on login to sell better.
+We transform real-time behavioral signals into immediate commercial decisions, increasing conversion and average order value even without login or prior customer history.
 
 **Key Features:**
-- Understand purchase intent from the first click
-- Increase conversion without relying on logged-in users
-- Recommend products with context, not guesswork
-- Activate opportunities at the exact moment of decision
+- Detect purchase intent from the first interaction  
+- Convert anonymous visitors without requiring identification  
+- Deliver contextual product recommendations in real time  
+- Activate the right offer at the decision moment  
 
-**Business Results:** More top-of-funnel conversion. More revenue without increasing media spend.
+**Business Impact:**  
+Higher conversion from existing traffic. Incremental revenue without increasing acquisition spend.
 
 ---
 
-## Turn Customer Data into Recurring Revenue
+## Turn Customer Data into Predictable Growth
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** B2B, B2C, B2B2C, D2C  
 
-**Target:** B2B, B2C, B2B2C, D2C
+**Overview:**  
+Most customer databases are reactive. They describe what happened, but do not influence what comes next.
 
-**Title:** Turn Customer Data into Recurring Revenue
-
-**Overview:** You already have customer data. The problem is that most of it is underused. We anticipate each customer's next move, activate the right offer at the right moment, and unlock cross-sell and upsell opportunities that drive retention, frequency, and lifetime value.
-Stop reacting to past behavior. Start shaping the next purchase.
+We anticipate the next purchase, activate cross-sell and upsell opportunities at the right timing, and increase retention and lifetime value through intelligent, behavior-driven decisions.
 
 **Key Features:**
-- Anticipate customer needs before they ask
-- Increase average order value with relevant recommendations
-- Reduce churn with activation at the right timing
-- Personalize consistently across all channels
+- Anticipate the next buying cycle  
+- Increase average order value with relevant offers  
+- Reduce churn through proactive activation  
+- Orchestrate personalization across channels  
 
-**Business Results:** Higher LTV. Greater purchase frequency. Predictable revenue growth.
+**Business Impact:**  
+Higher LTV. Increased purchase frequency. More predictable recurring revenue.
 
 ---
 
-## Industrial Recommendation Intelligence
+## Turn Your POS Network into a Revenue Engine
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** Supply & Profitability Optimization  
 
-**Target:** Supply & Profitability Optimization
+**Overview:**  
+Static assortment and disconnected pricing decisions slow down sell-out and dilute margin.
 
-**Title:** Industrial Recommendation Intelligence
-
-**Overview:** Align commercial objectives with intelligent recommendations that optimize assortment, pricing and POS behavior — all in real time.
+We align assortment, pricing, and commercial targets in real time, transforming each POS into an intelligent growth unit.
 
 **Key Features:**
-- Assortment Optimization
-- Dynamic Pricing Integration
-- Commercial Target Alignment
-- POS Behavioral Forecasting
+- Assortment optimization by location performance  
+- Intelligent order recommendations  
+- Alignment with revenue and margin targets  
+- Behavioral forecasting at POS level  
 
-**Business Results:** Generate product relevance and sell-out with intelligent orders, delivering the right mix aligned with POS performance, commercial targets, revenue and margin.
+**Business Impact:**  
+Faster sell-out. Reduced stock distortion. Stronger margin performance across locations.
 
 ---
 
-## Predictive Campaign Targeting
+## Turn Campaign Spend into Measurable ROI
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** Growth Acceleration  
 
-**Target:** Growth Acceleration
+**Overview:**  
+Most campaigns fail because targeting is too broad or based on static segmentation.
 
-**Title:** Predictive Campaign Targeting
-
-**Overview:** Identify and activate only the users with the highest likelihood of conversion before the campaign even begins. Drastically reduce CAC and increase conversion effectiveness with precise segmentation.
+We identify customers with the highest probability of conversion before activation, reducing CAC and increasing campaign efficiency.
 
 **Key Features:**
-- Propensity Modeling
-- Conversion Likelihood Scoring
-- Campaign Audience Refinement
-- Lead Activation Strategy
+- Propensity and conversion scoring  
+- Precision audience refinement  
+- Intelligent lead prioritization  
+- Timing optimization for activation  
 
-**Business Results:** Maximize ROI by targeting and impacting the right customer, at the right time, with the right product.
+**Business Impact:**  
+Higher conversion rates. Lower acquisition costs. Stronger return on marketing investment.
 
 ---
 
-## Smart Price Optimization
+## Turn Pricing into a Strategic Growth Lever
 
-**Engine:** i6 ElasticPrice
+**Engine:** i6 ElasticPrice  
+**Target:** Supply & Profitability Optimization  
 
-**Target:** Supply & Profitability Optimization
+**Overview:**  
+Pricing is often reactive, based on rules or competitor tracking. That approach erodes margin or sacrifices volume.
 
-**Title:** Smart Price Optimization
-
-**Overview:** A dynamic pricing solution that adapts in real time to demand, behavior and product lifecycle. Maximize profitability without losing competitiveness.
+We dynamically adjust prices based on demand behavior, elasticity, and lifecycle stage, balancing competitiveness with profitability.
 
 **Key Features:**
-- Behavior-Based Pricing
-- Lifecycle-Aware Strategy
-- Price Sensitivity Calibration
-- Margin Optimization Engine
+- Behavior-driven pricing adjustments  
+- Elasticity modeling by segment  
+- Lifecycle-aware pricing strategy  
+- Margin optimization logic  
 
-**Business Results:** Improve margin, sales cycle speed and competitiveness through behavior-driven intelligent pricing.
+**Business Impact:**  
+Improved margin. Healthier volume. Stronger competitive positioning.
 
 ---
 
-## Adaptive Demand Forecasting
+## Turn Forecasting into Competitive Advantage
 
-**Engine:** i6 Previsio
+**Engine:** i6 Previsio  
+**Target:** Supply & Profitability Optimization  
 
-**Target:** Supply & Profitability Optimization
+**Overview:**  
+Traditional forecasts rely heavily on historical averages. They struggle in volatile markets.
 
-**Title:** Adaptive Demand Forecasting
-
-**Overview:** Accurately forecast demand with adaptive models. Our self-adjusting algorithms project future sales based on trends, seasonality and behaviors — empowering supply chain and commercial planning.
+We use adaptive, self-learning models to anticipate demand shifts, seasonality, and behavioral trends, enabling smarter production and inventory planning.
 
 **Key Features:**
-- Self-Reinforcing Forecast Model
-- Extended Projection (N+M)
-- Seasonality and Trend Detection
-- Inventory and Supply Chain Alignment
+- Self-reinforcing adaptive forecasting  
+- Extended horizon projections  
+- Trend and seasonality detection  
+- Inventory and supply chain alignment  
 
-**Business Results:** Enhance demand planning by guiding production plans and commercial targets with precision, ensuring agility in fast-changing markets.
+**Business Impact:**  
+Higher forecast accuracy. Reduced stock imbalance. Greater operational agility.
 
 ---
-
