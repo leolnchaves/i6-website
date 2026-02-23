@@ -1,33 +1,38 @@
 
-# Animar o indicador "Scroll through content"
 
-O objetivo e tornar o indicador de scroll mais visivel e envolvente, com animacoes que chamem a atencao do usuario.
+# Novo cenario "Comportamento" com grafico de barras de compra/recompra
 
-## Mudancas planejadas
+## Resumo
+Adicionar um sexto cenario ao I6SignalDemo com o botao chamado **"Comportamento"** (PT) / **"Behavior"** (EN). O cenario mostra comportamento de compra e recompra de Losartana Potassica 50mg na regiao do Vale do Paraiba, com um grafico de barras usando Recharts.
 
-### 1. Adicionar animacao pulsante ao container (I6SignalDemo.tsx)
+## Mudancas
 
-Substituir a aparencia estatica do indicador por uma combinacao de animacoes:
+### 1. Atualizar tipo e imports (I6SignalDemo.tsx)
 
-- **Pulse/glow**: o container tera um efeito de brilho pulsante (shadow laranja que aumenta e diminui)
-- **Scale breathing**: o botao vai crescer e diminuir levemente de forma continua
-- **Bounce do icone**: manter o bounce no ChevronUp mas tornar mais pronunciado
-- **Gradiente animado**: fundo com gradiente que se move
+- Linha 11: adicionar `'pdv'` ao tipo `Scenario`
+- Linha 9: adicionar `BarChart, Bar` aos imports do recharts
 
-### 2. Novas animacoes CSS (index.css)
+### 2. Adicionar dados do cenario nos objetos de traducao
 
-Adicionar keyframes:
+**PT:**
+- `label: 'Comportamento'`
+- question sobre compra/recompra de Losartana Potassica 50mg no Vale do Paraiba
+- title, analysis, actions, questions seguindo a mesma estrutura dos outros cenarios
+- `barChartData`: array com 6 meses (Set-Fev), campos `month`, `compra`, `recompra`
+- `barChartNote`: nota do grafico
 
-- `scroll-hint-pulse`: escala de 1.0 a 1.06 com glow shadow laranja pulsante
-- `scroll-hint-glow`: box-shadow laranja que aparece e desaparece
+**EN:**
+- `label: 'Behavior'`
+- Traducao equivalente de todos os campos
 
-### Detalhes tecnicos
+### 3. Criar componente PdvBarChart
 
-**I6SignalDemo.tsx** (linhas ~667-678):
-- Trocar classes do container wrapper para incluir `animate-scroll-hint-pulse`
-- Adicionar classe de glow ao div interno com borda
-- Aumentar levemente o tamanho do texto e padding para maior visibilidade
+Sub-componente inline usando `BarChart`, `Bar`, `XAxis`, `YAxis`, `CartesianGrid`, `Tooltip`, `Legend`, `ResponsiveContainer` do Recharts. Duas barras lado a lado: laranja para Compra, azul para Recompra.
 
-**index.css**:
-- Adicionar `@keyframes scroll-hint-pulse` com transform scale e box-shadow animados
-- Adicionar classe `.animate-scroll-hint-pulse`
+### 4. Renderizar o grafico na area de resposta
+
+Adicionar condicional `activeScenario === 'pdv'` para renderizar o `PdvBarChart` na mesma posicao onde os outros cenarios renderizam suas visualizacoes.
+
+### Arquivo modificado
+- `src/components/solutions/I6SignalDemo.tsx`
+
