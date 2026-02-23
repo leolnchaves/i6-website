@@ -544,9 +544,31 @@ const I6SignalDemo = memo(() => {
     <section className="py-6 md:py-10 px-4 relative z-[10]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{t.sectionTitle}</h2>
           <p className="text-white/50 max-w-4xl mx-auto">{t.sectionSubtitle}</p>
+        </div>
+
+        {/* Scenario selector */}
+        <div className="text-center mb-8">
+          <p className="text-white/70 text-sm mb-4">
+            {lang === 'pt' ? 'Escolha um tema e veja como sinais se transformam em decisões concretas:' : 'Choose a topic and see how signals become concrete decisions:'}
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
+              <button
+                key={sc}
+                onClick={() => handleScenarioClick(sc)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeScenario === sc
+                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                    : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+                }`}
+              >
+                {t.scenarios[sc].label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Demo Container */}
@@ -754,22 +776,6 @@ const I6SignalDemo = memo(() => {
 
               {/* Scenario tabs + Input bar */}
               <div className="border-t border-gray-200/50 bg-white/95 backdrop-blur-sm p-3 md:p-4 md:pl-14">
-                {/* Scenario tabs */}
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
-                    <button
-                      key={sc}
-                      onClick={() => handleScenarioClick(sc)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                        activeScenario === sc
-                          ? 'bg-orange-500 text-white shadow-sm'
-                          : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
-                      }`}
-                    >
-                      {t.scenarios[sc].label}
-                    </button>
-                  ))}
-                </div>
                 {/* Input row */}
                 <div className="flex items-center gap-2">
                   <button className="h-10 w-10 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors flex-shrink-0">
