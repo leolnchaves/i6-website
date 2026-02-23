@@ -112,9 +112,9 @@ const content = {
           { territory: 'P. Alegre', gap: 145, potential: 680, score: 78 },
         ],
         actions: [
-          { bold: 'Alocar 2 representantes adicionais', text: 'para Grande BH, focando nos 15 PDVs com maior gap individual.' },
+          { bold: 'Alocar representantes adicionais', text: 'para Grande BH, focando nos PDVs com maior gap individual.' },
           { bold: 'Campanha de incentivo', text: 'para Campinas com bonificação escalonada por faixa de crescimento.' },
-          { bold: 'Visita executiva', text: 'aos 5 maiores clientes de Curitiba para renegociar mix e share of shelf.' },
+          { bold: 'Visita executiva', text: 'aos maiores clientes de Curitiba para renegociar mix e share of shelf.' },
         ],
         questions: [
           'Qual o ROI histórico de ações comerciais em cada território?',
@@ -267,9 +267,9 @@ const content = {
           { territory: 'P. Alegre', gap: 29, potential: 136, score: 78 },
         ],
         actions: [
-          { bold: 'Allocate 2 additional reps', text: 'to Metro BH, focusing on the 15 POS with the largest individual gap.' },
+          { bold: 'Allocate additional reps', text: 'to Metro BH, focusing on the POS with the largest individual gap.' },
           { bold: 'Incentive campaign', text: 'for Campinas with scaled bonus by growth tier.' },
-          { bold: 'Executive visit', text: 'to the top 5 clients in Curitiba to renegotiate mix and share of shelf.' },
+          { bold: 'Executive visit', text: 'to the top clients in Curitiba to renegotiate mix and share of shelf.' },
         ],
         questions: [
           'What is the historical ROI of commercial actions in each territory?',
