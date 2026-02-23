@@ -1,29 +1,20 @@
 
+## Atualizar logo Multi e uniformizar tamanhos
 
-## Ajuste de tamanho do título para tablet
+### 1. Substituir a logo da Multi
+- Copiar a nova imagem enviada (`user-uploads://image-45.png`) para `public/content/logos/multi.png`, substituindo a atual.
 
-**Problema:** O breakpoint `md` (768px) ainda é tablet, mas está usando o tamanho do desktop (`text-8xl` = 96px). Isso faz com que tablet e desktop fiquem com o mesmo tamanho grande.
-
-**Solução:** Redistribuir os breakpoints para separar corretamente tablet de desktop:
-
-| Dispositivo | Breakpoint | Tamanho atual | Tamanho novo |
-|---|---|---|---|
-| Mobile | base | text-5xl (48px) | text-5xl (48px) |
-| Tablet pequeno | sm (640px) | text-4xl (36px) | text-4xl (36px) |
-| Tablet grande | md (768px) | text-8xl (96px) | text-6xl (60px) |
-| Desktop | lg (1024px) | -- | text-8xl (96px) |
+### 2. Uniformizar tamanhos das logos
+- No componente `ClientesSection.tsx`, ajustar as classes CSS das imagens para que todas tenham tamanho uniforme.
+- Usar uma altura fixa de `h-8 sm:h-10` com `max-w-[120px]` para garantir que logos mais largas (como Multi) fiquem proporcionais as demais.
 
 ### Detalhes tecnicos
 
-**Arquivo:** `src/components/hometeste/HeroMovimento.tsx` (linha 28)
+**Arquivo:** `public/content/logos/multi.png`
+- Substituir pelo arquivo enviado pelo usuario.
 
-Alterar a classe do `h1` de:
-```
-text-5xl sm:text-4xl md:text-8xl
-```
-Para:
-```
-text-5xl sm:text-4xl md:text-6xl lg:text-8xl
-```
+**Arquivo:** `src/components/hometeste/ClientesSection.tsx` (linha 36)
+- Alterar de: `h-10 sm:h-12 w-auto max-w-[140px]`
+- Para: `h-8 sm:h-10 w-auto max-w-[120px]`
 
-Assim o desktop (`lg:text-8xl`) mantém o tamanho atual e o tablet (`md:text-6xl`) fica com 60px, um meio-termo adequado.
+Isso garante que logos mais altas ou largas fiquem contidas no mesmo espaco visual.
