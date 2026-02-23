@@ -38,7 +38,7 @@ const StaticSolutionsGrid = memo(() => {
   }
 
   return (
-    <section className="py-20 bg-[#0B1224] relative overflow-hidden">
+    <section className="pt-6 pb-20 bg-[#0B1224] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {solutions.length === 0 ? (
           <div className="text-center py-16">
