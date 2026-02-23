@@ -1,20 +1,20 @@
-## Smart Discovery for Anonymous Visitors
+## Turn Anonymous Traffic into Real Revenue
 
 **Engine:** i6 RecSys
 
-**Target:** Hyperpersonalization Intelligence & Growth Acceleration
+**Target:** B2B, B2C
 
-**Title:** Smart Discovery for Anonymous Visitors
+**Title:** Turn Anonymous Traffic into Real Revenue
 
-**Overview:** Turn anonymous traffic into engaged buyers. Our engine uses real-time signals and context to drive high-value recommendations without needing prior user history.
+**Overview:** Most of your traffic never identifies itself. That doesn't mean they're not ready to buy. Infinity6 converts real-time behavioral signals into concrete sales opportunities, increasing conversion and average ticket even without customer history. You stop depending on login to sell better.
 
 **Key Features:**
-- Contextual Affinity Modeling
-- Cold-Start Personalization
-- Anonymous Visitor Intelligence
-- Real-time Recommendations
+- Understand purchase intent from the first click
+- Increase conversion without relying on logged-in users
+- Recommend products with context, not guesswork
+- Activate opportunities at the exact moment of decision
 
-**Business Results:** Unlocks product discovery and boosts engagement with zero historical data.
+**Business Results:** More top-of-funnel conversion. More revenue without increasing media spend.
 
 ---
 
