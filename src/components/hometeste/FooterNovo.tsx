@@ -27,7 +27,7 @@ const FooterNovo = () => {
       : '© 2025 Infinity6.ai. All rights reserved.';
 
   const navLinks: { to: string; label: string; external?: boolean }[] = [
-    { to: '/hometeste', label: t('header.home') },
+    { to: '/', label: t('header.home') },
     { to: '/solutions', label: t('header.solutions') },
     { to: '/success-stories', label: t('header.successStories') },
     { to: 'https://huggingface.co/i6-aiworks', label: t('header.community'), external: true },

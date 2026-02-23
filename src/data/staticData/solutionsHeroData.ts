@@ -6,13 +6,13 @@ export interface SolutionsHeroData {
 
 export const solutionsHeroData: Record<string, SolutionsHeroData> = {
   en: {
-    mainTitle: 'Transform Your Business',
-    mainSubtitle: 'AI-Powered Solutions',
-    description: 'Explore solutions that optimize performance, guide smarter decisions and fuel sustainable growth across your business.'
+    mainTitle: 'Solutions that anticipate',
+    mainSubtitle: 'the market.',
+    description: 'From data intelligence to action. AI solutions that transform signals into decisions and decisions into growth.'
   },
   pt: {
-    mainTitle: 'Transforme seu Negócio',
-    mainSubtitle: 'Soluções de IA Aplicadas',
-    description: 'Descubra como nossas soluções otimizam a performance, apoiam decisões mais inteligentes e impulsionam um crescimento sustentável em toda a sua empresa.'
+    mainTitle: 'Soluções que antecipam',
+    mainSubtitle: 'o mercado.',
+    description: 'Da inteligência de dados à ação. Soluções de IA que transformam sinais em decisões e decisões em crescimento.'
   }
 };

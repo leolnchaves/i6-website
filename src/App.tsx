@@ -59,13 +59,13 @@ const App = () => {
               <Routes>
                 {/* Nova home - fora do Layout (tem HeaderNovo/FooterNovo próprios) */}
                 <Route path="/" element={<HomeTeste />} />
+                <Route path="/solutions" element={<Solutions />} />
                 
                 {/* Regular site routes - with Layout wrapper */}
                 <Route path="/*" element={
                   <Layout>
                     <Routes>
                       <Route path="/oldhome_teste" element={<Home />} />
-                      <Route path="/solutions" element={<Solutions />} />
                       <Route path="/success-stories" element={<SuccessStories />} />
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />

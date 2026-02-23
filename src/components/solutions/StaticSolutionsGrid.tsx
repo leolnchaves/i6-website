@@ -3,7 +3,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useSolutionsMarkdown } from '@/hooks/useSolutionsMarkdown';
 import ModernSolutionCard from './ModernSolutionCard';
 
-// Engine-based color mapping to maintain design consistency
 const engineColorMap: { [key: string]: string } = {
   'i6 RecSys': 'bg-blue-500/20',
   'i6 ElasticPrice': 'bg-orange-500/20', 
@@ -12,16 +11,14 @@ const engineColorMap: { [key: string]: string } = {
 
 const StaticSolutionsGrid = memo(() => {
   const { language } = useLanguage();
-  
-  // Use markdown content hook
   const { solutions, loading, error } = useSolutionsMarkdown();
 
   if (loading) {
     return (
-      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+      <section className="py-20 bg-[#0B1224] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center items-center py-16">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#F4845F]"></div>
           </div>
         </div>
       </section>
@@ -30,35 +27,27 @@ const StaticSolutionsGrid = memo(() => {
 
   if (error) {
     return (
-      <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
+      <section className="py-20 bg-[#0B1224] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-16">
-            <p className="text-gray-600">Error loading solutions: {error}</p>
+            <p className="text-white/60">Error loading solutions: {error}</p>
           </div>
         </div>
       </section>
     );
   }
 
-  // Debug log
-  console.log('StaticSolutionsGrid rendering with solutions:', solutions);
-
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 relative overflow-hidden">
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent"></div>
-      
+    <section className="py-20 bg-[#0B1224] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {solutions.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-600">No solutions found</p>
+            <p className="text-white/60">No solutions found</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {solutions.map((solution, index) => {
               const bgColor = engineColorMap[solution.engine] || 'bg-blue-500/20';
-              
-              console.log('Rendering solution:', solution.title, 'with features:', solution.keyFeatures);
               
               return (
                 <ModernSolutionCard

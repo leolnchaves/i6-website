@@ -1,6 +1,4 @@
 import { memo, useMemo, useState, useRef, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -15,7 +13,6 @@ interface ModernSolutionCardProps {
   index: number;
 }
 
-// Memoized translations outside component to prevent recreation
 const translations = {
   en: {
     overview: 'Overview',
@@ -32,33 +29,21 @@ const translations = {
 };
 
 const ModernSolutionCard = memo(({ 
-  title,
-  focus, 
-  description, 
-  features, 
-  outcome, 
-  engine, 
-  bgColor, 
-  index
+  title, focus, description, features, outcome, engine, bgColor, index
 }: ModernSolutionCardProps) => {
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   
-  // Memoize translations to prevent recalculation
   const t = useMemo(() => translations[language] || translations.en, [language]);
-  
-  // Show all features
   const displayedFeatures = useMemo(() => features, [features]);
   
-  // Intersection Observer for performance-optimized animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (entry.isIntersecting && !hasAnimated) {
-          // Add staggered animation delay based on index
           setTimeout(() => {
             setIsVisible(true);
             setHasAnimated(true);
@@ -76,48 +61,42 @@ const ModernSolutionCard = memo(({
   }, [index, hasAnimated]);
 
   return (
-    <Card 
+    <div 
       ref={cardRef}
-      className={`group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] bg-white/95 backdrop-blur-sm rounded-3xl ${
+      className={`group relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-700 hover:scale-[1.02] ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
-      style={{ 
-        animationDelay: `${index * 0.15}s`,
-        boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 10px -2px rgba(0, 0, 0, 0.04)'
-      }}
+      style={{ animationDelay: `${index * 0.15}s` }}
     >
-      {/* Soft gradient background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-orange-50/20 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
-      
-      {/* Animated line at top border */}
-      <div className="absolute top-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-full transition-all duration-700 ease-out rounded-t-3xl" />
+      {/* Coral accent bar at top */}
+      <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
 
-      <CardContent className="p-8 relative z-10">
-        {/* Header Section - Title only */}
+      <div className="p-8 relative z-10">
+        {/* Title */}
         <div className="mb-6">
-          <h3 className="font-bold text-2xl text-gray-900 mb-4 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-orange-600 group-hover:bg-clip-text transition-all duration-500">
+          <h3 className="font-bold text-2xl text-white mb-4 leading-tight group-hover:text-[#F4845F] transition-colors duration-500">
             {title}
           </h3>
         </div>
 
         {/* Description */}
         <div className="mb-6">
-          <p className="text-gray-600 leading-relaxed text-sm group-hover:text-gray-700 transition-colors duration-300">
+          <p className="text-white/60 leading-relaxed text-sm group-hover:text-white/70 transition-colors duration-300">
             {description}
           </p>
         </div>
 
-        {/* Features Grid */}
+        {/* Features */}
         <div className="mb-4">
-          <h4 className="text-sm font-semibold text-gray-800 mb-2 flex items-center gap-2">
-            <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-orange-500 rounded-full"></div>
+          <h4 className="text-sm font-semibold text-white/80 mb-2 flex items-center gap-2">
+            <div className="w-1 h-4 bg-[#F4845F] rounded-full"></div>
             {t.keyFeatures}
           </h4>
           <div className="space-y-1">
             {displayedFeatures.map((feature, idx) => (
-              <div key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-gray-50/80 hover:bg-gray-100/60 transition-colors duration-300 border border-gray-100/50">
-                <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
-                <span className="text-xs text-gray-700 leading-relaxed">
+              <div key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors duration-300 border border-white/5">
+                <div className="w-1.5 h-1.5 bg-[#F4845F] rounded-full mt-1.5 flex-shrink-0"></div>
+                <span className="text-xs text-white/70 leading-relaxed">
                   {feature}
                 </span>
               </div>
@@ -127,24 +106,21 @@ const ModernSolutionCard = memo(({
 
         {/* Business Outcome */}
         <div className="relative">
-          <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
-            <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-orange-500 rounded-full"></div>
+          <h4 className="text-sm font-semibold text-white/80 mb-3 flex items-center gap-2">
+            <div className="w-1 h-4 bg-[#F4845F] rounded-full"></div>
             {t.businessOutcome}
           </h4>
-          <div className="relative p-4 bg-gradient-to-br from-blue-50/40 to-orange-50/30 rounded-2xl border border-gray-200/30 backdrop-blur-sm group-hover:shadow-sm transition-all duration-500">
+          <div className="relative p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:border-[#F4845F]/30 transition-all duration-500">
             <div className="flex items-start gap-3">
-              <ArrowRight className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-              <p className="text-gray-700 leading-relaxed text-sm flex-1">
+              <ArrowRight className="w-5 h-5 text-[#F4845F] mt-0.5 flex-shrink-0" />
+              <p className="text-white/70 leading-relaxed text-sm flex-1">
                 {outcome}
               </p>
             </div>
           </div>
         </div>
-
-        {/* Bottom accent line */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 to-orange-500 group-hover:w-24 transition-all duration-700 rounded-t-full" />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 });
 
