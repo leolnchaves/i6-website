@@ -724,23 +724,28 @@ html {
   animation: pulse-soft 2.5s ease-in-out infinite;
 }
 
-/* Horizontal waves for Solutions hero */
-@keyframes wave-horizontal-1 {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+/* Horizontal waves for Solutions hero - organic sliding */
+@keyframes wave-slide-1 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-@keyframes wave-horizontal-2 {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(5px); }
+@keyframes wave-slide-2 {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
-@keyframes wave-horizontal-3 {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
+@keyframes wave-slide-3 {
+  0% { transform: translateX(-10%); }
+  100% { transform: translateX(-60%); }
 }
 
-@keyframes wave-horizontal-4 {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(6px); }
+@keyframes wave-slide-4 {
+  0% { transform: translateX(-40%); }
+  100% { transform: translateX(10%); }
+}
+
+@keyframes wave-slide-5 {
+  0% { transform: translateX(-5%); }
+  100% { transform: translateX(-55%); }
 }
