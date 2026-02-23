@@ -1,28 +1,21 @@
 
-# Adicionar 3 novos bullets na seção de capabilities (Sinais)
+# Compactar Seção Resultados para caber em uma tela
 
-## O que muda
+## Objetivo
+Reduzir padding, margens e tamanhos de fonte para que titulo + 4 cards caibam em um unico viewport sem scroll.
 
-Inserir 3 novos bullets entre "Base fundacional multi-segmentada." e "APIs de ativacao imediata." nos dois idiomas (PT e EN).
+## Alteracoes no arquivo `src/components/hometeste/ResultadosSection.tsx`
 
-### Novos bullets (PT)
-1. "Relevancia imediata ate para comportamentos sem historico."
-2. "Balanceamento entre personalizacao e diversidade."
-3. "Explicabilidade comportamental argumentativa"
+| Elemento | Atual | Novo |
+|----------|-------|------|
+| Section padding (linha 84) | `py-14 md:py-20` | `py-8 md:py-12` |
+| Titulo margin-bottom (linha 86) | `mb-16` | `mb-8` |
+| Titulo tamanho (linha 86) | `text-2xl sm:text-3xl md:text-4xl` | `text-xl sm:text-2xl md:text-3xl` |
+| Grid gap (linha 94) | `gap-5` | `gap-4` |
+| Card padding (linha 98) | `p-8` | `p-5` |
+| Badge margin-bottom (linha 100) | `mb-5` | `mb-3` |
+| Metric item padding (linha 108) | `py-4` | `py-2.5` |
+| Metric values (linhas 113, 117, etc.) | `text-lg` | `text-base` |
+| Metric labels (linhas 114, 118, etc.) | `text-sm` | `text-xs` |
 
-### Novos bullets (EN) - traducao equivalente
-1. "Immediate relevance even for behaviors without history."
-2. "Balance between personalization and diversity."
-3. "Argumentative behavioral explainability"
-
-## Detalhes Tecnicos
-
-Arquivo: `src/components/hometeste/SinaisSection.tsx`
-
-1. **Expandir o array `capabilityIcons`** (linha 7): adicionar 3 icones para os novos items. Sugestao: `Zap`, `Target`, `BarChart3` ou outros icones ja importados que facam sentido semantico (ex: `Sparkles` para relevancia, `Scale` para balanceamento, `MessageSquare` para explicabilidade). Importar novos icones se necessario.
-
-2. **Expandir `capabilities` no copy PT** (linhas 20-24): inserir os 3 novos textos apos "Base fundacional multi-segmentada." e antes de "APIs de ativacao imediata."
-
-3. **Expandir `capabilities` no copy EN** (linhas 53-57): inserir as traducoes correspondentes na mesma posicao.
-
-4. **Array de icones** atualizado de 3 para 6 icones para corresponder aos 6 bullets.
+Nenhum conteudo textual sera alterado. Apenas classes de espacamento e tipografia sao reduzidas.
