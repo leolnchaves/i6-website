@@ -26,7 +26,8 @@
 
 **Title:** Turn Customer Data into Recurring Revenue
 
-**Overview:** You already have customer data. The problem is that most of it is underused. Infinity6 anticipates each customer's next move, activates the right offer at the right moment, and unlocks cross-sell and upsell opportunities that increase retention, frequency, and lifetime value. Stop reacting to past behavior. Start driving the next purchase.
+**Overview:** You already have customer data. The problem is that most of it is underused. We anticipate each customer's next move, activate the right offer at the right moment, and unlock cross-sell and upsell opportunities that drive retention, frequency, and lifetime value.
+Stop reacting to past behavior. Start shaping the next purchase.
 
 **Key Features:**
 - Anticipate customer needs before they ask
