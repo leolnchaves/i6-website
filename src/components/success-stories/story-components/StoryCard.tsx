@@ -93,11 +93,8 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
             <span className="text-sm font-medium text-white/50 group-hover:text-white/70 transition-colors duration-300 mr-3">
               {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
             </span>
-            <div className="relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#F4845F] to-[#3B82F6] rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100 origin-left"></div>
-              <div className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 group-hover:bg-transparent transition-all duration-500">
-                <ArrowRight className="w-4 h-4 text-white/60 group-hover:text-white transition-all duration-500 group-hover:translate-x-1" />
-              </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 group-hover:bg-[#F4845F]/20 border border-transparent group-hover:border-[#F4845F]/30 transition-all duration-500">
+              <ArrowRight className="w-4 h-4 text-white/60 group-hover:text-[#F4845F] transition-all duration-500 group-hover:translate-x-1" />
             </div>
           </div>
         </div>
