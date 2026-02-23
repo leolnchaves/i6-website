@@ -8,19 +8,23 @@ import SolutionsMetricsSection from '@/components/solutions/SolutionsMetricsSect
 import StaticSolutionsGrid from '@/components/solutions/StaticSolutionsGrid';
 import ProcessFlow from '@/components/solutions/ProcessFlow';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
+import VerticalWaves from '@/components/solutions/VerticalWaves';
 
 const Solutions = memo(() => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#0B1224]">
-      <HeaderNovo />
-      <SolutionsHero />
-      <SolutionsMetricsSection />
-      <StaticSolutionsGrid />
-      <ProcessFlow />
-      <SolutionsCTA />
-      <FooterNovo />
+    <div className="min-h-screen bg-[#0B1224] relative">
+      <VerticalWaves />
+      <div className="relative z-[2]">
+        <HeaderNovo />
+        <SolutionsHero />
+        <SolutionsMetricsSection />
+        <StaticSolutionsGrid />
+        <ProcessFlow />
+        <SolutionsCTA />
+        <FooterNovo />
+      </div>
     </div>
   );
 });
