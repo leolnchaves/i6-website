@@ -12,7 +12,8 @@ const SinaisSection = () => {
   const copy = {
     pt: {
       badge: 'SINAIS',
-      titleLine1: 'Somos especialistas em IA aplicada',
+      titleLine1Start: 'Somos especialistas em ',
+      titleLine1Highlight: 'IA aplicada',
       titleLine2: 'que transforma dados em decisões antecipadas.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
       i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
@@ -44,7 +45,8 @@ const SinaisSection = () => {
     },
     en: {
       badge: 'SIGNALS',
-      titleLine1: 'We are specialists in applying AI to',
+      titleLine1Start: 'We are specialists in ',
+      titleLine1Highlight: 'applied AI',
       titleLine2: 'transform data into anticipated decisions.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
       i6signal: 'i6Signal\nConversational interface that transforms predictive signals into actionable decisions in real time.',
@@ -88,7 +90,7 @@ const SinaisSection = () => {
 
         {/* Title + Subtitle */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug mb-4">
-          {copy.titleLine1}<br />{copy.titleLine2}
+          {copy.titleLine1Start}<span className="text-[#F4845F] drop-shadow-[0_0_12px_rgba(244,132,95,0.5)]">{copy.titleLine1Highlight}</span><br />{copy.titleLine2}
         </h2>
         <p className="text-white/50 text-base md:text-lg max-w-2xl mb-12">
           {copy.subtitle}
