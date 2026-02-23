@@ -117,8 +117,8 @@ const ResultadosSection = () => {
                       ) : m.richLabel && m.richType === 'fashion' ? (
                         <div className="flex gap-4">
                           <div className="flex flex-col">
-                            <span className="text-base font-bold text-[#F4845F]">+2,6%</span>
-                            <span className="text-white/60 text-sm">{language === 'pt' ? 'mais vendas que a curadoria humana de looks.' : 'more sales than human look curation.'}</span>
+                            <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '+2,6% mais vendas' : '+2.6% more sales'}</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'que a curadoria humana de looks.' : 'than human look curation.'}</span>
                           </div>
                           <div className="flex flex-col">
                             <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '40% da receita adicional' : '40% of additional revenue'}</span>
