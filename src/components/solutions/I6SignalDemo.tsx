@@ -19,7 +19,7 @@ const RESPONSE_DELAY = 600;
 const content = {
   pt: {
     sectionTitle: 'i6Signal - Inteligência de Movimento em Ação',
-    sectionSubtitle: 'Escolha um tema e explore como sinais se convertem em decisões que movem crescimento e protegem margem.',
+    sectionSubtitle: 'Escolha um tema e explore como sinais viram decisões que movem crescimento e margem.',
     placeholder: 'Digite sua pergunta...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Análise Executiva',
@@ -174,7 +174,7 @@ const content = {
   },
   en: {
     sectionTitle: 'i6Signal - Movement Intelligence in Action',
-    sectionSubtitle: 'Choose a topic and explore how signals become decisions that drive growth and protect margin.',
+    sectionSubtitle: 'Choose a topic and explore how signals become decisions that drive growth and margin.',
     placeholder: 'Type your question...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
     executiveAnalysis: 'Executive Analysis',
@@ -612,9 +612,9 @@ const I6SignalDemo = memo(() => {
     <section className="py-6 md:py-10 px-4 relative z-[10]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-1">{t.sectionTitle}</h2>
-          <p className="text-white/40 text-sm leading-relaxed">{t.sectionSubtitle}</p>
+        <div className="text-center mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t.sectionTitle}</h2>
+          <p className="text-white/60 text-base md:text-lg leading-relaxed">{t.sectionSubtitle}</p>
         </div>
 
         {/* Scenario selector - continuous bar */}
