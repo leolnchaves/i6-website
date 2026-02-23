@@ -621,10 +621,10 @@ const I6SignalDemo = memo(() => {
         </div>
 
         {/* Subtitle + Scenario selector inline */}
-        <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
-          <p className="text-white/50 text-sm">{t.sectionSubtitle}</p>
-          <div className="hidden sm:block w-px h-6 bg-white/20"></div>
-          <div className="flex flex-wrap justify-center gap-2">
+        <div className="flex items-center justify-between mb-6 gap-4">
+          <p className="text-white/40 text-sm whitespace-nowrap hidden md:block">{t.sectionSubtitle}</p>
+          <div className="hidden md:block w-px h-5 bg-white/15 flex-shrink-0"></div>
+          <div className="flex flex-wrap justify-center md:justify-end gap-2">
             {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
               <button
                 key={sc}
