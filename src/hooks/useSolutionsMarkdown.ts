@@ -76,39 +76,56 @@ const parseMarkdownContent = (content: string): SolutionItem[] => {
     let keyFeatures: string[] = [];
     let businessResults = '';
     let isReadingFeatures = false;
+    let isReadingOverview = false;
+    let isReadingBusinessResults = false;
     
     for (const line of lines) {
       if (line.startsWith('## ')) {
-        // Use section header as fallback title
         if (!title) {
           title = line.substring(3).trim();
         }
+        isReadingFeatures = false;
+        isReadingOverview = false;
+        isReadingBusinessResults = false;
       } else if (line.startsWith('**Engine:**')) {
         engine = line.substring(11).trim();
+        isReadingFeatures = false;
+        isReadingOverview = false;
+        isReadingBusinessResults = false;
       } else if (line.startsWith('**Target:**')) {
         target = line.substring(11).trim();
-      } else if (line.startsWith('**Title:**')) {
-        // Use the Title field when available (overrides section header)
-        title = line.substring(11).trim();
-      } else if (line.startsWith('**Overview:**')) {
-        overview = line.substring(13).trim();
         isReadingFeatures = false;
+        isReadingOverview = false;
+        isReadingBusinessResults = false;
+      } else if (line.startsWith('**Title:**')) {
+        title = line.substring(11).trim();
+        isReadingFeatures = false;
+        isReadingOverview = false;
+        isReadingBusinessResults = false;
+      } else if (line.startsWith('**Overview:**')) {
+        const inlineValue = line.substring(13).trim();
+        if (inlineValue) overview = inlineValue;
+        isReadingOverview = true;
+        isReadingFeatures = false;
+        isReadingBusinessResults = false;
       } else if (line.startsWith('**Key Features:**')) {
         isReadingFeatures = true;
+        isReadingOverview = false;
+        isReadingBusinessResults = false;
         keyFeatures = [];
       } else if (line.startsWith('**Business Results:**')) {
-        businessResults = line.substring(21).trim();
+        const inlineValue = line.substring(21).trim();
+        if (inlineValue) businessResults = inlineValue;
+        isReadingBusinessResults = true;
         isReadingFeatures = false;
+        isReadingOverview = false;
       } else if (isReadingFeatures && line.startsWith('- ')) {
-        // Remove any prefix like "A " from the beginning
         let feature = line.substring(2).trim();
-        if (feature.startsWith('A ')) {
-          feature = feature.substring(2);
-        }
         keyFeatures.push(feature);
-      } else if (!isReadingFeatures && overview && !line.startsWith('**') && line) {
-        // Continue reading overview if it spans multiple lines
-        overview += ' ' + line;
+      } else if (isReadingOverview && !line.startsWith('**')) {
+        overview = overview ? overview + ' ' + line : line;
+      } else if (isReadingBusinessResults && !line.startsWith('**')) {
+        businessResults = businessResults ? businessResults + ' ' + line : line;
       }
     }
     
