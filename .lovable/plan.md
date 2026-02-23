@@ -1,41 +1,28 @@
 
 
-## Atualizar card Financeiro na secao de Resultados
+## Ajustar layout do rich label do card Varejo
 
 ### O que sera feito
 
-Alterar os 3 metrics do card "Financeiro" (e "Finance" em ingles):
-
-1. `-57% custo de CRM` -> `10 milhoes` (bold laranja) + `de comportamentos de clientes mapeados`
-2. `12x mais conversao` -> `+1 bilhao` (bold laranja) + `de transacoes treinadas`
-3. `ROI em 90 dias` -> Formato especial com dois pares bold+texto, similar ao card Varejo:
-   - `-57%` (bold laranja, em cima) + `de custo de CRM` (texto abaixo)
-   - `12x` (bold laranja, em cima) + `mais conversao na esteira de campanhas` (texto abaixo)
-   - Tudo na mesma linha/bloco
-
-### Solucao tecnica
-
-Reutilizar o pattern `richLabel` ja existente no card Varejo. A terceira metrica do Financeiro tera `richLabel: true` e um tipo de renderizacao especifico (`richType: 'finance'`) para diferenciar do formato do Varejo.
+Mudar o formato da terceira metrica do card Varejo de inline (tudo numa linha corrida) para o formato empilhado (bold em cima, texto embaixo), identico ao que ja foi feito no card Financeiro. Cada par bold+texto ficara alinhado verticalmente, lado a lado.
 
 ### Detalhes tecnicos
 
-**Arquivo: `src/components/hometeste/ResultadosSection.tsx`**
+**Arquivo: `src/components/hometeste/ResultadosSection.tsx`** (linhas 117-123)
 
-1. Atualizar dados PT do Financeiro (linhas 28-31):
-   - Metric 1: `{ value: '10 milhoes', label: 'de comportamentos de clientes mapeados' }`
-   - Metric 2: `{ value: '+1 bilhao', label: 'de transacoes treinadas' }`
-   - Metric 3: `{ value: '', label: '', richLabel: true, richType: 'finance' }`
+Substituir o bloco `<span>` inline por um layout flex identico ao do Finance:
 
-2. Atualizar dados EN do Finance (linhas 65-68):
-   - Metric 1: `{ value: '10 million', label: 'mapped customer behaviors' }`
-   - Metric 2: `{ value: '+1 billion', label: 'trained transactions' }`
-   - Metric 3: `{ value: '', label: '', richLabel: true, richType: 'finance' }`
+De:
+```
++36% positivacao de produtos +23% ticket medio por PDV.
+```
 
-3. Na renderizacao (linhas 106-112), expandir a condicao `richLabel` para verificar `richType`:
-   - Se `richType === 'finance'`: renderizar dois blocos lado a lado (usando flex), cada um com o valor bold laranja em cima e o texto descritivo embaixo:
-     ```
-     -57%              12x
-     de custo de CRM   mais conversao na esteira de campanhas
-     ```
-   - Se nao tem `richType` (Varejo): manter o formato inline atual com `+36%` e `+23%`.
+Para:
+```
++36%              +23%
+positivacao       ticket medio
+de produtos       por PDV.
+```
+
+Trocar o `<span>` por um `<div className="flex gap-4">` com dois `<div className="flex flex-col">` internos, cada um contendo o valor bold laranja em cima e o texto descritivo embaixo.
 
