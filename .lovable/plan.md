@@ -1,57 +1,44 @@
 
 
-# Simular digitação no input ao clicar em pergunta sugerida
+# Corrigir fluxo: digitar no input, animar botao, depois exibir no chat
 
-## Comportamento desejado
-1. Usuário clica em uma pergunta sugerida
-2. O texto é "digitado" caractere a caractere no campo de input (rounded-full, na parte inferior)
-3. Após completar a digitação, simula um clique no botão laranja (Send)
-4. O fluxo normal continua: mensagem aparece no chat, loading dots, resposta do assistente
+## Problema atual
+Quando o usuario clica numa pergunta sugerida, o texto aparece diretamente no board de respostas. O efeito de digitacao no input existe mas o `startAnimation` limpa o input imediatamente e comeca a digitar no chat.
 
-## Mudanças técnicas
+## Solucao
 
 ### Arquivo: `src/components/solutions/I6SignalDemo.tsx`
 
-**Novos estados (após linha 416):**
-- `inputText` (string) — texto visível no campo de input
-- `isFillingInput` (boolean) — controla se está no modo de digitação no input
-- `pendingQuestion` (string) — a pergunta completa que está sendo digitada
-- `inputRef` — ref para o input element
+### 1. Novo estado para animacao do botao Send
+- Adicionar `isSendAnimating` (boolean) para controlar o efeito visual no botao Send (scale/pulse)
 
-**Novo useEffect — digitação no input:**
-- Quando `isFillingInput === true`, digita `pendingQuestion` caractere a caractere no `inputText` (mesma velocidade `TYPING_SPEED`)
-- Ao completar, aguarda `RESPONSE_DELAY` ms, depois:
-  - Limpa `inputText` e `isFillingInput`
-  - Inicia `startAnimation()` com o cenário atual (que faz o texto aparecer no chat como mensagem do usuário)
+### 2. Modificar o useEffect de input filling (linhas 458-478)
+Quando a digitacao no input terminar:
+- Em vez de chamar `startAnimation` diretamente, primeiro ativar `isSendAnimating = true`
+- Aguardar ~400ms (efeito visual do botao)
+- Depois chamar `startAnimation` com o cenario pendente
+- Resetar `isSendAnimating = false`
 
-**Handler para clique na pergunta sugerida:**
-- Identifica qual cenário corresponde à pergunta clicada (busca no objeto `content`)
-- Seta `pendingQuestion` com o texto da pergunta
-- Seta `isFillingInput = true`
-- Limpa o chat atual (`setPhase('idle')`, `setShowResponse(false)`)
-
-**Modificação no input (linha 692-697):**
-- Trocar `readOnly` por `value={inputText}`
-- Manter `readOnly` mas mostrar o valor dinâmico
-
-**Modificação no startAnimation (linha 421-426):**
-- Adicionar `setInputText('')` para limpar o input quando a animação de chat começa
-
-**Botões de pergunta sugerida (linhas 650-657):**
-- Adicionar `onClick` handler que dispara o fluxo de preenchimento do input
-
-## Fluxo visual
+Fluxo revisado:
 ```text
-[Clique na pergunta] 
-  → Limpa chat atual
-  → Texto aparece gradualmente no input (campo inferior)
-  → Ao completar, simula "click" no Send
-  → Texto aparece como mensagem do user no chat
-  → Loading dots → Resposta do assistente
+inputText completo
+  → setIsSendAnimating(true)
+  → aguarda 400ms
+  → setIsSendAnimating(false)
+  → startAnimation(pendingScenario) — agora sim exibe no chat
 ```
 
-## O que NÃO muda
-- Visual/estilo do input, botão Send, perguntas sugeridas
-- Lógica dos cenários e tabs
-- Auto-start na montagem do componente
+### 3. Adicionar animacao visual no botao Send (linha 747)
+- Quando `isSendAnimating === true`, aplicar classes de animacao: `scale-110 ring-2 ring-orange-300` ou similar para simular o "clique"
+- Usar `transition-transform` para suavizar
+
+### 4. Garantir que startAnimation limpa o input corretamente
+- `startAnimation` ja faz `setInputText('')` (linha 430) — isso esta correto pois nesse ponto o texto ja deve sair do input e ir para o chat
+
+### Resultado esperado
+1. Usuario clica na pergunta sugerida
+2. Texto aparece caractere a caractere no campo de input (parte inferior)
+3. Botao Send (seta laranja) recebe animacao de "clique" (scale + glow)
+4. Texto desaparece do input e aparece no board do chat como mensagem do usuario
+5. Loading dots, depois resposta do assistente
 
