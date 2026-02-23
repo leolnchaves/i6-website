@@ -33,7 +33,7 @@ const ClientesSection = () => {
               key={`${p.name}-${i}`}
               src={`${import.meta.env.BASE_URL}${p.logo.startsWith('/') ? p.logo.slice(1) : p.logo}`}
               alt={p.name}
-              className="h-10 sm:h-12 w-auto max-w-[140px] object-contain opacity-60 hover:opacity-100 transition-opacity shrink-0"
+              className="h-8 sm:h-10 w-auto max-w-[120px] object-contain opacity-60 hover:opacity-100 transition-opacity shrink-0"
               loading="lazy"
             />
           ))}
