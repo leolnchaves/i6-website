@@ -493,7 +493,7 @@ const I6SignalDemo = memo(() => {
           </div>
 
           {/* ── Main body ── */}
-          <div className="flex h-[520px] md:h-[500px]">
+          <div className="flex h-[600px] md:h-[650px]">
             {/* Sidebar — light theme, hidden on mobile */}
             <div className="hidden md:flex flex-col w-52 bg-white border-r border-gray-200 flex-shrink-0">
               {/* Angle dropdown */}
@@ -639,31 +639,29 @@ const I6SignalDemo = memo(() => {
                             </li>
                           ))}
                         </ol>
+
+                        {/* Suggested Questions — inline */}
+                        <div className="mt-4 p-3 rounded-xl bg-gradient-to-br from-orange-50/80 to-amber-50/80 border border-orange-200/30">
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <Lightbulb className="w-3.5 h-3.5 text-orange-500" />
+                            <span className="text-xs font-medium text-orange-800">{t.suggestedQuestions}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {scenario.questions.slice(0, 3).map((q, i) => (
+                              <button
+                                key={i}
+                                className="text-[11px] text-gray-600 hover:bg-orange-100/50 hover:text-orange-900 px-2.5 py-1 rounded-lg transition-colors text-left"
+                              >
+                                {q}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
-
-              {/* Suggested Questions bar */}
-              {showResponse && (
-                <div className="px-4 md:pl-14 py-2.5 bg-gradient-to-br from-orange-50/80 to-amber-50/80 border-t border-orange-200/30">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Lightbulb className="w-3.5 h-3.5 text-orange-500" />
-                    <span className="text-xs font-medium text-orange-800">{t.suggestedQuestions}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {scenario.questions.slice(0, 3).map((q, i) => (
-                      <button
-                        key={i}
-                        className="text-[11px] text-gray-600 hover:bg-orange-100/50 hover:text-orange-900 px-2.5 py-1 rounded-lg transition-colors text-left"
-                      >
-                        {q}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* Scenario tabs + Input bar */}
               <div className="border-t border-gray-200/50 bg-white/95 backdrop-blur-sm p-3 md:p-4 md:pl-14">
