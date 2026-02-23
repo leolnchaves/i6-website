@@ -1,67 +1,56 @@
 
+## Ondas verticais na lateral esquerda da pagina inteira
 
-## Tornar as ondas realmente fluidas com animacao de morfismo
+### Conceito
 
-### Problema
-
-Atualmente as ondas usam `translateX` com timing `linear`, o que cria um efeito de "desenho deslizando" -- nao parece onda real. Para parecer ondas organicas e fluidas, precisamos que os proprios paths se deformem e ondulam no lugar.
-
-### Solucao
-
-Usar **SVG SMIL animation** (`<animate>` no atributo `d`) para interpolar entre diferentes formas de onda. Cada path tera 3-4 variantes de forma que se misturam continuamente, criando o efeito de onda real que sobe e desce organicamente. Combinar com leve `translateY` via CSS para adicionar respiracao vertical.
+Mover as ondas da posicao horizontal no hero para a posicao **vertical na lateral esquerda**, cobrindo toda a altura da pagina de Solutions. As ondas ficam como um background fixo/absoluto colado na borda esquerda. As secoes (hero, metricas, grid, process flow, CTA) ficam por cima com seus proprios backgrounds, mas nos espacos entre secoes ou em areas com fundo transparente, as ondas continuam visiveis.
 
 ### Mudancas
 
-**1. Editar `src/components/solutions/HorizontalWaves.tsx`**
+**1. Criar `src/components/solutions/VerticalWaves.tsx`**
 
-- Remover `w-[200%]` do SVG (nao precisa mais de largura dobrada pois nao vai deslizar)
-- Mudar para `w-full`
-- Remover classes `animate-[wave-slide-N]` de todos os paths
-- Adicionar elemento `<animate>` dentro de cada `<path>` com:
-  - `attributeName="d"` -- anima a forma do path
-  - `values` com 3-4 variantes do path (mesma estrutura, pontos de controle diferentes)
-  - `dur` variando entre 4s e 10s por layer (velocidades diferentes)
-  - `repeatCount="indefinite"`
-- Adicionar CSS classes com `translateY` sutil para respiracao vertical em alguns layers
+Novo componente que substitui o HorizontalWaves:
+- Container: `fixed left-0 top-0 h-full pointer-events-none z-[1]` com largura de ~200-250px
+- SVG com `viewBox="0 0 500 2000"` (estreito e alto, invertido do horizontal)
+- Rotacionar a logica dos paths: o eixo principal agora e vertical (Y vai de 0 a 2000), e as ondulacoes acontecem no eixo X (oscilando em torno de x~250)
+- Manter as mesmas 8 layers com mesmas amplitudes e opacidades, mas agora na horizontal:
+  - Layers pequenas: oscilam entre x~230 e x~270
+  - Layers medias: oscilam entre x~150 e x~350
+  - Layers grandes: oscilam entre x~50 e x~420
+- Manter animacoes SMIL (`<animate>` no atributo `d`) com mesmas duracoes
+- Manter respiracao CSS, agora usando `translateX` em vez de `translateY`
 
-**2. Editar `src/index.css`**
+**2. Editar `src/pages/Solutions.tsx`**
 
-- Adicionar 2-3 keyframes de "respiracao" vertical:
-  - `wave-breathe-1`: translateY oscilando entre -8px e 8px (6s)
-  - `wave-breathe-2`: translateY oscilando entre -5px e 5px (8s)
-  - `wave-breathe-3`: translateY oscilando entre -12px e 12px (10s)
+- Adicionar `relative` ao container principal
+- Importar e renderizar `VerticalWaves` como filho direto do container principal (fora de qualquer secao), com `position: fixed` para que acompanhe o scroll
+- Garantir que as secoes tenham `position: relative` e `z-index` maior para ficarem por cima
 
-### Exemplo de um path animado
+**3. Editar `src/components/solutions/SolutionsHero.tsx`**
 
-```xml
-<path fill="none" stroke="rgba(244,132,95,0.20)" strokeWidth="1.5">
-  <animate
-    attributeName="d"
-    dur="6s"
-    repeatCount="indefinite"
-    values="
-      M0,250 C120,235 280,265 450,240 C620,230 750,268 950,245 ...;
-      M0,250 C120,260 280,238 450,265 C620,270 750,232 950,258 ...;
-      M0,250 C120,242 280,255 450,248 C620,245 750,260 950,240 ...;
-      M0,250 C120,235 280,265 450,240 C620,230 750,268 950,245 ...
-    "
-  />
-</path>
+- Remover o import e uso do `HorizontalWaves` (as ondas agora vem do nivel da pagina)
+
+**4. Editar `src/index.css`**
+
+- Adicionar keyframes de respiracao horizontal:
+  - `wave-breathe-x-1`: translateX oscilando entre -8px e 8px
+  - `wave-breathe-x-2`: translateX oscilando entre -5px e 5px
+  - `wave-breathe-x-3`: translateX oscilando entre -12px e 12px
+
+### Estrutura dos paths verticais
+
+Cada path agora segue o eixo Y de cima para baixo. Exemplo de um path pequeno:
+
+```text
+M250,0 C235,100 265,250 240,400 C230,550 268,700 245,850 ...continuando ate Y=2000
 ```
 
-Cada variante inverte suavemente picos e vales -- quando um ponto sobe, na variante seguinte ele desce, criando ondulacao real.
-
-### Distribuicao das 8 layers
-
-Manter a mesma estrutura de amplitudes (pequenas, medias, grandes) e opacidades. Apenas trocar o tipo de animacao:
-
-- **Layers 1-2 (pequenas)**: morfismo rapido (4-5s) + respiracao leve
-- **Layers 3-4 (medias)**: morfismo medio (6-7s) + respiracao media
-- **Layers 5-6 (grandes)**: morfismo lento (8-10s) + respiracao ampla
-- **Layer 7 (compacta forte)**: morfismo rapido (5s)
-- **Layer 8 (media sutil)**: morfismo lento (9s) + respiracao leve
+Os pontos de controle oscilam no eixo X em torno do centro (250), criando ondulacoes laterais conforme descem pela pagina.
 
 ### Resultado visual
 
-Em vez de um desenho deslizando horizontalmente, as ondas vao pulsar e ondular no lugar -- picos subindo e descendo, vales se formando e desaparecendo, como ondas reais de agua ou sinais de radio vivos.
-
+- Faixa de ondas animadas na lateral esquerda da tela inteira
+- As ondas acompanham o scroll (position fixed)
+- As secoes da pagina cobrem as ondas com seus backgrounds
+- Nos gaps e areas com background transparente/semitransparente, as ondas aparecem como identidade visual continua
+- Efeito de "sinal vivo" percorrendo toda a pagina
