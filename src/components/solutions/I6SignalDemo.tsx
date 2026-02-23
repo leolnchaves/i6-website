@@ -419,6 +419,7 @@ const I6SignalDemo = memo(() => {
   const [pendingQuestion, setPendingQuestion] = useState('');
   const [pendingScenario, setPendingScenario] = useState<Scenario | null>(null);
   const [isSendAnimating, setIsSendAnimating] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
 
   const scenario = t.scenarios[activeScenario];
@@ -449,12 +450,34 @@ const I6SignalDemo = memo(() => {
     }
   }, [phase, typedText, activeScenario, t.scenarios]);
 
-  // Auto-scroll
+  // Auto-scroll to bottom and show scroll hint
   useEffect(() => {
     if (showResponse && chatRef.current) {
-      setTimeout(() => chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' }), 100);
+      setTimeout(() => {
+        chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' });
+        // Show scroll hint after auto-scroll completes
+        setTimeout(() => {
+          if (chatRef.current && chatRef.current.scrollTop > 50) {
+            setShowScrollHint(true);
+          }
+        }, 500);
+      }, 100);
+    } else {
+      setShowScrollHint(false);
     }
   }, [showResponse]);
+
+  // Hide scroll hint when user scrolls up
+  useEffect(() => {
+    const el = chatRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30;
+      if (!isAtBottom) setShowScrollHint(false);
+    };
+    el.addEventListener('scroll', handleScroll);
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Input filling effect (typing into input field)
   useEffect(() => {
@@ -628,7 +651,19 @@ const I6SignalDemo = memo(() => {
             </div>
 
             {/* Main Chat Area — white background */}
-            <div className="flex-1 flex flex-col min-w-0 bg-white">
+            <div className="flex-1 flex flex-col min-w-0 bg-white relative">
+              {/* Scroll up indicator */}
+              {showScrollHint && (
+                <div 
+                  className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 cursor-pointer animate-fade-in"
+                  onClick={() => chatRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                  <div className="w-6 h-10 rounded-full border border-orange-400/40 pt-1.5 flex items-start justify-center shadow-[0_0_12px_rgba(244,132,95,0.15)] bg-white/80 backdrop-blur-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-bounce" />
+                  </div>
+                  <span className="text-orange-400/60 text-[9px] tracking-[0.2em] uppercase">scroll</span>
+                </div>
+              )}
               {/* Chat content */}
               <div ref={chatRef} className="flex-1 overflow-y-auto px-4 md:px-8 lg:px-16 pt-6 pb-6">
                 <div className="max-w-4xl mx-auto space-y-4">
