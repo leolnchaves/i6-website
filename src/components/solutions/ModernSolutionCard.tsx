@@ -90,9 +90,9 @@ const ModernSolutionCard = memo(({
           </h4>
           <div className="space-y-0.5">
             {displayedFeatures.map((feature, idx) => (
-              <div key={idx} className="flex items-start gap-1.5 py-1 px-1.5 rounded bg-white/5 border border-white/5">
-                <div className="w-1 h-1 bg-[#F4845F] rounded-full mt-1.5 flex-shrink-0"></div>
-                <span className="text-[11px] text-white/70 leading-snug">
+              <div key={idx} className="flex items-start gap-2 py-1.5 px-2 rounded bg-white/5 border border-white/5">
+                <div className="w-1.5 h-1.5 bg-[#F4845F] rounded-full mt-1.5 flex-shrink-0"></div>
+                <span className="text-sm text-white/70 leading-snug">
                   {feature}
                 </span>
               </div>
@@ -109,7 +109,7 @@ const ModernSolutionCard = memo(({
           <div className="relative p-3 bg-white/5 rounded-xl border border-white/10 group-hover:border-[#F4845F]/30 transition-all duration-500">
             <div className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-[#F4845F] mt-0.5 flex-shrink-0" />
-              <p className="text-white/70 leading-snug text-xs flex-1">
+              <p className="text-white/70 leading-snug text-sm flex-1">
                 {outcome}
               </p>
             </div>
