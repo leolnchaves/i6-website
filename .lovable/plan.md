@@ -1,43 +1,39 @@
 
+## Internationalization of English Scenario Responses
 
-## Ajustes no Header da Secao i6Signal Demo
+### Problem
+The English versions of i6Signal scenarios contain Brazilian city names and regional references that would be confusing to international audiences. Portuguese versions should remain unchanged.
 
-### Problema
-1. O subtitulo esta mais proximo do titulo do que do seletor de cenarios (deveria ser o inverso)
-2. A fonte do subtitulo esta muito pequena (`text-sm`)
-3. O texto do subtitulo precisa ser atualizado
+### Scenarios to Update (English only)
 
-### Alteracoes
+**File:** `src/components/solutions/I6SignalDemo.tsx`
 
-**Arquivo:** `src/components/solutions/I6SignalDemo.tsx`
+#### 1. Commercial (lines 258-278) - MAIN ISSUE
+Current Brazilian cities in chart data and actions:
+- "Metro BH" / "Campinas" / "Curitiba" / "P. Alegre"
 
-1. **Espacamento**: Aumentar o `mb` do titulo (de `mb-1` para `mb-4` ou similar) para afastar o subtitulo do titulo, e reduzir o `mb` do container do subtitulo (de `mb-6` para `mb-2`) para aproxima-lo do seletor de cenarios.
+Replace with internationally recognizable cities:
+- "New York" / "Chicago" / "Los Angeles" / "Miami"
 
-2. **Tamanho da fonte**: Aumentar de `text-sm` para `text-base md:text-lg`.
+Update actions accordingly:
+- "Metro BH" references become "New York"
+- "Campinas" becomes "Chicago"
+- "Curitiba" becomes "Los Angeles"
 
-3. **Texto PT** (linha 22): Trocar para:
-   - "Escolha um tema e explore como sinais viram decisoes que movem crescimento e margem."
+#### 2. Mix (lines 280-301)
+- "South region" / "South Region" -- replace with "West Coast" or "Western Region"
+- Keep the same data, just change the region name in question, title, analysis, and actions
 
-4. **Texto EN** (linha 177): Traduzir equivalente:
-   - "Choose a topic and explore how signals become decisions that drive growth and margin."
+#### 3. Forecast (line 228)
+- Question "South vs Northeast" -- replace with "East Coast vs West Coast"
 
-### Detalhes Tecnicos
+#### 4. Pricing (lines 233-256)
+- "Southeast Region" -- replace with "Northeast Region" (US context) or keep generic "the region"
+- "metro area" is fine (generic)
+- "South Region" in questions -- replace with "West Coast"
 
-```text
-Antes:
-  Titulo (mb-1)
-  Subtitulo
-  (mb-6)
-  Seletor
+#### 5. Behavior (lines 303-327)
+- "Sao Paulo region" -- already well-known, but could optionally change to "Greater New York area" for full consistency
 
-Depois:
-  Titulo (mb-4)
-  Subtitulo
-  (mb-2)
-  Seletor
-```
-
-- Linha 22: atualizar `sectionSubtitle` PT
-- Linha 177: atualizar `sectionSubtitle` EN
-- Linhas 615-618: ajustar classes de espacamento e tamanho de fonte
-
+### Summary of Changes
+All edits are in the EN translation object only (approx. lines 195-328). The PT translations (lines 40-170) remain completely untouched. Changes are purely text replacements in strings -- no structural or logic changes.
