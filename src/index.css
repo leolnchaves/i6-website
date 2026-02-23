@@ -723,3 +723,24 @@ html {
 .animate-pulse-soft {
   animation: pulse-soft 2.5s ease-in-out infinite;
 }
+
+/* Horizontal waves for Solutions hero */
+@keyframes wave-horizontal-1 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes wave-horizontal-2 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(5px); }
+}
+
+@keyframes wave-horizontal-3 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes wave-horizontal-4 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(6px); }
+}
