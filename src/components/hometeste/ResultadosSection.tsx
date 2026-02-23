@@ -12,7 +12,7 @@ const ResultadosSection = () => {
           metrics: [
             { value: '2.200', label: 'SKUs otimizados' },
             { value: '95 mil', label: 'comportamentos de PDVs mapeados' },
-            { value: 'R$ 100 milhões em savings', label: 'ao antecipar sinais de incineração, ruptura e overstocking.' },
+            { value: 'R$ 100 milhões em savings', label: 'ao antecipar sinais de incineração, ruptura e overstocking' },
           ],
         },
         {
@@ -122,7 +122,7 @@ const ResultadosSection = () => {
                         <div className="flex gap-6">
                           <div className="flex flex-col">
                             <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '+2,6% mais vendas' : '+2.6% more sales'}</span>
-                            <span className="text-white/60 text-xs">{language === 'pt' ? 'que a curadoria humana de looks.' : 'than human look curation.'}</span>
+                            <span className="text-white/60 text-xs">{language === 'pt' ? 'que a curadoria humana de looks' : 'than human look curation'}</span>
                           </div>
                           <div className="flex flex-col">
                             <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '40% da receita adicional' : '40% of additional revenue'}</span>
@@ -137,7 +137,7 @@ const ResultadosSection = () => {
                           </div>
                           <div className="flex flex-col">
                             <span className="text-base font-bold text-[#F4845F]">+23%</span>
-                            <span className="text-white/60 text-xs">{language === 'pt' ? 'ticket médio por PDV.' : 'average ticket per POS.'}</span>
+                            <span className="text-white/60 text-xs">{language === 'pt' ? 'ticket médio por PDV' : 'average ticket per POS'}</span>
                           </div>
                         </div>
                       ) : (
