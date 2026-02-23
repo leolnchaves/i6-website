@@ -1,20 +1,38 @@
 
-## Atualizar logo Multi e uniformizar tamanhos
+## Trocar as rotas: Nova home vira padrão, antiga vai para /oldhome_teste
 
-### 1. Substituir a logo da Multi
-- Copiar a nova imagem enviada (`user-uploads://image-45.png`) para `public/content/logos/multi.png`, substituindo a atual.
+### Resumo
+A nova home (`HomeTeste`) passa a ser a rota `/` (padrão do site), e a home atual (`Home`) vai para `/oldhome_teste` como referência.
 
-### 2. Uniformizar tamanhos das logos
-- No componente `ClientesSection.tsx`, ajustar as classes CSS das imagens para que todas tenham tamanho uniforme.
-- Usar uma altura fixa de `h-8 sm:h-10` com `max-w-[120px]` para garantir que logos mais largas (como Multi) fiquem proporcionais as demais.
+### Alteracoes
+
+**1. `src/App.tsx` - Reorganizar rotas**
+- Remover a rota independente `/hometeste`
+- A rota `/` dentro do bloco `/*` passa a renderizar `HomeTeste` (fora do Layout, pois ela tem seu proprio header/footer)
+- Adicionar rota `/oldhome_teste` renderizando `Home` (dentro do Layout, como antes)
+- A nova home (`HomeTeste`) precisa ficar fora do Layout (ja tem HeaderNovo e FooterNovo proprios)
+
+Estrutura final de rotas:
+```
+/                  -> HomeTeste (sem Layout)
+/oldhome_teste     -> Home (com Layout)
+/solutions         -> Solutions (com Layout)
+/success-stories   -> SuccessStories (com Layout)
+/contact           -> Contact (com Layout)
+...
+```
+
+**2. `src/components/hometeste/HeaderNovo.tsx` - Atualizar links**
+- Mudar o link "Home" de `/hometeste` para `/`
+- Mudar o link do logo de `/hometeste` para `/`
 
 ### Detalhes tecnicos
 
-**Arquivo:** `public/content/logos/multi.png`
-- Substituir pelo arquivo enviado pelo usuario.
+**`src/App.tsx`:**
+- Rota `/` fora do bloco Layout -> `<HomeTeste />`
+- Dentro do bloco Layout, trocar `<Route path="/" element={<Home />} />` por `<Route path="/oldhome_teste" element={<Home />} />`
+- Remover a rota `/hometeste`
 
-**Arquivo:** `src/components/hometeste/ClientesSection.tsx` (linha 36)
-- Alterar de: `h-10 sm:h-12 w-auto max-w-[140px]`
-- Para: `h-8 sm:h-10 w-auto max-w-[120px]`
-
-Isso garante que logos mais altas ou largas fiquem contidas no mesmo espaco visual.
+**`src/components/hometeste/HeaderNovo.tsx`:**
+- Linha 19: `{ to: '/', label: t('header.home') }`
+- Linha 35: `<Link to="/" className="shrink-0">`
