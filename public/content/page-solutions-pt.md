@@ -6,7 +6,7 @@
 
 **Title:** Transforme Tráfego Anônimo em Receita Real
 
-**Overview:** Grande parte do seu tráfego nunca se identifica. Isso não significa que ele não esteja pronto para comprar. A Infinity6 converte sinais comportamentais em tempo real em oportunidades concretas de venda, aumentando conversão e ticket médio mesmo quando não existe histórico do cliente. Você deixa de depender de login para vender melhor.
+**Overview:** Grande parte do seu tráfego nunca se identifica. Isso não significa que ele não esteja pronto para comprar. Nós convertemos sinais comportamentais em tempo real em oportunidades concretas de venda, aumentando conversão e ticket médio mesmo quando não existe histórico do cliente. Você deixa de depender de login para vender melhor.
 
 **Key Features:**
 - Entenda a intenção de compra desde o primeiro clique
