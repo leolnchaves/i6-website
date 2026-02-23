@@ -18,23 +18,23 @@
 
 ---
 
-## Predictive Personalization for Identified Users
+## Turn Customer Data into Recurring Revenue
 
 **Engine:** i6 RecSys
 
-**Target:** Hyperpersonalization Intelligence & Growth Acceleration
+**Target:** B2B, B2C, B2B2C, D2C
 
-**Title:** Predictive Personalization for Identified Users
+**Title:** Turn Customer Data into Recurring Revenue
 
-**Overview:** Deliver truly personalized experiences by predicting customer needs based on individual behavior and preferences. Increase retention and drive higher purchase frequency.
+**Overview:** You already have customer data. The problem is that most of it is underused. Infinity6 anticipates each customer's next move, activates the right offer at the right moment, and unlocks cross-sell and upsell opportunities that increase retention, frequency, and lifetime value. Stop reacting to past behavior. Start driving the next purchase.
 
 **Key Features:**
-- Behavioral Data Analysis
-- Omnichannel Personalization
-- Cross-sell and Up-sell Intelligence
-- Profile Enrichment and Scoring
+- Anticipate customer needs before they ask
+- Increase average order value with relevant recommendations
+- Reduce churn with activation at the right timing
+- Personalize consistently across all channels
 
-**Business Results:** Increase customer LTV with intelligent, behavior-based personalization, translated into higher conversion.
+**Business Results:** Higher LTV. Greater purchase frequency. Predictable revenue growth.
 
 ---
 

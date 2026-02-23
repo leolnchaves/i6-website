@@ -18,23 +18,23 @@
 
 ---
 
-## Personalização Preditiva para Usuários Identificados
+## Transforme Dados de Clientes em Receita Recorrente
 
 **Engine:** i6 RecSys
 
 **Target:** B2B, B2C, B2B2C, D2C
 
-**Title:** Personalização Preditiva para Usuários Identificados
+**Title:** Transforme Dados de Clientes em Receita Recorrente
 
-**Overview:** Entregue experiências verdadeiramente personalizadas prevendo necessidades dos clientes baseado em comportamento individual e preferências. Aumente retenção e gere maior frequência de compra.
+**Overview:** Você já tem dados dos seus clientes. O problema é que a maior parte deles é subutilizada. A Infinity6 antecipa o próximo movimento de cada cliente, ativa a oferta certa no momento certo e desbloqueia oportunidades de cross-sell e upsell que aumentam retenção, frequência e lifetime value. Pare de reagir ao comportamento passado. Comece a conduzir a próxima compra.
 
 **Key Features:**
-- Análise de Dados Comportamentais
-- Personalização Omnichannel
-- Inteligência de Cross-sell e Up-sell
-- Enriquecimento e Pontuação de Perfil
+- Antecipe necessidades dos clientes antes que eles peçam
+- Aumente o ticket médio com recomendações relevantes
+- Reduza churn com ativação no timing certo
+- Personalize de forma consistente em todos os canais
 
-**Business Results:** Aumente LTV do cliente com personalização inteligente baseada em comportamento, traduzida em mais conversão.
+**Business Results:** Maior LTV. Maior frequência de compra. Crescimento previsível de receita.
 
 ---
 
