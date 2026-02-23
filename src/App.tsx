@@ -57,14 +57,14 @@ const App = () => {
             <Sonner />
             <BrowserRouter basename={import.meta.env.BASE_URL}>
               <Routes>
-                {/* Nova home independente - fora do Layout */}
-                <Route path="/hometeste" element={<HomeTeste />} />
+                {/* Nova home - fora do Layout (tem HeaderNovo/FooterNovo próprios) */}
+                <Route path="/" element={<HomeTeste />} />
                 
                 {/* Regular site routes - with Layout wrapper */}
                 <Route path="/*" element={
                   <Layout>
                     <Routes>
-                      <Route path="/" element={<Home />} />
+                      <Route path="/oldhome_teste" element={<Home />} />
                       <Route path="/solutions" element={<Solutions />} />
                       <Route path="/success-stories" element={<SuccessStories />} />
                       <Route path="/contact" element={<Contact />} />
