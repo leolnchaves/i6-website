@@ -6,9 +6,9 @@ import {
   Heart, BookOpen, RotateCcw, Settings, BarChart3, Upload, Target,
   Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix';
+type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv';
 type Phase = 'idle' | 'typing' | 'responding';
 
 const TYPING_SPEED = 30;
@@ -142,6 +142,31 @@ const content = {
           'Quais SKUs específicos devem ser priorizados em anti-hipertensivos?',
         ],
       },
+      pdv: {
+        label: 'Comportamento',
+        question: 'Qual o comportamento de compra e recompra da Losartana Potássica 50mg na região do Vale do Paraíba?',
+        title: 'Comportamento de Compra e Recompra — Losartana Potássica 50mg (Vale do Paraíba)',
+        analysis: 'A análise de comportamento de PDV na região do Vale do Paraíba revela que a Losartana Potássica 50mg apresenta taxa de recompra crescente nos últimos 6 meses, passando de 62% em setembro para 78% em fevereiro. O ciclo médio de recompra é de 28 dias, alinhado à posologia padrão. Farmácias com programa de fidelidade apresentam taxa de recompra 15pp superior à média regional, indicando forte correlação entre ações de retenção e recorrência.',
+        barChartData: [
+          { month: 'Set', compra: 4200, recompra: 2600 },
+          { month: 'Out', compra: 4500, recompra: 2950 },
+          { month: 'Nov', compra: 4800, recompra: 3400 },
+          { month: 'Dez', compra: 5100, recompra: 3750 },
+          { month: 'Jan', compra: 5400, recompra: 4100 },
+          { month: 'Fev', compra: 5700, recompra: 4450 },
+        ],
+        barChartNote: 'A taxa de recompra cresceu 18pp no período, sugerindo aumento da adesão ao tratamento e eficácia das ações de fidelização nos PDVs da região.',
+        actions: [
+          { bold: 'Expandir programa de fidelidade', text: 'para os 40 PDVs com menor taxa de recompra na região, replicando o modelo dos top performers.' },
+          { bold: 'Criar alertas de reposição', text: 'automáticos para pacientes com ciclo de recompra > 35 dias, reduzindo abandono de tratamento.' },
+          { bold: 'Campanha de adesão', text: 'junto a prescritores da região, reforçando a importância da continuidade terapêutica.' },
+        ],
+        questions: [
+          'Qual a taxa de recompra por bandeira de farmácia na região?',
+          'Como o preço impacta o ciclo de recompra da Losartana?',
+          'Quais PDVs apresentam maior risco de perda de pacientes para genéricos concorrentes?',
+        ],
+      },
     },
   },
   en: {
@@ -269,6 +294,31 @@ const content = {
           'Which specific SKUs should be prioritized in antihypertensives?',
         ],
       },
+      pdv: {
+        label: 'Behavior',
+        question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the Paraíba Valley region?',
+        title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (Paraíba Valley)',
+        analysis: 'POS behavior analysis in the Paraíba Valley region reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
+        barChartData: [
+          { month: 'Sep', compra: 4200, recompra: 2600 },
+          { month: 'Oct', compra: 4500, recompra: 2950 },
+          { month: 'Nov', compra: 4800, recompra: 3400 },
+          { month: 'Dec', compra: 5100, recompra: 3750 },
+          { month: 'Jan', compra: 5400, recompra: 4100 },
+          { month: 'Feb', compra: 5700, recompra: 4450 },
+        ],
+        barChartNote: 'The repurchase rate grew 18pp over the period, suggesting increased treatment adherence and effectiveness of loyalty actions at regional POS.',
+        actions: [
+          { bold: 'Expand loyalty program', text: 'to the 40 POS with the lowest repurchase rate in the region, replicating the top performers model.' },
+          { bold: 'Create automatic replenishment alerts', text: 'for patients with repurchase cycles > 35 days, reducing treatment abandonment.' },
+          { bold: 'Adherence campaign', text: 'with regional prescribers, reinforcing the importance of treatment continuity.' },
+        ],
+        questions: [
+          'What is the repurchase rate by pharmacy chain in the region?',
+          'How does pricing impact the Losartan repurchase cycle?',
+          'Which POS show the highest risk of losing patients to competing generics?',
+        ],
+      },
     },
   },
 };
@@ -386,6 +436,28 @@ const MixComparison = ({ comparison }: { comparison: { category: string; current
         ))}
       </tbody>
     </table>
+  </div>
+);
+
+const PdvBarChart = ({ data, note, lang }: { data: { month: string; compra: number; recompra: number }[]; note: string; lang: string }) => (
+  <div className="my-4">
+    <div className="h-[220px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+          <XAxis dataKey="month" stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} />
+          <YAxis stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} tickFormatter={(v) => `${(v / 1000).toFixed(1)}k`} />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+            labelStyle={{ color: '#6b7280' }}
+          />
+          <Legend wrapperStyle={{ color: '#6b7280', fontSize: '12px' }} />
+          <Bar dataKey="compra" name={lang === 'pt' ? 'Compra' : 'Purchase'} fill="#f97316" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="recompra" name={lang === 'pt' ? 'Recompra' : 'Repurchase'} fill="#3b82f6" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+    <p className="text-gray-400 text-xs mt-3 leading-relaxed">{note}</p>
   </div>
 );
 
@@ -735,6 +807,13 @@ const I6SignalDemo = memo(() => {
                         )}
                         {activeScenario === 'mix' && 'comparison' in scenario && (
                           <MixComparison comparison={(scenario as typeof t.scenarios.mix).comparison} />
+                        )}
+                        {activeScenario === 'pdv' && 'barChartData' in scenario && (
+                          <PdvBarChart
+                            data={(scenario as typeof t.scenarios.pdv).barChartData}
+                            note={(scenario as typeof t.scenarios.pdv).barChartNote}
+                            lang={lang}
+                          />
                         )}
 
                         {/* Recommended Actions */}
