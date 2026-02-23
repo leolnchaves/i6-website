@@ -225,7 +225,7 @@ const content = {
           { bold: 'Renegotiate contracts', text: 'with suppliers for larger Q4 volumes, securing competitive conditions.' },
         ],
         questions: [
-          'How does seasonality vary by region (South vs Northeast)?',
+          'How does seasonality vary by region (East Coast vs West Coast)?',
           'What is the effect of promotions on seasonal curve acceleration?',
           'Is there cannibalization with other SKUs in the same category?',
         ],
@@ -233,8 +233,8 @@ const content = {
       pricing: {
         label: 'Pricing',
         question: 'What is the optimal price for Ibuprofen 400mg in this region?',
-        title: 'Price Optimization — Ibuprofen 400mg (Southeast Region)',
-        analysis: 'Price elasticity analysis for Ibuprofen 400mg in the Southeast Region indicates the current price of $3.80 is 7% above the optimal point. Reducing to $3.50 would maximize total contribution margin, with an estimated 12% volume increase and net gain of $8,600/month in the region.',
+        title: 'Price Optimization — Ibuprofen 400mg (Northeast Region)',
+        analysis: 'Price elasticity analysis for Ibuprofen 400mg in the Northeast Region indicates the current price of $3.80 is 7% above the optimal point. Reducing to $3.50 would maximize total contribution margin, with an estimated 12% volume increase and net gain of $8,600/month in the region.',
         table: {
           headers: ['Indicator', 'Value', 'Note'],
           rows: [
@@ -251,7 +251,7 @@ const content = {
         ],
         questions: [
           'How does elasticity vary across channels (pharma vs retail)?',
-          'What is the optimal price for the South Region considering local competition?',
+          'What is the optimal price for the West Coast considering local competition?',
           'Is there a bundling opportunity with other products in the line?',
         ],
       },
@@ -261,15 +261,15 @@ const content = {
         title: 'Commercial Prioritization — February 2026',
         analysis: 'Potential vs performance analysis identified 8 territories with significant revenue gaps. The top 3 priority territories concentrate 62% of the total gap ($178k), with high conversion probability based on historical response to similar commercial actions.',
         comercialChart: [
-          { territory: 'Metro BH', gap: 47, potential: 240, score: 94 },
-          { territory: 'Campinas', gap: 40, potential: 178, score: 89 },
-          { territory: 'Curitiba', gap: 33, potential: 152, score: 85 },
-          { territory: 'P. Alegre', gap: 29, potential: 136, score: 78 },
+          { territory: 'New York', gap: 47, potential: 240, score: 94 },
+          { territory: 'Chicago', gap: 40, potential: 178, score: 89 },
+          { territory: 'Los Angeles', gap: 33, potential: 152, score: 85 },
+          { territory: 'Miami', gap: 29, potential: 136, score: 78 },
         ],
         actions: [
-          { bold: 'Allocate additional reps', text: 'to Metro BH, focusing on the POS with the largest individual gap.' },
-          { bold: 'Incentive campaign', text: 'for Campinas with scaled bonus by growth tier.' },
-          { bold: 'Executive visit', text: 'to the top clients in Curitiba to renegotiate mix and share of shelf.' },
+          { bold: 'Allocate additional reps', text: 'to New York, focusing on the POS with the largest individual gap.' },
+          { bold: 'Incentive campaign', text: 'for Chicago with scaled bonus by growth tier.' },
+          { bold: 'Executive visit', text: 'to the top clients in Los Angeles to renegotiate mix and share of shelf.' },
         ],
         questions: [
           'What is the historical ROI of commercial actions in each territory?',
@@ -279,9 +279,9 @@ const content = {
       },
       mix: {
         label: 'Mix',
-        question: 'What is the ideal mix for the South region?',
-        title: 'Mix Optimization — South Region',
-        analysis: 'Analysis of current vs recommended mix for the South Region reveals misalignment in 3 key categories. The current mix over-indexes analgesics (38% vs recommended 29%) and under-indexes antihypertensives (12% vs recommended 19%). The projected adjustment would impact +$62k/month in regional contribution margin.',
+        question: 'What is the ideal mix for the West Coast?',
+        title: 'Mix Optimization — West Coast',
+        analysis: 'Analysis of current vs recommended mix for the West Coast reveals misalignment in 3 key categories. The current mix over-indexes analgesics (38% vs recommended 29%) and under-indexes antihypertensives (12% vs recommended 19%). The projected adjustment would impact +$62k/month in regional contribution margin.',
         comparison: [
           { category: 'Analgesics', current: '38%', recommended: '29%', direction: 'down' as const },
           { category: 'Anti-inflammatories', current: '22%', recommended: '24%', direction: 'up' as const },
@@ -302,9 +302,9 @@ const content = {
       },
       pdv: {
         label: 'Behavior',
-        question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the São Paulo region?',
-        title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (São Paulo)',
-        analysis: 'POS behavior analysis in the São Paulo region reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
+        question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the Greater New York area?',
+        title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (Greater New York)',
+        analysis: 'POS behavior analysis in the Greater New York area reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
         barChartData: [
           { month: 'Sep', compra: 4200, recompra: 2600 },
           { month: 'Oct', compra: 4500, recompra: 2950 },
