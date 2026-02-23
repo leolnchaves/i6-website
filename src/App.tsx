@@ -5,6 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { useScrollToTop } from "./hooks/useScrollToTop";
+
+const ScrollToTop = () => { useScrollToTop(); return null; };
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Solutions from "./pages/Solutions";
@@ -56,6 +59,7 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter basename={import.meta.env.BASE_URL}>
+              <ScrollToTop />
               <Routes>
                 {/* Nova home - fora do Layout (tem HeaderNovo/FooterNovo próprios) */}
                 <Route path="/" element={<HomeTeste />} />
