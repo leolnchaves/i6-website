@@ -34,35 +34,25 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
   const { language } = useLanguage();
   const [selectedStory, setSelectedStory] = useState<StoryData | null>(null);
   const { preloadImage } = useImageCache({ maxAge: 24 * 60 * 60 * 1000, maxSize: 100 });
-
-  // Use markdown content hook
   const { stories, loading, error } = useSuccessStoriesMarkdown();
 
-  // Filter cards based on selected segment
-  const filteredCards = selectedSegment 
+  const filteredCards = selectedSegment
     ? stories.filter(story => story.segment === selectedSegment)
     : stories;
 
-  const handleCardClick = useCallback((story: StoryData) => {
-    setSelectedStory(story);
-  }, []);
+  const handleCardClick = useCallback((story: StoryData) => setSelectedStory(story), []);
+  const handleCloseModal = useCallback(() => setSelectedStory(null), []);
 
-  const handleCloseModal = useCallback(() => {
-    setSelectedStory(null);
-  }, []);
-
-  // Pré-carregar imagens quando o componente monta
   useEffect(() => {
-    const imageUrls = filteredCards.map(story => story.image);
-    imageUrls.forEach(url => preloadImage(url));
+    filteredCards.forEach(story => preloadImage(story.image));
   }, [filteredCards, preloadImage]);
 
   if (loading) {
     return (
-      <InViewSection className="py-6 md:py-8 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <InViewSection className="py-8">
+        <div className="container mx-auto px-4">
           <div className="flex justify-center items-center py-16">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#F4845F]"></div>
           </div>
         </div>
       </InViewSection>
@@ -71,10 +61,10 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
 
   if (error) {
     return (
-      <InViewSection className="py-6 md:py-8 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <InViewSection className="py-8">
+        <div className="container mx-auto px-4">
           <div className="text-center py-16">
-            <p className="text-gray-600">Error loading success stories: {error}</p>
+            <p className="text-white/60">Error loading success stories: {error}</p>
           </div>
         </div>
       </InViewSection>
@@ -87,7 +77,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
 
   return (
     <>
-      <InViewSection className="py-6 md:py-8 bg-gray-50">
+      <InViewSection className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCards.map((story) => (
@@ -131,11 +121,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
         getImplementedSolutions={(story: any) => {
           const storyData = stories.find(s => s.id === story.id);
           if (!storyData?.solutions) return [];
-          
-          // Return simple solution objects with just names
-          return storyData.solutions.map((solutionName: string) => ({
-            name: solutionName
-          }));
+          return storyData.solutions.map((solutionName: string) => ({ name: solutionName }));
         }}
       />
     </>

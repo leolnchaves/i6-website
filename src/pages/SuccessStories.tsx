@@ -1,59 +1,48 @@
 
+import { useState, memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
-import { logger } from '@/utils/logger';
-import { useState } from 'react';
+import HeaderNovo from '@/components/hometeste/HeaderNovo';
+import FooterNovo from '@/components/hometeste/FooterNovo';
+import CTAFinal from '@/components/hometeste/CTAFinal';
+import VerticalWaves from '@/components/solutions/VerticalWaves';
+import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 import SuccessStoriesHero from '@/components/success-stories/SuccessStoriesHero';
 import MetricsSection from '@/components/success-stories/MetricsSection';
 import SegmentFilter from '@/components/success-stories/SegmentFilter';
 import ModernStoriesGrid from '@/components/success-stories/ModernStoriesGrid';
 import TestimonialsSection from '@/components/success-stories/TestimonialsSection';
-import SuccessStoriesCTA from '@/components/success-stories/SuccessStoriesCTA';
 
-/**
- * Success Stories page component
- * Showcases customer success stories, metrics, and testimonials
- * Includes performance monitoring and error handling
- */
-const SuccessStories = () => {
-  // Performance monitoring
-  const metrics = usePerformanceMonitor('SuccessStoriesPage', 50);
-  
-  // Language context
+const SuccessStories = memo(() => {
   const { language } = useLanguage();
-  
-  // Segment filter state
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
-  
-  // Log page visit
-  logger.info('Success Stories page loaded', { 
-    timestamp: new Date().toISOString() 
-  }, 'SuccessStoriesPage');
-  
+
   return (
-    <div className="min-h-screen">
-      {/* Hero section for success stories */}
-      <SuccessStoriesHero />
-      
-      {/* Metrics and achievements section */}
-      <MetricsSection />
-      
-      {/* Segment filter */}
-      <SegmentFilter 
-        onSegmentChange={setSelectedSegment} 
-        selectedSegment={selectedSegment} 
-      />
-      
-      {/* Grid of success stories */}
-      <ModernStoriesGrid selectedSegment={selectedSegment} />
-      
-      {/* Customer testimonials section */}
-      <TestimonialsSection />
-      
-      {/* Call-to-action section */}
-      <SuccessStoriesCTA />
+    <div className="min-h-screen bg-[#0B1224] relative">
+      <VerticalWaves />
+      <div className="relative">
+        <div className="relative z-[20]">
+          <HeaderNovo />
+        </div>
+        <div className="relative z-[10]">
+          <SuccessStoriesHero />
+          <MetricsSection />
+          <SegmentFilter
+            onSegmentChange={setSelectedSegment}
+            selectedSegment={selectedSegment}
+          />
+          <ModernStoriesGrid selectedSegment={selectedSegment} />
+          <TestimonialsSection />
+        </div>
+        <CTAFinal />
+        <div className="relative z-[20]">
+          <FooterNovo />
+        </div>
+        <CookieConsentManager />
+      </div>
     </div>
   );
-};
+});
+
+SuccessStories.displayName = 'SuccessStories';
 
 export default SuccessStories;
