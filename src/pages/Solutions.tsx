@@ -9,6 +9,7 @@ import StaticSolutionsGrid from '@/components/solutions/StaticSolutionsGrid';
 import I6SignalDemo from '@/components/solutions/I6SignalDemo';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
 import VerticalWaves from '@/components/solutions/VerticalWaves';
+import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
 const Solutions = memo(() => {
   const { t } = useLanguage();
@@ -29,8 +30,9 @@ const Solutions = memo(() => {
         <SolutionsCTA />
         <div className="relative z-[20]">
           <FooterNovo />
-        </div>
       </div>
+      <CookieConsentManager />
+    </div>
     </div>
   );
 });
