@@ -110,8 +110,8 @@ const ResultadosSection = () => {
                             <span className="text-white/60 text-sm">{language === 'pt' ? 'de custo de CRM' : 'CRM cost'}</span>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-base font-bold text-[#F4845F]">12x</span>
-                            <span className="text-white/60 text-sm">{language === 'pt' ? 'mais conversão na esteira de campanhas' : 'more conversion in campaign pipeline'}</span>
+                            <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '12x mais conversão' : '12x more conversion'}</span>
+                            <span className="text-white/60 text-sm">{language === 'pt' ? 'na esteira de campanhas' : 'in campaign pipeline'}</span>
                           </div>
                         </div>
                       ) : m.richLabel && m.richType === 'fashion' ? (
