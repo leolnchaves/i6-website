@@ -14,8 +14,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 1 — small amplitude, fast */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.40)"
-          strokeWidth="1.5"
+          stroke="rgba(244,132,95,0.55)"
+          strokeWidth="2.0"
           className="animate-[wave-breathe-x-1_6s_ease-in-out_infinite]"
         >
           <animate
@@ -34,8 +34,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 2 — small amplitude, medium */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.35)"
-          strokeWidth="1.2"
+          stroke="rgba(244,132,95,0.50)"
+          strokeWidth="1.6"
           className="animate-[wave-breathe-x-2_8s_ease-in-out_infinite]"
         >
           <animate
@@ -54,8 +54,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 3 — medium amplitude, medium */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.30)"
-          strokeWidth="1.8"
+          stroke="rgba(244,132,95,0.45)"
+          strokeWidth="2.2"
           className="animate-[wave-breathe-x-1_7s_ease-in-out_infinite]"
         >
           <animate
@@ -74,8 +74,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 4 — medium amplitude, slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.28)"
-          strokeWidth="1.5"
+          stroke="rgba(244,132,95,0.42)"
+          strokeWidth="2.0"
           className="animate-[wave-breathe-x-2_9s_ease-in-out_infinite]"
         >
           <animate
@@ -94,8 +94,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 5 — large amplitude, slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.25)"
-          strokeWidth="2.2"
+          stroke="rgba(244,132,95,0.38)"
+          strokeWidth="2.8"
           className="animate-[wave-breathe-x-3_10s_ease-in-out_infinite]"
         >
           <animate
@@ -114,8 +114,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 6 — large amplitude, very slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.22)"
-          strokeWidth="2.5"
+          stroke="rgba(244,132,95,0.35)"
+          strokeWidth="3.0"
           className="animate-[wave-breathe-x-1_12s_ease-in-out_infinite]"
         >
           <animate
@@ -134,8 +134,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 7 — compact, strong, fast */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.45)"
-          strokeWidth="1.0"
+          stroke="rgba(244,132,95,0.60)"
+          strokeWidth="1.4"
           className="animate-[wave-breathe-x-2_5s_ease-in-out_infinite]"
         >
           <animate
@@ -154,8 +154,8 @@ const VerticalWaves = memo(() => {
         {/* Layer 8 — medium, subtle, slow */}
         <path
           fill="none"
-          stroke="rgba(244,132,95,0.28)"
-          strokeWidth="1.8"
+          stroke="rgba(244,132,95,0.42)"
+          strokeWidth="2.2"
           className="animate-[wave-breathe-x-3_11s_ease-in-out_infinite]"
         >
           <animate
