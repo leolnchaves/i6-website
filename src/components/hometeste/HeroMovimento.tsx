@@ -25,11 +25,11 @@ const HeroMovimento = () => {
       <WaveBackground />
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="text-5xl sm:text-5xl md:text-8xl font-bold text-white leading-tight tracking-tight">
+        <h1 className="text-5xl sm:text-4xl md:text-8xl font-bold text-white leading-tight tracking-tight">
           {copy.title}
         </h1>
         <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
-          Data moves. <span className="font-bold" style={{ textShadow: '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)' }}>You Grow.</span>
+          Data moves. <span className="font-semibold" style={{ textShadow: '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)' }}>You Grow.</span>
         </p>
         <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
           {copy.desc}
