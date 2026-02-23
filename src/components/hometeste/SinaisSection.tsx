@@ -1,10 +1,10 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { TrendingUp, Eye, DollarSign, Target, UserX, Zap, Cog, Database, BarChart3, Boxes } from 'lucide-react';
+import { TrendingUp, Eye, DollarSign, Target, UserX, Zap, Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText } from 'lucide-react';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 const signalIcons = [TrendingUp, Eye, DollarSign, Target, UserX, Zap];
 
-const capabilityIcons = [Cog, Database, Boxes];
+const capabilityIcons = [Cog, Database, Sparkles, Scale, MessageSquareText, Boxes];
 
 const SinaisSection = () => {
   const { language } = useLanguage();
@@ -20,6 +20,9 @@ const SinaisSection = () => {
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
         'Base fundacional multi-segmentada.',
+        'Relevância imediata até para comportamentos sem histórico.',
+        'Balanceamento entre personalização e diversidade.',
+        'Explicabilidade comportamental argumentativa.',
         'APIs de ativação imediata.',
       ],
       cards: [
@@ -53,6 +56,9 @@ const SinaisSection = () => {
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
         'Multi-segmented foundational base.',
+        'Immediate relevance even for behaviors without history.',
+        'Balance between personalization and diversity.',
+        'Argumentative behavioral explainability.',
         'Instant activation APIs.',
       ],
       cards: [
