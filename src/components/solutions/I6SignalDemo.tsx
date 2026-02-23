@@ -418,6 +418,7 @@ const I6SignalDemo = memo(() => {
   const [isFillingInput, setIsFillingInput] = useState(false);
   const [pendingQuestion, setPendingQuestion] = useState('');
   const [pendingScenario, setPendingScenario] = useState<Scenario | null>(null);
+  const [isSendAnimating, setIsSendAnimating] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
 
   const scenario = t.scenarios[activeScenario];
@@ -464,15 +465,19 @@ const I6SignalDemo = memo(() => {
       }, TYPING_SPEED);
       return () => clearTimeout(timer);
     } else {
-      // Typing complete — wait then trigger chat animation
+      // Typing complete — animate Send button, then trigger chat
       const timer = setTimeout(() => {
-        setIsFillingInput(false);
-        setPendingQuestion('');
-        if (pendingScenario) {
-          startAnimation(pendingScenario);
-          setPendingScenario(null);
-        }
-      }, RESPONSE_DELAY);
+        setIsSendAnimating(true);
+        setTimeout(() => {
+          setIsSendAnimating(false);
+          setIsFillingInput(false);
+          setPendingQuestion('');
+          if (pendingScenario) {
+            startAnimation(pendingScenario);
+            setPendingScenario(null);
+          }
+        }, 400);
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [isFillingInput, inputText, pendingQuestion, pendingScenario, startAnimation]);
@@ -744,7 +749,7 @@ const I6SignalDemo = memo(() => {
                     placeholder={t.placeholder}
                     className="flex-1 h-12 rounded-full border border-gray-200 bg-white px-5 text-sm text-gray-700 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all"
                   />
-                  <button className="h-12 w-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-md hover:shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all flex items-center justify-center flex-shrink-0">
+                  <button className={`h-12 w-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-md hover:shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 flex items-center justify-center flex-shrink-0 ${isSendAnimating ? 'scale-125 ring-4 ring-orange-400/40 shadow-orange-500/50 shadow-xl' : ''}`}>
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
