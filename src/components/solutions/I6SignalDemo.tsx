@@ -616,13 +616,14 @@ const I6SignalDemo = memo(() => {
     <section className="py-6 md:py-10 px-4 relative z-[10]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{t.sectionTitle}</h2>
-          <p className="text-white/50 max-w-4xl mx-auto">{t.sectionSubtitle}</p>
         </div>
 
-        {/* Scenario selector */}
-        <div className="text-center mb-8">
+        {/* Subtitle + Scenario selector inline */}
+        <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
+          <p className="text-white/50 text-sm">{t.sectionSubtitle}</p>
+          <div className="hidden sm:block w-px h-6 bg-white/20"></div>
           <div className="flex flex-wrap justify-center gap-2">
             {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
               <button
