@@ -1,26 +1,21 @@
 
 
-## Aumentar visibilidade das ondas verticais
+## Corrigir camada das ondas verticais
 
-### Mudanca unica em `src/components/solutions/VerticalWaves.tsx`
+### Problema
 
-Aumentar a opacidade de todos os 8 paths e engrossar levemente os strokes:
+O `VerticalWaves` usa `fixed` com `z-[5]` e fica fora do fluxo de stacking do conteudo. O conteudo todo esta dentro de um container com `z-[2]`, o que cria um stacking context -- os `z-[10]` dos cards e footer so valem **dentro** desse contexto `z-[2]`, nunca ultrapassando o `z-[5]` das ondas.
 
-| Layer | Opacidade atual | Nova opacidade | strokeWidth atual | Novo strokeWidth |
-|-------|----------------|----------------|-------------------|------------------|
-| 1 | 0.40 | 0.55 | 1.5 | 2.0 |
-| 2 | 0.35 | 0.50 | 1.2 | 1.6 |
-| 3 | 0.30 | 0.45 | 1.8 | 2.2 |
-| 4 | 0.28 | 0.42 | 1.5 | 2.0 |
-| 5 | 0.25 | 0.38 | 2.2 | 2.8 |
-| 6 | 0.22 | 0.35 | 2.5 | 3.0 |
-| 7 | 0.45 | 0.60 | 1.0 | 1.4 |
-| 8 | 0.28 | 0.42 | 1.8 | 2.2 |
+### Solucao
 
-### Detalhes tecnicos
+Reduzir o z-index das ondas para `z-[1]` em `VerticalWaves.tsx`, de modo que fiquem abaixo do container principal (`z-[2]`). Assim, cards e footer (com `z-[10]` dentro do `z-[2]`) ficam automaticamente acima das ondas.
 
-- Apenas o arquivo `VerticalWaves.tsx` sera editado
-- O componente so e usado na pagina `/solutions`, entao nao afeta outras paginas
-- Aumento medio de ~0.15 na opacidade e ~0.4px no strokeWidth
-- Mantem a hierarquia visual entre layers (as compactas/rapidas mais fortes, as grandes/lentas mais sutis)
+### Mudanca
+
+**Arquivo:** `src/components/solutions/VerticalWaves.tsx` (linha 6)
+
+- De: `z-[5]`
+- Para: `z-[1]`
+
+Apenas essa mudanca resolve o problema -- o container principal com `z-[2]` ja fica acima do `z-[1]` das ondas.
 
