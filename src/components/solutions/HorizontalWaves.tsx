@@ -2,42 +2,52 @@ import { memo } from 'react';
 
 const HorizontalWaves = memo(() => {
   return (
-    <div className="absolute bottom-0 left-0 w-full h-[100px] md:h-[120px] pointer-events-none z-0">
+    <div className="absolute bottom-0 left-0 w-full h-[180px] md:h-[220px] pointer-events-none z-[1] translate-y-1/2">
       <svg
-        viewBox="0 0 1400 120"
+        viewBox="0 0 2800 200"
         preserveAspectRatio="none"
-        className="w-full h-full"
+        className="w-[200%] h-full"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Wave 1 - lowest opacity, slowest */}
+        {/* Layer 1 - furthest, slowest, lowest opacity */}
         <path
-          d="M0,70 C50,40 100,90 150,60 C200,30 250,85 300,55 C350,25 400,80 450,50 C500,20 550,75 600,45 C650,15 700,70 750,40 C800,10 850,65 900,35 C950,5 1000,60 1050,30 C1100,0 1150,55 1200,25 C1250,0 1300,50 1350,20 L1400,30 L1400,120 L0,120 Z"
-          fill="rgba(244,132,95,0.08)"
-          className="animate-[wave-horizontal-1_7s_ease-in-out_infinite]"
+          d="M0,120 C80,60 180,150 300,90 C420,30 500,140 650,100 C800,60 900,160 1050,80 C1200,20 1300,130 1400,110 C1500,60 1600,150 1750,90 C1900,30 2000,140 2150,100 C2300,60 2400,160 2550,80 C2700,20 2750,130 2800,110"
+          fill="none"
+          stroke="rgba(244,132,95,0.08)"
+          strokeWidth="2"
+          className="animate-[wave-slide-1_25s_linear_infinite]"
         />
-        {/* Wave 2 */}
+        {/* Layer 2 */}
         <path
-          d="M0,80 C60,50 120,95 180,65 C240,35 300,90 360,60 C420,30 480,85 540,55 C600,25 660,80 720,50 C780,20 840,75 900,45 C960,15 1020,70 1080,40 C1140,10 1200,65 1260,35 C1320,5 1380,55 1400,45 L1400,120 L0,120 Z"
-          fill="rgba(244,132,95,0.14)"
-          className="animate-[wave-horizontal-2_9s_ease-in-out_infinite]"
+          d="M0,140 C120,70 250,160 400,110 C550,50 650,155 800,120 C950,70 1080,150 1200,95 C1320,40 1400,145 1550,105 C1700,55 1800,160 1950,110 C2100,50 2200,155 2350,120 C2500,70 2630,150 2750,95 L2800,100"
+          fill="none"
+          stroke="rgba(244,132,95,0.14)"
+          strokeWidth="2.5"
+          className="animate-[wave-slide-2_20s_linear_infinite]"
         />
-        {/* Wave 3 - mid opacity */}
+        {/* Layer 3 - mid */}
         <path
-          d="M0,85 C45,55 90,100 135,70 C180,40 225,95 270,65 C315,35 360,90 405,60 C450,30 495,85 540,55 C585,25 630,80 675,50 C720,20 765,75 810,45 C855,15 900,70 945,40 C990,10 1035,65 1080,35 C1125,5 1170,60 1215,30 C1260,0 1305,55 1350,25 L1400,35 L1400,120 L0,120 Z"
-          fill="rgba(244,132,95,0.20)"
-          className="animate-[wave-horizontal-3_11s_ease-in-out_infinite]"
+          d="M0,100 C100,40 220,170 380,85 C540,15 620,130 780,95 C940,55 1050,165 1180,75 C1310,10 1400,125 1530,100 C1660,55 1780,170 1940,85 C2100,15 2180,130 2340,95 C2500,55 2610,165 2740,75 L2800,90"
+          fill="none"
+          stroke="rgba(244,132,95,0.22)"
+          strokeWidth="2.5"
+          className="animate-[wave-slide-3_18s_linear_infinite]"
         />
-        {/* Wave 4 */}
+        {/* Layer 4 */}
         <path
-          d="M0,90 C55,65 110,105 165,75 C220,45 275,95 330,70 C385,40 440,90 495,65 C550,35 605,85 660,55 C715,25 770,80 825,50 C880,20 935,75 990,45 C1045,15 1100,70 1155,40 C1210,10 1265,65 1320,35 C1375,10 1400,50 1400,50 L1400,120 L0,120 Z"
-          fill="rgba(244,132,95,0.28)"
-          className="animate-[wave-horizontal-4_8s_ease-in-out_infinite]"
+          d="M0,130 C150,55 280,165 430,100 C580,35 700,150 850,115 C1000,65 1120,170 1280,90 C1400,40 1500,155 1650,110 C1800,55 1930,165 2080,100 C2230,35 2350,150 2500,115 C2650,65 2720,170 2800,90"
+          fill="none"
+          stroke="rgba(244,132,95,0.30)"
+          strokeWidth="3"
+          className="animate-[wave-slide-4_15s_linear_infinite]"
         />
-        {/* Wave 5 - highest opacity, closest to bottom */}
+        {/* Layer 5 - closest, fastest, highest opacity */}
         <path
-          d="M0,95 C40,75 80,110 120,85 C160,60 200,100 240,80 C280,55 320,95 360,75 C400,50 440,90 480,70 C520,45 560,88 600,65 C640,42 680,85 720,60 C760,38 800,82 840,58 C880,35 920,78 960,55 C1000,32 1040,75 1080,52 C1120,30 1160,72 1200,48 C1240,28 1280,68 1320,45 C1360,25 1400,60 1400,60 L1400,120 L0,120 Z"
-          fill="rgba(244,132,95,0.35)"
-          className="animate-[wave-horizontal-1_6s_ease-in-out_infinite_reverse]"
+          d="M0,150 C90,80 200,175 350,110 C500,45 600,160 750,125 C900,75 1020,180 1180,95 C1340,30 1400,140 1560,120 C1720,70 1850,175 2000,110 C2150,45 2250,160 2400,125 C2550,75 2670,180 2800,95"
+          fill="none"
+          stroke="rgba(244,132,95,0.40)"
+          strokeWidth="3"
+          className="animate-[wave-slide-5_22s_linear_infinite]"
         />
       </svg>
     </div>
