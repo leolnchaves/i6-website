@@ -517,10 +517,6 @@ const I6SignalDemo = memo(() => {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-[#F4845F]/10 border border-[#F4845F]/20 rounded-full px-4 py-1.5 mb-4">
-            <Brain className="w-4 h-4 text-[#F4845F]" />
-            <span className="text-[#F4845F] text-sm font-medium">i6Signal Intelliboard</span>
-          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{t.sectionTitle}</h2>
           <p className="text-white/50 max-w-2xl mx-auto">{t.sectionSubtitle}</p>
         </div>
