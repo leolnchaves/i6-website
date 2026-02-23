@@ -36,7 +36,7 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
       onClick={handleClick}
     >
       {/* Hover gradient bar */}
-      <div className="h-0 bg-gradient-to-r from-[#F4845F] to-[#3B82F6] group-hover:h-1 transition-all duration-500"></div>
+      <div className="h-0 bg-[#F4845F] group-hover:h-1 transition-all duration-500"></div>
 
       <div className="p-6 relative">
         {/* Image */}
