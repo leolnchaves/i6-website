@@ -11,7 +11,7 @@ const ResultadosSection = () => {
           segment: 'Farma',
           metrics: [
             { value: '2.200', label: 'SKUs otimizados' },
-            { value: '95 mil', label: 'PDVs cobertos' },
+            { value: '95 mil', label: 'comportamentos de PDVs mapeados' },
             { value: 'R$ 100 milhões em savings', label: 'ao antecipar sinais de incineração, ruptura e overstocking.' },
           ],
         },
@@ -48,7 +48,7 @@ const ResultadosSection = () => {
           segment: 'Pharma',
           metrics: [
             { value: '2,200', label: 'optimized SKUs' },
-            { value: '95K', label: 'points of sale' },
+            { value: '95K', label: 'mapped POS behaviors' },
             { value: 'R$ 100 million in savings', label: 'by anticipating incineration, stockout and overstocking signals.' },
           ],
         },
