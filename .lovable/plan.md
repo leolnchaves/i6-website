@@ -1,18 +1,29 @@
 
-## Correção das Traduções dos CTAs
 
-### Problema
-Os botões CTA nas versões em inglês não traduzem corretamente o que está escrito em português:
+## Ajuste de tamanho do título para tablet
 
-| Componente | PT (correto) | EN (atual - incorreto) | EN (corrigido) |
+**Problema:** O breakpoint `md` (768px) ainda é tablet, mas está usando o tamanho do desktop (`text-8xl` = 96px). Isso faz com que tablet e desktop fiquem com o mesmo tamanho grande.
+
+**Solução:** Redistribuir os breakpoints para separar corretamente tablet de desktop:
+
+| Dispositivo | Breakpoint | Tamanho atual | Tamanho novo |
 |---|---|---|---|
-| Hero (HeroMovimento) | "Antecipe suas decisões agora!" | "Talk to a specialist" | "Anticipate your decisions now!" |
-| CTA Final | "Pronto para transformar dados em lucro?" | "Move your data" | "Ready to turn data into profit?" |
+| Mobile | base | text-5xl (48px) | text-5xl (48px) |
+| Tablet pequeno | sm (640px) | text-4xl (36px) | text-4xl (36px) |
+| Tablet grande | md (768px) | text-8xl (96px) | text-6xl (60px) |
+| Desktop | lg (1024px) | -- | text-8xl (96px) |
 
-### Alteracoes
+### Detalhes tecnicos
 
-**Arquivo 1: `src/components/hometeste/HeroMovimento.tsx`**
-- Linha 19: Alterar `cta` de `'Talk to a specialist'` para `'Anticipate your decisions now!'`
+**Arquivo:** `src/components/hometeste/HeroMovimento.tsx` (linha 28)
 
-**Arquivo 2: `src/components/hometeste/CTAFinal.tsx`**
-- Linha 16: Alterar `cta` de `'Move your data'` para `'Ready to turn data into profit?'`
+Alterar a classe do `h1` de:
+```
+text-5xl sm:text-4xl md:text-8xl
+```
+Para:
+```
+text-5xl sm:text-4xl md:text-6xl lg:text-8xl
+```
+
+Assim o desktop (`lg:text-8xl`) mantém o tamanho atual e o tablet (`md:text-6xl`) fica com 60px, um meio-termo adequado.
