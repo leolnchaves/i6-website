@@ -19,10 +19,10 @@ const SinaisSection = () => {
       i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
-        'Base fundacional multi-segmentada.',
-        'Relevância imediata até para comportamentos sem histórico.',
-        'Balanceamento entre personalização e diversidade.',
-        'Explicabilidade comportamental argumentativa.',
+        'Base fundacional multi-segmento.',
+        'Relevância mesmo sem histórico.',
+        'Personalização com diversidade controlada.',
+        'Explicabilidade clara e orientada a negócio.',
         'APIs de ativação imediata.',
       ],
       cards: [
@@ -55,10 +55,10 @@ const SinaisSection = () => {
       i6signal: 'i6Signal\nConversational interface that transforms predictive signals into actionable decisions in real time.',
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
-        'Multi-segmented foundational base.',
-        'Immediate relevance even for behaviors without history.',
-        'Balance between personalization and diversity.',
-        'Argumentative behavioral explainability.',
+        'Multi-segment foundational base.',
+        'Relevance even without history.',
+        'Personalization with controlled diversity.',
+        'Clear, business-oriented explainability.',
         'Instant activation APIs.',
       ],
       cards: [
