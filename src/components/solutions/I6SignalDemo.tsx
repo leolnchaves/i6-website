@@ -551,9 +551,6 @@ const I6SignalDemo = memo(() => {
 
         {/* Scenario selector */}
         <div className="text-center mb-8">
-          <p className="text-white/70 text-sm mb-4">
-            {lang === 'pt' ? 'Escolha um tema e veja como sinais se transformam em decisões concretas:' : 'Choose a topic and see how signals become concrete decisions:'}
-          </p>
           <div className="flex flex-wrap justify-center gap-2">
             {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
               <button
