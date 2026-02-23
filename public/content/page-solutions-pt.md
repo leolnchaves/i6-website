@@ -1,20 +1,20 @@
-## Descoberta Inteligente para Visitantes Anônimos
+## Transforme Tráfego Anônimo em Receita Real
 
 **Engine:** i6 RecSys
 
 **Target:** B2B, B2C
 
-**Title:** Descoberta Inteligente para Visitantes Anônimos
+**Title:** Transforme Tráfego Anônimo em Receita Real
 
-**Overview:** Transforme tráfego anônimo em compradores engajados. Nosso engine usa sinais em tempo real e contexto para gerar recomendações de alto valor sem necessidade de histórico prévio do usuário.
+**Overview:** Grande parte do seu tráfego nunca se identifica. Isso não significa que ele não esteja pronto para comprar. A Infinity6 converte sinais comportamentais em tempo real em oportunidades concretas de venda, aumentando conversão e ticket médio mesmo quando não existe histórico do cliente. Você deixa de depender de login para vender melhor.
 
 **Key Features:**
-- Modelagem de Afinidade Contextual
-- Personalização Cold-Start
-- Inteligência de Visitantes Anônimos
-- Recomendações em Tempo Real
+- Entenda a intenção de compra desde o primeiro clique
+- Aumente conversão sem depender de base logada
+- Recomende produtos com contexto, não com achismo
+- Ative oportunidades no momento exato da decisão
 
-**Business Results:** Desbloqueie descoberta de produtos e aumente o engajamento com zero dados históricos.
+**Business Results:** Mais conversão no topo do funil. Mais receita sem aumentar mídia.
 
 ---
 
