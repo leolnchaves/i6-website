@@ -2,7 +2,7 @@ import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import avatarRicardo from '@/assets/images/avatar-ricardo.jpg';
 import {
-  Home, Database, Brain, LayoutGrid, Send, ChevronRight, ChevronDown,
+  Home, Database, Brain, LayoutGrid, Send, ChevronRight, ChevronDown, ChevronUp,
   Heart, BookOpen, RotateCcw, Settings, BarChart3, Upload, Target,
   Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
 } from 'lucide-react';
@@ -647,13 +647,15 @@ const I6SignalDemo = memo(() => {
               {/* Scroll up indicator */}
               {showScrollHint && (
                 <div 
-                  className="absolute top-3 right-4 z-20 flex flex-col items-center gap-1 cursor-pointer animate-fade-in"
+                  className="absolute top-3 right-4 z-20 cursor-pointer animate-fade-in"
                   onClick={() => chatRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
-                  <div className="w-6 h-10 rounded-full border border-orange-400/40 pt-1.5 flex items-start justify-center shadow-[0_0_12px_rgba(244,132,95,0.15)] bg-white/80 backdrop-blur-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-bounce" />
+                  <div className="flex items-center gap-2 bg-orange-50 border border-orange-300 rounded-lg px-3 py-2 shadow-md">
+                    <ChevronUp className="w-4 h-4 text-orange-500 animate-bounce" />
+                    <span className="text-orange-600 text-xs font-medium">
+                      {lang === 'pt' ? 'Navegue pelo conteúdo' : 'Scroll through content'}
+                    </span>
                   </div>
-                  <span className="text-orange-400/60 text-[9px] tracking-[0.2em] uppercase">scroll</span>
                 </div>
               )}
               {/* Chat content */}
