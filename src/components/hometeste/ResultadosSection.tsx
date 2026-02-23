@@ -18,9 +18,9 @@ const ResultadosSection = () => {
         {
           segment: 'Varejo',
           metrics: [
-            { value: '+36%', label: 'positivação' },
-            { value: '+23%', label: 'ticket médio' },
-            { value: 'Receita incremental', label: 'comprovada' },
+            { value: '1.400', label: 'SKUs otimizados' },
+            { value: '50 mil', label: 'comportamentos de PDVs mapeados' },
+            { value: '', label: '', richLabel: true },
           ],
         },
         {
@@ -55,9 +55,9 @@ const ResultadosSection = () => {
         {
           segment: 'Retail',
           metrics: [
-            { value: '+36%', label: 'activation rate' },
-            { value: '+23%', label: 'average ticket' },
-            { value: 'Proven incremental', label: 'revenue' },
+            { value: '1,400', label: 'optimized SKUs' },
+            { value: '50K', label: 'mapped POS behaviors' },
+            { value: '', label: '', richLabel: true },
           ],
         },
         {
@@ -103,8 +103,19 @@ const ResultadosSection = () => {
                       key={j}
                       className={`py-3 ${j < c.metrics.length - 1 ? 'border-b border-white/5' : ''}`}
                     >
-                      <span className="text-base font-bold text-[#F4845F] block">{m.value}</span>
-                      <span className="text-white/60 text-sm">{m.label}</span>
+                      {m.richLabel ? (
+                        <span className="text-white/60 text-sm">
+                          <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '+36%' : '+36%'}</span>{' '}
+                          {language === 'pt' ? 'positivação de produtos' : 'product activation'}{' '}
+                          <span className="text-base font-bold text-[#F4845F]">{language === 'pt' ? '+23%' : '+23%'}</span>{' '}
+                          {language === 'pt' ? 'ticket médio por PDV.' : 'average ticket per POS.'}
+                        </span>
+                      ) : (
+                        <>
+                          <span className="text-base font-bold text-[#F4845F] block">{m.value}</span>
+                          <span className="text-white/60 text-sm">{m.label}</span>
+                        </>
+                      )}
                     </li>
                   );
                 })}
