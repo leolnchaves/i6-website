@@ -57,7 +57,7 @@ const content = {
         label: 'Forecast',
         question: 'Qual a sazonalidade e tendência do produto mais vendido para o último quarter?',
         title: 'Análise Mensal do Item Mais Vendido (ID: 28822)',
-        analysis: 'O produto ID 28822 (Paracetamol 750mg) apresenta forte componente sazonal com pico em dezembro (+34% vs média). A tendência de longo prazo é de crescimento de 8,2% ao trimestre, impulsionada por expansão de cobertura em farmácias independentes. O modelo SARIMA(1,1,1)(1,1,1) apresentou MAPE de 4,3%, indicando alta acurácia preditiva.',
+        analysis: 'O produto ID 28822 (Paracetamol 750mg) apresenta forte componente sazonal com pico em dezembro (+34% vs média). A tendência de longo prazo é de crescimento de 8,2% ao trimestre, impulsionada por expansão de cobertura em farmácias independentes. O modelo apresentou alta acurácia preditiva neste item, o que representa uma predição de alta confiabilidade para o planejamento comercial.',
         chartData: [
           { month: 'Out', seasonality: 12400, trend: 11800 },
           { month: 'Nov', seasonality: 14200, trend: 12600 },
@@ -209,7 +209,7 @@ const content = {
         label: 'Forecast',
         question: 'What is the seasonality and trend of the best-selling product for the last quarter?',
         title: 'Monthly Analysis of Best-Selling Item (ID: 28822)',
-        analysis: 'Product ID 28822 (Paracetamol 750mg) shows a strong seasonal component with a peak in December (+34% vs average). The long-term trend shows 8.2% growth per quarter, driven by coverage expansion in independent pharmacies. The SARIMA(1,1,1)(1,1,1) model achieved a MAPE of 4.3%, indicating high predictive accuracy.',
+        analysis: 'Product ID 28822 (Paracetamol 750mg) shows a strong seasonal component with a peak in December (+34% vs average). The long-term trend shows 8.2% growth per quarter, driven by coverage expansion in independent pharmacies. The model showed high predictive accuracy for this item, representing a highly reliable prediction for commercial planning.',
         chartData: [
           { month: 'Oct', seasonality: 12400, trend: 11800 },
           { month: 'Nov', seasonality: 14200, trend: 12600 },
