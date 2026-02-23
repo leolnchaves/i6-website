@@ -5,7 +5,8 @@ import HeaderNovo from '@/components/hometeste/HeaderNovo';
 import FooterNovo from '@/components/hometeste/FooterNovo';
 import SolutionsHero from '@/components/solutions/SolutionsHero';
 import StaticSolutionsGrid from '@/components/solutions/StaticSolutionsGrid';
-import ProcessFlow from '@/components/solutions/ProcessFlow';
+// import ProcessFlow from '@/components/solutions/ProcessFlow';
+import I6SignalDemo from '@/components/solutions/I6SignalDemo';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
 import VerticalWaves from '@/components/solutions/VerticalWaves';
 
@@ -23,7 +24,8 @@ const Solutions = memo(() => {
         <div className="relative z-[10]">
           <StaticSolutionsGrid />
         </div>
-        <ProcessFlow />
+        {/* <ProcessFlow /> */}
+        <I6SignalDemo />
         <SolutionsCTA />
         <div className="relative z-[20]">
           <FooterNovo />
