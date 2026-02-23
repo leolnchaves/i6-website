@@ -1,117 +1,125 @@
-## Transforme Tráfego Anônimo em Receita Real
+## Transforme Tráfego Anônimo em Crescimento de Receita
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** B2B, B2C  
 
-**Target:** B2B, B2C
+**Overview:**  
+Grande parte da receita se perde no topo do funil porque não é possível identificar quem está navegando. O tráfego anônimo costuma ser tratado como ruído. Nós tratamos como oportunidade.
 
-**Title:** Transforme Tráfego Anônimo em Receita Real
-
-**Overview:** Grande parte do seu tráfego nunca se identifica. Isso não significa que ele não esteja pronto para comprar. Nós convertemos sinais comportamentais em tempo real em oportunidades concretas de venda, aumentando conversão e ticket médio mesmo quando não existe histórico do cliente. Você deixa de depender de login para vender melhor.
+Transformamos sinais comportamentais em tempo real em decisões comerciais imediatas, aumentando conversão e ticket médio mesmo sem login ou histórico prévio do cliente.
 
 **Key Features:**
-- Entenda a intenção de compra desde o primeiro clique
-- Aumente conversão sem depender de base logada
-- Recomende produtos com contexto, não com achismo
-- Ative oportunidades no momento exato da decisão
+- Detectar intenção de compra desde a primeira interação  
+- Converter visitantes anônimos sem exigir identificação  
+- Entregar recomendações contextuais em tempo real  
+- Ativar a melhor oferta no momento da decisão  
 
-**Business Results:** Mais conversão no topo do funil. Mais receita sem aumentar mídia.
+**Business Impact:**  
+Maior conversão no tráfego existente. Receita incremental sem aumentar investimento em aquisição.
 
 ---
 
-## Transforme Dados de Clientes em Receita Recorrente
+## Transforme Dados de Clientes em Crescimento Previsível
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** B2B, B2C, B2B2C, D2C  
 
-**Target:** B2B, B2C, B2B2C, D2C
+**Overview:**  
+A maioria das bases de clientes é reativa. Elas mostram o que já aconteceu, mas não influenciam o que vem a seguir.
 
-**Title:** Transforme Dados de Clientes em Receita Recorrente
-
-**Overview:** Você já tem dados dos seus clientes. O problema é que a maior parte deles é subutilizada. Antecipamos o próximo movimento de cada cliente, ativando a oferta certa no momento certo e desbloqueando oportunidades de cross-sell e upsell que aumentam retenção, frequência e lifetime value. Pare de reagir ao comportamento passado. Comece a conduzir a próxima compra.
+Antecipamos a próxima compra, ativamos oportunidades de cross-sell e up-sell no momento certo e aumentamos retenção e lifetime value por meio de decisões comerciais baseadas em comportamento real.
 
 **Key Features:**
-- Antecipe necessidades dos clientes antes que eles peçam
-- Aumente o ticket médio com recomendações relevantes
-- Reduza churn com ativação no timing certo
-- Personalize de forma consistente em todos os canais
+- Antecipar o próximo ciclo de compra  
+- Aumentar ticket médio com ofertas relevantes  
+- Reduzir churn com ativação proativa  
+- Orquestrar personalização em todos os canais  
 
-**Business Results:** Maior LTV. Maior frequência de compra. Crescimento previsível de receita.
+**Business Impact:**  
+Maior LTV. Mais frequência de compra. Receita recorrente mais previsível.
 
 ---
 
-## Inteligência de Recomendação Industrial
+## Transforme sua Rede de PDVs em um Motor de Receita
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** Supply & Profitability Optimization  
 
-**Target:** B2B, B2B2C
+**Overview:**  
+Sortimento estático e decisões de preço desconectadas reduzem giro e pressionam margem.
 
-**Title:** Inteligência de Recomendação Industrial
-
-**Overview:** Alinhe objetivos comerciais com recomendações inteligentes que otimizam sortimento, preços e comportamento de PDV: tudo em tempo real.
+Alinhamos sortimento, precificação e metas comerciais em tempo real, transformando cada PDV em uma unidade inteligente de crescimento.
 
 **Key Features:**
-- Otimização de Sortimento
-- Integração de Preços Dinâmicos
-- Alinhamento de Objetivos Comerciais
-- Previsão Comportamental de PDV
+- Otimização de sortimento por performance local  
+- Recomendações inteligentes de pedido  
+- Alinhamento com metas de receita e margem  
+- Previsão comportamental no nível do PDV  
 
-**Business Results:** Gere relevância de produtos e sell-out - pedidos inteligentes com mix adequado à performance do PDV, alinhado com objetivos de metas comerciais, receita e margem.
+**Business Impact:**  
+Sell-out mais rápido. Redução de distorções de estoque. Melhor performance de margem por loja.
 
 ---
 
-## Segmentação Preditiva de Campanha
+## Transforme Investimento em Campanha em ROI Mensurável
 
-**Engine:** i6 RecSys
+**Engine:** i6 RecSys  
+**Target:** Growth Acceleration  
 
-**Target:** B2B, B2C
+**Overview:**  
+Campanhas falham quando o público é amplo demais ou baseado apenas em segmentações estáticas.
 
-**Title:** Segmentação Preditiva de Campanha
-
-**Overview:** Identifique e ative apenas os usuários com maior probabilidade de conversão antes mesmo da campanha começar. Reduza drasticamente o CAC e aumente efetividade de conversão com segmentação precisa.
+Identificamos os clientes com maior probabilidade de conversão antes da ativação, reduzindo CAC e aumentando a eficiência do investimento.
 
 **Key Features:**
-- Modelagem de Propensão
-- Pontuação de Probabilidade de Conversão
-- Refinamento de Audiência de Campanha
-- Estratégia de Ativação de Leads
+- Modelagem de propensão  
+- Score de probabilidade de conversão  
+- Refinamento inteligente de audiência  
+- Priorização estratégica de leads  
 
-**Business Results:** Maximize ROI segmentando e impactando o cliente certo, no momento certo e com o produto certo.
+**Business Impact:**  
+Maior taxa de conversão. Menor custo de aquisição. ROI de marketing maximizado.
 
 ---
 
-## Otimização Inteligente de Preços
+## Transforme Preço em Alavanca Estratégica de Crescimento
 
-**Engine:** i6 ElasticPrice
+**Engine:** i6 ElasticPrice  
+**Target:** Supply & Profitability Optimization  
 
-**Target:** B2B, B2C, B2B2C, D2C
+**Overview:**  
+Precificação reativa baseada apenas em regra ou concorrência compromete margem ou volume.
 
-**Title:** Otimização Inteligente de Preços
-
-**Overview:** Uma solução de precificação dinâmica que se adapta em tempo real à demanda, comportamento e ciclo de vida do produto. Maximize lucratividade sem perder competitividade.
+Ajustamos preços dinamicamente com base em comportamento, elasticidade e estágio do ciclo de vida do produto, equilibrando competitividade e rentabilidade.
 
 **Key Features:**
-- Precificação Baseada em Comportamento
-- Estratégia Consciente de Ciclo de Vida
-- Calibração de Sensibilidade de Preço
-- Engine de Otimização de Margem
+- Ajustes de preço orientados por comportamento  
+- Modelagem de elasticidade por segmento  
+- Estratégia de preço por ciclo de vida  
+- Otimização inteligente de margem  
 
-**Business Results:** Melhore margem, velocidade no ciclo de vendas e competitividade através de precificação inteligente orientada a comportamento.
+**Business Impact:**  
+Margem ampliada. Volume saudável. Maior competitividade de mercado.
 
 ---
 
-## Previsão Adaptativa de Demanda
+## Transforme Previsão de Demanda em Vantagem Competitiva
 
-**Engine:** i6 Previsio
+**Engine:** i6 Previsio  
+**Target:** Supply & Profitability Optimization  
 
-**Target:** B2B, B2C
+**Overview:**  
+Previsões tradicionais dependem excessivamente de médias históricas e falham em cenários voláteis.
 
-**Title:** Previsão Adaptativa de Demanda
-
-**Overview:** Preveja demanda com precisão e adaptabilidade. Nossos modelos auto-ajustáveis projetam vendas futuras baseado em tendências, sazonalidade e comportamentos, capacitando planejamento de supply chain e comercial.
+Utilizamos modelos adaptativos e autoaprendizes para antecipar mudanças de demanda, sazonalidade e tendências comportamentais, apoiando decisões mais inteligentes de produção, estoque e planejamento comercial.
 
 **Key Features:**
-- Modelo de Previsão Auto-Reforçante
-- Projeção Estendida (N+M)
-- Detecção de Sazonalidade e Tendências
-- Alinhamento de Estoque e Supply Chain
+- Modelo adaptativo auto-reforçado  
+- Projeções estendidas de demanda  
+- Detecção de tendências e sazonalidade  
+- Alinhamento entre estoque e supply chain  
 
-**Business Results:** Melhore o planejamento de demanda, orientando planos de produção e metas comerciais com precisão, garantindo agilidade em mercados que mudam rapidamente.
+**Business Impact:**  
+Maior acurácia de previsão. Redução de rupturas e excessos. Mais agilidade operacional.
+
+---
