@@ -28,7 +28,7 @@ const content = {
     emptyState: 'Qual insight preditivo vamos descobrir hoje?',
     scenarios: {
       supply: {
-        label: 'Supply',
+        label: 'Abastecimento',
         question: 'Quais SKUs estão em risco de ruptura nos próximos 3 meses?',
         title: 'Análise de Risco de Ruptura — Próximo Trimestre',
         analysis: 'A projeção de demanda vs capacidade de reposição para os próximos 90 dias indica 5 SKUs com probabilidade elevada de ruptura. O SKU 44210 (Dipirona 500mg) lidera o risco (94%) devido à sazonalidade de outono e lead time de 22 dias do fornecedor principal. O impacto acumulado estimado é de R$ 510.000 em receita no trimestre caso nenhuma ação preventiva seja tomada.',
@@ -54,7 +54,7 @@ const content = {
         ],
       },
       forecast: {
-        label: 'Forecast',
+        label: 'Previsão',
         question: 'Qual a sazonalidade e tendência do produto mais vendido para o último quarter?',
         title: 'Análise Mensal do Item Mais Vendido (ID: 28822)',
         analysis: 'O produto ID 28822 (Paracetamol 750mg) apresenta forte componente sazonal com pico em dezembro (+34% vs média). A tendência de longo prazo é de crescimento de 8,2% ao trimestre, impulsionada por expansão de cobertura em farmácias independentes. O modelo apresentou alta acurácia preditiva neste item, o que representa uma predição de alta confiabilidade para o planejamento comercial.',
@@ -76,7 +76,7 @@ const content = {
         ],
       },
       pricing: {
-        label: 'Pricing',
+        label: 'Precificação',
         question: 'Qual o preço ótimo para o Ibuprofeno 400mg nesta região?',
         title: 'Otimização de Preço — Ibuprofeno 400mg (Região Sudeste)',
         analysis: 'A análise de elasticidade-preço para o Ibuprofeno 400mg na Região Sudeste indica que o preço atual de R$ 18,90 está 7% acima do ponto ótimo. A redução para R$ 17,50 maximizaria a margem de contribuição total, com aumento estimado de 12% no volume e ganho líquido de R$ 43.000/mês na região.',
