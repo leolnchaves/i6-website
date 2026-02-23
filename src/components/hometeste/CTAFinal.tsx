@@ -6,11 +6,13 @@ const CTAFinal = () => {
 
   const copy = {
     pt: {
-      line: 'Seus dados já têm as respostas.\nSó falta movimento.',
+      lineStart: 'Seus dados já têm as respostas.\nSó falta ',
+      lineHighlight: 'movimento.',
       cta: 'Movimente seus dados',
     },
     en: {
-      line: 'Your data already has the answers.\nAll it needs is movement.',
+      lineStart: 'Your data already has the answers.\nAll it needs is ',
+      lineHighlight: 'movement.',
       cta: 'Move your data',
     },
   }[language];
@@ -19,7 +21,7 @@ const CTAFinal = () => {
     <section className="relative py-14 md:py-20 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
         <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug whitespace-pre-line">
-          {copy.line}
+          {copy.lineStart}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
         </p>
         <Link
           to="/contact"
