@@ -130,15 +130,10 @@ const SinaisSection = () => {
           </div>
         </div>
 
-        {/* Vertical connector line */}
-        <div className="flex justify-end pr-[30%] lg:pr-[35%] mb-0">
-          <div className="w-px h-10 bg-gradient-to-b from-[#F4845F]/40 to-[#F4845F]/10" />
-        </div>
-
         {/* Two-column: Capabilities + GIF with popups */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-10 items-stretch">
           {/* Left: Capabilities */}
-          <div className="flex flex-col justify-between order-2 lg:order-1">
+          <div className="flex flex-col justify-between pt-10 order-2 lg:order-1">
             {copy.capabilities.map((text, i) => {
               const Icon = capabilityIcons[i];
               return (
@@ -155,6 +150,9 @@ const SinaisSection = () => {
 
           {/* Right: GIF + Popups */}
           <div className="relative flex flex-col items-center justify-start overflow-hidden lg:overflow-visible order-1 lg:order-2">
+            {/* Vertical connector line */}
+            <div className="w-px h-10 bg-gradient-to-b from-[#F4845F]/40 to-[#F4845F]/10" />
+
             {/* Glow behind GIF */}
             <div className="absolute inset-0 bg-[#F4845F]/5 rounded-2xl blur-3xl scale-110" />
 
