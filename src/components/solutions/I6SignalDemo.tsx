@@ -1,5 +1,6 @@
 import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import avatarRicardo from '@/assets/images/avatar-ricardo.jpg';
 import {
   Home, Database, Brain, LayoutGrid, Send, ChevronRight, ChevronDown,
   Heart, BookOpen, RotateCcw, Settings, BarChart3, Upload, Target,
@@ -487,9 +488,7 @@ const I6SignalDemo = memo(() => {
                 <p className="text-white text-xs font-medium">Ricardo Mendes</p>
                 <p className="text-white/50 text-[10px]">ricardo@alphatek.com.br</p>
               </div>
-              <div className="h-9 w-9 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 ring-2 ring-white/40 flex items-center justify-center text-white text-xs font-bold">
-                RM
-              </div>
+              <img src={avatarRicardo} alt="Ricardo Mendes" className="h-9 w-9 rounded-full ring-2 ring-white/40 object-cover" />
             </div>
           </div>
 
