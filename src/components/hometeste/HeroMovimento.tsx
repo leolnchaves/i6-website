@@ -29,7 +29,7 @@ const HeroMovimento = () => {
           {copy.title}
         </h1>
         <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
-          Data moves. <span className="drop-shadow-[0_0_20px_rgba(244,132,95,0.7)] text-shadow-[0_0_30px_rgba(244,132,95,0.6)]" style={{ textShadow: '0 0 20px rgba(244,132,95,0.6), 0 0 40px rgba(244,132,95,0.3)' }}>You Grow.</span>
+          Data moves. <span className="drop-shadow-[0_0_30px_rgba(244,132,95,0.8)]" style={{ textShadow: '0 0 30px rgba(244,132,95,0.8), 0 0 60px rgba(244,132,95,0.5), 0 0 90px rgba(244,132,95,0.3)' }}>You Grow.</span>
         </p>
         <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
           {copy.desc}
