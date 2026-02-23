@@ -18,7 +18,7 @@ const RESPONSE_DELAY = 600;
 
 const content = {
   pt: {
-    sectionTitle: 'Veja o i6Signal em ação',
+    sectionTitle: 'i6Signal - Inteligência de Movimento em Ação',
     sectionSubtitle: 'Explore como a inteligência preditiva do i6Signal entrega insights acionáveis em tempo real',
     placeholder: 'Digite sua pergunta...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
@@ -145,7 +145,7 @@ const content = {
     },
   },
   en: {
-    sectionTitle: 'See i6Signal in action',
+    sectionTitle: 'i6Signal - Movement Intelligence in Action',
     sectionSubtitle: 'Explore how i6Signal\'s predictive intelligence delivers actionable insights in real time.',
     placeholder: 'Type your question...',
     sidebar: ['Home', 'Ingestion Tokens', 'Recsys Tokens', 'Data Ingestion', 'i6 Signal', 'Widgets'],
