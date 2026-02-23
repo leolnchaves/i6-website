@@ -1,39 +1,43 @@
 
 
-# Mostrar pergunta completa no board de respostas (sem typing)
+# Tornar o indicador de scroll mais visivel no i6Signal
 
-## Problema
-Quando o sistema simula o clique, a pergunta aparece caractere a caractere no board de respostas (chat). O typing deveria acontecer apenas no campo de input.
+## O que muda
 
-## Mudancas no arquivo `src/components/solutions/I6SignalDemo.tsx`
+Substituir o pequeno icone de scroll (bolinha + texto "scroll") por um box mais aparente com texto descritivo, posicionado no canto superior direito da area de chat.
 
-### 1. Alterar `startAnimation` (linhas 427-433)
-Ao iniciar a animacao, definir `typedText` com a pergunta completa em vez de string vazia:
+## Mudanca no arquivo `src/components/solutions/I6SignalDemo.tsx`
+
+### Substituir o indicador atual (linhas 648-658)
+
+Trocar o indicador minimalista por um box com fundo, borda, icone de seta e texto bilíngue:
+
+```tsx
+{showScrollHint && (
+  <div 
+    className="absolute top-3 right-4 z-20 cursor-pointer animate-fade-in"
+    onClick={() => chatRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+  >
+    <div className="flex items-center gap-2 bg-orange-50 border border-orange-300 rounded-lg px-3 py-2 shadow-md">
+      <ChevronUp className="w-4 h-4 text-orange-500 animate-bounce" />
+      <span className="text-orange-600 text-xs font-medium">
+        {lang === 'pt' ? 'Navegue pelo conteúdo' : 'Scroll through content'}
+      </span>
+    </div>
+  </div>
+)}
 ```
-setTypedText(t.scenarios[sc].question)  // antes: setTypedText('')
-```
-Adicionar `t.scenarios` como dependencia do useCallback.
 
-### 2. Simplificar o useEffect de typing (linhas 435-451)
-Remover a logica de digitacao caractere a caractere no chat board. O useEffect agora apenas aguarda `RESPONSE_DELAY` e transiciona para `phase: 'responding'`:
-```
-useEffect(() => {
-  if (phase !== 'typing') return;
-  const timer = setTimeout(() => {
-    setPhase('responding');
-    setShowResponse(true);
-  }, RESPONSE_DELAY);
-  return () => clearTimeout(timer);
-}, [phase]);
-```
+O box tera:
+- Fundo laranja claro (`bg-orange-50`) com borda laranja (`border-orange-300`)
+- Icone `ChevronUp` animado com bounce
+- Texto descritivo em portugues ou ingles conforme o idioma ativo
+- Sombra para destaque visual
+- Clique leva ao topo da resposta
 
-### 3. Remover cursor piscante (linha 681)
-Remover o `<span>` com `animate-pulse` e cursor `|` da mensagem do usuario no chat, ja que nao ha mais digitacao no board.
+### Verificar import do ChevronUp
+Confirmar que `ChevronUp` ja esta importado do `lucide-react`. Se nao estiver, adicionar ao import existente.
 
-### Resultado
-1. Usuario clica no botao de cenario (ex: Forecast)
-2. Texto digita caractere a caractere no campo de input (parte inferior)
-3. Botao Send anima
-4. Pergunta aparece **completa** e de uma vez no board de respostas
-5. Loading dots, depois resposta do assistente
+## Resultado
+O usuario vera um box claro e legivel no canto superior direito com o texto "Navegue pelo conteúdo" (ou "Scroll through content" em ingles), tornando evidente que pode rolar para cima.
 
