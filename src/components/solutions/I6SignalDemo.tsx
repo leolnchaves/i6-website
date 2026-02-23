@@ -6,7 +6,7 @@ import {
   Heart, BookOpen, RotateCcw, Settings, BarChart3, Upload, Target,
   Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
 } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv';
 type Phase = 'idle' | 'typing' | 'responding';
@@ -105,11 +105,11 @@ const content = {
         question: 'Onde devo focar o esforço comercial este mês?',
         title: 'Priorização Comercial — Fevereiro 2026',
         analysis: 'A análise de potencial vs performance identificou 8 territórios com gap significativo de receita. Os 3 territórios prioritários concentram 62% do gap total (R$ 890k), com alta probabilidade de conversão baseada no histórico de resposta a ações comerciais similares.',
-        ranking: [
-          { rank: 1, territory: 'Grande BH', gap: 'R$ 234k', score: 94, potential: 'R$ 1.2M' },
-          { rank: 2, territory: 'Campinas', gap: 'R$ 198k', score: 89, potential: 'R$ 890k' },
-          { rank: 3, territory: 'Curitiba', gap: 'R$ 167k', score: 85, potential: 'R$ 760k' },
-          { rank: 4, territory: 'Porto Alegre', gap: 'R$ 145k', score: 78, potential: 'R$ 680k' },
+        comercialChart: [
+          { territory: 'Grande BH', gap: 234, potential: 1200, score: 94 },
+          { territory: 'Campinas', gap: 198, potential: 890, score: 89 },
+          { territory: 'Curitiba', gap: 167, potential: 760, score: 85 },
+          { territory: 'P. Alegre', gap: 145, potential: 680, score: 78 },
         ],
         actions: [
           { bold: 'Alocar 2 representantes adicionais', text: 'para Grande BH, focando nos 15 PDVs com maior gap individual.' },
@@ -260,11 +260,11 @@ const content = {
         question: 'Where should I focus commercial efforts this month?',
         title: 'Commercial Prioritization — February 2026',
         analysis: 'Potential vs performance analysis identified 8 territories with significant revenue gaps. The top 3 priority territories concentrate 62% of the total gap ($178k), with high conversion probability based on historical response to similar commercial actions.',
-        ranking: [
-          { rank: 1, territory: 'Metro BH', gap: '$47k', score: 94, potential: '$240k' },
-          { rank: 2, territory: 'Campinas', gap: '$40k', score: 89, potential: '$178k' },
-          { rank: 3, territory: 'Curitiba', gap: '$33k', score: 85, potential: '$152k' },
-          { rank: 4, territory: 'Porto Alegre', gap: '$29k', score: 78, potential: '$136k' },
+        comercialChart: [
+          { territory: 'Metro BH', gap: 47, potential: 240, score: 94 },
+          { territory: 'Campinas', gap: 40, potential: 178, score: 89 },
+          { territory: 'Curitiba', gap: 33, potential: 152, score: 85 },
+          { territory: 'P. Alegre', gap: 29, potential: 136, score: 78 },
         ],
         actions: [
           { bold: 'Allocate 2 additional reps', text: 'to Metro BH, focusing on the 15 POS with the largest individual gap.' },
@@ -379,25 +379,30 @@ const ForecastChart = ({ data, note, lang }: { data: { month: string; seasonalit
 
 
 
-const ComercialRanking = ({ ranking }: { ranking: { rank: number; territory: string; gap: string; score: number; potential: string }[] }) => (
-  <div className="space-y-2 my-4">
-    {ranking.map((r) => (
-      <div key={r.rank} className="flex items-center gap-3 bg-gray-50 rounded-lg p-3 border border-gray-200">
-        <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center font-bold text-sm flex-shrink-0">
-          {r.rank}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-gray-800 font-medium text-sm">{r.territory}</p>
-          <p className="text-gray-400 text-xs">Gap: {r.gap} · Potential: {r.potential}</p>
-        </div>
-        <div className="text-right flex-shrink-0">
-          <div className="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-orange-500 rounded-full" style={{ width: `${r.score}%` }} />
-          </div>
-          <p className="text-gray-400 text-[10px] mt-0.5">{r.score}/100</p>
-        </div>
-      </div>
-    ))}
+const ComercialChart = ({ data, lang }: { data: { territory: string; gap: number; potential: number; score: number }[]; lang: string }) => (
+  <div className="my-4">
+    <div className="h-[220px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <ComposedChart data={data} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+          <XAxis dataKey="territory" stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 11, fill: '#6b7280' }} />
+          <YAxis yAxisId="left" stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} tickFormatter={(v) => `${v}k`} />
+          <YAxis yAxisId="right" orientation="right" domain={[0, 100]} stroke="rgba(0,0,0,0.2)" tick={{ fontSize: 12, fill: '#6b7280' }} />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+            labelStyle={{ color: '#6b7280' }}
+            formatter={(value: number, name: string) => {
+              if (name === 'Score') return [value, name];
+              return [`${value}k`, name];
+            }}
+          />
+          <Legend wrapperStyle={{ color: '#6b7280', fontSize: '12px' }} />
+          <Bar yAxisId="left" dataKey="gap" name="Gap" fill="#f97316" radius={[4, 4, 0, 0]} barSize={28} />
+          <Bar yAxisId="left" dataKey="potential" name={lang === 'pt' ? 'Potencial' : 'Potential'} fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={28} />
+          <Line yAxisId="right" type="monotone" dataKey="score" name="Score" stroke="#10b981" strokeWidth={2.5} dot={{ r: 4, fill: '#10b981' }} />
+        </ComposedChart>
+      </ResponsiveContainer>
+    </div>
   </div>
 );
 
@@ -795,8 +800,8 @@ const I6SignalDemo = memo(() => {
                         {activeScenario === 'pricing' && 'table' in scenario && (
                           <SupplyTable data={(scenario as typeof t.scenarios.pricing).table} />
                         )}
-                        {activeScenario === 'comercial' && 'ranking' in scenario && (
-                          <ComercialRanking ranking={(scenario as typeof t.scenarios.comercial).ranking} />
+                        {activeScenario === 'comercial' && 'comercialChart' in scenario && (
+                          <ComercialChart data={(scenario as typeof t.scenarios.comercial).comercialChart} lang={lang} />
                         )}
                         {activeScenario === 'mix' && 'comparison' in scenario && (
                           <MixComparison comparison={(scenario as typeof t.scenarios.mix).comparison} />
