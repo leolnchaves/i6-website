@@ -10,7 +10,7 @@ const EthicsPolicy = () => {
     en: {
       title: "Ethics Policy",
       subtitle: "Our commitment to ethical AI and responsible business practices.",
-      lastUpdated: "Last updated: December 2024",
+      lastUpdated: "Last updated: January 2025",
       sections: {
         foundation: {
           title: "1. Our Ethical Foundation",
@@ -127,7 +127,7 @@ const EthicsPolicy = () => {
     pt: {
       title: "Política de Ética",
       subtitle: "Nosso compromisso com IA ética e práticas comerciais responsáveis.",
-      lastUpdated: "Última atualização: Dezembro 2024",
+      lastUpdated: "Última atualização: Janeiro 2025",
       sections: {
         foundation: {
           title: "1. Nossa Base Ética",

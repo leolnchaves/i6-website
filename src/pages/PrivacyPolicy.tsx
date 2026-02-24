@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
     en: {
       title: "Privacy Policy",
       subtitle: "Your privacy is our priority. Learn how we protect and handle your data.",
-      lastUpdated: "Last updated: December 2024",
+      lastUpdated: "Last updated: January 2025",
       sections: {
         introduction: {
           title: "1. Introduction",
@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
     pt: {
       title: "Política de Privacidade",
       subtitle: "Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.",
-      lastUpdated: "Última atualização: Dezembro 2024",
+      lastUpdated: "Última atualização: Janeiro 2025",
       sections: {
         introduction: {
           title: "1. Introdução",
