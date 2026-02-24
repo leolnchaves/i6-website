@@ -300,7 +300,7 @@ const EthicsPolicy = () => {
               <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
               <p className="text-white/70 mb-4">{currentContent.sections.contact.text}</p>
               <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.officer}</strong></p>
+                
                 <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
                 
                 
