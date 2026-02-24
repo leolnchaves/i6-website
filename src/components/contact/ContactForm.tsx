@@ -191,16 +191,15 @@ const ContactForm = memo(() => {
               </select>
             </div>
 
-            <div>
+            <div className="flex-1 flex flex-col">
               <Label htmlFor="message" className="text-sm font-medium text-white/70 mb-2 block">
                 {text.message} * <span className="text-xs text-white/40 font-normal">{text.messageMinChar}</span>
               </Label>
               <Textarea
                 id="message"
-                rows={6}
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
-                className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none ${
+                className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 min-h-[120px] ${
                   errors.message ? 'border-red-500' : 'border-white/10'
                 }`}
               />
