@@ -10,13 +10,13 @@ const ContactHero = memo(() => {
       title: "Hora de Colocar",
       subtitle: "Dados em ",
       highlight: "Movimento",
-      description: "Converse com nossos especialistas e descubra onde decisões preditivas podem gerar impacto imediato."
+      description: "Converse com nossos especialistas e descubra onde\ndecisões preditivas podem gerar impacto imediato."
     },
     en: {
       title: "Time to Put",
       subtitle: "Data in ",
       highlight: "Movement",
-      description: "Talk to our specialists and discover where predictive decisions can drive immediate impact."
+      description: "Talk to our specialists and discover where\npredictive decisions can drive immediate impact."
     }
   }), []);
 
@@ -40,7 +40,7 @@ const ContactHero = memo(() => {
               </span>
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-white/60 mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg text-white/60 mb-8 leading-relaxed whitespace-pre-line">
             {text.description}
           </p>
         </div>
