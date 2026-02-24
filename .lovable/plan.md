@@ -1,22 +1,38 @@
 
-# Centralizar logo verticalmente no modal de case
+# Adicionar fundo laranja suave no hero das paginas de Politica de Privacidade e Etica
 
-## Problema
-A logo da empresa no header do modal de detalhes do case esta alinhada ao topo do espaco, em vez de ficar centralizada verticalmente.
+## Objetivo
+Destacar a area do titulo, subtitulo e data de ultima atualizacao com um fundo laranja suave, separando visualmente essa secao do restante do conteudo nas paginas de Politica de Privacidade e Politica de Etica.
 
-## Mudanca
+## Mudancas
 
-### `src/components/success-stories/story-components/StoryModal.tsx`
-- Na div que envolve a logo (linha 96), adicionar `self-center` para centralizar verticalmente dentro do flex container.
+### 1. `src/pages/PrivacyPolicy.tsx` (linha 209)
+Trocar o fundo da secao hero de `bg-[#0B1224]` para um gradiente laranja suave:
 
 Antes:
 ```html
-<div className="flex-shrink-0 mr-8">
+<section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-[#0B1224]">
 ```
 
 Depois:
 ```html
-<div className="flex-shrink-0 mr-8 self-center">
+<section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]">
 ```
 
-Apenas uma classe CSS adicionada, sem outras alteracoes.
+Isso cria um fundo laranja sutil (15% de opacidade) que faz transicao suave para o fundo escuro padrao.
+
+### 2. `src/pages/EthicsPolicy.tsx` (linha 277)
+Mesma alteracao aplicada na secao hero:
+
+Antes:
+```html
+<section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-[#0B1224]">
+```
+
+Depois:
+```html
+<section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]">
+```
+
+## Resultado
+Ambas as paginas terao um destaque laranja suave na area do titulo que transiciona naturalmente para o fundo escuro do conteudo, mantendo a identidade visual do site.
