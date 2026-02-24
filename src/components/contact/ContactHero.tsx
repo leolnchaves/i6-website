@@ -7,13 +7,13 @@ const ContactHero = memo(() => {
   
   const content = useMemo(() => ({
     pt: {
-      title: "Vamos Colocar Seus",
-      subtitle: "Dados em Movimento",
+      title: "Vamos Colocar Dados em",
+      subtitle: "Movimento",
       description: "Descubra onde decisões preditivas podem gerar impacto real no seu negócio."
     },
     en: {
-      title: "Let's Put Your",
-      subtitle: "Data in Movement",
+      title: "Let's Put Data in",
+      subtitle: "Movement",
       description: "Discover where predictive decisions can drive real impact in your business."
     }
   }), []);
