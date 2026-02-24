@@ -74,7 +74,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
       buttonText: "Comece Hoje"
     },
     testimonials: {
-      title: "O Que Nossos Clientes Dizem",
+      title: "Confiança Construída em Resultado",
       subtitle: "Vozes reais. Resultados confiáveis. A força da IA especialista."
     }
   }
