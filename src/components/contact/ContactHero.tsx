@@ -13,9 +13,9 @@ const ContactHero = memo(() => {
       description: "Fale conosco e compartilhe seu objetivo ou desafio estratégico."
     },
     en: {
-      title: "Time to Put",
+      title: "Time to Set",
       subtitle: "Data in ",
-      highlight: "Movement",
+      highlight: "Motion",
       description: "Talk to us and share your strategic goal or challenge."
     }
   }), []);
