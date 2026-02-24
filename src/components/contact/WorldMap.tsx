@@ -94,7 +94,7 @@ const WorldMap = memo(() => {
                     style={{ top: location.position.top, left: location.position.left }}
                     onClick={() => handleLocationClick(location.id)}
                   >
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 p-2 min-w-[90px] sm:min-w-[110px]">
+                    <div className="bg-[#0B1224]/90 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 p-2 min-w-[90px] sm:min-w-[110px]">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-sm">{location.flag}</span>
                         <div className="text-left">
