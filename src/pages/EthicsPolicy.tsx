@@ -1,6 +1,5 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import heroBg from '@/assets/images/hero-bg.jpg';
 import SEOHead from '@/components/common/SEOHead';
 
 const EthicsPolicy = () => {
@@ -246,194 +245,95 @@ const EthicsPolicy = () => {
 
   const currentContent = content[language];
 
+  const renderSection = (title: string, text: string, items?: string[]) => (
+    <section className="border-b border-white/10 pb-8">
+      <h2 className="text-2xl font-bold text-white mb-4">{title}</h2>
+      <p className="text-white/70 mb-4">{text}</p>
+      {items && (
+        <ul className="list-disc list-inside text-white/70 space-y-1 marker:text-[#F4845F]">
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+
+  const renderSubSection = (title: string, text: string, items: string[]) => (
+    <>
+      <h3 className="text-lg font-semibold text-white/80 mb-2">{title}</h3>
+      <p className="text-white/70 mb-4">{text}</p>
+      <ul className="list-disc list-inside text-white/70 mb-6 space-y-1 marker:text-[#F4845F]">
+        {items.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+    </>
+  );
+
   return (
     <div className="relative overflow-hidden">
       <SEOHead page="ethicsPolicy" />
-      {/* Hero-inspired header section */}
-      <section className="w-full min-h-[35vh] flex items-center justify-center relative overflow-hidden">
-        {/* Background image with blur */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: `url(${heroBg})`,
-            filter: 'blur(10px)'
-          }}
-        ></div>
-        
-        {/* Minimal grid pattern overlay */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:40px_40px] opacity-30"></div>
-        </div>
-        
-        {/* Darker overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 mix-blend-multiply"></div>
-        
+      
+      {/* Hero */}
+      <section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-[#0B1224]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto text-white">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
-              <span className="block mb-2">{currentContent.title}</span>
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight">
+              {currentContent.title}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-4 drop-shadow-lg leading-relaxed">
+            <p className="text-base sm:text-lg text-white/60 mb-2 leading-relaxed">
               {currentContent.subtitle}
             </p>
-            <p className="text-sm text-gray-300 drop-shadow-sm">
+            <p className="text-sm text-white/40">
               {currentContent.lastUpdated}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Content section */}
-      <div className="bg-white relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg max-w-none scroll-reveal space-y-8">
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.foundation.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.foundation.text}
-                </p>
-              </section>
+      {/* Content */}
+      <div className="relative bg-[#0B1224]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {renderSection(currentContent.sections.foundation.title, currentContent.sections.foundation.text)}
 
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.development.title}</h2>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.development.fairnessTitle}</h3>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.development.fairnessText}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.development.fairnessItems.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+            <section className="border-b border-white/10 pb-8">
+              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.development.title}</h2>
+              {renderSubSection(currentContent.sections.development.fairnessTitle, currentContent.sections.development.fairnessText, currentContent.sections.development.fairnessItems)}
+              {renderSubSection(currentContent.sections.development.transparencyTitle, currentContent.sections.development.transparencyText, currentContent.sections.development.transparencyItems)}
+            </section>
 
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.development.transparencyTitle}</h3>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.development.transparencyText}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.development.transparencyItems.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
+            <section className="border-b border-white/10 pb-8">
+              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.data.title}</h2>
+              {renderSubSection(currentContent.sections.data.minimizationTitle, currentContent.sections.data.minimizationText, currentContent.sections.data.minimizationItems)}
+              {renderSubSection(currentContent.sections.data.privacyTitle, currentContent.sections.data.privacyText, currentContent.sections.data.privacyItems)}
+            </section>
 
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.data.title}</h2>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.data.minimizationTitle}</h3>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.data.minimizationText}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.data.minimizationItems.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+            {renderSection(currentContent.sections.human.title, currentContent.sections.human.text, currentContent.sections.human.items)}
+            {renderSection(currentContent.sections.environmental.title, currentContent.sections.environmental.text, currentContent.sections.environmental.items)}
+            {renderSection(currentContent.sections.stakeholder.title, currentContent.sections.stakeholder.text, currentContent.sections.stakeholder.items)}
+            {renderSection(currentContent.sections.improvement.title, currentContent.sections.improvement.text, currentContent.sections.improvement.items)}
+            {renderSection(currentContent.sections.compliance.title, currentContent.sections.compliance.text, currentContent.sections.compliance.items)}
 
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{currentContent.sections.data.privacyTitle}</h3>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.data.privacyText}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.data.privacyItems.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
+            <section className="border-b border-white/10 pb-8">
+              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.reporting.title}</h2>
+              <p className="text-white/70 mb-4">{currentContent.sections.reporting.text}</p>
+              <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
+                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.reporting.hotline}</strong> {currentContent.sections.reporting.hotlineText}</p>
+                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.reporting.email}</strong> ethics@infinity6.ai</p>
+                <p className="text-white/70"><strong className="text-white">{currentContent.sections.reporting.report}</strong> {currentContent.sections.reporting.reportText}</p>
+              </div>
+            </section>
 
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.human.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.human.text}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.human.items.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.environmental.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.environmental.text}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.environmental.items.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.stakeholder.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.stakeholder.text}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.stakeholder.items.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.improvement.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.improvement.text}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.improvement.items.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.compliance.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.compliance.text}
-                </p>
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
-                  {currentContent.sections.compliance.items.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.reporting.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.reporting.text}
-                </p>
-                <div className="bg-gray-50 p-6 rounded-lg mb-4">
-                  <p className="text-gray-700 mb-2">
-                    <strong>{currentContent.sections.reporting.hotline}</strong> {currentContent.sections.reporting.hotlineText}
-                  </p>
-                  <p className="text-gray-700 mb-2">
-                    <strong>{currentContent.sections.reporting.email}</strong> ethics@infinity6.ai
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>{currentContent.sections.reporting.report}</strong> {currentContent.sections.reporting.reportText}
-                  </p>
-                </div>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentContent.sections.contact.title}</h2>
-                <p className="text-gray-700 mb-4">
-                  {currentContent.sections.contact.text}
-                </p>
-                <div className="bg-orange-50 p-6 rounded-lg">
-                  <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.officer}</strong></p>
-                  <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
-                  <p className="text-gray-700 mb-2"><strong>{currentContent.sections.contact.phone}</strong> +55 (19) 99819-7775</p>
-                  <p className="text-gray-700">
-                    <strong>{currentContent.sections.contact.address}</strong> {currentContent.sections.contact.company}
-                  </p>
-                </div>
-              </section>
-            </div>
+            <section>
+              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
+              <p className="text-white/70 mb-4">{currentContent.sections.contact.text}</p>
+              <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
+                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.officer}</strong></p>
+                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
+                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.phone}</strong> +55 (19) 99819-7775</p>
+                <p className="text-white/70"><strong className="text-white">{currentContent.sections.contact.address}</strong> {currentContent.sections.contact.company}</p>
+              </div>
+            </section>
           </div>
         </div>
       </div>

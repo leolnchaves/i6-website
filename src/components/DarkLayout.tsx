@@ -6,11 +6,11 @@ import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
 const DarkLayout = () => {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const hideWaves = ['/', '/privacy-policy', '/ethics-policy'].includes(location.pathname);
 
   return (
   <div className="min-h-screen bg-[#0B1224] relative">
-    {!isHome && <VerticalWaves />}
+    {!hideWaves && <VerticalWaves />}
     <div className="relative">
       <div className="relative z-[20]">
         <HeaderNovo />
