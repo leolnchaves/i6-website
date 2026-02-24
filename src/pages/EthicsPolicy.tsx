@@ -14,7 +14,7 @@ const EthicsPolicy = () => {
       sections: {
         foundation: {
           title: "1. Our Ethical Foundation",
-          text: "At Infinity6, we believe that artificial intelligence should serve humanity's best interests. Our commitment to ethical AI development guides every aspect of our work, from research and development to deployment and ongoing maintenance of our solutions."
+          text: "At infinity6, we believe that artificial intelligence should serve humanity's best interests. Our commitment to ethical AI development guides every aspect of our work, from research and development to deployment and ongoing maintenance of our solutions."
         },
         development: {
           title: "2. Responsible AI Development",
@@ -111,7 +111,7 @@ const EthicsPolicy = () => {
           email: "Email:",
           phone: "Phone:",
           address: "Address:",
-          company: "Infinity6 AI Solutions, Ethics Department"
+          company: "infinity6 AI Solutions, Ethics Department"
         }
       }
     },
@@ -122,7 +122,7 @@ const EthicsPolicy = () => {
       sections: {
         foundation: {
           title: "1. Nossa Base Ética",
-          text: "Na Infinity6, acreditamos que a inteligência artificial deve servir aos melhores interesses da humanidade. Nosso compromisso com o desenvolvimento ético de IA orienta todos os aspectos do nosso trabalho, desde pesquisa e desenvolvimento até implantação e manutenção contínua de nossas soluções."
+          text: "Na infinity6, acreditamos que a inteligência artificial deve servir aos melhores interesses da humanidade. Nosso compromisso com o desenvolvimento ético de IA orienta todos os aspectos do nosso trabalho, desde pesquisa e desenvolvimento até implantação e manutenção contínua de nossas soluções."
         },
         development: {
           title: "2. Desenvolvimento Responsável de IA",
@@ -219,7 +219,7 @@ const EthicsPolicy = () => {
           email: "Email:",
           phone: "Telefone:",
           address: "Endereço:",
-          company: "Infinity6 AI Solutions, Departamento de Ética"
+          company: "infinity6 AI Solutions, Departamento de Ética"
         }
       }
     }

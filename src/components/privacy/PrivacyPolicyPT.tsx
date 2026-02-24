@@ -29,7 +29,7 @@ const PrivacyPolicyPT = () => {
       <section className="border-b border-white/10 pb-8">
         <h2 className="text-2xl font-bold text-white mb-4">1. Introdução</h2>
         <p className="text-white/70 mb-4">
-          A Infinity6 é uma plataforma de inteligência de dados escalável, desenvolvida para acelerar resultados e ampliar o sucesso em larga escala. Nossa prioridade é garantir a confidencialidade, integridade, disponibilidade e transparência no tratamento das informações, alinhando-nos às melhores práticas internacionais (ISO/IEC 42001) e ao marco regulatório europeu para Inteligência Artificial (AI Act).
+          A infinity6 é uma plataforma de inteligência de dados escalável, desenvolvida para acelerar resultados e ampliar o sucesso em larga escala. Nossa prioridade é garantir a confidencialidade, integridade, disponibilidade e transparência no tratamento das informações, alinhando-nos às melhores práticas internacionais (ISO/IEC 42001) e ao marco regulatório europeu para Inteligência Artificial (AI Act).
         </p>
         <p className="text-white/70">
           Esta Política de Privacidade descreve como protegemos os dados de nossos clientes, usuários e parceiros, assegurando conformidade legal, técnica e ética, além de introduzir um modelo de classificação de confidencialidade de ativos e informações.
@@ -40,7 +40,7 @@ const PrivacyPolicyPT = () => {
       <section className="border-b border-white/10 pb-8">
         <h2 className="text-2xl font-bold text-white mb-4">2. Princípios de Proteção de Dados</h2>
         <p className="text-white/70 mb-4">
-          A Infinity6 adota os seguintes princípios, em conformidade com a ISO/IEC 42001 e a Lei de IA da UE:
+          A infinity6 adota os seguintes princípios, em conformidade com a ISO/IEC 42001 e a Lei de IA da UE:
         </p>
         {renderBoldItems([
           { title: "Minimização de Dados", desc: "trabalhamos apenas com informações estritamente necessárias." },
@@ -56,7 +56,7 @@ const PrivacyPolicyPT = () => {
       <section className="border-b border-white/10 pb-8">
         <h2 className="text-2xl font-bold text-white mb-4">3. Classificação de Confidencialidade</h2>
         <p className="text-white/70 mb-6">
-          Todas as informações e ativos da Infinity6 são categorizados em quatro níveis de confidencialidade:
+          Todas as informações e ativos da infinity6 são categorizados em quatro níveis de confidencialidade:
         </p>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
@@ -75,7 +75,7 @@ const PrivacyPolicyPT = () => {
               </tr>
               <tr>
                 <td className="border border-white/10 px-4 py-3 text-white font-medium">Interna</td>
-                <td className="border border-white/10 px-4 py-3 text-white/70">Informações restritas ao uso dentro da Infinity6</td>
+                <td className="border border-white/10 px-4 py-3 text-white/70">Informações restritas ao uso dentro da infinity6</td>
                 <td className="border border-white/10 px-4 py-3 text-white/70">Procedimentos internos não sensíveis</td>
               </tr>
               <tr className="bg-white/5">
@@ -95,7 +95,7 @@ const PrivacyPolicyPT = () => {
 
       {/* 4. Dados Tratados */}
       <section className="border-b border-white/10 pb-8">
-        <h2 className="text-2xl font-bold text-white mb-4">4. Dados Tratados pela Infinity6</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">4. Dados Tratados pela infinity6</h2>
 
         <h3 className="text-lg font-semibold text-white/80 mb-3">4.1 Dados de Clientes</h3>
         <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 marker:text-[#F4845F]">
@@ -104,7 +104,7 @@ const PrivacyPolicyPT = () => {
           <li><strong className="text-white">Classificação de confidencialidade:</strong> Confidencial</li>
         </ul>
 
-        <h3 className="text-lg font-semibold text-white/80 mb-3">4.2 Dados Internos da Infinity6</h3>
+        <h3 className="text-lg font-semibold text-white/80 mb-3">4.2 Dados Internos da infinity6</h3>
         <ul className="list-disc list-inside text-white/70 space-y-2 marker:text-[#F4845F]">
           <li><strong className="text-white">Ativos de desenvolvimento:</strong> código, algoritmos, modelos e pipelines de dados.</li>
           <li><strong className="text-white">Classificação:</strong> Sigilosa</li>
@@ -170,7 +170,7 @@ const PrivacyPolicyPT = () => {
         "9. Confidencialidade e Propriedade Intelectual",
         "",
         [
-          "Todos os desenvolvimentos tecnológicos são Sigilosos e propriedade exclusiva da Infinity6.",
+          "Todos os desenvolvimentos tecnológicos são Sigilosos e propriedade exclusiva da infinity6.",
           "Nenhum ativo de desenvolvimento é compartilhado com terceiros.",
           "Todos os documentos internos são Confidenciais, protegidos contra divulgação não autorizada.",
         ]
@@ -180,7 +180,7 @@ const PrivacyPolicyPT = () => {
       <section className="border-b border-white/10 pb-8">
         <h2 className="text-2xl font-bold text-white mb-4">10. Atualizações da Política</h2>
         <p className="text-white/70">
-          A Infinity6 poderá atualizar esta Política para refletir melhorias em processos, mudanças regulatórias ou evolução tecnológica, comunicando tais alterações de forma clara e transparente.
+          A infinity6 poderá atualizar esta Política para refletir melhorias em processos, mudanças regulatórias ou evolução tecnológica, comunicando tais alterações de forma clara e transparente.
         </p>
       </section>
 
@@ -196,7 +196,7 @@ const PrivacyPolicyPT = () => {
           </p>
         </div>
         <p className="text-white/70 flex items-center gap-2">
-          🔒 A Infinity6 reafirma seu compromisso com a confiança, segurança e ética no uso de dados e inteligência artificial.
+          🔒 A infinity6 reafirma seu compromisso com a confiança, segurança e ética no uso de dados e inteligência artificial.
         </p>
       </section>
     </div>

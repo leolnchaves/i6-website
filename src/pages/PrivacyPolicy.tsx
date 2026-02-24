@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
   const enSections = {
     introduction: {
       title: "1. Introduction",
-      text: "At Infinity6 (\"we,\" \"our,\" or \"us\"), we are committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services."
+      text: "At infinity6 (\"we,\" \"our,\" or \"us\"), we are committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services."
     },
     information: {
       title: "2. Information We Collect",
@@ -102,7 +102,7 @@ const PrivacyPolicy = () => {
       text: "If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us:",
       email: "Email:",
       address: "Address:",
-      company: "Infinity6 AI Solutions",
+      company: "infinity6 AI Solutions",
       dpo: "Data Protection Officer"
     }
   };
