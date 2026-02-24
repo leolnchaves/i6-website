@@ -12,7 +12,7 @@ const SolutionsHero = memo(() => {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto text-white">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight">
             <span className="block mb-2 whitespace-nowrap">
               {heroContent.mainTitle}{' '}
               <span className="text-[#F4845F]" style={{
