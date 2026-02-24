@@ -20,12 +20,8 @@ const FooterNovo = () => {
 
   const desc =
     language === 'pt'
-      ? isMobile
-        ? 'Tecnologia que conecta dados\ne decisões em tempo real.\nCresça com velocidade,\nescale com precisão.'
-        : 'Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.'
-      : isMobile
-        ? 'Technology that connects data\nand decisions in real time.\nGrow faster, scale smarter.'
-        : 'Technology that connects data and decisions in real time.\nGrow faster, scale smarter.';
+      ? 'Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.'
+      : 'Technology that connects data and decisions in real time.\nGrow faster, scale smarter.';
 
   const copyright =
     language === 'pt'
@@ -47,7 +43,7 @@ const FooterNovo = () => {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <img src={logoFooter} alt="Infinity6" className="h-8 w-auto mb-4" loading="lazy" />
-            <p className="text-white/40 text-sm max-w-md whitespace-pre-line mb-6">{desc}</p>
+            <p className={`text-white/40 max-w-md whitespace-pre-line mb-6 ${isMobile ? 'text-xs leading-tight tracking-tight' : 'text-sm'}`}>{desc}</p>
 
             <div className="flex gap-4 mb-6">
               <a href="https://www.linkedin.com/company/infinity6" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors">
