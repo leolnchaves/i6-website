@@ -1,72 +1,80 @@
 
-# Redesign dos Botoes CTA da Home
+# Redesign Radical dos CTAs da Home
 
-## Objetivo
-Substituir os botoes CTA atuais (estilo pill simples) por um design glassmorphico, moderno e fluido, inspirado na referencia enviada -- botoes com sombra suave, backdrop blur, bordas translucidas e micro-animacoes elegantes.
+## Problema
+Os botoes atuais sao pills solidos com gradiente -- visualmente comuns e nao combinam com o estilo ultra-moderno do restante do site (waves, glassmorphism, glow effects).
 
-## Botoes afetados (apenas Home)
+## Nova Proposta: Botao "Outline Glow" com efeito de preenchimento animado
 
-1. **Hero CTA** (`HeroMovimento.tsx`) -- "Colocar Dados em Movimento"
-2. **CTA Final** (`CTAFinal.tsx`) -- "Pronto para transformar dados em lucro?"
+Inspirado na referencia enviada e no DNA visual do site, o novo design sera:
 
-## Novo estilo visual
+### Hero CTA ("Set Data in Motion")
+- **Estado normal**: botao outline (borda coral fina, fundo transparente, texto branco)
+- **Borda animada**: glow coral pulsante sutil ao redor (box-shadow animado)
+- **Hover**: fundo preenche com gradiente coral (da esquerda para direita via `bg-size` transition), texto fica branco, glow intensifica
+- **Seta**: aparece com slide da esquerda no hover (opacity + translate)
+- **Formato**: rounded-xl (nao full pill -- mais moderno, como na referencia)
 
-- Fundo: glassmorphism (bg semi-translucido com backdrop-blur)
-- Borda: sutil, branca translucida (border-white/20)
-- Sombra: multi-camada suave com glow coral sutil
-- Texto: peso semibold, tamanho confortavel
-- Hover: escala sutil (1.03), glow mais intenso, borda coral
-- Formato: pill (rounded-full) mantido, mas com profundidade visual
-- Transicao: suave (duration-500, ease-out)
-- Icone: seta animada no hover (desliza para direita)
+### CTA Final ("Pronto para transformar dados em lucro?")
+- **Estado normal**: outline branco fino, fundo transparente, texto branco
+- **Glow branco pulsante sutil**
+- **Hover**: preenche com branco, texto muda para navy, glow intensifica
+- **Seta**: mesma animacao de aparecimento
 
-### Hero CTA (fundo escuro)
-- Fundo: gradiente coral (`from-[#F4845F] to-[#E8764A]`) com overlay glassmorphico
-- Sombra glow coral ao redor
-- Hover: intensifica glow + leve elevacao
-- Seta com animacao `group-hover:translate-x-1`
-
-### CTA Final (fundo gradiente coral)
-- Fundo: branco com leve transparencia (bg-white/95 backdrop-blur)
-- Texto: navy (#0B1224)
-- Sombra suave branca
-- Hover: bg-white total, glow branco, escala 1.03
-- Seta com animacao `group-hover:translate-x-1`
+## Animacao CSS adicional
+Adicionar um keyframe `glow-pulse` no `index.css` para o efeito de brilho pulsante nas bordas dos botoes.
 
 ## Detalhes tecnicos
 
-### Arquivo 1: `src/components/hometeste/HeroMovimento.tsx`
-- Trocar o `<Link>` CTA por um com classes glassmorphicas
-- Adicionar `ArrowRight` do lucide-react como icone
-- Adicionar classe `group` no link para animar a seta no hover
-- Novo estilo:
-  ```
-  className="group inline-flex items-center gap-2 mt-10 px-8 py-4
-    bg-gradient-to-r from-[#F4845F] to-[#E8764A]
-    text-white font-semibold rounded-full
-    shadow-[0_0_20px_rgba(244,132,95,0.3),0_4px_15px_rgba(0,0,0,0.2)]
-    border border-white/20
-    backdrop-blur-sm
-    transition-all duration-500 ease-out
-    hover:shadow-[0_0_35px_rgba(244,132,95,0.5),0_8px_25px_rgba(0,0,0,0.3)]
-    hover:scale-[1.03] hover:border-white/40"
-  ```
+### Arquivo 1: `src/index.css`
+- Adicionar keyframe `glow-pulse-coral` (pulsacao de box-shadow coral)
+- Adicionar keyframe `glow-pulse-white` (pulsacao de box-shadow branco)
+- Adicionar classes `.animate-glow-coral` e `.animate-glow-white`
 
-### Arquivo 2: `src/components/hometeste/CTAFinal.tsx`
-- Trocar o `<Link>` CTA por um com classes glassmorphicas
-- Adicionar `ArrowRight` do lucide-react como icone
-- Adicionar classe `group` no link para animar a seta no hover
-- Novo estilo:
-  ```
-  className="group inline-flex items-center gap-2 mt-10 px-8 py-4
-    bg-white/90 backdrop-blur-md
-    text-[#0B1224] font-semibold rounded-full
-    shadow-[0_0_20px_rgba(255,255,255,0.15),0_4px_15px_rgba(0,0,0,0.1)]
-    border border-white/40
-    transition-all duration-500 ease-out
-    hover:bg-white hover:scale-[1.03]
-    hover:shadow-[0_0_35px_rgba(255,255,255,0.25),0_8px_25px_rgba(0,0,0,0.15)]
-    hover:border-white/60"
-  ```
+### Arquivo 2: `src/components/hometeste/HeroMovimento.tsx`
+- Novo estilo do botao:
+  - `rounded-xl` em vez de `rounded-full`
+  - Fundo transparente com borda coral (`border-[#F4845F]/60`)
+  - Texto branco
+  - Glow pulsante coral via classe customizada
+  - No hover: `hover:bg-[#F4845F] hover:border-[#F4845F]` (preenchimento solido)
+  - Transicao suave de 500ms
+  - Seta com `opacity-0 group-hover:opacity-100 group-hover:translate-x-1`
 
-Nenhum outro arquivo sera alterado. As demais paginas manterao seus CTAs atuais.
+### Arquivo 3: `src/components/hometeste/CTAFinal.tsx`
+- Novo estilo do botao:
+  - `rounded-xl`
+  - Fundo transparente com borda branca (`border-white/50`)
+  - Texto branco
+  - Glow pulsante branco
+  - No hover: `hover:bg-white hover:text-[#0B1224]` (preenchimento solido)
+  - Seta com mesma animacao de aparecimento
+
+### Resumo visual
+
+```text
+Estado normal (Hero):
++-----------------------------+
+|   Set Data in Motion        |  <- texto branco, borda coral, fundo transparente
++-----------------------------+     glow coral pulsante
+
+Hover (Hero):
++=============================+
+|   Set Data in Motion   ->   |  <- fundo coral solido, seta aparece
++=============================+     glow intenso
+
+Estado normal (CTA Final):
++-----------------------------+
+|   Ready to turn data...     |  <- texto branco, borda branca, fundo transparente
++-----------------------------+     glow branco pulsante
+
+Hover (CTA Final):
++=============================+
+|   Ready to turn data... ->  |  <- fundo branco, texto navy, seta aparece
++=============================+     glow intenso
+```
+
+### Arquivos modificados
+1. `src/index.css` -- adicionar 2 keyframes + 2 classes de animacao
+2. `src/components/hometeste/HeroMovimento.tsx` -- redesign completo do botao CTA
+3. `src/components/hometeste/CTAFinal.tsx` -- redesign completo do botao CTA
