@@ -302,7 +302,7 @@ const EthicsPolicy = () => {
               <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
                 <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.officer}</strong></p>
                 <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
-                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.phone}</strong> +55 (19) 99819-7775</p>
+                
                 <p className="text-white/70"><strong className="text-white">{currentContent.sections.contact.address}</strong> {currentContent.sections.contact.company}</p>
               </div>
             </section>
