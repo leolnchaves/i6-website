@@ -7,13 +7,13 @@ const ContactHero = memo(() => {
   
   const content = useMemo(() => ({
     pt: {
-      title: "Vamos Iniciar uma",
-      subtitle: "Conversa", 
+      title: "Vamos Colocar Seus Dados em",
+      subtitle: "Movimento",
       description: "Sua jornada de IA começa aqui!"
     },
     en: {
-      title: "Let's Start a",
-      subtitle: "Conversation",
+      title: "Let's Put Your Data in",
+      subtitle: "Movement",
       description: "Your AI journey starts here!"
     }
   }), []);
