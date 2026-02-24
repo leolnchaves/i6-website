@@ -92,7 +92,7 @@ const FAQSection = memo(() => {
     <section className="py-10 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
             {text.title}
           </h2>
@@ -102,7 +102,7 @@ const FAQSection = memo(() => {
         </div>
 
         {/* Search */}
-        <div className="max-w-2xl mx-auto mb-16">
+        <div className="max-w-2xl mx-auto mb-12">
           <div className="relative">
             <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-1">
               <div className="relative">
