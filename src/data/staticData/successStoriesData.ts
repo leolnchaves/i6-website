@@ -28,8 +28,8 @@ export interface SuccessStoriesStaticData {
 export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
   en: {
     hero: {
-      title: "When data moves,",
-      subtitle: "results are inevitable",
+      title: "When data moves, results are",
+      subtitle: "inevitable",
       description: "Explore real cases of growth, efficiency and competitive advantage driven by predictive intelligence, adapted to the dynamics of each market."
     },
     metrics: {
@@ -54,8 +54,8 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
   },
   pt: {
     hero: {
-      title: "Quando os dados se movem,",
-      subtitle: "os resultados são inevitáveis",
+      title: "Quando os dados se movem, os resultados são",
+      subtitle: "inevitáveis",
       description: "Explore casos reais de crescimento, eficiência e vantagem competitiva impulsionados por inteligência preditiva, adaptados às dinâmicas de cada mercado."
     },
     metrics: {
