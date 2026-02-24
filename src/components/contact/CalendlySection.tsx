@@ -24,7 +24,7 @@ const CalendlySection = memo(() => {
   
   const content = useMemo(() => ({
     pt: {
-      title: "Converse com um Especialista em Inteligência Preditiva",
+      title: "Ou, se preferir, agende uma conversa estratégica agora.",
       description: "Vamos mapear oportunidades de impacto preditivo alinhadas ao seu negócio."
     },
     en: {
