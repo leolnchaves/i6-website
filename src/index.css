@@ -771,3 +771,30 @@ html {
 .animate-scroll-hint-pulse {
   animation: scroll-hint-pulse 1.8s ease-in-out infinite;
 }
+
+/* CTA Glow pulse animations */
+@keyframes glow-pulse-coral {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(244, 132, 95, 0.15), 0 0 20px rgba(244, 132, 95, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(244, 132, 95, 0.35), 0 0 40px rgba(244, 132, 95, 0.15);
+  }
+}
+
+@keyframes glow-pulse-white {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.25), 0 0 40px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.animate-glow-coral {
+  animation: glow-pulse-coral 2.5s ease-in-out infinite;
+}
+
+.animate-glow-white {
+  animation: glow-pulse-white 2.5s ease-in-out infinite;
+}
