@@ -9,6 +9,7 @@ import { useScrollToTop } from "./hooks/useScrollToTop";
 
 const ScrollToTop = () => { useScrollToTop(); return null; };
 import Layout from "./components/Layout";
+import DarkLayout from "./components/DarkLayout";
 import Home from "./pages/Home";
 import Solutions from "./pages/Solutions";
 import SuccessStories from "./pages/SuccessStories";
@@ -61,11 +62,13 @@ const App = () => {
             <BrowserRouter basename={import.meta.env.BASE_URL}>
               <ScrollToTop />
               <Routes>
-                {/* Nova home - fora do Layout (tem HeaderNovo/FooterNovo próprios) */}
-                <Route path="/" element={<HomeTeste />} />
-                <Route path="/solutions" element={<Solutions />} />
-                <Route path="/success-stories" element={<SuccessStories />} />
-                <Route path="/contact" element={<Contact />} />
+                {/* Dark layout pages - shared HeaderNovo/FooterNovo */}
+                <Route element={<DarkLayout />}>
+                  <Route path="/" element={<HomeTeste />} />
+                  <Route path="/solutions" element={<Solutions />} />
+                  <Route path="/success-stories" element={<SuccessStories />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Route>
                 
                 {/* Regular site routes - with Layout wrapper */}
                 <Route path="/*" element={
@@ -74,7 +77,6 @@ const App = () => {
                       <Route path="/oldhome_teste" element={<Home />} />
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                       <Route path="/ethics-policy" element={<EthicsPolicy />} />
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Layout>
