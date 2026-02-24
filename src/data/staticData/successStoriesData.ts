@@ -28,9 +28,9 @@ export interface SuccessStoriesStaticData {
 export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
   en: {
     hero: {
-      title: "AI Shaping Industries",
-      subtitle: "Driven by Results",
-      description: "Discover how our AI success cases are continuously redefining how businesses grow, compete and lead."
+      title: "When data moves, results are",
+      subtitle: "inevitable",
+      description: "Explore real cases of growth, efficiency and competitive advantage driven by predictive intelligence, adapted to the dynamics of each market."
     },
     metrics: {
       avgROI: "20x",
@@ -48,8 +48,8 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
       buttonText: "Get Started Today"
     },
     testimonials: {
-      title: "What Our Clients Say",
-      subtitle: "Real voices. Trusted results. Powered by specialist AI."
+      title: "Trust Built on Results",
+      subtitle: "Testimonials from those who anticipate decisions and turn signals into real impact."
     }
   },
   pt: {
