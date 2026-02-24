@@ -25,7 +25,7 @@ const SuccessStories = memo(() => {
         </div>
         <div className="relative z-[10]">
           <SuccessStoriesHero />
-          <MetricsSection />
+          
           <SegmentFilter
             onSegmentChange={setSelectedSegment}
             selectedSegment={selectedSegment}
