@@ -26,7 +26,7 @@ const SuccessStoriesHero = memo(({ children }: SuccessStoriesHeroProps) => {
               {heroContent.subtitle}
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-white/60 max-w-3xl mx-auto leading-relaxed mb-8">
             {heroContent.description}
           </p>
           {children}
