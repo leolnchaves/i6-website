@@ -125,15 +125,7 @@ const ContactForm = memo(() => {
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
-      <CardHeader className="p-8">
-        <CardTitle className="text-2xl font-bold text-white">
-          <div className="space-y-1">
-            <div>{text.title1}</div>
-            <div className="text-[#F4845F]" style={{ textShadow: '0 0 20px rgba(244,132,95,0.2)' }}>{text.title2}</div>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-8 pt-0 flex-1 flex flex-col">
+      <CardContent className="p-8 flex-1 flex flex-col">
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
           <div className="flex-1 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
