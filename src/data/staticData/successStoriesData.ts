@@ -54,9 +54,9 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
   },
   pt: {
     hero: {
-      title: "IA Redefinindo Indústrias",
-      subtitle: "Impulsionadas por resultados",
-      description: "Descubra como nossos cases de IA estão redefinindo a forma como as empresas crescem, competem e lideram."
+      title: "Quando os dados se movem, os resultados são",
+      subtitle: "inevitáveis",
+      description: "Casos reais de crescimento, eficiência e vantagem competitiva impulsionados por antecipação preditiva"
     },
     metrics: {
       avgROI: "20x",
