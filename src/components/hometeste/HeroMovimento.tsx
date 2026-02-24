@@ -10,13 +10,13 @@ const HeroMovimento = () => {
       title: 'Inteligência de Movimento',
       subtitle: 'Data moves. You Grow.',
       desc: 'Transformamos dados estáticos em decisões que antecipam o mercado.',
-      cta: 'Colocar Resultados em Movimento',
+      cta: 'Colocar Dados em Movimento',
     },
     en: {
       title: 'Movement Intelligence',
       subtitle: 'Data moves. You Grow.',
       desc: 'We turn static data into decisions that anticipate the market.',
-      cta: 'Set Results in Motion',
+      cta: 'Set Data in Motion',
     },
   }[language];
 
