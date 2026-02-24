@@ -68,11 +68,11 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
 
         {/* Key metrics */}
         <div className="grid grid-cols-2 gap-3 mb-5">
-          <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+          <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10 min-h-[100px] flex flex-col justify-center">
             <div className="text-xl font-semibold text-[#F4845F] mb-1">{story.metric1_value}</div>
             <div className="text-xs text-white/50 font-medium">{story.metric1_label}</div>
           </div>
-          <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+          <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10 min-h-[100px] flex flex-col justify-center">
             <div className="text-xl font-semibold text-[#F4845F] mb-1">{story.metric2_value}</div>
             <div className="text-xs text-white/50 font-medium">{story.metric2_label}</div>
           </div>
