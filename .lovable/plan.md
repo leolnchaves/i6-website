@@ -1,39 +1,38 @@
 
-# Aumentar visibilidade do fundo laranja no hero das Politicas
+# Substituir "Infinity6" por "infinity6" em todas as paginas de politicas
 
-## Problema
-O gradiente laranja esta aplicado corretamente no codigo, mas com apenas 15% de opacidade (`from-[#F4845F]/15`) sobre o fundo escuro `#0B1224`, o efeito e praticamente invisivel.
-
-## Solucao
-Aumentar a opacidade do gradiente de 15% para 30% e estender um pouco mais o alcance do gradiente adicionando uma cor intermediaria (`via`), para que o efeito laranja suave fique visivel sem ser agressivo.
+## Objetivo
+Padronizar o nome da marca para sempre usar "infinity6" (tudo minusculo) em todos os textos das paginas de Politica de Privacidade e Politica de Etica.
 
 ## Mudancas
 
-### 1. `src/pages/PrivacyPolicy.tsx` (linha 166)
+### 1. `src/components/privacy/PrivacyPolicyPT.tsx`
+Substituir todas as ocorrencias de "Infinity6" por "infinity6" nos seguintes trechos:
+- Secao 1: "A infinity6 e uma plataforma..."
+- Secao 2: "A infinity6 adota os seguintes principios..."
+- Secao 3: "...ativos da infinity6 sao categorizados..."
+- Tabela: "...uso dentro da infinity6"
+- Secao 4: titulo "Dados Tratados pela infinity6", subtitulo "Dados Internos da infinity6"
+- Secao 9: "...propriedade exclusiva da infinity6"
+- Secao 10: "A infinity6 podera atualizar..."
+- Secao 11: "A infinity6 reafirma seu compromisso..."
 
-Antes:
-```
-bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]
-```
+Total: ~10 ocorrencias
 
-Depois:
-```
-bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/10 to-[#0B1224]
-```
+### 2. `src/pages/PrivacyPolicy.tsx`
+Substituir nas secoes EN:
+- Secao 1: "At infinity6 (\"we,\"..."
+- Secao 9 contato: "infinity6 AI Solutions"
 
-### 2. `src/pages/EthicsPolicy.tsx` (linha 259)
+Total: ~2 ocorrencias
 
-Mesma alteracao:
+### 3. `src/pages/EthicsPolicy.tsx`
+Substituir em ambos os idiomas (EN e PT):
+- EN secao 1: "At infinity6, we believe..."
+- EN contato: "infinity6 AI Solutions, Ethics Department"
+- PT secao 1: "Na infinity6, acreditamos..."
+- PT contato: "infinity6 AI Solutions, Departamento de Etica"
 
-Antes:
-```
-bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]
-```
+Total: ~4 ocorrencias
 
-Depois:
-```
-bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/10 to-[#0B1224]
-```
-
-## Resultado
-O laranja no topo do hero tera 30% de opacidade (o dobro do atual), com uma transicao suave passando por 10% antes de chegar ao fundo escuro. Isso cria um destaque visivel mas ainda elegante.
+**Nota:** Os enderecos de email (security@infinity6.com, privacy@infinity6.ai, ethics@infinity6.ai) permanecem inalterados, pois emails sao tecnicamente case-insensitive e ja estao em minusculo.
