@@ -49,7 +49,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "Trust Built on Results",
-      subtitle: "Testimonials from those who anticipate decisions and turn signals into real impact."
+      subtitle: "Real voices from those who turn signals into impact."
     }
   },
   pt: {
@@ -75,7 +75,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "Confiança Construída em Resultado",
-      subtitle: "Depoimentos de quem antecipa decisões e transforma sinais em impacto real."
+      subtitle: "Vozes reais de quem transforma sinais em impacto."
     }
   }
 };
