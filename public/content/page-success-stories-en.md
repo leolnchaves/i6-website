@@ -2,117 +2,110 @@
 
 ---
 
-## Market Place Excellence: Driving Success for Pharmacies
+## Marketplace Excellence: Driving Performance Across The Pharmacy Ecosystem
 **Image:** /content/success-stories/case-ems-farmacia.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** Manufacturing
-**Client:** EMS Farma
-**Description:** One of the largest pharmaceutical companies in Brazil, this organization is a key player in the global market.
-**Challenge:** The company sought to boost engagement and improve sales margins through their digital marketplace connecting pharmacies to distributors. To achieve this, deeper insights into customer behavior were needed. Our mission is to consolidate pharmacy and client data, delivering precise purchase predictions and actionable recommendations to optimize resource use, prevent stockouts and enhance operational efficiency.
-**Solution:** Our goal is to transform the digital marketplace into a trusted advisor for pharmacies, delivering high-impact, data-driven purchase suggestions. By enhancing resource use and creating opportunities for cross-sell and up-sell, we aim to increase engagement and expand basket sizes. This initiative focuses on helping pharmacies maximize profitability while strengthening their reliance on the industry as a key partner. Success is defined by increased sell-out volumes, higher margins and a seamless, efficient purchasing experience.
-**Metric1:** 23% Average Ticket Value
-**Metric2:** 36% New SKU Conversion
+**Client:** EMS Pharma
+**Description:** One of Brazil’s largest pharmaceutical companies and a strategic global player.
+**Challenge:** The marketplace connected manufacturers, distributors and pharmacies but operated reactively, driven by incoming orders rather than anticipatory intelligence at the POS level. The lack of granular demand visibility limited sell-out potential, pressured margins and reduced efficiency in inventory and commercial capital allocation.
+**Solution:** We consolidated purchase signals, transactional history, inventory and behavioral data per pharmacy into a predictive decision engine. The operation shifted from reacting to demand to actively guiding it, identifying what to sell, when to activate and which combinations would maximize turnover and margin expansion.
+**Metric1:** +23% Average Ticket Per POS
+**Metric2:** +36% New SKU Conversion
 **Metric3:** -
 **Solutions:** Industrial Recommendation Intelligence
-**Quote:** Market Place Excellence: Driving Success for Pharmacies
+**Quote:** Commercial Anticipation Applied To The Pharmacy Ecosystem
 **CustomerName:** Paulo Lima
 **CustomerTitle:** New Channel Manager
 **ShowHome:** True
-
 ---
 
-## Elevating Customer Engagement: Enhancing Online Sales
+## Enhancing Customer Engagement: Accelerating Online Sales
 **Image:** /content/success-stories/case-retail-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Retail
-**Client:** The most traditional fashion brand in Latin America
-**Description:** With over 140 years of history, the company has established itself as one of the leading fashion retailers in the region.
-**Challenge:** In the competitive fashion retail landscape, a leading company sought to boost customer engagement and drive online sales. They aimed to implement a solution that delivers highly relevant and diverse product recommendations in real-time, moving beyond basic suggestions to anticipate and fulfill customer needs. A significant challenge was providing personalized recommendations to both logged-in users and anonymous visitors, ensuring a seamless and engaging experience for all customers.
-**Solution:** To drive digital sales growth, the initiative focuses on consolidating customer behaviors from both logged-in users and anonymous visitors. By predicting purchasing patterns through real-time product recommendations aligned with customer navigation and interaction feedback, the retailer aims to enhance customer engagement.
-This strategy seeks to increase the average basket size through effective cross-selling and up-selling, creating a personalized and dynamic shopping experience that resonates with each customer’s unique preferences.
-**Metric1:** 50% New Products Discovery
-**Metric2:** 11% Items-to-Cart
+**Client:** The Most Traditional Fashion Brand In Latin America
+**Description:** With more than 140 years of history, the company has become one of the region’s largest fashion retailers.
+**Challenge:** A significant share of digital traffic was anonymous, limiting effective personalization and impacting conversion and average order value. In addition, key cross-sell opportunities relied on manually curated outfit compositions created by fashion specialists, a process that did not scale across more than 11,000 SKUs and lacked margin optimization.
+**Solution:** We transformed browsing and interaction signals into predictive intent from the first click. The model learned outfit composition patterns and introduced a strategic dimension: intelligent prioritization of lower-rotation and higher-margin SKUs. Real-time activation enabled contextual recommendations for both logged-in and anonymous users, scaling curated commerce with commercial intelligence.
+**Metric1:** +2.6% Higher Sales Vs. Traditional Curated Looks (With Only 5% Of Traffic)
+**Metric2:** 40% Of Incremental Revenue Generated By Predictive Models
 **Metric3:** -
-**Solutions:** Smart Discovery for Anonymous Visitors, Predictive Personalization for Identified Users
-**Quote:** Elevating Customer Engagement: Enhancing Online Sales
+**Solutions:** Smart Discovery For Anonymous Visitors, Predictive Personalization For Identified Users
+**Quote:** Scalable Curation Driven By Intent And Margin
 **CustomerName:** -
 **CustomerTitle:** -
 **ShowHome:** True
-
 ---
 
-## Assortment Precision: Sales Uplift through Optimized Predictions
+## Assortment Precision: Driving Sales Through Optimized Forecasting
 **Image:** /content/success-stories/case-foods-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Manufacturing 
-**Client:** The world's second-largest prepared foods producer
-**Description:** One of the world’s largest food conglomerates, operating in over 150 countries and leading several product categories in Latin America.
-**Challenge:** The challenge was to provide strategic, AI-driven product recommendations with clear reasoning that could optimize the selection and volumes for each point of sale, leveraging insights like seasonality and market trends. By refining the predictive accuracy, we aimed to enhance not only the efficiency of product assortments but also to identify new opportunities for sales expansion, aligning smarter decision-making with increased market potential.
-**Solution:** Our goal was clear: to drive sales growth by improving the efficiency of assortment prediction while incorporating more intelligence into the entire sales process, optimizing a truly unique, value-added experience for the points of sale.
-**Metric1:** 7,2% Direct Sales Uplift
-**Metric2:** 55% New Products Suggestions
+**Segment:** Manufacturing
+**Client:** The World’s Second-Largest Prepared Foods Producer
+**Description:** One of the largest food conglomerates in the world, operating in more than 150 countries and leading multiple categories across Latin America.
+**Challenge:** Assortment decisions per point of sale were based on aggregated analysis and standardized commercial approaches. This created misalignment between local turnover potential and the product mix offered, limiting growth and reducing execution efficiency.
+**Solution:** We implemented predictive decision-making at POS level, incorporating seasonality, local performance history, regional behavior and margin potential. Commercial teams gained granular intelligence, enabling mix expansion aligned with sell-out probability and measurable revenue impact.
+**Metric1:** +7.2% Direct Sales Uplift (Up-Sell)
+**Metric2:** +55% Of POS Converted New Product Recommendations
 **Metric3:** -
-**Solutions:** Predictive Personalization for Identified Users
-**Quote:** Assortment Precision: Sales Uplift through Optimized Predictions
+**Solutions:** Predictive Personalization For Identified Users
+**Quote:** Assortment Decisions Driven By Sell-Out Potential
 **CustomerName:** -
 **CustomerTitle:** -
 **ShowHome:** True
-
 ---
 
-## Precision Sales Forecast: Streamlining Results and Operations
+## High-Precision Sales Forecasting: Optimizing Results And Operations
 **Image:** /content/success-stories/case-forecast-1.jpg
 **Logo:** /content/logos/EMS-COR.png
 **Segment:** Manufacturing
-**Client:** EMS Farma
-**Description:** One of the largest pharmaceutical companies in Brazil, this organization is a key player in the global market.
-**Challenge:** The company faced significant challenges in generating highly accurate forecasts for market intelligence and S&OP (Sales and Operations Planning) related to sell-out. This lack of precision created opportunities for improvement in production planning, commercial target setting and cost of customer acquisition (CAC) efficiency. Our role was to deliver a solution that consolidated various data sources (historical data, market behavior, inventory levels, transactional data, external market research, etc.) into a unified and accurate sales forecast for each product and point of sale (PDV).
-**Solution:** Our goal was to deliver a medium-term, high-accuracy sales forecast at a highly granular level (SKU + Point of Sale), fine-tuning the engine to account for factors such as market share, profitability, seasonality and promotions. By achieving this level of precision, we aimed to help the company optimize production planning, commercial strategies, and investments. The success of this initiative would give the company the confidence to streamline its entire value chain, driving efficiency from production to sales and investment decisions.
-**Metric1:** 82% Sell-out Forecast Projection
-**Metric2:** +100M Inventory Loss Savings
+**Client:** EMS Pharma
+**Description:** One of Brazil’s largest pharmaceutical companies and a global reference in its segment.
+**Challenge:** Low sell-out forecast accuracy compromised production planning, commercial targets and capital allocation. Disconnected data sources generated inconsistent projections and limited confidence in planning.
+**Solution:** We unified multiple market, behavioral, inventory and historical signals into an adaptive forecasting engine at SKU and POS level. The company gained granular and reliable demand anticipation, enabling coordinated decisions from production to commercial investment.
+**Metric1:** 82% Sell-Out Forecast Accuracy
+**Metric2:** +100M In Inventory-Related Loss Prevention And Working Capital Optimization
 **Metric3:** -
 **Solutions:** Adaptive Demand Forecasting
-**Quote:** Precision Sales Forecast: Streamlining Results and Operations
+**Quote:** Operational Predictability With SKU And POS Granularity
 **CustomerName:** -
 **CustomerTitle:** -
 **ShowHome:** True
-
 ---
 
-## Maximizing Cross-Sell with Smart Buying Propensity
+## Maximizing Cross-Sell Through Intelligent Propensity Modeling
 **Image:** /content/success-stories/case-finance-1.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
-**Segment:** Finance
-**Client:** Top 3 banks in innovation in Brazil and a leader in payroll loans
-**Description:** A leading financial institution that maintains a strong presence in both domestic and international markets.
-**Challenge:** The bank sought a solution to refine its sales strategy by improving the accuracy of product recommendations and customer outreach. With a diverse portfolio of products and services, the bank faced the challenge of increasing cross-sell and up-sell opportunities while ensuring that each customer receives the most relevant offerings through the best communication channel, achieved by consolidating diverse consumer behavior data.
-**Solution:** Significantly enhance CRM efficiency by optimizing the entire customer journey and increasing cross-sell and up-sell rates for products and services. The goal was not just to boost sales but to create smarter, more personalized interactions, ensuring that each customer receives timely and relevant offers through their preferred channels.
-**Metric1:** 12x Conveersion Uplift
-**Metric2:** 50% Less CRM Costs
+**Segment:** Financial Services
+**Client:** Top 3 In Innovation In Brazil And Leader In Payroll-Deductible Credit
+**Description:** One of the country’s most relevant financial institutions with strong national presence.
+**Challenge:** The bank had a broad customer base and diversified portfolio, but generic campaigns and limited segmentation precision constrained cross-sell efficiency and increased commercial costs.
+**Solution:** We applied predictive propensity modeling across customers, products and channels, consolidating behavioral and transactional signals. Activation occurred at the optimal moment and channel, significantly improving conversion efficiency and campaign ROI.
+**Metric1:** 12x Increase In Campaign Conversion
+**Metric2:** 57% Reduction In CRM Messaging Costs
 **Metric3:** -
-**Solutions:** Predictive Campaign Targeting, Predictive Personalization for Identified Users
-**Quote:** Maximizing Cross-Sell with Smart Buying Propensity
+**Solutions:** Predictive Campaign Targeting, Predictive Personalization For Identified Users
+**Quote:** Predictive Propensity Applied To Multichannel Activation
 **CustomerName:** -
 **CustomerTitle:** -
 **ShowHome:** True
-
 ---
 
-## Demand Forecast Accuracy: Enhancing Production and Sales Planning
+## Demand Forecast Accuracy: Elevating Production And Sales Planning
 **Image:** /content/success-stories/case-retail-forecast.jpg
 **Logo:** /content/logos/infinity6_CMYK_color_symbol_72dpi.png
 **Segment:** Retail
-**Client:** Top leading cosmetics brand in Brazil
-**Description:** A major cosmetics player, recognized for its large-scale direct sales model and frequent product launches through purchase catalogs.
-**Challenge:** The company faced significant challenges in demand predictability. Due to the need to create purchase catalogs well in advance, it had to define production and inventory plans early and share them with manufacturers. The lack of accurate forecasting often resulted in overstock or shortages, directly affecting efficiency and sales performance.
-**Solution:** Advanced demand forecasting engine tailored to the company’s unique business cycle. All SKUs were classified into three levels — Gold, Silver, and Bronze — enabling granular control and drastically improving forecast accuracy.
-**Metric1:** +70% Forecast Accuracy
+**Client:** One Of Brazil’s Largest Cosmetics Brands
+**Description:** A leading beauty company recognized for its large-scale direct sales model and frequent catalog-based product launches.
+**Challenge:** The business model required early production planning aligned with catalog cycles, yet low demand predictability generated excess inventory or stockouts, impacting margin and working capital efficiency.
+**Solution:** We deployed adaptive forecasting aligned with catalog dynamics, segmenting SKUs by criticality and behavioral patterns. The operation gained higher planning precision, reducing operational risk and improving capital efficiency.
+**Metric1:** +70% Catalog Sales Forecast Accuracy
 **Metric2:** -
 **Metric3:** -
 **Solutions:** Adaptive Demand Forecasting
-**Quote:**Demand Forecast Accuracy: Enhancing Production and Sales Planning
+**Quote:** Catalog Planning Powered By Adaptive Forecasting
 **CustomerName:** -
 **CustomerTitle:** -
 **ShowHome:** False
-
 ---
