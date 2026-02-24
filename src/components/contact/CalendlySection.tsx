@@ -39,9 +39,6 @@ const CalendlySection = memo(() => {
     <Card ref={containerRef} className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl">
       <CardContent className="p-8">
         <div className="text-left mb-8">
-          <h3 className="text-3xl font-bold mb-4 text-white">
-            {text.title}
-          </h3>
           <p className="text-xl text-white/60 mb-6">
             {text.description}
           </p>
