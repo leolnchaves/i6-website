@@ -226,7 +226,7 @@ const ContactForm = memo(() => {
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-blue-600 to-[#F4845F] hover:from-blue-700 hover:to-[#e5734f] text-lg py-3 mt-auto disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-white/10 hover:bg-[#F4845F]/20 border border-transparent hover:border-[#F4845F]/30 text-white/80 hover:text-[#F4845F] text-lg py-3 mt-auto transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Sending...' : text.sendButton}
             <Send className={`ml-2 w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
