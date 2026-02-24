@@ -28,7 +28,7 @@ const FAQSection = memo(() => {
   // Static content - memoized for stability
   const content = useMemo(() => ({
     pt: {
-      title: "Perguntas Frequentes",
+      title: "O Que Você Precisa Saber",
       subtitle: "Perguntas comuns sobre nossas soluções e serviços de IA.",
       searchPlaceholder: "Digite para buscar nas perguntas frequentes...",
       noResults: "Nenhuma pergunta frequente encontrada correspondendo à sua busca. Tente palavras-chave diferentes.",
