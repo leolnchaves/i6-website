@@ -49,7 +49,7 @@ const WorldMap = memo(() => {
       unitName: 'infinity6 LATAM',
       position: positions.campinas,
       address: 'Av. Antônio Artioli, 570 - Sala 134 / Prédio A\nCEP 13049-900\nCampinas, SP - Brasil',
-      email: 'partner@infinity6.ai'
+      email: 'movimento@infinity6.ai'
     }
   ], [text.brazil, text.headquarters, positions.campinas]);
 
