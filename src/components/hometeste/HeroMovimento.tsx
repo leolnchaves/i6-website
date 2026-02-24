@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ArrowRight } from 'lucide-react';
 import WaveBackground from './WaveBackground';
 
 const HeroMovimento = () => {
@@ -36,9 +37,10 @@ const HeroMovimento = () => {
         </p>
         <Link
           to="/contact"
-          className="inline-block mt-10 px-8 py-4 bg-[#F4845F] hover:bg-[#E8764A] text-white font-semibold rounded-full transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(244,132,95,0.35)]"
+          className="group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-gradient-to-r from-[#F4845F] to-[#E8764A] text-white font-semibold rounded-full shadow-[0_0_20px_rgba(244,132,95,0.3),0_4px_15px_rgba(0,0,0,0.2)] border border-white/20 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-[0_0_35px_rgba(244,132,95,0.5),0_8px_25px_rgba(0,0,0,0.3)] hover:scale-[1.03] hover:border-white/40"
         >
           {copy.cta}
+          <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
 
