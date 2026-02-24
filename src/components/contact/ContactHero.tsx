@@ -7,13 +7,15 @@ const ContactHero = memo(() => {
   
   const content = useMemo(() => ({
     pt: {
-      title: "Vamos Colocar Dados em",
-      subtitle: "Movimento",
+      title: "Hora de Colocar",
+      subtitle: "Dados em ",
+      highlight: "Movimento",
       description: "Converse com nossos especialistas e descubra onde decisões preditivas podem gerar impacto imediato."
     },
     en: {
-      title: "Let's Put Data in",
-      subtitle: "Movement",
+      title: "Time to Put",
+      subtitle: "Data in ",
+      highlight: "Movement",
       description: "Talk to our specialists and discover where predictive decisions can drive immediate impact."
     }
   }), []);
@@ -28,11 +30,14 @@ const ContactHero = memo(() => {
             <span className="block mb-2 text-white">
               {text.title}
             </span>
-            <span 
-              className="block text-[#F4845F] pb-2"
-              style={{ textShadow: '0 0 30px rgba(244,132,95,0.3)' }}
-            >
-              {text.subtitle}
+            <span className="block pb-2">
+              <span className="text-white">{text.subtitle}</span>
+              <span 
+                className="text-[#F4845F]"
+                style={{ textShadow: '0 0 30px rgba(244,132,95,0.3)' }}
+              >
+                {text.highlight}
+              </span>
             </span>
           </h1>
           <p className="text-base sm:text-lg text-white/60 mb-8 leading-relaxed">
