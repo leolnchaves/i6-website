@@ -10,13 +10,13 @@ const ContactHero = memo(() => {
       title: "Hora de Colocar",
       subtitle: "Dados em ",
       highlight: "Movimento",
-      description: "Converse com nossos especialistas e descubra onde\ndecisões preditivas podem gerar impacto imediato."
+      description: "Fale conosco e compartilhe seu objetivo ou desafio estratégico."
     },
     en: {
       title: "Time to Put",
       subtitle: "Data in ",
       highlight: "Movement",
-      description: "Talk to our specialists and discover where\npredictive decisions can drive immediate impact."
+      description: "Talk to us and share your strategic goal or challenge."
     }
   }), []);
 
