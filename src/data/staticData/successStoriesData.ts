@@ -75,7 +75,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     },
     testimonials: {
       title: "Confiança Construída em Resultado",
-      subtitle: "Vozes reais. Resultados confiáveis. A força da IA especialista."
+      subtitle: "Depoimentos de quem antecipa decisões e transforma sinais em impacto real."
     }
   }
 };
