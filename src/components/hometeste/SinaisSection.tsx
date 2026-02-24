@@ -96,7 +96,7 @@ const SinaisSection = () => {
 
         {/* Title + Subtitle */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug mb-4">
-          {copy.titleLine1Start}<span className="text-[#F4845F] drop-shadow-[0_0_12px_rgba(244,132,95,0.5)]">{copy.titleLine1Highlight}</span><br />{copy.titleLine2}
+          {copy.titleLine1Start}<span className="text-[#F4845F] drop-shadow-[0_0_12px_rgba(244,132,95,0.5)]">{copy.titleLine1Highlight}</span><br className="hidden sm:block" />{' '}{copy.titleLine2}
         </h2>
         <p className="text-white/50 text-base md:text-lg max-w-2xl mb-12">
           {copy.subtitle}
