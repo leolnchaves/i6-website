@@ -9,12 +9,12 @@ const ContactHero = memo(() => {
     pt: {
       title: "Vamos Colocar Dados em",
       subtitle: "Movimento",
-      description: "Descubra onde decisões preditivas podem gerar impacto real no seu negócio."
+      description: "Converse com nossos especialistas e descubra onde decisões preditivas podem gerar impacto imediato."
     },
     en: {
       title: "Let's Put Data in",
       subtitle: "Movement",
-      description: "Discover where predictive decisions can drive real impact in your business."
+      description: "Talk to our specialists and discover where predictive decisions can drive immediate impact."
     }
   }), []);
 
