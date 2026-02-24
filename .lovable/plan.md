@@ -1,38 +1,18 @@
 
-# Substituir "Infinity6" por "infinity6" em todas as paginas de politicas
 
-## Objetivo
-Padronizar o nome da marca para sempre usar "infinity6" (tudo minusculo) em todos os textos das paginas de Politica de Privacidade e Politica de Etica.
+# Fix: Centralizar a seção de testemunhos no desktop
 
-## Mudancas
+## Problema
+O carrossel de testemunhos aparece deslocado para a esquerda no desktop. Isso ocorre por dois motivos:
+1. O container externo do carrossel tem padding horizontal muito grande (`lg:px-24`)
+2. Os itens do carrossel usam `basis-[30%]`, que somados (90%) nao preenchem toda a largura, e a combinacao com o padding assimetrico desloca tudo para a esquerda
 
-### 1. `src/components/privacy/PrivacyPolicyPT.tsx`
-Substituir todas as ocorrencias de "Infinity6" por "infinity6" nos seguintes trechos:
-- Secao 1: "A infinity6 e uma plataforma..."
-- Secao 2: "A infinity6 adota os seguintes principios..."
-- Secao 3: "...ativos da infinity6 sao categorizados..."
-- Tabela: "...uso dentro da infinity6"
-- Secao 4: titulo "Dados Tratados pela infinity6", subtitulo "Dados Internos da infinity6"
-- Secao 9: "...propriedade exclusiva da infinity6"
-- Secao 10: "A infinity6 podera atualizar..."
-- Secao 11: "A infinity6 reafirma seu compromisso..."
+## Solucao
 
-Total: ~10 ocorrencias
+**Arquivo:** `src/components/success-stories/TestimonialsSection.tsx`
 
-### 2. `src/pages/PrivacyPolicy.tsx`
-Substituir nas secoes EN:
-- Secao 1: "At infinity6 (\"we,\"..."
-- Secao 9 contato: "infinity6 AI Solutions"
+1. Remover o padding horizontal excessivo do wrapper do carrossel (trocar `px-4 sm:px-8 md:px-16 lg:px-24` por apenas `px-4`)
+2. Ajustar o `basis` dos itens do carrossel de `lg:basis-[30%]` para `lg:basis-1/3` para que 3 cards preencham 100% da largura disponivel
 
-Total: ~2 ocorrencias
+Essas duas mudancas garantem que o carrossel fique centralizado horizontalmente na pagina.
 
-### 3. `src/pages/EthicsPolicy.tsx`
-Substituir em ambos os idiomas (EN e PT):
-- EN secao 1: "At infinity6, we believe..."
-- EN contato: "infinity6 AI Solutions, Ethics Department"
-- PT secao 1: "Na infinity6, acreditamos..."
-- PT contato: "infinity6 AI Solutions, Departamento de Etica"
-
-Total: ~4 ocorrencias
-
-**Nota:** Os enderecos de email (security@infinity6.com, privacy@infinity6.ai, ethics@infinity6.ai) permanecem inalterados, pois emails sao tecnicamente case-insensitive e ja estao em minusculo.
