@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const CTAFinal = () => {
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
 
   const copy = {
     pt: {
       lineStart: 'Seus dados já têm as respostas.\nSó falta ',
       lineHighlight: 'movimento.',
-      cta: 'Pronto para transformar dados em lucro?',
+      cta: isMobile ? 'Vamos transformar dados em lucro?' : 'Pronto para transformar dados em lucro?',
     },
     en: {
       lineStart: 'Your data already has the answers.\nAll it needs is ',
       lineHighlight: 'movement.',
-      cta: 'Ready to turn data into profit?',
+      cta: isMobile ? "Let's turn data into profit?" : 'Ready to turn data into profit?',
     },
   }[language];
 
