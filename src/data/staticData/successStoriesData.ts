@@ -56,7 +56,7 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
     hero: {
       title: "Quando os dados se movem, os resultados são",
       subtitle: "inevitáveis",
-      description: "Casos reais de crescimento, eficiência e vantagem competitiva impulsionados por antecipação preditiva"
+      description: "Explore casos reais de crescimento, eficiência e vantagem competitiva impulsionados por inteligência preditiva, adaptados às dinâmicas de cada mercado."
     },
     metrics: {
       avgROI: "20x",
