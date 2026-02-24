@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ArrowRight } from 'lucide-react';
 
 const CTAFinal = () => {
   const { language } = useLanguage();
@@ -27,9 +28,10 @@ const CTAFinal = () => {
         </p>
         <Link
           to="/contact"
-          className="inline-block mt-10 px-8 py-4 bg-white text-[#0B1224] font-semibold rounded-full transition-all hover:scale-105 hover:shadow-xl"
+          className="group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-white/90 backdrop-blur-md text-[#0B1224] font-semibold rounded-full shadow-[0_0_20px_rgba(255,255,255,0.15),0_4px_15px_rgba(0,0,0,0.1)] border border-white/40 transition-all duration-500 ease-out hover:bg-white hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(255,255,255,0.25),0_8px_25px_rgba(0,0,0,0.15)] hover:border-white/60"
         >
           {copy.cta}
+          <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
     </section>
