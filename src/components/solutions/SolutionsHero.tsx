@@ -25,7 +25,7 @@ const SolutionsHero = memo(() => {
               {heroContent.mainSuffix}
             </span>
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-white/60 mb-4 leading-relaxed">
+          <p className="text-base sm:text-lg text-white/60 mb-4 leading-relaxed">
             {heroContent.description}
           </p>
         </div>
