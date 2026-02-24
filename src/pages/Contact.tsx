@@ -24,7 +24,7 @@ const Contact = memo(() => {
     <>
       <ContactHero />
       
-      <section id="contact-form" className="pt-6 pb-20">
+      <section id="contact-form" className="pt-0 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
             <ContactForm />
