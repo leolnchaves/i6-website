@@ -1,18 +1,25 @@
 
-
-# Substituir logo EMS nos casos de sucesso
+# Uniformizar altura dos quadros de KPIs nos cards de cases
 
 ## Problema
-O logo atual da EMS (`/content/logos/EMS-COR.png`) esta com qualidade ruim nos cards e modais dos casos de sucesso.
+Os dois quadros de metricas (KPIs) dentro de cada card de caso de sucesso tem alturas diferentes dependendo do tamanho do texto do label. Cards com labels curtos ficam menores que cards com labels longos, causando desalinhamento visual.
 
 ## Solucao
-Substituir o arquivo `public/content/logos/EMS-COR.png` pelo novo logo enviado. Como ambos os markdowns (PT e EN) referenciam o mesmo arquivo, a troca sera automatica em todos os lugares:
-- Card "Excelencia em Marketplace" (EMS Farma)
-- Card "Previsao de Vendas Precisa" (EMS Farma)
-- Modais de detalhes de ambos os cases
+Adicionar uma altura minima fixa (`min-h-[100px]`) nos containers dos KPIs dentro do `StoryCard.tsx`, garantindo que todos os quadros tenham o mesmo tamanho independente do conteudo.
 
 ## Mudanca
-1. Copiar `user-uploads://image-76.png` para `public/content/logos/EMS-COR.png`, sobrescrevendo o arquivo atual
 
-Nenhuma alteracao de codigo necessaria — os markdowns ja apontam para esse caminho.
+### `src/components/success-stories/story-components/StoryCard.tsx`
+- Nas duas `div` de metricas (linhas 71-78), adicionar `min-h-[100px]` e `flex flex-col justify-center` para que o conteudo fique centralizado verticalmente dentro de um box de tamanho uniforme.
 
+Antes:
+```
+<div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+```
+
+Depois:
+```
+<div className="text-center p-3 bg-white/5 rounded-lg border border-white/10 min-h-[100px] flex flex-col justify-center">
+```
+
+Aplicado em ambos os quadros de metricas (metric1 e metric2).
