@@ -131,7 +131,7 @@ const ContactForm = memo(() => {
         <h3 className="text-3xl font-bold mb-4 text-white">
           {text.title1} {text.title2}
         </h3>
-        <p className="text-sm text-white/50 mb-6 leading-relaxed">{text.subtitle}</p>
+        <p className="text-base text-white/50 mb-6 leading-relaxed">{text.subtitle}</p>
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
           <div className="flex-1 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
