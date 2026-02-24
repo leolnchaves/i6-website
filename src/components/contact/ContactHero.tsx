@@ -9,12 +9,12 @@ const ContactHero = memo(() => {
     pt: {
       title: "Vamos Colocar Seus Dados em",
       subtitle: "Movimento",
-      description: "Sua jornada de IA começa aqui!"
+      description: "Descubra onde decisões preditivas podem gerar impacto real no seu negócio."
     },
     en: {
       title: "Let's Put Your Data in",
       subtitle: "Movement",
-      description: "Your AI journey starts here!"
+      description: "Discover where predictive decisions can drive real impact in your business."
     }
   }), []);
 
