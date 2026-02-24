@@ -1,6 +1,7 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import heroBg from '@/assets/images/hero-bg.jpg';
+import SEOHead from '@/components/common/SEOHead';
 
 const PrivacyPolicy = () => {
   useScrollAnimation();
@@ -189,6 +190,7 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="relative overflow-hidden">
+      <SEOHead page="privacyPolicy" />
       {/* Hero-inspired header section */}
       <section className="w-full min-h-[35vh] flex items-center justify-center relative overflow-hidden">
         {/* Background image with blur */}

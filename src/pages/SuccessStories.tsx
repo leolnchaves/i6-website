@@ -4,12 +4,14 @@ import SuccessStoriesHero from '@/components/success-stories/SuccessStoriesHero'
 import SegmentFilter from '@/components/success-stories/SegmentFilter';
 import ModernStoriesGrid from '@/components/success-stories/ModernStoriesGrid';
 import TestimonialsSection from '@/components/success-stories/TestimonialsSection';
+import SEOHead from '@/components/common/SEOHead';
 
 const SuccessStories = memo(() => {
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
 
   return (
     <>
+      <SEOHead page="successStories" />
       <SuccessStoriesHero>
         <SegmentFilter
           onSegmentChange={setSelectedSegment}
