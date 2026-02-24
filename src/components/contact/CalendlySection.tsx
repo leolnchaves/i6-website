@@ -42,7 +42,7 @@ const CalendlySection = memo(() => {
           <h3 className="text-3xl font-bold mb-4 text-white">
             {text.title}
           </h3>
-          <p className="text-lg text-white/60 mb-6">
+          <p className="text-xl text-white/60 mb-6">
             {text.description}
           </p>
         </div>
