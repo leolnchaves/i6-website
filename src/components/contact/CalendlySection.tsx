@@ -25,7 +25,7 @@ const CalendlySection = memo(() => {
   const content = useMemo(() => ({
     pt: {
       title: "Prefere avançar direto para uma conversa estratégica?",
-      description: "Agende uma sessão dedicada para mapear impacto preditivo no seu contexto."
+      description: "Ou agende uma conversa estratégica para mapear impacto preditivo no seu negócio."
     },
     en: {
       title: "Sometimes a quick chat is all it takes.",
