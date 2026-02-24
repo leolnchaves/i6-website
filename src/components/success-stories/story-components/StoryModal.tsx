@@ -93,7 +93,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
                 {getCompanyDetails(selectedStory).about}
               </p>
             </div>
-            <div className="flex-shrink-0 mr-8">
+            <div className="flex-shrink-0 mr-8 self-center">
               <img
                 src={getCompanyDetails(selectedStory).logo}
                 alt={`${selectedStory.company_name} logo`}
