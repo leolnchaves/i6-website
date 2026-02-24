@@ -70,6 +70,8 @@ const App = () => {
                   <Route path="/solutions" element={<Solutions />} />
                   <Route path="/success-stories" element={<SuccessStories />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/ethics-policy" element={<EthicsPolicy />} />
                 </Route>
                 
                 {/* Regular site routes - with Layout wrapper */}
@@ -77,8 +79,6 @@ const App = () => {
                   <Layout>
                     <Routes>
                       <Route path="/oldhome_teste" element={<Home />} />
-                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                      <Route path="/ethics-policy" element={<EthicsPolicy />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Layout>
