@@ -206,7 +206,7 @@ const PrivacyPolicy = () => {
       <SEOHead page="privacyPolicy" />
       
       {/* Hero */}
-      <section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-[#0B1224]">
+      <section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight">
