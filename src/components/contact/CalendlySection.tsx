@@ -8,7 +8,6 @@ const CalendlySection = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Intersection Observer for lazy loading
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -19,15 +18,10 @@ const CalendlySection = memo(() => {
       },
       { threshold: 0.1, rootMargin: '50px' }
     );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
+    if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
   
-  // Static content for PT/EN - memoized for stability
   const content = useMemo(() => ({
     pt: {
       title: "Agende uma Conversa",
@@ -39,17 +33,16 @@ const CalendlySection = memo(() => {
     }
   }), []);
 
-  // Automatically uses current language from context - memoized
   const text = useMemo(() => content[language], [language]);
 
   return (
-    <Card ref={containerRef} className="border-0 shadow-2xl bg-gradient-to-r from-blue-600 to-orange-500 text-white">
+    <Card ref={containerRef} className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl">
       <CardContent className="p-8">
         <div className="text-center mb-8">
-          <h3 className="text-3xl font-bold mb-4">
+          <h3 className="text-3xl font-bold mb-4 text-white">
             {text.title}
           </h3>
-          <p className="text-lg opacity-90 mb-6">
+          <p className="text-lg text-white/60 mb-6">
             {text.description}
           </p>
         </div>
