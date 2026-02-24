@@ -1,42 +1,39 @@
 
-# Atualizar texto da Politica de Privacidade
+# Aumentar visibilidade do fundo laranja no hero das Politicas
 
-## Objetivo
-Substituir todo o conteudo PT da pagina de Politica de Privacidade pelo novo texto fornecido, que tem uma estrutura significativamente diferente: 11 secoes (em vez de 9), inclui uma tabela de classificacao de confidencialidade, subsecoes com dados de clientes/internos, e conteudo mais detalhado sobre conformidade com ISO/IEC 42001 e AI Act.
+## Problema
+O gradiente laranja esta aplicado corretamente no codigo, mas com apenas 15% de opacidade (`from-[#F4845F]/15`) sobre o fundo escuro `#0B1224`, o efeito e praticamente invisivel.
+
+## Solucao
+Aumentar a opacidade do gradiente de 15% para 30% e estender um pouco mais o alcance do gradiente adicionando uma cor intermediaria (`via`), para que o efeito laranja suave fique visivel sem ser agressivo.
 
 ## Mudancas
 
-### `src/pages/PrivacyPolicy.tsx` - Reescrita completa
+### 1. `src/pages/PrivacyPolicy.tsx` (linha 166)
 
-A estrutura atual usa um objeto `content` com EN/PT e um `renderSection` generico. O novo conteudo PT exige:
+Antes:
+```
+bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]
+```
 
-1. **Novo conteudo PT** com 11 secoes:
-   - 1. Introducao (2 paragrafos)
-   - 2. Principios de Protecao de Dados (texto + 6 items com titulos em negrito)
-   - 3. Classificacao de Confidencialidade (texto + tabela 4x3)
-   - 4. Dados Tratados (2 subsecoes: 4.1 Dados de Clientes, 4.2 Dados Internos - cada com bullets e classificacao)
-   - 5. Compartilhamento de Dados (3 bullets)
-   - 6. Seguranca da Informacao (6 bullets)
-   - 7. Conformidade com a Lei de IA da UE (5 bullets)
-   - 8. Direitos dos Clientes (4 bullets)
-   - 9. Confidencialidade e Propriedade Intelectual (3 bullets)
-   - 10. Atualizacoes da Politica (paragrafo simples)
-   - 11. Contato (email: security@infinity6.com + frase de compromisso)
+Depois:
+```
+bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/10 to-[#0B1224]
+```
 
-2. **Manter conteudo EN** inalterado (sera exibido quando o idioma for ingles)
+### 2. `src/pages/EthicsPolicy.tsx` (linha 259)
 
-3. **Adaptar o JSX de renderizacao** para suportar:
-   - Tabela estilizada (secao 3)
-   - Subsecoes numeradas (secao 4)
-   - Bullets com texto em negrito seguido de descricao (secao 2)
-   - Novo email de contato (security@infinity6.com) e frase final com icone de cadeado
+Mesma alteracao:
 
-4. **Renderizacao condicional por idioma**: como a estrutura PT e EN sao muito diferentes agora, o JSX sera dividido - EN usa a renderizacao atual, PT usa uma renderizacao customizada para acomodar tabela e subsecoes.
+Antes:
+```
+bg-gradient-to-b from-[#F4845F]/15 to-[#0B1224]
+```
 
-## Detalhes tecnicos
+Depois:
+```
+bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/10 to-[#0B1224]
+```
 
-- O objeto `content.pt` sera completamente substituido com as novas secoes
-- Uma funcao `renderPTContent()` sera criada para renderizar o layout PT com tabela e subsecoes
-- A funcao `renderSection()` existente continua sendo usada para o conteudo EN
-- A tabela de classificacao usara classes Tailwind consistentes com o design existente (`bg-white/5`, `border-white/10`, `text-white/70`)
-- Items com titulo em negrito usarao `<strong className="text-white">` seguido do texto em `text-white/70`
+## Resultado
+O laranja no topo do hero tera 30% de opacidade (o dobro do atual), com uma transicao suave passando por 10% antes de chegar ao fundo escuro. Isso cria um destaque visivel mas ainda elegante.
