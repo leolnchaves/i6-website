@@ -40,9 +40,6 @@ const ContactHero = memo(() => {
               </span>
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-white/60 mb-8 leading-relaxed whitespace-pre-line">
-            {text.description}
-          </p>
         </div>
       </div>
     </section>

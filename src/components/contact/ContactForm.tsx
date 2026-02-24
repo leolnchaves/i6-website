@@ -37,6 +37,7 @@ const ContactForm = memo(() => {
     pt: {
       title1: "Transforme seu negócio com",
       title2: "Inteligência Artificial",
+      subtitle: "Fale conosco e compartilhe seu objetivo ou desafio estratégico.",
       name: "Nome completo",
       email: "Email profissional",
       company: "Empresa",
@@ -53,6 +54,7 @@ const ContactForm = memo(() => {
     en: {
       title1: "Growth starts with one message.",
       title2: "Send yours.",
+      subtitle: "Talk to us and share your strategic goal or challenge.",
       name: "Full name",
       email: "Professional email",
       company: "Company",
@@ -126,6 +128,7 @@ const ContactForm = memo(() => {
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
       <CardContent className="p-8 flex-1 flex flex-col">
+        <p className="text-sm text-white/50 mb-6 leading-relaxed">{text.subtitle}</p>
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
           <div className="flex-1 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
