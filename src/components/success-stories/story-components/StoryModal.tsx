@@ -64,7 +64,7 @@ const StoryModal: React.FC<StoryModalProps> = memo(({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Gradient bar */}
-        <div className="h-1 bg-gradient-to-r from-[#F4845F] to-[#3B82F6]"></div>
+        <div className="h-1 bg-[#F4845F]"></div>
 
         {/* Close button */}
         <Button
