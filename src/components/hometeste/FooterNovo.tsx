@@ -1,12 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import logoFooter from '@/assets/images/logo-footer.png';
 import { useCallback } from 'react';
 
 const FooterNovo = () => {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleNav = useCallback(
     (href: string) => {
@@ -18,8 +20,12 @@ const FooterNovo = () => {
 
   const desc =
     language === 'pt'
-      ? 'Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.'
-      : 'Technology that connects data and decisions in real time.\nGrow faster, scale smarter.';
+      ? isMobile
+        ? 'Tecnologia que conecta dados\ne decisões em tempo real.\nCresça com velocidade,\nescale com precisão.'
+        : 'Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.'
+      : isMobile
+        ? 'Technology that connects data\nand decisions in real time.\nGrow faster, scale smarter.'
+        : 'Technology that connects data and decisions in real time.\nGrow faster, scale smarter.';
 
   const copyright =
     language === 'pt'
