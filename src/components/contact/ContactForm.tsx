@@ -35,8 +35,8 @@ const ContactForm = memo(() => {
   // Static content - memoized for stability
   const content = useMemo(() => ({
     pt: {
-      title1: "Transforme seu negócio com",
-      title2: "Inteligência Artificial",
+      title1: "Comece a Movimentar",
+      title2: "Seus Resultados",
       subtitle: "Fale conosco e compartilhe seu objetivo ou desafio estratégico.",
       name: "Nome completo",
       email: "Email profissional",
@@ -52,8 +52,8 @@ const ContactForm = memo(() => {
       errors: { nameRequired: "Preencha este campo.", emailRequired: "Preencha este campo.", emailInvalid: "Preencha este campo.", subjectRequired: "Preencha este campo.", messageRequired: "Preencha este campo.", messageMinLength: "Preencha este campo." }
     },
     en: {
-      title1: "Growth starts with one message.",
-      title2: "Send yours.",
+      title1: "Start Moving",
+      title2: "Your Results",
       subtitle: "Talk to us and share your strategic goal or challenge.",
       name: "Full name",
       email: "Professional email",
