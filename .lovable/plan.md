@@ -1,26 +1,19 @@
 
-# Igualar os títulos dos cards de Formulário e Calendly
 
-## Problema
-O card do Calendly tem um título grande e bold ("Prefere avançar direto para uma conversa estratégica?"), enquanto o card do formulário de contato não exibe nenhum título visível -- apenas o subtítulo pequeno em texto claro.
+# Substituir titulo do formulario de contato
 
-## Solução
-Adicionar o título existente (`title1` + `title2`) ao card do formulário, usando exatamente o mesmo estilo tipográfico do título do Calendly: `text-3xl font-bold text-white`.
+## Mudanca
+Atualizar o titulo do card do formulario na pagina /contact de "Transforme seu negocio com Inteligencia Artificial" para "Comece a Movimentar Seus Resultados".
 
-## Mudanças
+## Arquivo: `src/components/contact/ContactForm.tsx`
 
-### 1. `src/components/contact/ContactForm.tsx`
-- Inserir o título (combinando `title1` e `title2`) acima do subtítulo dentro do `CardContent`
-- Usar as mesmas classes do Calendly: `text-3xl font-bold mb-4 text-white`
+**Portugues (linha 37-39):**
+- `title1`: de "Transforme seu negócio com" para "Comece a Movimentar"
+- `title2`: de "Inteligência Artificial" para "Seus Resultados"
 
-### 2. Nenhuma mudança no `CalendlySection.tsx`
-O estilo do Calendly já está correto e serve como referência.
+**Ingles (linha 55-56):**
+- `title1`: de "Growth starts with one message." para "Start Moving"
+- `title2`: de "Send yours." para "Your Results"
 
-## Detalhes Técnicos
-- No `ContactForm.tsx`, antes da tag `<p>` do subtítulo (linha 131), será adicionado:
-```tsx
-<h3 className="text-3xl font-bold mb-4 text-white">
-  {text.title1} {text.title2}
-</h3>
-```
-- Isso garante que ambos os cards usem `h3`, `text-3xl`, `font-bold`, `mb-4` e `text-white` como padrão tipográfico consistente.
+Nenhum outro arquivo precisa ser alterado.
+
