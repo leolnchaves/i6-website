@@ -85,7 +85,7 @@ const FAQSection = memo(() => {
   }, []);
 
   return (
-    <section className="py-24 relative">
+    <section className="py-10 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
