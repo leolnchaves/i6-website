@@ -29,7 +29,7 @@ const FAQSection = memo(() => {
   const content = useMemo(() => ({
     pt: {
       title: "O Que Você Precisa Saber",
-      subtitle: "Perguntas comuns sobre nossas soluções e serviços de IA.",
+      subtitle: "Respostas objetivas sobre como implementar inteligência preditiva com rapidez e segurança.",
       searchPlaceholder: "Digite para buscar nas perguntas frequentes...",
       noResults: "Nenhuma pergunta frequente encontrada correspondendo à sua busca. Tente palavras-chave diferentes.",
       faqs: [
