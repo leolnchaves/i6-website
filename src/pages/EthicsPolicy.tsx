@@ -303,7 +303,7 @@ const EthicsPolicy = () => {
                 <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.officer}</strong></p>
                 <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
                 
-                <p className="text-white/70"><strong className="text-white">{currentContent.sections.contact.address}</strong> {currentContent.sections.contact.company}</p>
+                
               </div>
             </section>
           </div>
