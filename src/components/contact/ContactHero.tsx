@@ -35,7 +35,7 @@ const ContactHero = memo(() => {
               {text.subtitle}
             </span>
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-white/60 mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg text-white/60 mb-8 leading-relaxed">
             {text.description}
           </p>
         </div>
