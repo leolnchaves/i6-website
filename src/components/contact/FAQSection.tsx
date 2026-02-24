@@ -48,9 +48,9 @@ const FAQSection = memo(() => {
       ]
     },
     en: {
-      title: "Frequently Asked Questions",
-      subtitle: "Common questions about our AI solutions and services.",
-      searchPlaceholder: "Type to search frequently asked questions...",
+      title: "What You Need to Know",
+      subtitle: "Straight answers on how to deploy predictive intelligence quickly and securely.",
+      searchPlaceholder: "Search by topic, challenge or keyword...",
       noResults: "No FAQs found matching your search. Try different keywords.",
       faqs: [
         { id: 1, question: "How long does it take to put intelligence into production?", answer: "We deploy predictive intelligence into production within 4 to 12 weeks, generating measurable financial impact from the first activations, whether in revenue growth, margin protection or operational efficiency gains.", order: 1 },
