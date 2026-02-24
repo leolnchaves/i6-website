@@ -24,12 +24,12 @@ const SuccessStories = memo(() => {
           <HeaderNovo />
         </div>
         <div className="relative z-[10]">
-          <SuccessStoriesHero />
-          
-          <SegmentFilter
-            onSegmentChange={setSelectedSegment}
-            selectedSegment={selectedSegment}
-          />
+          <SuccessStoriesHero>
+            <SegmentFilter
+              onSegmentChange={setSelectedSegment}
+              selectedSegment={selectedSegment}
+            />
+          </SuccessStoriesHero>
           <ModernStoriesGrid selectedSegment={selectedSegment} />
           <TestimonialsSection />
         </div>

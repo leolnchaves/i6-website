@@ -3,7 +3,11 @@ import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 
-const SuccessStoriesHero = memo(() => {
+interface SuccessStoriesHeroProps {
+  children?: React.ReactNode;
+}
+
+const SuccessStoriesHero = memo(({ children }: SuccessStoriesHeroProps) => {
   const { language } = useLanguage();
   const heroContent = successStoriesData[language]?.hero || successStoriesData.en.hero;
 
@@ -22,9 +26,10 @@ const SuccessStoriesHero = memo(() => {
               {heroContent.subtitle}
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed mb-8">
             {heroContent.description}
           </p>
+          {children}
         </div>
       </div>
     </section>
