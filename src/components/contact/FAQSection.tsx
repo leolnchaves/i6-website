@@ -30,7 +30,7 @@ const FAQSection = memo(() => {
     pt: {
       title: "O Que Você Precisa Saber",
       subtitle: "Respostas objetivas sobre como implementar inteligência preditiva com rapidez e segurança.",
-      searchPlaceholder: "Digite para buscar nas perguntas frequentes...",
+      searchPlaceholder: "Busque por tema, desafio ou palavra-chave...",
       noResults: "Nenhuma pergunta frequente encontrada correspondendo à sua busca. Tente palavras-chave diferentes.",
       faqs: [
         { id: 1, question: "Quanto tempo leva a implementação de IA?", answer: "O tempo de implementação varia dependendo da complexidade do projeto. A maioria dos nossos clientes vê implantação completa de 1 a 3 meses, com resultados mensuráveis começando em apenas algumas semanas.", order: 1 },
