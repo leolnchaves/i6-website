@@ -2,7 +2,6 @@
 import React, { memo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import { logger } from '@/utils/logger';
@@ -18,23 +17,21 @@ const SuccessStoriesCTA = memo(() => {
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-[#0B1224]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl font-bold text-gray-900 mb-6">
+        <h2 className="text-4xl font-bold text-white mb-6">
           {ctaContent.title}
         </h2>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        <p className="text-xl text-white/60 mb-8 max-w-2xl mx-auto">
           {ctaContent.description}
         </p>
-        <Link to="/contact#contact-form">
-          <Button 
-            size="lg" 
-            onClick={handleCTAClick}
-            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
-          >
-            {ctaContent.buttonText}
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+        <Link 
+          to="/contact#contact-form"
+          onClick={handleCTAClick}
+          className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
+        >
+          {ctaContent.buttonText}
+          <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
         </Link>
       </div>
     </section>

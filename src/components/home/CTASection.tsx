@@ -1,7 +1,6 @@
 
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { logger } from '@/utils/logger';
@@ -23,35 +22,26 @@ const CTASection = () => {
   };
   
   return (
-    <section className="py-20 bg-gray-50" role="region" aria-labelledby="cta-heading">
+    <section className="py-20 bg-[#0B1224]" role="region" aria-labelledby="cta-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* CTA Heading */}
         <h2 
           id="cta-heading"
-          className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          className="text-4xl md:text-5xl font-bold text-white mb-6"
         >
           {t('cta.title')}
         </h2>
-        
-        {/* CTA Description */}
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        <p className="text-xl text-white/60 mb-8 max-w-2xl mx-auto">
           {t('cta.description')}
         </p>
-        
-        {/* CTA Button */}
-        <Link to="/contact#contact-form">
-          <Button 
-            size="lg" 
-            onClick={handleCTAClick}
-            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold hover:scale-105"
-            aria-describedby="cta-description"
-          >
-            {t('cta.button')}
-            <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
-          </Button>
+        <Link 
+          to="/contact#contact-form"
+          onClick={handleCTAClick}
+          className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
+          aria-describedby="cta-description"
+        >
+          {t('cta.button')}
+          <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" aria-hidden="true" />
         </Link>
-        
-        {/* Screen reader description */}
         <div id="cta-description" className="sr-only">
           Click to start your AI transformation journey
         </div>
