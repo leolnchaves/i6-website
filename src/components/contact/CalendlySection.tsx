@@ -29,7 +29,7 @@ const CalendlySection = memo(() => {
     },
     en: {
       title: "Sometimes a quick chat is all it takes.",
-      description: "Let's cut to the chase: schedule a session with our experts now!"
+      description: "Or schedule a strategic conversation to map predictive impact on your business."
     }
   }), []);
 
