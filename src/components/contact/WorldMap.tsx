@@ -141,10 +141,8 @@ const WorldMap = memo(() => {
             ))}
           </div>
         </TooltipProvider>
-        
-        <p className="text-sm text-white/40 mt-4 text-center">
-          {text.hoverTip}
-        </p>
+
+
       </CardContent>
     </Card>
   );
