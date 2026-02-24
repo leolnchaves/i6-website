@@ -55,7 +55,7 @@ const TestimonialsSection = memo(() => {
             </p>
           </div>
         ) : (
-          <div className="max-w-7xl mx-auto relative px-4 sm:px-8 md:px-16 lg:px-24">
+          <div className="max-w-7xl mx-auto relative px-4">
             <Carousel
               setApi={setApi}
               className="w-full"
@@ -64,7 +64,7 @@ const TestimonialsSection = memo(() => {
             >
               <CarouselContent className="-ml-2 md:-ml-3">
                 {testimonials.map((testimonial) => (
-                  <CarouselItem key={testimonial.id} className="pl-2 md:pl-3 basis-full sm:basis-1/2 lg:basis-[30%]">
+                  <CarouselItem key={testimonial.id} className="pl-2 md:pl-3 basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="group h-full">
                       <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-4 h-full transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-xl hover:shadow-[#F4845F]/5 hover:-translate-y-1 relative flex flex-col min-h-[280px]">
                         <div className="flex items-center justify-between mb-3">
