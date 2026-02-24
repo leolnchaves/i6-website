@@ -11,12 +11,12 @@ const CTAFinal = () => {
     pt: {
       lineStart: 'Seus dados já têm as respostas.\nSó falta ',
       lineHighlight: 'movimento.',
-      cta: isMobile ? 'Vamos transformar dados em lucro?' : 'Pronto para transformar dados em lucro?',
+      cta: isMobile ? 'Pronto para transformar\ndados em lucro?' : 'Pronto para transformar dados em lucro?',
     },
     en: {
       lineStart: 'Your data already has the answers.\nAll it needs is ',
       lineHighlight: 'movement.',
-      cta: isMobile ? "Let's turn data into profit?" : 'Ready to turn data into profit?',
+      cta: isMobile ? 'Ready to turn\ndata into profit?' : 'Ready to turn data into profit?',
     },
   }[language];
 
@@ -28,7 +28,7 @@ const CTAFinal = () => {
         </p>
         <Link
           to="/contact"
-          className="group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-white/50 animate-glow-white transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4),0_0_60px_rgba(255,255,255,0.15)]"
+          className={`group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-white/50 animate-glow-white transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4),0_0_60px_rgba(255,255,255,0.15)] ${isMobile ? 'whitespace-pre-line text-center' : ''}`}
         >
           {copy.cta}
           <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
