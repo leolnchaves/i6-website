@@ -104,17 +104,8 @@ const EthicsPolicy = () => {
             "Transparent reporting of compliance metrics"
           ]
         },
-        reporting: {
-          title: "9. Reporting and Accountability",
-          text: "We believe in transparency and accountability in our ethical practices:",
-          hotline: "Ethics Hotline:",
-          hotlineText: "Report concerns confidentially",
-          email: "Email:",
-          report: "Annual Ethics Report:",
-          reportText: "Published annually on our website"
-        },
         contact: {
-          title: "10. Contact Our Ethics Team",
+          title: "9. Contact Our Ethics Team",
           text: "For questions about our ethics policy, to report concerns, or to discuss ethical considerations:",
           officer: "Chief Ethics Officer",
           email: "Email:",
@@ -221,17 +212,8 @@ const EthicsPolicy = () => {
             "Relatórios transparentes de métricas de conformidade"
           ]
         },
-        reporting: {
-          title: "9. Relatórios e Responsabilização",
-          text: "Acreditamos na transparência e responsabilização em nossas práticas éticas:",
-          hotline: "Linha Direta de Ética:",
-          hotlineText: "Relate preocupações confidencialmente",
-          email: "Email:",
-          report: "Relatório Anual de Ética:",
-          reportText: "Publicado anualmente em nosso site"
-        },
         contact: {
-          title: "10. Contate Nossa Equipe de Ética",
+          title: "9. Contate Nossa Equipe de Ética",
           text: "Para perguntas sobre nossa política de ética, para relatar preocupações ou discutir considerações éticas:",
           officer: "Diretor de Ética",
           email: "Email:",
@@ -313,16 +295,6 @@ const EthicsPolicy = () => {
             {renderSection(currentContent.sections.stakeholder.title, currentContent.sections.stakeholder.text, currentContent.sections.stakeholder.items)}
             {renderSection(currentContent.sections.improvement.title, currentContent.sections.improvement.text, currentContent.sections.improvement.items)}
             {renderSection(currentContent.sections.compliance.title, currentContent.sections.compliance.text, currentContent.sections.compliance.items)}
-
-            <section className="border-b border-white/10 pb-8">
-              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.reporting.title}</h2>
-              <p className="text-white/70 mb-4">{currentContent.sections.reporting.text}</p>
-              <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.reporting.hotline}</strong> {currentContent.sections.reporting.hotlineText}</p>
-                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.reporting.email}</strong> ethics@infinity6.ai</p>
-                <p className="text-white/70"><strong className="text-white">{currentContent.sections.reporting.report}</strong> {currentContent.sections.reporting.reportText}</p>
-              </div>
-            </section>
 
             <section>
               <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
