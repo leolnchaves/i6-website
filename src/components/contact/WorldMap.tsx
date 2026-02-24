@@ -18,10 +18,10 @@ const WorldMap = memo(() => {
   const content = useMemo(() => ({
     pt: {
       title: "Nossa Presença Global",
-      description: "Clique em cada localização para ver informações detalhadas de contato.",
+      description: "Posicione o mouse nas localizações para ver informações detalhadas de contato.",
       headquarters: "Sede",
       brazil: "Brasil",
-      hoverTip: "Passe o mouse sobre as localizações para mais informações"
+      hoverTip: "Posicione o mouse sobre as localizações para mais informações"
     },
     en: {
       title: "Our Global Presence", 
