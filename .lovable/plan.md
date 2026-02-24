@@ -1,75 +1,79 @@
 
-# Redesign da pagina /contact para o novo layout
 
-## Resumo
-Migrar a pagina `/contact` do layout antigo (Layout wrapper com Header/Footer padrao, fundo branco) para o novo layout dark com ondas verticais, HeaderNovo, FooterNovo -- o mesmo padrao visual das paginas `/solutions` e `/success-stories`. Sem CTA final. Os textos existentes serao mantidos, apenas adaptados ao novo estilo visual.
+# Corrigir flash do header ao navegar entre paginas
+
+## Problema
+Cada pagina (Home, Solutions, SuccessStories, Contact) renderiza sua propria instancia de `HeaderNovo`. Ao navegar, o React desmonta a pagina inteira (incluindo o header) e monta a nova, causando o flash visual onde a logo desaparece e os menus se reposicionam.
+
+## Solucao
+Criar um layout compartilhado para as paginas que usam `HeaderNovo`/`FooterNovo`, de forma que o header e footer persistam entre navegacoes sem remontar.
 
 ## Mudancas
 
-### 1. `src/App.tsx` -- Mover rota para fora do Layout wrapper
-- Remover `/contact` de dentro do `<Layout>` wrapper
-- Adicionar como rota standalone (como `/solutions` e `/success-stories`)
+### 1. Criar `src/components/DarkLayout.tsx`
+Novo componente de layout para as paginas dark, contendo:
+- `HeaderNovo` (z-[20])
+- `FooterNovo` (z-[20])
+- `VerticalWaves`
+- `CookieConsentManager`
+- Slot para conteudo filho (children)
+- Background `bg-[#0B1224]`
 
-### 2. `src/pages/Contact.tsx` -- Reescrever estrutura da pagina
-- Fundo dark `bg-[#0B1224]`
-- Adicionar `VerticalWaves` (mesma posicao das outras paginas)
-- Adicionar `HeaderNovo` em `z-[20]`
-- Adicionar `FooterNovo` em `z-[20]`
-- Adicionar `CookieConsentManager`
-- Conteudo principal em `z-[10]`
-- Sem CTA final
-- Estrutura: ContactHero > FAQSection > ContactForm + Calendly > WorldMap > FooterNovo
+### 2. Atualizar `src/App.tsx`
+Agrupar as rotas `/`, `/solutions`, `/success-stories` e `/contact` dentro do `DarkLayout`, usando um `<Route>` pai com `<Outlet>`:
 
-### 3. `src/components/contact/ContactHero.tsx` -- Adaptar ao estilo dark
-- Remover background image com blur e overlays
-- Usar fundo transparente (herda o `bg-[#0B1224]` da pagina)
-- Titulo em branco com destaque coral (`#F4845F`) no subtitulo, com textShadow glow (igual SolutionsHero)
-- Descricao em `text-white/60`
-- Padding: `pt-28 pb-0` (mesma proporcao do SolutionsHero)
-- Remover hero-bg.jpg import
+```text
+Routes
+  DarkLayout (HeaderNovo + FooterNovo persistem)
+    / -> HomeTeste (sem header/footer proprio)
+    /solutions -> Solutions (sem header/footer proprio)
+    /success-stories -> SuccessStories (sem header/footer proprio)
+    /contact -> Contact (sem header/footer proprio)
+  Layout (Header antigo)
+    /privacy-policy
+    /ethics-policy
+    ...
+```
 
-### 4. `src/components/contact/FAQSection.tsx` -- Adaptar cores para tema dark
-- Background: transparente (sem `bg-gradient-to-b from-background`)
-- Titulo e textos em branco/white
-- Cards: `bg-white/5` com `border-white/10` (padrao dark das outras paginas)
-- Textos de perguntas em branco, respostas em `text-white/60`
-- Search input com estilo dark
-- Numeros em coral `text-[#F4845F]`
+### 3. Remover HeaderNovo, FooterNovo, VerticalWaves e CookieConsentManager de cada pagina
+Arquivos a editar:
+- `src/pages/HomeTeste.tsx` -- remover HeaderNovo, FooterNovo, VerticalWaves, CookieConsentManager
+- `src/pages/Solutions.tsx` -- remover os mesmos
+- `src/pages/SuccessStories.tsx` -- remover os mesmos
+- `src/pages/Contact.tsx` -- remover os mesmos
 
-### 5. `src/components/contact/ContactForm.tsx` -- Adaptar para dark
-- Card com `bg-white/5 border-white/10` em vez de branco
-- Titulo em branco
-- Labels em `text-white/70`
-- Inputs com `bg-white/10 border-white/10 text-white`
-- Botao mantendo gradiente coral/azul
-- Success message adaptada ao dark
-
-### 6. `src/components/contact/CalendlySection.tsx` -- Adaptar para dark
-- Card com `bg-white/5 border-white/10` (remover gradiente azul-laranja)
-- Titulo e descricao em branco
-- Iframe container mantido em branco (necessario para o Calendly funcionar)
-
-### 7. `src/components/contact/WorldMap.tsx` -- Adaptar para dark
-- Card com `bg-white/5 border-white/10`
-- Titulo e textos em branco
-- Fundo do mapa em `bg-white/5` ao inves de `bg-gray-50`
+Cada pagina passara a renderizar apenas seu conteudo especifico (hero, secoes, CTA, etc).
 
 ## Detalhes tecnicos
 
+### Arquivos criados
+1. `src/components/DarkLayout.tsx`
+
 ### Arquivos modificados
-1. `src/App.tsx` -- mover rota
-2. `src/pages/Contact.tsx` -- nova estrutura
-3. `src/components/contact/ContactHero.tsx` -- estilo dark
-4. `src/components/contact/FAQSection.tsx` -- estilo dark
-5. `src/components/contact/ContactForm.tsx` -- estilo dark
-6. `src/components/contact/CalendlySection.tsx` -- estilo dark
-7. `src/components/contact/WorldMap.tsx` -- estilo dark
+1. `src/App.tsx` -- reestruturar rotas com Outlet
+2. `src/pages/HomeTeste.tsx` -- remover header/footer/waves
+3. `src/pages/Solutions.tsx` -- remover header/footer/waves
+4. `src/pages/SuccessStories.tsx` -- remover header/footer/waves
+5. `src/pages/Contact.tsx` -- remover header/footer/waves
 
-### Nenhum arquivo novo criado
-Todos os componentes existentes serao reutilizados e adaptados.
+### Estrutura do DarkLayout
+```text
+<div className="min-h-screen bg-[#0B1224] relative">
+  <VerticalWaves />
+  <div className="relative">
+    <div className="relative z-[20]">
+      <HeaderNovo />
+    </div>
+    <div className="relative z-[10]">
+      <Outlet />   <-- conteudo da pagina
+    </div>
+    <div className="relative z-[20]">
+      <FooterNovo />
+    </div>
+    <CookieConsentManager />
+  </div>
+</div>
+```
 
-### Padroes seguidos
-- Mesmo z-index hierarchy: waves z-[15], content z-[10], header/footer z-[20]
-- Mesma paleta: Navy `#0B1224`, Coral `#F4845F`, `bg-white/5`, `border-white/10`
-- Mesmo hero spacing: `pt-28 pb-0` ou `pt-32 pb-16`
-- Mesmo glow effect no destaque coral: `textShadow: '0 0 30px rgba(244,132,95,0.3)'`
+Nota: Paginas que precisam de elementos fora do z-[10] (como CTAFinal em SuccessStories ou SolutionsCTA em Solutions) precisarao manter o z-index correto internamente. Sera verificado caso a caso.
+
