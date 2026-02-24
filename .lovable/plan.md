@@ -1,25 +1,22 @@
 
-# Uniformizar altura dos quadros de KPIs nos cards de cases
+# Centralizar logo verticalmente no modal de case
 
 ## Problema
-Os dois quadros de metricas (KPIs) dentro de cada card de caso de sucesso tem alturas diferentes dependendo do tamanho do texto do label. Cards com labels curtos ficam menores que cards com labels longos, causando desalinhamento visual.
-
-## Solucao
-Adicionar uma altura minima fixa (`min-h-[100px]`) nos containers dos KPIs dentro do `StoryCard.tsx`, garantindo que todos os quadros tenham o mesmo tamanho independente do conteudo.
+A logo da empresa no header do modal de detalhes do case esta alinhada ao topo do espaco, em vez de ficar centralizada verticalmente.
 
 ## Mudanca
 
-### `src/components/success-stories/story-components/StoryCard.tsx`
-- Nas duas `div` de metricas (linhas 71-78), adicionar `min-h-[100px]` e `flex flex-col justify-center` para que o conteudo fique centralizado verticalmente dentro de um box de tamanho uniforme.
+### `src/components/success-stories/story-components/StoryModal.tsx`
+- Na div que envolve a logo (linha 96), adicionar `self-center` para centralizar verticalmente dentro do flex container.
 
 Antes:
-```
-<div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+```html
+<div className="flex-shrink-0 mr-8">
 ```
 
 Depois:
-```
-<div className="text-center p-3 bg-white/5 rounded-lg border border-white/10 min-h-[100px] flex flex-col justify-center">
+```html
+<div className="flex-shrink-0 mr-8 self-center">
 ```
 
-Aplicado em ambos os quadros de metricas (metric1 e metric2).
+Apenas uma classe CSS adicionada, sem outras alteracoes.
