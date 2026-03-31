@@ -1,57 +1,27 @@
 
 
-# Reconstruir TeseSection: indicadores à esquerda, consequências à direita
+# Ajustar TeseSection: cards menores, texto maior, destaque laranja nos titulos
 
-## Conceito visual
-Layout side-by-side no desktop com uma seta/conector visual simulando "causa → consequência":
+## Mudancas em `src/components/hometeste/TeseSection.tsx`
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│  Titulo centralizado (mantido)                              │
-│  "Seus dados geram vantagem competitiva..."                 │
-├────────────────────────┬──┬─────────────────────────────────┤
-│  INDICADORES (esq)     │→ │  CONSEQUÊNCIAS (dir)            │
-│                        │  │                                 │
-│  ┌──────────────┐      │  │  Texto intro:                   │
-│  │  11%         │      │  │  "O custo da reação..."         │
-│  │  receita...  │      │  │                                 │
-│  ├──────────────┤      │  │  • Ruptura e Miopia de Mix      │
-│  │  31%         │      │  │  • Inacurácia de Demanda        │
-│  │  empresas... │      │  │  • Margem sob Pressão           │
-│  ├──────────────┤      │  │  • Ineficiência Comercial       │
-│  │  11%         │      │  │                                 │
-│  │  marcas...   │      │  │                                 │
-│  └──────────────┘      │  │                                 │
-├────────────────────────┴──┴─────────────────────────────────┤
-│  Texto bridge (mantido)                                     │
-│  "Dados, sozinhos, não criam vantagem competitiva..."       │
-└─────────────────────────────────────────────────────────────┘
+### 1. Layout do grid
+Alterar proporcoes de `lg:grid-cols-[1fr_auto_1fr]` para `lg:grid-cols-[280px_auto_1fr]` para que os cards ocupem menos espaco e o texto a direita tenha mais area.
+
+### 2. Cards de indicadores menores
+Reduzir padding de `p-6` para `p-4`, diminuir fonte do contador de `text-4xl sm:text-5xl` para `text-3xl sm:text-4xl`.
+
+### 3. Destaque laranja nos nomes dos problemas
+Remover o bullet (dot laranja) e substituir por um efeito visual nos titulos: fundo laranja semi-transparente (`bg-[#F4845F]/10`) com borda esquerda laranja (`border-l-3 border-[#F4845F]`) e padding, criando um destaque tipo "tag". O titulo fica em `text-[#F4845F] font-bold`.
+
+### 4. Texto narrativo atualizado
+- PT: "Dados parados não são neutros. São caros. A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem."
+- EN: equivalente traduzido ("Idle data isn't neutral. It's expensive. The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.")
+
+### 5. Estrutura dos bullets
+```tsx
+<li className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-3 pr-4">
+  <span className="font-bold text-[#F4845F]">{b.title}:</span>
+  <span className="text-[#0F172A]/70"> {b.desc}</span>
+</li>
 ```
-
-O conector visual entre esquerda e direita será uma seta SVG animada com gradiente laranja, criando a sensação de "esses números levam a esses problemas".
-
-## Mudanças
-
-### 1. `tsconfig.app.json`
-Adicionar `"types": ["node"]` ao `compilerOptions` para corrigir os erros de build com `process` e `NodeJS`.
-
-### 2. `src/components/hometeste/TeseSection.tsx`
-Reconstruir o layout central:
-
-- **Titulo e bridge**: mantidos intactos (posição e estilo)
-- **Bloco central**: trocar o grid 3-colunas centralizado por um layout `grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr]`
-  - **Coluna esquerda**: os 3 indicadores empilhados verticalmente (cards com fundo `bg-gray-50` sutil, borda leve)
-  - **Coluna central**: SVG com seta curva animada (gradiente `#F4845F`) apontando da esquerda para a direita, com animação de "draw-line"
-  - **Coluna direita**: texto introdutório "O custo da reação..." seguido dos 4 bullets com dot laranja e titulo em negrito
-- **Mobile**: empilha verticalmente (indicadores → seta apontando para baixo → bullets)
-- Conteudo bilíngue (PT e EN) inline no componente, mesmo padrão atual
-
-### Detalhes do conector visual
-- SVG de ~40px de largura no desktop, com path curvo tipo "→"
-- Animação CSS `draw-line` já existente no `index.css`
-- No mobile, rotaciona 90° para apontar para baixo
-
-### Estilo dos bullets
-- Cada bullet: dot laranja `w-2 h-2 rounded-full bg-[#F4845F]` + titulo em `font-semibold text-[#0B1224]` + descrição em `text-[#0F172A]/70`
-- Espaçamento `space-y-4`
 
