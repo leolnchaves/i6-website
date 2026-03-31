@@ -180,7 +180,7 @@ const TeseSection = () => {
             </p>
             <ul className="space-y-2">
               {copy.bullets.map((b, i) => (
-                <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-3 pr-4">
+                <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-2 pr-3">
                   <p className="text-sm md:text-base">
                     <span className="font-bold text-[#F4845F]">{b.title}:</span>{' '}
                     <span className="text-[#0F172A]/70">{b.desc}</span>
