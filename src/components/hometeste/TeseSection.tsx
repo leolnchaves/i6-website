@@ -22,7 +22,7 @@ const AnimatedCounter = ({ target, suffix = '%' }: { target: number; suffix?: st
   }, [isVisible, target]);
 
   return (
-    <span ref={elementRef} className="text-3xl sm:text-4xl font-bold text-[#F4845F]">
+    <span ref={elementRef} className="text-2xl sm:text-3xl font-bold text-[#F4845F]">
       {value}{suffix}
     </span>
   );
