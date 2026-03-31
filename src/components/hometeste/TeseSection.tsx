@@ -174,10 +174,11 @@ const TeseSection = () => {
 
           {/* RIGHT: Consequences */}
           <div className="text-left">
-            <p className="text-base md:text-lg text-[#0F172A]/70 mb-6">
-              {copy.narrative}
+            <p className="text-sm md:text-base text-[#0F172A]/70 mb-4">
+              <strong className="text-[#0B1224]">{copy.narrativeBold}</strong>{' '}
+              {copy.narrativeRest}
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {copy.bullets.map((b, i) => (
                 <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-3 pr-4">
                   <p className="text-sm md:text-base">
