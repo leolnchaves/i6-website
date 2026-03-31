@@ -161,7 +161,7 @@ const TeseSection = () => {
             {copy.stats.map((s, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center lg:items-start gap-2 bg-gray-50 rounded-xl p-6 border border-gray-100"
+                className="flex flex-col items-center lg:items-start gap-1 bg-gray-50 rounded-xl p-4 border border-gray-100"
               >
                 <AnimatedCounter target={s.value} />
                 <p className="text-sm text-[#0F172A]/60">{s.label}</p>
