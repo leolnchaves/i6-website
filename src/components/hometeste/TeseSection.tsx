@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
@@ -22,9 +22,89 @@ const AnimatedCounter = ({ target, suffix = '%' }: { target: number; suffix?: st
   }, [isVisible, target]);
 
   return (
-    <span ref={elementRef} className="text-5xl sm:text-6xl md:text-7xl font-bold text-[#F4845F]">
+    <span ref={elementRef} className="text-4xl sm:text-5xl font-bold text-[#F4845F]">
       {value}{suffix}
     </span>
+  );
+};
+
+const ArrowConnector = () => {
+  const { isVisible, elementRef } = useIntersectionObserver({ threshold: 0.3 });
+
+  return (
+    <div ref={elementRef} className="flex items-center justify-center">
+      {/* Desktop: horizontal arrow */}
+      <svg
+        className="hidden lg:block w-16 h-32"
+        viewBox="0 0 64 128"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="arrowGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#F4845F" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#F4845F" stopOpacity="1" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M8 64 L44 64"
+          stroke="url(#arrowGradient)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray={isVisible ? "0" : "40"}
+          strokeDashoffset={isVisible ? "0" : "40"}
+          style={{
+            transition: 'stroke-dasharray 1s ease-out 0.5s, stroke-dashoffset 1s ease-out 0.5s',
+          }}
+        />
+        <path
+          d="M38 54 L50 64 L38 74"
+          stroke="#F4845F"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity={isVisible ? 1 : 0}
+          style={{ transition: 'opacity 0.4s ease-out 1.3s' }}
+        />
+      </svg>
+
+      {/* Mobile: vertical arrow */}
+      <svg
+        className="block lg:hidden w-32 h-16"
+        viewBox="0 0 128 64"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="arrowGradientV" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#F4845F" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#F4845F" stopOpacity="1" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M64 8 L64 44"
+          stroke="url(#arrowGradientV)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray={isVisible ? "0" : "40"}
+          strokeDashoffset={isVisible ? "0" : "40"}
+          style={{
+            transition: 'stroke-dasharray 1s ease-out 0.5s, stroke-dashoffset 1s ease-out 0.5s',
+          }}
+        />
+        <path
+          d="M54 38 L64 50 L74 38"
+          stroke="#F4845F"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity={isVisible ? 1 : 0}
+          style={{ transition: 'opacity 0.4s ease-out 1.3s' }}
+        />
+      </svg>
+    </div>
   );
 };
 
@@ -39,8 +119,15 @@ const TeseSection = () => {
         { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
         { value: 11, label: 'das marcas personalizam experiências com dados' },
       ],
+      narrativeTitle: 'O custo da reação:',
+      narrativeIntro: 'dados que não se movem não são apenas neutros — eles são caros. A incapacidade de transformar volume de informação em inteligência preditiva gera um efeito cascata de ineficiências operacionais e comerciais:',
+      bullets: [
+        { title: 'Ruptura e Miopia de Mix', desc: 'O custo de ter o produto certo no lugar errado, ou um sortimento desalinhado com o comportamento real de consumo.' },
+        { title: 'Inacurácia de Demanda', desc: 'Produção baseada no "retrovisor", gerando excessos de estoque ou perdas críticas de oportunidade por falta de visão antecipada.' },
+        { title: 'Margem sob Pressão', desc: 'Precificação puramente reativa e descontos agressivos para desovar o que a falta de previsão acumulou.' },
+        { title: 'Ineficiência Comercial', desc: 'Esforço de vendas disperso em PDVs de baixa propensão, enquanto janelas de oportunidade real se fecham sem ativação.' },
+      ],
       bridge: 'Dados, sozinhos, não criam vantagem competitiva.\nO problema não é falta de dado, é falta de movimento.',
-      poke: '',
     },
     en: {
       question: 'Does your data drive competitive advantage\nor just feed dashboards?',
@@ -49,28 +136,66 @@ const TeseSection = () => {
         { value: 31, label: 'of companies use data for strategic decisions' },
         { value: 11, label: 'of brands personalize experiences with data' },
       ],
+      narrativeTitle: 'The cost of reaction:',
+      narrativeIntro: "data that doesn't move isn't just neutral — it's expensive. The inability to turn information volume into predictive intelligence creates a cascade of operational and commercial inefficiencies:",
+      bullets: [
+        { title: 'Stockouts & Mix Myopia', desc: 'The cost of having the right product in the wrong place, or an assortment misaligned with actual consumer behavior.' },
+        { title: 'Demand Inaccuracy', desc: 'Production based on the rearview mirror, generating excess inventory or critical missed opportunities due to lack of forward vision.' },
+        { title: 'Margin Under Pressure', desc: 'Purely reactive pricing and aggressive discounts to offload what poor forecasting accumulated.' },
+        { title: 'Commercial Inefficiency', desc: 'Sales effort scattered across low-propensity stores, while real opportunity windows close without activation.' },
+      ],
       bridge: "Data alone doesn't create competitive advantage.\nThe problem isn't lack of data — it's lack of movement.",
-      poke: '',
     },
   }[language];
 
   return (
     <section className="py-14 md:py-20 bg-white">
-      <div className="container mx-auto px-6 max-w-5xl text-center">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1224] leading-snug whitespace-pre-line">
+      <div className="container mx-auto px-6 max-w-6xl">
+        {/* Title - centered */}
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1224] leading-snug whitespace-pre-line text-center">
           {copy.question}
         </h2>
 
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-12">
-          {copy.stats.map((s, i) => (
-            <div key={i} className="flex flex-col items-center gap-3">
-              <AnimatedCounter target={s.value} />
-              <p className="text-sm text-[#0F172A]/60 max-w-[200px]">{s.label}</p>
-            </div>
-          ))}
+        {/* Side-by-side: indicators left | arrow | consequences right */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] items-center gap-8 lg:gap-6">
+          {/* LEFT: Indicators */}
+          <div className="space-y-6">
+            {copy.stats.map((s, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center lg:items-start gap-2 bg-gray-50 rounded-xl p-6 border border-gray-100"
+              >
+                <AnimatedCounter target={s.value} />
+                <p className="text-sm text-[#0F172A]/60">{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* CENTER: Arrow connector */}
+          <ArrowConnector />
+
+          {/* RIGHT: Consequences */}
+          <div className="text-left">
+            <p className="text-lg md:text-xl text-[#0B1224] mb-4">
+              <span className="font-bold">{copy.narrativeTitle}</span>{' '}
+              <span className="text-[#0F172A]/70">{copy.narrativeIntro}</span>
+            </p>
+            <ul className="space-y-4">
+              {copy.bullets.map((b, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="mt-2 w-2 h-2 rounded-full bg-[#F4845F] shrink-0" />
+                  <p className="text-sm md:text-base text-[#0F172A]/70">
+                    <span className="font-semibold text-[#0B1224]">{b.title}:</span>{' '}
+                    {b.desc}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed">
+        {/* Bridge text - centered */}
+        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed text-center">
           {copy.bridge.split('\n')[0]}
           <br />
           <span className="text-[#F4845F]">
@@ -83,9 +208,6 @@ const TeseSection = () => {
               ) : <span key={i}>{part}</span>
             )}
           </span>
-        </p>
-        <p className="mt-4 text-base text-[#F4845F] font-medium italic">
-          {copy.poke}
         </p>
       </div>
     </section>
