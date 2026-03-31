@@ -157,7 +157,7 @@ const TeseSection = () => {
         {/* Side-by-side: indicators left | arrow | consequences right */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-[280px_auto_1fr] items-center gap-8 lg:gap-6">
           {/* LEFT: Indicators */}
-          <div className="space-y-6">
+          <div className="space-y-3">
             {copy.stats.map((s, i) => (
               <div
                 key={i}
