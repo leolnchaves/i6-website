@@ -119,7 +119,7 @@ const TeseSection = () => {
         { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
         { value: 11, label: 'das marcas personalizam experiências com dados' },
       ],
-      narrativeBold: 'Seus dados parados são o lucro da concorrência.',
+      narrativeBold: 'Dados parados são o lucro da concorrência.',
       narrativeRest: 'A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
       bullets: [
         { title: 'Ruptura e Miopia de Mix', desc: 'O custo de ter o produto certo no lugar errado, ou um sortimento desalinhado com o comportamento real de consumo.' },
