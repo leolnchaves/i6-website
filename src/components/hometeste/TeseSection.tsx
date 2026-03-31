@@ -147,7 +147,7 @@ const TeseSection = () => {
   }[language];
 
   return (
-    <section className="py-14 md:py-20 bg-white">
+    <section className="py-10 md:py-14 bg-white">
       <div className="container mx-auto px-6 max-w-6xl">
         {/* Title - centered */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1224] leading-snug whitespace-pre-line text-center">
