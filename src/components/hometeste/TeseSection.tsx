@@ -135,8 +135,7 @@ const TeseSection = () => {
         { value: 31, label: 'of companies use data for strategic decisions' },
         { value: 11, label: 'of brands personalize experiences with data' },
       ],
-      narrativeTitle: 'The cost of reaction:',
-      narrativeIntro: "data that doesn't move isn't just neutral — it's expensive. The inability to turn information volume into predictive intelligence creates a cascade of operational and commercial inefficiencies:",
+      narrative: "Idle data isn't neutral. It's expensive. The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.",
       bullets: [
         { title: 'Stockouts & Mix Myopia', desc: 'The cost of having the right product in the wrong place, or an assortment misaligned with actual consumer behavior.' },
         { title: 'Demand Inaccuracy', desc: 'Production based on the rearview mirror, generating excess inventory or critical missed opportunities due to lack of forward vision.' },
