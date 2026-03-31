@@ -1,37 +1,42 @@
 
 
-# Compactar TeseSection para caber sem scroll + atualizar texto
+# Análise: Desconectar o banco de dados do site
 
-## Problema
-A secao esta muito alta e nao cabe em uma unica viewport (1021x743). Os espacamentos verticais sao excessivos: `py-14 md:py-20`, `mt-16` entre titulo e grid, `space-y-6` entre cards, `mt-16` antes do bridge.
+## Resultado da investigação
 
-## Mudancas em `src/components/hometeste/TeseSection.tsx`
+O código do site **não utiliza nenhuma tabela do banco de dados**. Confirmações:
 
-### 1. Reduzir espacamentos verticais
-- Secao: `py-14 md:py-20` → `py-10 md:py-14`
-- Titulo ao grid: `mt-16` → `mt-8`
-- Entre indicator cards: `space-y-6` → `space-y-3`
-- Padding dos cards: `p-4` → `p-3`
-- Entre bullets: `space-y-3` → `space-y-2`
-- Padding dos bullets: `py-3 pr-4` → `py-2 pr-3`
-- Narrative `mb-6` → `mb-4`
-- Bridge: `mt-16` → `mt-8`
+1. **Nenhum import do cliente Supabase** em nenhum componente ou página (apenas o arquivo auto-gerado `client.ts` existe)
+2. **Nenhuma referência a tabelas `cms_*`** em todo o código
+3. **Todo o conteúdo vem de arquivos `.md`** em `/public/content/`
+4. Existem 25 migrations que criaram tabelas CMS (cms_pages, cms_users, cms_testimonials, etc.) que estão completamente sem uso
 
-### 2. Reduzir fontes
-- Titulo: `text-2xl sm:text-3xl md:text-4xl` → `text-xl sm:text-2xl md:text-3xl`
-- Counter: `text-3xl sm:text-4xl` → `text-2xl sm:text-3xl`
-- Bridge: `text-lg md:text-xl` → `text-base md:text-lg`
+## Sobre desconectar o banco
 
-### 3. Atualizar texto narrativo
-- PT: **"Seus dados parados são o lucro da concorrência."** (em negrito) + resto: "A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem."
-- EN: **"Your idle data is your competitor's profit."** (em negrito) + resto mantido
+Infelizmente, **não é possível desconectar o Lovable Cloud** uma vez que foi habilitado no projeto. Isso é uma limitação da plataforma — restaurar para uma versão anterior também não resolve.
 
-### 4. Implementacao do negrito
-Separar a primeira frase em um `<strong>` e o resto em `<span>`:
-```tsx
-<p className="text-sm md:text-base text-[#0F172A]/70 mb-4">
-  <strong className="text-[#0B1224]">{copy.narrativeBold}</strong>{' '}
-  {copy.narrativeRest}
-</p>
+O que **podemos fazer**:
+
+1. **Dropar todas as tabelas CMS** via migration — eliminando os riscos de segurança apontados no scan (RLS desabilitado, senhas expostas, etc.)
+2. **Desabilitar Cloud para projetos futuros** em Settings → Connectors → Lovable Cloud → Disable Cloud
+
+## Plano de ação
+
+### Migration SQL para limpar o banco
+Criar uma migration que dropa todas as tabelas e tipos não utilizados:
+
+```sql
+DROP TABLE IF EXISTS cms_page_content CASCADE;
+DROP TABLE IF EXISTS cms_results_cards CASCADE;
+DROP TABLE IF EXISTS cms_testimonials CASCADE;
+DROP TABLE IF EXISTS cms_faq_cards CASCADE;
+DROP TABLE IF EXISTS cms_seo CASCADE;
+DROP TABLE IF EXISTS cms_success_stories_cards CASCADE;
+DROP TABLE IF EXISTS cms_solutions_cards CASCADE;
+DROP TABLE IF EXISTS cms_pages CASCADE;
+DROP TABLE IF EXISTS cms_users CASCADE;
+-- Drop any custom types/functions created by migrations
 ```
+
+Isso resolve todos os 4 alertas de segurança identificados no scan (RLS desabilitado, senhas expostas, etc.) pois as tabelas simplesmente deixarão de existir.
 
