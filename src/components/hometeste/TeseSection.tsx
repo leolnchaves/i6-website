@@ -174,17 +174,15 @@ const TeseSection = () => {
 
           {/* RIGHT: Consequences */}
           <div className="text-left">
-            <p className="text-lg md:text-xl text-[#0B1224] mb-4">
-              <span className="font-bold">{copy.narrativeTitle}</span>{' '}
-              <span className="text-[#0F172A]/70">{copy.narrativeIntro}</span>
+            <p className="text-base md:text-lg text-[#0F172A]/70 mb-6">
+              {copy.narrative}
             </p>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {copy.bullets.map((b, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="mt-2 w-2 h-2 rounded-full bg-[#F4845F] shrink-0" />
-                  <p className="text-sm md:text-base text-[#0F172A]/70">
-                    <span className="font-semibold text-[#0B1224]">{b.title}:</span>{' '}
-                    {b.desc}
+                <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-3 pr-4">
+                  <p className="text-sm md:text-base">
+                    <span className="font-bold text-[#F4845F]">{b.title}:</span>{' '}
+                    <span className="text-[#0F172A]/70">{b.desc}</span>
                   </p>
                 </li>
               ))}
