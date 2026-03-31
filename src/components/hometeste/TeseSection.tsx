@@ -119,7 +119,8 @@ const TeseSection = () => {
         { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
         { value: 11, label: 'das marcas personalizam experiências com dados' },
       ],
-      narrative: 'Dados parados não são neutros. São caros. A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
+      narrativeBold: 'Seus dados parados são o lucro da concorrência.',
+      narrativeRest: 'A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
       bullets: [
         { title: 'Ruptura e Miopia de Mix', desc: 'O custo de ter o produto certo no lugar errado, ou um sortimento desalinhado com o comportamento real de consumo.' },
         { title: 'Inacurácia de Demanda', desc: 'Produção baseada no "retrovisor", gerando excessos de estoque ou perdas críticas de oportunidade por falta de visão antecipada.' },
