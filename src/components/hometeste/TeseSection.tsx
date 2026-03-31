@@ -192,7 +192,7 @@ const TeseSection = () => {
         </div>
 
         {/* Bridge text - centered */}
-        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed text-center">
+        <p className="mt-8 text-base md:text-lg text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed text-center">
           {copy.bridge.split('\n')[0]}
           <br />
           <span className="text-[#F4845F]">
