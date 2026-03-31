@@ -22,7 +22,7 @@ const AnimatedCounter = ({ target, suffix = '%' }: { target: number; suffix?: st
   }, [isVisible, target]);
 
   return (
-    <span ref={elementRef} className="text-3xl sm:text-4xl font-bold text-[#F4845F]">
+    <span ref={elementRef} className="text-2xl sm:text-3xl font-bold text-[#F4845F]">
       {value}{suffix}
     </span>
   );
@@ -119,7 +119,8 @@ const TeseSection = () => {
         { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
         { value: 11, label: 'das marcas personalizam experiências com dados' },
       ],
-      narrative: 'Dados parados não são neutros. São caros. A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
+      narrativeBold: 'Seus dados parados são o lucro da concorrência.',
+      narrativeRest: 'A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
       bullets: [
         { title: 'Ruptura e Miopia de Mix', desc: 'O custo de ter o produto certo no lugar errado, ou um sortimento desalinhado com o comportamento real de consumo.' },
         { title: 'Inacurácia de Demanda', desc: 'Produção baseada no "retrovisor", gerando excessos de estoque ou perdas críticas de oportunidade por falta de visão antecipada.' },
@@ -135,7 +136,8 @@ const TeseSection = () => {
         { value: 31, label: 'of companies use data for strategic decisions' },
         { value: 11, label: 'of brands personalize experiences with data' },
       ],
-      narrative: "Idle data isn't neutral. It's expensive. The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.",
+      narrativeBold: "Your idle data is your competitor's profit.",
+      narrativeRest: "The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.",
       bullets: [
         { title: 'Stockouts & Mix Myopia', desc: 'The cost of having the right product in the wrong place, or an assortment misaligned with actual consumer behavior.' },
         { title: 'Demand Inaccuracy', desc: 'Production based on the rearview mirror, generating excess inventory or critical missed opportunities due to lack of forward vision.' },
@@ -147,21 +149,21 @@ const TeseSection = () => {
   }[language];
 
   return (
-    <section className="py-14 md:py-20 bg-white">
+    <section className="py-10 md:py-14 bg-white">
       <div className="container mx-auto px-6 max-w-6xl">
         {/* Title - centered */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1224] leading-snug whitespace-pre-line text-center">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0B1224] leading-snug whitespace-pre-line text-center">
           {copy.question}
         </h2>
 
         {/* Side-by-side: indicators left | arrow | consequences right */}
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-[280px_auto_1fr] items-center gap-8 lg:gap-6">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[280px_auto_1fr] items-center gap-8 lg:gap-6">
           {/* LEFT: Indicators */}
-          <div className="space-y-6">
+          <div className="space-y-3">
             {copy.stats.map((s, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center lg:items-start gap-1 bg-gray-50 rounded-xl p-4 border border-gray-100"
+                className="flex flex-col items-center lg:items-start gap-1 bg-gray-50 rounded-xl p-3 border border-gray-100"
               >
                 <AnimatedCounter target={s.value} />
                 <p className="text-sm text-[#0F172A]/60">{s.label}</p>
@@ -174,12 +176,13 @@ const TeseSection = () => {
 
           {/* RIGHT: Consequences */}
           <div className="text-left">
-            <p className="text-base md:text-lg text-[#0F172A]/70 mb-6">
-              {copy.narrative}
+            <p className="text-sm md:text-base text-[#0F172A]/70 mb-4">
+              <strong className="text-[#0B1224]">{copy.narrativeBold}</strong>{' '}
+              {copy.narrativeRest}
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {copy.bullets.map((b, i) => (
-                <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-3 pr-4">
+                <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-2 pr-3">
                   <p className="text-sm md:text-base">
                     <span className="font-bold text-[#F4845F]">{b.title}:</span>{' '}
                     <span className="text-[#0F172A]/70">{b.desc}</span>
@@ -191,7 +194,7 @@ const TeseSection = () => {
         </div>
 
         {/* Bridge text - centered */}
-        <p className="mt-16 text-lg md:text-xl text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed text-center">
+        <p className="mt-8 text-base md:text-lg text-[#0F172A]/80 max-w-2xl mx-auto leading-relaxed text-center">
           {copy.bridge.split('\n')[0]}
           <br />
           <span className="text-[#F4845F]">
