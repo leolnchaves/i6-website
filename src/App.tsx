@@ -15,6 +15,7 @@ import DarkLayout from "./components/DarkLayout";
 import Home from "./pages/Home";
 import Solutions from "./pages/Solutions";
 import SuccessStories from "./pages/SuccessStories";
+import SuccessStoryArticle from "./pages/SuccessStoryArticle";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
@@ -67,6 +68,7 @@ const LocalizedRoutes = () => {
         <Route index element={<HomeTeste />} />
         <Route path="solutions" element={<Solutions />} />
         <Route path="success-stories" element={<SuccessStories />} />
+        <Route path="success-stories/:slug" element={<SuccessStoryArticle />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="ethics-policy" element={<EthicsPolicy />} />
