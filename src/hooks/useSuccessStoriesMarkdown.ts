@@ -4,6 +4,7 @@ import { getPublicAssetUrl } from '@/utils/assetUtils';
 
 export interface SuccessStoryItem {
   id: string;
+  slug: string;
   title: string;
   image: string;
   logo: string;
@@ -80,6 +81,7 @@ const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
     const lines = section.split('\n').map(line => line.trim()).filter(Boolean);
     
     let title = '';
+    let slug = '';
     let image = '';
     let logo = '';
     let segment = '';
@@ -106,6 +108,8 @@ const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
         segment = line.substring(12).trim();
       } else if (line.startsWith('**Client:**')) {
         client = line.substring(11).trim();
+      } else if (line.startsWith('**Slug:**')) {
+        slug = line.substring(9).trim();
       } else if (line.startsWith('**Description:**')) {
         description = line.substring(16).trim();
       } else if (line.startsWith('**Challenge:**')) {
@@ -131,11 +135,13 @@ const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
     }
     
     if (title && image && segment && client) {
-      // Generate ID from title
+      // Generate ID from title (fallback) — slug is the stable per-language identifier
       const id = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-      
+      const finalSlug = slug || id;
+
       stories.push({
-        id,
+        id: finalSlug,
+        slug: finalSlug,
         title,
         image,
         logo,
