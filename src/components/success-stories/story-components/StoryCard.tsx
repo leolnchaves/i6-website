@@ -1,9 +1,12 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Building2 } from 'lucide-react';
 import LazyImage from '../optimized/LazyImage';
+import { useLocalizedPath } from '@/utils/localizedPath';
 
 interface StoryCardData {
   id: string;
+  slug: string;
   industry: string;
   company_name: string;
   challenge: string;
@@ -23,17 +26,17 @@ interface StoryCardData {
 
 interface StoryCardProps {
   story: StoryCardData;
-  onClick: (story: StoryCardData) => void;
   language: string;
 }
 
-const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) => {
-  const handleClick = useCallback(() => onClick(story), [story, onClick]);
+const StoryCard: React.FC<StoryCardProps> = memo(({ story, language }) => {
+  const localized = useLocalizedPath();
+  const href = localized(`/success-stories/${story.slug}`);
 
   return (
-    <div
-      className="group overflow-hidden cursor-pointer rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-500 transform hover:-translate-y-1"
-      onClick={handleClick}
+    <Link
+      to={href}
+      className="group block overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-500 transform hover:-translate-y-1"
     >
       {/* Hover gradient bar */}
       <div className="h-0 bg-[#F4845F] group-hover:h-1 transition-all duration-500"></div>
@@ -91,7 +94,7 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
           </div>
           <div className="flex items-center">
             <span className="text-sm font-medium text-white/50 group-hover:text-white/70 transition-colors duration-300 mr-3">
-              {language === 'en' ? 'Explore Details' : 'Ver Detalhes'}
+              {language === 'en' ? 'Read Case' : 'Ler Case'}
             </span>
             <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 group-hover:bg-[#F4845F]/20 border border-transparent group-hover:border-[#F4845F]/30 transition-all duration-500">
               <ArrowRight className="w-4 h-4 text-white/60 group-hover:text-[#F4845F] transition-all duration-500 group-hover:translate-x-1" />
@@ -99,7 +102,7 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, onClick, language }) 
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 });
 
