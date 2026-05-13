@@ -1,11 +1,15 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsight, resolveCoverImage } from '@/hooks/useInsights';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
+import LeadGateForm from '@/components/insights/LeadGateForm';
+import { Button } from '@/components/ui/button';
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -14,6 +18,19 @@ const InsightArticle = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const insight = useInsight(slug || '');
+
+  const [unlocked, setUnlocked] = useState(false);
+
+  useEffect(() => {
+    if (!insight?.gated) return;
+    try {
+      const raw = localStorage.getItem('i6_unlocked_insights');
+      const arr: string[] = raw ? JSON.parse(raw) : [];
+      if (arr.includes(insight.slug)) setUnlocked(true);
+    } catch {
+      /* localStorage unavailable */
+    }
+  }, [insight?.gated, insight?.slug]);
 
   if (!insight) return <Navigate to={localized('/insights')} replace />;
   if (insight.type !== 'article') {
@@ -26,6 +43,13 @@ const InsightArticle = () => {
 
   const cover = resolveCoverImage(insight.cover_image);
   const url = `${BASE_URL}/${language}/insights/${insight.slug}`;
+  const isLocked = insight.gated === true && !unlocked;
+  const pdfUrl = insight.asset_url
+    ? (insight.asset_url.startsWith('http')
+        ? insight.asset_url
+        : getPublicAssetUrl(insight.asset_url.replace(/^\//, '')))
+    : null;
+
 
   return (
     <>
