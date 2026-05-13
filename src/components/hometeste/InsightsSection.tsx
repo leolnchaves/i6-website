@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
-import { useInsights, type Insight } from '@/hooks/useInsights';
+import { useFeaturedInsights, type Insight } from '@/hooks/useInsights';
 
 const TYPE_LABELS_PT: Record<string, string> = { article: 'Artigo', linkedin: 'LinkedIn', press: 'Imprensa', podcast: 'Podcast', video: 'Vídeo' };
 const TYPE_LABELS_EN: Record<string, string> = { article: 'Article', linkedin: 'LinkedIn', press: 'Press', podcast: 'Podcast', video: 'Video' };
@@ -36,7 +36,7 @@ const InsightMiniCard = ({ insight }: { insight: Insight }) => {
 const InsightsSection = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const insights = useInsights(3);
+  const insights = useFeaturedInsights(3);
 
   if (insights.length === 0) return null;
 
