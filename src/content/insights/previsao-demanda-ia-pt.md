@@ -10,6 +10,8 @@ cover_image: /lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png
 external_url: null
 read_time: 8
 featured: true
+gated: true
+asset_url: /assets/insights/previsao-demanda-ia.pdf
 ---
 
 ## Por que previsão de demanda com IA virou prioridade

@@ -1,11 +1,15 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsight, resolveCoverImage } from '@/hooks/useInsights';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
+import LeadGateForm from '@/components/insights/LeadGateForm';
+import { Button } from '@/components/ui/button';
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -14,6 +18,19 @@ const InsightArticle = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const insight = useInsight(slug || '');
+
+  const [unlocked, setUnlocked] = useState(false);
+
+  useEffect(() => {
+    if (!insight?.gated) return;
+    try {
+      const raw = localStorage.getItem('i6_unlocked_insights');
+      const arr: string[] = raw ? JSON.parse(raw) : [];
+      if (arr.includes(insight.slug)) setUnlocked(true);
+    } catch {
+      /* localStorage unavailable */
+    }
+  }, [insight?.gated, insight?.slug]);
 
   if (!insight) return <Navigate to={localized('/insights')} replace />;
   if (insight.type !== 'article') {
@@ -26,6 +43,13 @@ const InsightArticle = () => {
 
   const cover = resolveCoverImage(insight.cover_image);
   const url = `${BASE_URL}/${language}/insights/${insight.slug}`;
+  const isLocked = insight.gated === true && !unlocked;
+  const pdfUrl = insight.asset_url
+    ? (insight.asset_url.startsWith('http')
+        ? insight.asset_url
+        : getPublicAssetUrl(insight.asset_url.replace(/^\//, '')))
+    : null;
+
 
   return (
     <>
@@ -85,9 +109,32 @@ const InsightArticle = () => {
           <img src={cover} alt={insight.title} className="w-full rounded-xl mb-10" />
         )}
 
-        <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/80 prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/80">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{insight.content}</ReactMarkdown>
-        </div>
+        {isLocked ? (
+          <LeadGateForm
+            insightTitle={insight.title}
+            insightSlug={insight.slug}
+            onUnlock={() => setUnlocked(true)}
+          />
+        ) : (
+          <>
+            {pdfUrl && (
+              <div className="mb-8">
+                <Button
+                  asChild
+                  className="bg-[#F4845F] hover:bg-[#F4845F]/90 text-white shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+                >
+                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
+                    <Download className="w-4 h-4 mr-2" />
+                    {language === 'pt' ? 'Baixar PDF' : 'Download PDF'}
+                  </a>
+                </Button>
+              </div>
+            )}
+            <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/80 prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/80">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{insight.content}</ReactMarkdown>
+            </div>
+          </>
+        )}
       </article>
     </>
   );
