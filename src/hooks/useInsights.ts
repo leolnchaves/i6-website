@@ -16,6 +16,8 @@ export interface InsightFrontmatter {
   external_url?: string | null;
   read_time?: number;
   featured?: boolean;
+  gated?: boolean;
+  asset_url?: string | null;
 }
 
 export interface Insight extends InsightFrontmatter {
