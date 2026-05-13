@@ -84,6 +84,10 @@ jobs:
             "pt/privacy-policy"
             "en/ethics-policy"
             "pt/ethics-policy"
+            "en/insights"
+            "pt/insights"
+            "en/insights/previsao-demanda-ia"
+            "pt/insights/previsao-demanda-ia"
           )
           for route in "${ROUTES[@]}"; do
             mkdir -p "dist/$route"

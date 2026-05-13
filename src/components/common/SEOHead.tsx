@@ -12,6 +12,7 @@ const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b
 
 const pagePath = (page: string): string => {
   if (page === 'home') return '';
+  if (page === 'insights') return '/insights';
   return `/${page.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
 };
 

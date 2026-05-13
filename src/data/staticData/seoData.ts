@@ -144,4 +144,16 @@ export const seoData: SEODataMap = {
       keywords: ['AI ethics', 'responsible AI', 'transparency'],
     },
   },
+  insights: {
+    pt: {
+      title: 'Insights de IA Preditiva | infinity6',
+      description: 'Artigos e análises sobre previsão de demanda, forecast de vendas, pricing dinâmico e crescimento de receita com IA.',
+      keywords: ['previsão de demanda', 'forecast de vendas', 'gestão de demanda', 'IA para empresas', 'precificação dinâmica', 'inteligência preditiva'],
+    },
+    en: {
+      title: 'Predictive AI Insights | infinity6',
+      description: 'Articles and analysis on demand forecasting, dynamic pricing, recommendation engines and revenue growth with AI.',
+      keywords: ['demand forecasting', 'sales forecasting', 'predictive AI', 'dynamic pricing', 'recommendation engine'],
+    },
+  },
 };
