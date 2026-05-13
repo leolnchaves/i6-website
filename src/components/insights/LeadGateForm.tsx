@@ -1,0 +1,197 @@
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Lock, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
+
+const APPS_SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec';
+
+const schema = z.object({
+  name: z.string().trim().min(1).max(100),
+  email: z.string().trim().email().max(255),
+});
+
+type FormData = z.infer<typeof schema>;
+
+interface LeadGateFormProps {
+  insightTitle: string;
+  insightSlug: string;
+  onUnlock: () => void;
+}
+
+const LeadGateForm = ({ insightTitle, insightSlug, onUnlock }: LeadGateFormProps) => {
+  const { language } = useLanguage();
+  const localized = useLocalizedPath();
+  const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const t = language === 'pt'
+    ? {
+        title: 'Conteúdo exclusivo',
+        subtitle: 'Para acessar este conteúdo, deixe seu nome e email',
+        name: 'Nome',
+        email: 'Email',
+        cta: 'Acessar conteúdo',
+        sending: 'Enviando...',
+        success: 'Acesso liberado! Bom proveito',
+        error: 'Não foi possível enviar. Tente novamente',
+        privacy: 'Ao enviar, você concorda com nossa',
+        privacyLink: 'Política de Privacidade',
+        invalidName: 'Informe seu nome',
+        invalidEmail: 'Email inválido',
+      }
+    : {
+        title: 'Exclusive content',
+        subtitle: 'To access this content, leave your name and email',
+        name: 'Name',
+        email: 'Email',
+        cta: 'Access content',
+        sending: 'Sending...',
+        success: 'Access granted! Enjoy',
+        error: 'Could not submit. Please try again',
+        privacy: 'By submitting, you agree to our',
+        privacyLink: 'Privacy Policy',
+        invalidName: 'Enter your name',
+        invalidEmail: 'Invalid email',
+      };
+
+  const onSubmit = useCallback(
+    async (data: FormData) => {
+      setSubmitting(true);
+      try {
+        const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
+        const message = `Lead gerado a partir do engajamento com o insight ${insightTitle} - Página: ${url}`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'i6_lead_iframe';
+        document.body.appendChild(iframe);
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = APPS_SCRIPT_URL;
+        form.target = 'i6_lead_iframe';
+        form.style.display = 'none';
+
+        const fields: Record<string, string> = {
+          name: data.name,
+          email: data.email,
+          company: '',
+          subscription: 'FALSE',
+          message,
+        };
+
+        Object.entries(fields).forEach(([k, v]) => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = k;
+          input.value = v;
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+
+        setTimeout(() => {
+          form.remove();
+          iframe.remove();
+        }, 1500);
+
+        // Persist unlock in localStorage
+        try {
+          const raw = localStorage.getItem('i6_unlocked_insights');
+          const arr: string[] = raw ? JSON.parse(raw) : [];
+          if (!arr.includes(insightSlug)) {
+            arr.push(insightSlug);
+            localStorage.setItem('i6_unlocked_insights', JSON.stringify(arr));
+          }
+        } catch {
+          /* localStorage may be unavailable */
+        }
+
+        toast({ title: t.success });
+        onUnlock();
+      } catch (err) {
+        console.error('LeadGateForm submit error:', err);
+        toast({ title: t.error, variant: 'destructive' });
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [insightSlug, insightTitle, language, onUnlock, t.error, t.success, toast],
+  );
+
+  return (
+    <div className="my-10 p-8 md:p-10 rounded-2xl border border-[#F4845F]/30 bg-gradient-to-br from-white/5 to-[#F4845F]/5 backdrop-blur-sm">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-10 h-10 rounded-full bg-[#F4845F]/15 border border-[#F4845F]/30 flex items-center justify-center">
+          <Lock className="w-4 h-4 text-[#F4845F]" />
+        </div>
+        <h2 className="text-2xl font-semibold text-white">{t.title}</h2>
+      </div>
+      <p className="text-white/70 mb-6">{t.subtitle}</p>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="lead-name" className="text-white/80">{t.name}</Label>
+          <Input
+            id="lead-name"
+            {...register('name')}
+            className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus-visible:ring-[#F4845F]"
+            disabled={submitting}
+          />
+          {errors.name && <p className="text-xs text-red-400">{t.invalidName}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="lead-email" className="text-white/80">{t.email}</Label>
+          <Input
+            id="lead-email"
+            type="email"
+            {...register('email')}
+            className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus-visible:ring-[#F4845F]"
+            disabled={submitting}
+          />
+          {errors.email && <p className="text-xs text-red-400">{t.invalidEmail}</p>}
+        </div>
+
+        <Button
+          type="submit"
+          disabled={submitting}
+          className="w-full bg-[#F4845F] hover:bg-[#F4845F]/90 text-white font-semibold border border-[#F4845F]/50 shadow-[0_0_20px_rgba(244,132,95,0.3)] hover:shadow-[0_0_30px_rgba(244,132,95,0.5)] transition-all"
+        >
+          {submitting ? (
+            <span className="inline-flex items-center gap-2">
+              <Loader2 className="w-4 h-4 animate-spin" /> {t.sending}
+            </span>
+          ) : (
+            t.cta
+          )}
+        </Button>
+
+        <p className="text-xs text-white/50 text-center">
+          {t.privacy}{' '}
+          <Link to={localized('/privacy')} className="text-[#F4845F] hover:underline">
+            {t.privacyLink}
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default LeadGateForm;
