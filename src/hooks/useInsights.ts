@@ -29,7 +29,7 @@ export interface Insight extends InsightFrontmatter {
 }
 
 // Eagerly import all markdown files at build time
-const modules = import.meta.glob('/public/content/insights/*.md', {
+const modules = import.meta.glob('/src/content/insights/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
