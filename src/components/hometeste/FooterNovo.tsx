@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIsMobile } from '@/hooks/use-mobile';
 import logoFooter from '@/assets/images/logo-footer.png';
 import { useCallback } from 'react';
@@ -8,6 +9,7 @@ import { useCallback } from 'react';
 const FooterNovo = () => {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
+  const localized = useLocalizedPath();
   const isMobile = useIsMobile();
 
   const handleNav = useCallback(
@@ -29,11 +31,11 @@ const FooterNovo = () => {
       : '© 2025 Infinity6.ai. All rights reserved.';
 
   const navLinks: { to: string; label: string; external?: boolean }[] = [
-    { to: '/', label: t('header.home') },
-    { to: '/solutions', label: t('header.solutions') },
-    { to: '/success-stories', label: t('header.successStories') },
+    { to: localized('/'), label: t('header.home') },
+    { to: localized('/solutions'), label: t('header.solutions') },
+    { to: localized('/success-stories'), label: t('header.successStories') },
     { to: 'https://huggingface.co/infinity6', label: t('header.community'), external: true },
-    { to: '/contact', label: t('header.contact') },
+    { to: localized('/contact'), label: t('header.contact') },
   ];
 
   return (
@@ -55,10 +57,10 @@ const FooterNovo = () => {
             </div>
 
             <div className="flex gap-4 text-xs">
-              <Link to="/privacy-policy" onClick={() => handleNav('/privacy-policy')} className="text-white/30 hover:text-[#F4845F] transition-colors">
+              <Link to={localized('/privacy-policy')} onClick={() => handleNav(localized('/privacy-policy'))} className="text-white/30 hover:text-[#F4845F] transition-colors">
                 {t('footer.privacy')}
               </Link>
-              <Link to="/ethics-policy" onClick={() => handleNav('/ethics-policy')} className="text-white/30 hover:text-[#F4845F] transition-colors">
+              <Link to={localized('/ethics-policy')} onClick={() => handleNav(localized('/ethics-policy'))} className="text-white/30 hover:text-[#F4845F] transition-colors">
                 {t('footer.ethics')}
               </Link>
             </div>
