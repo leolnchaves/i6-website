@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import logoHeader from '@/assets/images/logo-header.png';
 
 const HeaderNovo = () => {
   const { language, setLanguage, t } = useLanguage();
+  const localized = useLocalizedPath();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -16,11 +18,11 @@ const HeaderNovo = () => {
   }, []);
 
   const links: { to: string; label: string; external?: boolean }[] = [
-    { to: '/', label: t('header.home') },
-    { to: '/solutions', label: t('header.solutions') },
-    { to: '/success-stories', label: t('header.successStories') },
+    { to: localized('/'), label: t('header.home') },
+    { to: localized('/solutions'), label: t('header.solutions') },
+    { to: localized('/success-stories'), label: t('header.successStories') },
     { to: 'https://huggingface.co/infinity6', label: t('header.community'), external: true },
-    { to: '/contact', label: t('header.contact') },
+    { to: localized('/contact'), label: t('header.contact') },
   ];
 
   return (
@@ -32,7 +34,7 @@ const HeaderNovo = () => {
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
-        <Link to="/" className="shrink-0">
+        <Link to={localized('/')} className="shrink-0">
           <img src={logoHeader} alt="Infinity6" className="h-12 w-auto brightness-0 invert" />
         </Link>
 

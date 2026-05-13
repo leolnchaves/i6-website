@@ -1,14 +1,15 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { useScrollToTop } from "./hooks/useScrollToTop";
+import { detectPreferredLang, isLang } from "./utils/localizedPath";
 
 const ScrollToTop = () => { useScrollToTop(); return null; };
+
 import Layout from "./components/Layout";
 import DarkLayout from "./components/DarkLayout";
 import Home from "./pages/Home";
@@ -23,7 +24,6 @@ import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
 
-// Configure React Query client with error handling
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -40,13 +40,42 @@ const queryClient = new QueryClient({
   },
 });
 
-/**
- * Main App component with error boundaries and debug tools
- * Provides the root structure for the entire application
- */
+/** Redirects any non-localized path to /<preferred-lang>/<path> */
+const RootLangRedirect = () => {
+  const location = useLocation();
+  const lang = detectPreferredLang();
+  const target = `/${lang}${location.pathname === '/' ? '' : location.pathname}${location.search}${location.hash}`;
+  return <Navigate to={target} replace />;
+};
+
+/** Validates :lang param; if invalid, redirects to detected language */
+const LocalizedRoutes = () => {
+  const { lang } = useParams();
+  const location = useLocation();
+
+  if (!isLang(lang)) {
+    const preferred = detectPreferredLang();
+    const rest = location.pathname.replace(/^\/[^/]+/, '');
+    return <Navigate to={`/${preferred}${rest}${location.search}${location.hash}`} replace />;
+  }
+
+  return (
+    <Routes>
+      <Route element={<DarkLayout />}>
+        <Route index element={<HomeTeste />} />
+        <Route path="solutions" element={<Solutions />} />
+        <Route path="success-stories" element={<SuccessStories />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="ethics-policy" element={<EthicsPolicy />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
 const App = () => {
-  // Log app initialization
-  logger.info('App initialized', { 
+  logger.info('App initialized', {
     environment: process.env.NODE_ENV,
     timestamp: new Date().toISOString(),
     userAgent: navigator.userAgent,
@@ -56,41 +85,29 @@ const App = () => {
   return (
     <ErrorBoundary>
       <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter basename={import.meta.env.BASE_URL}>
-              <ScrollToTop />
-              <Routes>
-                {/* Dark layout pages - shared HeaderNovo/FooterNovo */}
-                <Route element={<DarkLayout />}>
-                  <Route path="/" element={<HomeTeste />} />
-                  <Route path="/solutions" element={<Solutions />} />
-                  <Route path="/success-stories" element={<SuccessStories />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/ethics-policy" element={<EthicsPolicy />} />
-                </Route>
-                
-                {/* Regular site routes - with Layout wrapper */}
-                <Route path="/*" element={
-                  <Layout>
-                    <Routes>
-                      <Route path="/oldhome_teste" element={<Home />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Layout>
-                } />
-              </Routes>
-            </BrowserRouter>
-            
-            {/* Debug panel for development */}
-            <DebugPanel />
-          </TooltipProvider>
-        </LanguageProvider>
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
+            <LanguageProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <ScrollToTop />
+                <Routes>
+                  {/* Legacy old home route (non-localized) */}
+                  <Route path="/oldhome_teste" element={<Layout><Home /></Layout>} />
+
+                  {/* Localized site */}
+                  <Route path="/:lang/*" element={<LocalizedRoutes />} />
+
+                  {/* Root + any unprefixed path -> redirect to /<lang>/... */}
+                  <Route path="/" element={<RootLangRedirect />} />
+                  <Route path="*" element={<RootLangRedirect />} />
+                </Routes>
+                <DebugPanel />
+              </TooltipProvider>
+            </LanguageProvider>
+          </BrowserRouter>
+        </QueryClientProvider>
       </HelmetProvider>
     </ErrorBoundary>
   );

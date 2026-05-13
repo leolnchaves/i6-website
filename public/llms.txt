@@ -1,0 +1,23 @@
+# infinity6
+
+> Predictive AI for business. We turn data into decisions that anticipate the market — to grow revenue, protect margins and accelerate growth.
+
+infinity6 builds predictive intelligence engines for B2B companies in retail, industry, pharma and CPG. Core solutions include adaptive demand forecasting, dynamic pricing, recommendation systems, and propensity models — deployed in 4–12 weeks with measurable financial impact.
+
+## Pages
+
+- [Home (EN)](/en): Predictive Intelligence for Business — overview of the i6 movement and engines.
+- [Home (PT)](/pt): Inteligência Preditiva para Empresas — visão geral do movimento i6.
+- [Solutions (EN)](/en/solutions): Real-time recommendations, dynamic pricing, adaptive forecasting.
+- [Solutions (PT)](/pt/solutions): Recomendação em tempo real, preço dinâmico, forecasting adaptativo.
+- [Success Stories (EN)](/en/success-stories): How companies grew revenue and reduced stockouts with i6.
+- [Success Stories (PT)](/pt/success-stories): Cases reais de aumento de receita e redução de ruptura.
+- [Contact (EN)](/en/contact): Schedule a strategic conversation.
+- [Contact (PT)](/pt/contact): Agende uma conversa estratégica.
+
+## Optional
+
+- [Privacy Policy (EN)](/en/privacy-policy)
+- [Privacy Policy (PT)](/pt/privacy-policy)
+- [AI Ethics Policy (EN)](/en/ethics-policy)
+- [Política de Ética em IA (PT)](/pt/ethics-policy)

@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
 import WaveBackground from './WaveBackground';
 
 const HeroMovimento = () => {
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
 
   const copy = {
     pt: {
@@ -36,7 +38,7 @@ const HeroMovimento = () => {
           {copy.desc}
         </p>
         <Link
-          to="/contact"
+          to={localized('/contact')}
           className="group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
         >
           {copy.cta}
