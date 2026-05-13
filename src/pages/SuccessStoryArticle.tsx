@@ -1,0 +1,199 @@
+import { useParams, Link, Navigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { ArrowLeft, Building2, Quote } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
+import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
+import CTAFinal from '@/components/hometeste/CTAFinal';
+
+const BASE_URL = 'https://infinity6.ai';
+
+const splitMetric = (raw: string) => {
+  const value = raw.split(' ')[0];
+  const label = raw.split(' ').slice(1).join(' ');
+  return { value, label };
+};
+
+const SuccessStoryArticle = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const localized = useLocalizedPath();
+  const { stories, loading } = useSuccessStoriesMarkdown();
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 pt-32 pb-20 flex justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#F4845F]" />
+      </div>
+    );
+  }
+
+  const story = stories.find((s) => s.slug === slug);
+  if (!story) return <Navigate to={localized('/success-stories')} replace />;
+
+  const url = `${BASE_URL}/${language}/success-stories/${story.slug}`;
+  const metrics = [story.metric1, story.metric2, story.metric3]
+    .filter((m) => m && m.trim() !== '-' && m.trim() !== '')
+    .map(splitMetric);
+
+  const t = {
+    back: language === 'pt' ? 'Voltar para Histórias' : 'Back to Stories',
+    challenge: language === 'pt' ? 'Desafio' : 'Challenge',
+    solution: language === 'pt' ? 'Solução' : 'Solution',
+    appliedSolutions: language === 'pt' ? 'Soluções Aplicadas' : 'Applied Solutions',
+    results: language === 'pt' ? 'Resultados' : 'Results',
+    about: language === 'pt' ? 'Sobre o Cliente' : 'About the Client',
+    related: language === 'pt' ? 'Outras Histórias' : 'Other Stories',
+  };
+
+  const others = stories.filter((s) => s.slug !== story.slug).slice(0, 3);
+
+  return (
+    <>
+      <Helmet>
+        <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
+        <title>{`${story.title} | infinity6`}</title>
+        <meta name="description" content={story.description || story.quote} />
+        <link rel="canonical" href={url} />
+        <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/success-stories/${story.slug}`} />
+        <link rel="alternate" hrefLang="pt-BR" href={`${BASE_URL}/pt/success-stories/${story.slug}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${BASE_URL}/en/success-stories/${story.slug}`} />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={story.title} />
+        <meta property="og:description" content={story.description || story.quote} />
+        <meta property="og:url" content={url} />
+        {story.image && <meta property="og:image" content={story.image.startsWith('http') ? story.image : `${BASE_URL}${story.image}`} />}
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: story.title,
+          description: story.description || story.quote,
+          author: { '@type': 'Organization', name: 'infinity6' },
+          publisher: {
+            '@type': 'Organization',
+            name: 'infinity6',
+            logo: { '@type': 'ImageObject', url: `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png` },
+          },
+          mainEntityOfPage: url,
+          about: story.client,
+          articleSection: story.segment,
+          ...(story.image ? { image: story.image.startsWith('http') ? story.image : `${BASE_URL}${story.image}` } : {}),
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${language}` },
+            { '@type': 'ListItem', position: 2, name: language === 'pt' ? 'Histórias de Sucesso' : 'Success Stories', item: `${BASE_URL}/${language}/success-stories` },
+            { '@type': 'ListItem', position: 3, name: story.title, item: url },
+          ],
+        })}</script>
+      </Helmet>
+
+      <article className="container mx-auto px-6 pt-32 pb-12 max-w-4xl">
+        <Link
+          to={localized('/success-stories')}
+          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] mb-8 transition-colors"
+        >
+          <ArrowLeft size={16} /> {t.back}
+        </Link>
+
+        <header className="mb-10">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-white/50 mb-4">
+            <Building2 className="w-3 h-3" /> {story.segment}
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{story.title}</h1>
+          <p className="text-xl text-white/70 mb-6">{story.client}</p>
+          {story.description && <p className="text-base text-white/60">{story.description}</p>}
+        </header>
+
+        {story.image && (
+          <img
+            src={story.image}
+            alt={story.title}
+            className="w-full rounded-xl mb-12 object-cover max-h-[420px]"
+          />
+        )}
+
+        {metrics.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-2xl font-semibold text-white mb-6">{t.results}</h2>
+            <div className={`grid gap-4 ${metrics.length === 1 ? 'grid-cols-1' : metrics.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
+              {metrics.map((m, i) => (
+                <div key={i} className="p-6 bg-white/5 rounded-xl border border-white/10 text-center">
+                  <div className="text-2xl md:text-3xl font-semibold text-[#F4845F] mb-2">{m.value}</div>
+                  <div className="text-sm text-white/60">{m.label}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+          <section>
+            <h2 className="text-xl font-semibold text-white mb-3">{t.challenge}</h2>
+            <p className="text-white/70 leading-relaxed">{story.challenge}</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-semibold text-white mb-3">{t.solution}</h2>
+            <p className="text-white/70 leading-relaxed">{story.solution}</p>
+          </section>
+        </div>
+
+        {story.solutions && story.solutions.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-xl font-semibold text-white mb-4">{t.appliedSolutions}</h2>
+            <div className="flex flex-wrap gap-2">
+              {story.solutions.map((s, i) => (
+                <span
+                  key={i}
+                  className="px-4 py-2 rounded-full bg-[#F4845F]/10 border border-[#F4845F]/30 text-sm text-white/80"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {story.quote && (
+          <section className="mb-12 p-8 rounded-xl bg-white/5 border border-white/10">
+            <Quote className="w-8 h-8 text-[#F4845F] mb-4" />
+            <p className="text-lg md:text-xl text-white/85 italic mb-4">{story.quote}</p>
+            {(story.customerName && story.customerName !== '-') && (
+              <div className="text-sm text-white/60">
+                <span className="font-semibold text-white">{story.customerName}</span>
+                {story.customerTitle && story.customerTitle !== '-' && <> · {story.customerTitle}</>}
+              </div>
+            )}
+          </section>
+        )}
+
+        {others.length > 0 && (
+          <section className="mt-16 pt-10 border-t border-white/10">
+            <h2 className="text-xl font-semibold text-white mb-6">{t.related}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {others.map((o) => (
+                <Link
+                  key={o.slug}
+                  to={localized(`/success-stories/${o.slug}`)}
+                  className="group p-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all"
+                >
+                  <div className="text-xs uppercase tracking-wider text-white/40 mb-2">{o.segment}</div>
+                  <div className="text-base font-semibold text-white group-hover:text-[#F4845F] transition-colors">{o.title}</div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+      </article>
+
+      <CTAFinal />
+    </>
+  );
+};
+
+export default SuccessStoryArticle;

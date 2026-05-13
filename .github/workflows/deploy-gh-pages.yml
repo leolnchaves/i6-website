@@ -88,6 +88,18 @@ jobs:
             "pt/insights"
             "en/insights/previsao-demanda-ia"
             "pt/insights/previsao-demanda-ia"
+            "en/success-stories/marketplace-excellence-pharmacy"
+            "pt/success-stories/marketplace-excellence-pharmacy"
+            "en/success-stories/customer-engagement-online-sales"
+            "pt/success-stories/customer-engagement-online-sales"
+            "en/success-stories/assortment-precision-sales-growth"
+            "pt/success-stories/assortment-precision-sales-growth"
+            "en/success-stories/sales-forecast-precision"
+            "pt/success-stories/sales-forecast-precision"
+            "en/success-stories/cross-sell-propensity-intelligence"
+            "pt/success-stories/cross-sell-propensity-intelligence"
+            "en/success-stories/demand-forecast-accuracy"
+            "pt/success-stories/demand-forecast-accuracy"
           )
           for route in "${ROUTES[@]}"; do
             mkdir -p "dist/$route"

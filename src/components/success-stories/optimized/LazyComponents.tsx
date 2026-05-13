@@ -118,21 +118,12 @@ const StoryModalSkeleton = memo(() => (
 // Wrapper com Suspense para lazy loading
 interface LazyStoryCardProps {
   story: any;
-  onClick: (story: any) => void;
   language: string;
-}
-
-interface LazyStoryModalProps {
-  selectedStory: any;
-  onClose: () => void;
-  language: string;
-  getCompanyDetails: (story: any) => any;
-  getImplementedSolutions: (story: any) => any;
 }
 
 export const LazyStoryCard: React.FC<LazyStoryCardProps> = memo((props) => {
   const StoryCard = React.lazy(() => import('../story-components/StoryCard'));
-  
+
   return (
     <Suspense fallback={<StoryCardSkeleton />}>
       <StoryCard {...props} />
@@ -140,17 +131,4 @@ export const LazyStoryCard: React.FC<LazyStoryCardProps> = memo((props) => {
   );
 });
 
-export const LazyStoryModal: React.FC<LazyStoryModalProps> = memo((props) => {
-  const StoryModal = React.lazy(() => import('../story-components/StoryModal'));
-  
-  if (!props.selectedStory) return null;
-  
-  return (
-    <Suspense fallback={<StoryModalSkeleton />}>
-      <StoryModal {...props} />
-    </Suspense>
-  );
-});
-
 LazyStoryCard.displayName = 'LazyStoryCard';
-LazyStoryModal.displayName = 'LazyStoryModal';
