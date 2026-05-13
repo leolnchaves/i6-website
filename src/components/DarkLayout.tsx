@@ -15,9 +15,9 @@ const DarkLayout = () => {
       <div className="relative z-[20]">
         <HeaderNovo />
       </div>
-      <div className="relative z-[10]">
+      <main className="relative z-[10]">
         <Outlet />
-      </div>
+      </main>
       <div className="relative z-[20]">
         <FooterNovo />
       </div>
