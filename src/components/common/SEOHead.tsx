@@ -7,7 +7,7 @@ interface SEOHeadProps {
   jsonLd?: Record<string, unknown>;
 }
 
-const BASE_URL = 'https://www.infinity6.ai';
+const BASE_URL = 'https://infinity6.ai';
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 const pagePath = (page: string): string => {
