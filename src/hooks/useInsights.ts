@@ -15,6 +15,7 @@ export interface InsightFrontmatter {
   cover_image?: string | null;
   external_url?: string | null;
   read_time?: number;
+  featured?: boolean;
 }
 
 export interface Insight extends InsightFrontmatter {
@@ -88,6 +89,7 @@ const ALL: Insight[] = Object.entries(modules)
       cover_image: fm.cover_image ?? null,
       external_url: fm.external_url ?? null,
       read_time: fm.read_time,
+      featured: fm.featured === true,
       slug:
         fm.slug ||
         path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
@@ -104,6 +106,18 @@ export const useInsights = (limit?: number) => {
 
   useEffect(() => {
     const filtered = ALL.filter((i) => i.language === language);
+    setItems(limit ? filtered.slice(0, limit) : filtered);
+  }, [language, limit]);
+
+  return items;
+};
+
+export const useFeaturedInsights = (limit?: number) => {
+  const { language } = useLanguage();
+  const [items, setItems] = useState<Insight[]>([]);
+
+  useEffect(() => {
+    const filtered = ALL.filter((i) => i.language === language && i.featured === true);
     setItems(limit ? filtered.slice(0, limit) : filtered);
   }, [language, limit]);
 

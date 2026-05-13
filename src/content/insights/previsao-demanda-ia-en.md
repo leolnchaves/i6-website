@@ -9,6 +9,7 @@ excerpt: "How predictive models cut stockouts, prevent overstock and lift sell-o
 cover_image: /lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png
 external_url: null
 read_time: 8
+featured: true
 ---
 
 ## Why AI demand forecasting became a priority

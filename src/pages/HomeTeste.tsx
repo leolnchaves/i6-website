@@ -14,8 +14,8 @@ const HomeTeste = () => (
     <TeseSection />
     <SinaisSection />
     <ResultadosSection />
-    <InsightsSection />
     <ClientesSection />
+    <InsightsSection />
     <CTAFinal />
   </>
 );

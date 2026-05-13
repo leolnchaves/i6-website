@@ -9,6 +9,7 @@ excerpt: "Post no LinkedIn discutindo o impacto de elasticidade de preço com IA
 cover_image: null
 external_url: https://www.linkedin.com/company/infinity6
 read_time: 3
+featured: true
 ---
 
 Conteúdo externo — não exibido na página interna.
