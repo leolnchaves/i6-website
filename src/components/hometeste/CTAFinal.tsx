@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ArrowRight } from 'lucide-react';
 
 const CTAFinal = () => {
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
   const isMobile = useIsMobile();
 
   const copy = {
@@ -27,7 +29,7 @@ const CTAFinal = () => {
           {copy.lineStart}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
         </p>
         <Link
-          to="/contact"
+          to={localized('/contact')}
           className={`group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-white/50 animate-glow-white transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4),0_0_60px_rgba(255,255,255,0.15)] ${isMobile ? 'whitespace-pre-line text-center' : ''}`}
         >
           {copy.cta}

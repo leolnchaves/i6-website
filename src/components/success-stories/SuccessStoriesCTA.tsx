@@ -3,12 +3,14 @@ import React, { memo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 import { logger } from '@/utils/logger';
 
 const SuccessStoriesCTA = memo(() => {
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
   const isMobile = useIsMobile();
   
   const ctaContent = successStoriesData[language]?.cta || successStoriesData.en.cta;
@@ -35,7 +37,7 @@ const SuccessStoriesCTA = memo(() => {
           {ctaContent.description}
         </p>
         <Link 
-          to="/contact#contact-form"
+          to={localized('/contact') + '#contact-form'}
           onClick={handleCTAClick}
           className={`group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)] ${isMobile ? 'whitespace-pre-line text-center' : ''}`}
         >
