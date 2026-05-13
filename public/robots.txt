@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.infinity6.ai/sitemap.xml
+Sitemap: https://infinity6.ai/sitemap.xml

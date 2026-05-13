@@ -4,121 +4,121 @@
 
   <!-- Home -->
   <url>
-    <loc>https://www.infinity6.ai/en</loc>
+    <loc>https://infinity6.ai/en</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en"/>
   </url>
   <url>
-    <loc>https://www.infinity6.ai/pt</loc>
+    <loc>https://infinity6.ai/pt</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en"/>
   </url>
 
   <!-- Solutions -->
   <url>
-    <loc>https://www.infinity6.ai/en/solutions</loc>
+    <loc>https://infinity6.ai/en/solutions</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/solutions"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/solutions"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/solutions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/solutions"/>
   </url>
   <url>
-    <loc>https://www.infinity6.ai/pt/solutions</loc>
+    <loc>https://infinity6.ai/pt/solutions</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/solutions"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/solutions"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/solutions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/solutions"/>
   </url>
 
   <!-- Success Stories -->
   <url>
-    <loc>https://www.infinity6.ai/en/success-stories</loc>
+    <loc>https://infinity6.ai/en/success-stories</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/success-stories"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/success-stories"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/success-stories"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/success-stories"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/success-stories"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/success-stories"/>
   </url>
   <url>
-    <loc>https://www.infinity6.ai/pt/success-stories</loc>
+    <loc>https://infinity6.ai/pt/success-stories</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/success-stories"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/success-stories"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/success-stories"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/success-stories"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/success-stories"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/success-stories"/>
   </url>
 
   <!-- Contact -->
   <url>
-    <loc>https://www.infinity6.ai/en/contact</loc>
+    <loc>https://infinity6.ai/en/contact</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/contact"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/contact"/>
   </url>
   <url>
-    <loc>https://www.infinity6.ai/pt/contact</loc>
+    <loc>https://infinity6.ai/pt/contact</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/contact"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/contact"/>
   </url>
 
   <!-- Privacy Policy -->
   <url>
-    <loc>https://www.infinity6.ai/en/privacy-policy</loc>
+    <loc>https://infinity6.ai/en/privacy-policy</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/privacy-policy"/>
   </url>
   <url>
-    <loc>https://www.infinity6.ai/pt/privacy-policy</loc>
+    <loc>https://infinity6.ai/pt/privacy-policy</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/privacy-policy"/>
   </url>
 
   <!-- Ethics Policy -->
   <url>
-    <loc>https://www.infinity6.ai/en/ethics-policy</loc>
+    <loc>https://infinity6.ai/en/ethics-policy</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/ethics-policy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/ethics-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/ethics-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/ethics-policy"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/ethics-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/ethics-policy"/>
   </url>
   <url>
-    <loc>https://www.infinity6.ai/pt/ethics-policy</loc>
+    <loc>https://infinity6.ai/pt/ethics-policy</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.infinity6.ai/en/ethics-policy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.infinity6.ai/pt/ethics-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.infinity6.ai/en/ethics-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/ethics-policy"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/ethics-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/ethics-policy"/>
   </url>
 </urlset>
