@@ -20,6 +20,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
 import NotFound from "./pages/NotFound";
 import HomeTeste from "./pages/HomeTeste";
+import Insights from "./pages/Insights";
+import InsightArticle from "./pages/InsightArticle";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
@@ -68,6 +70,8 @@ const LocalizedRoutes = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="ethics-policy" element={<EthicsPolicy />} />
+        <Route path="insights" element={<Insights />} />
+        <Route path="insights/:slug" element={<InsightArticle />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

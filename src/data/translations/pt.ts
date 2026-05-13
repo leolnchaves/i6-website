@@ -5,6 +5,7 @@ export const ptTranslations = {
   'header.solutions': 'Soluções',
   'header.successStories': 'Cases de Sucesso',
   'header.community': 'Comunidade',
+  'header.insights': 'Insights',
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
   
