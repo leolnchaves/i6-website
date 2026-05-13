@@ -92,6 +92,8 @@ const ALL: Insight[] = Object.entries(modules)
       external_url: fm.external_url ?? null,
       read_time: fm.read_time,
       featured: fm.featured === true,
+      gated: fm.gated === true,
+      asset_url: fm.asset_url ?? null,
       slug:
         fm.slug ||
         path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
