@@ -121,4 +121,44 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/ethics-policy"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/ethics-policy"/>
   </url>
+
+  <!-- Insights -->
+  <url>
+    <loc>https://infinity6.ai/en/insights</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/insights"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/insights"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/insights"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/insights</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/insights"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/insights"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/insights"/>
+  </url>
+
+  <!-- Insights articles -->
+  <url>
+    <loc>https://infinity6.ai/en/insights/previsao-demanda-ia</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/insights/previsao-demanda-ia"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/insights/previsao-demanda-ia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/insights/previsao-demanda-ia"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/insights/previsao-demanda-ia</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/insights/previsao-demanda-ia"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/insights/previsao-demanda-ia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/insights/previsao-demanda-ia"/>
+  </url>
 </urlset>

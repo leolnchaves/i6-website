@@ -5,6 +5,7 @@ export const enTranslations = {
   'header.solutions': 'Solutions',
   'header.successStories': 'Success Stories',
   'header.community': 'Community',
+  'header.insights': 'Insights',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
   
