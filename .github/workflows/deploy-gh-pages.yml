@@ -68,7 +68,29 @@ jobs:
         
       - name: Copy sitemap to dist
         run: cp public/sitemap.xml dist/sitemap.xml
-        
+
+      - name: Create static route stubs for SEO (HTTP 200 on SPA routes)
+        run: |
+          ROUTES=(
+            "en"
+            "pt"
+            "en/solutions"
+            "pt/solutions"
+            "en/success-stories"
+            "pt/success-stories"
+            "en/contact"
+            "pt/contact"
+            "en/privacy-policy"
+            "pt/privacy-policy"
+            "en/ethics-policy"
+            "pt/ethics-policy"
+          )
+          for route in "${ROUTES[@]}"; do
+            mkdir -p "dist/$route"
+            cp dist/index.html "dist/$route/index.html"
+          done
+          echo "Created stubs for ${#ROUTES[@]} routes"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
