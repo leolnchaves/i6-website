@@ -102,8 +102,16 @@ jobs:
             "pt/success-stories/demand-forecast-accuracy"
           )
           for route in "${ROUTES[@]}"; do
-            mkdir -p "dist/$route"
-            cp dist/index.html "dist/$route/index.html"
+            if [ "$route" = "en" ] || [ "$route" = "pt" ]; then
+              # Language roots stay as folder/index.html
+              mkdir -p "dist/$route"
+              cp dist/index.html "dist/$route/index.html"
+            else
+              # All other routes as flat .html files to avoid GH Pages
+              # adding a trailing slash via 301 (causes "Redirect error" in GSC)
+              mkdir -p "$(dirname "dist/$route")"
+              cp dist/index.html "dist/$route.html"
+            fi
           done
           echo "Created stubs for ${#ROUTES[@]} routes"
 
