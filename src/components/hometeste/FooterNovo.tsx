@@ -54,6 +54,11 @@ const FooterNovo = () => {
               <a href="https://www.youtube.com/@infinity6ai" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors">
                 <Youtube size={22} />
               </a>
+              <a href="https://huggingface.co/infinity6" target="_blank" rel="noopener noreferrer" aria-label="infinity6 on Hugging Face" className="text-white/40 hover:text-[#F4845F] transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                  <path d="M12.48 2.27c-.5.77-1.1 1.7-1.73 2.69-.63-.99-1.23-1.92-1.73-2.69-.5.77-1.1 1.7-1.73 2.69-.63-.99-1.23-1.92-1.73-2.69C4.8 4.23 3.78 6.1 3.78 8.1c0 4.55 3.66 8.25 8.17 8.25 4.51 0 8.17-3.7 8.17-8.25 0-2-1.02-3.87-2.58-4.83-.5.77-1.1 1.7-1.73 2.69-.63-.99-1.23-1.92-1.73-2.69-.5.77-1.1 1.7-1.73 2.69-.63-.99-1.23-1.92-1.73-2.69-.5.77-1.1 1.7-1.73 2.69z" />
+                </svg>
+              </a>
             </div>
 
             <div className="flex gap-4 text-xs">
