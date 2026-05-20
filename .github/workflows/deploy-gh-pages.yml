@@ -69,51 +69,8 @@ jobs:
       - name: Copy sitemap to dist
         run: cp public/sitemap.xml dist/sitemap.xml
 
-      - name: Create static route stubs for SEO (HTTP 200 on SPA routes)
-        run: |
-          ROUTES=(
-            "en"
-            "pt"
-            "en/solutions"
-            "pt/solutions"
-            "en/success-stories"
-            "pt/success-stories"
-            "en/contact"
-            "pt/contact"
-            "en/privacy-policy"
-            "pt/privacy-policy"
-            "en/ethics-policy"
-            "pt/ethics-policy"
-            "en/insights"
-            "pt/insights"
-            "en/insights/previsao-demanda-ia"
-            "pt/insights/previsao-demanda-ia"
-            "en/success-stories/marketplace-excellence-pharmacy"
-            "pt/success-stories/marketplace-excellence-pharmacy"
-            "en/success-stories/customer-engagement-online-sales"
-            "pt/success-stories/customer-engagement-online-sales"
-            "en/success-stories/assortment-precision-sales-growth"
-            "pt/success-stories/assortment-precision-sales-growth"
-            "en/success-stories/sales-forecast-precision"
-            "pt/success-stories/sales-forecast-precision"
-            "en/success-stories/cross-sell-propensity-intelligence"
-            "pt/success-stories/cross-sell-propensity-intelligence"
-            "en/success-stories/demand-forecast-accuracy"
-            "pt/success-stories/demand-forecast-accuracy"
-          )
-          for route in "${ROUTES[@]}"; do
-            if [ "$route" = "en" ] || [ "$route" = "pt" ]; then
-              # Language roots stay as folder/index.html
-              mkdir -p "dist/$route"
-              cp dist/index.html "dist/$route/index.html"
-            else
-              # All other routes as flat .html files to avoid GH Pages
-              # adding a trailing slash via 301 (causes "Redirect error" in GSC)
-              mkdir -p "$(dirname "dist/$route")"
-              cp dist/index.html "dist/$route.html"
-            fi
-          done
-          echo "Created stubs for ${#ROUTES[@]} routes"
+      - name: Prerender SEO stubs (per-route title, description, canonical, h1)
+        run: node scripts/prerender-seo-stubs.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
