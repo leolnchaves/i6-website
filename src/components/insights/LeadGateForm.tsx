@@ -155,6 +155,18 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
       <p className="text-white/70 mb-6">{t.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Honeypot: hidden from humans (CSS + aria), bots fill it */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
+          <label htmlFor="lead-website">Website</label>
+          <input
+            id="lead-website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register(HONEYPOT_FIELD as 'name')}
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="lead-name" className="text-white/80">{t.name}</Label>
           <Input
