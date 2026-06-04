@@ -206,7 +206,7 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
 
         <p className="text-xs text-white/50 text-center">
           {t.privacy}{' '}
-          <Link to={localized('/privacy')} className="text-[#F4845F] hover:underline">
+          <Link to={localized('/privacy-policy')} className="text-[#F4845F] hover:underline">
             {t.privacyLink}
           </Link>
         </p>
