@@ -11,8 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 
-const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec';
+import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
