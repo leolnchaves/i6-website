@@ -17,6 +17,7 @@ import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFo
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
   email: z.string().trim().email().max(255),
+  [HONEYPOT_FIELD]: z.string().max(0).optional().or(z.literal('')),
 });
 
 type FormData = z.infer<typeof schema>;
