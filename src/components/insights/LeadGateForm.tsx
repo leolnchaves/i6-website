@@ -163,7 +163,7 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
             type="text"
             tabIndex={-1}
             autoComplete="off"
-            {...register(HONEYPOT_FIELD as 'name')}
+            {...register(HONEYPOT_FIELD as keyof FormData)}
           />
         </div>
 
