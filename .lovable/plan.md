@@ -1,15 +1,33 @@
-## Problema
+## Objetivo
+Garantir que qualquer insight marcado como `gated: true` leve o usuário para a página interna com o formulário de nome + email, mesmo quando o insight também tiver `type` externo e `external_url`.
 
-Em `InsightArticle.tsx`, qualquer insight com `type !== 'article'` (ex.: `press`, `linkedin`, `podcast`, `video`) é tratado como link externo: um `useEffect` abre `external_url` em nova aba e a página renderiza apenas o fallback "Abrir em nova aba". O gate (nome + email) só é avaliado dentro do bloco de `type === 'article'`, então insights `press` gated — como o da CNN — nunca mostram o formulário.
+## Diagnóstico
+O detalhe do insight já foi corrigido para mostrar o `LeadGateForm` quando `gated === true`. Porém ainda existem cards/listagens que decidem o destino assim:
 
-## Correção
+- se `type !== 'article'` e existe `external_url`, o card vira um link externo direto
+- isso ignora `gated: true`
+- resultado: o usuário clica no card e sai do site sem passar pelo formulário
 
-Em `src/pages/InsightArticle.tsx`, dar prioridade ao `gated` antes do tratamento de link externo:
+Arquivos afetados:
+- `src/pages/Insights.tsx`
+- `src/components/hometeste/InsightsSection.tsx`
 
-1. No `useEffect` que abre `external_url` em nova aba, adicionar guarda: **não abrir** se `insight.gated === true`.
-2. No bloco `if (insight.type !== 'article')`, adicionar guarda: **se `insight.gated === true`, não retornar o fallback externo** — deixar o fluxo seguir para a renderização normal do artigo, que já contém o `LeadGateForm` quando `isLocked` é verdadeiro.
-3. Como insights não-article gated não têm corpo de markdown útil, o `LeadGateForm` é o único conteúdo exibido (header + cover + gate). Após submit, mostra a confirmação "Pedido recebido / Request received" (já implementado). O `external_url` / `asset_url` permanecem ocultos do visitante — o material é enviado pelo CRM via email.
+## Plano de implementação
+1. Ajustar a regra `isExternal` nos cards de insights para considerar gate:
+   - antes: `type !== 'article' && external_url`
+   - depois: `!gated && type !== 'article' && external_url`
 
-### Inalterado
-- Markdown frontmatter, sync do i6Hub, Apps Script, arquitetura estática.
-- Insights não-gated com `external_url` continuam abrindo em nova aba normalmente.
+2. Manter o comportamento atual para insights não-gated:
+   - press/linkedin/podcast/video com `external_url` continuam abrindo fora
+
+3. Para insights gated:
+   - o card passa a apontar para `/insights/:slug`
+   - a página interna mostra o formulário de nome + email
+   - após envio, mantém a confirmação de que o material será enviado por email
+
+4. Validar por inspeção/código que não há outro card de insight usando a regra antiga de link externo sem checar `gated`
+
+## Fora de escopo
+- Não alterar markdown/frontmatter
+- Não alterar CRM/Apps Script
+- Não mexer no fluxo de confirmação já implementado

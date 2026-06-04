@@ -25,7 +25,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const labels = language === 'pt' ? TYPE_LABELS_PT : TYPE_LABELS_EN;
-  const isExternal = insight.type !== 'article' && !!insight.external_url;
+  const isExternal = !insight.gated && insight.type !== 'article' && !!insight.external_url;
   const cover = resolveCoverImage(insight.cover_image);
 
   const cardContent = (
