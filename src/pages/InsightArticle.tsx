@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -19,18 +19,16 @@ const InsightArticle = () => {
   const localized = useLocalizedPath();
   const insight = useInsight(slug || '');
 
-  const [unlocked, setUnlocked] = useState(false);
-
+  // Clean up legacy unlock entries from older versions of the gate flow
   useEffect(() => {
-    if (!insight?.gated) return;
     try {
-      const raw = localStorage.getItem('i6_unlocked_insights');
-      const arr: string[] = raw ? JSON.parse(raw) : [];
-      if (arr.includes(insight.slug)) setUnlocked(true);
+      if (localStorage.getItem('i6_unlocked_insights') !== null) {
+        localStorage.removeItem('i6_unlocked_insights');
+      }
     } catch {
       /* localStorage unavailable */
     }
-  }, [insight?.gated, insight?.slug]);
+  }, []);
 
   useEffect(() => {
     if (insight && insight.type !== 'article' && insight.external_url) {
@@ -75,7 +73,7 @@ const InsightArticle = () => {
 
   const cover = resolveCoverImage(insight.cover_image);
   const url = `${BASE_URL}/${language}/insights/${insight.slug}`;
-  const isLocked = insight.gated === true && !unlocked;
+  const isLocked = insight.gated === true;
   const pdfUrl = insight.asset_url
     ? (insight.asset_url.startsWith('http')
         ? insight.asset_url
@@ -145,7 +143,6 @@ const InsightArticle = () => {
           <LeadGateForm
             insightTitle={insight.title}
             insightSlug={insight.slug}
-            onUnlock={() => setUnlocked(true)}
           />
         ) : (
           <>

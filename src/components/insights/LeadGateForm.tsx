@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Lock, Loader2 } from 'lucide-react';
+import { Lock, Loader2, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -24,14 +24,14 @@ type FormData = z.infer<typeof schema>;
 interface LeadGateFormProps {
   insightTitle: string;
   insightSlug: string;
-  onUnlock: () => void;
 }
 
-const LeadGateForm = ({ insightTitle, insightSlug, onUnlock }: LeadGateFormProps) => {
+const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     register,
@@ -42,12 +42,13 @@ const LeadGateForm = ({ insightTitle, insightSlug, onUnlock }: LeadGateFormProps
   const t = language === 'pt'
     ? {
         title: 'Conteúdo exclusivo',
-        subtitle: 'Para acessar este conteúdo, deixe seu nome e email',
+        subtitle: 'Para receber este conteúdo, deixe seu nome e email',
         name: 'Nome',
         email: 'Email',
-        cta: 'Acessar conteúdo',
+        cta: 'Receber por email',
         sending: 'Enviando...',
-        success: 'Acesso liberado! Bom proveito',
+        successTitle: 'Pedido recebido',
+        successMsg: 'Recebemos seu pedido. Em instantes você receberá o material no email informado',
         error: 'Não foi possível enviar. Tente novamente',
         privacy: 'Ao enviar, você concorda com nossa',
         privacyLink: 'Política de Privacidade',
@@ -56,12 +57,13 @@ const LeadGateForm = ({ insightTitle, insightSlug, onUnlock }: LeadGateFormProps
       }
     : {
         title: 'Exclusive content',
-        subtitle: 'To access this content, leave your name and email',
+        subtitle: 'To receive this content, leave your name and email',
         name: 'Name',
         email: 'Email',
-        cta: 'Access content',
+        cta: 'Receive by email',
         sending: 'Sending...',
-        success: 'Access granted! Enjoy',
+        successTitle: 'Request received',
+        successMsg: "We received your request. You'll receive the material at the provided email shortly",
         error: 'Could not submit. Please try again',
         privacy: 'By submitting, you agree to our',
         privacyLink: 'Privacy Policy',
@@ -111,20 +113,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, onUnlock }: LeadGateFormProps
           iframe.remove();
         }, 1500);
 
-        // Persist unlock in localStorage
-        try {
-          const raw = localStorage.getItem('i6_unlocked_insights');
-          const arr: string[] = raw ? JSON.parse(raw) : [];
-          if (!arr.includes(insightSlug)) {
-            arr.push(insightSlug);
-            localStorage.setItem('i6_unlocked_insights', JSON.stringify(arr));
-          }
-        } catch {
-          /* localStorage may be unavailable */
-        }
-
-        toast({ title: t.success });
-        onUnlock();
+        setSubmitted(true);
       } catch (err) {
         console.error('LeadGateForm submit error:', err);
         toast({ title: t.error, variant: 'destructive' });
@@ -132,8 +121,20 @@ const LeadGateForm = ({ insightTitle, insightSlug, onUnlock }: LeadGateFormProps
         setSubmitting(false);
       }
     },
-    [insightSlug, insightTitle, language, onUnlock, t.error, t.success, toast],
+    [insightSlug, insightTitle, language, t.error, toast],
   );
+
+  if (submitted) {
+    return (
+      <div className="my-10 p-8 md:p-10 rounded-2xl border border-[#F4845F]/30 bg-gradient-to-br from-white/5 to-[#F4845F]/5 backdrop-blur-sm text-center">
+        <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#F4845F]/15 border border-[#F4845F]/30 flex items-center justify-center">
+          <CheckCircle2 className="w-7 h-7 text-[#F4845F]" />
+        </div>
+        <h2 className="text-2xl font-semibold text-white mb-2">{t.successTitle}</h2>
+        <p className="text-white/70 max-w-md mx-auto">{t.successMsg}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="my-10 p-8 md:p-10 rounded-2xl border border-[#F4845F]/30 bg-gradient-to-br from-white/5 to-[#F4845F]/5 backdrop-blur-sm">
