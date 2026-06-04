@@ -32,13 +32,45 @@ const InsightArticle = () => {
     }
   }, [insight?.gated, insight?.slug]);
 
+  useEffect(() => {
+    if (insight && insight.type !== 'article' && insight.external_url) {
+      window.open(insight.external_url, '_blank', 'noopener,noreferrer');
+    }
+  }, [insight]);
+
   if (!insight) return <Navigate to={localized('/insights')} replace />;
   if (insight.type !== 'article') {
-    if (insight.external_url) {
-      window.location.href = insight.external_url;
-      return null;
+    if (!insight.external_url) {
+      return <Navigate to={localized('/insights')} replace />;
     }
-    return <Navigate to={localized('/insights')} replace />;
+    return (
+      <section className="container mx-auto px-6 pt-32 pb-20 max-w-2xl text-center">
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          {insight.title}
+        </h1>
+        <p className="text-white/70 mb-8">
+          {language === 'pt'
+            ? 'Este conteúdo está hospedado em outro site. Abrimos em uma nova aba — se nada aconteceu, seu navegador pode ter bloqueado o popup.'
+            : 'This content is hosted on another site. We opened it in a new tab — if nothing happened, your browser may have blocked the popup.'}
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Button
+            asChild
+            className="bg-[#F4845F] hover:bg-[#F4845F]/90 text-white shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+          >
+            <a href={insight.external_url} target="_blank" rel="noopener noreferrer">
+              {language === 'pt' ? 'Abrir em nova aba' : 'Open in new tab'}
+            </a>
+          </Button>
+          <Link
+            to={localized('/insights')}
+            className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors"
+          >
+            <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para Insights' : 'Back to Insights'}
+          </Link>
+        </div>
+      </section>
+    );
   }
 
   const cover = resolveCoverImage(insight.cover_image);
