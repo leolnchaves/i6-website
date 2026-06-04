@@ -1,24 +1,15 @@
-## Mudança no fluxo de gated insights
+## Problema
 
-Form captura nome+email → envia ao Apps Script (CRM) → exibe confirmação. **Nada é desbloqueado.** Conteúdo e PDF seguem ocultos. Material chega por email via CRM.
+Em `InsightArticle.tsx`, qualquer insight com `type !== 'article'` (ex.: `press`, `linkedin`, `podcast`, `video`) é tratado como link externo: um `useEffect` abre `external_url` em nova aba e a página renderiza apenas o fallback "Abrir em nova aba". O gate (nome + email) só é avaliado dentro do bloco de `type === 'article'`, então insights `press` gated — como o da CNN — nunca mostram o formulário.
 
-### 1. `src/components/insights/LeadGateForm.tsx`
-- Remover prop `onUnlock` e a chamada `onUnlock()`.
-- Remover gravação em `localStorage` (`i6_unlocked_insights`).
-- Após submit com sucesso, trocar o form por estado de confirmação:
-  - Ícone de check (coral), título "Pedido recebido" / "Request received".
-  - Mensagem PT: "Recebemos seu pedido. Em instantes você receberá o material no email informado."
-  - Mensagem EN: "We received your request. You'll receive the material at the provided email shortly."
-- Manter: iframe POST ao Apps Script, validação Zod, link de Política de Privacidade.
+## Correção
 
-### 2. `src/pages/InsightArticle.tsx`
-- Remover state `unlocked` e o `useEffect` que lia `localStorage`.
-- `isLocked = insight.gated === true` (sempre bloqueado se gated).
-- Remover prop `onUnlock` no `<LeadGateForm>`.
-- Markdown e botão de PDF nunca aparecem em insights gated.
+Em `src/pages/InsightArticle.tsx`, dar prioridade ao `gated` antes do tratamento de link externo:
 
-### 3. Limpeza de `localStorage`
-- Adicionar pequeno efeito (em `InsightArticle.tsx` ou `App.tsx`) que executa uma vez e remove a chave legada `i6_unlocked_insights` do navegador do visitante.
+1. No `useEffect` que abre `external_url` em nova aba, adicionar guarda: **não abrir** se `insight.gated === true`.
+2. No bloco `if (insight.type !== 'article')`, adicionar guarda: **se `insight.gated === true`, não retornar o fallback externo** — deixar o fluxo seguir para a renderização normal do artigo, que já contém o `LeadGateForm` quando `isLocked` é verdadeiro.
+3. Como insights não-article gated não têm corpo de markdown útil, o `LeadGateForm` é o único conteúdo exibido (header + cover + gate). Após submit, mostra a confirmação "Pedido recebido / Request received" (já implementado). O `external_url` / `asset_url` permanecem ocultos do visitante — o material é enviado pelo CRM via email.
 
 ### Inalterado
-- Frontmatter `gated`/`asset_url`, sync do i6Hub, Apps Script recebendo leads, arquitetura 100% estática.
+- Markdown frontmatter, sync do i6Hub, Apps Script, arquitetura estática.
+- Insights não-gated com `external_url` continuam abrindo em nova aba normalmente.
