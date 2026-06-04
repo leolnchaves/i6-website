@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
+import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
 
 interface FormData {
   name: string;
@@ -17,6 +18,7 @@ interface FormData {
   phone: string;
   subject: string;
   message: string;
+  [HONEYPOT_FIELD]?: string;
 }
 
 const ContactForm = memo(() => {
@@ -71,6 +73,12 @@ const ContactForm = memo(() => {
   }), []);
 
   const onSubmit = useCallback(async (data: FormData) => {
+    // Honeypot: silently drop bot submissions
+    if (data[HONEYPOT_FIELD]) {
+      setIsSuccess(true);
+      reset();
+      return;
+    }
     setIsSubmitting(true);
     try {
       const iframe = document.createElement('iframe');
@@ -80,7 +88,7 @@ const ContactForm = memo(() => {
 
       const form = document.createElement('form');
       form.method = 'POST';
-      form.action = 'https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec';
+      form.action = APPS_SCRIPT_URL;
       form.target = 'hidden_iframe';
       form.style.display = 'none';
 
@@ -89,7 +97,8 @@ const ContactForm = memo(() => {
         { name: 'email', value: data.email },
         { name: 'company', value: data.company || '' },
         { name: 'message', value: data.message },
-        { name: 'subscription', value: data.subject }
+        { name: 'subscription', value: data.subject },
+        { name: 'token', value: SHARED_FORM_TOKEN }
       ];
 
       fields.forEach(field => {
@@ -130,6 +139,17 @@ const ContactForm = memo(() => {
       <CardContent className="p-8 flex-1 flex flex-col">
         <p className="text-xl text-white/50 mb-6 leading-relaxed">{text.subtitle}</p>
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
+          {/* Honeypot */}
+          <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
+            <label htmlFor="contact-website">Website</label>
+            <input
+              id="contact-website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              {...register(HONEYPOT_FIELD as keyof FormData)}
+            />
+          </div>
           <div className="flex-1 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

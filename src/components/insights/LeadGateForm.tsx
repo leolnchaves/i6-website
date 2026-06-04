@@ -11,12 +11,13 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 
-const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbzx_sv6GihHhurFlLvuoYRvjLZOC7TrDHWIayCiJIGO5vvBsGgvUd3ATEmFEuWZxZ6I/exec';
+import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
   email: z.string().trim().email().max(255),
+  [HONEYPOT_FIELD]: z.string().max(0).optional().or(z.literal('')),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -73,6 +74,12 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
+      // Honeypot: bots normally fill every field. Silently swallow and show
+      // the same confirmation UI so they don't retry.
+      if (data[HONEYPOT_FIELD]) {
+        setSubmitted(true);
+        return;
+      }
       setSubmitting(true);
       try {
         const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
@@ -95,6 +102,7 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
           company: '',
           subscription: 'FALSE',
           message,
+          token: SHARED_FORM_TOKEN,
         };
 
         Object.entries(fields).forEach(([k, v]) => {
@@ -147,6 +155,18 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
       <p className="text-white/70 mb-6">{t.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Honeypot: hidden from humans (CSS + aria), bots fill it */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
+          <label htmlFor="lead-website">Website</label>
+          <input
+            id="lead-website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register(HONEYPOT_FIELD as keyof FormData)}
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="lead-name" className="text-white/80">{t.name}</Label>
           <Input
