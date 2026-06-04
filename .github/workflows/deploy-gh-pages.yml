@@ -4,6 +4,8 @@ on:
   push:
     branches: [ main, master ]
   workflow_dispatch:
+  repository_dispatch:
+    types: [insights-updated]
 
 permissions:
   contents: read
@@ -25,7 +27,13 @@ jobs:
           
       - name: Install dependencies
         run: npm install
-        
+
+      - name: Sync insights from i6Hub CMS
+        run: node scripts/sync-insights.mjs
+        env:
+          I6HUB_SUPABASE_URL: ${{ secrets.I6HUB_SUPABASE_URL }}
+          I6HUB_SUPABASE_SERVICE_KEY: ${{ secrets.I6HUB_SUPABASE_SERVICE_KEY }}
+
       - name: Build
         run: npm run build
         env:
