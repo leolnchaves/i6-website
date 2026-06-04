@@ -73,7 +73,7 @@ const InsightArticle = () => {
 
   const cover = resolveCoverImage(insight.cover_image);
   const url = `${BASE_URL}/${language}/insights/${insight.slug}`;
-  const isLocked = insight.gated === true && !unlocked;
+  const isLocked = insight.gated === true;
   const pdfUrl = insight.asset_url
     ? (insight.asset_url.startsWith('http')
         ? insight.asset_url
@@ -143,7 +143,6 @@ const InsightArticle = () => {
           <LeadGateForm
             insightTitle={insight.title}
             insightSlug={insight.slug}
-            onUnlock={() => setUnlocked(true)}
           />
         ) : (
           <>
