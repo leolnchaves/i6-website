@@ -74,6 +74,12 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
+      // Honeypot: bots normally fill every field. Silently swallow and show
+      // the same confirmation UI so they don't retry.
+      if (data[HONEYPOT_FIELD]) {
+        setSubmitted(true);
+        return;
+      }
       setSubmitting(true);
       try {
         const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
@@ -96,6 +102,7 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
           company: '',
           subscription: 'FALSE',
           message,
+          token: SHARED_FORM_TOKEN,
         };
 
         Object.entries(fields).forEach(([k, v]) => {
