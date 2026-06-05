@@ -47,6 +47,7 @@ const yaml = (v) => JSON.stringify(v);
 for (const it of items) {
   const fm = [
     '---',
+    it.id ? `id: ${it.id}` : null,
     `title: ${yaml(it.title ?? '')}`,
     `slug: ${it.slug}`,
     `language: ${it.language}`,

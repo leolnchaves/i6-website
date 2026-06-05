@@ -25,10 +25,11 @@ type FormData = z.infer<typeof schema>;
 interface LeadGateFormProps {
   insightTitle: string;
   insightSlug: string;
+  insightId?: string;
   pdfUrl?: string;
 }
 
-const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) => {
+const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGateFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
@@ -87,6 +88,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) 
           '[Lead Insights]',
           `Insight: ${insightTitle}`,
           `Slug: ${insightSlug}`,
+          `ID: ${insightId || '-'}`,
           `URL: ${url}`,
           `Idioma: ${language}`,
           `PDF: ${pdfUrl || '-'}`,
@@ -99,6 +101,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) 
         formData.append('company', insightTitle);
         formData.append('message', message);
         formData.append('subscription', `insight:${insightSlug}`);
+        formData.append('insight_id', insightId || '');
         formData.append('token', SHARED_FORM_TOKEN);
 
         await fetch(APPS_SCRIPT_URL, {
@@ -115,7 +118,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) 
         setSubmitting(false);
       }
     },
-    [insightSlug, insightTitle, language, pdfUrl, t.error, toast],
+    [insightId, insightSlug, insightTitle, language, pdfUrl, t.error, toast],
   );
 
 
@@ -142,6 +145,8 @@ const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) 
       <p className="text-white/70 mb-6">{t.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <input type="hidden" name="insight_id" value={insightId ?? ''} readOnly />
+
         {/* Honeypot: hidden from humans (CSS + aria), bots fill it */}
         <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
           <label htmlFor="lead-website">Website</label>
