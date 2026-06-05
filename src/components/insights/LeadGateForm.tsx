@@ -25,10 +25,11 @@ type FormData = z.infer<typeof schema>;
 interface LeadGateFormProps {
   insightTitle: string;
   insightSlug: string;
+  insightId?: string;
   pdfUrl?: string;
 }
 
-const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) => {
+const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGateFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
