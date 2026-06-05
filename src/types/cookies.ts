@@ -16,9 +16,11 @@ export interface CookieCategoryInfo {
   cookies: string[];
 }
 
+// Soft opt-in: analytics anônimos ativos por padrão (base legítimo interesse).
+// Visitante pode desativar em /cookie-settings.
 export const defaultCookieConsent: CookieConsent = {
   essential: true,
-  analytics: false,
+  analytics: true,
   marketing: false,
   preferences: false,
 };
@@ -34,9 +36,9 @@ export const cookieCategories: CookieCategoryInfo[] = [
   {
     id: 'analytics',
     name: 'Análise',
-    description: 'Cookies que nos ajudam a entender como os visitantes interagem com o site.',
+    description: 'Cookies anônimos que nos ajudam a entender como os visitantes interagem com o site. Você pode desativar em "Preferências de cookies".',
     required: false,
-    cookies: ['google_analytics', 'hotjar', 'performance_metrics']
+    cookies: ['google_analytics', 'anonymous_id', 'performance_metrics']
   },
   {
     id: 'marketing',

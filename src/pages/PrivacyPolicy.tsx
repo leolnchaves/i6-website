@@ -11,12 +11,12 @@ const PrivacyPolicy = () => {
     en: {
       title: "Privacy Policy",
       subtitle: "Your privacy is our priority. Learn how we protect and handle your data.",
-      lastUpdated: "Last updated: January 2025",
+      lastUpdated: "Last updated: June 2026",
     },
     pt: {
       title: "Política de Privacidade",
       subtitle: "Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.",
-      lastUpdated: "Última atualização: Janeiro 2025",
+      lastUpdated: "Última atualização: Junho 2026",
     },
   };
 
@@ -93,12 +93,27 @@ const PrivacyPolicy = () => {
       title: "7. International Data Transfers",
       text: "Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with applicable laws."
     },
+    cookies: {
+      title: "8. Cookies and Site Analytics",
+      intro: "When you browse infinity6.ai, we automatically collect, under the legal basis of legitimate interest, anonymous information to understand how the site is used and improve your experience. No personally identifiable data is collected at this stage.",
+      collectedTitle: "What we collect:",
+      collectedItems: [
+        { title: "anonymous_id", desc: "anonymous identifier (UUID) generated in your browser and stored in localStorage. Does not identify you personally." },
+        { title: "session_id", desc: "temporary session identifier; expires after 30 minutes of inactivity." },
+        { title: "Visit origin", desc: "UTM parameters (source, medium, campaign), referrer and landing page." },
+        { title: "On-site history", desc: "last 20 pages visited and last 30 interaction events (CTA clicks, Insight downloads, form submissions)." },
+        { title: "Technical data via Google Analytics 4", desc: "device type, browser, approximate country." },
+      ],
+      usage: "How we use it: measure performance, improve UX, and when you choose to fill out a form, attach this anonymous history to your contact to enrich the conversation.",
+      additional: "Additional cookies (marketing/preferences): only activated after explicit consent in the cookie banner. You can review and change your choices at any time in \"Cookie preferences\".",
+      rights: "Your rights: disable analytics in \"Cookie preferences\", clear your browser storage, or request deletion via movimento@infinity6.ai.",
+    },
     changes: {
-      title: "8. Changes to This Policy",
+      title: "9. Changes to This Policy",
       text: "We may update this Privacy Policy periodically. We will notify you of any material changes by posting the new policy on our website and updating the \"Last updated\" date."
     },
     contact: {
-      title: "9. Contact Us",
+      title: "10. Contact Us",
       text: "If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us:",
       email: "Email:",
       address: "Address:",
@@ -144,6 +159,21 @@ const PrivacyPolicy = () => {
       {renderSection(enSections.sharing.title, enSections.sharing.text, enSections.sharing.items)}
       {renderSection(enSections.rights.title, enSections.rights.text, enSections.rights.items)}
       {renderSection(enSections.transfers.title, enSections.transfers.text)}
+
+      <section className="border-b border-white/10 pb-8">
+        <h2 className="text-2xl font-bold text-white mb-4">{enSections.cookies.title}</h2>
+        <p className="text-white/70 mb-4">{enSections.cookies.intro}</p>
+        <p className="text-white/70 mb-3"><strong className="text-white">{enSections.cookies.collectedTitle}</strong></p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 marker:text-[#F4845F] mb-4">
+          {enSections.cookies.collectedItems.map((item, i) => (
+            <li key={i}><strong className="text-white">{item.title}:</strong> {item.desc}</li>
+          ))}
+        </ul>
+        <p className="text-white/70 mb-2">{enSections.cookies.usage}</p>
+        <p className="text-white/70 mb-2">{enSections.cookies.additional}</p>
+        <p className="text-white/70">{enSections.cookies.rights}</p>
+      </section>
+
       {renderSection(enSections.changes.title, enSections.changes.text)}
 
       <section>

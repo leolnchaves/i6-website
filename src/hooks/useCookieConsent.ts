@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { CookieConsent, defaultCookieConsent } from '@/types/cookies';
 
 const COOKIE_CONSENT_KEY = 'cookie_consent';
-const COOKIE_CONSENT_VERSION = '1.0';
+const COOKIE_CONSENT_VERSION = '2.0';
 
 export const useCookieConsent = () => {
   const [consent, setConsent] = useState<CookieConsent>(defaultCookieConsent);
@@ -56,7 +56,6 @@ export const useCookieConsent = () => {
   }, []);
 
   const acceptAll = useCallback(() => {
-    console.log('Accepting all cookies');
     const allAccepted: CookieConsent = {
       essential: true,
       analytics: true,
@@ -66,8 +65,27 @@ export const useCookieConsent = () => {
     saveConsent(allAccepted);
   }, [saveConsent]);
 
+  // Soft opt-in: aceita os adicionais (marketing + preferências) além do baseline.
+  const acceptAdditional = useCallback(() => {
+    saveConsent({
+      essential: true,
+      analytics: true,
+      marketing: true,
+      preferences: true,
+    });
+  }, [saveConsent]);
+
+  // Continua só com essenciais + analytics anônimos (legítimo interesse).
+  const continueEssential = useCallback(() => {
+    saveConsent({
+      essential: true,
+      analytics: true,
+      marketing: false,
+      preferences: false,
+    });
+  }, [saveConsent]);
+
   const rejectAll = useCallback(() => {
-    console.log('Rejecting all cookies');
     const onlyEssential: CookieConsent = {
       essential: true,
       analytics: false,
@@ -104,6 +122,8 @@ export const useCookieConsent = () => {
     showBanner,
     saveConsent,
     acceptAll,
+    acceptAdditional,
+    continueEssential,
     rejectAll,
     updateConsent,
     resetConsent,

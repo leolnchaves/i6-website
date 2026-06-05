@@ -1,138 +1,77 @@
-
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { X } from 'lucide-react';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useState } from 'react';
-import { CookieConsent } from '@/types/cookies';
+import { useLocalizedPath } from '@/utils/localizedPath';
 
 const CookieBanner = () => {
-  const { showBanner, consent, saveConsent, setShowBanner } = useCookieConsent();
-  const { t } = useLanguage();
-  
-  // Local state for cookie preferences
-  const [preferences, setPreferences] = useState<CookieConsent>(consent);
+  const { showBanner, acceptAdditional, continueEssential } = useCookieConsent();
+  const { language } = useLanguage();
+  const localized = useLocalizedPath();
 
   if (!showBanner) return null;
 
-  const handleToggleChange = (category: keyof CookieConsent, value: boolean) => {
-    if (category === 'essential') return; // Essential cookies cannot be disabled
-    
-    setPreferences(prev => ({
-      ...prev,
-      [category]: value
-    }));
-  };
-
-  const handleAcceptAll = () => {
-    const allAccepted: CookieConsent = {
-      essential: true,
-      analytics: true,
-      marketing: true,
-      preferences: true,
-    };
-    saveConsent(allAccepted);
-  };
-
-  const handleSaveSelection = () => {
-    saveConsent(preferences);
-  };
-
-  const handleRejectAll = () => {
-    const onlyEssential: CookieConsent = {
-      essential: true,
-      analytics: false,
-      marketing: false,
-      preferences: false,
-    };
-    saveConsent(onlyEssential);
-  };
+  const t = language === 'pt'
+    ? {
+        title: 'Cookies',
+        body: 'Usamos cookies essenciais e de análise anônimos para que o site funcione e medir desempenho. Aceita também cookies adicionais de marketing e preferências?',
+        privacy: 'Política de Privacidade',
+        preferences: 'Preferências',
+        continueEssential: 'Continuar sem',
+        acceptAdditional: 'Aceitar adicionais',
+      }
+    : {
+        title: 'Cookies',
+        body: 'We use essential and anonymous analytics cookies so the site works and we can measure performance. Do you also accept additional marketing and preferences cookies?',
+        privacy: 'Privacy Policy',
+        preferences: 'Preferences',
+        continueEssential: 'Continue without',
+        acceptAdditional: 'Accept additional',
+      };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 max-w-xs animate-fade-in">
-      <Card className="bg-white/95 backdrop-blur-sm border shadow-lg p-3 space-y-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1 pr-2">
-            <h3 className="font-semibold text-xs text-gray-900 mb-1">
-              Cookies
-            </h3>
-            <p className="text-xs text-gray-600 leading-relaxed mb-2">
-              Usamos cookies para melhorar sua experiência.
-            </p>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-5 w-5 text-gray-400 hover:text-gray-600 shrink-0"
-            onClick={() => setShowBanner(false)}
+    <div
+      role="dialog"
+      aria-label={t.title}
+      className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:bottom-6 z-50 max-w-md animate-fade-in"
+    >
+      <div className="rounded-2xl border border-white/10 bg-[#0B1224]/95 backdrop-blur-md shadow-2xl p-5">
+        <h3 className="text-white text-sm font-semibold mb-2">{t.title}</h3>
+        <p className="text-white/70 text-xs leading-relaxed mb-3">{t.body}</p>
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 text-xs">
+          <Link
+            to={localized('/privacy-policy')}
+            className="text-[#F4845F] hover:underline"
           >
-            <X className="h-3 w-3" />
-          </Button>
+            {t.privacy}
+          </Link>
+          <Link
+            to={localized('/cookie-settings')}
+            className="text-white/60 hover:text-white/90 hover:underline"
+          >
+            {t.preferences}
+          </Link>
         </div>
-        
-        {/* Compact Cookie Categories */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-700">Marketing</span>
-            <Switch
-              checked={preferences.marketing}
-              onCheckedChange={(checked) => handleToggleChange('marketing', checked)}
-              className="scale-75 data-[state=checked]:bg-gray-800 data-[state=unchecked]:bg-gray-300"
-            />
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-700">Funcional</span>
-            <Switch
-              checked={preferences.preferences}
-              onCheckedChange={(checked) => handleToggleChange('preferences', checked)}
-              className="scale-75 data-[state=checked]:bg-gray-800 data-[state=unchecked]:bg-gray-300"
-            />
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-700">Essencial</span>
-            <Switch
-              checked={true}
-              disabled={true}
-              className="scale-75 data-[state=checked]:bg-gray-600 opacity-75"
-            />
-          </div>
-        </div>
-        
-        {/* Compact Action Buttons */}
-        <div className="flex flex-col gap-1 pt-1">
+
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button
-            onClick={handleAcceptAll}
+            onClick={continueEssential}
+            variant="outline"
             size="sm"
-            className="w-full text-xs h-7 bg-gray-800 hover:bg-gray-700 text-white"
+            className="flex-1 border-white/15 bg-transparent text-white/80 hover:bg-white/5 hover:text-white"
           >
-            Aceitar Todos
+            {t.continueEssential}
           </Button>
-          
-          <div className="flex gap-1">
-            <Button
-              onClick={handleSaveSelection}
-              size="sm"
-              variant="outline"
-              className="flex-1 text-xs h-6 border-gray-300 text-gray-700 hover:bg-gray-50"
-            >
-              Gravar
-            </Button>
-            
-            <Button
-              onClick={handleRejectAll}
-              size="sm"
-              variant="outline"
-              className="flex-1 text-xs h-6 border-gray-300 text-gray-700 hover:bg-gray-50"
-            >
-              Rejeitar
-            </Button>
-          </div>
+          <Button
+            onClick={acceptAdditional}
+            size="sm"
+            className="flex-1 bg-[#F4845F] hover:bg-[#F4845F]/90 text-white font-semibold border border-[#F4845F]/50 shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+          >
+            {t.acceptAdditional}
+          </Button>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

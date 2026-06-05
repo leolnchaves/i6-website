@@ -12,7 +12,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
-import { getLeadContext, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
+import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 
@@ -106,8 +106,10 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         formData.append('message', message);
         formData.append('subscription', `insight:${insightSlug}`);
         formData.append('insight_id', insightId || '');
-        formData.append('anonymous_id', ctx.anonymous_id || '');
         formData.append('token', SHARED_FORM_TOKEN);
+        // Anexa todos os campos de tracking planos (anonymous_id, session_id,
+        // first/last touch, journey, language, user_agent, etc.)
+        Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
 
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
