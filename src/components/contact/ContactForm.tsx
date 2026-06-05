@@ -10,6 +10,8 @@ import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+import { getLeadContext, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
+import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 interface FormData {
   name: string;
@@ -92,12 +94,16 @@ const ContactForm = memo(() => {
       form.target = 'hidden_iframe';
       form.style.display = 'none';
 
+      const ctx = getLeadContext();
+      const enrichedMessage = [data.message, '', formatLeadContextForMessage(ctx)].join('\n');
+
       const fields = [
         { name: 'name', value: data.name },
         { name: 'email', value: data.email },
         { name: 'company', value: data.company || '' },
-        { name: 'message', value: data.message },
+        { name: 'message', value: enrichedMessage },
         { name: 'subscription', value: data.subject },
+        { name: 'anonymous_id', value: ctx.anonymous_id || '' },
         { name: 'token', value: SHARED_FORM_TOKEN }
       ];
 
@@ -116,6 +122,8 @@ const ContactForm = memo(() => {
         document.body.removeChild(form);
         document.body.removeChild(iframe);
       }, 1000);
+
+      trackEvent(TRACKER_EVENTS.CONTACT_FORM_SUBMITTED, { subject: data.subject });
 
       setIsSuccess(true);
       toast({
