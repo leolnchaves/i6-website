@@ -159,6 +159,21 @@ const PrivacyPolicy = () => {
       {renderSection(enSections.sharing.title, enSections.sharing.text, enSections.sharing.items)}
       {renderSection(enSections.rights.title, enSections.rights.text, enSections.rights.items)}
       {renderSection(enSections.transfers.title, enSections.transfers.text)}
+
+      <section className="border-b border-white/10 pb-8">
+        <h2 className="text-2xl font-bold text-white mb-4">{enSections.cookies.title}</h2>
+        <p className="text-white/70 mb-4">{enSections.cookies.intro}</p>
+        <p className="text-white/70 mb-3"><strong className="text-white">{enSections.cookies.collectedTitle}</strong></p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 marker:text-[#F4845F] mb-4">
+          {enSections.cookies.collectedItems.map((item, i) => (
+            <li key={i}><strong className="text-white">{item.title}:</strong> {item.desc}</li>
+          ))}
+        </ul>
+        <p className="text-white/70 mb-2">{enSections.cookies.usage}</p>
+        <p className="text-white/70 mb-2">{enSections.cookies.additional}</p>
+        <p className="text-white/70">{enSections.cookies.rights}</p>
+      </section>
+
       {renderSection(enSections.changes.title, enSections.changes.text)}
 
       <section>
