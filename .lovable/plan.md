@@ -1,31 +1,16 @@
-## Diagnóstico
+## Plano
 
-O formulário de Contato grava porque envia campos simples que o `doPost` já espera: `name`, `email`, `company`, `message`, `subscription`, `token`.
+1. **Alinhar o Insights exatamente ao padrão que já funciona no Contato**
+   - Trocar o submit atual do `LeadGateForm` para usar o mesmo fluxo simples do `ContactForm`: iframe fixo, form oculto, `form.submit()`, cleanup por timeout.
+   - Manter os mesmos nomes de campos esperados pelo Apps Script: `name`, `email`, `company`, `message`, `subscription`, `token`.
 
-O formulário de Insights também tenta enviar esses campos, mas hoje ele usa criação dinâmica de `form` + `iframe`, com `setSubmitted(true)` imediatamente após `form.submit()`. Como não há validação da resposta do Apps Script, a tela mostra sucesso mesmo quando o Apps Script não gravou.
+2. **Evitar campos que possam acionar bloqueio no Apps Script**
+   - Não enviar `website_url` no POST real.
+   - Manter o honeypot apenas para validação local no navegador.
 
-## Plano de correção
+3. **Tornar o lead de Insights identificável na planilha**
+   - Enviar `subscription` como um valor simples e curto, por exemplo `insights`.
+   - Enviar no `message` o título e a URL do insight para diferenciar a origem.
 
-1. **Ajustar o `LeadGateForm` para seguir o mesmo padrão do formulário de Contato**
-   - Manter `name`, `email`, `company`, `message`, `subscription` e `token`
-   - Enviar `subscription` com um valor explícito de origem, por exemplo `insight-lead`
-   - Enviar `company` vazio, como hoje
-   - Manter o `message` com título e URL do insight
-
-2. **Garantir que o honeypot não bloqueie usuários reais**
-   - Manter o campo `website_url` invisível
-   - Se vier preenchido, ignorar localmente como já está
-   - Não enviar `website_url` quando o usuário real submete nome e email
-
-3. **Melhorar a confiabilidade do envio nos Insights**
-   - Usar nomes únicos para `iframe` e `form` por submit, evitando conflito com submits anteriores
-   - Só mostrar sucesso depois de disparar o submit corretamente
-   - Manter a limpeza do `iframe/form` depois do envio
-
-4. **Adicionar um modo de debug mínimo durante o desenvolvimento**
-   - Logar no console apenas em caso de erro no envio do LeadGateForm
-   - Não expor dados sensíveis
-
-## Observação sobre o Apps Script
-
-Seu `doPost` atual está compatível com os campos esperados. A correção deve ser no frontend dos Insights, sem mudar a planilha nem o endpoint.
+4. **Não alterar o Apps Script**
+   - Como o formulário de Contato grava normalmente, a correção deve ficar no front-end para replicar o caminho que já está validado.

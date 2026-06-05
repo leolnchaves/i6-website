@@ -82,7 +82,6 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
       }
       setSubmitting(true);
 
-      const uniqueId = `i6_lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
       const iframe = document.createElement('iframe');
       const form = document.createElement('form');
 
@@ -91,12 +90,12 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
         const message = `Lead gerado a partir do engajamento com o insight "${insightTitle}" - Página: ${url}`;
 
         iframe.style.display = 'none';
-        iframe.name = uniqueId;
+        iframe.name = 'hidden_iframe';
         document.body.appendChild(iframe);
 
         form.method = 'POST';
         form.action = APPS_SCRIPT_URL;
-        form.target = uniqueId;
+        form.target = 'hidden_iframe';
         form.style.display = 'none';
 
         // Mesmos campos que o formulário de Contato envia ao Apps Script.
@@ -106,7 +105,7 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
           ['email', data.email],
           ['company', ''],
           ['message', message],
-          ['subscription', `insight-lead:${insightSlug}`],
+          ['subscription', 'insights'],
           ['token', SHARED_FORM_TOKEN],
         ];
 
@@ -119,17 +118,13 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
         });
 
         document.body.appendChild(form);
-
-        // Limpa só depois do iframe carregar a resposta do Apps Script,
-        // garantindo que o POST não foi abortado antes de gravar.
-        iframe.addEventListener('load', () => {
-          setTimeout(() => {
-            form.remove();
-            iframe.remove();
-          }, 500);
-        });
-
         form.submit();
+
+        setTimeout(() => {
+          form.remove();
+          iframe.remove();
+        }, 1000);
+
         setSubmitted(true);
       } catch (err) {
         console.error('LeadGateForm submit error:', err);
