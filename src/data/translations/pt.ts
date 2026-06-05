@@ -63,7 +63,7 @@ export const ptTranslations = {
   'compactSolutions.subtitle': 'Destrave sua Vantagem Competitiva',
   'compactSolutions.description': 'Vá além do hype. Transforme inteligência em performance de negócio com soluções de IA ready-to-deploy.',
   'compactSolutions.buttonText': 'Explorar Soluções',
-  'compactSolutions.learnMore': 'Saiba Mais',
+  'compactSolutions.learnMore': 'Explorar esta solução',
   
   // Partners Section
   'partners.our': 'NOSSOS',
@@ -239,7 +239,7 @@ export const ptTranslations = {
   'home.featuredStories.title': 'Marcas Visionárias',
   'home.featuredStories.subtitle': 'Gerando Resultados Escaláveis',
   'home.featuredStories.description': 'Aprenda como organizações transformam IA em receita, agilidade e vantagem competitiva.',
-  'home.featuredStories.learnMore': 'Saiba mais',
+  'home.featuredStories.learnMore': 'Ler este case',
   'home.featuredStories.viewAll': 'Ver Todos os Cases de Sucesso',
   'home.featuredStories.techcorp.description': 'Manutenção preditiva baseada em IA reduziu tempo de inatividade em 75%',
   'home.featuredStories.financeflow.description': 'Detecção de fraudes com machine learning com taxa de precisão de 99,2%',

@@ -63,7 +63,7 @@ export const enTranslations = {
   'compactSolutions.subtitle': 'Unlock Competitive Advantage',
   'compactSolutions.description': 'Go beyond the hype. Turn intelligence into business performance with ready-to-deploy AI solutions.',
   'compactSolutions.buttonText': 'Explore Solutions',
-  'compactSolutions.learnMore': 'Learn More',
+  'compactSolutions.learnMore': 'Explore this solution',
   
   // Partners Section
   'partners.our': 'OUR',
@@ -239,7 +239,7 @@ export const enTranslations = {
   'home.featuredStories.title': 'Visionary Brands',
   'home.featuredStories.subtitle': 'Driving Scalable Results',
   'home.featuredStories.description': 'Learn how organizations turn AI into revenue, agility and a competitive edge.',
-  'home.featuredStories.learnMore': 'Learn more',
+  'home.featuredStories.learnMore': 'Read this success story',
   'home.featuredStories.viewAll': 'View All Success Stories',
   'home.featuredStories.techcorp.description': 'AI-powered predictive maintenance reduced downtime by 75%',
   'home.featuredStories.financeflow.description': 'Machine learning fraud detection with 99.2% accuracy rate',
