@@ -5,6 +5,7 @@ import { getPublicAssetUrl } from '@/utils/assetUtils';
 export type InsightType = 'article' | 'linkedin' | 'press' | 'podcast' | 'video';
 
 export interface InsightFrontmatter {
+  id?: string;
   title: string;
   slug: string;
   type: InsightType;
