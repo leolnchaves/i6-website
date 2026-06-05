@@ -80,3 +80,33 @@ Adicionar parágrafo curto: quando o i6HUB começar a consumir H–V, tratar `""
 
 - Reverse-IP, session replay, endpoint dedicado de tracking, mudanças no i6HUB.
 - Reescrever `useCookieConsent` — já está correto para v2.
+
+---
+
+## Apps Script — coerção numérica (cole no `doPost`)
+
+Antes de gravar a linha, force os campos numéricos:
+
+```js
+function toNum(v) { var n = Number(v); return isFinite(n) ? n : 0; }
+
+// Dentro do doPost, ao montar o row:
+row[COLUMN_MAP.session_duration]   = toNum(params.session_duration);
+row[COLUMN_MAP.pages_viewed_count] = toNum(params.pages_viewed_count);
+```
+
+Os demais 13 campos novos permanecem string com `String(params.x || '').slice(0, LIMIT)`.
+
+## QA pós-deploy
+
+- [ ] Aba anônima → banner aparece
+- [ ] "Continuar sem" → banner some, GA4 dispara, marketing/preferences off
+- [ ] "Aceitar adicionais" → tudo on
+- [ ] `/pt/cookie-settings` e `/en/cookie-settings` carregam, toggles salvam
+- [ ] ContactForm e LeadGateForm → linha no Sheet com H–V preenchidas
+- [ ] Linha antiga (pré-deploy) continua legível com H..V vazias
+- [ ] Bump v1→v2 reabre banner para usuários antigos
+
+## Nota i6HUB
+
+Quando o i6HUB começar a consumir as colunas H–V do Sheet, tratar `""` como `null`: leads gerados antes deste deploy não terão esses campos preenchidos.
