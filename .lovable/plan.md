@@ -1,116 +1,263 @@
-# Captura de Leads Anônimos — infinity6
+# Plano completo — tracking de leads + cookie consent v2 + política de privacidade
 
-Stack enxuta, gratuita, sem backend novo, sem comprometer a arquitetura 100% estática nem a LGPD.
+Site continua 100% estático. **Cinco frentes**: planilha (manual), Apps Script (cole/cole), novo cookie consent, envio de campos nos forms, atualização da Política de Privacidade.
 
-## Arquitetura proposta
+---
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│  Browser (site estático)                                     │
-│                                                              │
-│  ┌────────────────┐   ┌──────────────────┐   ┌────────────┐ │
-│  │ Consent (LGPD) │──▶│ tracker.ts       │──▶│ GA4        │ │
-│  └────────────────┘   │ - anonymous_id   │   └────────────┘ │
-│                       │ - UTMs (1st hit) │                  │
-│                       │ - page_views[]   │                  │
-│                       │ - events[]       │                  │
-│                       │ (localStorage)   │                  │
-│                       └────────┬─────────┘                  │
-│                                │                            │
-│                                ▼ no submit                  │
-│                       ┌──────────────────┐                  │
-│                       │ LeadGateForm /   │                  │
-│                       │ ContactForm      │──┐               │
-│                       └──────────────────┘  │               │
-└──────────────────────────────────────────────┼──────────────┘
-                                               ▼
-                                  ┌──────────────────────────┐
-                                  │ Apps Script (já existe)  │
-                                  │ → Google Sheets          │
-                                  │ → i6HUB (CRM)            │
-                                  └──────────────────────────┘
-```
+## Parte A — Google Sheets (manual)
 
-Tudo client-side. Nenhuma nova ferramenta paga. Nenhum servidor.
-
-## Custos
-
-| Item | Custo |
-|---|---|
-| GA4 (já integrado) | Grátis |
-| `tracker.ts` (código próprio, localStorage) | Grátis |
-| Reverse-IP (identificar empresa) | **Adiado** — RB2B só cobre US; Leadfeeder/Clearbit pagos. Reavaliar depois |
-| Session replay (PostHog/Hotjar) | Adiado — fora do orçamento e adiciona script externo |
-| Apps Script + Sheets + i6HUB | Já existem, grátis |
-
-Custo total da fase 1: **R$ 0/mês**.
-
-## Escopo da fase 1
-
-### 1. Módulo `src/lib/tracker.ts` (novo)
-Pequena lib (~150 linhas) que centraliza:
-
-- **`anonymous_id`**: UUID v4 gerado no primeiro acesso, salvo em `localStorage` (`i6_aid`). Persiste entre sessões.
-- **`session_id`**: UUID por sessão (expira em 30 min de inatividade).
-- **First-touch UTMs**: na primeira visita, captura `utm_source/medium/campaign/term/content` + `referrer` + `landing_page` e salva em `localStorage` (`i6_first_touch`). Nunca sobrescreve.
-- **Last-touch UTMs**: atualiza a cada visita com UTMs novos (`i6_last_touch`).
-- **Histórico de páginas**: array circular das últimas 20 páginas vistas com timestamp (`i6_pages`).
-- **Eventos custom**: `track(event, props)` — guarda últimos 30 eventos relevantes (`i6_events`).
-- **`getLeadContext()`**: devolve um objeto pronto para anexar ao payload do form.
-- **Respeita consent**: se `CookieConsentManager` não autorizou analytics, não grava nada além do mínimo funcional.
-
-### 2. Integração com GA4
-- Enviar `anonymous_id` como `user_id` (ou `client_id` custom dimension) no GA4 já configurado.
-- Disparar eventos GA4 padronizados: `insight_view`, `insight_download_started`, `insight_download_completed`, `contact_form_started`, `contact_form_submitted`, `cta_click`, `scroll_75`.
-- Marcar `insight_download_completed` e `contact_form_submitted` como **conversões** no GA4.
-
-### 3. Identity stitching nos forms
-No `onSubmit` de `LeadGateForm` e `ContactForm`, chamar `getLeadContext()` e incluir no `message` (e em campos novos se o Apps Script aceitar):
+Aba `ContactForm`. **Mantém** A–G. Adiciona H–V:
 
 ```text
---- Contexto ---
-anonymous_id: a1b2c3...
-first_touch: utm_source=linkedin, utm_campaign=launch, referrer=...
-last_touch: ...
-landing_page: /pt/insights/...
-pages_viewed: 4 (lista)
-session_duration: 6m23s
+A  date                       (existente)
+B  subscription                (existente)
+C  company                     (existente)
+D  email                       (existente)
+E  name                        (existente)
+F  message                     (existente)
+G  insight_id                  (existente)
+H  anonymous_id                NOVO
+I  session_id                  NOVO
+J  first_touch_source          NOVO
+K  first_touch_medium          NOVO
+L  first_touch_campaign        NOVO
+M  first_touch_referrer        NOVO
+N  first_touch_landing_page    NOVO
+O  last_touch_source           NOVO
+P  last_touch_medium           NOVO
+Q  last_touch_campaign         NOVO
+R  pages_viewed_count          NOVO
+S  journey                     NOVO
+T  session_duration            NOVO
+U  language                    NOVO
+V  user_agent                  NOVO
 ```
 
-Assim o **i6HUB recebe o lead já com histórico**, e dá pra reconciliar leads anônimos via `anonymous_id` se aparecer em outra captura depois.
+---
 
-### 4. CTAs e sinais comportamentais
-Adicionar `data-track="..."` em CTAs principais (Home hero, Solutions, Insights cards, Contact) e um hook que escuta clicks → `tracker.track(...)`.
+## Parte B — Apps Script (cole)
 
-### 5. LGPD / Cookie consent
-- Antes do consent: só `session_id` em memória, sem localStorage de tracking.
-- Depois do consent (analytics aceito): grava `anonymous_id`, UTMs, histórico, e habilita GA4.
-- Atualizar o texto do banner se necessário para mencionar o `anonymous_id`.
+```javascript
+// ============ CONFIG GLOBAL ============
+const SHARED_TOKEN = 'i6-web-2026-mvmnt';
+const SPREADSHEET_ID = '142ByWNnIO_LP85m-uEVftKH4Ll2Is4uCUtspKJVqtGE';
+const SHEET_NAME = 'ContactForm';
 
-## Fora de escopo (fases futuras, quando fizer sentido)
+const COLUMN_MAP = {
+  timestamp:                'date',
+  subscription:             'subscription',
+  company:                  'company',
+  email:                    'email',
+  name:                     'name',
+  message:                  'message',
+  insight_id:               'insight_id',
+  anonymous_id:             'anonymous_id',
+  session_id:               'session_id',
+  first_touch_source:       'first_touch_source',
+  first_touch_medium:       'first_touch_medium',
+  first_touch_campaign:     'first_touch_campaign',
+  first_touch_referrer:     'first_touch_referrer',
+  first_touch_landing_page: 'first_touch_landing_page',
+  last_touch_source:        'last_touch_source',
+  last_touch_medium:        'last_touch_medium',
+  last_touch_campaign:      'last_touch_campaign',
+  pages_viewed_count:       'pages_viewed_count',
+  journey:                  'journey',
+  session_duration:         'session_duration',
+  language:                 'language',
+  user_agent:               'user_agent',
+};
 
-- **Reverse-IP B2B** (identificar empresa) — revisitar quando tiver volume e budget. Opções: Leadfeeder (€139/mês), Clearbit Reveal, RB2B (US only).
-- **Session replay** (PostHog/Hotjar) — útil para UX, mas adiciona script de terceiro e custo.
-- **Server-side tagging** (GTM server-side no Cloud Run) — só se adblockers virarem problema.
-- **Lead scoring automático no i6HUB** — depende do i6HUB.
-- **Endpoint dedicado no i6HUB** para receber `anonymous_id` direto (hoje vai pelo Apps Script no campo `message`).
+// ============ doPost ============
+function doPost(e) {
+  if (e.parameter.website_url) {
+    return ContentService.createTextOutput('{"result":"ok"}')
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  if (e.parameter.token !== SHARED_TOKEN) {
+    return ContentService.createTextOutput('{"result":"forbidden"}')
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 
-## Segurança e manutenção
+  var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  var p = e.parameter;
+  var s = function (v, n) { return (v || '').toString().slice(0, n); };
 
-- Zero PII antes do consent.
-- Zero dependências externas novas (só código próprio + GA4 que já existe).
-- `tracker.ts` isolado em um único módulo, fácil de manter/remover.
-- Nenhum script de terceiros injetado.
-- Site continua 100% estático, deploy continua via GitHub Actions.
+  sheet.appendRow([
+    new Date(),                              // A
+    s(p.subscription, 100),                  // B
+    s(p.company, 200),                       // C
+    s(p.email, 255),                         // D
+    s(p.name, 255),                          // E
+    s(p.message, 2000),                      // F
+    s(p.insight_id, 100),                    // G
+    s(p.anonymous_id, 64),                   // H
+    s(p.session_id, 64),                     // I
+    s(p.first_touch_source, 100),            // J
+    s(p.first_touch_medium, 100),            // K
+    s(p.first_touch_campaign, 150),          // L
+    s(p.first_touch_referrer, 500),          // M
+    s(p.first_touch_landing_page, 500),      // N
+    s(p.last_touch_source, 100),             // O
+    s(p.last_touch_medium, 100),             // P
+    s(p.last_touch_campaign, 150),           // Q
+    s(p.pages_viewed_count, 10),             // R
+    s(p.journey, 2000),                      // S
+    s(p.session_duration, 20),               // T
+    s(p.language, 5),                        // U
+    s(p.user_agent, 500),                    // V
+  ]);
 
-## Entregáveis
+  return ContentService.createTextOutput('{"result":"success"}')
+    .setMimeType(ContentService.MimeType.JSON);
+}
 
-1. `src/lib/tracker.ts` — módulo de tracking
-2. `src/lib/tracker-events.ts` — constantes de eventos
-3. Hook `useTracker()` para uso em componentes
-4. Integração em `LeadGateForm.tsx` e `ContactForm.tsx` (anexar contexto ao `message`)
-5. Integração em `App.tsx` / router (pageview automático)
-6. Atualização do `CookieConsentManager` para gatear o tracker
-7. Doc curta em `.lovable/plan.md` descrevendo eventos e payload
+// ============ doGet existente ============
+// Mantém o seu doGet atual; já usa COLUMN_MAP.
+```
 
-Posso seguir com a implementação dessa fase 1, ou quer ajustar o escopo antes?
+Depois: **Implantar → Gerenciar implantações → Nova versão**.
+
+---
+
+## Parte C — Cookie Consent v2
+
+Modelo soft opt-in: essenciais + analytics ligados por padrão (legítimo interesse), banner pergunta só sobre **cookies adicionais**. Sem botão "Rejeitar".
+
+**C.1 `src/types/cookies.ts**`
+
+- `defaultCookieConsent.analytics: true` (era `false`).
+- Atualizar descrição da categoria deixando claro como desativar em `/cookie-settings`.
+
+**C.2 `src/hooks/useCookieConsent.ts**`
+
+- `COOKIE_CONSENT_VERSION = '2.0'` (força reaparecer pra quem aceitou v1).
+- Adicionar `acceptAdditional()` (tudo on) e `continueEssential()` (essentials + analytics on; marketing/preferences off).
+- `rejectAll` permanece exportado para uso em `/cookie-settings`.
+
+**C.3 `src/components/cookies/CookieBanner.tsx**` — reescrita
+
+```text
+┌──────────────────────────────────────────────────────────┐
+│ Usamos cookies essenciais e de análise (anônimos) para  │
+│ que o site funcione e medir desempenho. Aceita também   │
+│ cookies adicionais de marketing e preferências?         │
+│                                                          │
+│ [Política de Privacidade] [Preferências]                │
+│                                                          │
+│            [ Continuar sem ]  [ Aceitar adicionais ]    │
+└──────────────────────────────────────────────────────────┘
+```
+
+- Bilíngue via `useLanguage()`.
+- Dark theme: `bg-[#0B1224]/95`, accent `#F4845F`.
+- Sem switches inline; granularidade fica em `/cookie-settings`.
+
+**C.4 Integração tracker**: `CookieConsentManager` já chama `useTracker(consent.analytics)`. Com `analytics=true` por padrão, o tracker liga assim que o banner é resolvido.
+
+---
+
+## Parte D — Forms enviando campos planos
+
+**D.1 `src/lib/tracker.ts**` — novo helper:
+
+```ts
+export const getLeadContextFields = (): Record<string, string> => {
+  if (typeof window === 'undefined') return {};
+  const ctx = getLeadContext();
+  const ft = ctx.first_touch ?? {};
+  const lt = ctx.last_touch ?? {};
+  const journey = ctx.pages.slice(-10).map((p) => p.path).join(' > ');
+  const fmtDuration = (ms: number | null) => {
+    if (!ms || ms < 0) return '';
+    const s = Math.round(ms / 1000);
+    return `${Math.floor(s / 60)}m${s % 60}s`;
+  };
+  return {
+    anonymous_id:              ctx.anonymous_id ?? '',
+    session_id:                ctx.session_id ?? '',
+    first_touch_source:        ft.utm_source ?? '',
+    first_touch_medium:        ft.utm_medium ?? '',
+    first_touch_campaign:      ft.utm_campaign ?? '',
+    first_touch_referrer:      ft.referrer ?? '',
+    first_touch_landing_page:  ctx.landing_page ?? '',
+    last_touch_source:         lt.utm_source ?? '',
+    last_touch_medium:         lt.utm_medium ?? '',
+    last_touch_campaign:       lt.utm_campaign ?? '',
+    pages_viewed_count:        String(ctx.pages_viewed_count),
+    journey,
+    session_duration:          fmtDuration(ctx.session_duration_ms),
+    language:                  document.documentElement.lang || '',
+    user_agent:                navigator.userAgent.slice(0, 500),
+  };
+};
+```
+
+**D.2 `LeadGateForm.tsx**` — antes do `fetch`:
+
+```ts
+Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
+```
+
+**D.3 `ContactForm.tsx**` — no mesmo loop dos hidden inputs:
+
+```ts
+Object.entries(getLeadContextFields()).forEach(([name, value]) => {
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = name;
+  input.value = value;
+  form.appendChild(input);
+});
+```
+
+---
+
+## Parte E — Política de Privacidade
+
+Nova seção dedicada a cookies e analytics, refletindo o tracker + cookie consent v2.
+
+**E.1 `src/components/privacy/PrivacyPolicyPT.tsx**` — inserir nova seção **10. Cookies e Analytics do Site** antes da atual "10. Atualizações da Política" (renumerar Atualizações → 11 e Contato → 12).
+
+Conteúdo:
+
+> Quando você navega em infinity6.ai, coletamos automaticamente, sob base legal de **legítimo interesse**, informações anônimas para entender como o site é usado e melhorar sua experiência. Nenhum dado pessoal identificável é coletado nesta etapa.
+>
+> **O que coletamos:**
+>
+> - **anonymous_id**: identificador anônimo (UUID) gerado no seu navegador e guardado em `localStorage`. Não identifica você pessoalmente.
+> - **session_id**: identificador temporário de sessão; expira após 30 min de inatividade.
+> - **Origem da visita**: parâmetros UTM (source, medium, campaign), referrer e landing page.
+> - **Histórico no site**: últimas 20 páginas visitadas e últimos 30 eventos de interação (cliques em CTAs, downloads de Insights, envios de formulário).
+> - **Dados técnicos via Google Analytics 4**: tipo de dispositivo, navegador, país aproximado.
+>
+> **Como usamos:** medir desempenho, melhorar UX e, quando você opta por preencher um formulário, anexar esse histórico anônimo ao seu contato para enriquecer o atendimento.
+>
+> **Cookies adicionais (marketing/preferências)**: só são ativados após consentimento explícito no banner. Você pode revisar e alterar em "Preferências de cookies".
+>
+> **Seus direitos:** desativar analytics em `/cookie-settings`, limpar o storage do navegador ou solicitar exclusão via [talk@infinity6.ai](mailto:movimento@infinity6.ai).
+
+**E.2 `src/pages/PrivacyPolicy.tsx**` (EN) — espelhar a seção em inglês ("Cookies and Site Analytics") com mesmo escopo, inserida entre "International Data Transfers" e "Changes to This Policy".
+
+**E.3 Datas** — atualizar `lastUpdated` em ambos para "Junho 2026 / Junho 2026".
+
+---
+
+## Parte F — Documentação
+
+Atualizar `.lovable/plan.md` com o cabeçalho final da planilha + snippet do Apps Script (Partes A e B) para referência da equipe.
+
+---
+
+## Ordem de deploy
+
+1. **Planilha** — adicionar H..V.
+2. **Apps Script** — colar novo código, publicar nova versão (URL permanece).
+3. **Site** — deploy do React (Partes C, D, E, F).
+4. **Teste** — site anônimo: banner v2 aparece → "Continuar sem" → enviar lead em `/insights/...` e `/contact` → conferir planilha (A–G iguais, H..V preenchidas).
+
+## Fora do escopo
+
+- Reverse-IP (B2B), session replay, endpoint dedicado de tracking, mudanças no i6HUB pra consumir novos campos.
+
+Aprovado pra implementar as Partes C, D, E e F?
