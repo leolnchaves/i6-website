@@ -10,6 +10,8 @@ import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+import { getLeadContext, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
+import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 interface FormData {
   name: string;
