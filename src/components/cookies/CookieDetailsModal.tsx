@@ -1,8 +1,9 @@
-
+import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 
 interface CookieDetailsModalProps {
   open: boolean;
@@ -10,49 +11,70 @@ interface CookieDetailsModalProps {
 }
 
 export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalProps) => {
-  const { acceptAll, rejectAll } = useCookieConsent();
-  const { t } = useLanguage();
+  const { acceptAdditional, continueEssential } = useCookieConsent();
+  const { language } = useLanguage();
+  const localized = useLocalizedPath();
 
-  const handleAcceptAll = () => {
-    acceptAll();
+  const t = language === 'pt'
+    ? {
+        title: 'Cookies',
+        body: 'Usamos cookies essenciais e de análise anônimos para que o site funcione e medir desempenho. Aceita também cookies adicionais de marketing e preferências?',
+        acceptAdditional: 'Aceitar adicionais',
+        continueEssential: 'Continuar sem',
+        granular: 'Ajustar preferências',
+      }
+    : {
+        title: 'Cookies',
+        body: 'We use essential and anonymous analytics cookies so the site works and we can measure performance. Do you also accept additional marketing and preferences cookies?',
+        acceptAdditional: 'Accept additional',
+        continueEssential: 'Continue without',
+        granular: 'Adjust preferences',
+      };
+
+  const handleAccept = () => {
+    acceptAdditional();
     onOpenChange(false);
   };
 
-  const handleRejectAll = () => {
-    rejectAll();
+  const handleEssential = () => {
+    continueEssential();
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-[#0B1224] border border-white/10 text-white">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">
-            {t('cookies.banner.title')}
-          </DialogTitle>
-          <DialogDescription className="text-sm text-gray-600 mt-2">
-            {t('cookies.banner.description')}
+          <DialogTitle className="text-white text-base font-semibold">{t.title}</DialogTitle>
+          <DialogDescription className="text-white/70 text-sm mt-2">
+            {t.body}
           </DialogDescription>
         </DialogHeader>
-        
-        <div className="space-y-3 mt-4">
+
+        <div className="space-y-2 mt-4">
           <Button
-            onClick={handleAcceptAll}
-            className="w-full bg-primary hover:bg-primary/90 text-white"
+            onClick={handleAccept}
+            className="w-full bg-[#F4845F] hover:bg-[#F4845F]/90 text-white font-semibold border border-[#F4845F]/50 shadow-[0_0_20px_rgba(244,132,95,0.3)]"
           >
-            {t('cookies.banner.acceptAll')}
+            {t.acceptAdditional}
           </Button>
-          
           <Button
-            onClick={handleRejectAll}
-            className="w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 hover:border-red-300 transition-colors"
+            onClick={handleEssential}
+            variant="outline"
+            className="w-full border-white/15 bg-transparent text-white/80 hover:bg-white/5 hover:text-white"
           >
-            {t('cookies.banner.rejectAll')}
+            {t.continueEssential}
           </Button>
         </div>
-        
-        <div className="text-xs text-gray-500 mt-4 pt-3 border-t">
-          <p>{t('cookies.banner.compliance')}</p>
+
+        <div className="text-xs text-white/60 mt-3 pt-3 border-t border-white/10">
+          <Link
+            to={localized('/cookie-settings')}
+            onClick={() => onOpenChange(false)}
+            className="text-[#F4845F] hover:underline"
+          >
+            {t.granular}
+          </Link>
         </div>
       </DialogContent>
     </Dialog>

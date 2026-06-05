@@ -19,6 +19,7 @@ import SuccessStoryArticle from "./pages/SuccessStoryArticle";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import EthicsPolicy from "./pages/EthicsPolicy";
+import CookieSettings from "./pages/CookieSettings";
 import NotFound from "./pages/NotFound";
 import HomeTeste from "./pages/HomeTeste";
 import Insights from "./pages/Insights";
@@ -72,6 +73,7 @@ const LocalizedRoutes = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="ethics-policy" element={<EthicsPolicy />} />
+        <Route path="cookie-settings" element={<CookieSettings />} />
         <Route path="insights" element={<Insights />} />
         <Route path="insights/:slug" element={<InsightArticle />} />
       </Route>

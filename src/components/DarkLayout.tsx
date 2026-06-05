@@ -6,7 +6,9 @@ import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
 const DarkLayout = () => {
   const location = useLocation();
-  const hideWaves = ['/', '/privacy-policy', '/ethics-policy'].includes(location.pathname);
+  const hideWaves = ['/', '/privacy-policy', '/ethics-policy', '/cookie-settings'].some((p) =>
+    location.pathname === p || location.pathname.endsWith(p)
+  );
 
   return (
   <div className="min-h-screen bg-[#0B1224] relative">
