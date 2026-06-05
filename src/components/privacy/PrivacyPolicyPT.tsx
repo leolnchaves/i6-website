@@ -176,17 +176,42 @@ const PrivacyPolicyPT = () => {
         ]
       )}
 
-      {/* 10. Atualizações da Política */}
+      {/* 10. Cookies e Analytics do Site */}
       <section className="border-b border-white/10 pb-8">
-        <h2 className="text-2xl font-bold text-white mb-4">10. Atualizações da Política</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">10. Cookies e Analytics do Site</h2>
+        <p className="text-white/70 mb-4">
+          Quando você navega em infinity6.ai, coletamos automaticamente, sob base legal de <strong className="text-white">legítimo interesse</strong>, informações anônimas para entender como o site é usado e melhorar sua experiência. Nenhum dado pessoal identificável é coletado nesta etapa.
+        </p>
+        <p className="text-white/70 mb-3"><strong className="text-white">O que coletamos:</strong></p>
+        {renderBoldItems([
+          { title: 'anonymous_id', desc: 'identificador anônimo (UUID) gerado no seu navegador e guardado em localStorage. Não identifica você pessoalmente.' },
+          { title: 'session_id', desc: 'identificador temporário de sessão; expira após 30 minutos de inatividade.' },
+          { title: 'Origem da visita', desc: 'parâmetros UTM (source, medium, campaign), referrer e landing page.' },
+          { title: 'Histórico no site', desc: 'últimas 20 páginas visitadas e últimos 30 eventos de interação (cliques em CTAs, downloads de Insights, envios de formulário).' },
+          { title: 'Dados técnicos via Google Analytics 4', desc: 'tipo de dispositivo, navegador, país aproximado.' },
+        ])}
+        <p className="text-white/70 mt-4 mb-2">
+          <strong className="text-white">Como usamos:</strong> medir desempenho, melhorar a experiência de uso e, quando você opta por preencher um formulário, anexar esse histórico anônimo ao seu contato para enriquecer o atendimento.
+        </p>
+        <p className="text-white/70 mb-2">
+          <strong className="text-white">Cookies adicionais (marketing/preferências):</strong> só são ativados após consentimento explícito no banner de cookies. Você pode revisar e alterar suas escolhas a qualquer momento em "Preferências de cookies".
+        </p>
+        <p className="text-white/70">
+          <strong className="text-white">Seus direitos:</strong> desativar analytics em "Preferências de cookies", limpar o storage do navegador ou solicitar exclusão via <a href="mailto:movimento@infinity6.ai" className="text-[#F4845F] hover:underline">movimento@infinity6.ai</a>.
+        </p>
+      </section>
+
+      {/* 11. Atualizações da Política */}
+      <section className="border-b border-white/10 pb-8">
+        <h2 className="text-2xl font-bold text-white mb-4">11. Atualizações da Política</h2>
         <p className="text-white/70">
           A infinity6 poderá atualizar esta Política para refletir melhorias em processos, mudanças regulatórias ou evolução tecnológica, comunicando tais alterações de forma clara e transparente.
         </p>
       </section>
 
-      {/* 11. Contato */}
+      {/* 12. Contato */}
       <section>
-        <h2 className="text-2xl font-bold text-white mb-4">11. Contato</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">12. Contato</h2>
         <p className="text-white/70 mb-4">
           Em caso de dúvidas ou solicitações relacionadas a esta política:
         </p>
