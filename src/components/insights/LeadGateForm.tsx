@@ -144,7 +144,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
       </div>
       <p className="text-white/70 mb-6">{t.subtitle}</p>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         <input type="hidden" name="insight_id" value={insightId ?? ''} readOnly />
 
         {/* Honeypot: hidden from humans (CSS + aria), bots fill it */}
