@@ -45,9 +45,9 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
             {new Date(insight.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
           </time>
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors">
+        <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors">
           {insight.title}
-        </h3>
+        </h2>
         <p className="text-sm text-white/60 flex-1">{insight.excerpt}</p>
         {insight.read_time && insight.type === 'article' && (
           <p className="text-xs text-white/40 mt-4">{insight.read_time} min</p>
