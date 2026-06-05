@@ -138,7 +138,7 @@ const ContactForm = memo(() => {
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
       <CardContent className="p-8 flex-1 flex flex-col">
         <p className="text-xl text-white/50 mb-6 leading-relaxed">{text.subtitle}</p>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col">
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col" noValidate>
           {/* Honeypot */}
           <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
             <label htmlFor="contact-website">Website</label>
