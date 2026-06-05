@@ -86,6 +86,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
 
       try {
         const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
+        const ctx = getLeadContext();
         const message = [
           '[Lead Insights]',
           `Insight: ${insightTitle}`,
@@ -94,6 +95,8 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
           `URL: ${url}`,
           `Idioma: ${language}`,
           'Origem: lead-gate-insights',
+          '',
+          formatLeadContextForMessage(ctx),
         ].join('\n');
 
         const formData = new FormData();
@@ -103,12 +106,19 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         formData.append('message', message);
         formData.append('subscription', `insight:${insightSlug}`);
         formData.append('insight_id', insightId || '');
+        formData.append('anonymous_id', ctx.anonymous_id || '');
         formData.append('token', SHARED_FORM_TOKEN);
 
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
           body: formData,
+        });
+
+        trackEvent(TRACKER_EVENTS.INSIGHT_DOWNLOAD_COMPLETED, {
+          insight_id: insightId,
+          insight_slug: insightSlug,
+          language,
         });
 
         setSubmitted(true);
