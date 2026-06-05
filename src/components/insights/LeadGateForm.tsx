@@ -81,31 +81,36 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
         return;
       }
       setSubmitting(true);
+
+      const uniqueId = `i6_lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      const iframe = document.createElement('iframe');
+      const form = document.createElement('form');
+
       try {
         const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
-        const message = `Lead gerado a partir do engajamento com o insight ${insightTitle} - Página: ${url}`;
+        const message = `Lead gerado a partir do engajamento com o insight "${insightTitle}" - Página: ${url}`;
 
-        const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
-        iframe.name = 'i6_lead_iframe';
+        iframe.name = uniqueId;
         document.body.appendChild(iframe);
 
-        const form = document.createElement('form');
         form.method = 'POST';
         form.action = APPS_SCRIPT_URL;
-        form.target = 'i6_lead_iframe';
+        form.target = uniqueId;
         form.style.display = 'none';
 
-        const fields: Record<string, string> = {
-          name: data.name,
-          email: data.email,
-          company: '',
-          subscription: 'FALSE',
-          message,
-          token: SHARED_FORM_TOKEN,
-        };
+        // Mesmos campos que o formulário de Contato envia ao Apps Script.
+        // subscription = origem do lead (vai na coluna B da planilha).
+        const fields: Array<[string, string]> = [
+          ['name', data.name],
+          ['email', data.email],
+          ['company', ''],
+          ['message', message],
+          ['subscription', `insight-lead:${insightSlug}`],
+          ['token', SHARED_FORM_TOKEN],
+        ];
 
-        Object.entries(fields).forEach(([k, v]) => {
+        fields.forEach(([k, v]) => {
           const input = document.createElement('input');
           input.type = 'hidden';
           input.name = k;
@@ -114,16 +119,22 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
         });
 
         document.body.appendChild(form);
+
+        // Limpa só depois do iframe carregar a resposta do Apps Script,
+        // garantindo que o POST não foi abortado antes de gravar.
+        iframe.addEventListener('load', () => {
+          setTimeout(() => {
+            form.remove();
+            iframe.remove();
+          }, 500);
+        });
+
         form.submit();
-
-        setTimeout(() => {
-          form.remove();
-          iframe.remove();
-        }, 1500);
-
         setSubmitted(true);
       } catch (err) {
         console.error('LeadGateForm submit error:', err);
+        form.remove();
+        iframe.remove();
         toast({ title: t.error, variant: 'destructive' });
       } finally {
         setSubmitting(false);
