@@ -88,6 +88,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
           '[Lead Insights]',
           `Insight: ${insightTitle}`,
           `Slug: ${insightSlug}`,
+          `ID: ${insightId || '-'}`,
           `URL: ${url}`,
           `Idioma: ${language}`,
           `PDF: ${pdfUrl || '-'}`,
@@ -100,6 +101,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         formData.append('company', insightTitle);
         formData.append('message', message);
         formData.append('subscription', `insight:${insightSlug}`);
+        formData.append('insight_id', insightId || '');
         formData.append('token', SHARED_FORM_TOKEN);
 
         await fetch(APPS_SCRIPT_URL, {
@@ -116,7 +118,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         setSubmitting(false);
       }
     },
-    [insightSlug, insightTitle, language, pdfUrl, t.error, toast],
+    [insightId, insightSlug, insightTitle, language, pdfUrl, t.error, toast],
   );
 
 
