@@ -91,7 +91,6 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
           `ID: ${insightId || '-'}`,
           `URL: ${url}`,
           `Idioma: ${language}`,
-          `PDF: ${pdfUrl || '-'}`,
           'Origem: lead-gate-insights',
         ].join('\n');
 
