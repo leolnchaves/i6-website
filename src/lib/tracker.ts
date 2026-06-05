@@ -277,3 +277,38 @@ export const formatLeadContextForMessage = (ctx: LeadContext): string => {
     `consent: ${ctx.consent_granted ? 'granted' : 'denied'}`,
   ].join('\n');
 };
+
+/**
+ * Snapshot do contexto em campos planos (Record<string,string>), prontos para
+ * serem anexados num FormData enviado ao Apps Script. Os nomes batem 1:1 com
+ * as colunas H..V da planilha `ContactForm`.
+ */
+export const getLeadContextFields = (): Record<string, string> => {
+  if (!isBrowser()) return {};
+  const ctx = getLeadContext();
+  const ft = ctx.first_touch ?? ({} as FirstTouch);
+  const lt = ctx.last_touch ?? ({} as LastTouch);
+  const journey = ctx.pages.slice(-10).map((p) => p.path).join(' > ');
+  const fmtDuration = (ms: number | null) => {
+    if (!ms || ms < 0) return '';
+    const s = Math.round(ms / 1000);
+    return `${Math.floor(s / 60)}m${s % 60}s`;
+  };
+  return {
+    anonymous_id:              ctx.anonymous_id ?? '',
+    session_id:                ctx.session_id ?? '',
+    first_touch_source:        ft.utm_source ?? '',
+    first_touch_medium:        ft.utm_medium ?? '',
+    first_touch_campaign:      ft.utm_campaign ?? '',
+    first_touch_referrer:      ft.referrer ?? '',
+    first_touch_landing_page:  ctx.landing_page ?? '',
+    last_touch_source:         lt.utm_source ?? '',
+    last_touch_medium:         lt.utm_medium ?? '',
+    last_touch_campaign:       lt.utm_campaign ?? '',
+    pages_viewed_count:        String(ctx.pages_viewed_count),
+    journey,
+    session_duration:          fmtDuration(ctx.session_duration_ms),
+    language:                  document.documentElement.lang || '',
+    user_agent:                navigator.userAgent.slice(0, 500),
+  };
+};
