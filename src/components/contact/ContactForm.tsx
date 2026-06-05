@@ -94,12 +94,16 @@ const ContactForm = memo(() => {
       form.target = 'hidden_iframe';
       form.style.display = 'none';
 
+      const ctx = getLeadContext();
+      const enrichedMessage = [data.message, '', formatLeadContextForMessage(ctx)].join('\n');
+
       const fields = [
         { name: 'name', value: data.name },
         { name: 'email', value: data.email },
         { name: 'company', value: data.company || '' },
-        { name: 'message', value: data.message },
+        { name: 'message', value: enrichedMessage },
         { name: 'subscription', value: data.subject },
+        { name: 'anonymous_id', value: ctx.anonymous_id || '' },
         { name: 'token', value: SHARED_FORM_TOKEN }
       ];
 
