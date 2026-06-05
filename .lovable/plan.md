@@ -1,112 +1,64 @@
-## Verificação realizada
+## Resposta à sua pergunta
 
-Revisei o que já está implementado vs. o que ficou pendente:
+**Sim — hoje a opção "Análise" controla TUDO.** No `tracker.ts`, `setTrackerConsent(false)` apaga `i6_aid`, sessão, UTMs, journey, eventos. Se o visitante desmarca "Análise" (ou clica "Continuar sem"), perdemos:
+- `anonymous_id` e `session_id`
+- `first_touch` / `last_touch` (UTMs, referrer, landing)
+- `pages` (journey) e `events`
+- Todas as colunas H–V do Sheet ficam vazias quando ele preenche o form
 
-| Item | Status |
-|---|---|
-| `defaultCookieConsent.analytics = true` | OK |
-| `COOKIE_CONSENT_VERSION = '2.0'` | OK |
-| `acceptAdditional` / `continueEssential` no hook | OK |
-| `CookieBanner.tsx` (dark + bilíngue + 2 botões) | OK |
-| Privacy Policy PT seção 10 + EN seção 8 | OK |
-| `getLeadContextFields()` + uso em LeadGate/Contact | OK |
-| `.lovable/plan.md` com header do Sheet + Apps Script | OK |
-
-**Problemas encontrados:**
-
-1. **`/cookie-settings` 404** — o `CookieBanner.tsx` linka para `/cookie-settings` (linha 50) mas **essa rota não existe** em `src/App.tsx`. Clicar em "Preferências / Preferences" leva ao NotFound.
-2. **`CookieDetailsModal.tsx` desatualizado** — ainda usa tema claro (`text-gray-600`, `bg-red-50`), copy antigo via `t('cookies.banner.*')` e botão "Rejeitar tudo". Inconsistente com a v2.
-3. **`CookieSettingsButton.tsx` desatualizado** — `bg-white/80` claro, fixed bottom-left. Não combina com a identidade dark e nem é usado/montado em lugar nenhum hoje.
-4. **Apps Script** — `session_duration` e `pages_viewed_count` chegam como string; sem coerção numérica viram texto no Sheet.
-5. **Sem checklist de QA end-to-end documentado.**
+Ou seja, o rastreamento de primeira parte que construímos para o i6HUB **morre junto** com o opt-out de analytics. E é exatamente isso que você quer reclassificar como "essencial".
 
 ## Plano
 
-### 1. Criar página `/cookie-settings` (PT + EN)
+### 1. Reclassificar o tracker de primeira parte como essencial
 
-Novo arquivo `src/pages/CookieSettings.tsx` com:
-- Layout `DarkLayout` (mesmo wrapper de Privacy/Ethics)
-- Bilíngue via `useLanguage()`
-- 4 toggles (Essential bloqueado, Analytics, Marketing, Preferences) usando `updateConsent` + botão "Salvar preferências" que chama `saveConsent(consent)`
-- Atalhos: "Aceitar tudo" (`acceptAll`), "Apenas essenciais" (`rejectAll`)
-- SEO: `<Helmet>` com title/description bilíngue, `noindex`
-- Sem vertical waves (regra de memória para páginas legais)
+Base legal: **legítimo interesse** (dado anônimo, sem terceiros, sem fingerprinting, retenção curta no `localStorage` do próprio browser, sem envio a fornecedor externo). É a mesma postura que Vercel Analytics e Plausible adotam.
 
-Registrar a rota em `src/App.tsx` dentro de `LocalizedRoutes`:
-```
-<Route path="cookie-settings" element={<CookieSettings />} />
-```
+Mudanças:
 
-### 2. Atualizar `CookieDetailsModal.tsx` para v2
+- **`src/lib/tracker.ts`**: remover a dependência de `consentGranted` para gravar `i6_aid`, `i6_session`, `i6_first_touch`, `i6_last_touch`, `i6_pages`, `i6_events`. Essas chaves passam a ser sempre persistidas (mesmo sem opt-in).
+- Manter a **flag `analyticsConsent` apenas para GA4 (terceira parte)**: o `gtag('event', ...)` só dispara se `analytics === true`.
+- Renomear `setTrackerConsent` → `setThirdPartyAnalyticsConsent` (semântica clara) e remover o "wipe everything" quando revogado — só desliga o gtag.
+- **`src/hooks/useTracker.ts`**: chamar sempre `recordPageView` (independente do consent); só gatear gtag pelo consent.
+- **`src/types/cookies.ts`**: ajustar copy da categoria `analytics` para deixar explícito que é **só GA4 / terceira parte** (o tracker próprio anônimo entra em "essential").
 
-Reescrever com:
-- Tema dark (`bg-[#0B1224]`, texto branco/coral)
-- Textos inline bilíngues (mesma estratégia do `CookieBanner.tsx`, sem depender de `t('cookies.banner.*')`)
-- Dois botões: "Aceitar adicionais" (`acceptAdditional`) e "Continuar sem" (`continueEssential`)
-- Link para `/cookie-settings` para ajuste granular
+### 2. Mesclar `/cookie-settings` dentro do próprio banner
 
-### 3. Atualizar `CookieSettingsButton.tsx`
+Esticar o `CookieBanner` para cima e exibir os 4 toggles + ações granulares dentro do mesmo card. Eliminar a página separada.
 
-- Trocar `bg-white/80` por estilo dark consistente (`bg-[#0B1224]/80`, borda `white/10`, hover coral)
-- Manter `fixed bottom-4 left-4` mas só renderizar se `!showBanner` (evita sobrepor banner)
+- **`src/components/cookies/CookieBanner.tsx`**: adicionar estado `expanded`. View colapsada = a atual (texto + 2 botões + link "Preferências"). Clicar em "Preferências" abre a view expandida no mesmo card: lista de toggles (Essenciais bloqueado, Análise GA4, Marketing, Preferências) + "Salvar preferências" / "Aceitar tudo" / "Apenas essenciais" / "Voltar".
+- Card cresce para cima (`bottom-6` fixo, altura dinâmica, `max-h-[80vh] overflow-y-auto` para mobile).
+- **`src/pages/CookieSettings.tsx`**: remover.
+- **`src/App.tsx`**: trocar a rota `/cookie-settings` por redirect que volta para `/` (ou rota anterior) com `?cookies=open` — o `CookieBanner` lê isso e abre direto na view expandida. Mantém compatibilidade com links já indexados.
+- **`src/components/cookies/CookieSettingsButton.tsx`**: continua, mas agora simplesmente reabre o banner já em modo expandido.
+- **`src/components/cookies/CookieDetailsModal.tsx`**: o link "Ajustar preferências" passa a abrir o banner expandido em vez de navegar para `/cookie-settings`.
 
-### 4. Apps Script — coerção numérica
+### 3. Renomear "Continuar sem" → "Rejeitar adicionais"
 
-Atualizar `.lovable/plan.md`: no `doPost`, antes de gravar, converter `session_duration` e `pages_viewed_count` com `Number(...) || 0`. Demais campos ficam como string com `slice()`.
+- `CookieBanner.tsx`: `continueEssential: 'Rejeitar adicionais'` (PT) / `'Reject additional'` (EN).
+- `CookieDetailsModal.tsx`: mesma troca.
 
-### 5. Checklist de QA (em `.lovable/plan.md`)
+### 4. Política de Privacidade: `movimento@` → `security@`
 
-Adicionar seção "Testes pós-deploy":
-- [ ] Aba anônima → banner aparece
-- [ ] "Continuar sem" → banner some, GA4 dispara, marketing/preferences off
-- [ ] "Aceitar adicionais" → tudo on
-- [ ] `/cookie-settings` carrega em PT e EN, toggles salvam
-- [ ] Submeter ContactForm e LeadGateForm → linha no Sheet com colunas H–V preenchidas
-- [ ] Linha antiga (pré-deploy) continua legível com H..V vazias
-- [ ] Bump v1→v2 reabre banner para usuários antigos
+- `src/components/privacy/PrivacyPolicyPT.tsx`: na seção 10 (Cookies / Seus direitos), trocar `movimento@infinity6.ai` por `security@infinity6.ai`.
+- Verificar a versão EN da mesma seção (seção 8) e ajustar se a mesma frase existir.
+- **Atualizar também a descrição das categorias**: deixar claro que o tracker anônimo de primeira parte (`anonymous_id`, journey, UTMs) entra em **Essenciais / legítimo interesse** e que a categoria "Análise" cobre apenas **GA4 (Google, terceira parte)**. Isso é importante para coerência legal com a mudança técnica do item 1.
 
-### 6. Nota i6HUB no `.lovable/plan.md`
+### 5. Atualizar `.lovable/plan.md`
 
-Adicionar parágrafo curto: quando o i6HUB começar a consumir H–V, tratar `""` como `null` (leads pré-deploy não terão esses campos).
+- Refletir que o tracker é essencial (legítimo interesse) e que H–V do Sheet são preenchidas **sempre**, independente do consent.
+- Atualizar QA: o cenário "Rejeitar adicionais" agora resulta em H–V preenchidas + GA4 OFF.
+- Remover referência a `/cookie-settings` como rota; mencionar que preferências granulares vivem no próprio banner.
 
 ## Detalhes técnicos
 
-- **Sem novas dependências.** Tudo React + Tailwind + tokens semânticos existentes.
-- **Sem mudança de backend** — site continua 100% estático. Apps Script já está documentado em `.lovable/plan.md` (a alteração do item 4 é só no `.md`, você cola no Apps Script manualmente).
-- **Tokens:** usar `#0B1224` (navy) e `#F4845F` (coral) inline como o resto do projeto faz nos componentes de cookies/privacy.
-- **i18n:** seguir padrão inline já usado no `CookieBanner.tsx` (sem adicionar chaves novas ao dicionário de tradução).
+- **Sem novas dependências.** Só reorganização de estado e copy.
+- **Conformidade LGPD**: tracker anônimo de primeira parte sob legítimo interesse é prática aceita desde que (a) seja anônimo, (b) o titular possa se opor, (c) esteja descrito na política. Os 3 pontos ficam cobertos: anonymous_id é UUID local (não é PII), o usuário pode limpar via `localStorage`/botão "Resetar consentimento" futuro, e a Política de Privacidade vai descrever explicitamente.
+- **Bump de versão**: `COOKIE_CONSENT_VERSION` continua `'2.0'` (a semântica do toggle "analytics" mudou para "GA4 only", mas o default `analytics: true` já cobre o caso mais comum — quem tinha `analytics: false` agora vai ver GA4 OFF, que é o que ele pediu mesmo).
+- **Tokens visuais**: banner expandido reusa `#0B1224`, `#F4845F`, `border-white/10`, `bg-white/[0.03]` que já estão no `CookieSettings.tsx` atual — copiar os cards de toggle de lá para dentro do banner.
 
 ## Fora de escopo
 
-- Reverse-IP, session replay, endpoint dedicado de tracking, mudanças no i6HUB.
-- Reescrever `useCookieConsent` — já está correto para v2.
-
----
-
-## Apps Script — coerção numérica (cole no `doPost`)
-
-Antes de gravar a linha, force os campos numéricos:
-
-```js
-function toNum(v) { var n = Number(v); return isFinite(n) ? n : 0; }
-
-// Dentro do doPost, ao montar o row:
-row[COLUMN_MAP.session_duration]   = toNum(params.session_duration);
-row[COLUMN_MAP.pages_viewed_count] = toNum(params.pages_viewed_count);
-```
-
-Os demais 13 campos novos permanecem string com `String(params.x || '').slice(0, LIMIT)`.
-
-## QA pós-deploy
-
-- [ ] Aba anônima → banner aparece
-- [ ] "Continuar sem" → banner some, GA4 dispara, marketing/preferences off
-- [ ] "Aceitar adicionais" → tudo on
-- [ ] `/pt/cookie-settings` e `/en/cookie-settings` carregam, toggles salvam
-- [ ] ContactForm e LeadGateForm → linha no Sheet com H–V preenchidas
-- [ ] Linha antiga (pré-deploy) continua legível com H..V vazias
-- [ ] Bump v1→v2 reabre banner para usuários antigos
-
-## Nota i6HUB
-
-Quando o i6HUB começar a consumir as colunas H–V do Sheet, tratar `""` como `null`: leads gerados antes deste deploy não terão esses campos preenchidos.
+- Mudanças no Apps Script ou no Sheet.
+- Reverse-IP, session replay, endpoint dedicado.
+- Internacionalização nova (segue padrão inline já usado).

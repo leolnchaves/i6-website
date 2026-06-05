@@ -1,18 +1,10 @@
 /**
  * infinity6 first-party visitor tracker
  *
- * Goal: capture anonymous behavior (anonymous_id, UTMs, page history, events)
- * client-side, with zero backend, and stitch it to lead identity when the
- * user submits a form (LeadGateForm / ContactForm). Respects LGPD: nothing
- * is persisted until the visitor accepts the analytics cookie category.
- *
- * Keys in localStorage (all under `i6_` prefix so they're easy to inspect/clear):
- *   i6_aid          -> anonymous_id (UUID)
- *   i6_first_touch  -> { utm_*, referrer, landing_page, ts } (set once, never overwritten)
- *   i6_last_touch   -> { utm_*, referrer, ts }              (updated on every visit with new UTMs)
- *   i6_pages        -> ring buffer of last 20 { path, title, ts }
- *   i6_events       -> ring buffer of last 30 { name, props, ts }
- *   i6_session      -> { id, started_at, last_activity }    (sessionStorage)
+ * Base legal: LEGÍTIMO INTERESSE. Coleta anônima de primeira parte (UUID local,
+ * UTMs, journey, eventos) — sem terceiros, sem fingerprinting. Sempre ativo,
+ * mesmo sem opt-in no banner de cookies. O toggle "Análise" controla apenas o
+ * envio para GA4 (terceira parte).
  */
 
 const STORAGE = {
@@ -26,7 +18,7 @@ const STORAGE = {
 
 const MAX_PAGES = 20;
 const MAX_EVENTS = 30;
-const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 min inactivity
+const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
 
 const UTM_KEYS = [
   'utm_source',
@@ -66,8 +58,8 @@ export type LeadContext = {
   consent_granted: boolean;
 };
 
-// ---------- internal state ----------
-let consentGranted = false;
+// Apenas para GA4 (terceira parte). Tracker próprio é sempre on.
+let ga4ConsentGranted = false;
 let inMemorySessionId: string | null = null;
 let sessionStart = 0;
 
@@ -88,7 +80,7 @@ const readJSON = <T>(key: string): T | null => {
 };
 
 const writeJSON = (key: string, value: unknown) => {
-  if (!isBrowser() || !consentGranted) return;
+  if (!isBrowser()) return;
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
@@ -97,7 +89,7 @@ const writeJSON = (key: string, value: unknown) => {
 };
 
 const writeString = (key: string, value: string) => {
-  if (!isBrowser() || !consentGranted) return;
+  if (!isBrowser()) return;
   try {
     localStorage.setItem(key, value);
   } catch {
@@ -115,37 +107,22 @@ const parseUtms = (search: string): UtmRecord => {
   return out;
 };
 
-// ---------- public API ----------
-
 /**
- * Called by useTracker whenever analytics consent flips. When granted, persists
- * any in-memory state. When revoked, clears all tracker keys.
+ * Controla apenas o envio para GA4 (terceira parte). O tracker próprio
+ * (primeira parte, anônimo) permanece ativo independente desta flag.
+ * Mantemos o nome antigo como alias para compatibilidade.
  */
-export const setTrackerConsent = (granted: boolean) => {
+export const setThirdPartyAnalyticsConsent = (granted: boolean) => {
   if (!isBrowser()) return;
-  const wasGranted = consentGranted;
-  consentGranted = granted;
-
-  if (!granted && wasGranted) {
-    // Revoked -> wipe everything we persisted.
-    for (const key of Object.values(STORAGE)) {
-      try {
-        localStorage.removeItem(key);
-      } catch {
-        /* noop */
-      }
-    }
-    inMemorySessionId = null;
-    sessionStart = 0;
-    return;
-  }
-
-  if (granted) {
-    ensureAnonymousId();
-    ensureSession();
-    captureTouches();
-  }
+  ga4ConsentGranted = granted;
+  // Inicializa baseline do tracker próprio na primeira chamada.
+  ensureAnonymousId();
+  ensureSession();
+  captureTouches();
 };
+
+/** @deprecated use setThirdPartyAnalyticsConsent */
+export const setTrackerConsent = setThirdPartyAnalyticsConsent;
 
 export const ensureAnonymousId = (): string | null => {
   if (!isBrowser()) return null;
@@ -200,9 +177,10 @@ const captureTouches = () => {
   }
 };
 
-/** Record a SPA pageview. Called by useTracker on route change. */
+/** Sempre registra (primeira parte, anônimo, legítimo interesse). */
 export const recordPageView = (path: string, title?: string) => {
-  if (!isBrowser() || !consentGranted) return;
+  if (!isBrowser()) return;
+  ensureAnonymousId();
   ensureSession();
   const pages = readJSON<PageView[]>(STORAGE.pages) ?? [];
   pages.push({ path, title, ts: new Date().toISOString() });
@@ -210,30 +188,28 @@ export const recordPageView = (path: string, title?: string) => {
   writeJSON(STORAGE.pages, pages);
 };
 
-/** Track a custom behavioral event. Also forwards to GA4 if available. */
+/** Sempre persiste local; só encaminha para GA4 se houver consent. */
 export const trackEvent = (name: string, props?: Record<string, unknown>) => {
   if (!isBrowser()) return;
-  if (consentGranted) {
-    ensureSession();
-    const events = readJSON<TrackedEvent[]>(STORAGE.events) ?? [];
-    events.push({ name, props, ts: new Date().toISOString() });
-    if (events.length > MAX_EVENTS) events.splice(0, events.length - MAX_EVENTS);
-    writeJSON(STORAGE.events, events);
-  }
-  // Forward to GA4 if loaded; gtag itself respects its own consent mode.
-  const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
-  if (typeof gtag === 'function') {
-    try {
-      gtag('event', name, { ...(props ?? {}), anonymous_id: getAnonymousId() ?? undefined });
-    } catch {
-      /* noop */
+  ensureSession();
+  const events = readJSON<TrackedEvent[]>(STORAGE.events) ?? [];
+  events.push({ name, props, ts: new Date().toISOString() });
+  if (events.length > MAX_EVENTS) events.splice(0, events.length - MAX_EVENTS);
+  writeJSON(STORAGE.events, events);
+
+  if (ga4ConsentGranted) {
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+    if (typeof gtag === 'function') {
+      try {
+        gtag('event', name, { ...(props ?? {}), anonymous_id: getAnonymousId() ?? undefined });
+      } catch {
+        /* noop */
+      }
     }
   }
 };
 
-/** Snapshot everything we know about this visitor, ready to ship with a form. */
 export const getLeadContext = (): LeadContext => {
-  const consent = consentGranted;
   return {
     anonymous_id: getAnonymousId(),
     session_id: inMemorySessionId,
@@ -244,13 +220,12 @@ export const getLeadContext = (): LeadContext => {
     pages_viewed_count: (readJSON<PageView[]>(STORAGE.pages) ?? []).length,
     events: readJSON<TrackedEvent[]>(STORAGE.events) ?? [],
     session_duration_ms: sessionStart ? Date.now() - sessionStart : null,
-    consent_granted: consent,
+    consent_granted: ga4ConsentGranted,
   };
 };
 
-/** Human-readable block to append to the Apps Script `message` field. */
 export const formatLeadContextForMessage = (ctx: LeadContext): string => {
-  const fmtTouch = (t: UtmRecord & { referrer?: string } | null) => {
+  const fmtTouch = (t: (UtmRecord & { referrer?: string }) | null) => {
     if (!t) return '-';
     const parts: string[] = [];
     for (const k of UTM_KEYS) if (t[k]) parts.push(`${k}=${t[k]}`);
@@ -266,7 +241,7 @@ export const formatLeadContextForMessage = (ctx: LeadContext): string => {
   const lastPages = ctx.pages.slice(-10).map((p) => p.path).join(' > ') || '-';
   return [
     '--- Contexto do visitante ---',
-    `anonymous_id: ${ctx.anonymous_id ?? '(sem consentimento)'}`,
+    `anonymous_id: ${ctx.anonymous_id ?? '-'}`,
     `session_id: ${ctx.session_id ?? '-'}`,
     `session_duration: ${fmtDuration(ctx.session_duration_ms)}`,
     `first_touch: ${fmtTouch(ctx.first_touch)}`,
@@ -274,15 +249,10 @@ export const formatLeadContextForMessage = (ctx: LeadContext): string => {
     `landing_page: ${ctx.landing_page ?? '-'}`,
     `pages_viewed: ${ctx.pages_viewed_count}`,
     `journey: ${lastPages}`,
-    `consent: ${ctx.consent_granted ? 'granted' : 'denied'}`,
+    `ga4_consent: ${ctx.consent_granted ? 'granted' : 'denied'}`,
   ].join('\n');
 };
 
-/**
- * Snapshot do contexto em campos planos (Record<string,string>), prontos para
- * serem anexados num FormData enviado ao Apps Script. Os nomes batem 1:1 com
- * as colunas H..V da planilha `ContactForm`.
- */
 export const getLeadContextFields = (): Record<string, string> => {
   if (!isBrowser()) return {};
   const ctx = getLeadContext();

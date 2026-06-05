@@ -6,7 +6,7 @@ import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
 const DarkLayout = () => {
   const location = useLocation();
-  const hideWaves = ['/', '/privacy-policy', '/ethics-policy', '/cookie-settings'].some((p) =>
+  const hideWaves = ['/', '/privacy-policy', '/ethics-policy'].some((p) =>
     location.pathname === p || location.pathname.endsWith(p)
   );
 
