@@ -123,6 +123,8 @@ const ContactForm = memo(() => {
         document.body.removeChild(iframe);
       }, 1000);
 
+      trackEvent(TRACKER_EVENTS.CONTACT_FORM_SUBMITTED, { subject: data.subject });
+
       setIsSuccess(true);
       toast({
         title: language === 'pt' 
