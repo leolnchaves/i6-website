@@ -1,35 +1,21 @@
-## Plano: as 3 opções
+## Contexto
 
-### Opção 1 — `robots.txt` com diretiva Sitemap
-**Já está pronto.** Verifiquei `public/robots.txt`: a última linha já contém `Sitemap: https://infinity6.ai/sitemap.xml`. Nenhuma alteração necessária.
+O scanner de SEO reportou que o `sitemap.xml` está desalinhado, mas o diagnóstico é incorreto neste projeto:
 
-### Opção 2 — Auditoria do `sitemap.xml`
-Conferi `public/sitemap.xml` contra `scripts/prerender-seo-stubs.mjs` e `public/content/page-success-stories-pt.md`. Cobertura está completa:
+1. **Domínio**: o site oficial é `https://infinity6.ai` (custom domain via GitHub Pages — `public/CNAME` + workflow `deploy-gh-pages.yml`). O `i6-website.lovable.app` é apenas staging. Logo, é **correto** que todas as URLs do sitemap apontem para `infinity6.ai`.
 
-- Home PT/EN
-- `/solutions`, `/success-stories`, `/contact`, `/privacy-policy`, `/ethics-policy`, `/insights` (PT/EN)
-- 6 artigos de success-stories (PT/EN cada): `marketplace-excellence-pharmacy`, `customer-engagement-online-sales`, `assortment-precision-sales-growth`, `sales-forecast-precision`, `cross-sell-propensity-intelligence`, `demand-forecast-accuracy`
-- 1 artigo de insights (PT/EN): `previsao-demanda-ia`
+2. **Rotas i18n**: o app só expõe rotas prefixadas por idioma (`/en/*` e `/pt/*`). Não existem rotas `/solutions`, `/contact`, `/privacy-policy` sem prefixo — o scanner está aplicando uma heurística que não vale aqui.
 
-Total: 26 URLs, todas com `hreflang` en/pt-BR/x-default. Bate com as rotas reais.
+3. **Cobertura real**: o `sitemap.xml` atual já lista as 28 URLs reais (home PT/EN, solutions, success-stories + 6 artigos, contact, privacy, ethics, insights + 1 artigo) em ambos os idiomas. Está em dia.
 
-**Única correção:** todos os `<lastmod>` estão em `2026-05-13` (data antiga). Vou atualizar para a data de hoje (`2026-06-05`) — sinaliza ao Google que o conteúdo foi revisado, acelerando o re-crawl agora que o GSC foi linkado.
+## Ação
 
-### Opção 3 — SEO scan
-Rodar o scanner pra ver findings atuais. Fluxo:
+Marcar o finding como `fixed` via `seo--update_findings`, com explicação clara de que:
+- o domínio canônico é `infinity6.ai` (custom domain), não `lovable.app`;
+- as rotas do app são todas prefixadas por idioma e já estão presentes no sitemap.
 
-1. `seo--list_findings` — ver findings existentes
-2. `seo--trigger_scan` — disparar nova varredura (requer aprovação sua no card)
-3. Se findings triviais aparecerem (title/description default, canonical faltando, og:image), corrijo no mesmo passe — o `prerender-seo-stubs.mjs` já cobre quase tudo por rota, então não espero achados graves
-4. Abrir painel SEO pra você acompanhar (~1min)
+Nenhum arquivo precisa ser alterado.
 
-## Arquivos afetados
+## Observação
 
-- `public/sitemap.xml` — substituir `2026-05-13` por `2026-06-05` nos 26 `<lastmod>`
-- Eventuais arquivos extras se o scan encontrar problemas (improvável)
-
-## Fora de escopo
-
-- `robots.txt` (já tem `Sitemap:`)
-- `prerender-seo-stubs.mjs`, `index.html` base, rotas
-- Configurações no GA4/GSC (link GSC↔GA4, publish da coleção "Search Console") — continuam manuais no console do Google
+O scanner pode reabrir esse finding em scans futuros, já que a heurística dele não tem como saber dessas duas particularidades. Se isso virar ruído, podemos ignorá-lo permanentemente em vez de marcar como fixed a cada scan.
