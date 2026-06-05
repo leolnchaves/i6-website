@@ -12,6 +12,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+import { getLeadContext, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
+import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 
 const schema = z.object({
