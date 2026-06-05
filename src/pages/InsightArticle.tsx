@@ -143,6 +143,7 @@ const InsightArticle = () => {
           <LeadGateForm
             insightTitle={insight.title}
             insightSlug={insight.slug}
+            insightId={insight.id}
             pdfUrl={pdfUrl}
           />
         ) : (
