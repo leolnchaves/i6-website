@@ -109,11 +109,11 @@ const PrivacyPolicy = () => {
       rights: "Your rights: disable analytics in \"Cookie preferences\", clear your browser storage, or request deletion via movimento@infinity6.ai.",
     },
     changes: {
-      title: "10. Changes to This Policy",
+      title: "9. Changes to This Policy",
       text: "We may update this Privacy Policy periodically. We will notify you of any material changes by posting the new policy on our website and updating the \"Last updated\" date."
     },
     contact: {
-      title: "11. Contact Us",
+      title: "10. Contact Us",
       text: "If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us:",
       email: "Email:",
       address: "Address:",
