@@ -1,9 +1,7 @@
-import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
 
 interface CookieDetailsModalProps {
   open: boolean;
@@ -11,23 +9,22 @@ interface CookieDetailsModalProps {
 }
 
 export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalProps) => {
-  const { acceptAdditional, continueEssential } = useCookieConsent();
+  const { acceptAdditional, continueEssential, openPreferences } = useCookieConsent();
   const { language } = useLanguage();
-  const localized = useLocalizedPath();
 
   const t = language === 'pt'
     ? {
         title: 'Cookies',
         body: 'Usamos cookies essenciais e de análise anônimos para que o site funcione e medir desempenho. Aceita também cookies adicionais de marketing e preferências?',
         acceptAdditional: 'Aceitar adicionais',
-        continueEssential: 'Continuar sem',
+        continueEssential: 'Rejeitar adicionais',
         granular: 'Ajustar preferências',
       }
     : {
         title: 'Cookies',
         body: 'We use essential and anonymous analytics cookies so the site works and we can measure performance. Do you also accept additional marketing and preferences cookies?',
         acceptAdditional: 'Accept additional',
-        continueEssential: 'Continue without',
+        continueEssential: 'Reject additional',
         granular: 'Adjust preferences',
       };
 
@@ -39,6 +36,11 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
   const handleEssential = () => {
     continueEssential();
     onOpenChange(false);
+  };
+
+  const handleGranular = () => {
+    onOpenChange(false);
+    openPreferences();
   };
 
   return (
@@ -68,13 +70,13 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
         </div>
 
         <div className="text-xs text-white/60 mt-3 pt-3 border-t border-white/10">
-          <Link
-            to={localized('/cookie-settings')}
-            onClick={() => onOpenChange(false)}
+          <button
+            type="button"
+            onClick={handleGranular}
             className="text-[#F4845F] hover:underline"
           >
             {t.granular}
-          </Link>
+          </button>
         </div>
       </DialogContent>
     </Dialog>

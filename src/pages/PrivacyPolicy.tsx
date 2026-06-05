@@ -106,7 +106,7 @@ const PrivacyPolicy = () => {
       ],
       usage: "How we use it: measure performance, improve UX, and when you choose to fill out a form, attach this anonymous history to your contact to enrich the conversation.",
       additional: "Additional cookies (marketing/preferences): only activated after explicit consent in the cookie banner. You can review and change your choices at any time in \"Cookie preferences\".",
-      rights: "Your rights: disable analytics in \"Cookie preferences\", clear your browser storage, or request deletion via movimento@infinity6.ai.",
+      rights: "Your rights: disable analytics in \"Cookie preferences\", clear your browser storage, or request deletion via security@infinity6.ai.",
     },
     changes: {
       title: "9. Changes to This Policy",

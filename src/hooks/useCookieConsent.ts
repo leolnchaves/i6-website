@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { CookieConsent, defaultCookieConsent } from '@/types/cookies';
 
@@ -8,118 +7,97 @@ const COOKIE_CONSENT_VERSION = '2.0';
 export const useCookieConsent = () => {
   const [consent, setConsent] = useState<CookieConsent>(defaultCookieConsent);
   const [showBanner, setShowBanner] = useState(false);
+  const [bannerExpanded, setBannerExpanded] = useState(false);
 
   // Load consent from localStorage on mount
   useEffect(() => {
-    console.log('Loading cookie consent from localStorage...');
     const savedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (savedConsent) {
       try {
         const parsed = JSON.parse(savedConsent);
-        console.log('Found saved consent:', parsed);
         if (parsed.version === COOKIE_CONSENT_VERSION) {
           setConsent(parsed.consent);
           setShowBanner(false);
-          console.log('Consent loaded successfully');
         } else {
-          // Version mismatch, show banner again
-          console.log('Version mismatch, showing banner');
           setShowBanner(true);
         }
-      } catch (error) {
-        console.error('Error parsing cookie consent:', error);
+      } catch {
         setShowBanner(true);
       }
     } else {
-      // No consent found, show banner
-      console.log('No saved consent found, showing banner');
       setShowBanner(true);
+    }
+
+    // Open expanded banner if URL has ?cookies=open (deep-link from old route)
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('cookies') === 'open') {
+        setShowBanner(true);
+        setBannerExpanded(true);
+      }
+    } catch {
+      /* noop */
     }
   }, []);
 
   const saveConsent = useCallback((newConsent: CookieConsent) => {
-    console.log('Saving consent:', newConsent);
     const consentData = {
       consent: newConsent,
       version: COOKIE_CONSENT_VERSION,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
-    
     try {
       localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(consentData));
       setConsent(newConsent);
       setShowBanner(false);
-      console.log('Consent saved successfully');
+      setBannerExpanded(false);
     } catch (error) {
       console.error('Error saving consent:', error);
     }
   }, []);
 
   const acceptAll = useCallback(() => {
-    const allAccepted: CookieConsent = {
-      essential: true,
-      analytics: true,
-      marketing: true,
-      preferences: true,
-    };
-    saveConsent(allAccepted);
+    saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
   }, [saveConsent]);
 
   // Soft opt-in: aceita os adicionais (marketing + preferências) além do baseline.
   const acceptAdditional = useCallback(() => {
-    saveConsent({
-      essential: true,
-      analytics: true,
-      marketing: true,
-      preferences: true,
-    });
+    saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
   }, [saveConsent]);
 
-  // Continua só com essenciais + analytics anônimos (legítimo interesse).
+  // Rejeita os adicionais: mantém essenciais + analytics anônimos (legítimo interesse).
   const continueEssential = useCallback(() => {
-    saveConsent({
-      essential: true,
-      analytics: true,
-      marketing: false,
-      preferences: false,
-    });
+    saveConsent({ essential: true, analytics: true, marketing: false, preferences: false });
   }, [saveConsent]);
 
   const rejectAll = useCallback(() => {
-    const onlyEssential: CookieConsent = {
-      essential: true,
-      analytics: false,
-      marketing: false,
-      preferences: false,
-    };
-    saveConsent(onlyEssential);
+    saveConsent({ essential: true, analytics: false, marketing: false, preferences: false });
   }, [saveConsent]);
 
   const updateConsent = useCallback((category: keyof CookieConsent, value: boolean) => {
-    if (category === 'essential') return; // Essential cookies cannot be disabled
-    
-    console.log(`Updating ${category} consent to ${value}`);
-    setConsent(prev => ({
-      ...prev,
-      [category]: value
-    }));
+    if (category === 'essential') return;
+    setConsent((prev) => ({ ...prev, [category]: value }));
   }, []);
 
   const resetConsent = useCallback(() => {
-    console.log('Resetting consent');
     try {
       localStorage.removeItem(COOKIE_CONSENT_KEY);
       setConsent(defaultCookieConsent);
       setShowBanner(true);
-      console.log('Consent reset successfully');
     } catch (error) {
       console.error('Error resetting consent:', error);
     }
   }, []);
 
+  const openPreferences = useCallback(() => {
+    setShowBanner(true);
+    setBannerExpanded(true);
+  }, []);
+
   return {
     consent,
     showBanner,
+    bannerExpanded,
     saveConsent,
     acceptAll,
     acceptAdditional,
@@ -127,6 +105,8 @@ export const useCookieConsent = () => {
     rejectAll,
     updateConsent,
     resetConsent,
-    setShowBanner
+    setShowBanner,
+    setBannerExpanded,
+    openPreferences,
   };
 };
