@@ -89,7 +89,10 @@ const PrivacyPolicy = () => {
         "Data portability rights"
       ]
     },
-    // (transfers re-numbered to 9 below, after cookies section)
+    transfers: {
+      title: "7. International Data Transfers",
+      text: "Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with applicable laws."
+    },
     cookies: {
       title: "8. Cookies and Site Analytics",
       intro: "When you browse infinity6.ai, we automatically collect, under the legal basis of legitimate interest, anonymous information to understand how the site is used and improve your experience. No personally identifiable data is collected at this stage.",
@@ -104,10 +107,6 @@ const PrivacyPolicy = () => {
       usage: "How we use it: measure performance, improve UX, and when you choose to fill out a form, attach this anonymous history to your contact to enrich the conversation.",
       additional: "Additional cookies (marketing/preferences): only activated after explicit consent in the cookie banner. You can review and change your choices at any time in \"Cookie preferences\".",
       rights: "Your rights: disable analytics in \"Cookie preferences\", clear your browser storage, or request deletion via movimento@infinity6.ai.",
-    },
-    transfers: {
-      title: "9. International Data Transfers",
-      text: "Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with applicable laws."
     },
     changes: {
       title: "10. Changes to This Policy",
