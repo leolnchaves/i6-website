@@ -25,9 +25,10 @@ type FormData = z.infer<typeof schema>;
 interface LeadGateFormProps {
   insightTitle: string;
   insightSlug: string;
+  pdfUrl?: string;
 }
 
-const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
+const LeadGateForm = ({ insightTitle, insightSlug, pdfUrl }: LeadGateFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
@@ -74,69 +75,49 @@ const LeadGateForm = ({ insightTitle, insightSlug }: LeadGateFormProps) => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      // Honeypot: bots normally fill every field. Silently swallow and show
-      // the same confirmation UI so they don't retry.
       if (data[HONEYPOT_FIELD]) {
         setSubmitted(true);
         return;
       }
       setSubmitting(true);
 
-      const iframe = document.createElement('iframe');
-      const form = document.createElement('form');
-
       try {
         const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
-        const message = `Lead gerado a partir do engajamento com o insight "${insightTitle}" - Página: ${url}`;
+        const message = [
+          '[Lead Insights]',
+          `Insight: ${insightTitle}`,
+          `Slug: ${insightSlug}`,
+          `URL: ${url}`,
+          `Idioma: ${language}`,
+          `PDF: ${pdfUrl || '-'}`,
+          'Origem: lead-gate-insights',
+        ].join('\n');
 
-        iframe.style.display = 'none';
-        iframe.name = 'hidden_iframe';
-        document.body.appendChild(iframe);
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('company', insightTitle);
+        formData.append('message', message);
+        formData.append('subscription', `insight:${insightSlug}`);
+        formData.append('token', SHARED_FORM_TOKEN);
 
-        form.method = 'POST';
-        form.action = APPS_SCRIPT_URL;
-        form.target = 'hidden_iframe';
-        form.style.display = 'none';
-
-        // Mesmos campos que o formulário de Contato envia ao Apps Script.
-        // subscription = origem do lead (vai na coluna B da planilha).
-        const fields: Array<[string, string]> = [
-          ['name', data.name],
-          ['email', data.email],
-          ['company', ''],
-          ['message', message],
-          ['subscription', 'insights'],
-          ['token', SHARED_FORM_TOKEN],
-        ];
-
-        fields.forEach(([k, v]) => {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = k;
-          input.value = v;
-          form.appendChild(input);
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData,
         });
-
-        document.body.appendChild(form);
-        form.submit();
-
-        setTimeout(() => {
-          form.remove();
-          iframe.remove();
-        }, 1000);
 
         setSubmitted(true);
       } catch (err) {
         console.error('LeadGateForm submit error:', err);
-        form.remove();
-        iframe.remove();
         toast({ title: t.error, variant: 'destructive' });
       } finally {
         setSubmitting(false);
       }
     },
-    [insightSlug, insightTitle, language, t.error, toast],
+    [insightSlug, insightTitle, language, pdfUrl, t.error, toast],
   );
+
 
   if (submitted) {
     return (
