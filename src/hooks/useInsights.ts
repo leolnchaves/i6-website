@@ -83,6 +83,7 @@ const ALL: Insight[] = Object.entries(modules)
     const fm = data as Partial<InsightFrontmatter>;
     if (!fm.title || !fm.language || !fm.type || !fm.date) return null;
     return {
+      id: fm.id,
       title: fm.title,
       type: fm.type,
       date: fm.date,
