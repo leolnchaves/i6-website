@@ -52,8 +52,13 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         email: 'Email',
         cta: 'Receber por email',
         sending: 'Enviando...',
-        successTitle: 'Pedido recebido',
-        successMsg: 'Recebemos seu pedido. Em instantes você receberá o material no email informado',
+        successTitle: 'Tudo certo',
+        successMsgBefore: 'Obrigado! Já estamos enviando o material para o seu email. Ele deve chegar em alguns minutos — se não aparecer na caixa de entrada, dá uma olhadinha na pasta de ',
+        successMsgStrong: 'SPAM',
+        successMsgAfter: '.',
+        successHelp: 'Qualquer problema, ',
+        successHelpLink: 'entre em contato',
+        successHelpTail: ' que respondemos o mais rápido possível.',
         error: 'Não foi possível enviar. Tente novamente',
         privacy: 'Ao enviar, você concorda com nossa',
         privacyLink: 'Política de Privacidade',
@@ -67,8 +72,13 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         email: 'Email',
         cta: 'Receive by email',
         sending: 'Sending...',
-        successTitle: 'Request received',
-        successMsg: "We received your request. You'll receive the material at the provided email shortly",
+        successTitle: 'All set',
+        successMsgBefore: "Thanks! We're sending the material to your inbox right now. It should arrive in a few minutes — if you don't see it, please check your ",
+        successMsgStrong: 'Spam',
+        successMsgAfter: ' folder.',
+        successHelp: 'Any issues, ',
+        successHelpLink: 'get in touch',
+        successHelpTail: " and we'll reply as soon as possible.",
         error: 'Could not submit. Please try again',
         privacy: 'By submitting, you agree to our',
         privacyLink: 'Privacy Policy',
@@ -142,7 +152,18 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
           <CheckCircle2 className="w-7 h-7 text-[#F4845F]" />
         </div>
         <h2 className="text-2xl font-semibold text-white mb-2">{t.successTitle}</h2>
-        <p className="text-white/70 max-w-md mx-auto">{t.successMsg}</p>
+        <p className="text-white/70 max-w-md mx-auto">
+          {t.successMsgBefore}
+          <strong className="text-white">{t.successMsgStrong}</strong>
+          {t.successMsgAfter}
+        </p>
+        <p className="text-white/70 max-w-md mx-auto mt-4">
+          {t.successHelp}
+          <Link to={localized('/contact')} className="text-[#F4845F] hover:underline">
+            {t.successHelpLink}
+          </Link>
+          {t.successHelpTail}
+        </p>
       </div>
     );
   }
