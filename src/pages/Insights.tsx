@@ -28,17 +28,33 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
   const isExternal = !insight.gated && insight.type !== 'article' && !!insight.external_url;
   const cover = resolveCoverImage(insight.cover_image);
 
+  const typeLabel = labels[insight.type] || insight.type;
+
   const cardContent = (
     <article className="group h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all overflow-hidden">
-      {cover && (
-        <div className="h-40 overflow-hidden bg-white/5">
+      <div className="h-40 overflow-hidden bg-white/5 relative">
+        {cover ? (
           <img src={cover} alt={insight.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-        </div>
-      )}
+        ) : (
+          <div
+            className="w-full h-full flex items-center justify-center relative overflow-hidden"
+            style={{
+              background:
+                'radial-gradient(120% 80% at 30% 20%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0) 60%), linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+            }}
+            aria-hidden="true"
+          >
+            <span className="text-3xl md:text-4xl font-bold uppercase tracking-[0.25em] text-white/10 select-none">
+              {typeLabel}
+            </span>
+            <span className="absolute inset-0 bg-[radial-gradient(circle_at_80%_90%,rgba(244,132,95,0.08),transparent_50%)]" />
+          </div>
+        )}
+      </div>
       <div className="p-6 flex-1 flex flex-col">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded bg-[#F4845F]/15 text-[#F4845F]">
-            {labels[insight.type] || insight.type}
+            {typeLabel}
           </span>
           {isExternal && <ExternalLink size={14} className="text-white/40" />}
           <time className="text-xs text-white/40 ml-auto">
