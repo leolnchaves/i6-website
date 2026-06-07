@@ -152,7 +152,18 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
           <CheckCircle2 className="w-7 h-7 text-[#F4845F]" />
         </div>
         <h2 className="text-2xl font-semibold text-white mb-2">{t.successTitle}</h2>
-        <p className="text-white/70 max-w-md mx-auto">{t.successMsg}</p>
+        <p className="text-white/70 max-w-md mx-auto">
+          {t.successMsgBefore}
+          <strong className="text-white">{t.successMsgStrong}</strong>
+          {t.successMsgAfter}
+        </p>
+        <p className="text-white/70 max-w-md mx-auto mt-4">
+          {t.successHelp}
+          <Link to={localized('/contact')} className="text-[#F4845F] hover:underline">
+            {t.successHelpLink}
+          </Link>
+          {t.successHelpTail}
+        </p>
       </div>
     );
   }
