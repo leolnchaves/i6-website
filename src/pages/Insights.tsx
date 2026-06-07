@@ -31,7 +31,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
   const cardContent = (
     <article className="group h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all overflow-hidden">
       {cover && (
-        <div className="aspect-video overflow-hidden bg-white/5">
+        <div className="h-40 overflow-hidden bg-white/5">
           <img src={cover} alt={insight.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         </div>
       )}
