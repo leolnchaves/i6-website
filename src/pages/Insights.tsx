@@ -54,7 +54,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
       <div className="p-6 flex-1 flex flex-col">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded bg-[#F4845F]/15 text-[#F4845F]">
-            {labels[insight.type] || insight.type}
+            {typeLabel}
           </span>
           {isExternal && <ExternalLink size={14} className="text-white/40" />}
           <time className="text-xs text-white/40 ml-auto">
