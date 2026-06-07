@@ -3,19 +3,16 @@
  * sync-insights-from-i6hub.mjs
  *
  * Pulls published insights from the i6Hub public feed and regenerates:
- *   - src/content/insights/<lang>-<slug>.md   (frontmatter + body)
- *   - public/content/insights/<slug>.<ext>     (cover images, when present)
- *
- * Images travel inside the feed as base64 (cover_image_data + cover_image_mime),
- * so the site stays 100% static and self-contained after build.
+ *   - src/content/insights/<lang>-<slug>.md     (frontmatter + body)
+ *   - public/content/insights/<slug>.<ext>      (cover images, when present)
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const FEED_URL = process.env.I6HUB_FEED_URL;
-const TOKEN = process.env.I6HUB_SYNC_TOKEN;
-const MD_DIR  = path.resolve('src/content/insights');
-const IMG_DIR = path.resolve('public/content/insights');
+const TOKEN    = process.env.I6HUB_SYNC_TOKEN;
+const MD_DIR   = path.resolve('src/content/insights');
+const IMG_DIR  = path.resolve('public/content/insights');
 
 if (!FEED_URL || !TOKEN) {
   throw new Error('Missing I6HUB_FEED_URL or I6HUB_SYNC_TOKEN');
@@ -27,41 +24,36 @@ if (!res.ok) {
 }
 const items = await res.json();
 
-// Ensure output dirs
+// Cria as pastas (idempotente — não falha se já existirem)
 await fs.mkdir(MD_DIR, { recursive: true });
 await fs.mkdir(IMG_DIR, { recursive: true });
 
-// Wipe existing .md files (preserve README.md)
+// Limpa .md antigos (preserva README.md)
 const existingMd = await fs.readdir(MD_DIR);
 await Promise.all(
   existingMd
-    .filter((name) => name.endsWith('.md') && name.toLowerCase() !== 'readme.md')
-    .map((name) => fs.rm(path.join(MD_DIR, name), { force: true })),
+    .filter((n) => n.endsWith('.md') && n.toLowerCase() !== 'readme.md')
+    .map((n) => fs.rm(path.join(MD_DIR, n), { force: true })),
 );
 
-// Wipe existing managed images (only .jpg/.png/.webp; preserve anything else)
+// Limpa imagens antigas (apenas formatos gerenciados)
 const existingImg = await fs.readdir(IMG_DIR).catch(() => []);
 await Promise.all(
   existingImg
-    .filter((name) => /\.(jpe?g|png|webp)$/i.test(name))
-    .map((name) => fs.rm(path.join(IMG_DIR, name), { force: true })),
+    .filter((n) => /\.(jpe?g|png|webp)$/i.test(n))
+    .map((n) => fs.rm(path.join(IMG_DIR, n), { force: true })),
 );
 
 const yaml = (v) => JSON.stringify(v);
-
-const mimeToExt = (mime) => {
-  switch (mime) {
-    case 'image/jpeg': return 'jpg';
-    case 'image/png':  return 'png';
-    case 'image/webp': return 'webp';
-    default: return null;
-  }
-};
+const mimeToExt = (m) =>
+  m === 'image/jpeg' ? 'jpg' :
+  m === 'image/png'  ? 'png' :
+  m === 'image/webp' ? 'webp' : null;
 
 let imgCount = 0;
 
 for (const it of items) {
-  // 1) Markdown (unchanged)
+  // Markdown (inalterado)
   const fm = [
     '---',
     it.id ? `id: ${it.id}` : null,
@@ -85,7 +77,7 @@ for (const it of items) {
 
   await fs.writeFile(path.join(MD_DIR, `${it.language}-${it.slug}.md`), fm);
 
-  // 2) Cover image (new)
+  // Imagem de capa (novo)
   if (it.cover_image_data && it.cover_image_mime) {
     const ext = mimeToExt(it.cover_image_mime);
     if (!ext) {
