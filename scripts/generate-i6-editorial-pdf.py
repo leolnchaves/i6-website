@@ -499,8 +499,9 @@ def parse_article(raw: str) -> Article:
         else:
             label = prefix_clause or _clean(ctx_para[max(0, end_idx - 40):end_idx + 40])
         # Cap length
-        if len(label) > 80:
-            label = label[:77].rstrip(" ,") + "…"
+        if len(label) > 160:
+            label = label[:157].rstrip(" ,") + "…"
+
         # Capitalize first letter
         if label:
             label = label[0].upper() + label[1:]
