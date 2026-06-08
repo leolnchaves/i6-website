@@ -746,7 +746,7 @@ def fit_display(c, text: str, font: str, max_size: float, min_size: float,
         if len(lines) <= max_lines:
             return size, lines
         size -= 1
-    return min_size, wrap_text(c, text, font, min_size, max_w)[:max_lines]
+    return min_size, wrap_text(c, text, font, min_size, max_w)
 
 
 # ---------------------------------------------------------------------------
