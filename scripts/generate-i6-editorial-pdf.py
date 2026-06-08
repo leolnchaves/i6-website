@@ -458,17 +458,17 @@ def parse_article(raw: str) -> Article:
             for m in range_re.finditer(p):
                 a, b = m.group(1), m.group(2)
                 val = f"{a}–{b}%"
-                add_stat(val, p, m.end())
+                add_stat(val, p, m.start(), m.end())
                 consumed_spans.append((p, m.start(), m.end()))
             # Money: US$ 100 milhões
             for m in money_re.finditer(p):
-                add_stat(_clean(m.group(0)), p, m.end())
+                add_stat(_clean(m.group(0)), p, m.start(), m.end())
                 consumed_spans.append((p, m.start(), m.end()))
             # Singles not inside a range/money span already captured
             for m in single_re.finditer(p):
                 if any(p is sp_p and sp_s <= m.start() < sp_e for (sp_p, sp_s, sp_e) in consumed_spans):
                     continue
-                add_stat(_clean(m.group(0)), p, m.end())
+                add_stat(_clean(m.group(0)), p, m.start(), m.end())
     # Keep at most 5 strongest stats
     stats = stats[:5]
 
