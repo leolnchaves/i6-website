@@ -98,6 +98,39 @@ BODY_BLACK = "Inter-Black" if HAVE_INTER else "Helvetica-Bold"
 
 
 # ---------------------------------------------------------------------------
+# Brand logo assets (white symbol + horizontal wordmark)
+# ---------------------------------------------------------------------------
+
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOGO_SYMBOL = os.path.join(_SCRIPT_DIR, "assets", "infinity6_symbol_white.png")
+LOGO_HORIZ = os.path.join(_SCRIPT_DIR, "assets", "infinity6_horiz_white.png")
+# Native aspect ratios (width / height) of the cropped artwork.
+_SYMBOL_AR = 1448 / 930
+_HORIZ_AR = 1624 / 249
+
+
+def draw_logo_symbol(c, x: float, y: float, height: float) -> None:
+    """Draw the infinity6 symbol with its bottom-left at (x, y)."""
+    if not os.path.exists(LOGO_SYMBOL):
+        return
+    w = height * _SYMBOL_AR
+    c.drawImage(LOGO_SYMBOL, x, y, width=w, height=height, mask="auto",
+                preserveAspectRatio=True)
+
+
+def draw_logo_horizontal(c, x: float, y: float, height: float) -> None:
+    """Draw the horizontal infinity6 wordmark with its bottom-left at (x, y)."""
+    if not os.path.exists(LOGO_HORIZ):
+        return
+    w = height * _HORIZ_AR
+    c.drawImage(LOGO_HORIZ, x, y, width=w, height=height, mask="auto",
+                preserveAspectRatio=True)
+
+
+
+
+
+# ---------------------------------------------------------------------------
 # Canvas patches: char-spacing via text objects
 # ---------------------------------------------------------------------------
 
