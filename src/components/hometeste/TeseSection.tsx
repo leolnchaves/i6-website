@@ -115,9 +115,9 @@ const TeseSection = () => {
     pt: {
       question: 'Seus dados geram vantagem competitiva\nou só alimentam dashboards?',
       stats: [
-        { value: 11, label: 'da receita vem de monetização de dados' },
-        { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
-        { value: 11, label: 'das marcas personalizam experiências com dados' },
+        { value: 89, label: 'das empresas não monetizam seus dados' },
+        { value: 69, label: 'das empresas não usam dados para decisões estratégicas' },
+        { value: 89, label: 'das empresas não personalizam experiências baseadas em comportamento' },
       ],
       narrativeBold: 'Dados parados são o lucro da concorrência.',
       narrativeRest: 'A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
@@ -132,9 +132,9 @@ const TeseSection = () => {
     en: {
       question: 'Does your data drive competitive advantage\nor just feed dashboards?',
       stats: [
-        { value: 11, label: 'of revenue comes from data monetization' },
-        { value: 31, label: 'of companies use data for strategic decisions' },
-        { value: 11, label: 'of brands personalize experiences with data' },
+        { value: 89, label: "of companies don't monetize their data" },
+        { value: 69, label: "of companies don't use data for strategic decisions" },
+        { value: 89, label: "of companies don't personalize experiences based on behavior" },
       ],
       narrativeBold: "Your idle data is your competitor's profit.",
       narrativeRest: "The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.",
