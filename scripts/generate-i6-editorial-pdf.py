@@ -816,8 +816,8 @@ def render_cover(c, art: Article, page_num: int, total: int):
     # Title — wrap big
     title_text = art.title.upper()
     max_w = PAGE_W - MARGIN * 2 - 20
-    size, lines = fit_display(c, title_text, DISPLAY, max_size=56, min_size=28,
-                              max_w=max_w, max_lines=5)
+    size, lines = fit_display(c, title_text, DISPLAY, max_size=56, min_size=20,
+                              max_w=max_w, max_lines=8)
     leading = size * 0.95
     y = PAGE_H * 0.55
     c.setFillColor(TEXT_LIGHT)
@@ -864,7 +864,7 @@ def render_cover(c, art: Article, page_num: int, total: int):
     # Excerpt
     if art.excerpt:
         y = draw_paragraph(c, MARGIN, y, art.excerpt, BODY_LIGHT, 11.5, 16.5,
-                           max_w=PAGE_W * 0.55, color=TEXT_LIGHT, max_lines=5)
+                           max_w=PAGE_W * 0.55, color=TEXT_LIGHT, max_lines=14)
 
     # Bottom meta
     c.setFillColor(TEXT_MUTED)
@@ -913,7 +913,7 @@ def render_lead(c, art: Article, page_num: int, total: int):
 
     # Big punch line (display)
     max_w = PAGE_W - MARGIN * 2 - 30
-    size, lines = fit_display(c, punch, DISPLAY, 46, 24, max_w, max_lines=5)
+    size, lines = fit_display(c, punch, DISPLAY, 46, 14, max_w, max_lines=10)
     y = PAGE_H - MARGIN - 80
     leading = size * 1.02
     c.setFont(DISPLAY, size)
@@ -1038,7 +1038,7 @@ def render_stats(c, art: Article, page_num: int, total: int):
     c.setFillColor(TEXT_LIGHT)
     c.setFont(BODY_MEDIUM, 10)
     lab_y = hero_top - hv_size - 24
-    for ln in wrap_text(c, hero.label, BODY_MEDIUM, 10, hero_max_w)[:4]:
+    for ln in wrap_text(c, hero.label, BODY_MEDIUM, 10, hero_max_w)[:6]:
         c.drawString(hero_x, lab_y, ln)
         lab_y -= 14
     if hero.source:
@@ -1075,7 +1075,7 @@ def render_stats(c, art: Article, page_num: int, total: int):
         c.setFont(BODY, 8.5)
         lab_x = bar_x + bar_w * 0.58
         lab_w = bar_w - bar_w * 0.58 - 2
-        lab_lines = wrap_text(c, st.label, BODY, 8.5, lab_w)[:2]
+        lab_lines = wrap_text(c, st.label, BODY, 8.5, lab_w)[:3]
         ly = bar_y - 8
         for ln in lab_lines:
             c.drawString(lab_x, ly, ln)
@@ -1109,8 +1109,8 @@ def render_compare(c, art: Article, page_num: int, total: int,
 
     heading = section.heading if section else "Forecast estatístico × forecast adaptativo"
     c.setFillColor(TEXT_LIGHT)
-    size, lines = fit_display(c, heading, DISPLAY, 34, 22, PAGE_W - MARGIN * 2,
-                              max_lines=2)
+    size, lines = fit_display(c, heading, DISPLAY, 34, 18, PAGE_W - MARGIN * 2,
+                              max_lines=4)
     c.setFont(DISPLAY, size)
     y = PAGE_H - MARGIN - 70
     for ln in lines:
@@ -1190,7 +1190,7 @@ def render_numbered_list(c, art: Article, page_num: int, total: int,
     if intro:
         draw_paragraph_justified(c, MARGIN, PAGE_H - MARGIN - 110, intro,
                                   BODY_LIGHT, 10, 15, PAGE_W * 0.6,
-                                  color=TEXT_LIGHT, max_lines=3)
+                                  color=TEXT_LIGHT, max_lines=8)
 
     # List
     items = section.bullets or []
@@ -1217,7 +1217,7 @@ def render_numbered_list(c, art: Article, page_num: int, total: int,
         c.setFont(BODY_MEDIUM, 11)
         lines = wrap_text(c, it.rstrip(".;"), BODY_MEDIUM, 11, PAGE_W - MARGIN * 2 - 75)
         ly = y_row - 8
-        for ln in lines[:2]:
+        for ln in lines[:4]:
             c.drawString(MARGIN + 70, ly, ln)
             ly -= 14
 
@@ -1240,8 +1240,8 @@ def render_quote(c, art: Article, page_num: int, total: int, quote: str,
 
     # The quote — large display, multi-line
     max_w = PAGE_W - MARGIN * 2 - 30
-    size, lines = fit_display(c, quote, DISPLAY_LIGHT, 38, 18, max_w,
-                              max_lines=8)
+    size, lines = fit_display(c, quote, DISPLAY_LIGHT, 38, 14, max_w,
+                              max_lines=14)
     leading = size * 1.18
     total_h = leading * len(lines)
     y = (PAGE_H + total_h) / 2 - 30
@@ -1275,8 +1275,8 @@ def render_section_with_image(c, art: Article, page_num: int, total: int,
 
     heading = section.heading or "Aprendizado"
     c.setFillColor(TEXT_LIGHT)
-    size, lines = fit_display(c, heading, DISPLAY, 32, 22, PAGE_W - MARGIN * 2,
-                              max_lines=2)
+    size, lines = fit_display(c, heading, DISPLAY, 32, 18, PAGE_W - MARGIN * 2,
+                              max_lines=4)
     c.setFont(DISPLAY, size)
     y = PAGE_H - MARGIN - 70
     for ln in lines:
@@ -1334,7 +1334,7 @@ def render_confidence_diagram(c, art: Article, page_num: int, total: int,
         intro = section.paragraphs[0]
     draw_paragraph_justified(c, MARGIN, PAGE_H - MARGIN - 110, intro,
                               BODY_LIGHT, 10.5, 16, PAGE_W * 0.7,
-                              color=TEXT_LIGHT, max_lines=4)
+                              color=TEXT_LIGHT, max_lines=10)
 
     # Diagram: three horizontal segments — Alta / Média / Baixa
     diag_y = PAGE_H * 0.45
@@ -1400,7 +1400,7 @@ def render_closing(c, art: Article, page_num: int, total: int):
     closing = ("Quais sinais mostram que a demanda está mudando, "
                "e qual decisão precisamos tomar agora?")
     max_w = PAGE_W - MARGIN * 2 - 20
-    size, lines = fit_display(c, closing, DISPLAY, 38, 22, max_w, max_lines=5)
+    size, lines = fit_display(c, closing, DISPLAY, 38, 16, max_w, max_lines=8)
     c.setFont(DISPLAY, size)
     y = PAGE_H * 0.7
     leading = size * 1.1
