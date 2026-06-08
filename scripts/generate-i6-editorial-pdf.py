@@ -955,13 +955,13 @@ def render_lead(c, art: Article, page_num: int, total: int):
 
 def render_stats(c, art: Article, page_num: int, total: int):
     fill_bg(c)
-    draw_radial_glow(c, PAGE_W * 0.95, PAGE_H * 0.1, 380, color=CORAL,
+    draw_radial_glow(c, PAGE_W * 0.95, PAGE_H * 0.12, 380, color=CORAL,
                      intensity=0.10)
     draw_chrome(c, page_num, total, section_label="EVIDÊNCIAS")
 
-    draw_eyebrow(c, MARGIN, PAGE_H - MARGIN - 28, "02  EVIDÊNCIAS QUE SUSTENTAM A TESE")
+    draw_eyebrow(c, MARGIN, PAGE_H - MARGIN - 28,
+                 "02  EVIDÊNCIAS QUE SUSTENTAM A TESE")
 
-    # Headline
     headline = "Os números falam por si"
     c.setFillColor(TEXT_LIGHT)
     c.setFont(DISPLAY, 34)
@@ -969,10 +969,8 @@ def render_stats(c, art: Article, page_num: int, total: int):
     draw_thin_rule(c, MARGIN, PAGE_H - MARGIN - 86, MARGIN + 50,
                    color=CORAL, width=1.0)
 
-    # Layout: a big "hero" stat on the left, list of bars on the right
     stats = art.stats[:5]
     if not stats:
-        # Fallback: just print key paragraphs
         y = PAGE_H - MARGIN - 130
         for sec in art.sections[:1]:
             for p in sec.paragraphs[:3]:
@@ -982,73 +980,79 @@ def render_stats(c, art: Article, page_num: int, total: int):
                 y -= 12
         return
 
-    # Hero stat = first stat
+    # ---- LEFT: hero stat (first) ----
     hero = stats[0]
     hero_x = MARGIN
-    hero_y_top = PAGE_H - MARGIN - 130
+    hero_top = PAGE_H - MARGIN - 130
+    hero_max_w = PAGE_W * 0.45
+    # Fit value
+    hv_size = 110
+    while hv_size > 50 and pdfmetrics.stringWidth(hero.value, DISPLAY, hv_size) > hero_max_w:
+        hv_size -= 4
     c.setFillColor(CORAL)
-    c.setFont(DISPLAY, 120)
-    # Trim to most striking part — e.g. drop unit lines if too wide
-    hero_value = hero.value
-    while pdfmetrics.stringWidth(hero_value, DISPLAY, 120) > (PAGE_W * 0.42):
-        # shrink
-        size = 120
-        while size > 50 and pdfmetrics.stringWidth(hero_value, DISPLAY, size) > (PAGE_W * 0.42):
-            size -= 4
-        c.setFont(DISPLAY, size)
-        break
-    c.drawString(hero_x, hero_y_top - 100, hero_value)
-    # Label below
+    c.setFont(DISPLAY, hv_size)
+    c.drawString(hero_x, hero_top - hv_size * 0.85, hero.value)
+    # Underline
+    draw_thin_rule(c, hero_x, hero_top - hv_size - 6,
+                   hero_x + min(hero_max_w, 220), color=CORAL, width=0.8)
+    # Label
     c.setFillColor(TEXT_LIGHT)
-    c.setFont(BODY_MEDIUM, 9.5)
-    y = hero_y_top - 120
-    label_lines = wrap_text(c, hero.label, BODY_MEDIUM, 9.5, PAGE_W * 0.42)
-    for ln in label_lines[:3]:
-        c.drawString(hero_x, y, ln)
-        y -= 14
+    c.setFont(BODY_MEDIUM, 10)
+    lab_y = hero_top - hv_size - 24
+    for ln in wrap_text(c, hero.label, BODY_MEDIUM, 10, hero_max_w)[:4]:
+        c.drawString(hero_x, lab_y, ln)
+        lab_y -= 14
     if hero.source:
         c.setFillColor(CORAL)
         c.setFont(BODY_BOLD, 7.5)
         c.setCharSpace(2.4)
-        c.drawString(hero_x, y - 6, hero.source.upper())
+        c.drawString(hero_x, lab_y - 8, hero.source.upper() + "  ·  FONTE")
         c.setCharSpace(0)
 
-    # Bars on the right
+    # ---- RIGHT: secondary stats stacked ----
     bar_x = PAGE_W * 0.55
     bar_w = PAGE_W - MARGIN - bar_x
-    bar_y = PAGE_H - MARGIN - 130
+    bar_y = PAGE_H - MARGIN - 120
     c.setFillColor(TEXT_MUTED)
     c.setFont(BODY_BOLD, 8)
     c.setCharSpace(2.2)
     c.drawString(bar_x, bar_y, "OUTROS INDICADORES")
     c.setCharSpace(0)
-    bar_y -= 22
-    for st in stats[1:6]:
-        # Value
+    bar_y -= 16
+    draw_thin_rule(c, bar_x, bar_y, PAGE_W - MARGIN, color=NAVY_LINE, width=0.6)
+    bar_y -= 24
+
+    rest = stats[1:5]
+    for st in rest:
+        # Value — keep within left half of column
+        vsize = 26
+        while vsize > 14 and pdfmetrics.stringWidth(st.value, DISPLAY_BOLD, vsize) > bar_w * 0.55:
+            vsize -= 2
         c.setFillColor(TEXT_LIGHT)
-        c.setFont(DISPLAY_BOLD, 28)
-        c.drawString(bar_x, bar_y - 22, st.value)
-        # Label
+        c.setFont(DISPLAY_BOLD, vsize)
+        c.drawString(bar_x, bar_y - vsize, st.value)
+        # Label on the right side, wrap up to 2 lines
         c.setFillColor(TEXT_MUTED)
         c.setFont(BODY, 8.5)
-        lab_lines = wrap_text(c, st.label, BODY, 8.5, bar_w - 100)
-        ly = bar_y - 12
-        for ln in lab_lines[:2]:
-            c.drawString(bar_x + 100, ly, ln)
+        lab_x = bar_x + bar_w * 0.58
+        lab_w = bar_w - bar_w * 0.58 - 2
+        lab_lines = wrap_text(c, st.label, BODY, 8.5, lab_w)[:2]
+        ly = bar_y - 8
+        for ln in lab_lines:
+            c.drawString(lab_x, ly, ln)
             ly -= 11
-        # Source tag
+        # Source — below label, small coral
         if st.source:
             c.setFillColor(CORAL)
-            c.setFont(BODY_BOLD, 7)
-            c.setCharSpace(2)
-            c.drawRightString(PAGE_W - MARGIN, bar_y - 22, st.source.upper())
+            c.setFont(BODY_BOLD, 6.5)
+            c.setCharSpace(1.8)
+            c.drawString(lab_x, ly - 2, st.source.upper())
             c.setCharSpace(0)
-        # Coral bar
-        draw_thin_rule(c, bar_x, bar_y - 32, PAGE_W - MARGIN, color=NAVY_LINE,
-                       width=0.6)
-        bar_y -= 56
+        bar_y -= max(vsize + 22, 44)
+        draw_thin_rule(c, bar_x, bar_y + 4, PAGE_W - MARGIN, color=NAVY_LINE,
+                       width=0.4)
 
-    # Bottom: gentle waves
+    # Bottom waves
     draw_wave(c, y_base=MARGIN + 40, amplitude=14, wavelength=300, phase=0,
               color=CORAL, alpha=0.25, stroke_width=0.5)
     draw_wave(c, y_base=MARGIN + 55, amplitude=10, wavelength=260, phase=1.6,
