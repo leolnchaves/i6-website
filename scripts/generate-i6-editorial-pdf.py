@@ -319,17 +319,31 @@ def parse_article(raw: str) -> Article:
     lines = [l.rstrip() for l in raw.splitlines()]
     # Remove leading/trailing blank lines per logical block
 
-    # Pull metadata block (lines like "Title: ..." near the end)
+    # Pull metadata block (lines like "Title: ..." near the end). Allow values
+    # to span multiple lines — continuation lines (no "Key:" prefix) are
+    # appended to the most recent meta entry until the next meta key or a
+    # blank line.
     meta: dict[str, str] = {}
     body_lines = []
+    last_meta_key: Optional[str] = None
     for line in lines:
         m = re.match(r"^\*?\*?([A-Za-zÀ-ÿ ]+?)\*?\*?\s*:\s*(.+)$", line)
         if m and m.group(1).strip().lower() in META_KEYS:
-            meta[m.group(1).strip().lower()] = _clean(m.group(2))
-        else:
-            body_lines.append(line)
+            key = m.group(1).strip().lower()
+            meta[key] = _clean(m.group(2))
+            last_meta_key = key
+            continue
+        # Continuation of the previous meta value?
+        if last_meta_key and line.strip() and not re.match(r"^#+\s", line):
+            # Stop continuation if this looks like a new section heading
+            meta[last_meta_key] = (meta[last_meta_key] + " " + _clean(line)).strip()
+            continue
+        if not line.strip():
+            last_meta_key = None
+        body_lines.append(line)
 
     body = "\n".join(body_lines)
+
 
     # Title: first non-empty line, OR ## heading at top, OR meta['title']
     title = meta.get("title", "")
