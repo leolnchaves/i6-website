@@ -1433,13 +1433,12 @@ def render_closing(c, art: Article, page_num: int, total: int):
         else:
             y -= 6
 
-    # Wordmark big
-    c.setFillColor(TEXT_LIGHT)
-    c.setFont(DISPLAY, 56)
-    c.drawString(MARGIN, MARGIN + 40, "infinity6")
+    # Horizontal wordmark logo bottom-left
+    draw_logo_horizontal(c, MARGIN, MARGIN + 40, height=46)
     c.setFillColor(TEXT_MUTED)
     c.setFont(BODY, 8.5)
-    c.drawString(MARGIN, MARGIN + 22, "movimento@infinity6.ai  ·  infinity6.ai")
+    c.drawString(MARGIN, MARGIN + 22, "talk@infinity6.ai  ·  infinity6.ai")
+
     c.setFillColor(TEXT_DIM)
     c.setFont(BODY, 7.5)
     c.drawRightString(PAGE_W - MARGIN, MARGIN + 22, f"{page_num:02d} / {total:02d}")
