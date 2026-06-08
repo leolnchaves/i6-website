@@ -755,11 +755,9 @@ def fit_display(c, text: str, font: str, max_size: float, min_size: float,
 
 def draw_chrome(c, page_num: int, total: int, section_label: str = "",
                 show_top: bool = True):
-    # Top-left wordmark, top-right edition/cluster
+    # Top-left wordmark (symbol logo), top-right edition/cluster
     if show_top:
-        c.setFillColor(TEXT_LIGHT)
-        c.setFont(BODY_BLACK, 9)
-        c.drawString(MARGIN, PAGE_H - MARGIN + 6, "infinity6")
+        draw_logo_symbol(c, MARGIN, PAGE_H - MARGIN + 4, height=14)
         if section_label:
             c.setFillColor(TEXT_MUTED)
             c.setFont(BODY_MEDIUM, 7.5)
@@ -772,7 +770,8 @@ def draw_chrome(c, page_num: int, total: int, section_label: str = "",
                    width=0.5, alpha=1.0)
     c.setFillColor(TEXT_DIM)
     c.setFont(BODY, 7.5)
-    c.drawString(MARGIN, MARGIN - 24, "infinity6 · movimento@infinity6.ai")
+    c.drawString(MARGIN, MARGIN - 24, "infinity6 · talk@infinity6.ai")
+
     c.setFont(BODY_MEDIUM, 7.5)
     c.drawRightString(PAGE_W - MARGIN, MARGIN - 24,
                       f"{page_num:02d}  /  {total:02d}")
