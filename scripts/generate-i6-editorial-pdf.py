@@ -830,8 +830,8 @@ def render_cover(c, art: Article, page_num: int, total: int):
     # Title — wrap big
     title_text = art.title.upper()
     max_w = PAGE_W - MARGIN * 2 - 20
-    size, lines = fit_display(c, title_text, DISPLAY, max_size=56, min_size=20,
-                              max_w=max_w, max_lines=8)
+    size, lines = fit_display(c, title_text, DISPLAY, max_size=52, min_size=24,
+                              max_w=max_w, max_lines=6)
     leading = size * 0.95
     y = PAGE_H * 0.55
     c.setFillColor(TEXT_LIGHT)
