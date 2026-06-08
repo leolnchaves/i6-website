@@ -793,10 +793,9 @@ def render_cover(c, art: Article, page_num: int, total: int):
                     base_wl=180, seed=7, color=CORAL)
     draw_particles(c, count=60, seed=3)
 
-    # Top chrome
-    c.setFillColor(TEXT_LIGHT)
-    c.setFont(BODY_BLACK, 11)
-    c.drawString(MARGIN, PAGE_H - MARGIN, "infinity6")
+    # Top chrome — symbol logo top-left
+    draw_logo_symbol(c, MARGIN, PAGE_H - MARGIN - 4, height=18)
+
     c.setFillColor(CORAL)
     c.setFont(BODY_MEDIUM, 9)
     c.setCharSpace(2.8)
