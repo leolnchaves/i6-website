@@ -98,6 +98,39 @@ BODY_BLACK = "Inter-Black" if HAVE_INTER else "Helvetica-Bold"
 
 
 # ---------------------------------------------------------------------------
+# Brand logo assets (white symbol + horizontal wordmark)
+# ---------------------------------------------------------------------------
+
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOGO_SYMBOL = os.path.join(_SCRIPT_DIR, "assets", "infinity6_symbol_white.png")
+LOGO_HORIZ = os.path.join(_SCRIPT_DIR, "assets", "infinity6_horiz_white.png")
+# Native aspect ratios (width / height) of the cropped artwork.
+_SYMBOL_AR = 1448 / 930
+_HORIZ_AR = 1624 / 249
+
+
+def draw_logo_symbol(c, x: float, y: float, height: float) -> None:
+    """Draw the infinity6 symbol with its bottom-left at (x, y)."""
+    if not os.path.exists(LOGO_SYMBOL):
+        return
+    w = height * _SYMBOL_AR
+    c.drawImage(LOGO_SYMBOL, x, y, width=w, height=height, mask="auto",
+                preserveAspectRatio=True)
+
+
+def draw_logo_horizontal(c, x: float, y: float, height: float) -> None:
+    """Draw the horizontal infinity6 wordmark with its bottom-left at (x, y)."""
+    if not os.path.exists(LOGO_HORIZ):
+        return
+    w = height * _HORIZ_AR
+    c.drawImage(LOGO_HORIZ, x, y, width=w, height=height, mask="auto",
+                preserveAspectRatio=True)
+
+
+
+
+
+# ---------------------------------------------------------------------------
 # Canvas patches: char-spacing via text objects
 # ---------------------------------------------------------------------------
 
@@ -286,17 +319,31 @@ def parse_article(raw: str) -> Article:
     lines = [l.rstrip() for l in raw.splitlines()]
     # Remove leading/trailing blank lines per logical block
 
-    # Pull metadata block (lines like "Title: ..." near the end)
+    # Pull metadata block (lines like "Title: ..." near the end). Allow values
+    # to span multiple lines — continuation lines (no "Key:" prefix) are
+    # appended to the most recent meta entry until the next meta key or a
+    # blank line.
     meta: dict[str, str] = {}
     body_lines = []
+    last_meta_key: Optional[str] = None
     for line in lines:
         m = re.match(r"^\*?\*?([A-Za-zÀ-ÿ ]+?)\*?\*?\s*:\s*(.+)$", line)
         if m and m.group(1).strip().lower() in META_KEYS:
-            meta[m.group(1).strip().lower()] = _clean(m.group(2))
-        else:
-            body_lines.append(line)
+            key = m.group(1).strip().lower()
+            meta[key] = _clean(m.group(2))
+            last_meta_key = key
+            continue
+        # Continuation of the previous meta value?
+        if last_meta_key and line.strip() and not re.match(r"^#+\s", line):
+            # Stop continuation if this looks like a new section heading
+            meta[last_meta_key] = (meta[last_meta_key] + " " + _clean(line)).strip()
+            continue
+        if not line.strip():
+            last_meta_key = None
+        body_lines.append(line)
 
     body = "\n".join(body_lines)
+
 
     # Title: first non-empty line, OR ## heading at top, OR meta['title']
     title = meta.get("title", "")
@@ -452,8 +499,9 @@ def parse_article(raw: str) -> Article:
         else:
             label = prefix_clause or _clean(ctx_para[max(0, end_idx - 40):end_idx + 40])
         # Cap length
-        if len(label) > 80:
-            label = label[:77].rstrip(" ,") + "…"
+        if len(label) > 160:
+            label = label[:157].rstrip(" ,") + "…"
+
         # Capitalize first letter
         if label:
             label = label[0].upper() + label[1:]
@@ -713,7 +761,7 @@ def fit_display(c, text: str, font: str, max_size: float, min_size: float,
         if len(lines) <= max_lines:
             return size, lines
         size -= 1
-    return min_size, wrap_text(c, text, font, min_size, max_w)[:max_lines]
+    return min_size, wrap_text(c, text, font, min_size, max_w)
 
 
 # ---------------------------------------------------------------------------
@@ -722,11 +770,9 @@ def fit_display(c, text: str, font: str, max_size: float, min_size: float,
 
 def draw_chrome(c, page_num: int, total: int, section_label: str = "",
                 show_top: bool = True):
-    # Top-left wordmark, top-right edition/cluster
+    # Top-left wordmark (symbol logo), top-right edition/cluster
     if show_top:
-        c.setFillColor(TEXT_LIGHT)
-        c.setFont(BODY_BLACK, 9)
-        c.drawString(MARGIN, PAGE_H - MARGIN + 6, "infinity6")
+        draw_logo_symbol(c, MARGIN, PAGE_H - MARGIN + 4, height=14)
         if section_label:
             c.setFillColor(TEXT_MUTED)
             c.setFont(BODY_MEDIUM, 7.5)
@@ -739,7 +785,8 @@ def draw_chrome(c, page_num: int, total: int, section_label: str = "",
                    width=0.5, alpha=1.0)
     c.setFillColor(TEXT_DIM)
     c.setFont(BODY, 7.5)
-    c.drawString(MARGIN, MARGIN - 24, "infinity6 · movimento@infinity6.ai")
+    c.drawString(MARGIN, MARGIN - 24, "infinity6 · talk@infinity6.ai")
+
     c.setFont(BODY_MEDIUM, 7.5)
     c.drawRightString(PAGE_W - MARGIN, MARGIN - 24,
                       f"{page_num:02d}  /  {total:02d}")
@@ -761,10 +808,9 @@ def render_cover(c, art: Article, page_num: int, total: int):
                     base_wl=180, seed=7, color=CORAL)
     draw_particles(c, count=60, seed=3)
 
-    # Top chrome
-    c.setFillColor(TEXT_LIGHT)
-    c.setFont(BODY_BLACK, 11)
-    c.drawString(MARGIN, PAGE_H - MARGIN, "infinity6")
+    # Top chrome — symbol logo top-left
+    draw_logo_symbol(c, MARGIN, PAGE_H - MARGIN - 4, height=18)
+
     c.setFillColor(CORAL)
     c.setFont(BODY_MEDIUM, 9)
     c.setCharSpace(2.8)
@@ -785,8 +831,8 @@ def render_cover(c, art: Article, page_num: int, total: int):
     # Title — wrap big
     title_text = art.title.upper()
     max_w = PAGE_W - MARGIN * 2 - 20
-    size, lines = fit_display(c, title_text, DISPLAY, max_size=56, min_size=28,
-                              max_w=max_w, max_lines=5)
+    size, lines = fit_display(c, title_text, DISPLAY, max_size=52, min_size=24,
+                              max_w=max_w, max_lines=6)
     leading = size * 0.95
     y = PAGE_H * 0.55
     c.setFillColor(TEXT_LIGHT)
@@ -833,7 +879,7 @@ def render_cover(c, art: Article, page_num: int, total: int):
     # Excerpt
     if art.excerpt:
         y = draw_paragraph(c, MARGIN, y, art.excerpt, BODY_LIGHT, 11.5, 16.5,
-                           max_w=PAGE_W * 0.55, color=TEXT_LIGHT, max_lines=5)
+                           max_w=PAGE_W * 0.55, color=TEXT_LIGHT, max_lines=14)
 
     # Bottom meta
     c.setFillColor(TEXT_MUTED)
@@ -882,7 +928,7 @@ def render_lead(c, art: Article, page_num: int, total: int):
 
     # Big punch line (display)
     max_w = PAGE_W - MARGIN * 2 - 30
-    size, lines = fit_display(c, punch, DISPLAY, 46, 24, max_w, max_lines=5)
+    size, lines = fit_display(c, punch, DISPLAY, 46, 14, max_w, max_lines=10)
     y = PAGE_H - MARGIN - 80
     leading = size * 1.02
     c.setFont(DISPLAY, size)
@@ -1007,7 +1053,7 @@ def render_stats(c, art: Article, page_num: int, total: int):
     c.setFillColor(TEXT_LIGHT)
     c.setFont(BODY_MEDIUM, 10)
     lab_y = hero_top - hv_size - 24
-    for ln in wrap_text(c, hero.label, BODY_MEDIUM, 10, hero_max_w)[:4]:
+    for ln in wrap_text(c, hero.label, BODY_MEDIUM, 10, hero_max_w)[:6]:
         c.drawString(hero_x, lab_y, ln)
         lab_y -= 14
     if hero.source:
@@ -1044,7 +1090,7 @@ def render_stats(c, art: Article, page_num: int, total: int):
         c.setFont(BODY, 8.5)
         lab_x = bar_x + bar_w * 0.58
         lab_w = bar_w - bar_w * 0.58 - 2
-        lab_lines = wrap_text(c, st.label, BODY, 8.5, lab_w)[:2]
+        lab_lines = wrap_text(c, st.label, BODY, 8.5, lab_w)[:3]
         ly = bar_y - 8
         for ln in lab_lines:
             c.drawString(lab_x, ly, ln)
@@ -1078,8 +1124,8 @@ def render_compare(c, art: Article, page_num: int, total: int,
 
     heading = section.heading if section else "Forecast estatístico × forecast adaptativo"
     c.setFillColor(TEXT_LIGHT)
-    size, lines = fit_display(c, heading, DISPLAY, 34, 22, PAGE_W - MARGIN * 2,
-                              max_lines=2)
+    size, lines = fit_display(c, heading, DISPLAY, 34, 18, PAGE_W - MARGIN * 2,
+                              max_lines=4)
     c.setFont(DISPLAY, size)
     y = PAGE_H - MARGIN - 70
     for ln in lines:
@@ -1159,7 +1205,7 @@ def render_numbered_list(c, art: Article, page_num: int, total: int,
     if intro:
         draw_paragraph_justified(c, MARGIN, PAGE_H - MARGIN - 110, intro,
                                   BODY_LIGHT, 10, 15, PAGE_W * 0.6,
-                                  color=TEXT_LIGHT, max_lines=3)
+                                  color=TEXT_LIGHT, max_lines=8)
 
     # List
     items = section.bullets or []
@@ -1186,7 +1232,7 @@ def render_numbered_list(c, art: Article, page_num: int, total: int,
         c.setFont(BODY_MEDIUM, 11)
         lines = wrap_text(c, it.rstrip(".;"), BODY_MEDIUM, 11, PAGE_W - MARGIN * 2 - 75)
         ly = y_row - 8
-        for ln in lines[:2]:
+        for ln in lines[:4]:
             c.drawString(MARGIN + 70, ly, ln)
             ly -= 14
 
@@ -1209,8 +1255,8 @@ def render_quote(c, art: Article, page_num: int, total: int, quote: str,
 
     # The quote — large display, multi-line
     max_w = PAGE_W - MARGIN * 2 - 30
-    size, lines = fit_display(c, quote, DISPLAY_LIGHT, 38, 18, max_w,
-                              max_lines=8)
+    size, lines = fit_display(c, quote, DISPLAY_LIGHT, 38, 14, max_w,
+                              max_lines=14)
     leading = size * 1.18
     total_h = leading * len(lines)
     y = (PAGE_H + total_h) / 2 - 30
@@ -1244,8 +1290,8 @@ def render_section_with_image(c, art: Article, page_num: int, total: int,
 
     heading = section.heading or "Aprendizado"
     c.setFillColor(TEXT_LIGHT)
-    size, lines = fit_display(c, heading, DISPLAY, 32, 22, PAGE_W - MARGIN * 2,
-                              max_lines=2)
+    size, lines = fit_display(c, heading, DISPLAY, 32, 18, PAGE_W - MARGIN * 2,
+                              max_lines=4)
     c.setFont(DISPLAY, size)
     y = PAGE_H - MARGIN - 70
     for ln in lines:
@@ -1303,7 +1349,7 @@ def render_confidence_diagram(c, art: Article, page_num: int, total: int,
         intro = section.paragraphs[0]
     draw_paragraph_justified(c, MARGIN, PAGE_H - MARGIN - 110, intro,
                               BODY_LIGHT, 10.5, 16, PAGE_W * 0.7,
-                              color=TEXT_LIGHT, max_lines=4)
+                              color=TEXT_LIGHT, max_lines=10)
 
     # Diagram: three horizontal segments — Alta / Média / Baixa
     diag_y = PAGE_H * 0.45
@@ -1356,10 +1402,9 @@ def render_closing(c, art: Article, page_num: int, total: int):
                     base_wl=260, seed=21, color=CORAL)
     draw_particles(c, count=70, seed=33)
 
-    # Top chrome
-    c.setFillColor(TEXT_LIGHT)
-    c.setFont(BODY_BLACK, 11)
-    c.drawString(MARGIN, PAGE_H - MARGIN, "infinity6")
+    # Top chrome — symbol logo top-left
+    draw_logo_symbol(c, MARGIN, PAGE_H - MARGIN - 4, height=18)
+
     c.setFillColor(CORAL)
     c.setFont(BODY_MEDIUM, 9)
     c.setCharSpace(2.8)
@@ -1370,7 +1415,7 @@ def render_closing(c, art: Article, page_num: int, total: int):
     closing = ("Quais sinais mostram que a demanda está mudando, "
                "e qual decisão precisamos tomar agora?")
     max_w = PAGE_W - MARGIN * 2 - 20
-    size, lines = fit_display(c, closing, DISPLAY, 38, 22, max_w, max_lines=5)
+    size, lines = fit_display(c, closing, DISPLAY, 38, 16, max_w, max_lines=8)
     c.setFont(DISPLAY, size)
     y = PAGE_H * 0.7
     leading = size * 1.1
@@ -1403,13 +1448,12 @@ def render_closing(c, art: Article, page_num: int, total: int):
         else:
             y -= 6
 
-    # Wordmark big
-    c.setFillColor(TEXT_LIGHT)
-    c.setFont(DISPLAY, 56)
-    c.drawString(MARGIN, MARGIN + 40, "infinity6")
+    # Horizontal wordmark logo bottom-left
+    draw_logo_horizontal(c, MARGIN, MARGIN + 40, height=46)
     c.setFillColor(TEXT_MUTED)
     c.setFont(BODY, 8.5)
-    c.drawString(MARGIN, MARGIN + 22, "movimento@infinity6.ai  ·  infinity6.ai")
+    c.drawString(MARGIN, MARGIN + 22, "talk@infinity6.ai  ·  infinity6.ai")
+
     c.setFillColor(TEXT_DIM)
     c.setFont(BODY, 7.5)
     c.drawRightString(PAGE_W - MARGIN, MARGIN + 22, f"{page_num:02d} / {total:02d}")
