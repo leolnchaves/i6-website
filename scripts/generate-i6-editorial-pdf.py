@@ -266,10 +266,18 @@ def extract_text(pdf_path: str) -> str:
             result_lines.append(f"# {' '.join(title_parts)}")
             result_lines.append("")
         result_lines.extend(out)
-        return "\n".join(result_lines)
+        return _norm_ligs("\n".join(result_lines))
 
+
+_LIG = {"\ufb00":"ff","\ufb01":"fi","\ufb02":"fl","\ufb03":"ffi","\ufb04":"ffl","\ufb05":"st","\u2013":"–","\u2014":"—","\u2018":"'","\u2019":"'","\u201c":"\u201c","\u201d":"\u201d"}
+
+def _norm_ligs(s: str) -> str:
+    for k, v in _LIG.items():
+        s = s.replace(k, v)
+    return s
 
 def _clean(s: str) -> str:
+    s = _norm_ligs(s)
     s = re.sub(r"[ \t]+", " ", s)
     return s.strip()
 
