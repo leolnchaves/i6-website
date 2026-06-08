@@ -115,9 +115,9 @@ const TeseSection = () => {
     pt: {
       question: 'Seus dados geram vantagem competitiva\nou só alimentam dashboards?',
       stats: [
-        { value: 11, label: 'da receita vem de monetização de dados' },
-        { value: 31, label: 'das empresas usam dados para decisões estratégicas' },
-        { value: 11, label: 'das marcas personalizam experiências com dados' },
+        { value: 89, label: 'das empresas não monetizam seus dados' },
+        { value: 69, label: 'das empresas não usam dados para decisões estratégicas' },
+        { value: 89, label: 'das empresas não personalizam experiências baseadas em comportamento' },
       ],
       narrativeBold: 'Dados parados são o lucro da concorrência.',
       narrativeRest: 'A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
