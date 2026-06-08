@@ -132,9 +132,9 @@ const TeseSection = () => {
     en: {
       question: 'Does your data drive competitive advantage\nor just feed dashboards?',
       stats: [
-        { value: 11, label: 'of revenue comes from data monetization' },
-        { value: 31, label: 'of companies use data for strategic decisions' },
-        { value: 11, label: 'of brands personalize experiences with data' },
+        { value: 89, label: "of companies don't monetize their data" },
+        { value: 69, label: "of companies don't use data for strategic decisions" },
+        { value: 89, label: "of companies don't personalize experiences based on behavior" },
       ],
       narrativeBold: "Your idle data is your competitor's profit.",
       narrativeRest: "The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.",
