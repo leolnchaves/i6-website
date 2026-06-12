@@ -12,7 +12,7 @@ export const enTranslations = {
   'header.successStories': 'Success Stories',
   'header.community': 'Community',
   'header.insights': 'Insights',
-  'header.intelligence': 'i6 Intelligence',
+  'header.intelligence': 'i6 Research',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
   

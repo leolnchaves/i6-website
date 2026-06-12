@@ -131,7 +131,7 @@ const Intelligence = () => {
     (!sector || p.sector === sector) && (!theme || p.theme === theme)
   );
 
-  const heading = 'i6 Intelligence';
+  const heading = 'i6 Research';
   const subheading = language === 'pt'
     ? 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão para os setores de varejo, indústria, financeiro e farma.'
     : 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.';
@@ -143,7 +143,7 @@ const Intelligence = () => {
     <>
       <Helmet>
         <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
-        <title>{`i6 Intelligence | infinity6`}</title>
+        <title>{`i6 Research | infinity6`}</title>
         <meta name="description" content={subheading} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org',
@@ -156,7 +156,7 @@ const Intelligence = () => {
       <section className="container mx-auto px-6 pt-32 pb-20">
         <header className="max-w-3xl mb-10">
           <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Research</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{heading}</h1>
+          <h1 className="sr-only">{heading}</h1>
           <p className="text-lg text-white/70">{subheading}</p>
         </header>
 

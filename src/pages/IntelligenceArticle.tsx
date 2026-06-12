@@ -45,7 +45,7 @@ const IntelligenceArticle = () => {
     <>
       <Helmet>
         <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
-        <title>{`${piece.title} | i6 Intelligence`}</title>
+        <title>{`${piece.title} | i6 Research`}</title>
         <meta name="description" content={piece.excerpt} />
         <link rel="canonical" href={url} />
         <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/i6-intelligence/${piece.slug}`} />
@@ -69,7 +69,7 @@ const IntelligenceArticle = () => {
           author: { '@type': 'Organization', name: 'infinity6' },
           publisher: { '@type': 'Organization', name: 'infinity6' },
           mainEntityOfPage: url,
-          isPartOf: { '@type': 'CreativeWork', name: 'i6 Intelligence' },
+          isPartOf: { '@type': 'CreativeWork', name: 'i6 Research' },
           ...(cover ? { image: cover.startsWith('http') ? cover : `${BASE_URL}${cover}` } : {}),
         })}</script>
         <script type="application/ld+json">{JSON.stringify({
@@ -77,7 +77,7 @@ const IntelligenceArticle = () => {
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${language}` },
-            { '@type': 'ListItem', position: 2, name: 'i6 Intelligence', item: `${BASE_URL}/${language}/i6-intelligence` },
+            { '@type': 'ListItem', position: 2, name: 'i6 Research', item: `${BASE_URL}/${language}/i6-intelligence` },
             { '@type': 'ListItem', position: 3, name: piece.title, item: url },
           ],
         })}</script>
@@ -99,7 +99,7 @@ const IntelligenceArticle = () => {
           to={localized('/i6-intelligence')}
           className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors mb-8"
         >
-          <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para i6 Intelligence' : 'Back to i6 Intelligence'}
+          <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para i6 Research' : 'Back to i6 Research'}
         </Link>
 
         <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Research</p>

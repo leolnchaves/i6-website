@@ -12,7 +12,7 @@ export const ptTranslations = {
   'header.successStories': 'Cases de Sucesso',
   'header.community': 'Comunidade',
   'header.insights': 'Insights',
-  'header.intelligence': 'i6 Intelligence',
+  'header.intelligence': 'i6 Research',
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
   
