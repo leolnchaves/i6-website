@@ -10,9 +10,9 @@ const ICONS = [ShieldCheck, Lock, KeyRound, Maximize2];
 
 const SecuritySection = memo(({ content }: Props) => {
   return (
-    <section className="relative py-20 md:py-28 bg-[#0B1224]">
+    <section className="relative py-14 md:py-20 bg-[#0B1224]">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-14 max-w-3xl mx-auto leading-tight">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10 max-w-3xl mx-auto leading-tight">
           {content.title}
         </h2>
 
