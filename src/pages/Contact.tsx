@@ -73,7 +73,7 @@ const Contact = memo(() => {
       
       <section id="contact-form" className="pt-0 pb-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <ContactForm />
           </div>
         </div>
