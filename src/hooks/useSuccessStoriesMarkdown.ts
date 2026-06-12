@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 
@@ -20,6 +20,10 @@ export interface SuccessStoryItem {
   quote: string;
   customerName: string;
   customerTitle: string;
+  showHome: boolean;
+  published: boolean;
+  sortOrder: number;
+  language: 'pt' | 'en';
 }
 
 interface UseSuccessStoriesMarkdownReturn {
@@ -28,6 +32,92 @@ interface UseSuccessStoriesMarkdownReturn {
   error: string | null;
 }
 
+/**
+ * Minimal YAML frontmatter parser — supports quoted strings, bools, numbers,
+ * null, and inline arrays like `solutions: ["a", "b"]`.
+ */
+function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!match) return { data: {}, content: raw };
+  const [, fmBlock, content] = match;
+  const data: Record<string, unknown> = {};
+  for (const line of fmBlock.split(/\r?\n/)) {
+    if (!line.trim() || line.trim().startsWith('#')) continue;
+    const idx = line.indexOf(':');
+    if (idx === -1) continue;
+    const key = line.slice(0, idx).trim();
+    let value: string = line.slice(idx + 1).trim();
+
+    // Inline array
+    if (value.startsWith('[') && value.endsWith(']')) {
+      const inner = value.slice(1, -1).trim();
+      if (!inner) { data[key] = []; continue; }
+      const items = inner.match(/("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|[^,]+)/g) || [];
+      data[key] = items
+        .map(it => {
+          let s = it.trim();
+          if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+            s = s.slice(1, -1).replace(/\\"/g, '"');
+          }
+          return s;
+        })
+        .filter(Boolean);
+      continue;
+    }
+
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1).replace(/\\"/g, '"');
+    }
+    if (value === '' || value === 'null' || value === '~') data[key] = '';
+    else if (value === 'true') data[key] = true;
+    else if (value === 'false') data[key] = false;
+    else if (/^-?\d+(\.\d+)?$/.test(value)) data[key] = Number(value);
+    else data[key] = value;
+  }
+  return { data, content: content.trim() };
+}
+
+const modules = import.meta.glob('/src/content/stories/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
+
+const asStr = (v: unknown): string => (v == null ? '' : String(v));
+
+const ALL: SuccessStoryItem[] = Object.entries(modules)
+  .map(([, raw]) => {
+    const { data } = parseFrontmatter(raw);
+    const fm = data as Record<string, unknown>;
+    if (!fm.slug || !fm.language) return null;
+    const slug = String(fm.slug);
+    return {
+      id: slug,
+      slug,
+      title: asStr(fm.title),
+      image: asStr(fm.cover_image),
+      logo: asStr(fm.logo),
+      segment: asStr(fm.segment),
+      client: asStr(fm.client),
+      description: asStr(fm.description),
+      challenge: asStr(fm.challenge),
+      solution: asStr(fm.solution),
+      metric1: asStr(fm.metric1),
+      metric2: asStr(fm.metric2),
+      metric3: asStr(fm.metric3),
+      solutions: Array.isArray(fm.solutions) ? (fm.solutions as string[]) : [],
+      quote: asStr(fm.quote),
+      customerName: asStr(fm.customer_name),
+      customerTitle: asStr(fm.customer_title),
+      showHome: fm.show_home === true,
+      published: fm.published !== false,
+      sortOrder: typeof fm.sort_order === 'number' ? (fm.sort_order as number) : 999,
+      language: (fm.language === 'en' ? 'en' : 'pt') as 'pt' | 'en',
+    } as SuccessStoryItem;
+  })
+  .filter((x): x is SuccessStoryItem => x !== null)
+  .filter(s => s.published);
+
 export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => {
   const [stories, setStories] = useState<SuccessStoryItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,131 +125,24 @@ export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => 
   const { language } = useLanguage();
 
   useEffect(() => {
-    const fetchMarkdownContent = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        const filename = language === 'pt' ? 'page-success-stories-pt.md' : 'page-success-stories-en.md';
-        const response = await fetch(`${import.meta.env.BASE_URL}content/${filename}`, { cache: 'no-store' });
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch content: ${response.status}`);
-        }
-        
-        const content = await response.text();
-        console.log('Success stories markdown content loaded:', content.substring(0, 200) + '...');
-        const parsedStories = parseMarkdownContent(content);
-        console.log('Parsed success stories count:', parsedStories.length);
-        const version = String(content.length);
-        const normalizedStories = parsedStories.map(s => ({
+    try {
+      setLoading(true);
+      setError(null);
+      const filtered = ALL
+        .filter(s => s.language === language)
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .map(s => ({
           ...s,
-          image: getPublicAssetUrl(s.image) + `?v=${version}`,
-          logo: getPublicAssetUrl(s.logo) + `?v=${version}`
+          image: getPublicAssetUrl(s.image),
+          logo: getPublicAssetUrl(s.logo),
         }));
-        setStories(normalizedStories);
-      } catch (err) {
-        console.error('Error fetching success stories markdown content:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMarkdownContent();
+      setStories(filtered);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
   }, [language]);
 
   return { stories, loading, error };
-};
-
-const parseMarkdownContent = (content: string): SuccessStoryItem[] => {
-  const stories: SuccessStoryItem[] = [];
-  const sections = content.split('---').map(section => section.trim()).filter(Boolean);
-  
-  // Process all sections, including the first one which contains the first card
-  for (const section of sections) {
-    const lines = section.split('\n').map(line => line.trim()).filter(Boolean);
-    
-    let title = '';
-    let slug = '';
-    let image = '';
-    let logo = '';
-    let segment = '';
-    let client = '';
-    let description = '';
-    let challenge = '';
-    let solution = '';
-    let metric1 = '';
-    let metric2 = '';
-    let metric3 = '';
-    let solutions: string[] = [];
-    let quote = '';
-    let customerName = '';
-    let customerTitle = '';
-    
-    for (const line of lines) {
-      if (line.startsWith('## ')) {
-        title = line.substring(3).trim();
-      } else if (line.startsWith('**Image:**')) {
-        image = line.substring(10).trim();
-      } else if (line.startsWith('**Logo:**')) {
-        logo = line.substring(9).trim();
-      } else if (line.startsWith('**Segment:**')) {
-        segment = line.substring(12).trim();
-      } else if (line.startsWith('**Client:**')) {
-        client = line.substring(11).trim();
-      } else if (line.startsWith('**Slug:**')) {
-        slug = line.substring(9).trim();
-      } else if (line.startsWith('**Description:**')) {
-        description = line.substring(16).trim();
-      } else if (line.startsWith('**Challenge:**')) {
-        challenge = line.substring(14).trim();
-      } else if (line.startsWith('**Solution:**')) {
-        solution = line.substring(13).trim();
-      } else if (line.startsWith('**Metric1:**')) {
-        metric1 = line.substring(12).trim();
-      } else if (line.startsWith('**Metric2:**')) {
-        metric2 = line.substring(12).trim();
-      } else if (line.startsWith('**Metric3:**')) {
-        metric3 = line.substring(12).trim();
-      } else if (line.startsWith('**Solutions:**')) {
-        const solutionsText = line.substring(14).trim();
-        solutions = solutionsText.split(',').map(s => s.trim());
-      } else if (line.startsWith('**Quote:**')) {
-        quote = line.substring(10).trim();
-      } else if (line.startsWith('**CustomerName:**')) {
-        customerName = line.substring(17).trim();
-      } else if (line.startsWith('**CustomerTitle:**')) {
-        customerTitle = line.substring(18).trim();
-      }
-    }
-    
-    if (title && image && segment && client) {
-      // Generate ID from title (fallback) — slug is the stable per-language identifier
-      const id = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-      const finalSlug = slug || id;
-
-      stories.push({
-        id: finalSlug,
-        slug: finalSlug,
-        title,
-        image,
-        logo,
-        segment,
-        client,
-        description,
-        challenge,
-        solution,
-        metric1,
-        metric2,
-        metric3,
-        solutions,
-        quote,
-        customerName,
-        customerTitle
-      });
-    }
-  }
-  
-  return stories;
 };
