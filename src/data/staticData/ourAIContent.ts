@@ -311,6 +311,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     security: {
       title: 'Segurança e conformidade por design',
       pillars: [
+        { title: 'Anonimização na origem', description: 'Dados sensíveis são anonimizados antes de qualquer treinamento — pré-requisito de segurança para todos os modelos' },
         { title: 'Arquitetura segura', description: 'Autenticação multinível e controle de acesso baseado em rotas' },
         { title: 'Ambiente isolado', description: 'Ambientes seguros e isolados protegem dados e modelos contra acesso não autorizado' },
         { title: 'Conformidade by design', description: 'Práticas rigorosas de criptografia de dados confidenciais' },
@@ -616,6 +617,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     security: {
       title: 'Security and compliance by design',
       pillars: [
+        { title: 'Anonymization at source', description: 'Sensitive data is anonymized before any training — a security prerequisite for every model' },
         { title: 'Secure architecture', description: 'Multi-level authentication and route-based access control' },
         { title: 'Isolated environment', description: 'Secure, isolated environments protect your data and models from unauthorized access' },
         { title: 'Compliance by design', description: 'Strict encryption practices for confidential data' },
