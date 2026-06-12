@@ -28,9 +28,8 @@ const UnifiedImpactSection = memo(({ dualValue, learnInfluence }: Props) => {
               </div>
               <ul className="space-y-3 mb-8">
                 {col.points.map((p) => (
-                  <li key={p} className="text-sm text-white/60 leading-relaxed flex gap-3">
-                    <span className="text-[#F4845F] mt-1.5 shrink-0 inline-block w-3 h-px bg-current" />
-                    <span>{p}</span>
+                  <li key={p} className="text-sm text-white/60 leading-relaxed">
+                    {p}
                   </li>
                 ))}
               </ul>

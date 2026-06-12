@@ -1,31 +1,16 @@
-## Problema
+## Mudanças em `/our-ai`
 
-A página `/insights` está exibindo cards de "i6 Success Story". Isso acontece porque o feed do i6Hub que alimenta `src/content/insights/` (sync em deploy) inclui itens com `type` fora do conjunto válido (`article | linkedin | press | podcast | video`) — provavelmente `success_story`. O hook `useInsights` aceita qualquer valor de `type`, então esses itens aparecem na listagem com o badge mostrando o `type` cru ("I6 SUCCESS STORY").
+### 1. Reordenar seção
 
-Success stories devem viver exclusivamente em `/success-stories` e em suas páginas individuais.
+Em `src/pages/OurAI.tsx`, mover `<UnifiedImpactSection>` para logo abaixo de `<ThesisSection>` (que tem o título "IA só precisa saber o que muda o jogo").
 
-## Mudança
-
-Único arquivo: `src/hooks/useInsights.ts`.
-
-No bloco `ALL` (mapeamento dos `.md`), adicionar uma whitelist de tipos válidos e descartar qualquer item cujo `type` não esteja nela:
-
-```ts
-const VALID_TYPES: InsightType[] = ['article', 'linkedin', 'press', 'podcast', 'video'];
-// dentro do .map:
-if (!VALID_TYPES.includes(fm.type as InsightType)) return null;
+Nova ordem:
+```
+Hero → Thesis → UnifiedImpact → EnginesGrid → Diversity → Explainability → RealResults → Security → Challenges → Community → Glossary → CTA
 ```
 
-Isso garante que:
-- `/insights` (listagem) não mostra mais success stories nem nenhum outro tipo desconhecido.
-- `/insights/:slug` (via `useInsight`) também não resolve slugs de success stories.
-- `useFeaturedInsights` (home/seções derivadas) fica idem protegido.
-- `/success-stories` e as páginas individuais (`SuccessStoryArticle`) seguem intocadas — usam `useSuccessStoriesMarkdown` lendo `src/content/stories/`.
+### 2. Remover os traços dos bullets
 
-Nenhuma mudança em conteúdo, script de sync, ou outras páginas. Sem impacto em SEO de insights legítimos.
+Em `src/components/our-ai/UnifiedImpactSection.tsx`, dentro do `<ul>` de `dualValue.columns`, remover o `<span>` que renderiza o tracinho laranja (`w-3 h-px bg-current`). Os itens ficam como texto puro, mantendo o `space-y-3` e a cor `text-white/60`. Remover também o `flex gap-3` do `<li>` (não há mais marcador) — fica só o texto.
 
-## Verificação
-
-- Build automático.
-- Preview `/pt/insights` e `/en/insights`: nenhum card "I6 SUCCESS STORY".
-- `/pt/success-stories` continua listando os cases normalmente.
+Nenhuma outra alteração. Sem mudança de conteúdo, copy ou outras seções.
