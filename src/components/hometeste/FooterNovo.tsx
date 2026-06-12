@@ -39,6 +39,13 @@ const FooterNovo = () => {
     { to: localized('/contact'), label: t('header.contact') },
   ];
 
+  const transformationLinks: { to: string; label: string }[] = [
+    { to: localized('/solutions/demand-supply-efficiency'), label: t('header.solutions.demandSupply') },
+    { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization') },
+    { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps') },
+    { to: localized('/solutions/behavior-conversion'), label: t('header.solutions.behaviorConversion') },
+  ];
+
   return (
     <footer className="bg-[#0B1224] text-white">
       <div className="container mx-auto px-6 py-10">
