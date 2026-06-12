@@ -11,7 +11,9 @@ interface ModernSolutionCardProps {
   engine: string;
   bgColor: string;
   index: number;
+  anchorId?: string;
 }
+
 
 const translations = {
   en: {
@@ -29,12 +31,13 @@ const translations = {
 };
 
 const ModernSolutionCard = memo(({ 
-  title, focus, description, features, outcome, engine, bgColor, index
+  title, focus, description, features, outcome, engine, bgColor, index, anchorId
 }: ModernSolutionCardProps) => {
+
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLElement>(null);
   
   const t = useMemo(() => translations[language] || translations.en, [language]);
   const displayedFeatures = useMemo(() => features, [features]);
@@ -61,26 +64,34 @@ const ModernSolutionCard = memo(({
   }, [index, hasAnimated]);
 
   return (
-    <div 
+    <article
       ref={cardRef}
+      id={anchorId}
+      itemScope
+      itemType="https://schema.org/Product"
+      aria-label={`${engine} — ${title}`}
       className={`group relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-700 hover:scale-[1.02] ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
       style={{ animationDelay: `${index * 0.15}s` }}
     >
+      <meta itemProp="brand" content="infinity6" />
+      <meta itemProp="name" content={engine} />
+      <meta itemProp="category" content="AI software" />
       {/* Coral accent bar at top */}
       <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
 
       <div className="p-5 relative z-10">
         {/* Title */}
-        <h3 className="font-bold text-lg text-white mb-2 leading-tight group-hover:text-[#F4845F] transition-colors duration-500">
+        <h3 className="font-bold text-lg text-white mb-2 leading-tight group-hover:text-[#F4845F] transition-colors duration-500" itemProp="alternateName">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-white/60 leading-relaxed text-xs mb-4 group-hover:text-white/70 transition-colors duration-300 line-clamp-3">
+        <p className="text-white/60 leading-relaxed text-xs mb-4 group-hover:text-white/70 transition-colors duration-300 line-clamp-3" itemProp="description">
           {description}
         </p>
+
 
         {/* Features */}
         <div className="mb-3">
@@ -116,7 +127,8 @@ const ModernSolutionCard = memo(({
           </div>
         </div>
       </div>
-    </div>
+    </article>
+
   );
 });
 
