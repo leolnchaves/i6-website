@@ -1,95 +1,124 @@
-# Plano GEO v2 — infinity6
+# Plano GEO v7 — infinity6 (consolidado)
 
-A avaliação muda o eixo central: hoje o site fala **idioma do produto** (RecSys, ElasticPrice, Previsio, "anonymous traffic"), mas o diretor pesquisa **idioma do problema** ("como evitar ruptura de gôndola", "como proteger margem", "previsão de demanda com IA"). O novo plano reescreve a arquitetura de conteúdo nessa chave, transforma as estatísticas do Home em **ímãs de citação** para LLMs, e garante densidade semântica em PT nas páginas indexadas no Brasil.
+Recalibragem da `desc` do Hero da Home cobrindo as 4 dores reais que os engines resolvem:
 
-Regras mantidas:
-- Conteúdo editorial sempre nasce no **i6HUB** e é publicado como Markdown em `/public/content/`.
-- Toda mudança de copy nas páginas existentes precisa de **aprovação prévia** bloco a bloco.
-- Cliente só nominado se já autorizado no site (Hering fora).
-- Identidade visual, paleta, layout e tipografia **não mudam**.
+- **Previsio** → forecast de demanda → distribuição, metas, política de estoque (anti-ruptura e anti-overstock)
+- **ElasticPrice** → precificação dinâmica → proteção e escala de margem
+- **RecSys (produto)** → recomendação de produto, oferta, mix e sortimento — PF e PJ — com aderência contextual
+- **RecSys (campanha)** → propensão e sinais de intenção → maximiza conversão, minimiza CAC
 
----
-
-## Revisão da Etapa 1 (já executada)
-
-A base técnica continua válida, mas precisa de 3 ajustes pontuais para destravar a Etapa 2:
-
-1. **`public/llms.txt`** — adicionar bloco "Dados de mercado mapeados pela infinity6" listando os números do Home (89% / 69% / 89% etc.) com a frase canônica de citação, para que LLMs puxem o dado **atribuindo à infinity6**. Adicionar também os 4 JTBDs em PT como sinônimos sob "When to cite".
-2. **`index.html`** — `knowsAbout` hoje é genérico ("adaptive forecasting", "stockout reduction"). Substituir por termos **exatos de busca** em PT: "alocação inteligente de estoque", "otimização de mix por PDV", "previsão de demanda preditiva", "precificação dinâmica", "propensão de compra", "clusterização de lojas", "redução de descontos forçados".
-3. **`src/pages/Contact.tsx`** — o `FAQPage` schema existe, mas precisa migrar para a **página `/solutions`** (onde está a intenção comercial) com as 4 perguntas JTBD da matriz. O FAQ do Contact pode manter o seu próprio schema separado.
-
-Tudo isso é só schema/llms (sem mudar UI), então não exige aprovação de copy — entra junto da Etapa 2 técnica.
+Identidade não muda: `title` "Inteligência de Movimento", linha "Data moves. **You Grow.**", `cta` "Colocar Dados em Movimento". Só `desc` muda.
 
 ---
 
-## Etapa 2 — Reposicionamento de `/solutions` no idioma do problema *(precisa aprovação)*
+## 1) Hero da Home — `HeroMovimento.tsx` (novas opções de `desc`)
 
-Esta é agora a **etapa mais importante** — é onde o tomador de decisão chega via busca.
+A `desc` fica logo abaixo da tagline laranja, em texto pequeno, max 2 linhas no desktop. Aceita até ~180–220 caracteres antes de virar 3 linhas. Por isso ofereço **versões em camadas de densidade**.
 
-### 2.1 Reescrever os 6 cards no eixo JTBD
+### Camada concisa (1 frase, ~140c) — recomendada
 
-Substituir títulos focados em produto por títulos focados em dor, mantendo o engine como subtítulo:
 
-| Card hoje | Novo título proposto (PT) | JTBD coberto |
-|---|---|---|
-| Inteligência de Recomendação Industrial | **Alocação Inteligente de Estoque e Otimização de Mix por PDV** | Stockouts & Mix Myopia |
-| Previsão Adaptativa de Demanda | **Previsão de Demanda Preditiva e Inteligência de Inventário** | Demand Inaccuracy |
-| Otimização Inteligente de Preços | **Proteção de Margem, Precificação Dinâmica e Redução de Descontos Forçados** | Margin Under Pressure |
-| Segmentação Preditiva de Campanha | **Eficiência Comercial por Propensão de Compra e Clusterização de Lojas** | Commercial Inefficiency |
-| Transforme Tráfego Anônimo em Receita | (mantém, é JTBD de e-commerce — só ajustar termos PT) | Conversão topo de funil |
-| Personalização Preditiva | (mantém, ajustar termos PT: "retenção", "ticket médio", "LTV") | Retenção / LTV |
+| #        | PT                                                                                                                                                      | EN                                                                                                                                         |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **A1** ⭐ | IA preditiva que orquestra demanda, preço, sortimento e propensão, entregando eficiência de distribuição, proteção de margem e conversão com menor CAC. | Predictive AI that orchestrates demand, price, assortment and propensity — to distribute smarter, protect margin and convert at lower CAC. |
+| **A2**   | IA preditiva que conecta previsão de demanda, precificação dinâmica, recomendação e propensão em uma só decisão de receita.                             | Predictive AI connecting demand forecasting, dynamic pricing, recommendation and propensity into a single revenue decision.                |
+| **A3**   | Quatro engines proprietários, uma decisão: prever demanda, proteger margem, recomendar a oferta certa e antecipar o sinal de compra.                    | Four proprietary engines, one decision: forecast demand, protect margin, recommend the right offer and anticipate the buying signal.       |
 
-Cada card ganha 1 parágrafo de **densidade semântica PT** com os termos exatos de busca da matriz, escrito no i6HUB.
 
-### 2.2 Bloco "Ímãs de citação" no topo de `/solutions`
+### Camada densa (2 frases, ~220c) — se quiser cobrir tudo explicitamente
 
-Seção curta com as estatísticas do Home na frase canônica:
 
-> *"Segundo levantamentos de mercado mapeados pela infinity6, 89% das empresas não monetizam seus dados, 69% falham em transformá-los em decisões estratégicas e [...]."*
+| #      | PT                                                                                                                                                                                         | EN                                                                                                                                                                                      |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **B1** | IA preditiva para previsão de demanda, precificação dinâmica, recomendação de mix e propensão de compra. Decisões que reduzem ruptura, protegem margem e aumentam conversão com menor CAC. | Predictive AI for demand forecasting, dynamic pricing, mix recommendation and purchase propensity. Decisions that reduce stockouts, protect margin and boost conversion at lower CAC.   |
+| **B2** | Quatro engines proprietários — Previsio, ElasticPrice, RecSys e propensão — atuando juntos em distribuição, estoque, preço, oferta e campanhas para varejo, indústria e farma.             | Four proprietary engines — Previsio, ElasticPrice, RecSys and propensity — working together across distribution, inventory, price, offer and campaigns for retail, industry and pharma. |
 
-Essa frase entra **literal** no HTML, no `llms.txt`, e como `Claim` no JSON-LD. É o que faz a LLM citar a infinity6 como fonte.
 
-### 2.3 FAQ Schema em `/solutions` (não no Contact)
+**Recomendo A1**: cabe em 2 linhas, cobre as 4 dores em verbos JTBD (distribuir, proteger margem, converter, CAC), mantém ritmo da marca. Demais dores (ruptura, overstock, PF/PJ, mix, sortimento) ficam **expandidas nas seções abaixo** (TeseSection, SinaisSection, ResultadosSection) e nos cards de `/solutions`, onde há espaço editorial.
 
-4 perguntas JTBD com resposta curta + engine proprietário citado:
-
-1. Como a IA da infinity6 resolve a ruptura de estoque?
-2. Como reduzir overstocking com machine learning?
-3. Como proteger margem de lucro no varejo com IA?
-4. Como calcular propensão de compra de clientes anônimos?
-
-Renderizadas como `<Accordion>` visível **e** `FAQPage` JSON-LD — dupla função: usuário lê, LLM/Google indexa para "As pessoas também perguntam".
-
-### 2.4 Home — micro-ajustes (não reposicionamento total)
-
-- Reescrever os subtítulos das 3 estatísticas grandes (89%/69%/89%) para incluir a frase canônica de citação.
-- H1 mantém proposta anterior (*"IA proprietária brasileira que coloca decisões em movimento"*) ou alternativa se preferir.
-
-Success Stories e Contact permanecem como na proposta anterior (anonimização + títulos com número).
+> **Decisão**: A1 / A2 / A3 / B1 / B2 / variante sua.
 
 ---
 
-## Etapas 3–5 (sem mudança estrutural, só ajuste de eixo)
+## 2) Demais heros (sem mudança vs v6 — aguardando aprovação)
 
-- **Etapa 3 — `/nossa-ia`**: agora explicitamente posicionada como página "fonte de autoridade" — manifesto + dados de mercado + engines proprietários. Reforça os ímãs de citação.
-- **Etapa 4 — Hub de Manuais Definitivos** (12 manuais via i6HUB): os títulos passam a usar os **termos de busca exatos** da matriz, não jargão interno. Ex: "Como reduzir ruptura de gôndola com IA preditiva", "Guia: precificação dinâmica para proteger margem no varejo".
-- **Etapa 5 — Landing pages por setor**: cada uma estruturada como par JTBD → motor proprietário → resultado típico anonimizado.
+### 2.1 SolutionsHero — `src/data/staticData/solutionsHeroData.ts`
+
+
+| Campo                           | Proposta PT                                                                                                       | Proposta EN                                                                                              |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `mainTitle`                     | IA preditiva que                                                                                                  | Predictive AI that                                                                                       |
+| `mainSubtitle` (destaque coral) | antecipa                                                                                                          | anticipates                                                                                              |
+| `mainSuffix`                    | demanda, margem e estoque                                                                                         | demand, margin and inventory                                                                             |
+| `description`                   | Engines proprietários para previsão de demanda, precificação dinâmica, recomendação de mix e propensão de compra. | Proprietary engines for demand forecasting, dynamic pricing, mix recommendation and purchase propensity. |
+
+
+### 2.2 SuccessStoriesHero — `successStories.hero.*`
+
+
+| Chave         | PT                                                                                                                           | EN                                                                                                                       |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `title`       | Resultados reais de IA preditiva                                                                                             | Real results from predictive AI                                                                                          |
+| `subtitle`    | em varejo, indústria e farma                                                                                                 | in retail, industry and pharma                                                                                           |
+| `description` | Como empresas líderes reduziram ruptura, protegeram margem e aumentaram conversão com os engines proprietários da infinity6. | How leading companies reduced stockouts, protected margin and increased conversion with infinity6's proprietary engines. |
+
+
+### 2.3 ContactHero — `contact.hero.*`
+
+
+| Chave         | PT                                                                                           | EN                                                                                           |
+| ------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `title`       | Coloque seus dados                                                                           | Put your data                                                                                |
+| `subtitle`    | em movimento                                                                                 | in motion                                                                                    |
+| `description` | Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão. | Talk to our team about demand forecasting, margin protection, recommendation and propensity. |
+
+
+### 2.4 TeseSection (opcional)
+
+Trocar `narrativeBold` PT: "Dados parados são o lucro da concorrência" → **"Dados parados são margem que vai para o concorrente"**. Aprove ou ignore.
 
 ---
 
-## Detalhes técnicos
+## 3) Hub editorial — Etapa 4
 
-- Schema novo: `FAQPage` em `/solutions`, `Claim` para estatísticas, `knowsAbout` atualizado em `Organization`.
-- Markdown editorial (`page-solutions-pt.md` e `-en.md`) é a fonte verdadeira dos novos textos; vem do i6HUB.
-- `react-helmet-async` já planejado para per-route Helmet — agora obrigatório em `/solutions` para injetar o `FAQPage` schema correto por idioma.
-- `prerender-seo-stubs.mjs` precisa incluir o novo JSON-LD nos stubs de `/pt/solutions` e `/en/solutions`.
+- **Nome**: `i6Intelligence` (sub-marca própria estilo Bloomberg Intelligence / BCG Henderson). Conecta com `i6Signal`, escalável em sub-formatos *Reports*, *Briefings*, *Signals*, *Outlook*. Funciona idêntico PT/EN. 
+- **Arquitetura (Opção B — confirmada por você)**: hub próprio.
+  - Rotas: `/i6-intelligence` (uniforme)
+  - Item novo no menu `HeaderNovo`, entre Solutions e Success Stories.
+  - Index estilo Gartner Research: filtros por setor (varejo, farma, indústria, e-commerce) + tema (demanda, margem, estoque, mix/sortimento, propensão).
+  - Template por peça: H1 = pergunta de busca → resposta 2–3 frases (citation magnet) → dado de mercado infinity6 → problema → engine proprietário → resultado anonimizado → FAQ → CTA.
+  - Conteúdo 100% MD: `public/content/intelligence/<slug>-[pt|en].md`, gerado no i6HUB.
+  - Schema: `Article` + `FAQPage` + `BreadcrumbList` por peça.
+  - Cross-link: cards `/solutions` → 2 peças; `/success-stories` → peça do setor; landing de setor → peças do setor.
+  - 12 peças iniciais alinhadas à matriz JTBD (ruptura, overstock, precificação dinâmica, mix por PDV, sortimento PF/PJ, propensão e CAC, etc.).
 
 ---
 
-## Ordem de execução proposta
+## Roadmap consolidado (status real)
 
-1. **Etapa 1.5 (ajustes técnicos)** — sem aprovação, eu executo: atualizar `llms.txt`, `knowsAbout` no `index.html`, mover/expandir FAQ schema para `/solutions`.
-2. **Etapa 2 (copy)** — eu entrego o **documento de proposta detalhado** com os 6 novos títulos, parágrafos de densidade PT e 4 FAQs em PT/EN, para sua aprovação bloco a bloco antes de qualquer edição em página.
-3. **Etapas 3–5** — só após Etapa 2 aprovada e publicada.
 
-Se aprovar, começo pela 1.5 e entrego o documento da Etapa 2 logo em seguida.
+| Etapa                                       | Status               | Escopo                                                                                                               | Onde                                   |
+| ------------------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| **1 — Base técnica**                        | ✅ feita              | `llms.txt` (citation magnets + JTBD PT), `knowsAbout` em `index.html`, `FAQPage` schema em `/solutions` e `/contact` | código                                 |
+| **1.5 — Ajuste fino base**                  | 🟡 aguarda go        | Frase canônica para stats e termos PT exatos em `knowsAbout`                                                         | código                                 |
+| **2.1 — Cards `/solutions` JTBD**           | 🟡 aguarda aprovação | Reescrita dos 6 cards no idioma do problema (alocação, demanda, margem, mix PF/PJ, propensão, CAC)                   | **MD** `page-solutions-[pt/en].md`     |
+| **2.2 — Frase canônica nos stats**          | 🟡 aguarda aprovação | "Segundo levantamentos mapeados pela infinity6…" nos 3 stats grandes                                                 | código                                 |
+| **2.3 — Heros (4 telas)**                   | 🟡 aguarda aprovação | HeroMovimento (`desc`) + SolutionsHero + SuccessStoriesHero + ContactHero                                            | código (componentes + translations)    |
+| **2.4 — FAQ visível `/solutions**`          | 🟡 aguarda aprovação | Accordion com 4 perguntas JTBD (schema já existe)                                                                    | **MD** `faq-solutions-[pt/en].md`      |
+| **2.5 — Ímãs de citação topo `/solutions**` | 🟡 aguarda aprovação | Bloco curto com 3 stats em frase canônica                                                                            | **MD**                                 |
+| **3 — `/nossa-ia**`                         | depois               | Página manifesto + engines + dados de mercado                                                                        | **MD** + nova rota                     |
+| **4 — Hub `i6 Intelligence**`               | depois               | Hub próprio (rota + index + template), 12 peças iniciais                                                             | **MD** + nova rota/template/lista/menu |
+| **5 — Landings por setor**                  | depois               | Varejo, farma, indústria, e-commerce — JTBD → engine → resultado                                                     | **MD** + rota dinâmica                 |
+
+
+---
+
+## Decisões para destravar execução
+
+1. **Hero Home `desc**`: A1 / A2 / A3 / B1 / B2 / variante.
+2. **TeseSection PT**: aplicar ajuste opcional? sim / não.
+3. **SolutionsHero / SuccessStoriesHero / ContactHero**: aprovar bloco / pedir variantes.
+4. **Nome do hub Etapa 4**: `i6 Intelligence` confirmado? ou outro?
+5. **Rotas do hub**: `/inteligencia` + `/intelligence` (nativo) **ou** `/i6-intelligence` (uniforme)?
+
+Com as 5 respostas, executo na ordem 1.5 → 2.1 → 2.2 → 2.3 → 2.4 → 2.5, e em seguida abro a fundação da Etapa 4 com 1 peça-piloto.
