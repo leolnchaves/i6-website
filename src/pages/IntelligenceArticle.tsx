@@ -77,7 +77,7 @@ const IntelligenceArticle = () => {
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${language}` },
-            { '@type': 'ListItem', position: 2, name: 'i6 Intelligence', item: `${BASE_URL}/${language}/i6-intelligence` },
+            { '@type': 'ListItem', position: 2, name: 'i6 Research', item: `${BASE_URL}/${language}/i6-intelligence` },
             { '@type': 'ListItem', position: 3, name: piece.title, item: url },
           ],
         })}</script>
