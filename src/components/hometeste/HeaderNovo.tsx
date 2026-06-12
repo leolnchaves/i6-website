@@ -38,15 +38,14 @@ const HeaderNovo = () => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  // Solutions submenu. Items flagged `comingSoon` are filtered out until their
-  // pages exist (Phase 9 = Proprietary AI; Phase 10 = 4 transformation landings).
+  // Solutions submenu. All 4 transformation landings activated in Phase 10.
   const solutionsSubMenu: SubLink[] = [
     { to: localized('/solutions'), label: t('header.solutions.aiSolutions') },
     { to: localized('/our-ai'), label: t('header.solutions.proprietaryAi') },
-    { to: localized('/solutions/demand-supply-efficiency'), label: t('header.solutions.demandSupply'), comingSoon: true },
-    { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization'), comingSoon: true },
-    { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps'), comingSoon: true },
-    { to: localized('/solutions/behavior-conversion'), label: t('header.solutions.behaviorConversion'), comingSoon: true },
+    { to: localized('/solutions/demand-supply-efficiency'), label: t('header.solutions.demandSupply') },
+    { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization') },
+    { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps') },
+    { to: localized('/solutions/behavior-conversion'), label: t('header.solutions.behaviorConversion') },
   ].filter((item) => !item.comingSoon);
 
   const links = [
