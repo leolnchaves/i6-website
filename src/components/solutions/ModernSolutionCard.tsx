@@ -37,7 +37,7 @@ const ModernSolutionCard = memo(({
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLElement>(null);
   
   const t = useMemo(() => translations[language] || translations.en, [language]);
   const displayedFeatures = useMemo(() => features, [features]);
@@ -65,7 +65,7 @@ const ModernSolutionCard = memo(({
 
   return (
     <article
-      ref={cardRef as React.RefObject<HTMLElement>}
+      ref={cardRef}
       id={anchorId}
       itemScope
       itemType="https://schema.org/Product"
