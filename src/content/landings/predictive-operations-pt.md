@@ -3,7 +3,7 @@ title: "Operações Preditivas com IA Proprietária"
 description: "Da previsão de demanda à execução: IA proprietária que antecipa ruptura, prioriza ordens e ativa o time de operações no canal certo, no momento certo."
 slug: predictive-operations
 language: pt
-hero_kicker: "Transformação · Operações Preditivas"
+hero_kicker: "Eficiência · Operações Preditivas"
 hero_headline: "A próxima decisão operacional não pode esperar o dashboard atualizar."
 hero_sub: "IA proprietária que conecta previsão, política e ativação — para que ruptura, atraso e overstock sejam evitados antes de virarem ocorrência."
 sectors: "varejo, indústria, CPG, logística"

@@ -3,7 +3,7 @@ title: "Comportamento e Conversão com IA Preditiva"
 description: "Antecipe intenção, prescreva o argumento certo e converta mais — IA proprietária que aprende o comportamento individual e ativa a próxima ação no canal certo."
 slug: behavior-conversion
 language: pt
-hero_kicker: "Transformação · Comportamento & Conversão"
+hero_kicker: "Crescimento · Comportamento & Conversão"
 hero_headline: "Conversão não é sobre quem entra. É sobre quem você entende a tempo."
 hero_sub: "Propensão preditiva, explicabilidade por feature e ativação em tempo real — IA proprietária que transforma tráfego em receita sem depender de cupom."
 sectors: "varejo, e-commerce, financeiro, CPG"
