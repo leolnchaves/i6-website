@@ -481,6 +481,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         subtitle: 'For precision and diversity',
       },
       chartNote: 'Distribution of customers by number of diverse products recommended — customers with diverse predictions, while keeping high precision in behavioral alignment.',
+      chartHighlight: '9 recommendations at the same relevance level — even for anonymous users',
     },
     explainability: {
       title: 'Explainability that becomes a sales argument',
@@ -512,10 +513,39 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           title: 'Generate dynamic argument',
           description: 'Fill the template with dynamic elements, composing a personalized message per POS/SKU',
-          cards: [
-            { title: 'High engagement', subtitle: 'from similar customer profiles in the last 30 days' },
-            { title: 'Optimized bundling', subtitle: 'based on successful cross-sell patterns' },
-            { title: 'Strong correlation', subtitle: 'with the preferred products of high-value customers' },
+          segments: [
+            {
+              label: 'Industry',
+              items: [
+                { title: 'Consumption pattern', subtitle: 'mirrored in comparable seasonal windows' },
+                { title: 'Forecasted seasonality', subtitle: 'anticipates demand peak in 21 days' },
+                { title: 'Smart replenishment', subtitle: 'prevents stockout in the highest-turnover channel' },
+              ],
+            },
+            {
+              label: 'Retail',
+              items: [
+                { title: 'High engagement', subtitle: 'from similar customer profiles in the last 30 days' },
+                { title: 'Optimized bundling', subtitle: 'based on successful cross-sell patterns' },
+                { title: 'Strong correlation', subtitle: 'with the preferred products of high-value customers' },
+              ],
+            },
+            {
+              label: 'Finance',
+              items: [
+                { title: 'Propensity to contract', subtitle: 'high affinity score with the offer' },
+                { title: 'Aligned risk profile', subtitle: "within the portfolio's defined appetite" },
+                { title: 'Product cross-sell', subtitle: 'consistent with the active customer journey' },
+              ],
+            },
+            {
+              label: 'Pharma',
+              items: [
+                { title: 'Treatment adherence', subtitle: 'ideal moment to renew prescription' },
+                { title: 'Predicted repurchase', subtitle: 'continuity window for therapy' },
+                { title: 'Clinical-profile recommendation', subtitle: 'aligned with the prescribed category' },
+              ],
+            },
           ],
         },
       ],
