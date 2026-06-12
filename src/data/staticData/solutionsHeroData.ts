@@ -7,15 +7,15 @@ export interface SolutionsHeroData {
 
 export const solutionsHeroData: Record<string, SolutionsHeroData> = {
   en: {
-    mainTitle: 'Solutions that',
-    mainSubtitle: 'anticipate',
-    mainSuffix: 'the market',
-    description: 'AI that transforms signals into decisions and decisions into growth.'
+    mainTitle: 'Predictive AI that',
+    mainSubtitle: 'anticipates',
+    mainSuffix: 'demand, margin and inventory',
+    description: 'Proprietary engines for demand forecasting, dynamic pricing, mix recommendation and purchase propensity.'
   },
   pt: {
-    mainTitle: 'Soluções que',
-    mainSubtitle: 'antecipam',
-    mainSuffix: 'o mercado',
-    description: 'IA que transforma sinais em decisões e decisões em crescimento.'
+    mainTitle: 'IA preditiva que',
+    mainSubtitle: 'antecipa',
+    mainSuffix: 'demanda, margem e estoque',
+    description: 'Engines proprietários para previsão de demanda, precificação dinâmica, recomendação de mix e propensão de compra.'
   }
 };

@@ -12,13 +12,13 @@ const HeroMovimento = () => {
     pt: {
       title: 'Inteligência de Movimento',
       subtitle: 'Data moves. You Grow.',
-      desc: 'Transformamos dados estáticos em decisões que antecipam o mercado.',
+      desc: 'IA preditiva que orquestra demanda, preço, sortimento e propensão, entregando eficiência de distribuição, proteção de margem e conversão com menor CAC.',
       cta: 'Colocar Dados em Movimento',
     },
     en: {
       title: 'Movement Intelligence',
       subtitle: 'Data moves. You Grow.',
-      desc: 'We turn static data into decisions that anticipate the market.',
+      desc: 'Predictive AI that orchestrates demand, price, assortment and propensity — to distribute smarter, protect margin and convert at lower CAC.',
       cta: 'Set Data in Motion',
     },
   }[language];

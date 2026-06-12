@@ -188,9 +188,9 @@ export const ptTranslations = {
   'solutions.card.additionalFeatures': 'funcionalidades adicionais',
   
   // Success Stories Page
-  'successStories.hero.title': 'Cases de Sucesso que',
-  'successStories.hero.subtitle': 'Inspiram Inovação',
-  'successStories.hero.description': 'Descubra como empresas líderes em diversos setores transformaram suas operações e alcançaram resultados extraordinários com nossas soluções de IA.',
+  'successStories.hero.title': 'Resultados reais de IA preditiva',
+  'successStories.hero.subtitle': 'em varejo, indústria e farma',
+  'successStories.hero.description': 'Como empresas líderes reduziram ruptura, protegeram margem e aumentaram conversão com os engines proprietários da infinity6.',
   'successStories.metrics.avgROI': 'ROI Médio',
   'successStories.metrics.companiesServed': 'Empresas Atendidas',
   'successStories.metrics.costSavings': 'Economia de Custos Gerada',
@@ -248,9 +248,9 @@ export const ptTranslations = {
   'home.featuredStories.retention': 'Retenção',
   
   // Contact Page
-  'contact.hero.title': 'Vamos Começar uma',
-  'contact.hero.subtitle': 'Conversa',
-  'contact.hero.description': 'Sua jornada de IA começa aqui!',
+  'contact.hero.title': 'Coloque seus dados',
+  'contact.hero.subtitle': 'em movimento',
+  'contact.hero.description': 'Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão.',
   'contact.info.emailUs': 'Envie um Email',
   'contact.info.emailDescription': 'Nos envie um email a qualquer momento',
   'contact.info.callUs': 'Ligue para Nós',

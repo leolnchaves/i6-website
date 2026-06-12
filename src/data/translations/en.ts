@@ -188,9 +188,9 @@ export const enTranslations = {
   'solutions.card.additionalFeatures': 'additional features',
   
   // Success Stories Page
-  'successStories.hero.title': 'Success Stories That',
-  'successStories.hero.subtitle': 'Inspire Innovation',
-  'successStories.hero.description': 'Discover how leading companies across industries have transformed their operations and achieved remarkable results with our AI solutions.',
+  'successStories.hero.title': 'Real results from predictive AI',
+  'successStories.hero.subtitle': 'in retail, industry and pharma',
+  'successStories.hero.description': 'How leading companies reduced stockouts, protected margin and increased conversion with infinity6\'s proprietary engines.',
   'successStories.metrics.avgROI': 'Average ROI',
   'successStories.metrics.companiesServed': 'Companies Served',
   'successStories.metrics.costSavings': 'Cost Savings Generated',
@@ -248,9 +248,9 @@ export const enTranslations = {
   'home.featuredStories.retention': 'Retention',
   
   // Contact Page
-  'contact.hero.title': 'Let\'s Start a',
-  'contact.hero.subtitle': 'Conversation',
-  'contact.hero.description': 'Your AI journey starts here!',
+  'contact.hero.title': 'Put your data',
+  'contact.hero.subtitle': 'in motion',
+  'contact.hero.description': 'Talk to our team about demand forecasting, margin protection, recommendation and propensity.',
   'contact.info.emailUs': 'Email Us',
   'contact.info.emailDescription': 'Send us an email anytime',
   'contact.info.callUs': 'Call Us',
