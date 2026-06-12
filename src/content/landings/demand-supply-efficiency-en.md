@@ -3,7 +3,7 @@ title: "Demand & Supply Efficiency with Predictive AI"
 description: "Proprietary AI that connects demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts and overstock without inflating working capital."
 slug: demand-supply-efficiency
 language: en
-hero_kicker: "Transformation · Demand & Supply"
+hero_kicker: "Efficiency · Demand & Supply"
 hero_headline: "Balance demand and supply before the next stockout wave"
 hero_sub: "Granular forecasting, dynamic policy and intelligent allocation in a single cycle — running on top of your ERP, with measurable financial impact in 60 to 90 days."
 sectors: "retail, pharma, industry, CPG"

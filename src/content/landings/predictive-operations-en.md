@@ -3,7 +3,7 @@ title: "Predictive Operations with Proprietary AI"
 description: "From demand forecasting to execution: proprietary AI that anticipates stockouts, prioritizes orders and activates operations teams on the right channel at the right moment."
 slug: predictive-operations
 language: en
-hero_kicker: "Transformation · Predictive Operations"
+hero_kicker: "Efficiency · Predictive Operations"
 hero_headline: "The next operational decision can't wait for the dashboard to refresh."
 hero_sub: "Proprietary AI that connects forecast, policy and activation — so stockouts, delays and overstock are avoided before they become incidents."
 sectors: "retail, industry, CPG, logistics"

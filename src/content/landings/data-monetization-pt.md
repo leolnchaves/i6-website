@@ -3,7 +3,7 @@ title: "Monetização de Dados com IA Aplicada"
 description: "Transforme dados de clientes, transações e operação em fluxos de receita recorrentes — propensão preditiva, mix por cluster e ativação prescritiva via i6 Signal."
 slug: data-monetization
 language: pt
-hero_kicker: "Transformação · Monetização de Dados"
+hero_kicker: "Lucratividade · Estratégia de Monetização de Dados"
 hero_headline: "Seus dados já têm receita escondida. A IA encontra antes do mercado."
 hero_sub: "Da propensão de compra à recomendação de mix por cluster — IA proprietária que devolve cada decisão em margem, não em dashboard."
 sectors: "varejo, e-commerce, financeiro, CPG"

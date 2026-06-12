@@ -3,7 +3,7 @@ title: "Eficiência de Demanda e Oferta com IA Preditiva"
 description: "IA proprietária que conecta previsão de demanda, política de estoque e alocação por PDV para reduzir ruptura e overstock sem inflar capital de giro."
 slug: demand-supply-efficiency
 language: pt
-hero_kicker: "Transformação · Demanda & Oferta"
+hero_kicker: "Eficiência · Demanda & Supply"
 hero_headline: "Equilibre demanda e oferta antes da próxima onda de ruptura"
 hero_sub: "Previsão granular, política dinâmica e alocação inteligente em um único ciclo — operando sobre o seu ERP, com impacto financeiro mensurável em 60 a 90 dias."
 sectors: "varejo, farma, indústria, CPG"

@@ -3,7 +3,7 @@ title: "Data Monetization with Applied AI"
 description: "Turn customer, transaction and operational data into recurring revenue streams — predictive propensity, cluster-driven mix and prescriptive activation via i6 Signal."
 slug: data-monetization
 language: en
-hero_kicker: "Transformation · Data Monetization"
+hero_kicker: "Profitability · Data Monetization Strategy"
 hero_headline: "Your data already holds revenue. AI finds it before the market does."
 hero_sub: "From purchase propensity to cluster-driven mix recommendation — proprietary AI that returns every decision as margin, not as a dashboard."
 sectors: "retail, e-commerce, financial services, CPG"

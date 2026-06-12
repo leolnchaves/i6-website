@@ -3,7 +3,7 @@ title: "Behavior & Conversion with Predictive AI"
 description: "Anticipate intent, prescribe the right argument and convert more — proprietary AI that learns individual behavior and activates the next action on the right channel."
 slug: behavior-conversion
 language: en
-hero_kicker: "Transformation · Behavior & Conversion"
+hero_kicker: "Growth · Behavior & Conversion"
 hero_headline: "Conversion isn't about who walks in. It's about who you understand in time."
 hero_sub: "Predictive propensity, per-feature explainability and real-time activation — proprietary AI that turns traffic into revenue without relying on coupons."
 sectors: "retail, e-commerce, financial services, CPG"
