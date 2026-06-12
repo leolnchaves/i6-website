@@ -1,42 +1,29 @@
-# Alinhar rótulos das landings entre menu (header/footer) e título no topo da página
-
 ## Problema
 
-1. No menu em PT, os 4 itens de landing aparecem em inglês (`Demand & Supply Efficiency`, `Data Monetization & Strategy`, `Predictive Operations`, `Behavior & Conversion`) — ambos `pt.ts` e `en.ts` têm os mesmos valores em inglês.
-2. O kicker da página (ex.: `Eficiência · Demanda & Oferta`) usa rótulo diferente do menu, criando inconsistência.
+Texto do corpo aparece praticamente preto sobre o fundo escuro em três tipos de página:
 
-## Mudanças
+- `/[lang]/solutions/<slug>` — `src/pages/TransformationLanding.tsx`
+- `/[lang]/i6-intelligence/<slug>` (Research) — `src/pages/IntelligenceArticle.tsx`
+- Insights — `src/pages/InsightArticle.tsx`
 
-### 1) Traduções do menu — `src/data/translations/pt.ts` e `src/data/translations/en.ts`
+Todas renderizam Markdown com classes `prose prose-invert prose-p:text-white/75 ...`. O pacote `@tailwindcss/typography` está em `package.json`, mas **não está registrado no `tailwind.config.ts`**, então as classes `prose-*` não geram CSS e o texto cai para a cor padrão (preto).
 
+## Mudança
 
-| chave                                 | EN (en.ts)                   | PT (pt.ts)                           |
-| ------------------------------------- | ---------------------------- | ------------------------------------ |
-| `header.solutions.demandSupply`       | `Demand & Supply`            | `Demanda & Supply`                   |
-| `header.solutions.dataMonetization`   | `Data Monetization Strategy` | `Estratégia de Monetização de Dados` |
-| `header.solutions.predictiveOps`      | `Predictive Operations`      | `Operações Preditivas`               |
-| `header.solutions.behaviorConversion` | `Behavior & Conversion`      | `Comportamento & Conversão`          |
+Arquivo único: `tailwind.config.ts` (linha 136).
 
+```ts
+// antes
+plugins: [require("tailwindcss-animate")],
 
-Header e Footer já consomem essas chaves, então atualizam automaticamente.
+// depois
+plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+```
 
-### 2) Hero kicker dos 8 MDs — alinhar o termo depois de `Eficiência ·` / `Efficiency ·` ao menu
+Nenhuma outra alteração necessária — as classes `prose-invert prose-p:text-white/75 prose-strong:text-white prose-headings:text-white prose-a:text-[#F4845F]` já estão corretas nos três componentes.
 
+## Validação
 
-| Arquivo                                               | hero_kicker novo                                     |
-| ----------------------------------------------------- | ---------------------------------------------------- |
-| `src/content/landings/demand-supply-efficiency-pt.md` | `Eficiência · Demanda & Supply`                      |
-| `src/content/landings/demand-supply-efficiency-en.md` | `Efficiency · Demand & Supply`                       |
-| `src/content/landings/data-monetization-pt.md`        | `Lucratividade · Estratégia de Monetização de Dados` |
-| `src/content/landings/data-monetization-en.md`        | `Profitability · Data Monetization Strategy`         |
-| `src/content/landings/predictive-operations-pt.md`    | `Eficiência · Operações Preditivas`                  |
-| `src/content/landings/predictive-operations-en.md`    | `Efficiency · Predictive Operations`                 |
-| `src/content/landings/behavior-conversion-pt.md`      | `Crescimento · Comportamento & Conversão`            |
-| `src/content/landings/behavior-conversion-en.md`      | `Growth · Behavior & Conversion`                     |
-
-
-## Não alterado
-
-- `hero_headline` (frase de marketing exibida como H1 — não foi pedido)
-- `title` no front-matter (usado em SEO/JSON-LD)
-- Rotas, slugs, nomes de arquivos
+1. `/pt/solutions/demand-supply-efficiency` e outras 3 landings — corpo em branco/cinza claro
+2. `/pt/i6-intelligence/ruptura-gondola-ia-preditiva` — corpo legível, `<strong>` em branco
+3. Um artigo de Insights — mesma verificação
