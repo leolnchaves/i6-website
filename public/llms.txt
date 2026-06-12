@@ -54,6 +54,19 @@ infinity6's editorial hub for applied predictive intelligence. Each piece is str
 - [i6 Intelligence (PT)](/pt/i6-intelligence): Hub editorial com decisões aplicadas de demanda, margem, estoque, mix e propensão para varejo, indústria, financeiro e farma.
 - [i6 Intelligence (EN)](/en/i6-intelligence): Editorial hub with applied decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.
 
+## Business Transformations (landings)
+
+Four high-level transformation landings tie business pain → infinity6 proprietary engines → real cases. Each landing has PT + EN versions, Service + BreadcrumbList + FAQPage JSON-LD, and crawlable Q&A.
+
+- [Demand & Supply Efficiency (PT)](/pt/solutions/demand-supply-efficiency): IA proprietária que conecta previsão de demanda, política de estoque dinâmica e alocação por PDV para cortar ruptura e overstock sem inflar capital de giro.
+- [Demand & Supply Efficiency (EN)](/en/solutions/demand-supply-efficiency): Proprietary AI connecting demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts and overstock without inflating working capital.
+- [Data Monetization (PT)](/pt/solutions/data-monetization): Transformar dados de clientes, transações e operação em receita recorrente — propensão preditiva, mix por cluster e ativação prescritiva via i6 Signal.
+- [Data Monetization (EN)](/en/solutions/data-monetization): Turn customer, transaction and operational data into recurring revenue — predictive propensity, cluster-driven mix and prescriptive activation via i6 Signal.
+- [Predictive Operations (PT)](/pt/solutions/predictive-operations): Da previsão à execução — IA que antecipa ruptura, prioriza ordens e ativa o time de operações com argumento explicável.
+- [Predictive Operations (EN)](/en/solutions/predictive-operations): From forecast to execution — AI that anticipates stockouts, prioritizes orders and activates operations teams with explainable arguments.
+- [Behavior & Conversion (PT)](/pt/solutions/behavior-conversion): Propensão preditiva, explicabilidade por feature e ativação em tempo real para converter tráfego em receita sem depender de cupom.
+- [Behavior & Conversion (EN)](/en/solutions/behavior-conversion): Predictive propensity, per-feature explainability and real-time activation to convert traffic into revenue without relying on coupons.
+
 <!-- i6hub:intelligence-list-start -->
 - [Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico (PT)](/pt/i6-intelligence/ruptura-gondola-ia-preditiva): Ruptura de gôndola no varejo farma custa de 4% a 12% do faturamento. IA preditiva combina previsão de demanda, política de estoque e alocação por PDV para reduzir falta sem inflar capital de giro.
 - [How to reduce shelf stockouts with predictive AI in pharma retail (EN)](/en/i6-intelligence/ruptura-gondola-ia-preditiva): Shelf stockouts in pharma retail cost between 4% and 12% of net revenue. Predictive AI links demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts without inflating working capital.
