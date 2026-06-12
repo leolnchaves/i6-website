@@ -92,9 +92,9 @@ if (res.status === 404) {
 if (!res.ok) throw new Error(`Feed failed: ${res.status} ${await res.text()}`);
 const items = await res.json();
 console.log(`[${TYPE}] received ${items.length} items`);
-
-
-
+const MD_DIR   = CONFIG.mdDir;
+const IMG_DIR  = CONFIG.imgDir  ?? null;
+const LOGO_DIR = CONFIG.logoDir ?? null;
 
 await fs.mkdir(MD_DIR, { recursive: true });
 if (IMG_DIR)  await fs.mkdir(IMG_DIR,  { recursive: true });

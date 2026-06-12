@@ -1,17 +1,18 @@
-# Ajuste da página /insights
+# Fix: restore directory constants in sync script
 
-Alinhar o cabeçalho da página de Insights ao padrão usado em i6 Research.
+## Problem
+The previous edit to `scripts/sync-content-from-i6hub.mjs` removed the definitions of `MD_DIR`, `IMG_DIR` and `LOGO_DIR` (lines 96–98), but the rest of the script still uses them. The GitHub Actions sync step now crashes with `ReferenceError: MD_DIR is not defined` right after fetching the feed.
 
-## Mudança
+## Fix
+Re-add the three constants right after the feed fetch, derived from the per-type config:
 
-Em `src/pages/Insights.tsx`:
+```js
+const MD_DIR   = CONFIG.mdDir;
+const IMG_DIR  = CONFIG.imgDir  ?? null;
+const LOGO_DIR = CONFIG.logoDir ?? null;
+```
 
-- Remover o `<h1>` visível ("Insights").
-- Adicionar acima do subheading um eyebrow laranja em letras menores: `infinity6 · Insights` (mesmo estilo usado em `Intelligence.tsx`: texto pequeno, uppercase, tracking aumentado, cor `#F4845F`).
-- Manter o `<h1>` apenas como `sr-only` para SEO/acessibilidade.
-- Manter o subheading (parágrafo descritivo) e o restante da página inalterados.
+## Verification
+Run the script locally with a mocked feed to confirm it executes past the `mkdir` step without errors.
 
-## Fora do escopo
-
-- Sem mudanças em rotas, traduções, SEO meta, JSON-LD ou no grid de cards.
-- Sem alterações em outras páginas.
+No other files change.
