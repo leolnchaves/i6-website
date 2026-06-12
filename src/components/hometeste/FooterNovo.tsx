@@ -103,7 +103,7 @@ const FooterNovo = () => {
           {/* Transformations */}
           <div>
             <h3 className="text-sm font-semibold mb-4 text-white/60 uppercase tracking-wider">
-              {language === 'pt' ? 'Transformações' : 'Transformations'}
+              {language === 'pt' ? 'Aplicabilidade' : 'Applicability'}
             </h3>
             <ul className="space-y-2">
               {transformationLinks.map((l) => (
