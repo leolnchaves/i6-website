@@ -145,3 +145,28 @@ related_story_slug: vivaris-pharma # opcional — slug de um case em /success-st
 Manter ambos os campos opcionais — artigos sem `related_*` simplesmente não mostram
 os botões extras.
 
+---
+
+## Landings de Transformação (Fase 10)
+
+Quatro landings de transformação de negócio rodam sobre o mesmo padrão MD-gerenciável, em `src/content/landings/`:
+
+- `demand-supply-efficiency-{pt,en}.md` → `/{lang}/solutions/demand-supply-efficiency`
+- `data-monetization-{pt,en}.md` → `/{lang}/solutions/data-monetization`
+- `predictive-operations-{pt,en}.md` → `/{lang}/solutions/predictive-operations`
+- `behavior-conversion-{pt,en}.md` → `/{lang}/solutions/behavior-conversion`
+
+Documentação completa do schema (frontmatter, seções H2 fixas, formato dos KPIs) em
+[`src/content/landings/README.md`](../src/content/landings/README.md).
+
+### Quando o i6Hub ganhar o tipo `landing`
+
+Mirror do fluxo de Insights/Intelligence:
+
+1. Adicionar tabela `public_landings` (ou estender `public_insights` com `content_type`).
+2. Criar edge function `public-landings-feed` (lista `published = true`, valida `X-Sync-Token`).
+3. Criar `scripts/sync-landings-from-i6hub.mjs` (mirror do de insights, escreve em `src/content/landings/`).
+4. Adicionar `landings-updated` em `repository_dispatch` no workflow `deploy-gh-pages.yml`.
+5. UI no i6Hub: slug **locked** à whitelist dos 4 valores; form com todos os campos do frontmatter.
+
+
