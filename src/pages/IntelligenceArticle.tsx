@@ -45,7 +45,7 @@ const IntelligenceArticle = () => {
     <>
       <Helmet>
         <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
-        <title>{`${piece.title} | i6 Intelligence`}</title>
+        <title>{`${piece.title} | i6 Research`}</title>
         <meta name="description" content={piece.excerpt} />
         <link rel="canonical" href={url} />
         <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/i6-intelligence/${piece.slug}`} />
