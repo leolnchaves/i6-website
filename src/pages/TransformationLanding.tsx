@@ -2,7 +2,7 @@ import { Navigate, useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ArrowRight, Layers, TrendingUp, DollarSign, MessageSquare } from 'lucide-react';
+import { ArrowRight, Layers, TrendingUp, DollarSign, MessageSquare, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanding, isLandingSlug, type LandingPiece } from '@/hooks/useLandings';
@@ -10,7 +10,7 @@ import SolutionsCTA from '@/components/solutions/SolutionsCTA';
 
 const BASE_URL = 'https://infinity6.ai';
 
-const ENGINE_META: Record<string, { name: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; anchor: string }> = {
+const ENGINE_META: Record<string, { name: string; icon: LucideIcon; anchor: string }> = {
   i6recsys: { name: 'i6 RecSys', icon: Layers, anchor: 'i6recsys' },
   i6previsio: { name: 'i6 Previsio', icon: TrendingUp, anchor: 'i6previsio' },
   i6elasticprice: { name: 'i6 ElasticPrice', icon: DollarSign, anchor: 'i6elasticprice' },
