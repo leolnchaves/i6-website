@@ -188,9 +188,9 @@ export const enTranslations = {
   'solutions.card.additionalFeatures': 'additional features',
   
   // Success Stories Page
-  'successStories.hero.title': 'Success Stories That',
-  'successStories.hero.subtitle': 'Inspire Innovation',
-  'successStories.hero.description': 'Discover how leading companies across industries have transformed their operations and achieved remarkable results with our AI solutions.',
+  'successStories.hero.title': 'Real results from predictive AI',
+  'successStories.hero.subtitle': 'in retail, industry and pharma',
+  'successStories.hero.description': 'How leading companies reduced stockouts, protected margin and increased conversion with infinity6\'s proprietary engines.',
   'successStories.metrics.avgROI': 'Average ROI',
   'successStories.metrics.companiesServed': 'Companies Served',
   'successStories.metrics.costSavings': 'Cost Savings Generated',
