@@ -188,9 +188,9 @@ export const ptTranslations = {
   'solutions.card.additionalFeatures': 'funcionalidades adicionais',
   
   // Success Stories Page
-  'successStories.hero.title': 'Cases de Sucesso que',
-  'successStories.hero.subtitle': 'Inspiram Inovação',
-  'successStories.hero.description': 'Descubra como empresas líderes em diversos setores transformaram suas operações e alcançaram resultados extraordinários com nossas soluções de IA.',
+  'successStories.hero.title': 'Resultados reais de IA preditiva',
+  'successStories.hero.subtitle': 'em varejo, indústria e farma',
+  'successStories.hero.description': 'Como empresas líderes reduziram ruptura, protegeram margem e aumentaram conversão com os engines proprietários da infinity6.',
   'successStories.metrics.avgROI': 'ROI Médio',
   'successStories.metrics.companiesServed': 'Empresas Atendidas',
   'successStories.metrics.costSavings': 'Economia de Custos Gerada',
