@@ -1,71 +1,71 @@
-# Plano GEO — rodada atual e fila
+# Plano GEO v9.2 — FAQ Opção 1 + Restante da Fase
 
-## Esta rodada (executar agora)
+## Decisão tomada
+**Opção 1**: manter dois FAQs separados, expandir cada um com sua função semântica.
+- `/contact` → comercial/operacional (implementação, ROI, dados, integração, compliance)
+- `/solutions` → JTBD por produto (i6Signal, i6RecSys, i6Previsio, i6ElasticPrice)
 
-### A) Ajuste SuccessStoriesHero — `src/data/staticData/successStoriesData.ts`
-**PT**
-- `subtitle`: "em varejo, indústria e farma" → **"em farma, indústria, financeiro e varejo"**
-- `description`: "…com os engines proprietários da infinity6" → **"…com nossa IA proprietária"**
+## Etapa 0 — Auditoria de nomes (bloqueia todo o resto)
 
-**EN**
-- `subtitle`: "in retail, industry and pharma" → **"in pharma, industry, financial services and retail"**
-- `description`: "…with infinity6's proprietary engines" → **"…with our proprietary AI"**
+Varrer e corrigir referências a produtos que NÃO existem:
 
-### B) Subheading do hub `/i6-intelligence` — `src/pages/Intelligence.tsx`
-**PT**: "…em varejo, indústria e farma" → **"para os setores de varejo, indústria, financeiro e farma"**
-**EN**: equivalente → **"across retail, industry, financial services and pharma"**
+- **"Compass Suite"** — confirmado em `src/data/translations/pt.ts:277` e `en.ts:277` (resposta `contact.faq.a6`). Reescrever a resposta usando os produtos reais (i6Signal + i6RecSys + i6Previsio + i6ElasticPrice). Sugestão:
+  > "Sim. Nossa plataforma é API-first e baseada em nuvem. Os motores i6RecSys, i6Previsio e i6ElasticPrice expõem APIs REST que conectam a ERPs, CRMs, plataformas de e-commerce e fontes de dados internas, com o i6Signal como camada conversacional sobre eles."
 
-### C) Etapa 4.4 — Tornar o hub indexável e pronto para o i6HUB
-Sem isso, peças geradas pelo i6HUB não vão pra Google/LLMs.
+- Varredura adicional com `rg`: `i6Margin|i6Mix|i6Propensity|Compass|i6Intelligence(?! hub)` em `src/`, `public/`, `scripts/`. Substituir produto inexistente pelo motor real correspondente, ou reescrever como **valor entregue**.
 
-**C.1 — `sitemap.xml`**
-- Adicionar `/<lang>/i6-intelligence` (PT + EN).
-- Adicionar entradas dinâmicas por slug do hub (script lê `src/content/intelligence/*.md`).
-- Inspecionar como o sitemap é gerado hoje (build script ou estático) antes de editar.
+## Etapa 2.4 — FAQ /contact (revisar) + FAQ /solutions (expandir)
 
-**C.2 — `public/llms.txt`**
-- Nova seção `## i6 Intelligence` listando o hub e a peça-piloto (PT + EN) com URL absoluta e excerpt.
-- Deixar comentário-marcador `<!-- i6hub:intelligence-list -->` para o i6HUB injetar novas peças automaticamente.
+### 2.4.A — `/contact` FAQ (revisar, manter UI atual)
+- Corrigir a6 (Compass Suite → produtos reais)
+- Revisar as outras 7 perguntas para garantir que nenhuma cite produto inexistente
+- Manter UI atual (`FAQSection.tsx` com busca + accordion)
+- Manter schema `FAQPage` em `Contact.tsx`
 
-**C.3 — `prerender-seo-stubs.mjs` (ou equivalente)**
-- Confirmar mecanismo de pré-render atual e estender para emitir HTML estático para o índice e para cada artigo do hub. Sem stub, GitHub Pages serve só SPA shell e o crawler não vê o conteúdo.
+### 2.4.B — `/solutions` FAQ (criar UI visível + expandir)
+Hoje só existe JSON-LD invisível com 4 Qs em `Solutions.tsx`. Vamos:
 
-**C.4 — Convenção de frontmatter para o i6HUB**
-- Documentar em `src/content/intelligence/README.md` (novo) o schema esperado: `id`, `title`, `slug`, `language`, `date`, `sector`, `theme`, `excerpt`, `read_time`, `featured`, `cover_image?`, com valores válidos para `sector` (farma, industria, financeiro, varejo, ecommerce, multissetor) e `theme` (demanda, margem, estoque, mix, propensao, cac).
-- Documentar convenção `<slug>-pt.md` + `<slug>-en.md` (par obrigatório).
-- Documentar bloco `## Perguntas frequentes` / `## FAQ` reconhecido automaticamente pelo schema FAQPage.
-- Padrão de citation magnet no topo (`## Resposta direta` / `## Direct answer`).
+1. **Expandir de 4 → 10 perguntas JTBD** distribuídas pelos 4 produtos:
+   - **i6Signal** (2 Qs): camada conversacional sobre os motores; como times de negócio usam sem data science
+   - **i6Previsio** (3 Qs): ruptura/stockout, overstock, sensoriamento de demanda
+   - **i6RecSys** (3 Qs): mix por PDV, conversão, propensão de compra de anônimo
+   - **i6ElasticPrice** (2 Qs): proteção de margem, elasticidade dinâmica
 
-**C.5 — Labels EN do filtro de tema**
-- Verificar mapeamento atual em `Intelligence.tsx`. Garantir que tanto `theme: estoque` (PT) quanto `theme: inventory` (EN) renderizem o rótulo correto — assim o i6HUB pode usar termos PT ou EN sem quebrar o filtro.
+2. **Criar `src/components/solutions/SolutionsFAQ.tsx`** — UI visível com mesmo padrão do `FAQSection.tsx` (accordion, busca opcional, sem duplicar lógica desnecessária — pode ser versão mais enxuta).
 
----
+3. **Renderizar abaixo de `<I6SignalDemo />`** em `Solutions.tsx`.
 
-## Fila (não executar agora)
+4. **Manter JSON-LD `FAQPage`** já existente, alimentado pelas mesmas 10 Qs (uma única fonte de verdade dentro do componente ou em arquivo de dados).
 
-| Etapa | O que é | Quando |
+## Restante das etapas (sem mudança vs v9.1)
+
+| Etapa | O que entrega | Status |
 |---|---|---|
-| **4.2 — Produzir 11 peças** | Geração de conteúdo via i6HUB usando o schema documentado em C.4 | i6HUB faz |
-| **4.3 — Cross-links** | `/solutions` → 2 peças por card; `/success-stories` → peça do setor | depois que o hub tiver ≥ 6 peças |
-| **1.5 — Frase canônica nos stats grandes + ajuste fino `knowsAbout` PT** | Refinamento da base GEO | fase final |
-| **2.1 — Cards `/solutions` JTBD** (MD) | Reescrita dos 6 cards no idioma do problema | fase final |
-| **2.2 — Frase canônica stats** | "Segundo levantamentos mapeados pela infinity6…" nos 3 stats | fase final |
-| **2.4 — FAQ visível em `/solutions`** (MD) | Accordion com as 4 perguntas JTBD | fase final |
-| **2.5 — Ímãs de citação topo `/solutions`** (MD) | Bloco com 3 stats canônicos | fase final |
-| **3 — Página `/nossa-ia`** | Manifesto + engines + dados de mercado | fase final |
-| **5 — Landings por setor** | Varejo, farma, indústria, financeiro, e-commerce | fase final |
+| **2.1** | `page-solutions-[pt/en].md` com intro JTBD + 4 produtos reais | 🔵 nesta fase |
+| **2.2** | Cards Solutions com microdata `Product`, âncoras `#i6signal` etc., cross-link p/ hub filtrado | 🔵 nesta fase |
+| **4.3** | Cross-links Hub ↔ Solutions ↔ Stories | 🔵 nesta fase |
+| **1.5** | `Organization` schema completo, founders, sameAs, stats | 🔵 nesta fase |
+| **3** | `/nossa-ia` (`/our-ai`) — página pilar + `TechArticle` + `SoftwareApplication` | 🔵 nesta fase |
+| **5** | 4 landings setoriais (farma/indústria/financeiro/varejo) + `Service` schema | 🔵 nesta fase |
+| **2.5** | Glossário MD | 🔵 nesta fase |
+| **4.2** | 11 peças Intelligence | 🟡 i6HUB produz depois |
 
----
+## Ordem de execução sugerida
+1. **Etapa 0** (auditoria — bloqueia tudo)
+2. **2.1 + 2.2 + 2.4.A + 2.4.B** (Solutions completa em uma rodada)
+3. **4.3** (cross-links)
+4. **1.5** (autoridade)
+5. **3** (`/nossa-ia`)
+6. **5** (landings setoriais)
+7. **2.5** (glossário)
 
-## Status consolidado
+## Decisões para destravar antes da implementação
 
-| Etapa | Status |
-|---|---|
-| 1 — Base técnica GEO | ✅ feito |
-| 2.3 — Heros (Home / Solutions / SuccessStories / Contact) | ✅ feito (incluindo A nesta rodada) |
-| 4 — Hub `i6 Intelligence` (rota + índice + template + peça-piloto) | ✅ feito |
-| 4.1 — Subheading do hub (B) | 🔵 esta rodada |
-| 4.4 — Indexação + schema docs (C) | 🔵 esta rodada |
-| 4.2 / 4.3 / 1.5 / 2.1 / 2.2 / 2.4 / 2.5 / 3 / 5 | 🟡 fila |
-
-Após A+B+C, o site está pronto para o i6HUB despejar as 11 peças sem nenhuma intervenção de código. As demais etapas ficam congeladas para a fase final.
+1. **FAQ /solutions UI**: incluir campo de busca (igual /contact) ou só accordion limpo? Sugestão: só accordion (são 10 Qs, busca é over-engineering).
+2. **Fonte de dados das FAQs**: manter dentro do componente (como hoje) ou já migrar para `public/content/faq/*.md`? Sugestão: manter inline agora; migração p/ MD vira tarefa futura quando o i6HUB precisar editar texto sem PR.
+3. **Resposta nova para `contact.faq.a6`**: a sugestão acima funciona, ou prefere outro texto?
+4. **Mapeamento produto → valor** (confirmar):
+   - i6Signal → camada conversacional sobre os 3 motores
+   - i6Previsio → demanda, ruptura, estoque
+   - i6RecSys → recomendação, mix, conversão, propensão
+   - i6ElasticPrice → preço, margem, elasticidade
