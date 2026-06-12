@@ -248,9 +248,9 @@ export const ptTranslations = {
   'home.featuredStories.retention': 'Retenção',
   
   // Contact Page
-  'contact.hero.title': 'Vamos Começar uma',
-  'contact.hero.subtitle': 'Conversa',
-  'contact.hero.description': 'Sua jornada de IA começa aqui!',
+  'contact.hero.title': 'Coloque seus dados',
+  'contact.hero.subtitle': 'em movimento',
+  'contact.hero.description': 'Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão.',
   'contact.info.emailUs': 'Envie um Email',
   'contact.info.emailDescription': 'Nos envie um email a qualquer momento',
   'contact.info.callUs': 'Ligue para Nós',
