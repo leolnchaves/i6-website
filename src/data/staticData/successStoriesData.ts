@@ -29,8 +29,8 @@ export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
   en: {
     hero: {
       title: "Real results from predictive AI",
-      subtitle: "in retail, industry and pharma",
-      description: "How leading companies reduced stockouts, protected margin and increased conversion with infinity6's proprietary engines."
+      subtitle: "in pharma, industry, financial services and retail",
+      description: "How leading companies reduced stockouts, protected margin and increased conversion with our proprietary AI."
     },
     metrics: {
       avgROI: "20x",
