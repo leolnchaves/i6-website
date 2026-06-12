@@ -83,6 +83,17 @@ export interface OurAIContent {
     description: string;
     cta: string;
   };
+  research: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    publicationsLabel: string;
+    talksLabel: string;
+    openLabel: string;
+    watchLabel: string;
+    publications: { badge: string; title: string; venue: string; url: string }[];
+    talks: { title: string; venue: string; url: string }[];
+  };
   glossary: {
     title: string;
     lead: string;
