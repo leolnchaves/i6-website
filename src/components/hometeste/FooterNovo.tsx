@@ -49,7 +49,7 @@ const FooterNovo = () => {
   return (
     <footer className="bg-[#0B1224] text-white">
       <div className="container mx-auto px-6 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <img src={logoFooter} alt="Infinity6" className="h-8 w-auto mb-4" loading="lazy" />
@@ -95,6 +95,22 @@ const FooterNovo = () => {
                       {l.label}
                     </Link>
                   )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Transformations */}
+          <div>
+            <h3 className="text-sm font-semibold mb-4 text-white/60 uppercase tracking-wider">
+              {language === 'pt' ? 'Transformações' : 'Transformations'}
+            </h3>
+            <ul className="space-y-2">
+              {transformationLinks.map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>
