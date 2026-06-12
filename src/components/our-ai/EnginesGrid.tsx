@@ -23,21 +23,27 @@ const EnginesGrid = memo(({ content, foundation }: Props) => {
           <p className="text-sm md:text-base text-white/55 leading-relaxed">{content.lead}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {content.items.map((eng) => {
+        {(() => {
+          const signal = content.items.find((i) => i.id === 'i6signal');
+          const engines = content.items.filter((i) => i.id !== 'i6signal');
+          const renderCard = (eng: typeof content.items[number], emphasize = false) => {
             const Icon = ENGINE_ICONS[eng.id];
             return (
               <article
                 key={eng.id}
                 id={eng.id}
-                className="group border border-white/10 rounded-lg p-7 bg-white/[0.015] hover:border-[#F4845F]/40 hover:bg-white/[0.03] transition-all duration-300 scroll-mt-24"
+                className={`group border rounded-lg p-7 transition-all duration-300 scroll-mt-24 ${
+                  emphasize
+                    ? 'border-[#F4845F]/40 bg-gradient-to-r from-[#F4845F]/[0.06] via-white/[0.02] to-[#F4845F]/[0.06] hover:border-[#F4845F]/60'
+                    : 'border-white/10 bg-white/[0.015] hover:border-[#F4845F]/40 hover:bg-white/[0.03]'
+                }`}
                 itemScope
                 itemType="https://schema.org/SoftwareApplication"
               >
                 <meta itemProp="applicationCategory" content="BusinessApplication" />
                 <meta itemProp="operatingSystem" content="Cloud" />
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="shrink-0 w-10 h-10 rounded-md border border-white/10 flex items-center justify-center text-[#F4845F] group-hover:border-[#F4845F]/50 transition-colors">
+                  <div className={`shrink-0 w-10 h-10 rounded-md border flex items-center justify-center text-[#F4845F] transition-colors ${emphasize ? 'border-[#F4845F]/50' : 'border-white/10 group-hover:border-[#F4845F]/50'}`}>
                     <Icon size={18} strokeWidth={1.5} />
                   </div>
                   <div>
@@ -52,8 +58,37 @@ const EnginesGrid = memo(({ content, foundation }: Props) => {
                 </p>
               </article>
             );
-          })}
-        </div>
+          };
+
+          return (
+            <div>
+              {/* Top layer — i6Signal */}
+              {signal && (
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#F4845F]/80 text-center mb-3">
+                    Camada conversacional
+                  </p>
+                  {renderCard(signal, true)}
+                </div>
+              )}
+
+              {/* Connector — three lines descending from Signal to engines below */}
+              <div aria-hidden className="grid grid-cols-3 gap-5 h-8 px-[12%] md:px-[18%]">
+                <div className="flex justify-center"><span className="w-px h-full bg-gradient-to-b from-[#F4845F]/50 to-[#F4845F]/10" /></div>
+                <div className="flex justify-center"><span className="w-px h-full bg-gradient-to-b from-[#F4845F]/50 to-[#F4845F]/10" /></div>
+                <div className="flex justify-center"><span className="w-px h-full bg-gradient-to-b from-[#F4845F]/50 to-[#F4845F]/10" /></div>
+              </div>
+
+              {/* Foundation layer — 3 predictive engines */}
+              <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-white/40 text-center mb-3">
+                Motores preditivos
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {engines.map((eng) => renderCard(eng))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Foundation model card — same section as engines */}
         <div className="mt-8 border border-white/10 rounded-lg p-8 md:p-10 bg-white/[0.02]">
