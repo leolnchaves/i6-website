@@ -51,6 +51,10 @@ const seo = {
     pt: { title: 'Insights de IA Preditiva | infinity6', description: 'Artigos e análises sobre previsão de demanda, forecast de vendas, pricing dinâmico e crescimento de receita com IA.' },
     en: { title: 'Predictive AI Insights | infinity6', description: 'Articles and analysis on demand forecasting, dynamic pricing, recommendation engines and revenue growth with AI.' },
   },
+  'i6-intelligence': {
+    pt: { title: 'i6 Intelligence | infinity6', description: 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão para os setores de varejo, indústria, financeiro e farma.' },
+    en: { title: 'i6 Intelligence | infinity6', description: 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.' },
+  },
 };
 
 // ---- Parse success stories markdown (mirrors useSuccessStoriesMarkdown.ts) ----
