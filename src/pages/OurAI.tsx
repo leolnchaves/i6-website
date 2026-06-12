@@ -108,6 +108,7 @@ const OurAI = memo(() => {
       <SecuritySection content={c.security} />
       <ChallengesAccordion content={c.challenges} />
       <CommunitySection content={c.community} />
+      <ResearchSection content={c.research} />
       <RealResultsStrip />
       <GlossarySection content={c.glossary} />
       <OurAICTA content={c.cta} />
