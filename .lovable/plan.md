@@ -1,30 +1,42 @@
-## Traduzir strings EN no PT e reordenar /our-ai
+## Animação na barra 9 + carrossel vertical por segmento
 
-### 1) Traduzir strings que ficaram em inglês no conteúdo PT
-Em `src/data/staticData/ourAIContent.ts`, dentro do bloco `pt`:
+### 1) Diversity — destaque animado na barra "9"
+Em `src/components/our-ai/DiversityBalanceSection.tsx`:
+- Envolver a barra 9 (Recharts `<Cell>` já distinta) com um efeito visual sutil:
+  - Pulso/glow contínuo de baixa opacidade ao redor da coluna 9, via uma `<Customized>` overlay no SVG do gráfico (um `<rect>` com `filter` blur laranja `#F4845F`, `opacity: 0.35`, animação CSS `pulse-soft` de 2.4s ease-in-out infinite).
+  - Linha fina vertical pontilhada saindo do topo da barra até uma anotação flutuante.
+- Anotação ("callout") posicionada acima/à esquerda da barra 9, dentro do card do gráfico:
+  - Pequeno badge com borda `#F4845F/40`, fundo `#0B1224`, padding compacto.
+  - **PT:** "9 recomendações com o mesmo nível de relevância — inclusive para usuários anônimos"
+  - **EN:** "9 recommendations at the same relevance level — even for anonymous users"
+- Entrada do callout: `IntersectionObserver` → `animate-fade-in` (já existe no tailwind config) quando a seção entra na viewport. Não roda em loop, só na primeira aparição.
+- Adicionar copy `chartHighlight: { pt, en }` em `ourAIContent.ts` (campo novo em `diversity`).
+- Adicionar keyframe `pulse-soft` em `tailwind.config.ts` (opacity 0.2 ↔ 0.5, scale 1 ↔ 1.04 no rect overlay).
 
-**Diversity (linha 223):**
-- `tasks: ['Recommended for you', 'Frequently bought together', 'Buy it again', 'Similar items', 'On sale']`
-- → `['Recomendado para você', 'Comprados juntos com frequência', 'Compre novamente', 'Itens similares', 'Em promoção']`
+### 2) Explainability step 03 — carrossel vertical por segmento
+Substituir os 3 cards estáticos do step 03 ("Gera argumento dinâmico") por um carrossel vertical animado.
 
-**Explainability — step 2 cards (linhas 251–254):**
-- Increase in demand / prioritize argument of growth opportunity → "Aumento de demanda" / "priorize o argumento de oportunidade de crescimento"
-- Repurchase occasion / emphasize need for immediate restocking → "Ocasião de recompra" / "enfatize a necessidade de reposição imediata"
-- New product / highlight market trend → "Produto novo" / "destaque a tendência de mercado"
-- High-selling product / stress risk of stockout → "Produto de alta venda" / "reforce o risco de ruptura"
+**Estrutura de dados** (em `ourAIContent.ts`, dentro de `explainability.steps[2]`):
+Substituir `cards` por `segments: Array<{ label, items: Array<{ title, subtitle }> }>` com 4 segmentos × 3 argumentos cada:
 
-**Explainability — step 3 cards (linhas 261–263):**
-- High engagement / from similar customer profiles in the last 30 days → "Alto engajamento" / "de perfis de cliente similares nos últimos 30 dias"
-- Optimized bundling / based on successful cross-sell patterns → "Bundling otimizado" / "baseado em padrões bem-sucedidos de cross-sell"
-- Strong correlation / with the preferred products of high-value customers → "Forte correlação" / "com os produtos preferidos de clientes de alto valor"
+- **Indústria** — Padrão de consumo / Sazonalidade prevista / Reposição inteligente
+- **Varejo** — Alto engajamento / Bundling otimizado / Forte correlação
+- **Financeiro** — Propensão a contratar / Perfil de risco alinhado / Cross-sell de produto
+- **Farma** — Aderência ao tratamento / Recompra prevista / Recomendação por perfil clínico
 
-Bloco `en` permanece intacto.
+(copy inicial — usuário pode refinar depois)
 
-### 2) Reordenar /our-ai — RealResults como penúltimo (acima do Glossário)
-Em `src/pages/OurAI.tsx`, mover `<RealResultsStrip />` da posição atual (após Explainability) para imediatamente antes de `<GlossarySection>`.
+**Componente novo:** `src/components/our-ai/SegmentArgumentCarousel.tsx`
+- Lista vertical com altura fixa mostrando 3 cards visíveis simultaneamente.
+- Loop interno: a cada 2.6s o card do topo recebe `translateY(-100%)` + `opacity 0` (sai por cima), os demais sobem uma posição, e um novo card entra por baixo com `translateY(100%) → 0` + fade-in.
+- Quando os 3 argumentos do segmento atual terminam, troca para o próximo segmento sem corte (continuidade).
+- Label do segmento atual aparece acima da lista em uppercase tracking, com `key`-based fade quando troca: `INDÚSTRIA` → `VAREJO` → `FINANCEIRO` → `FARMA`.
+- Respeita `prefers-reduced-motion`: se reduzido, mostra os 3 cards iniciais estáticos sem rotação.
+- Pausa quando a aba do navegador está oculta (`document.visibilityState`) para evitar custo de animação.
 
-Nova ordem:
-Hero → Thesis → UnifiedImpact → EnginesGrid → Diversity → Explainability → Security → Challenges → Community → **RealResultsStrip** → Glossary → CTA.
+**Integração:** `ExplainabilitySection.tsx` renderiza `<SegmentArgumentCarousel segments={step.segments} />` quando `step.segments` existe (mantendo fallback para `step.cards` legado e `step.sample` intacto). Step 02 permanece com cards estáticos.
 
 ### Verificação
-Preview `/pt/our-ai`: textos dos cards de Explainability e chips de Diversity em português; faixa "Resultados reais em produção" aparece logo acima do Glossário.
+Preview PT e EN em `/our-ai`:
+- Barra 9 com pulso suave laranja + callout textual aparecendo uma vez ao scroll.
+- Card "Gera argumento dinâmico" mostra label do segmento alternando e cards subindo continuamente, sem flicker.

@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
+import SegmentArgumentCarousel from './SegmentArgumentCarousel';
 
 interface Props {
   content: OurAIContent['explainability'];
@@ -55,6 +56,9 @@ const ExplainabilitySection = memo(({ content }: Props) => {
                     ))}
                   </ul>
                 )}
+
+                {/* Segment carousel */}
+                {step.segments && <SegmentArgumentCarousel segments={step.segments} />}
               </div>
 
               {/* Arrow between cards (desktop only) */}

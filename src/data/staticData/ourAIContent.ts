@@ -55,6 +55,7 @@ export interface OurAIContent {
     tasks: string[];
     middle: { title: string; subtitle: string };
     chartNote: string;
+    chartHighlight: string;
   };
   explainability: {
     title: string;
@@ -64,6 +65,7 @@ export interface OurAIContent {
       description: string;
       sample?: { sku: string; rows: { feature: string; weight: string }[] };
       cards?: { title: string; subtitle: string }[];
+      segments?: { label: string; items: { title: string; subtitle: string }[] }[];
     }[];
   };
   security: {
@@ -226,6 +228,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         subtitle: 'Para precisão e diversidade',
       },
       chartNote: 'Distribuição de clientes por número de produtos diversos recomendados — clientes com previsões diversas, mantendo alta precisão no alinhamento comportamental.',
+      chartHighlight: '9 recomendações com o mesmo nível de relevância — inclusive para usuários anônimos',
     },
     explainability: {
       title: 'Explicabilidade que vira argumento de venda',
@@ -257,10 +260,39 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           title: 'Gera argumento dinâmico',
           description: 'Preenche o modelo com elementos dinâmicos, compondo a mensagem personalizada para cada PDV/SKU',
-          cards: [
-            { title: 'Alto engajamento', subtitle: 'de perfis de cliente similares nos últimos 30 dias' },
-            { title: 'Bundling otimizado', subtitle: 'baseado em padrões bem-sucedidos de cross-sell' },
-            { title: 'Forte correlação', subtitle: 'com os produtos preferidos de clientes de alto valor' },
+          segments: [
+            {
+              label: 'Indústria',
+              items: [
+                { title: 'Padrão de consumo', subtitle: 'replicado em janelas sazonais comparáveis' },
+                { title: 'Sazonalidade prevista', subtitle: 'antecipa pico de demanda em 21 dias' },
+                { title: 'Reposição inteligente', subtitle: 'evita ruptura no canal de maior giro' },
+              ],
+            },
+            {
+              label: 'Varejo',
+              items: [
+                { title: 'Alto engajamento', subtitle: 'de perfis de cliente similares nos últimos 30 dias' },
+                { title: 'Bundling otimizado', subtitle: 'baseado em padrões bem-sucedidos de cross-sell' },
+                { title: 'Forte correlação', subtitle: 'com os produtos preferidos de clientes de alto valor' },
+              ],
+            },
+            {
+              label: 'Financeiro',
+              items: [
+                { title: 'Propensão a contratar', subtitle: 'score elevado de afinidade com a oferta' },
+                { title: 'Perfil de risco alinhado', subtitle: 'dentro do apetite definido pela carteira' },
+                { title: 'Cross-sell de produto', subtitle: 'aderente à jornada do cliente já ativo' },
+              ],
+            },
+            {
+              label: 'Farma',
+              items: [
+                { title: 'Aderência ao tratamento', subtitle: 'momento ideal de renovação da receita' },
+                { title: 'Recompra prevista', subtitle: 'janela de continuidade da terapia' },
+                { title: 'Recomendação por perfil clínico', subtitle: 'coerente com a categoria prescrita' },
+              ],
+            },
           ],
         },
       ],
@@ -449,6 +481,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         subtitle: 'For precision and diversity',
       },
       chartNote: 'Distribution of customers by number of diverse products recommended — customers with diverse predictions, while keeping high precision in behavioral alignment.',
+      chartHighlight: '9 recommendations at the same relevance level — even for anonymous users',
     },
     explainability: {
       title: 'Explainability that becomes a sales argument',
@@ -480,10 +513,39 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           title: 'Generate dynamic argument',
           description: 'Fill the template with dynamic elements, composing a personalized message per POS/SKU',
-          cards: [
-            { title: 'High engagement', subtitle: 'from similar customer profiles in the last 30 days' },
-            { title: 'Optimized bundling', subtitle: 'based on successful cross-sell patterns' },
-            { title: 'Strong correlation', subtitle: 'with the preferred products of high-value customers' },
+          segments: [
+            {
+              label: 'Industry',
+              items: [
+                { title: 'Consumption pattern', subtitle: 'mirrored in comparable seasonal windows' },
+                { title: 'Forecasted seasonality', subtitle: 'anticipates demand peak in 21 days' },
+                { title: 'Smart replenishment', subtitle: 'prevents stockout in the highest-turnover channel' },
+              ],
+            },
+            {
+              label: 'Retail',
+              items: [
+                { title: 'High engagement', subtitle: 'from similar customer profiles in the last 30 days' },
+                { title: 'Optimized bundling', subtitle: 'based on successful cross-sell patterns' },
+                { title: 'Strong correlation', subtitle: 'with the preferred products of high-value customers' },
+              ],
+            },
+            {
+              label: 'Finance',
+              items: [
+                { title: 'Propensity to contract', subtitle: 'high affinity score with the offer' },
+                { title: 'Aligned risk profile', subtitle: "within the portfolio's defined appetite" },
+                { title: 'Product cross-sell', subtitle: 'consistent with the active customer journey' },
+              ],
+            },
+            {
+              label: 'Pharma',
+              items: [
+                { title: 'Treatment adherence', subtitle: 'ideal moment to renew prescription' },
+                { title: 'Predicted repurchase', subtitle: 'continuity window for therapy' },
+                { title: 'Clinical-profile recommendation', subtitle: 'aligned with the prescribed category' },
+              ],
+            },
           ],
         },
       ],

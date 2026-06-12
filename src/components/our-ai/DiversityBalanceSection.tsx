@@ -56,8 +56,23 @@ const DiversityBalanceSection = memo(({ content }: Props) => {
             </svg>
           </div>
 
-          <div className="border border-white/10 rounded-lg p-5 bg-white/[0.02]">
-            <div className="h-48 md:h-56">
+          <div className="relative border border-white/10 rounded-lg p-5 bg-white/[0.02]">
+            {/* Annotation callout pointing to bar 9 */}
+            <div className="absolute top-3 right-3 z-20 max-w-[220px] border border-[#F4845F]/40 bg-[#0B1224]/95 rounded px-3 py-2 animate-fade-in shadow-[0_0_28px_-12px_rgba(244,132,95,0.7)]">
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#F4845F] animate-pulse" />
+                <p className="text-[10px] text-[#F4845F] font-bold uppercase tracking-wider">Insight · 9</p>
+              </div>
+              <p className="text-[11px] text-white/75 leading-snug">{content.chartHighlight}</p>
+            </div>
+
+            <div className="relative h-48 md:h-56">
+              {/* Soft pulse glow positioned over bar 9 (rightmost bar) */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute z-10 animate-pulse-soft rounded-sm bg-[#F4845F] blur-md"
+                style={{ right: '2.5%', bottom: '32px', width: '7%', height: '78%', transformOrigin: 'bottom center' }}
+              />
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={histogram} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
                   <XAxis
