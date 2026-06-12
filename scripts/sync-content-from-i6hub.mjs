@@ -93,9 +93,7 @@ if (!res.ok) throw new Error(`Feed failed: ${res.status} ${await res.text()}`);
 const items = await res.json();
 console.log(`[${TYPE}] received ${items.length} items`);
 
-const MD_DIR  = path.resolve(CONFIG.mdDir);
-const IMG_DIR = CONFIG.imgDir ? path.resolve(CONFIG.imgDir) : null;
-const LOGO_DIR = CONFIG.logoDir ? path.resolve(CONFIG.logoDir) : null;
+
 
 
 await fs.mkdir(MD_DIR, { recursive: true });
