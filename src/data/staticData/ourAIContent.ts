@@ -312,8 +312,11 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
     },
     cta: {
-
+      title: 'Quer conhecer os motores em profundidade?',
+      button: 'Converse com nosso time técnico',
+    },
   },
+
   en: {
     hero: {
       eyebrow: 'Proprietary AI',
