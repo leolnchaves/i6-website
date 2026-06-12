@@ -95,8 +95,8 @@ const FooterNovo = () => {
           {/* Contact */}
           <div>
             <h3 className="text-sm font-semibold mb-4 text-white/60 uppercase tracking-wider">{t('footer.contact')}</h3>
-            <a href="mailto:movimento@infinity6.ai" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm hover:underline">
-              movimento@infinity6.ai
+            <a href="mailto:performance@infinity6.ai" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm hover:underline">
+              performance@infinity6.ai
             </a>
           </div>
         </div>

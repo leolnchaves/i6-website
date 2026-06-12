@@ -1,6 +1,8 @@
 import { memo, useMemo, useState, useRef, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
 
 interface ModernSolutionCardProps {
   title: string;
@@ -20,21 +22,32 @@ const translations = {
     overview: 'Overview',
     keyFeatures: 'Key Features',
     additionalFeatures: 'more features',
-    businessOutcome: 'Expected Results'
+    businessOutcome: 'Expected Results',
+    seeAnalyses: 'See analyses on',
   },
   pt: {
     overview: 'Visão Geral',
     keyFeatures: 'Características Principais',
     additionalFeatures: 'mais características',
-    businessOutcome: 'Resultados Esperados'
-  }
+    businessOutcome: 'Resultados Esperados',
+    seeAnalyses: 'Ver análises sobre',
+  },
 };
 
-const ModernSolutionCard = memo(({ 
+// Engine → i6 Intelligence theme + label (PT/EN). Drives the "See analyses on …" link
+// at the bottom of each solution card. Themes match useIntelligence frontmatter keys.
+const ENGINE_THEME_MAP: Record<string, { theme: string; labelPt: string; labelEn: string }> = {
+  'i6 RecSys': { theme: 'propensao', labelPt: 'propensão', labelEn: 'propensity' },
+  'i6 ElasticPrice': { theme: 'margem', labelPt: 'margem', labelEn: 'margin' },
+  'i6 Previsio': { theme: 'demanda', labelPt: 'demanda', labelEn: 'demand' },
+};
+
+const ModernSolutionCard = memo(({
   title, focus, description, features, outcome, engine, bgColor, index, anchorId
 }: ModernSolutionCardProps) => {
 
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const cardRef = useRef<HTMLElement>(null);
@@ -126,6 +139,19 @@ const ModernSolutionCard = memo(({
             </div>
           </div>
         </div>
+
+        {/* Cross-link to i6 Intelligence filtered by engine's primary theme */}
+        {ENGINE_THEME_MAP[engine] && (
+          <div className="mt-3">
+            <Link
+              to={localized(`/i6-intelligence?theme=${ENGINE_THEME_MAP[engine].theme}`)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#F4845F] hover:text-[#F4845F]/80 transition-colors"
+            >
+              {t.seeAnalyses} {language === 'pt' ? ENGINE_THEME_MAP[engine].labelPt : ENGINE_THEME_MAP[engine].labelEn}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        )}
       </div>
     </article>
 

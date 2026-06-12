@@ -14,7 +14,9 @@ export interface IntelligenceFrontmatter {
   cover_image?: string | null;
   read_time?: number;
   featured?: boolean;
-  faq?: string;           // optional path or block — kept simple for v1
+  faq?: string;
+  related_product?: string;     // anchor on /solutions (e.g. "i6previsio", "i6recsys")
+  related_story_slug?: string;  // success story slug
 }
 
 export interface IntelligencePiece extends IntelligenceFrontmatter {
@@ -66,6 +68,8 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
       cover_image: fm.cover_image ?? null,
       read_time: fm.read_time,
       featured: fm.featured === true,
+      related_product: fm.related_product,
+      related_story_slug: fm.related_story_slug,
       slug: fm.slug || path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
       content,
     } as IntelligencePiece;

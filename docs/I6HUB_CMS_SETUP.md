@@ -102,3 +102,46 @@ Acompanhe em GitHub → repo `i6-website` → aba **Actions** → workflow
 | GitHub repo i6-website | `I6HUB_SYNC_TOKEN` | Token validado pela edge feed | você (Parte D) |
 | i6Hub (Lovable secrets) | `GITHUB_DISPATCH_TOKEN` | PAT fine-grained do GitHub | já configurado (Parte B) |
 | i6Hub (Lovable secrets) | `I6HUB_SYNC_TOKEN` | Mesmo valor do GitHub Secret | já configurado (Parte C) |
+
+---
+
+## Frontmatter dos artigos i6 Intelligence
+
+Cada artigo em `src/content/intelligence/*.md` aceita os seguintes campos no frontmatter:
+
+```yaml
+---
+id: ruptura-gondola-ia-preditiva
+title: "Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico"
+slug: ruptura-gondola-ia-preditiva
+language: pt            # pt | en
+date: 2026-06-12
+sector: farma           # varejo | farma | industria | ecommerce | multissetor
+theme: estoque          # demanda | margem | estoque | mix | propensao | cac
+excerpt: "..."
+read_time: 8
+featured: true
+related_product: i6previsio        # opcional — âncora no /solutions
+                                   #   valores: i6recsys | i6elasticprice | i6previsio
+                                   #   (ou âncoras secundárias: propensao, pricing-dinamico, etc.)
+related_story_slug: vivaris-pharma # opcional — slug de um case em /success-stories
+---
+```
+
+### Como os cross-links funcionam
+
+- **Card de solução em `/solutions`** mostra "Ver análises sobre [tema] →" levando a
+  `/i6-intelligence?theme=<theme>`. O mapeamento Engine → tema é fixo no código:
+  i6 RecSys → `propensao`, i6 ElasticPrice → `margem`, i6 Previsio → `demanda`.
+
+- **Lista `/i6-intelligence`** aceita query params `?sector=` e `?theme=` que
+  pré-selecionam chips e filtram a grid. Trocar de chip atualiza a URL (`replace`).
+
+- **Artigo `/i6-intelligence/<slug>`** mostra no rodapé:
+  - "Ver a solução relacionada" → `/solutions#<related_product>` (se preenchido)
+  - "Ler o case relacionado" → `/success-stories/<related_story_slug>` (se preenchido)
+  - CTA principal "Colocar Dados em Movimento" → `/contact`
+
+Manter ambos os campos opcionais — artigos sem `related_*` simplesmente não mostram
+os botões extras.
+
