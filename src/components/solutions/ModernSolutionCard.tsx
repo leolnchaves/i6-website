@@ -127,7 +127,8 @@ const ModernSolutionCard = memo(({
           </div>
         </div>
       </div>
-    </div>
+    </article>
+
   );
 });
 
