@@ -9,12 +9,12 @@ const ContactHero = memo(() => {
     pt: {
       title: "Coloque seus dados",
       highlight: "em movimento",
-      description: "Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão. Respondemos em até 1 dia útil."
+      description: "Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão."
     },
     en: {
       title: "Put your data",
       highlight: "in motion",
-      description: "Talk to our team about demand forecasting, margin protection, recommendation and propensity. We reply within 1 business day."
+      description: "Talk to our team about demand forecasting, margin protection, recommendation and propensity."
     }
   }), []);
 
@@ -37,7 +37,7 @@ const ContactHero = memo(() => {
               </span>
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-white/60 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-white/60 max-w-5xl mx-auto leading-relaxed whitespace-nowrap">
             {text.description}
           </p>
         </div>
