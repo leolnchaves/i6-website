@@ -321,11 +321,11 @@ for (const lang of ['en', 'pt']) {
         '@type': 'Observation',
         name: k.label,
         observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
-        measuredProperty: {
+        variableMeasured: {
           '@type': 'PropertyValue',
           name: k.label,
-          value: k.value,
         },
+        measuredValue: k.value,
         description: `${lang === 'pt' ? 'Setor' : 'Sector'}: ${k.source}`,
       }));
 

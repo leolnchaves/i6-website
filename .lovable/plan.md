@@ -1,61 +1,39 @@
-# Contato: form-first, sem Calendly público
+## Objetivo
+Eliminar o erro "PropertyValue não é um tipo válido para measuredProperty" no JSON-LD de `/our-ai`.
 
-Reposicionar `/contact` para o padrão enterprise B2B: form qualificado como CTA único, sem Calendly exposto, com e-mail como fallback discreto. Sem WhatsApp por enquanto.
+## Causa
+`Observation.measuredProperty` espera `Property`, não `PropertyValue`. O padrão correto do schema.org para registrar a variável observada com nome/unidade é `variableMeasured` (aceita PropertyValue), e o valor numérico vai em `measuredValue` no próprio Observation.
 
----
+## Alterações
 
-## Mudanças
+### 1. `src/pages/OurAI.tsx` (linhas 76–90)
+Substituir o map de `statistics`:
 
-### 1. Remover Calendly da página pública
-
-**Arquivo:** `src/pages/Contact.tsx`
-
-- Remover import e uso de `<CalendlySection />`.
-- Trocar o grid `lg:grid-cols-2 gap-12 items-stretch` por layout de coluna única centralizada (`max-w-2xl mx-auto`) para o `<ContactForm />`.
-- **Não deletar** `src/components/contact/CalendlySection.tsx` — fica no codebase para uso interno (SDR pode enviar o link manualmente após qualificação).
-
-**Efeito colateral positivo:** elimina o warning "Datadog Browser SDK: No storage available" no console, que vinha do iframe Calendly.
-
-### 2. Strip discreto de contato direto
-
-Novo componente `src/components/contact/DirectContactStrip.tsx`, posicionado **abaixo** do form e **acima** do `<FAQSection />`:
-
+```ts
+const statistics = realResults
+  .filter((r) => typeof r.numericValue === 'number')
+  .map((r) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Observation',
+    name: r.label[language],
+    observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+    variableMeasured: {
+      '@type': 'PropertyValue',
+      name: r.label[language],
+      ...(r.unitText ? { unitText: r.unitText } : {}),
+    },
+    measuredValue: r.numericValue,
+    ...(r.unitText ? { unitText: r.unitText } : {}),
+    description: `${language === 'pt' ? 'Setor' : 'Sector'}: ${r.source[language]}`,
+  }));
 ```
-Já nos conhece?  performance@infinity6.ai
-Already know us?  performance@infinity6.ai
-```
 
-- Linha única, centralizada, tipografia pequena (`text-sm text-white/55`).
-- Sem card, sem ícone grande, sem botão destacado — apenas texto + link `mailto:`.
-- Strings PT/EN inline no componente (`useLanguage`).
-- `<a>` semântico com `aria-label`.
+### 2. `scripts/prerender-seo-stubs.mjs` (linhas ~321–330)
+Aplicar a mesma estrutura no stub estático para que crawlers sem JS vejam o JSON-LD corrigido.
 
-### 3. Ajuste de copy
+## Validação
+- Rodar build e abrir `/our-ai`; conferir `<script type="application/ld+json">` no DOM.
+- Validar no Schema Markup Validator: nó `Observation` sem erros.
 
-Verificar `ContactHero.tsx` e o botão de submit do `ContactForm` para remover qualquer menção a "agende" / "schedule a call". Substituir por:
-- PT: "Envie sua mensagem — respondemos em até 1 dia útil"
-- EN: "Send your message — we reply within 1 business day"
-
-Mantém a promessa de tempo de resposta que o Calendly resolvia visualmente.
-
-### 4. Form: campos qualificadores (apenas verificação, sem alterar)
-
-Ler `src/components/contact/form/ContactFormFields.tsx` para confirmar presença de: empresa, cargo, e-mail corporativo, mensagem. Se faltar **cargo** ou **porte/segmento**, sinalizo no fim — **não altero o form sem sua aprovação explícita**, porque é um capture ativo.
-
----
-
-## Detalhes técnicos
-
-- Sem mudança em rotas, sitemap, JSON-LD do FAQ, SEO ou backend.
-- Sem novas dependências.
-- `CalendlySection.tsx` permanece no repositório, apenas desplugado da rota pública.
-- Build/preview: alteração puramente visual + remoção de iframe.
-
----
-
-## Resultado esperado
-
-- `/contact` com foco único no form qualificado (best practice enterprise B2B).
-- Fallback `mailto:performance@infinity6.ai` para quem já conhece a marca.
-- Console limpo (sem warning Datadog do Calendly).
-- Footer mantém `performance@infinity6.ai` (sem mudança).
+## Fora de escopo
+Sem mudanças visuais, de conteúdo, rotas, sitemap ou outros JSON-LD da página.
