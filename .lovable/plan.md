@@ -1,32 +1,76 @@
+# Reorganização da página /our-ai
 
-# Plano — Fase 2: remover Home antiga
+## 1. Nova ordem de seções (`src/pages/OurAI.tsx`)
 
-## Auditoria de impacto (confirmada)
-- `Home.tsx`, `Layout.tsx` → só importados por `App.tsx` (rota `/oldhome_teste`).
-- `Index.tsx` → nenhuma referência (já órfã).
-- `src/components/home/**` → nenhuma referência fora da própria pasta.
-- `ClientCarousel.tsx` → só usado por `home/StatsSection.tsx`.
-- `VideoModal.tsx` → só usado por `home/HeroSection.tsx`.
-- `LanguageSelector.tsx` → sem nenhuma referência (versão `LanguageSelectorSimple` é a usada).
-- Nenhum link interno (nav, footer, redirect) aponta para `/oldhome_teste`.
+Sequência atual:
+```
+Hero → Thesis(3 pilares + Foundation card) → Engines → RealResults → DualValue → LearnInfluence → Diversity → Explainability → Security → Challenges → Community → Glossary → CTA
+```
 
-A home ativa (`HomeTeste.tsx`, montada em `DarkLayout` na rota `index`) não é afetada.
+Sequência alvo (agrupando tudo de "motor" numa macro-área contínua):
+```
+Hero
+ThesisPillars (somente os 3 pilares)
+EnginesGrid + Foundation card + Diversity + Explainability  ← mesma macro-área visual
+RealResultsStrip
+UnifiedImpactSection (DualValue + LearnInfluence fundidos)
+Security
+Challenges
+Community
+Glossary
+CTA
+```
 
-## Mudanças
+## 2. Mudanças por componente
 
-**Remover arquivos/pastas**
-- `src/pages/Home.tsx`
-- `src/pages/Index.tsx`
-- `src/components/Layout.tsx`
-- `src/components/ClientCarousel.tsx`
-- `src/components/VideoModal.tsx`
-- `src/components/LanguageSelector.tsx`
-- `src/components/home/` (toda a pasta, incluindo subpastas `hero/`, `results/`, `stats/`, `featured-stories/`, `compact-solutions/`)
+**`ThesisSection.tsx`** — remover o bloco "Foundation model card" (linhas 33-85). Mantém só o título + os 3 pilares. Reduzir `py-20 md:py-28` → `py-12 md:py-16`.
 
-**Editar `src/App.tsx`**
-- Remover imports: `Layout`, `Home`.
-- Remover a linha da rota `/oldhome_teste`.
+**`EnginesGrid.tsx`** — após o bloco de diferenciadores, anexar dentro da mesma `<section>`:
+- O Foundation model card (movido do ThesisSection, mesmo markup e conteúdo `content.foundation`)
+- O conteúdo de `DiversityBalanceSection` (inline no mesmo container, sem nova `<section>`)
+- O conteúdo de `ExplainabilitySection` (inline no mesmo container)
 
-## Verificação
-- `rg` final por qualquer referência residual aos nomes removidos.
-- Garantir que `App.tsx` compila (imports e JSX consistentes).
+Para evitar inchar um único arquivo, criar 3 subcomponentes de apresentação puros dentro de `src/components/our-ai/engines/`:
+- `FoundationCard.tsx` (extraído do ThesisSection)
+- `DiversityBlock.tsx` (extraído do DiversityBalanceSection, sem o wrapper `<section>` e sem padding vertical próprio)
+- `ExplainabilityBlock.tsx` (extraído do ExplainabilitySection, idem)
+
+`EnginesGrid` passa a aceitar também `foundation`, `diversity`, `explainability` por props e renderiza-os com separadores `mt-16 pt-12 border-t border-white/5` em vez de seções separadas.
+
+Remover `<DiversityBalanceSection>` e `<ExplainabilitySection>` do `OurAI.tsx` (componentes ficam, mas não são mais usados — podem ser deletados depois).
+
+**Novo `UnifiedImpactSection.tsx`** — funde `DualValueSection` + `LearnInfluenceFlow` em uma narrativa única, sem repetir "IA aprende / Influência vende" (que já é o ponto das duas colunas).
+
+Estrutura:
+```
+<section> (py-14 md:py-20, bg #0B1224)
+  H2: content.dualValue.title  ("O impacto não vem de prever…")
+  Grid 2 cols: as duas colunas 01/02 do DualValue (clareza/números)
+  Divider sutil (mt-14 pt-10 border-t border-white/5)
+  Subtítulo pequeno (eyebrow laranja): "Do comportamento ao resultado" / "From behavior to outcome"
+  Flow horizontal de 3 steps (Fine tuning → Necessidade específica → Resultado) do LearnInfluence
+  Chips de atributos (Relevância, Oportunidade, …)
+</section>
+```
+Remove a frase-conclusão redundante "Fine tuning a partir do comportamento isolado…" — substituída pelo subtítulo curto acima.
+
+Adicionar campo opcional `bridge` em `ourAIContent` (pt/en) para o eyebrow ("Do comportamento ao resultado" / "From behavior to outcome").
+
+**`GlossarySection.tsx`** —
+- Trocar eyebrow `"GEO · Glossary"` por `"Glossary"` (en) / `"Glossário"` (pt) usando `content.eyebrow` novo (ou hardcode condicional simples já que é a única label).
+- Remover o `<h2>{content.title}</h2>` (linha 15).
+- Remover o `<p>{content.lead}</p>` (linhas 16-18) — usuário pediu "deixando apenas o texto laranja menor".
+- Reduzir `py-20 md:py-24` → `py-12 md:py-16`.
+
+Em `ourAIContent.ts`: trocar `glossary.title` pt → `"Glossário"` e en → `"Glossary"` (mantém o campo só para o JSON-LD `DefinedTermSet.name` que continua usando `content.glossary.title`).
+
+## 3. Redução de espaços verticais
+
+Padronizar padding das seções de `/our-ai` de `py-20 md:py-28` para `py-14 md:py-20` em:
+- `ThesisSection`, `EnginesGrid`, `UnifiedImpactSection`, `SecuritySection`, `ChallengesAccordion`, `CommunitySection`, `GlossarySection`, `OurAICTA`.
+
+Reduzir também `mb-14` dos headers de seção para `mb-10`.
+
+## 4. Verificação
+
+Build automático + abrir `/pt/our-ai` e `/en/our-ai` no preview para validar fluxo visual contínuo, ausência de duplicidade e rótulos do glossary.
