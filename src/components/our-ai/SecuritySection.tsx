@@ -16,7 +16,7 @@ const SecuritySection = memo(({ content }: Props) => {
           {content.title}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-white/10 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-lg overflow-hidden">
           {content.pillars.map((p, idx) => {
             const Icon = ICONS[idx];
             return (
