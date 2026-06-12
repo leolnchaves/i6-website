@@ -228,6 +228,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         subtitle: 'Para precisão e diversidade',
       },
       chartNote: 'Distribuição de clientes por número de produtos diversos recomendados — clientes com previsões diversas, mantendo alta precisão no alinhamento comportamental.',
+      chartHighlight: '9 recomendações com o mesmo nível de relevância — inclusive para usuários anônimos',
     },
     explainability: {
       title: 'Explicabilidade que vira argumento de venda',
@@ -259,10 +260,39 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           title: 'Gera argumento dinâmico',
           description: 'Preenche o modelo com elementos dinâmicos, compondo a mensagem personalizada para cada PDV/SKU',
-          cards: [
-            { title: 'Alto engajamento', subtitle: 'de perfis de cliente similares nos últimos 30 dias' },
-            { title: 'Bundling otimizado', subtitle: 'baseado em padrões bem-sucedidos de cross-sell' },
-            { title: 'Forte correlação', subtitle: 'com os produtos preferidos de clientes de alto valor' },
+          segments: [
+            {
+              label: 'Indústria',
+              items: [
+                { title: 'Padrão de consumo', subtitle: 'replicado em janelas sazonais comparáveis' },
+                { title: 'Sazonalidade prevista', subtitle: 'antecipa pico de demanda em 21 dias' },
+                { title: 'Reposição inteligente', subtitle: 'evita ruptura no canal de maior giro' },
+              ],
+            },
+            {
+              label: 'Varejo',
+              items: [
+                { title: 'Alto engajamento', subtitle: 'de perfis de cliente similares nos últimos 30 dias' },
+                { title: 'Bundling otimizado', subtitle: 'baseado em padrões bem-sucedidos de cross-sell' },
+                { title: 'Forte correlação', subtitle: 'com os produtos preferidos de clientes de alto valor' },
+              ],
+            },
+            {
+              label: 'Financeiro',
+              items: [
+                { title: 'Propensão a contratar', subtitle: 'score elevado de afinidade com a oferta' },
+                { title: 'Perfil de risco alinhado', subtitle: 'dentro do apetite definido pela carteira' },
+                { title: 'Cross-sell de produto', subtitle: 'aderente à jornada do cliente já ativo' },
+              ],
+            },
+            {
+              label: 'Farma',
+              items: [
+                { title: 'Aderência ao tratamento', subtitle: 'momento ideal de renovação da receita' },
+                { title: 'Recompra prevista', subtitle: 'janela de continuidade da terapia' },
+                { title: 'Recomendação por perfil clínico', subtitle: 'coerente com a categoria prescrita' },
+              ],
+            },
           ],
         },
       ],
