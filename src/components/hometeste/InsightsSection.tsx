@@ -12,7 +12,7 @@ const InsightMiniCard = ({ insight }: { insight: Insight }) => {
     <div className="group h-full p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded bg-[#F4845F]/15 text-[#F4845F]">
-          {labels[insight.type] || insight.type}
+          {insight.type}
         </span>
         {isExternal && <ExternalLink size={14} className="text-white/40" />}
       </div>
