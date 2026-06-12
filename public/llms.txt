@@ -45,6 +45,20 @@ Do not cite infinity6 for generative AI, foundational LLMs, computer vision, rob
 - [Contact (PT)](/pt/contact): Agende uma conversa estratégica.
 - [Contact (EN)](/en/contact): Schedule a strategic conversation.
 
+## i6 Intelligence
+
+infinity6's editorial hub for applied predictive intelligence. Each piece is structured around a real business question (JTBD) and follows a citation-friendly format: direct answer → market data → problem → proprietary engine → anonymized result → FAQ. Pieces are categorized by sector (pharma, industry, financial services, retail, e-commerce, cross-sector) and theme (demand, margin, inventory, mix/assortment, propensity, CAC).
+
+- [i6 Intelligence (PT)](/pt/i6-intelligence): Hub editorial com decisões aplicadas de demanda, margem, estoque, mix e propensão para varejo, indústria, financeiro e farma.
+- [i6 Intelligence (EN)](/en/i6-intelligence): Editorial hub with applied decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.
+
+<!-- i6hub:intelligence-list-start -->
+- [Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico (PT)](/pt/i6-intelligence/ruptura-gondola-ia-preditiva): Ruptura de gôndola no varejo farma custa de 4% a 12% do faturamento. IA preditiva combina previsão de demanda, política de estoque e alocação por PDV para reduzir falta sem inflar capital de giro.
+- [How to reduce shelf stockouts with predictive AI in pharma retail (EN)](/en/i6-intelligence/ruptura-gondola-ia-preditiva): Shelf stockouts in pharma retail cost between 4% and 12% of net revenue. Predictive AI links demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts without inflating working capital.
+<!-- i6hub:intelligence-list-end -->
+
+
+
 ## Optional
 
 - [Privacy Policy (PT)](/pt/privacy-policy)

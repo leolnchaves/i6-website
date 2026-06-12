@@ -12,12 +12,13 @@
  * The React app still hydrates normally on top of it.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
 const PUBLIC_CONTENT = resolve('public/content');
+const INTELLIGENCE_DIR = resolve('src/content/intelligence');
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
@@ -49,6 +50,10 @@ const seo = {
   insights: {
     pt: { title: 'Insights de IA Preditiva | infinity6', description: 'Artigos e análises sobre previsão de demanda, forecast de vendas, pricing dinâmico e crescimento de receita com IA.' },
     en: { title: 'Predictive AI Insights | infinity6', description: 'Articles and analysis on demand forecasting, dynamic pricing, recommendation engines and revenue growth with AI.' },
+  },
+  'i6-intelligence': {
+    pt: { title: 'i6 Intelligence | infinity6', description: 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão para os setores de varejo, indústria, financeiro e farma.' },
+    en: { title: 'i6 Intelligence | infinity6', description: 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.' },
   },
 };
 
@@ -172,7 +177,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'solutions', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights'];
+const staticRoutes = ['', 'solutions', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 for (const lang of ['en', 'pt']) {
   for (const route of staticRoutes) {
     const key = route === '' ? 'home' : route;
@@ -243,6 +248,100 @@ for (const lang of ['en', 'pt']) {
     });
     writeStub(path, html);
     count++;
+  }
+}
+
+// ---- i6 Intelligence articles — driven by markdown in src/content/intelligence/ ----
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!match) return { data: {}, content: raw };
+  const [, fmBlock, content] = match;
+  const data = {};
+  for (const line of fmBlock.split(/\r?\n/)) {
+    if (!line.trim() || line.trim().startsWith('#')) continue;
+    const idx = line.indexOf(':');
+    if (idx === -1) continue;
+    const key = line.slice(0, idx).trim();
+    let value = line.slice(idx + 1).trim();
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    if (value === '' || value === 'null') data[key] = null;
+    else if (value === 'true') data[key] = true;
+    else if (value === 'false') data[key] = false;
+    else if (/^-?\d+(\.\d+)?$/.test(value)) data[key] = Number(value);
+    else data[key] = value;
+  }
+  return { data, content: content.trim() };
+}
+
+function extractFAQ(content) {
+  const re = /^##\s+(?:Perguntas frequentes|FAQ)\s*$/im;
+  const m = content.match(re);
+  if (!m) return [];
+  const rest = content.slice(content.indexOf(m[0]) + m[0].length);
+  const endIdx = rest.search(/\n##\s+/);
+  const block = endIdx === -1 ? rest : rest.slice(0, endIdx);
+  const pairs = [];
+  const qa = /\*\*([^*]+\?)\*\*\s*\n+([^\n][^\n]*(?:\n[^\n*][^\n]*)*)/g;
+  let mm;
+  while ((mm = qa.exec(block)) !== null) {
+    pairs.push({ q: mm[1].trim(), a: mm[2].trim() });
+  }
+  return pairs;
+}
+
+if (existsSync(INTELLIGENCE_DIR)) {
+  const files = readdirSync(INTELLIGENCE_DIR).filter((f) => f.endsWith('.md'));
+  for (const file of files) {
+    const raw = readFileSync(join(INTELLIGENCE_DIR, file), 'utf8');
+    const { data: fm, content } = parseFrontmatter(raw);
+    if (!fm.title || !fm.language || !fm.slug || !fm.date) continue;
+    const lang = fm.language;
+    const path = `/${lang}/i6-intelligence/${fm.slug}`;
+    const title = `${fm.title} | i6 Intelligence`;
+    const description = fm.excerpt || '';
+    const faq = extractFAQ(content);
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: fm.title,
+      description,
+      datePublished: fm.date,
+      inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
+      author: { '@type': 'Organization', name: 'infinity6' },
+      publisher: { '@type': 'Organization', name: 'infinity6', logo: { '@type': 'ImageObject', url: OG_IMAGE } },
+      mainEntityOfPage: `${BASE_URL}${path}`,
+      isPartOf: { '@type': 'CreativeWork', name: 'i6 Intelligence' },
+      ...(fm.cover_image ? { image: String(fm.cover_image).startsWith('http') ? fm.cover_image : `${BASE_URL}${fm.cover_image}` } : {}),
+    };
+    const html = buildStub(template, {
+      lang, path, title, description, h1: fm.title,
+      image: fm.cover_image || undefined,
+      jsonLd,
+    });
+    writeStub(path, html);
+    count++;
+
+    // FAQPage as a separate JSON-LD block (appended into <head>)
+    if (faq.length > 0) {
+      const faqLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      };
+      // Re-read the just-written file and inject the FAQ script before </head>
+      const outFile = join(DIST, `${path.replace(/^\//, '')}.html`);
+      if (existsSync(outFile)) {
+        let written = readFileSync(outFile, 'utf8');
+        written = written.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(faqLd)}</script>\n  </head>`);
+        writeFileSync(outFile, written, 'utf8');
+      }
+    }
   }
 }
 

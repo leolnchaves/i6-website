@@ -4,8 +4,8 @@ title: "How to reduce shelf stockouts with predictive AI in pharma retail"
 slug: ruptura-gondola-ia-preditiva
 language: en
 date: 2026-06-12
-sector: pharma
-theme: inventory
+sector: farma
+theme: estoque
 excerpt: "Shelf stockouts in pharma retail cost between 4% and 12% of net revenue. Predictive AI links demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts without inflating working capital."
 read_time: 8
 featured: true
