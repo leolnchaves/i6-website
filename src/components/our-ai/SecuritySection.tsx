@@ -1,12 +1,12 @@
 import { memo } from 'react';
-import { ShieldCheck, Lock, KeyRound, Maximize2 } from 'lucide-react';
+import { ShieldCheck, Lock, KeyRound, Maximize2, EyeOff } from 'lucide-react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
 
 interface Props {
   content: OurAIContent['security'];
 }
 
-const ICONS = [ShieldCheck, Lock, KeyRound, Maximize2];
+const ICONS = [EyeOff, ShieldCheck, Lock, KeyRound, Maximize2];
 
 const SecuritySection = memo(({ content }: Props) => {
   return (
@@ -16,7 +16,7 @@ const SecuritySection = memo(({ content }: Props) => {
           {content.title}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-white/10 rounded-lg overflow-hidden">
           {content.pillars.map((p, idx) => {
             const Icon = ICONS[idx];
             return (
