@@ -210,23 +210,56 @@ let count = 0;
 
 // Static pages
 const staticRoutes = ['', 'solutions', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+
+const PRODUCTS = [
+  { name: 'i6Signal', anchor: 'i6signal', description: { pt: 'Camada conversacional preditiva sobre os motores i6Previsio, i6RecSys e i6ElasticPrice', en: 'Predictive conversational layer over the i6Previsio, i6RecSys and i6ElasticPrice engines' } },
+  { name: 'i6Previsio', anchor: 'i6previsio', description: { pt: 'Motor proprietário de previsão de demanda com modelos adaptativos e demand sensing em tempo real', en: 'Proprietary demand forecasting engine with adaptive models and real-time demand sensing' } },
+  { name: 'i6RecSys', anchor: 'i6recsys', description: { pt: 'Motor proprietário de recomendação, otimização de mix e score de propensão de compra para anônimos', en: 'Proprietary engine for recommendation, mix optimization and anonymous purchase propensity scoring' } },
+  { name: 'i6ElasticPrice', anchor: 'i6elasticprice', description: { pt: 'Motor proprietário de elasticidade e precificação dinâmica por SKU, canal e ciclo de vida', en: 'Proprietary elasticity and dynamic pricing engine by SKU, channel and lifecycle' } },
+];
+
 for (const lang of ['en', 'pt']) {
   for (const route of staticRoutes) {
     const key = route === '' ? 'home' : route;
     const meta = seo[key]?.[lang];
     if (!meta) continue;
     const path = route === '' ? `/${lang}` : `/${lang}/${route}`;
+    let body = '';
+    let jsonLd;
+    if (route === 'solutions') {
+      body = loadSolutionsSeo(lang);
+      jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: lang === 'pt' ? 'Produtos de IA preditiva da infinity6' : 'infinity6 predictive AI products',
+        itemListElement: PRODUCTS.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'Product',
+            name: p.name,
+            description: p.description[lang],
+            brand: { '@type': 'Brand', name: 'infinity6' },
+            category: 'AI software',
+            url: `${BASE_URL}/${lang}/solutions#${p.anchor}`,
+          },
+        })),
+      };
+    }
     const html = buildStub(template, {
       lang,
       path,
       title: meta.title,
       description: meta.description,
       h1: meta.title.split(' | ')[0].split(' – ')[0],
+      body: body || undefined,
+      jsonLd,
     });
     writeStub(path, html);
     count++;
   }
 }
+
 
 // Insights articles (only the published one for now — extend if more land in content/)
 const insightArticles = [
