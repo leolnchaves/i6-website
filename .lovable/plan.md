@@ -1,25 +1,30 @@
-## Reestruturar grid de motores como "fundação + camada"
+## Traduzir strings EN no PT e reordenar /our-ai
 
-Em `src/components/our-ai/EnginesGrid.tsx`, separar os 4 items em dois grupos visuais:
+### 1) Traduzir strings que ficaram em inglês no conteúdo PT
+Em `src/data/staticData/ourAIContent.ts`, dentro do bloco `pt`:
 
-**Camada de cima — i6Signal (full-width):**
-- Card único ocupando toda a largura, com o mesmo border-radius/borda dos demais.
-- Borda mais marcada (`border-[#F4845F]/40`) e fundo levemente diferenciado (`bg-gradient-to-r from-[#F4845F]/[0.04] via-white/[0.02] to-[#F4845F]/[0.04]`).
-- Chip discreto acima do título: `CAMADA CONVERSACIONAL` (laranja, mesma tipografia dos taglines).
+**Diversity (linha 223):**
+- `tasks: ['Recommended for you', 'Frequently bought together', 'Buy it again', 'Similar items', 'On sale']`
+- → `['Recomendado para você', 'Comprados juntos com frequência', 'Compre novamente', 'Itens similares', 'Em promoção']`
 
-**Conector visual:**
-- Faixa fina entre as duas camadas: três linhas verticais (uma para cada motor) descendo do card do Signal até o topo dos cards da base, indicando que o Signal lê os 3 motores. Altura ~24px, opacidade baixa (`bg-[#F4845F]/30`), sem texto.
+**Explainability — step 2 cards (linhas 251–254):**
+- Increase in demand / prioritize argument of growth opportunity → "Aumento de demanda" / "priorize o argumento de oportunidade de crescimento"
+- Repurchase occasion / emphasize need for immediate restocking → "Ocasião de recompra" / "enfatize a necessidade de reposição imediata"
+- New product / highlight market trend → "Produto novo" / "destaque a tendência de mercado"
+- High-selling product / stress risk of stockout → "Produto de alta venda" / "reforce o risco de ruptura"
 
-**Base — RecSys, Previsio, ElasticPrice (3 colunas):**
-- Grid `md:grid-cols-3` (em mobile fica `grid-cols-1`).
-- Eyebrow centralizado acima da base: `MOTORES PREDITIVOS` em uppercase/tracking, cor `text-white/40`.
+**Explainability — step 3 cards (linhas 261–263):**
+- High engagement / from similar customer profiles in the last 30 days → "Alto engajamento" / "de perfis de cliente similares nos últimos 30 dias"
+- Optimized bundling / based on successful cross-sell patterns → "Bundling otimizado" / "baseado em padrões bem-sucedidos de cross-sell"
+- Strong correlation / with the preferred products of high-value customers → "Forte correlação" / "com os produtos preferidos de clientes de alto valor"
 
-### Lógica
-Filtrar `content.items` em dois arrays:
-- `signal = items.find(i => i.id === 'i6signal')`
-- `engines = items.filter(i => i.id !== 'i6signal')`
+Bloco `en` permanece intacto.
 
-Renderizar Signal primeiro (full-width), conector, depois grid de 3 engines. Manter o resto da seção (Foundation card, Differentiators) intacto. Sem mudança de copy nem em outros arquivos.
+### 2) Reordenar /our-ai — RealResults como penúltimo (acima do Glossário)
+Em `src/pages/OurAI.tsx`, mover `<RealResultsStrip />` da posição atual (após Explainability) para imediatamente antes de `<GlossarySection>`.
+
+Nova ordem:
+Hero → Thesis → UnifiedImpact → EnginesGrid → Diversity → Explainability → Security → Challenges → Community → **RealResultsStrip** → Glossary → CTA.
 
 ### Verificação
-Preview `/pt/our-ai` e `/en/our-ai`: Signal no topo destacado, 3 motores em fila abaixo com conector visual sugerindo "camada sobre fundação". Build automático.
+Preview `/pt/our-ai`: textos dos cards de Explainability e chips de Diversity em português; faixa "Resultados reais em produção" aparece logo acima do Glossário.
