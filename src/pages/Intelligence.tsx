@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIntelligence, resolveIntelligenceCover, type IntelligencePiece } from '@/hooks/useIntelligence';
@@ -105,8 +105,24 @@ const IntelligenceCard = ({ piece }: { piece: IntelligencePiece }) => {
 const Intelligence = () => {
   const { language } = useLanguage();
   const pieces = useIntelligence();
-  const [sector, setSector] = useState<string | null>(null);
-  const [theme, setTheme] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [sector, setSectorState] = useState<string | null>(searchParams.get('sector'));
+  const [theme, setThemeState] = useState<string | null>(searchParams.get('theme'));
+
+  // Sync state from URL changes (e.g., back/forward, links)
+  useEffect(() => {
+    setSectorState(searchParams.get('sector'));
+    setThemeState(searchParams.get('theme'));
+  }, [searchParams]);
+
+  const updateParam = (key: 'sector' | 'theme', value: string | null) => {
+    const next = new URLSearchParams(searchParams);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setSearchParams(next, { replace: true });
+  };
+  const setSector = (v: string | null) => { setSectorState(v); updateParam('sector', v); };
+  const setTheme = (v: string | null) => { setThemeState(v); updateParam('theme', v); };
 
   const sectors = useMemo(() => Array.from(new Set(pieces.map((p) => p.sector).filter(Boolean))) as string[], [pieces]);
   const themes = useMemo(() => Array.from(new Set(pieces.map((p) => p.theme).filter(Boolean))) as string[], [pieces]);
