@@ -83,6 +83,17 @@ export interface OurAIContent {
     description: string;
     cta: string;
   };
+  research: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    publicationsLabel: string;
+    talksLabel: string;
+    openLabel: string;
+    watchLabel: string;
+    publications: { badge: string; title: string; venue: string; url: string }[];
+    talks: { title: string; venue: string; url: string }[];
+  };
   glossary: {
     title: string;
     lead: string;
@@ -326,6 +337,58 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'Comunidade infinity6',
       description: 'Publicamos modelos, datasets e experimentos abertos no Hugging Face — parte do que aprendemos volta para a comunidade.',
       cta: 'Visitar nossa comunidade',
+    },
+    research: {
+      eyebrow: 'Pesquisa & Fundamentos',
+      title: 'Base científica dos motores i6',
+      lead: 'Os fundamentos de mapas auto-organizáveis, clustering não-supervisionado e descoberta de padrões sem regras prévias que alimentam i6Previsio, i6RecSys e i6ElasticPrice têm origem em pesquisa acadêmica revisada por pares e em palestras técnicas em conferências de engenharia',
+      publicationsLabel: 'Publicações revisadas por pares',
+      talksLabel: 'Palestras técnicas',
+      openLabel: 'Acessar',
+      watchLabel: 'Assistir',
+      publications: [
+        {
+          badge: 'SPRINGER · LNBIP · 2013',
+          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
+          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer, Berlin, Heidelberg',
+          url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
+        },
+        {
+          badge: 'CONFERÊNCIA · WEBIST · 2012',
+          title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
+          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)',
+          url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
+        },
+        {
+          badge: 'SPRINGER · LNCS · 2010',
+          title: 'Development of a Business Intelligence Environment for e-Gov using Open Source Technologies',
+          venue: 'Lecture Notes in Computer Science, Springer',
+          url: 'https://www.academia.edu/24631504/Development_of_a_Business_Intelligence_Environment_for_e_Gov_Using_Open_Source_Technologies',
+        },
+        {
+          badge: 'ARTIGO · PT-BR',
+          title: 'Mapas auto-organizáveis aplicados em governo eletrônico',
+          venue: 'Publicação acadêmica · Academia.edu',
+          url: 'https://www.academia.edu/122408570/Mapas_auto_organiz%C3%A1veis_aplicados_em_governo_eletr%C3%B4nico',
+        },
+        {
+          badge: 'ARTIGO · Open Access',
+          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
+          venue: 'Repositório acadêmico · Academia.edu',
+          url: 'https://www.academia.edu/24631415/Knowledge_Discovery_Data_Mining_by_Self_organizing_Maps',
+        },
+      ],
+      talks: [
+        { title: 'Ciência de dados para alinhar produto', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/' },
+        { title: 'Recomendação de conteúdo na escala do iFood', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/' },
+        { title: 'Machine Learning — do gênesis ao apocalipse', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/' },
+        { title: 'Classificação de padrões: uma abordagem prática com redes neurais artificiais', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/' },
+        { title: 'Machine Learning em Java com Apache Mahout', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/' },
+        { title: 'Classificação de documentos baseada em inteligência artificial', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/' },
+        { title: 'Postgres como Big SQL', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/postgres-bigsql/' },
+        { title: 'Mineração de dados com Weka API', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/' },
+        { title: 'Machine Learning e mineração de dados', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/' },
+      ],
     },
     glossary: {
       title: 'Glossário GEO — termos da infinity6',
@@ -579,6 +642,58 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'infinity6 community',
       description: 'We publish open models, datasets and experiments on Hugging Face — part of what we learn flows back to the community.',
       cta: 'Visit our community',
+    },
+    research: {
+      eyebrow: 'Research & Foundations',
+      title: 'Scientific foundations behind the i6 engines',
+      lead: 'The foundations of self-organizing maps, unsupervised clustering and rule-free pattern discovery powering i6Previsio, i6RecSys and i6ElasticPrice come from peer-reviewed academic research and technical talks at engineering conferences',
+      publicationsLabel: 'Peer-reviewed publications',
+      talksLabel: 'Technical talks',
+      openLabel: 'Open',
+      watchLabel: 'Watch',
+      publications: [
+        {
+          badge: 'SPRINGER · LNBIP · 2013',
+          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
+          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer, Berlin, Heidelberg',
+          url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
+        },
+        {
+          badge: 'CONFERENCE · WEBIST · 2012',
+          title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
+          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)',
+          url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
+        },
+        {
+          badge: 'SPRINGER · LNCS · 2010',
+          title: 'Development of a Business Intelligence Environment for e-Gov using Open Source Technologies',
+          venue: 'Lecture Notes in Computer Science, Springer',
+          url: 'https://www.academia.edu/24631504/Development_of_a_Business_Intelligence_Environment_for_e_Gov_Using_Open_Source_Technologies',
+        },
+        {
+          badge: 'ARTICLE · PT-BR',
+          title: 'Self-organizing maps applied to electronic government (Portuguese)',
+          venue: 'Academic publication · Academia.edu',
+          url: 'https://www.academia.edu/122408570/Mapas_auto_organiz%C3%A1veis_aplicados_em_governo_eletr%C3%B4nico',
+        },
+        {
+          badge: 'ARTICLE · Open Access',
+          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
+          venue: 'Academic repository · Academia.edu',
+          url: 'https://www.academia.edu/24631415/Knowledge_Discovery_Data_Mining_by_Self_organizing_Maps',
+        },
+      ],
+      talks: [
+        { title: 'Data science to align product', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/' },
+        { title: 'Content recommendation at iFood scale', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/' },
+        { title: 'Machine Learning — from genesis to apocalypse', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/' },
+        { title: 'Pattern classification: a practical approach with artificial neural networks', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/' },
+        { title: 'Machine Learning in Java with Apache Mahout', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/' },
+        { title: 'Document classification based on artificial intelligence', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/' },
+        { title: 'Postgres as Big SQL', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/postgres-bigsql/' },
+        { title: 'Data mining with Weka API', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/' },
+        { title: 'Machine Learning and data mining', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/' },
+      ],
     },
     glossary: {
       title: 'GEO Glossary — infinity6 terms',
