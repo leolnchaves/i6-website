@@ -28,9 +28,9 @@ export interface SuccessStoriesStaticData {
 export const successStoriesData: Record<string, SuccessStoriesStaticData> = {
   en: {
     hero: {
-      title: "When data moves, results are",
-      subtitle: "inevitable",
-      description: "Explore real cases of growth, efficiency and competitive advantage driven by predictive intelligence, adapted to the dynamics of each market."
+      title: "Real results from predictive AI",
+      subtitle: "in retail, industry and pharma",
+      description: "How leading companies reduced stockouts, protected margin and increased conversion with infinity6's proprietary engines."
     },
     metrics: {
       avgROI: "20x",
