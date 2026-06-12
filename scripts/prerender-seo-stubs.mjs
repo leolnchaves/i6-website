@@ -55,6 +55,10 @@ const seo = {
     pt: { title: 'i6 Intelligence | infinity6', description: 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão para os setores de varejo, indústria, financeiro e farma.' },
     en: { title: 'i6 Intelligence | infinity6', description: 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.' },
   },
+  'our-ai': {
+    pt: { title: 'Proprietary AI — Motores de IA da infinity6', description: 'Conheça os motores proprietários da infinity6: i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. IA aplicada que aprende comportamento, antecipa decisão e prescreve ação.' },
+    en: { title: 'Proprietary AI — infinity6 AI Engines', description: 'Meet infinity6 proprietary engines: i6 RecSys, i6 Previsio, i6 ElasticPrice and i6 Signal. Applied AI that learns behavior, anticipates decisions and prescribes action.' },
+  },
 };
 
 // ---- Parse success stories markdown (mirrors useSuccessStoriesMarkdown.ts) ----
