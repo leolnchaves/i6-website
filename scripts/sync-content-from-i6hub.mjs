@@ -74,20 +74,27 @@ const CONFIG = {
 }[TYPE];
 
 const FEED_URL = process.env[CONFIG.envFeed];
-if (!FEED_URL || !TOKEN) {
-  throw new Error(`Missing ${CONFIG.envFeed} or I6HUB_SYNC_TOKEN`);
+if (!TOKEN) {
+  throw new Error(`Missing I6HUB_SYNC_TOKEN`);
 }
-
-const MD_DIR  = path.resolve(CONFIG.mdDir);
-const IMG_DIR = CONFIG.imgDir ? path.resolve(CONFIG.imgDir) : null;
-const LOGO_DIR = CONFIG.logoDir ? path.resolve(CONFIG.logoDir) : null;
+if (!FEED_URL) {
+  console.warn(`[${TYPE}] skipped: ${CONFIG.envFeed} not configured`);
+  process.exit(0);
+}
 
 // ---------- Fetch feed ----------
 console.log(`[${TYPE}] fetching ${FEED_URL}`);
 const res = await fetch(FEED_URL, { headers: { 'X-Sync-Token': TOKEN } });
+if (res.status === 404) {
+  console.warn(`[${TYPE}] skipped: feed not deployed yet (404). Preserving existing .md files.`);
+  process.exit(0);
+}
 if (!res.ok) throw new Error(`Feed failed: ${res.status} ${await res.text()}`);
 const items = await res.json();
 console.log(`[${TYPE}] received ${items.length} items`);
+
+
+
 
 await fs.mkdir(MD_DIR, { recursive: true });
 if (IMG_DIR)  await fs.mkdir(IMG_DIR,  { recursive: true });
