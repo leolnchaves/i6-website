@@ -139,6 +139,19 @@ const ModernSolutionCard = memo(({
             </div>
           </div>
         </div>
+
+        {/* Cross-link to i6 Intelligence filtered by engine's primary theme */}
+        {ENGINE_THEME_MAP[engine] && (
+          <div className="mt-3">
+            <Link
+              to={localized(`/i6-intelligence?theme=${ENGINE_THEME_MAP[engine].theme}`)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#F4845F] hover:text-[#F4845F]/80 transition-colors"
+            >
+              {t.seeAnalyses} {language === 'pt' ? ENGINE_THEME_MAP[engine].labelPt : ENGINE_THEME_MAP[engine].labelEn}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        )}
       </div>
     </article>
 
