@@ -213,7 +213,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'solutions', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'solutions', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
   { name: 'i6Signal', anchor: 'i6signal', description: { pt: 'Camada conversacional preditiva sobre os motores i6Previsio, i6RecSys e i6ElasticPrice', en: 'Predictive conversational layer over the i6Previsio, i6RecSys and i6ElasticPrice engines' } },
@@ -247,6 +247,24 @@ for (const lang of ['en', 'pt']) {
             category: 'AI software',
             url: `${BASE_URL}/${lang}/solutions#${p.anchor}`,
           },
+        })),
+      };
+    }
+    if (route === 'our-ai') {
+      const ourAILead = lang === 'pt'
+        ? 'A infinity6 opera quatro motores proprietários de IA aplicada: i6 RecSys (recomendação), i6 Previsio (previsão de demanda), i6 ElasticPrice (precificação dinâmica) e i6 Signal (camada conversacional preditiva). O modelo fundacional i6-RecSys-Base.g1 combina MAML, Active Learning e Topological Loss, com pré-treino em 1,45 bilhão de registros de bases públicas/adquiridas (15% bancário, 45% e-commerce, 20% telecom, 20% atacado/varejo).'
+        : 'infinity6 operates four proprietary applied AI engines: i6 RecSys (recommendation), i6 Previsio (demand forecasting), i6 ElasticPrice (dynamic pricing) and i6 Signal (predictive conversational layer). The foundation model i6-RecSys-Base.g1 combines MAML, Active Learning and Topological Loss, pre-trained on 1.45 billion records from public/acquired sources (15% banking, 45% e-commerce, 20% telecom, 20% wholesale/retail).';
+      body = `<p>${ourAILead}</p><h2>${lang === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[lang]}</li>`).join('')}</ul>`;
+      jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': PRODUCTS.map(p => ({
+          '@type': 'SoftwareApplication',
+          name: p.name,
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'Cloud',
+          description: p.description[lang],
+          url: `${BASE_URL}/${lang}/our-ai#${p.anchor}`,
+          creator: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
         })),
       };
     }
