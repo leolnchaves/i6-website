@@ -10,9 +10,7 @@ import { detectPreferredLang, isLang } from "./utils/localizedPath";
 
 const ScrollToTop = () => { useScrollToTop(); return null; };
 
-import Layout from "./components/Layout";
 import DarkLayout from "./components/DarkLayout";
-import Home from "./pages/Home";
 import Solutions from "./pages/Solutions";
 import SuccessStories from "./pages/SuccessStories";
 import SuccessStoryArticle from "./pages/SuccessStoryArticle";
@@ -109,8 +107,7 @@ const App = () => {
                 <Sonner />
                 <ScrollToTop />
                 <Routes>
-                  {/* Legacy old home route (non-localized) */}
-                  <Route path="/oldhome_teste" element={<Layout><Home /></Layout>} />
+
 
                   {/* Localized site */}
                   <Route path="/:lang/*" element={<LocalizedRoutes />} />
