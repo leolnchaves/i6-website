@@ -8,7 +8,7 @@ interface Props {
 
 const CommunitySection = memo(({ content }: Props) => {
   return (
-    <section className="relative py-20 md:py-24 bg-[#0B1224]">
+    <section className="relative py-14 md:py-20 bg-[#0B1224]">
       <div className="container mx-auto px-6 max-w-3xl text-center">
         {/* Hugging Face mark */}
         <svg

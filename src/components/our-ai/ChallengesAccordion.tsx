@@ -8,9 +8,9 @@ interface Props {
 
 const ChallengesAccordion = memo(({ content }: Props) => {
   return (
-    <section className="relative py-20 md:py-28 bg-[#0A101F]">
+    <section className="relative py-14 md:py-20 bg-[#0A101F]">
       <div className="container mx-auto px-6 max-w-4xl">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{content.title}</h2>
           <p className="text-sm md:text-base text-white/55 leading-relaxed max-w-2xl mx-auto">
             {content.lead}

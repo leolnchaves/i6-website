@@ -7,9 +7,9 @@ interface Props {
 
 const ExplainabilitySection = memo(({ content }: Props) => {
   return (
-    <section className="relative py-20 md:py-28 bg-[#0A101F]">
+    <section className="relative py-12 md:py-16 bg-[#0A101F] border-t border-white/5">
       <div className="container mx-auto px-6 max-w-6xl">
-        <div className="text-center mb-14 max-w-3xl mx-auto">
+        <div className="text-center mb-10 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{content.title}</h2>
           <p className="text-sm md:text-base text-white/55 leading-relaxed">{content.lead}</p>
         </div>

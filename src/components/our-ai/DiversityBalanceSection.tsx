@@ -21,15 +21,14 @@ const histogram = [
 
 const DiversityBalanceSection = memo(({ content }: Props) => {
   return (
-    <section className="relative py-20 md:py-28 bg-[#0B1224]">
+    <section className="relative py-12 md:py-16 bg-[#0A101F] border-t border-white/5">
       <div className="container mx-auto px-6 max-w-6xl">
-        <div className="text-center mb-14 max-w-3xl mx-auto">
+        <div className="text-center mb-10 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{content.title}</h2>
           <p className="text-sm md:text-base text-white/55 leading-relaxed">{content.lead}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_2fr] items-center gap-8 md:gap-10">
-          {/* Tasks */}
           <div className="flex flex-col gap-2">
             {content.tasks.map((t) => (
               <span
@@ -41,7 +40,6 @@ const DiversityBalanceSection = memo(({ content }: Props) => {
             ))}
           </div>
 
-          {/* Middle */}
           <div className="text-center">
             <Sparkles size={28} strokeWidth={1.2} className="text-[#F4845F] mx-auto mb-3" />
             <p className="text-sm font-semibold text-white">{content.middle.title}</p>
@@ -58,7 +56,6 @@ const DiversityBalanceSection = memo(({ content }: Props) => {
             </svg>
           </div>
 
-          {/* Chart */}
           <div className="border border-white/10 rounded-lg p-5 bg-white/[0.02]">
             <div className="h-48 md:h-56">
               <ResponsiveContainer width="100%" height="100%">
