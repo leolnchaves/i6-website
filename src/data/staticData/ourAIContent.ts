@@ -81,10 +81,16 @@ export interface OurAIContent {
     description: string;
     cta: string;
   };
+  glossary: {
+    title: string;
+    lead: string;
+    terms: { slug: string; term: string; definition: string }[];
+  };
   cta: {
     title: string;
     button: string;
   };
+
 }
 
 export const ourAIContent: Record<Language, OurAIContent> = {
