@@ -174,4 +174,47 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/insights/previsao-demanda-ia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/insights/previsao-demanda-ia"/>
   </url>
+
+  <!-- i6 Intelligence (hub index) -->
+  <url>
+    <loc>https://infinity6.ai/en/i6-intelligence</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-intelligence"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-intelligence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-intelligence"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/i6-intelligence</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-intelligence"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-intelligence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-intelligence"/>
+  </url>
+
+  <!-- i6 Intelligence articles -->
+  <!-- i6hub:intelligence-sitemap-start -->
+  <url>
+    <loc>https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-intelligence/ruptura-gondola-ia-preditiva"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/i6-intelligence/ruptura-gondola-ia-preditiva</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-intelligence/ruptura-gondola-ia-preditiva"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva"/>
+  </url>
+  <!-- i6hub:intelligence-sitemap-end -->
+
 </urlset>
