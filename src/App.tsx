@@ -27,6 +27,7 @@ import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
 import IntelligenceArticle from "./pages/IntelligenceArticle";
 import OurAI from "./pages/OurAI";
+import TransformationLanding from "./pages/TransformationLanding";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
@@ -71,6 +72,7 @@ const LocalizedRoutes = () => {
       <Route element={<DarkLayout />}>
         <Route index element={<HomeTeste />} />
         <Route path="solutions" element={<Solutions />} />
+        <Route path="solutions/:slug" element={<TransformationLanding />} />
         <Route path="our-ai" element={<OurAI />} />
         <Route path="success-stories" element={<SuccessStories />} />
         <Route path="success-stories/:slug" element={<SuccessStoryArticle />} />
