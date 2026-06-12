@@ -69,7 +69,7 @@ const IntelligenceArticle = () => {
           author: { '@type': 'Organization', name: 'infinity6' },
           publisher: { '@type': 'Organization', name: 'infinity6' },
           mainEntityOfPage: url,
-          isPartOf: { '@type': 'CreativeWork', name: 'i6 Intelligence' },
+          isPartOf: { '@type': 'CreativeWork', name: 'i6 Research' },
           ...(cover ? { image: cover.startsWith('http') ? cover : `${BASE_URL}${cover}` } : {}),
         })}</script>
         <script type="application/ld+json">{JSON.stringify({
