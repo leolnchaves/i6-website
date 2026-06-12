@@ -78,6 +78,8 @@ const LocalizedRoutes = () => {
         <Route path="cookie-settings" element={<Navigate to="../?cookies=open" replace />} />
         <Route path="insights" element={<Insights />} />
         <Route path="insights/:slug" element={<InsightArticle />} />
+        <Route path="i6-intelligence" element={<Intelligence />} />
+        <Route path="i6-intelligence/:slug" element={<IntelligenceArticle />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
