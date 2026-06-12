@@ -7,10 +7,9 @@ import { realResults } from '@/data/staticData/realResults';
 import OurAIHero from '@/components/our-ai/OurAIHero';
 import ThesisSection from '@/components/our-ai/ThesisSection';
 import EnginesGrid from '@/components/our-ai/EnginesGrid';
-import DualValueSection from '@/components/our-ai/DualValueSection';
-import LearnInfluenceFlow from '@/components/our-ai/LearnInfluenceFlow';
 import DiversityBalanceSection from '@/components/our-ai/DiversityBalanceSection';
 import ExplainabilitySection from '@/components/our-ai/ExplainabilitySection';
+import UnifiedImpactSection from '@/components/our-ai/UnifiedImpactSection';
 import SecuritySection from '@/components/our-ai/SecuritySection';
 import ChallengesAccordion from '@/components/our-ai/ChallengesAccordion';
 import CommunitySection from '@/components/our-ai/CommunitySection';
@@ -101,12 +100,11 @@ const OurAI = memo(() => {
       <SEOHead page="our-ai" jsonLd={jsonLd} />
       <OurAIHero content={c.hero} />
       <ThesisSection content={c.thesis} />
-      <EnginesGrid content={c.engines} />
-      <RealResultsStrip />
-      <DualValueSection content={c.dualValue} />
-      <LearnInfluenceFlow content={c.learnInfluence} />
+      <EnginesGrid content={c.engines} foundation={c.thesis.foundation} />
       <DiversityBalanceSection content={c.diversity} />
       <ExplainabilitySection content={c.explainability} />
+      <RealResultsStrip />
+      <UnifiedImpactSection dualValue={c.dualValue} learnInfluence={c.learnInfluence} />
       <SecuritySection content={c.security} />
       <ChallengesAccordion content={c.challenges} />
       <CommunitySection content={c.community} />
