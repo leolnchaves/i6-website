@@ -32,6 +32,7 @@ const OurAI = memo(() => {
       headline: c.hero.title,
       description: c.hero.lead,
       url,
+      image: `${BASE_URL}/favicon.ico`,
       inLanguage: language === 'pt' ? 'pt-BR' : 'en',
       author: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
       publisher: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
@@ -52,7 +53,7 @@ const OurAI = memo(() => {
       description: e.description,
       url: `${url}#${e.id}`,
       creator: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
-      offers: { '@type': 'Offer', priceCurrency: 'BRL', price: '0', availability: 'https://schema.org/InStock' },
+      provider: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
     }));
 
     const definedTermSet = {
@@ -79,10 +80,13 @@ const OurAI = memo(() => {
         '@type': 'Observation',
         name: r.label[language],
         observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
-        measuredProperty: r.label[language],
-        measuredValue: r.numericValue,
-        unitText: r.unitText,
-        marginOfError: r.source[language],
+        measuredProperty: {
+          '@type': 'PropertyValue',
+          name: r.label[language],
+          value: r.numericValue,
+          unitText: r.unitText,
+        },
+        description: `${language === 'pt' ? 'Setor' : 'Sector'}: ${r.source[language]}`,
       }));
 
     return {

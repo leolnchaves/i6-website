@@ -234,15 +234,8 @@ const TransformationLanding = () => {
     ],
   };
 
-  const faqLd = piece.faq.length > 0 ? {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: piece.faq.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  } : null;
+  // FAQPage JSON-LD is injected by scripts/prerender-seo-stubs.mjs
+  // (static stub) to avoid duplicate FAQPage blocks in <head> after hydration.
 
   return (
     <>
@@ -260,7 +253,6 @@ const TransformationLanding = () => {
         <meta property="og:url" content={url} />
         <script type="application/ld+json">{JSON.stringify(serviceLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
-        {faqLd && <script type="application/ld+json">{JSON.stringify(faqLd)}</script>}
       </Helmet>
 
       {/* sr-only crawler block with sectors + long-tail keywords */}

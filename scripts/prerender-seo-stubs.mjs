@@ -321,9 +321,12 @@ for (const lang of ['en', 'pt']) {
         '@type': 'Observation',
         name: k.label,
         observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
-        measuredProperty: k.label,
-        measuredValue: k.value,
-        marginOfError: k.source,
+        measuredProperty: {
+          '@type': 'PropertyValue',
+          name: k.label,
+          value: k.value,
+        },
+        description: `${lang === 'pt' ? 'Setor' : 'Sector'}: ${k.source}`,
       }));
 
       jsonLd = {

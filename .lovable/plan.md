@@ -1,95 +1,76 @@
-# Plano de execução — Fases 11, 12 e 13
+# Correções JSON-LD pós-auditoria GEO
 
-Fase 10 já concluída (4 landings MD + i6HUB-ready). Seguimos com o restante do GEO v10.1.
-
----
-
-## Fase 11 — Glossário GEO em `/our-ai`
-
-**Objetivo:** dar a LLMs (ChatGPT, Gemini, Perplexity, Claude) um bloco canônico de definições curtas dos termos que a infinity6 usa, citável via `DefinedTermSet`.
-
-**Onde:** nova seção `<section id="glossario">` em `src/pages/OurAI.tsx`, inserida **antes** do `OurAICTA` e depois de `CommunitySection`.
-
-**Componente novo:** `src/components/our-ai/GlossarySection.tsx`
-- Layout `<dl>` minimalista, grid 2 colunas no desktop / 1 no mobile.
-- Termo em coral (`#F4845F`), definição em 2–3 linhas, navy de fundo.
-- Sem ícones, sem cards — só tipografia + divisores sutis (mantém o tom discreto de `/our-ai`).
-- Reusa `useScrollAnimation` para fade-in.
-
-**Conteúdo (estático em `src/data/staticData/ourAIContent.ts`):** ~10 termos PT/EN:
-1. Predição comportamental
-2. Propensão de conversão
-3. Elasticidade dinâmica
-4. Aderência contextual
-5. Ruptura de gôndola
-6. MAML (Model-Agnostic Meta-Learning)
-7. Topological Loss
-8. Active Learning
-9. i6-RecSys-Base.g1
-10. i6Signal
-
-**SEO/GEO:**
-- JSON-LD `DefinedTermSet` injetado no `SEOHead` da página `/our-ai`, com cada termo como `DefinedTerm` (`@id` = `https://infinity6.ai/{lang}/our-ai#glossario-<slug>`).
-- Cada `<dt>` recebe `id="glossario-<slug>"` para deep-link.
-- `llms.txt` ganha bloco "Glossário" com âncoras `/{lang}/our-ai#glossario-<slug>`.
+Quatro ajustes pontuais nos blocos JSON-LD identificados pelo Rich Results Test e pelo validator.schema.org. Nenhuma mudança visual ou de conteúdo — só estrutura de dados estruturados.
 
 ---
 
-## Fase 12 — `Statistic` JSON-LD + bloco "Resultados em números"
+## 1. TechArticle sem `image` (Anexo 1 — `/our-ai`)
 
-**Objetivo:** publicar números reais de clientes de forma estruturada, citável por LLMs e renderizada visualmente em pontos-chave do site.
+**Arquivos:** `src/pages/OurAI.tsx` e `scripts/prerender-seo-stubs.mjs` (bloco `/our-ai`).
 
-**Fonte da verdade:** criar `src/data/staticData/realResults.ts` consolidando 6 KPIs extraídos de `successStoriesData.ts` (label PT/EN, valor, unidade, fonte/cliente, setor).
+Adicionar campo `image` ao TechArticle apontando para um asset público estável. Usar a OG image padrão do site (`/og-image.png` ou logo coral em fundo navy). Como o projeto não tem OG image dedicada, vamos usar `${BASE_URL}/favicon.png` como fallback imediato e marcar TODO para gerar imagem de hero dedicada depois.
 
-**Componente novo:** `src/components/common/RealResultsStrip.tsx`
-- Strip horizontal com 4–6 KPIs (número grande coral + label navy + fonte em caption).
-- Variante compacta (Home) e expandida (`/our-ai` e landings).
-- Mesmo tom navy/coral, sem cards coloridos.
-
-**Inserção:**
-- **Home** (`HomeTeste.tsx`): após `ResultadosSection`.
-- **`/our-ai`**: entre `EnginesGrid` e `ExplainabilitySection`.
-- **4 landings**: a seção `## Results` do MD já vira KPI strip — passamos a usar `RealResultsStrip` como renderer comum, lendo do mesmo dataset quando o frontmatter `stats` referenciar slugs de `realResults.ts` (fallback: parser atual do MD).
-
-**JSON-LD:**
-- `Statistic` aninhado em `Organization` na Home (cada KPI vira um `Statistic` com `observationDate`, `measurementMethod`, `value`).
-- `QuantitativeValue` dentro de cada `Service` nas 4 landings (já existe `Service` JSON-LD — só estender).
-
-**llms.txt:** novo bloco "Provas em números (dados reais de clientes infinity6)" com os 6 KPIs em texto plano.
+Mesma adição no stub estático para que o crawler enxergue.
 
 ---
 
-## Fase 13 — Auditoria pós-deploy
+## 2. SoftwareApplication com `offers` inválido (Anexo 2)
 
-**Entregável:** relatório `.lovable/audit-geo-v10.md`.
+**Arquivo:** `src/pages/OurAI.tsx` (linha 55).
 
-**Checklist:**
-1. **Rich Results Test** em: Home, `/our-ai`, 4 landings, `/i6-intelligence`, 1 artigo Intelligence, `/success-stories`, 1 case.
-2. **Validação manual de JSON-LD** em `validator.schema.org` — 1 amostra por tipo (`Organization`, `Service`, `FAQPage`, `BreadcrumbList`, `Article`, `DefinedTermSet`, `Statistic`).
-3. **GSC:** confirmar `sitemap.xml` submetido, monitorar cobertura das novas URLs.
-4. **Testes de citação em LLMs** (ChatGPT, Gemini, Perplexity, Claude) com 6 prompts:
-   - "o que é i6 Previsio?"
-   - "o que é i6-RecSys-Base.g1?"
-   - "como reduzir ruptura de gôndola no varejo farma com IA?"
-   - "quem é infinity6?"
-   - "empresas brasileiras de IA proprietária para varejo"
-   - "como monetizar dados de clientes no varejo"
-5. **Lighthouse** em Home, `/our-ai`, 1 landing — meta ≥ 90 SEO/Best Practices.
-6. **Relatório** consolidando: prints/links das validações, citações capturadas, scores Lighthouse, e lista de ajustes residuais (se houver).
+O `offers` atual usa `price: '0'` — isso é semanticamente errado (não são produtos vendidos a R$0) e o Google sinaliza como ausente/quebrado. Os motores são SaaS proprietários sob contrato.
+
+**Ação:** remover o bloco `offers` por completo. Os avisos `offers` e `aggregateRating` são **opcionais não-críticos**, e remover o offers fake é mais correto do que tentar fingir um preço. Adicionar `provider` (Organization infinity6) — campo recomendado para SoftwareApplication empresarial.
+
+---
+
+## 3. FAQPage duplicado nas landings (Anexo 3 — erro crítico)
+
+**Causa raiz:** `src/pages/TransformationLanding.tsx` (linha 263) injeta FAQPage via Helmet **E** `scripts/prerender-seo-stubs.mjs` (linhas 489-504 e 575-587) também injeta no HTML estático. Quando a página hidrata, ficam dois `<script type="application/ld+json">` FAQPage no `<head>`.
+
+**Fix:** remover a injeção do `faqLd` do React (`TransformationLanding.tsx`). O stub estático já cobre os crawlers (que é onde importa para SEO/Rich Results). Mantém `serviceLd` e `breadcrumbLd` no React (esses não estão duplicados — o stub injeta Service mas a duplicação de Service é tolerada por @id; FAQ não).
+
+Alternativa rejeitada: remover do stub e manter no React — ruim porque crawlers sem JS perderiam o FAQ.
+
+---
+
+## 4. Observation com `measuredValue` inválido (Anexo 4)
+
+**Arquivos:** `src/pages/OurAI.tsx` (linhas 79-87) e `scripts/prerender-seo-stubs.mjs` (linhas 320-327).
+
+Schema.org `Observation` **não tem** propriedade `measuredValue`. A propriedade correta é `value` (de `QuantitativeValue` aninhada em `measuredProperty`) ou simplesmente `value` no próprio Observation com `valueReference`. Também `marginOfError` está sendo usado errado (guardando string de setor, não margem de erro numérica).
+
+**Estrutura corrigida:**
+
+```json
+{
+  "@type": "Observation",
+  "name": "custo de CRM",
+  "observationAbout": { "@type": "Organization", "name": "infinity6", "url": "https://infinity6.ai/" },
+  "measuredProperty": {
+    "@type": "PropertyValue",
+    "name": "custo de CRM",
+    "value": -57,
+    "unitText": "percent"
+  },
+  "description": "Setor: Financeiro"
+}
+```
+
+Remove `measuredValue` e `marginOfError` (uso incorreto), move o número e unidade para dentro de `measuredProperty` como `PropertyValue` (que **tem** `value` e `unitText` no schema), e move o setor para `description`.
+
+Aplica nos dois locais (React + stub estático).
 
 ---
 
 ## Detalhes técnicos
 
-- Zero novas libs. Reusa `SEOHead`, `useScrollAnimation`, `react-helmet-async`, MD glob existente.
-- `prerender-seo-stubs.mjs` ganha os blocos `DefinedTermSet` (em `/our-ai`) e `Statistic` (Home + landings) dentro do stub HTML.
-- `seoData.ts` e `sitemap.xml` não mudam (URLs já estão indexadas — só conteúdo novo no `/our-ai`).
-- Sem backend, sem mudanças em i6HUB nesta etapa (glossário e KPIs ficam em código por enquanto; podem virar MD-gerenciáveis numa Fase 14 se necessário).
+- Build: nenhuma dependência nova. `prerender-seo-stubs.mjs` continua rodando no `postbuild`.
+- Verificação local: após edits, rodar `npm run build` e inspecionar `dist/pt/our-ai/index.html` e `dist/pt/solutions/demand-supply-efficiency/index.html` confirmando:
+  - 1 único `<script>` FAQPage por página de landing
+  - Observation com `measuredProperty.value` (não `measuredValue`)
+  - TechArticle com `image`
+  - SoftwareApplication sem `offers`
+- Pós-deploy: rodar Rich Results Test + validator.schema.org de novo nas mesmas URLs e atualizar `.lovable/audit-geo-v10.md`.
 
----
-
-## Ordem de execução
-
-1. Fase 11 (Glossário) → 1 commit.
-2. Fase 12 (RealResults + Statistic) → 1 commit.
-3. Fase 13 (Auditoria) → roda após deploy estabilizado, gera o relatório final.
+Sem mudanças em conteúdo de markdown, componentes visuais, rotas ou backend.
