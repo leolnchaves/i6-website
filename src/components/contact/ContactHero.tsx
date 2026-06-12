@@ -9,12 +9,12 @@ const ContactHero = memo(() => {
     pt: {
       title: "Coloque seus dados",
       highlight: "em movimento",
-      description: "Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão."
+      description: "Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão. Respondemos em até 1 dia útil."
     },
     en: {
       title: "Put your data",
       highlight: "in motion",
-      description: "Talk to our team about demand forecasting, margin protection, recommendation and propensity."
+      description: "Talk to our team about demand forecasting, margin protection, recommendation and propensity. We reply within 1 business day."
     }
   }), []);
 
