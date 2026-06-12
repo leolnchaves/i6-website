@@ -110,7 +110,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
   pt: {
     hero: {
       eyebrow: 'Proprietary AI',
-      title: 'Nossos motores de IA proprietária',
+      title: 'Motores proprietários de IA',
       subtitle: 'IA aplicada é um organismo que se constrói, se alimenta e se adapta',
       lead: 'Quatro motores próprios que aprendem comportamento, antecipam decisão e prescrevem ação — não geram texto, geram resultado.',
     },
@@ -415,7 +415,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
   en: {
     hero: {
       eyebrow: 'Proprietary AI',
-      title: 'Our proprietary AI engines',
+      title: 'Proprietary AI engines',
       subtitle: 'Applied AI is an organism that builds itself, feeds itself and adapts',
       lead: 'Four in-house engines that learn behavior, anticipate decisions and prescribe action — they do not generate text, they generate outcomes.',
     },
