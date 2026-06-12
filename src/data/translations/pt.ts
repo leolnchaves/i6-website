@@ -274,7 +274,7 @@ export const ptTranslations = {
   'contact.faq.q5': 'Que tipo de dados preciso para começar?',
   'contact.faq.a5': 'Trabalhamos com os dados que você já tem, incluindo dados comportamentais, transacionais, CRM ou de suprimentos. Todos os dados são 100% anonimizados e tratados com segurança. Nossos modelos são robustos a lacunas e podem entregar valor mesmo com datasets não estruturados. O primeiro treinamento do modelo é conduzido usando uma amostra dos seus dados, sem necessidade de integração completa.',
   'contact.faq.q6': 'Seus modelos de IA podem se integrar com nossos sistemas existentes?',
-  'contact.faq.a6': 'Sim. O Compass Suite é API-first e baseado em nuvem, facilitando a conexão com ERPs, CRMs, plataformas de e-commerce e fontes de dados internas.',
+  'contact.faq.a6': 'Sim. Nossa plataforma é API-first e baseada em nuvem. Os motores i6RecSys, i6Previsio e i6ElasticPrice expõem APIs REST que conectam a ERPs, CRMs, plataformas de e-commerce e fontes de dados internas, com o i6Signal como camada conversacional sobre eles.',
   'contact.faq.q7': 'Preciso de uma equipe de data science para usar suas soluções?',
   'contact.faq.a7': 'Não. Nossas soluções são projetadas para serem usadas por equipes de negócios. Cuidamos da complexidade da IA para que sua equipe possa focar em ação e resultados.',
   'contact.faq.q8': 'Sua IA é explicável e compatível com regulamentações de privacidade de dados?',
