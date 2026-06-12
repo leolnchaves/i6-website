@@ -39,9 +39,6 @@ const OurAIHero = memo(({ content }: Props) => {
         <p className="text-lg md:text-xl text-white/70 font-light italic mb-4">
           {content.subtitle}
         </p>
-        <p className="text-base md:text-lg text-white/50 leading-relaxed max-w-2xl mx-auto">
-          {content.lead}
-        </p>
       </div>
     </section>
   );
