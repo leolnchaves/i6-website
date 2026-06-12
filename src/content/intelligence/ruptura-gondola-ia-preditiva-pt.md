@@ -9,6 +9,8 @@ theme: estoque
 excerpt: "Ruptura de gôndola no varejo farma custa de 4% a 12% do faturamento. IA preditiva combina previsão de demanda, política de estoque e alocação por PDV para reduzir falta sem inflar capital de giro."
 read_time: 8
 featured: true
+related_product: i6previsio
+related_story_slug: marketplace-excellence-pharmacy
 ---
 
 ## Resposta direta

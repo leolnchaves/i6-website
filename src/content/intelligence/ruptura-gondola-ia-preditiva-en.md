@@ -9,6 +9,8 @@ theme: estoque
 excerpt: "Shelf stockouts in pharma retail cost between 4% and 12% of net revenue. Predictive AI links demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts without inflating working capital."
 read_time: 8
 featured: true
+related_product: i6previsio
+related_story_slug: marketplace-excellence-pharmacy
 ---
 
 ## Direct answer
