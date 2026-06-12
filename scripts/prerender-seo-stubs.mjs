@@ -19,6 +19,7 @@ const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
 const PUBLIC_CONTENT = resolve('public/content');
 const INTELLIGENCE_DIR = resolve('src/content/intelligence');
+const LANDINGS_DIR = resolve('src/content/landings');
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
@@ -422,6 +423,89 @@ if (existsSync(INTELLIGENCE_DIR)) {
         })),
       };
       // Re-read the just-written file and inject the FAQ script before </head>
+      const outFile = join(DIST, `${path.replace(/^\//, '')}.html`);
+      if (existsSync(outFile)) {
+        let written = readFileSync(outFile, 'utf8');
+        written = written.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(faqLd)}</script>\n  </head>`);
+        writeFileSync(outFile, written, 'utf8');
+      }
+    }
+  }
+}
+
+// ---- Transformation landings (Phase 10) — driven by markdown in src/content/landings/ ----
+if (existsSync(LANDINGS_DIR)) {
+  const files = readdirSync(LANDINGS_DIR).filter((f) => f.endsWith('.md'));
+  for (const file of files) {
+    const raw = readFileSync(join(LANDINGS_DIR, file), 'utf8');
+    const { data: fm, content } = parseFrontmatter(raw);
+    if (!fm.title || !fm.language || !fm.slug) continue;
+    const lang = fm.language;
+    const path = `/${lang}/solutions/${fm.slug}`;
+    const title = `${fm.title} | infinity6`;
+    const description = fm.description || '';
+    const faq = extractFAQ(content);
+
+    // crawlable body: hero + sections (H2s) flattened
+    const heroBlock = `<p><strong>${escapeHtml(fm.hero_kicker || '')}</strong></p><h2>${escapeHtml(fm.hero_headline || fm.title)}</h2><p>${escapeHtml(fm.hero_sub || description)}</p>`;
+    const bodyHtml = `${heroBlock}${mdToHtml(content)}`;
+
+    const stats = [];
+    const resMatch = content.match(/##\s+(?:Results|Resultados)\s*\n([\s\S]*?)(?:\n##\s+|$)/i);
+    if (resMatch) {
+      for (const line of resMatch[1].split(/\r?\n/)) {
+        const m = line.match(/^\s*-\s+\*\*([^*]+)\*\*\s*(.+)$/);
+        if (m) {
+          const parts = m[2].split('|').map((s) => s.trim());
+          stats.push({ value: m[1].trim(), label: parts[0] || '', source: parts[1] });
+        }
+      }
+    }
+
+    const serviceLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: fm.title,
+      description,
+      url: `${BASE_URL}${path}`,
+      serviceType: fm.hero_kicker || fm.title,
+      provider: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+      areaServed: ['BR', 'LatAm'],
+      ...(stats.length > 0 ? {
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: lang === 'pt' ? 'Resultados mensuráveis' : 'Measurable results',
+          itemListElement: stats.map((s) => ({ '@type': 'QuantitativeValue', value: s.value, unitText: s.label })),
+        },
+      } : {}),
+    };
+    const breadcrumbLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${lang}` },
+        { '@type': 'ListItem', position: 2, name: lang === 'pt' ? 'Soluções' : 'Solutions', item: `${BASE_URL}/${lang}/solutions` },
+        { '@type': 'ListItem', position: 3, name: fm.title, item: `${BASE_URL}${path}` },
+      ],
+    };
+
+    const html = buildStub(template, {
+      lang, path, title, description, h1: fm.hero_headline || fm.title,
+      body: bodyHtml,
+      jsonLd: { '@context': 'https://schema.org', '@graph': [serviceLd, breadcrumbLd] },
+    });
+    writeStub(path, html);
+    count++;
+
+    if (faq.length > 0) {
+      const faqLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question', name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      };
       const outFile = join(DIST, `${path.replace(/^\//, '')}.html`);
       if (existsSync(outFile)) {
         let written = readFileSync(outFile, 'utf8');
