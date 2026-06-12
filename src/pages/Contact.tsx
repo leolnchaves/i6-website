@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import ContactHero from '@/components/contact/ContactHero';
 import FAQSection from '@/components/contact/FAQSection';
 import ContactForm from '@/components/contact/ContactForm';
-import CalendlySection from '@/components/contact/CalendlySection';
+import DirectContactStrip from '@/components/contact/DirectContactStrip';
 import WorldMap from '@/components/contact/WorldMap';
 import SEOHead from '@/components/common/SEOHead';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -73,12 +73,13 @@ const Contact = memo(() => {
       
       <section id="contact-form" className="pt-0 pb-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+          <div className="max-w-2xl mx-auto">
             <ContactForm />
-            <CalendlySection />
           </div>
         </div>
       </section>
+
+      <DirectContactStrip />
 
       <FAQSection />
 
