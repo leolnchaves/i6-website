@@ -100,11 +100,11 @@ const OurAI = memo(() => {
     <>
       <SEOHead page="our-ai" jsonLd={jsonLd} />
       <OurAIHero content={c.hero} />
-      <ThesisSection content={c.thesis} />
-      <UnifiedImpactSection dualValue={c.dualValue} learnInfluence={c.learnInfluence} />
       <EnginesGrid content={c.engines} foundation={c.thesis.foundation} />
       <DiversityBalanceSection content={c.diversity} />
       <ExplainabilitySection content={c.explainability} />
+      <ThesisSection content={c.thesis} />
+      <UnifiedImpactSection dualValue={c.dualValue} learnInfluence={c.learnInfluence} />
       <SecuritySection content={c.security} />
       <ChallengesAccordion content={c.challenges} />
       <CommunitySection content={c.community} />
