@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
 import { ourAIContent } from '@/data/staticData/ourAIContent';
+import { realResults } from '@/data/staticData/realResults';
 
 import OurAIHero from '@/components/our-ai/OurAIHero';
 import ThesisSection from '@/components/our-ai/ThesisSection';
@@ -13,7 +14,9 @@ import ExplainabilitySection from '@/components/our-ai/ExplainabilitySection';
 import SecuritySection from '@/components/our-ai/SecuritySection';
 import ChallengesAccordion from '@/components/our-ai/ChallengesAccordion';
 import CommunitySection from '@/components/our-ai/CommunitySection';
+import GlossarySection from '@/components/our-ai/GlossarySection';
 import OurAICTA from '@/components/our-ai/OurAICTA';
+import RealResultsStrip from '@/components/common/RealResultsStrip';
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -52,7 +55,40 @@ const OurAI = memo(() => {
       offers: { '@type': 'Offer', priceCurrency: 'BRL', price: '0', availability: 'https://schema.org/InStock' },
     }));
 
-    return { '@context': 'https://schema.org', '@graph': [techArticle, ...applications] };
+    const definedTermSet = {
+      '@context': 'https://schema.org',
+      '@type': 'DefinedTermSet',
+      '@id': `${url}#glossario`,
+      name: c.glossary.title,
+      description: c.glossary.lead,
+      inLanguage: language === 'pt' ? 'pt-BR' : 'en',
+      hasDefinedTerm: c.glossary.terms.map((t) => ({
+        '@type': 'DefinedTerm',
+        '@id': `${url}#glossario-${t.slug}`,
+        name: t.term,
+        description: t.definition,
+        inDefinedTermSet: `${url}#glossario`,
+        url: `${url}#glossario-${t.slug}`,
+      })),
+    };
+
+    const statistics = realResults
+      .filter((r) => typeof r.numericValue === 'number')
+      .map((r) => ({
+        '@context': 'https://schema.org',
+        '@type': 'Observation',
+        name: r.label[language],
+        observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+        measuredProperty: r.label[language],
+        measuredValue: r.numericValue,
+        unitText: r.unitText,
+        marginOfError: r.source[language],
+      }));
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [techArticle, ...applications, definedTermSet, ...statistics],
+    };
   }, [c, language]);
 
   return (
@@ -61,6 +97,7 @@ const OurAI = memo(() => {
       <OurAIHero content={c.hero} />
       <ThesisSection content={c.thesis} />
       <EnginesGrid content={c.engines} />
+      <RealResultsStrip />
       <DualValueSection content={c.dualValue} />
       <LearnInfluenceFlow content={c.learnInfluence} />
       <DiversityBalanceSection content={c.diversity} />
@@ -68,6 +105,7 @@ const OurAI = memo(() => {
       <SecuritySection content={c.security} />
       <ChallengesAccordion content={c.challenges} />
       <CommunitySection content={c.community} />
+      <GlossarySection content={c.glossary} />
       <OurAICTA content={c.cta} />
     </>
   );

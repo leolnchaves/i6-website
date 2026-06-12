@@ -81,10 +81,16 @@ export interface OurAIContent {
     description: string;
     cta: string;
   };
+  glossary: {
+    title: string;
+    lead: string;
+    terms: { slug: string; term: string; definition: string }[];
+  };
   cta: {
     title: string;
     button: string;
   };
+
 }
 
 export const ourAIContent: Record<Language, OurAIContent> = {
@@ -289,11 +295,28 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       description: 'Publicamos modelos, datasets e experimentos abertos no Hugging Face — parte do que aprendemos volta para a comunidade.',
       cta: 'Visitar nossa comunidade',
     },
+    glossary: {
+      title: 'Glossário GEO — termos da infinity6',
+      lead: 'Definições curtas dos termos próprios da infinity6 e da literatura técnica que sustenta nossos motores.',
+      terms: [
+        { slug: 'predicao-comportamental', term: 'Predição comportamental', definition: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais — não declarados — para antecipar a próxima ação relevante.' },
+        { slug: 'propensao-conversao', term: 'Propensão de conversão', definition: 'Score preditivo que estima a probabilidade de um anônimo ou cliente concluir uma compra em um contexto específico (canal, momento, oferta).' },
+        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', definition: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida — substitui curvas estáticas por aprendizado online.' },
+        { slug: 'aderencia-contextual', term: 'Aderência contextual', definition: 'Grau em que uma recomendação combina histórico de comportamento com o contexto atual (estoque, momento, perfil de PDV) — base da decisão prescritiva da infinity6.' },
+        { slug: 'ruptura-gondola', term: 'Ruptura de gôndola', definition: 'Indisponibilidade de SKU no ponto de venda quando há demanda real. No varejo farma custa entre 4% e 12% do faturamento líquido.' },
+        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva relações topológicas entre exemplos no espaço latente, melhorando generalização em poucos shots e estabilidade do embedding.' },
+        { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o modelo seleciona ativamente quais amostras rotular para acelerar aprendizado e reduzir custo de anotação.' },
+        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional proprietário da infinity6 (MAML + Active Learning + Topological Loss) pré-treinado em 1,45 bilhão de registros multissetoriais, adaptável com poucas amostras por cliente.' },
+        { slug: 'i6signal', term: 'i6 Signal', definition: 'Camada conversacional preditiva que lê o output dos motores i6 Previsio, i6 RecSys e i6 ElasticPrice e entrega ao time de negócio a próxima ação prescritiva — antecipatória, não reativa.' },
+      ],
+    },
     cta: {
       title: 'Quer conhecer os motores em profundidade?',
       button: 'Converse com nosso time técnico',
     },
   },
+
   en: {
     hero: {
       eyebrow: 'Proprietary AI',
@@ -495,9 +518,26 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       description: 'We publish open models, datasets and experiments on Hugging Face — part of what we learn flows back to the community.',
       cta: 'Visit our community',
     },
+    glossary: {
+      title: 'GEO Glossary — infinity6 terms',
+      lead: 'Short definitions of infinity6 proprietary terms and the technical literature underpinning our engines.',
+      terms: [
+        { slug: 'behavioral-prediction', term: 'Behavioral prediction', definition: 'Modeling that learns the real behavior of a customer, channel or product from transactional data — not declared preferences — to anticipate the next relevant action.' },
+        { slug: 'conversion-propensity', term: 'Conversion propensity', definition: 'Predictive score estimating the probability that an anonymous visitor or known customer completes a purchase in a specific context (channel, moment, offer).' },
+        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', definition: 'Price sensitivity of demand computed continuously by SKU, channel and lifecycle — replacing static curves with online learning.' },
+        { slug: 'contextual-adherence', term: 'Contextual adherence', definition: 'Degree to which a recommendation combines behavioral history with current context (stock, moment, POS profile) — the basis of infinity6 prescriptive decisions.' },
+        { slug: 'shelf-stockout', term: 'Shelf stockout', definition: 'Unavailability of a SKU at the point of sale when real demand exists. In pharma retail it costs between 4% and 12% of net revenue.' },
+        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algorithm (Finn, Abbeel & Levine, 2017) that trains models to adapt quickly to new tasks from few samples — the basis of i6-RecSys-Base.g1.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Loss function that preserves topological relationships between examples in the latent space, improving few-shot generalization and embedding stability.' },
+        { slug: 'active-learning', term: 'Active Learning', definition: 'Strategy where the model actively selects which samples to label, accelerating learning and reducing annotation cost.' },
+        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss) pre-trained on 1.45 billion cross-sector records, adaptable from few client samples.' },
+        { slug: 'i6signal', term: 'i6 Signal', definition: 'Predictive conversational layer that reads the output of the i6 Previsio, i6 RecSys and i6 ElasticPrice engines and delivers the next prescriptive action to business teams — anticipatory, not reactive.' },
+      ],
+    },
     cta: {
       title: 'Want to explore the engines in depth?',
       button: 'Talk to our technical team',
     },
+
   },
 };

@@ -255,20 +255,95 @@ for (const lang of ['en', 'pt']) {
       const ourAILead = lang === 'pt'
         ? 'A infinity6 opera quatro motores proprietários de IA aplicada: i6 RecSys (recomendação), i6 Previsio (previsão de demanda), i6 ElasticPrice (precificação dinâmica) e i6 Signal (camada conversacional preditiva). O modelo fundacional i6-RecSys-Base.g1 combina MAML, Active Learning e Topological Loss, com pré-treino em 1,45 bilhão de registros de bases públicas/adquiridas (15% bancário, 45% e-commerce, 20% telecom, 20% atacado/varejo).'
         : 'infinity6 operates four proprietary applied AI engines: i6 RecSys (recommendation), i6 Previsio (demand forecasting), i6 ElasticPrice (dynamic pricing) and i6 Signal (predictive conversational layer). The foundation model i6-RecSys-Base.g1 combines MAML, Active Learning and Topological Loss, pre-trained on 1.45 billion records from public/acquired sources (15% banking, 45% e-commerce, 20% telecom, 20% wholesale/retail).';
-      body = `<p>${ourAILead}</p><h2>${lang === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[lang]}</li>`).join('')}</ul>`;
-      jsonLd = {
-        '@context': 'https://schema.org',
-        '@graph': PRODUCTS.map(p => ({
-          '@type': 'SoftwareApplication',
-          name: p.name,
-          applicationCategory: 'BusinessApplication',
-          operatingSystem: 'Cloud',
-          description: p.description[lang],
-          url: `${BASE_URL}/${lang}/our-ai#${p.anchor}`,
-          creator: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+
+      // Glossary terms (mirror src/data/staticData/ourAIContent.ts)
+      const glossary = lang === 'pt' ? [
+        { slug: 'predicao-comportamental', term: 'Predição comportamental', def: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais para antecipar a próxima ação relevante.' },
+        { slug: 'propensao-conversao', term: 'Propensão de conversão', def: 'Score preditivo da probabilidade de conclusão de compra em um contexto específico.' },
+        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', def: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida.' },
+        { slug: 'aderencia-contextual', term: 'Aderência contextual', def: 'Grau em que uma recomendação combina histórico comportamental com o contexto atual.' },
+        { slug: 'ruptura-gondola', term: 'Ruptura de gôndola', def: 'Indisponibilidade de SKU no PDV com demanda real. Custa 4%–12% do faturamento líquido no varejo farma.' },
+        { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine) base do i6-RecSys-Base.g1.' },
+        { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva relações topológicas no espaço latente para melhorar generalização few-shot.' },
+        { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o modelo seleciona ativamente amostras para rotular, acelerando aprendizado.' },
+        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'Modelo fundacional proprietário da infinity6 (MAML + Active Learning + Topological Loss), 1,45 bilhão de registros.' },
+        { slug: 'i6signal', term: 'i6 Signal', def: 'Camada conversacional preditiva sobre os motores i6 Previsio, i6 RecSys e i6 ElasticPrice.' },
+      ] : [
+        { slug: 'behavioral-prediction', term: 'Behavioral prediction', def: 'Modeling that learns real customer/channel/product behavior from transactional data to anticipate the next relevant action.' },
+        { slug: 'conversion-propensity', term: 'Conversion propensity', def: 'Predictive score for the probability of completing a purchase in a specific context.' },
+        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', def: 'Continuous price-sensitivity learning by SKU, channel and lifecycle.' },
+        { slug: 'contextual-adherence', term: 'Contextual adherence', def: 'How well a recommendation combines behavioral history with current context.' },
+        { slug: 'shelf-stockout', term: 'Shelf stockout', def: 'SKU unavailability at POS when real demand exists. Costs 4%–12% of net revenue in pharma retail.' },
+        { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning (Finn, Abbeel & Levine). Foundation of i6-RecSys-Base.g1.' },
+        { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss preserving topological relationships in the latent space for better few-shot generalization.' },
+        { slug: 'active-learning', term: 'Active Learning', def: 'Strategy where the model selects which samples to label, accelerating learning.' },
+        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss), 1.45B records.' },
+        { slug: 'i6signal', term: 'i6 Signal', def: 'Predictive conversational layer over i6 Previsio, i6 RecSys and i6 ElasticPrice engines.' },
+      ];
+
+      // Real-results KPIs (mirror src/data/staticData/realResults.ts)
+      const kpis = lang === 'pt' ? [
+        { value: 'R$ 100M', label: 'em savings ao antecipar ruptura, overstocking e incineração', source: 'Varejo farma' },
+        { value: '+23%', label: 'ticket médio por PDV', source: 'Varejo' },
+        { value: '+36%', label: 'positivação de produtos', source: 'Varejo' },
+        { value: '−57%', label: 'custo de CRM', source: 'Financeiro' },
+        { value: '12x', label: 'mais conversão em campanhas', source: 'Financeiro' },
+        { value: '+2,6%', label: 'mais vendas que a curadoria humana de looks', source: 'Fashion' },
+      ] : [
+        { value: 'R$ 100M', label: 'in savings by anticipating stockouts, overstocking and incineration', source: 'Pharma retail' },
+        { value: '+23%', label: 'average ticket per POS', source: 'Retail' },
+        { value: '+36%', label: 'product activation', source: 'Retail' },
+        { value: '−57%', label: 'CRM cost', source: 'Financial services' },
+        { value: '12x', label: 'more conversion in campaigns', source: 'Financial services' },
+        { value: '+2.6%', label: 'more sales than human look curation', source: 'Fashion' },
+      ];
+
+      const glossaryHtml = `<h2 id="glossario">${lang === 'pt' ? 'Glossário GEO' : 'GEO Glossary'}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
+      const kpisHtml = `<h2>${lang === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
+
+      body = `<p>${ourAILead}</p><h2>${lang === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[lang]}</li>`).join('')}</ul>${kpisHtml}${glossaryHtml}`;
+
+      const definedTermSet = {
+        '@type': 'DefinedTermSet',
+        '@id': `${BASE_URL}/${lang}/our-ai#glossario`,
+        name: lang === 'pt' ? 'Glossário GEO — termos da infinity6' : 'GEO Glossary — infinity6 terms',
+        inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
+        hasDefinedTerm: glossary.map(g => ({
+          '@type': 'DefinedTerm',
+          '@id': `${BASE_URL}/${lang}/our-ai#glossario-${g.slug}`,
+          name: g.term,
+          description: g.def,
+          inDefinedTermSet: `${BASE_URL}/${lang}/our-ai#glossario`,
+          url: `${BASE_URL}/${lang}/our-ai#glossario-${g.slug}`,
         })),
       };
+      const observations = kpis.map(k => ({
+        '@type': 'Observation',
+        name: k.label,
+        observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+        measuredProperty: k.label,
+        measuredValue: k.value,
+        marginOfError: k.source,
+      }));
+
+      jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+          ...PRODUCTS.map(p => ({
+            '@type': 'SoftwareApplication',
+            name: p.name,
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Cloud',
+            description: p.description[lang],
+            url: `${BASE_URL}/${lang}/our-ai#${p.anchor}`,
+            creator: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+          })),
+          definedTermSet,
+          ...observations,
+        ],
+      };
     }
+
     const html = buildStub(template, {
       lang,
       path,
