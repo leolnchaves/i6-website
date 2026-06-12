@@ -42,7 +42,7 @@ const HeaderNovo = () => {
   // pages exist (Phase 9 = Proprietary AI; Phase 10 = 4 transformation landings).
   const solutionsSubMenu: SubLink[] = [
     { to: localized('/solutions'), label: t('header.solutions.aiSolutions') },
-    { to: localized('/our-ai'), label: t('header.solutions.proprietaryAi'), comingSoon: true },
+    { to: localized('/our-ai'), label: t('header.solutions.proprietaryAi') },
     { to: localized('/solutions/demand-supply-efficiency'), label: t('header.solutions.demandSupply'), comingSoon: true },
     { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization'), comingSoon: true },
     { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps'), comingSoon: true },
