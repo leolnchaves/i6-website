@@ -102,7 +102,8 @@ const Insights = () => {
 
       <section className="container mx-auto px-6 pt-32 pb-20">
         <header className="max-w-3xl mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{heading}</h1>
+          <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Insights</p>
+          <h1 className="sr-only">{heading}</h1>
           <p className="text-lg text-white/70">{subheading}</p>
         </header>
 
