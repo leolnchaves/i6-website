@@ -1,13 +1,7 @@
-## Reescrever título de `dualValue` sem travessão
+## Remover seção "Resultados em movimento" da Home
 
-Em `src/data/staticData/ourAIContent.ts`:
+Em `src/pages/HomeTeste.tsx`:
+- Remover o import na linha 5: `import ResultadosSection from '@/components/hometeste/ResultadosSection';`
+- Remover o uso na linha 17: `<ResultadosSection />`
 
-- **Linha 199 (PT):**
-  - **De:** `'O impacto não vem de prever — vem de como a IA se conecta ao contexto do problema'`
-  - **Para:** `'O impacto não vem só de prever, mas de como a IA se conecta ao contexto do problema'`
-
-- **Linha 504 (EN):**
-  - **De:** `'Impact does not come from predicting — it comes from how AI connects to the problem context'`
-  - **Para:** `'Impact does not come from predicting alone, but from how AI connects to the problem context'`
-
-Sem outras mudanças. Sem ponto final (regra global). Sem alterações no componente.
+A seção "Provas em números" (logo abaixo) permanece como única seção de resultados na home. O arquivo `src/components/hometeste/ResultadosSection.tsx` fica órfão mas não será deletado (sem impacto no build).
