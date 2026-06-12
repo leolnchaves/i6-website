@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
   repository_dispatch:
-    types: [insights-updated]
+    types: [insights-updated, research-updated, landings-updated, stories-updated]
 
 permissions:
   contents: read
