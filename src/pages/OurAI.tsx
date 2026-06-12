@@ -80,12 +80,13 @@ const OurAI = memo(() => {
         '@type': 'Observation',
         name: r.label[language],
         observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
-        measuredProperty: {
+        variableMeasured: {
           '@type': 'PropertyValue',
           name: r.label[language],
-          value: r.numericValue,
-          unitText: r.unitText,
+          ...(r.unitText ? { unitText: r.unitText } : {}),
         },
+        measuredValue: r.numericValue,
+        ...(r.unitText ? { unitText: r.unitText } : {}),
         description: `${language === 'pt' ? 'Setor' : 'Sector'}: ${r.source[language]}`,
       }));
 
