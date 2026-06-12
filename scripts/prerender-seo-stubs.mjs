@@ -85,6 +85,38 @@ function loadStories(lang) {
   return parseStories(readFileSync(file, 'utf8'));
 }
 
+// ---- Minimal markdown → HTML for SEO injection ----
+// Handles: H2/H3, **bold**, bullet lists, paragraphs. Strips YAML frontmatter.
+function mdToHtml(md) {
+  let src = md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+  const lines = src.split(/\r?\n/);
+  const out = [];
+  let para = [];
+  let list = [];
+  const flushPara = () => { if (para.length) { out.push(`<p>${para.join(' ')}</p>`); para = []; } };
+  const flushList = () => { if (list.length) { out.push(`<ul>${list.map(i => `<li>${i}</li>`).join('')}</ul>`); list = []; } };
+  const inline = (s) => s
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { flushPara(); flushList(); continue; }
+    if (line.startsWith('## ')) { flushPara(); flushList(); out.push(`<h2>${inline(line.slice(3).trim())}</h2>`); continue; }
+    if (line.startsWith('### ')) { flushPara(); flushList(); out.push(`<h3>${inline(line.slice(4).trim())}</h3>`); continue; }
+    if (line.startsWith('- ')) { flushPara(); list.push(inline(line.slice(2).trim())); continue; }
+    flushList(); para.push(inline(line));
+  }
+  flushPara(); flushList();
+  return out.join('\n');
+}
+
+function loadSolutionsSeo(lang) {
+  const file = join(PUBLIC_CONTENT, `solutions-seo-${lang}.md`);
+  if (!existsSync(file)) return '';
+  return mdToHtml(readFileSync(file, 'utf8'));
+}
+
+
 // ---- HTML transformation ----
 const escapeHtml = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
