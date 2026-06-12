@@ -7,7 +7,7 @@ interface Props {
 
 const OurAIHero = memo(({ content }: Props) => {
   return (
-    <section className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 bg-[#0B1224] overflow-hidden">
+    <section className="relative w-full pt-28 pb-6 md:pt-36 md:pb-8 bg-[#0B1224] overflow-hidden">
       {/* Subtle signal wave SVG background */}
       <svg
         aria-hidden="true"

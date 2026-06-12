@@ -16,7 +16,7 @@ const ENGINE_ICONS = {
 
 const EnginesGrid = memo(({ content, foundation }: Props) => {
   return (
-    <section className="relative py-14 md:py-20 bg-[#0A101F]">
+    <section className="relative pt-6 pb-14 md:pt-8 md:pb-20 bg-[#0A101F]">
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="text-center mb-10 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{content.title}</h2>
