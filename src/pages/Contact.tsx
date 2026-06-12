@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import ContactHero from '@/components/contact/ContactHero';
 import FAQSection from '@/components/contact/FAQSection';
 import ContactForm from '@/components/contact/ContactForm';
-import CalendlySection from '@/components/contact/CalendlySection';
+import DirectContactStrip from '@/components/contact/DirectContactStrip';
 import WorldMap from '@/components/contact/WorldMap';
 import SEOHead from '@/components/common/SEOHead';
 import { useLanguage } from '@/contexts/LanguageContext';
