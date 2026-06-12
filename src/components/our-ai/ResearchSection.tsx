@@ -73,7 +73,7 @@ const ResearchSection = memo(({ content }: Props) => {
                 >
                   <div className="min-w-0 flex-1">
                     <p className="text-[11px] uppercase tracking-wider text-[#F4845F] mb-1.5">
-                      PALESTRA · {t.venue}
+                      {t.venue}
                     </p>
                     <h4 className="text-base md:text-lg text-white font-semibold leading-snug group-hover:text-[#F4845F] transition-colors">
                       {t.title}
