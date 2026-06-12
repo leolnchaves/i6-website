@@ -11,7 +11,9 @@ interface ModernSolutionCardProps {
   engine: string;
   bgColor: string;
   index: number;
+  anchorId?: string;
 }
+
 
 const translations = {
   en: {
@@ -29,8 +31,9 @@ const translations = {
 };
 
 const ModernSolutionCard = memo(({ 
-  title, focus, description, features, outcome, engine, bgColor, index
+  title, focus, description, features, outcome, engine, bgColor, index, anchorId
 }: ModernSolutionCardProps) => {
+
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
