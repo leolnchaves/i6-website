@@ -77,7 +77,7 @@ const modules = import.meta.glob('/src/content/insights/*.md', {
   eager: true,
 }) as Record<string, string>;
 
-const VALID_TYPES: InsightType[] = ['article', 'linkedin', 'press', 'podcast', 'video'];
+const VALID_TYPES: InsightType[] = ['i6 on Media', 'i6 Article', 'i6 eBook', 'i6 Social'];
 
 const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
