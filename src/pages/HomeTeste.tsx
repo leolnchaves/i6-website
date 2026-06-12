@@ -6,6 +6,7 @@ import ResultadosSection from '@/components/hometeste/ResultadosSection';
 import InsightsSection from '@/components/hometeste/InsightsSection';
 import CTAFinal from '@/components/hometeste/CTAFinal';
 import SEOHead from '@/components/common/SEOHead';
+import RealResultsStrip from '@/components/common/RealResultsStrip';
 
 const HomeTeste = () => (
   <>
@@ -14,6 +15,7 @@ const HomeTeste = () => (
     <TeseSection />
     <SinaisSection />
     <ResultadosSection />
+    <RealResultsStrip compact />
     <ClientesSection />
     <InsightsSection />
     <CTAFinal />
@@ -21,3 +23,4 @@ const HomeTeste = () => (
 );
 
 export default HomeTeste;
+
