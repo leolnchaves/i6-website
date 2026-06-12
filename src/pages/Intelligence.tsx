@@ -117,8 +117,8 @@ const Intelligence = () => {
 
   const heading = 'i6 Intelligence';
   const subheading = language === 'pt'
-    ? 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão — em varejo, indústria e farma.'
-    : 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity — across retail, industry and pharma.';
+    ? 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão para os setores de varejo, indústria, financeiro e farma.'
+    : 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.';
 
   const sectorLabels = language === 'pt' ? SECTOR_LABELS_PT : SECTOR_LABELS_EN;
   const themeLabels = language === 'pt' ? THEME_LABELS_PT : THEME_LABELS_EN;
