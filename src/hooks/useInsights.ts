@@ -77,11 +77,14 @@ const modules = import.meta.glob('/src/content/insights/*.md', {
   eager: true,
 }) as Record<string, string>;
 
+const VALID_TYPES: InsightType[] = ['article', 'linkedin', 'press', 'podcast', 'video'];
+
 const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
     const { data, content } = parseFrontmatter(raw);
     const fm = data as Partial<InsightFrontmatter>;
     if (!fm.title || !fm.language || !fm.type || !fm.date) return null;
+    if (!VALID_TYPES.includes(fm.type as InsightType)) return null;
     return {
       id: fm.id,
       title: fm.title,
