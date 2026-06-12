@@ -196,7 +196,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       },
     },
     dualValue: {
-      title: 'O impacto não vem de prever — vem de como a IA se conecta ao contexto do problema',
+      title: 'O impacto não vem só de prever, mas de como a IA se conecta ao contexto do problema',
       columns: [
         {
           title: 'Clareza ao caos',
@@ -501,7 +501,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       },
     },
     dualValue: {
-      title: 'Impact does not come from predicting — it comes from how AI connects to the problem context',
+      title: 'Impact does not come from predicting alone, but from how AI connects to the problem context',
       columns: [
         {
           title: 'Clarity from chaos',
