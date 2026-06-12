@@ -1,76 +1,61 @@
-# Correções JSON-LD pós-auditoria GEO
+# Contato: form-first, sem Calendly público
 
-Quatro ajustes pontuais nos blocos JSON-LD identificados pelo Rich Results Test e pelo validator.schema.org. Nenhuma mudança visual ou de conteúdo — só estrutura de dados estruturados.
-
----
-
-## 1. TechArticle sem `image` (Anexo 1 — `/our-ai`)
-
-**Arquivos:** `src/pages/OurAI.tsx` e `scripts/prerender-seo-stubs.mjs` (bloco `/our-ai`).
-
-Adicionar campo `image` ao TechArticle apontando para um asset público estável. Usar a OG image padrão do site (`/og-image.png` ou logo coral em fundo navy). Como o projeto não tem OG image dedicada, vamos usar `${BASE_URL}/favicon.png` como fallback imediato e marcar TODO para gerar imagem de hero dedicada depois.
-
-Mesma adição no stub estático para que o crawler enxergue.
+Reposicionar `/contact` para o padrão enterprise B2B: form qualificado como CTA único, sem Calendly exposto, com e-mail como fallback discreto. Sem WhatsApp por enquanto.
 
 ---
 
-## 2. SoftwareApplication com `offers` inválido (Anexo 2)
+## Mudanças
 
-**Arquivo:** `src/pages/OurAI.tsx` (linha 55).
+### 1. Remover Calendly da página pública
 
-O `offers` atual usa `price: '0'` — isso é semanticamente errado (não são produtos vendidos a R$0) e o Google sinaliza como ausente/quebrado. Os motores são SaaS proprietários sob contrato.
+**Arquivo:** `src/pages/Contact.tsx`
 
-**Ação:** remover o bloco `offers` por completo. Os avisos `offers` e `aggregateRating` são **opcionais não-críticos**, e remover o offers fake é mais correto do que tentar fingir um preço. Adicionar `provider` (Organization infinity6) — campo recomendado para SoftwareApplication empresarial.
+- Remover import e uso de `<CalendlySection />`.
+- Trocar o grid `lg:grid-cols-2 gap-12 items-stretch` por layout de coluna única centralizada (`max-w-2xl mx-auto`) para o `<ContactForm />`.
+- **Não deletar** `src/components/contact/CalendlySection.tsx` — fica no codebase para uso interno (SDR pode enviar o link manualmente após qualificação).
 
----
+**Efeito colateral positivo:** elimina o warning "Datadog Browser SDK: No storage available" no console, que vinha do iframe Calendly.
 
-## 3. FAQPage duplicado nas landings (Anexo 3 — erro crítico)
+### 2. Strip discreto de contato direto
 
-**Causa raiz:** `src/pages/TransformationLanding.tsx` (linha 263) injeta FAQPage via Helmet **E** `scripts/prerender-seo-stubs.mjs` (linhas 489-504 e 575-587) também injeta no HTML estático. Quando a página hidrata, ficam dois `<script type="application/ld+json">` FAQPage no `<head>`.
+Novo componente `src/components/contact/DirectContactStrip.tsx`, posicionado **abaixo** do form e **acima** do `<FAQSection />`:
 
-**Fix:** remover a injeção do `faqLd` do React (`TransformationLanding.tsx`). O stub estático já cobre os crawlers (que é onde importa para SEO/Rich Results). Mantém `serviceLd` e `breadcrumbLd` no React (esses não estão duplicados — o stub injeta Service mas a duplicação de Service é tolerada por @id; FAQ não).
-
-Alternativa rejeitada: remover do stub e manter no React — ruim porque crawlers sem JS perderiam o FAQ.
-
----
-
-## 4. Observation com `measuredValue` inválido (Anexo 4)
-
-**Arquivos:** `src/pages/OurAI.tsx` (linhas 79-87) e `scripts/prerender-seo-stubs.mjs` (linhas 320-327).
-
-Schema.org `Observation` **não tem** propriedade `measuredValue`. A propriedade correta é `value` (de `QuantitativeValue` aninhada em `measuredProperty`) ou simplesmente `value` no próprio Observation com `valueReference`. Também `marginOfError` está sendo usado errado (guardando string de setor, não margem de erro numérica).
-
-**Estrutura corrigida:**
-
-```json
-{
-  "@type": "Observation",
-  "name": "custo de CRM",
-  "observationAbout": { "@type": "Organization", "name": "infinity6", "url": "https://infinity6.ai/" },
-  "measuredProperty": {
-    "@type": "PropertyValue",
-    "name": "custo de CRM",
-    "value": -57,
-    "unitText": "percent"
-  },
-  "description": "Setor: Financeiro"
-}
+```
+Já nos conhece?  performance@infinity6.ai
+Already know us?  performance@infinity6.ai
 ```
 
-Remove `measuredValue` e `marginOfError` (uso incorreto), move o número e unidade para dentro de `measuredProperty` como `PropertyValue` (que **tem** `value` e `unitText` no schema), e move o setor para `description`.
+- Linha única, centralizada, tipografia pequena (`text-sm text-white/55`).
+- Sem card, sem ícone grande, sem botão destacado — apenas texto + link `mailto:`.
+- Strings PT/EN inline no componente (`useLanguage`).
+- `<a>` semântico com `aria-label`.
 
-Aplica nos dois locais (React + stub estático).
+### 3. Ajuste de copy
+
+Verificar `ContactHero.tsx` e o botão de submit do `ContactForm` para remover qualquer menção a "agende" / "schedule a call". Substituir por:
+- PT: "Envie sua mensagem — respondemos em até 1 dia útil"
+- EN: "Send your message — we reply within 1 business day"
+
+Mantém a promessa de tempo de resposta que o Calendly resolvia visualmente.
+
+### 4. Form: campos qualificadores (apenas verificação, sem alterar)
+
+Ler `src/components/contact/form/ContactFormFields.tsx` para confirmar presença de: empresa, cargo, e-mail corporativo, mensagem. Se faltar **cargo** ou **porte/segmento**, sinalizo no fim — **não altero o form sem sua aprovação explícita**, porque é um capture ativo.
 
 ---
 
 ## Detalhes técnicos
 
-- Build: nenhuma dependência nova. `prerender-seo-stubs.mjs` continua rodando no `postbuild`.
-- Verificação local: após edits, rodar `npm run build` e inspecionar `dist/pt/our-ai/index.html` e `dist/pt/solutions/demand-supply-efficiency/index.html` confirmando:
-  - 1 único `<script>` FAQPage por página de landing
-  - Observation com `measuredProperty.value` (não `measuredValue`)
-  - TechArticle com `image`
-  - SoftwareApplication sem `offers`
-- Pós-deploy: rodar Rich Results Test + validator.schema.org de novo nas mesmas URLs e atualizar `.lovable/audit-geo-v10.md`.
+- Sem mudança em rotas, sitemap, JSON-LD do FAQ, SEO ou backend.
+- Sem novas dependências.
+- `CalendlySection.tsx` permanece no repositório, apenas desplugado da rota pública.
+- Build/preview: alteração puramente visual + remoção de iframe.
 
-Sem mudanças em conteúdo de markdown, componentes visuais, rotas ou backend.
+---
+
+## Resultado esperado
+
+- `/contact` com foco único no form qualificado (best practice enterprise B2B).
+- Fallback `mailto:performance@infinity6.ai` para quem já conhece a marca.
+- Console limpo (sem warning Datadog do Calendly).
+- Footer mantém `performance@infinity6.ai` (sem mudança).
