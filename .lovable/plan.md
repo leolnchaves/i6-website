@@ -1,16 +1,25 @@
-## Mudanças em `/our-ai`
+## Reestruturar grid de motores como "fundação + camada"
 
-### 1. Reordenar seção
+Em `src/components/our-ai/EnginesGrid.tsx`, separar os 4 items em dois grupos visuais:
 
-Em `src/pages/OurAI.tsx`, mover `<UnifiedImpactSection>` para logo abaixo de `<ThesisSection>` (que tem o título "IA só precisa saber o que muda o jogo").
+**Camada de cima — i6Signal (full-width):**
+- Card único ocupando toda a largura, com o mesmo border-radius/borda dos demais.
+- Borda mais marcada (`border-[#F4845F]/40`) e fundo levemente diferenciado (`bg-gradient-to-r from-[#F4845F]/[0.04] via-white/[0.02] to-[#F4845F]/[0.04]`).
+- Chip discreto acima do título: `CAMADA CONVERSACIONAL` (laranja, mesma tipografia dos taglines).
 
-Nova ordem:
-```
-Hero → Thesis → UnifiedImpact → EnginesGrid → Diversity → Explainability → RealResults → Security → Challenges → Community → Glossary → CTA
-```
+**Conector visual:**
+- Faixa fina entre as duas camadas: três linhas verticais (uma para cada motor) descendo do card do Signal até o topo dos cards da base, indicando que o Signal lê os 3 motores. Altura ~24px, opacidade baixa (`bg-[#F4845F]/30`), sem texto.
 
-### 2. Remover os traços dos bullets
+**Base — RecSys, Previsio, ElasticPrice (3 colunas):**
+- Grid `md:grid-cols-3` (em mobile fica `grid-cols-1`).
+- Eyebrow centralizado acima da base: `MOTORES PREDITIVOS` em uppercase/tracking, cor `text-white/40`.
 
-Em `src/components/our-ai/UnifiedImpactSection.tsx`, dentro do `<ul>` de `dualValue.columns`, remover o `<span>` que renderiza o tracinho laranja (`w-3 h-px bg-current`). Os itens ficam como texto puro, mantendo o `space-y-3` e a cor `text-white/60`. Remover também o `flex gap-3` do `<li>` (não há mais marcador) — fica só o texto.
+### Lógica
+Filtrar `content.items` em dois arrays:
+- `signal = items.find(i => i.id === 'i6signal')`
+- `engines = items.filter(i => i.id !== 'i6signal')`
 
-Nenhuma outra alteração. Sem mudança de conteúdo, copy ou outras seções.
+Renderizar Signal primeiro (full-width), conector, depois grid de 3 engines. Manter o resto da seção (Foundation card, Differentiators) intacto. Sem mudança de copy nem em outros arquivos.
+
+### Verificação
+Preview `/pt/our-ai` e `/en/our-ai`: Signal no topo destacado, 3 motores em fila abaixo com conector visual sugerindo "camada sobre fundação". Build automático.
