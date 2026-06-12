@@ -156,4 +156,36 @@ export const seoData: SEODataMap = {
       keywords: ['demand forecasting', 'sales forecasting', 'predictive AI', 'dynamic pricing', 'recommendation engine'],
     },
   },
+  'our-ai': {
+    pt: {
+      title: 'Proprietary AI — Motores de IA da infinity6',
+      description: 'Conheça os motores proprietários da infinity6: i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. IA aplicada que aprende comportamento, antecipa decisão e prescreve ação.',
+      keywords: [
+        'IA proprietária brasileira',
+        'motor de recomendação',
+        'previsão de demanda com IA',
+        'precificação dinâmica',
+        'i6-RecSys-Base.g1',
+        'MAML',
+        'Active Learning',
+        'IA explicável',
+        'predição comportamental',
+      ],
+    },
+    en: {
+      title: 'Proprietary AI — infinity6 AI Engines',
+      description: 'Meet infinity6 proprietary engines: i6 RecSys, i6 Previsio, i6 ElasticPrice and i6 Signal. Applied AI that learns behavior, anticipates decisions and prescribes action.',
+      keywords: [
+        'proprietary AI engines',
+        'recommendation engine',
+        'predictive demand forecasting',
+        'dynamic pricing AI',
+        'i6-RecSys-Base.g1',
+        'MAML foundation model',
+        'Active Learning',
+        'explainable AI',
+        'behavioral prediction',
+      ],
+    },
+  },
 };
