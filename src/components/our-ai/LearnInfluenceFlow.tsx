@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, Fragment } from 'react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
 
 interface Props {
@@ -17,9 +17,8 @@ const LearnInfluenceFlow = memo(({ content }: Props) => {
         {/* Horizontal flow */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-4 md:gap-2 mb-10">
           {content.stages.map((stage, idx) => (
-            <>
+            <Fragment key={stage.label}>
               <div
-                key={stage.label}
                 className="border border-white/10 rounded-lg p-6 bg-white/[0.02] text-center md:text-left"
               >
                 <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#F4845F] mb-2">
@@ -44,7 +43,6 @@ const LearnInfluenceFlow = memo(({ content }: Props) => {
               </div>
               {idx < content.stages.length - 1 && (
                 <div
-                  key={`arrow-${idx}`}
                   className="hidden md:flex items-center justify-center text-[#F4845F]"
                   aria-hidden="true"
                 >
@@ -53,7 +51,7 @@ const LearnInfluenceFlow = memo(({ content }: Props) => {
                   </svg>
                 </div>
               )}
-            </>
+            </Fragment>
           ))}
         </div>
 
