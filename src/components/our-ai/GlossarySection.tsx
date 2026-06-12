@@ -1,20 +1,20 @@
 import { memo } from 'react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Props {
   content: OurAIContent['glossary'];
 }
 
 const GlossarySection = memo(({ content }: Props) => {
+  const { language } = useLanguage();
+  const eyebrow = language === 'pt' ? 'Glossário' : 'Glossary';
+
   return (
-    <section id="glossario" className="relative py-20 md:py-24 bg-[#0B1224] border-t border-white/5">
+    <section id="glossario" className="relative py-12 md:py-16 bg-[#0B1224] border-t border-white/5">
       <div className="container mx-auto px-6 max-w-5xl">
-        <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
-          GEO · Glossary
-        </p>
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">{content.title}</h2>
-        <p className="text-sm md:text-base text-white/55 max-w-2xl leading-relaxed mb-10">
-          {content.lead}
+        <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-8">
+          {eyebrow}
         </p>
 
         <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
