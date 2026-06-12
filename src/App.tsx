@@ -24,6 +24,8 @@ import NotFound from "./pages/NotFound";
 import HomeTeste from "./pages/HomeTeste";
 import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
+import Intelligence from "./pages/Intelligence";
+import IntelligenceArticle from "./pages/IntelligenceArticle";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
@@ -76,6 +78,8 @@ const LocalizedRoutes = () => {
         <Route path="cookie-settings" element={<Navigate to="../?cookies=open" replace />} />
         <Route path="insights" element={<Insights />} />
         <Route path="insights/:slug" element={<InsightArticle />} />
+        <Route path="i6-intelligence" element={<Intelligence />} />
+        <Route path="i6-intelligence/:slug" element={<IntelligenceArticle />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

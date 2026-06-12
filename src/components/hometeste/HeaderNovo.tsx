@@ -21,6 +21,7 @@ const HeaderNovo = () => {
     { to: localized('/'), label: t('header.home') },
     { to: localized('/solutions'), label: t('header.solutions') },
     { to: localized('/success-stories'), label: t('header.successStories') },
+    { to: localized('/i6-intelligence'), label: t('header.intelligence') },
     { to: localized('/insights'), label: t('header.insights') },
     { to: 'https://huggingface.co/infinity6', label: t('header.community'), external: true },
     { to: localized('/contact'), label: t('header.contact') },

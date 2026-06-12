@@ -4,19 +4,17 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const ContactHero = memo(() => {
   const { language } = useLanguage();
-  
+
   const content = useMemo(() => ({
     pt: {
-      title: "Hora de Colocar",
-      subtitle: "Dados em ",
-      highlight: "Movimento",
-      description: "Fale conosco e compartilhe seu objetivo ou desafio estratégico."
+      title: "Coloque seus dados",
+      highlight: "em movimento",
+      description: "Fale com nosso time sobre previsão de demanda, proteção de margem, recomendação e propensão."
     },
     en: {
-      title: "Time to Set",
-      subtitle: "Data in ",
-      highlight: "Motion",
-      description: "Talk to us and share your strategic goal or challenge."
+      title: "Put your data",
+      highlight: "in motion",
+      description: "Talk to our team about demand forecasting, margin protection, recommendation and propensity."
     }
   }), []);
 
@@ -31,8 +29,7 @@ const ContactHero = memo(() => {
               {text.title}
             </span>
             <span className="block pb-2">
-              <span className="text-white">{text.subtitle}</span>
-              <span 
+              <span
                 className="text-[#F4845F]"
                 style={{ textShadow: '0 0 30px rgba(244,132,95,0.3)' }}
               >
@@ -40,6 +37,9 @@ const ContactHero = memo(() => {
               </span>
             </span>
           </h1>
+          <p className="text-base sm:text-lg text-white/60 max-w-3xl mx-auto leading-relaxed">
+            {text.description}
+          </p>
         </div>
       </div>
     </section>

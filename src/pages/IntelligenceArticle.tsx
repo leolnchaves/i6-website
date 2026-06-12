@@ -1,0 +1,133 @@
+import { useParams, Link, Navigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Helmet } from 'react-helmet-async';
+import { ArrowLeft } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/utils/localizedPath';
+import { useIntelligencePiece, resolveIntelligenceCover } from '@/hooks/useIntelligence';
+
+const BASE_URL = 'https://infinity6.ai';
+
+// Extract FAQ Q&A pairs from markdown content for FAQPage schema
+function extractFAQ(content: string): { q: string; a: string }[] {
+  const faqHeadingRe = /^##\s+(?:Perguntas frequentes|FAQ)\s*$/im;
+  const match = content.match(faqHeadingRe);
+  if (!match) return [];
+  const start = content.indexOf(match[0]) + match[0].length;
+  const rest = content.slice(start);
+  // FAQ section ends at next H2 or end of file
+  const endIdx = rest.search(/\n##\s+/);
+  const block = endIdx === -1 ? rest : rest.slice(0, endIdx);
+  const pairs: { q: string; a: string }[] = [];
+  // Q is **bold line ending with ?**; A is following line(s) until blank line
+  const re = /\*\*([^*]+\?)\*\*\s*\n+([^\n][^\n]*(?:\n[^\n*][^\n]*)*)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(block)) !== null) {
+    pairs.push({ q: m[1].trim(), a: m[2].trim() });
+  }
+  return pairs;
+}
+
+const IntelligenceArticle = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const localized = useLocalizedPath();
+  const piece = useIntelligencePiece(slug || '');
+
+  if (!piece) return <Navigate to={localized('/i6-intelligence')} replace />;
+
+  const cover = resolveIntelligenceCover(piece.cover_image);
+  const url = `${BASE_URL}/${language}/i6-intelligence/${piece.slug}`;
+  const faq = extractFAQ(piece.content);
+
+  return (
+    <>
+      <Helmet>
+        <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
+        <title>{`${piece.title} | i6 Intelligence`}</title>
+        <meta name="description" content={piece.excerpt} />
+        <link rel="canonical" href={url} />
+        <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/i6-intelligence/${piece.slug}`} />
+        <link rel="alternate" hrefLang="pt-BR" href={`${BASE_URL}/pt/i6-intelligence/${piece.slug}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${BASE_URL}/en/i6-intelligence/${piece.slug}`} />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={piece.title} />
+        <meta property="og:description" content={piece.excerpt} />
+        <meta property="og:url" content={url} />
+        {cover && <meta property="og:image" content={cover.startsWith('http') ? cover : `${BASE_URL}${cover}`} />}
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: piece.title,
+          description: piece.excerpt,
+          datePublished: piece.date,
+          inLanguage: language === 'pt' ? 'pt-BR' : 'en',
+          author: { '@type': 'Organization', name: 'infinity6' },
+          publisher: { '@type': 'Organization', name: 'infinity6' },
+          mainEntityOfPage: url,
+          isPartOf: { '@type': 'CreativeWork', name: 'i6 Intelligence' },
+          ...(cover ? { image: cover.startsWith('http') ? cover : `${BASE_URL}${cover}` } : {}),
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${language}` },
+            { '@type': 'ListItem', position: 2, name: 'i6 Intelligence', item: `${BASE_URL}/${language}/i6-intelligence` },
+            { '@type': 'ListItem', position: 3, name: piece.title, item: url },
+          ],
+        })}</script>
+        {faq.length > 0 && (
+          <script type="application/ld+json">{JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faq.map((f) => ({
+              '@type': 'Question',
+              name: f.q,
+              acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
+          })}</script>
+        )}
+      </Helmet>
+
+      <article className="container mx-auto px-6 pt-32 pb-20 max-w-3xl">
+        <Link
+          to={localized('/i6-intelligence')}
+          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors mb-8"
+        >
+          <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para i6 Intelligence' : 'Back to i6 Intelligence'}
+        </Link>
+
+        <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Research</p>
+        <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">{piece.title}</h1>
+        <p className="text-base text-white/60 mb-8">{piece.excerpt}</p>
+
+        <div className="flex items-center gap-3 text-xs text-white/40 mb-12">
+          <time>
+            {new Date(piece.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { day: '2-digit', month: 'long', year: 'numeric' })}
+          </time>
+          {piece.read_time && <><span>·</span><span>{piece.read_time} min</span></>}
+        </div>
+
+        <div className="prose prose-invert prose-headings:text-white prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-p:text-white/80 prose-li:text-white/80 prose-strong:text-white prose-a:text-[#F4845F] hover:prose-a:underline max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.content}</ReactMarkdown>
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-white/10">
+          <Link
+            to={localized('/contact')}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F4845F] hover:bg-[#F4845F]/90 text-white text-sm font-semibold transition-all shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+          >
+            {language === 'pt' ? 'Colocar Dados em Movimento' : 'Put Data in Motion'}
+          </Link>
+        </div>
+      </article>
+    </>
+  );
+};
+
+export default IntelligenceArticle;
