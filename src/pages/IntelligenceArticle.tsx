@@ -99,7 +99,7 @@ const IntelligenceArticle = () => {
           to={localized('/i6-intelligence')}
           className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors mb-8"
         >
-          <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para i6 Intelligence' : 'Back to i6 Intelligence'}
+          <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para i6 Research' : 'Back to i6 Research'}
         </Link>
 
         <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Research</p>
