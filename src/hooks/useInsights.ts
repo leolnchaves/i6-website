@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 
-export type InsightType = 'article' | 'linkedin' | 'press' | 'podcast' | 'video';
+export type InsightType = 'i6 on Media' | 'i6 Article' | 'i6 eBook' | 'i6 Social';
 
 export interface InsightFrontmatter {
   id?: string;
