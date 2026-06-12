@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
   repository_dispatch:
-    types: [insights-updated]
+    types: [insights-updated, research-updated, landings-updated, stories-updated]
 
 permissions:
   contents: read
@@ -29,9 +29,27 @@ jobs:
         run: npm install
 
       - name: Sync insights from i6Hub CMS
-        run: node scripts/sync-insights-from-i6hub.mjs
+        run: node scripts/sync-content-from-i6hub.mjs --type=insights
         env:
           I6HUB_FEED_URL: ${{ secrets.I6HUB_FEED_URL }}
+          I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
+
+      - name: Sync research from i6Hub CMS
+        run: node scripts/sync-content-from-i6hub.mjs --type=research
+        env:
+          I6HUB_FEED_URL_RESEARCH: ${{ secrets.I6HUB_FEED_URL_RESEARCH }}
+          I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
+
+      - name: Sync landings from i6Hub CMS
+        run: node scripts/sync-content-from-i6hub.mjs --type=landings
+        env:
+          I6HUB_FEED_URL_LANDINGS: ${{ secrets.I6HUB_FEED_URL_LANDINGS }}
+          I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
+
+      - name: Sync stories from i6Hub CMS
+        run: node scripts/sync-content-from-i6hub.mjs --type=stories
+        env:
+          I6HUB_FEED_URL_STORIES: ${{ secrets.I6HUB_FEED_URL_STORIES }}
           I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
 
       - name: Build
