@@ -1,7 +1,6 @@
-## Remover seção "Resultados em movimento" da Home
+Atualizar o título da seção "Challenges" em `src/data/staticData/ourAIContent.ts`:
 
-Em `src/pages/HomeTeste.tsx`:
-- Remover o import na linha 5: `import ResultadosSection from '@/components/hometeste/ResultadosSection';`
-- Remover o uso na linha 17: `<ResultadosSection />`
+- **PT (linha 321):** `'Por que a IA aplicada falha — e como resolvemos'` → `'Por que a IA falha e como resolvemos'`
+- **EN (linha 626):** `'Why applied AI fails — and how we solve it'` → `'Why AI fails and how we solve it'`
 
-A seção "Provas em números" (logo abaixo) permanece como única seção de resultados na home. O arquivo `src/components/hometeste/ResultadosSection.tsx` fica órfão mas não será deletado (sem impacto no build).
+Sem ponto final, conforme regra de tipografia do projeto.

@@ -318,7 +318,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
     },
     challenges: {
-      title: 'Por que a IA aplicada falha — e como resolvemos',
+      title: 'Por que a IA falha e como resolvemos',
       lead: 'IA aplicada é um organismo que se constrói, se alimenta e se adapta. Os principais desafios que enfrentamos com clientes e como a infinity6 endereça cada um.',
       headers: { challenge: 'Desafio', learning: 'Aprendizado', resolution: 'Como resolvemos' },
       rows: [
@@ -623,7 +623,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
     },
     challenges: {
-      title: 'Why applied AI fails — and how we solve it',
+      title: 'Why AI fails and how we solve it',
       lead: 'Applied AI is an organism that builds itself, feeds itself and adapts. The main challenges we face with clients and how infinity6 addresses each one.',
       headers: { challenge: 'Challenge', learning: 'Learning', resolution: 'How we solve it' },
       rows: [
