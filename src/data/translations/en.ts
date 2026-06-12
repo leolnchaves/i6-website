@@ -248,9 +248,9 @@ export const enTranslations = {
   'home.featuredStories.retention': 'Retention',
   
   // Contact Page
-  'contact.hero.title': 'Let\'s Start a',
-  'contact.hero.subtitle': 'Conversation',
-  'contact.hero.description': 'Your AI journey starts here!',
+  'contact.hero.title': 'Put your data',
+  'contact.hero.subtitle': 'in motion',
+  'contact.hero.description': 'Talk to our team about demand forecasting, margin protection, recommendation and propensity.',
   'contact.info.emailUs': 'Email Us',
   'contact.info.emailDescription': 'Send us an email anytime',
   'contact.info.callUs': 'Call Us',
