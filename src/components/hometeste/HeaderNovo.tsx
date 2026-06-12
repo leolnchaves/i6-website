@@ -46,7 +46,7 @@ const HeaderNovo = () => {
     { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization') },
     { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps') },
     { to: localized('/solutions/behavior-conversion'), label: t('header.solutions.behaviorConversion') },
-  ].filter((item) => !item.comingSoon);
+  ];
 
   const links = [
     { to: localized('/'), label: t('header.home') },
