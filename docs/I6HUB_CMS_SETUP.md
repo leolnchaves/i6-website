@@ -1,5 +1,11 @@
 # i6Hub CMS — Setup do site infinity6
 
+> Este documento cobre **Insights** (já em produção).
+> Para colocar **Intelligence**, **Landings** e **Success Stories** sob CMS
+> seguindo o mesmo padrão, ver [`docs/I6HUB_CMS_ROADMAP.md`](./I6HUB_CMS_ROADMAP.md).
+
+
+
 Arquitetura: o **i6Hub** é o painel admin dos artigos do site
 `infinity6.ai`. Quando um artigo é salvo no i6Hub, um trigger Postgres
 chama a edge function `notify-site-rebuild`, que dispara um
