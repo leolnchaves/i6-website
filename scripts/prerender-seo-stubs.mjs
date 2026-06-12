@@ -177,7 +177,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'solutions', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights'];
+const staticRoutes = ['', 'solutions', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 for (const lang of ['en', 'pt']) {
   for (const route of staticRoutes) {
     const key = route === '' ? 'home' : route;
