@@ -341,7 +341,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     research: {
       eyebrow: 'Pesquisa & Fundamentos',
       title: 'Base científica dos motores i6',
-      lead: 'Os fundamentos de mapas auto-organizáveis, clustering não-supervisionado e descoberta de padrões sem regras prévias que alimentam i6Previsio, i6RecSys e i6ElasticPrice têm origem em pesquisa acadêmica revisada por pares e em palestras técnicas em conferências de engenharia',
+      lead: 'Referências técnicas próprias: estudos conduzidos pelo founder da infinity6 e nossa área de P&D, em uma base de pesquisa em IA construída desde 2010, que sustentam os motores i6Previsio, i6RecSys e i6ElasticPrice — de mapas auto-organizáveis a clustering não-supervisionado e descoberta de padrões sem regras prévias',
       publicationsLabel: 'Publicações revisadas por pares',
       talksLabel: 'Palestras técnicas',
       openLabel: 'Acessar',
@@ -646,7 +646,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     research: {
       eyebrow: 'Research & Foundations',
       title: 'Scientific foundations behind the i6 engines',
-      lead: 'The foundations of self-organizing maps, unsupervised clustering and rule-free pattern discovery powering i6Previsio, i6RecSys and i6ElasticPrice come from peer-reviewed academic research and technical talks at engineering conferences',
+      lead: 'Proprietary technical references: studies developed by the founder of infinity6 and our R&D department, on an AI research base built since 2010, powering i6Previsio, i6RecSys and i6ElasticPrice — from self-organizing maps to unsupervised clustering and rule-free pattern discovery',
       publicationsLabel: 'Peer-reviewed publications',
       talksLabel: 'Technical talks',
       openLabel: 'Open',
