@@ -104,10 +104,10 @@ const OurAI = memo(() => {
       <EnginesGrid content={c.engines} foundation={c.thesis.foundation} />
       <DiversityBalanceSection content={c.diversity} />
       <ExplainabilitySection content={c.explainability} />
-      <RealResultsStrip />
       <SecuritySection content={c.security} />
       <ChallengesAccordion content={c.challenges} />
       <CommunitySection content={c.community} />
+      <RealResultsStrip />
       <GlossarySection content={c.glossary} />
       <OurAICTA content={c.cta} />
     </>

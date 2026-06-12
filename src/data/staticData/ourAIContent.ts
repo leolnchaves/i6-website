@@ -220,7 +220,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     diversity: {
       title: 'Balanceamento de diversidade',
       lead: 'Ao analisar comportamentos únicos e padrões de recomendação, identificamos os melhores produtos inexplorados para cada cliente — garantindo sugestões diversas e relevantes além do histórico.',
-      tasks: ['Recommended for you', 'Frequently bought together', 'Buy it again', 'Similar items', 'On sale'],
+      tasks: ['Recomendado para você', 'Comprados juntos com frequência', 'Compre novamente', 'Itens similares', 'Em promoção'],
       middle: {
         title: 'Treinamento com ajuste fino',
         subtitle: 'Para precisão e diversidade',
@@ -248,19 +248,19 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Prioriza fatores e estrutura',
           description: 'Classifica fatores pelo impacto estimado no aumento de vendas e escolhe o melhor modelo de mensagem',
           cards: [
-            { title: 'Increase in demand', subtitle: 'prioritize argument of growth opportunity' },
-            { title: 'Repurchase occasion', subtitle: 'emphasize need for immediate restocking' },
-            { title: 'New product', subtitle: 'highlight market trend' },
-            { title: 'High-selling product', subtitle: 'stress risk of stockout' },
+            { title: 'Aumento de demanda', subtitle: 'priorize o argumento de oportunidade de crescimento' },
+            { title: 'Ocasião de recompra', subtitle: 'enfatize a necessidade de reposição imediata' },
+            { title: 'Produto novo', subtitle: 'destaque a tendência de mercado' },
+            { title: 'Produto de alta venda', subtitle: 'reforce o risco de ruptura' },
           ],
         },
         {
           title: 'Gera argumento dinâmico',
           description: 'Preenche o modelo com elementos dinâmicos, compondo a mensagem personalizada para cada PDV/SKU',
           cards: [
-            { title: 'High engagement', subtitle: 'from similar customer profiles in the last 30 days' },
-            { title: 'Optimized bundling', subtitle: 'based on successful cross-sell patterns' },
-            { title: 'Strong correlation', subtitle: 'with the preferred products of high-value customers' },
+            { title: 'Alto engajamento', subtitle: 'de perfis de cliente similares nos últimos 30 dias' },
+            { title: 'Bundling otimizado', subtitle: 'baseado em padrões bem-sucedidos de cross-sell' },
+            { title: 'Forte correlação', subtitle: 'com os produtos preferidos de clientes de alto valor' },
           ],
         },
       ],
