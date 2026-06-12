@@ -3,6 +3,12 @@ export const enTranslations = {
   // Header
   'header.home': 'Home',
   'header.solutions': 'Solutions',
+  'header.solutions.aiSolutions': 'AI Solutions',
+  'header.solutions.proprietaryAi': 'Proprietary AI',
+  'header.solutions.demandSupply': 'Demand & Supply Efficiency',
+  'header.solutions.dataMonetization': 'Data Monetization & Strategy',
+  'header.solutions.predictiveOps': 'Predictive Operations',
+  'header.solutions.behaviorConversion': 'Behavior & Conversion',
   'header.successStories': 'Success Stories',
   'header.community': 'Community',
   'header.insights': 'Insights',

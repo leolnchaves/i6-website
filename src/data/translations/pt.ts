@@ -3,6 +3,12 @@ export const ptTranslations = {
   // Header
   'header.home': 'Início',
   'header.solutions': 'Soluções',
+  'header.solutions.aiSolutions': 'AI Solutions',
+  'header.solutions.proprietaryAi': 'Proprietary AI',
+  'header.solutions.demandSupply': 'Demand & Supply Efficiency',
+  'header.solutions.dataMonetization': 'Data Monetization & Strategy',
+  'header.solutions.predictiveOps': 'Predictive Operations',
+  'header.solutions.behaviorConversion': 'Behavior & Conversion',
   'header.successStories': 'Cases de Sucesso',
   'header.community': 'Comunidade',
   'header.insights': 'Insights',
