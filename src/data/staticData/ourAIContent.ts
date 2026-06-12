@@ -55,6 +55,7 @@ export interface OurAIContent {
     tasks: string[];
     middle: { title: string; subtitle: string };
     chartNote: string;
+    chartHighlight: string;
   };
   explainability: {
     title: string;
@@ -64,6 +65,7 @@ export interface OurAIContent {
       description: string;
       sample?: { sku: string; rows: { feature: string; weight: string }[] };
       cards?: { title: string; subtitle: string }[];
+      segments?: { label: string; items: { title: string; subtitle: string }[] }[];
     }[];
   };
   security: {
