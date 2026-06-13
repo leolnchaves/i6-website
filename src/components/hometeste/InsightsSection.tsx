@@ -4,20 +4,15 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useFeaturedInsights, type Insight } from '@/hooks/useInsights';
 
-const TYPE_LABELS_PT: Record<string, string> = { article: 'Artigo', linkedin: 'LinkedIn', press: 'Imprensa', podcast: 'Podcast', video: 'Vídeo' };
-const TYPE_LABELS_EN: Record<string, string> = { article: 'Article', linkedin: 'LinkedIn', press: 'Press', podcast: 'Podcast', video: 'Video' };
-
 const InsightMiniCard = ({ insight }: { insight: Insight }) => {
-  const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const labels = language === 'pt' ? TYPE_LABELS_PT : TYPE_LABELS_EN;
-  const isExternal = !insight.gated && insight.type !== 'article' && !!insight.external_url;
+  const isExternal = !insight.gated && insight.type !== 'i6 Article' && !!insight.external_url;
 
   const inner = (
     <div className="group h-full p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded bg-[#F4845F]/15 text-[#F4845F]">
-          {labels[insight.type] || insight.type}
+          {insight.type}
         </span>
         {isExternal && <ExternalLink size={14} className="text-white/40" />}
       </div>

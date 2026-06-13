@@ -6,29 +6,13 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsights, resolveCoverImage, type Insight } from '@/hooks/useInsights';
 import SEOHead from '@/components/common/SEOHead';
 
-const TYPE_LABELS_PT: Record<string, string> = {
-  article: 'Artigo',
-  linkedin: 'LinkedIn',
-  press: 'Imprensa',
-  podcast: 'Podcast',
-  video: 'Vídeo',
-};
-const TYPE_LABELS_EN: Record<string, string> = {
-  article: 'Article',
-  linkedin: 'LinkedIn',
-  press: 'Press',
-  podcast: 'Podcast',
-  video: 'Video',
-};
-
 const InsightCard = ({ insight }: { insight: Insight }) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const labels = language === 'pt' ? TYPE_LABELS_PT : TYPE_LABELS_EN;
-  const isExternal = !insight.gated && insight.type !== 'article' && !!insight.external_url;
+  const isExternal = !insight.gated && insight.type !== 'i6 Article' && !!insight.external_url;
   const cover = resolveCoverImage(insight.cover_image);
 
-  const typeLabel = labels[insight.type] || insight.type;
+  const typeLabel = insight.type;
 
   const cardContent = (
     <article className="group h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all overflow-hidden">
@@ -65,7 +49,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
           {insight.title}
         </h2>
         <p className="text-sm text-white/60 flex-1">{insight.excerpt}</p>
-        {insight.read_time && insight.type === 'article' && (
+        {insight.read_time && insight.type === 'i6 Article' && (
           <p className="text-xs text-white/40 mt-4">{insight.read_time} min</p>
         )}
       </div>

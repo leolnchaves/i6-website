@@ -90,8 +90,12 @@ if (res.status === 404) {
   process.exit(0);
 }
 if (!res.ok) throw new Error(`Feed failed: ${res.status} ${await res.text()}`);
-const items = await res.json();
-console.log(`[${TYPE}] received ${items.length} items`);
+const rawItems = await res.json();
+const INSIGHT_TYPES = new Set(['i6 on Media', 'i6 Article', 'i6 eBook', 'i6 Social']);
+const items = TYPE === 'insights'
+  ? rawItems.filter((it) => INSIGHT_TYPES.has(it?.type))
+  : rawItems;
+console.log(`[${TYPE}] received ${rawItems.length} items${TYPE === 'insights' ? ` (${items.length} after type filter)` : ''}`);
 const MD_DIR   = CONFIG.mdDir;
 const IMG_DIR  = CONFIG.imgDir  ?? null;
 const LOGO_DIR = CONFIG.logoDir ?? null;
