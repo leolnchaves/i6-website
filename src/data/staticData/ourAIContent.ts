@@ -141,7 +141,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           { value: '~50', label: 'bases públicas/adquiridas (2026)' },
         ],
         mix: [
-          { value: '15%', label: 'transações bancárias' },
+          { value: '15%', label: 'comportamento em produtos financeiros' },
           { value: '45%', label: 'e-commerce' },
           { value: '20%', label: 'telecom' },
           { value: '20%', label: 'atacado / varejo' },
