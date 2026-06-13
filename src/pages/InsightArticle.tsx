@@ -31,13 +31,13 @@ const InsightArticle = () => {
   }, []);
 
   useEffect(() => {
-    if (insight && !insight.gated && insight.type !== 'article' && insight.external_url) {
+    if (insight && !insight.gated && insight.type !== 'i6 Article' && insight.external_url) {
       window.open(insight.external_url, '_blank', 'noopener,noreferrer');
     }
   }, [insight]);
 
   if (!insight) return <Navigate to={localized('/insights')} replace />;
-  if (insight.type !== 'article' && !insight.gated) {
+  if (insight.type !== 'i6 Article' && !insight.gated) {
     if (!insight.external_url) {
       return <Navigate to={localized('/insights')} replace />;
     }
