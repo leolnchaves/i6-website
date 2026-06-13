@@ -1,20 +1,26 @@
-## Reduzir cards da página /insights
+## Problema
 
-Arquivo: `src/pages/Insights.tsx` (componente `InsightCard`)
+Os 4 arquivos `*-pt.md` em `src/content/landings/` estão com os títulos das seções (`## Pain`, `## Problem`, `## Solution`, `## Application`, `## Results`, `## FAQ`) em inglês. Como o `TransformationLanding.tsx` renderiza o `section.title` exatamente como está no Markdown, as versões em português exibem os títulos em inglês.
 
-Mudanças:
+O parser em `useLandings.ts` já mapeia tanto PT quanto EN para os mesmos `section.id` (`pain`, `problem`, `solution`, `application`, `results`, `faq`), então mudar apenas o título visível não quebra nenhuma lógica.
 
-1. **Grid**: trocar `md:grid-cols-2 lg:grid-cols-3` por `sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4` — mais cards por linha, cada um ~25% mais estreito.
-2. **Imagem de capa**: reduzir altura de `h-40` para `h-28`.
-3. **Padding interno**: `p-6` → `p-4`.
-4. **Tipografia**:
-   - Título: `text-lg` → `text-sm` + `mb-2` mantém
-   - Excerpt: `text-sm` → `text-xs`, adicionar `line-clamp-3`
-   - Marca de tipo (badge): manter `text-xs` mas com `px-1.5 py-0.5`
-   - Placeholder "I6 ON MEDIA": `text-3xl md:text-4xl` → `text-xl md:text-2xl`
-5. **Gap do grid**: `gap-6` → `gap-4`.
-6. **Margens internas**: `mb-3` (header) → `mb-2`; `mt-4` (read_time) → `mt-3`.
+## Mudanças
 
-Resultado: cards ~40% menores em área, mantendo hierarquia visual e legibilidade. Não altera lógica, dados ou roteamento — apenas presentation/Tailwind no `Insights.tsx`.
+Substituir os cabeçalhos H2 nos 4 arquivos PT:
 
-Não mexer em `InsightsSection.tsx` (home) pois o pedido é específico da tela `/insights`.
+| EN (atual) | PT (novo) |
+|---|---|
+| `## Pain` | `## Dor` |
+| `## Problem` | `## Problema` |
+| `## Solution` | `## Solução` |
+| `## Application` | `## Aplicação` |
+| `## Results` | `## Resultados` |
+| `## FAQ` | `## Perguntas frequentes` |
+
+Arquivos afetados:
+- `src/content/landings/demand-supply-efficiency-pt.md`
+- `src/content/landings/data-monetization-pt.md`
+- `src/content/landings/predictive-operations-pt.md`
+- `src/content/landings/behavior-conversion-pt.md`
+
+Os arquivos `-en.md` ficam intactos. Nenhuma alteração de código/componente é necessária.

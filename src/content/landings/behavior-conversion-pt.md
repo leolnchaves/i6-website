@@ -13,7 +13,7 @@ related_stories: "customer-engagement-online-sales, cross-sell-propensity-intell
 cover_image: null
 ---
 
-## Pain
+## Dor
 
 A maior parte do tráfego não converte por dois motivos simples:
 
@@ -22,13 +22,13 @@ A maior parte do tráfego não converte por dois motivos simples:
 
 O custo é duplo: **CAC inflado** (gasto para trazer quem não converteu) + **margem corroída** (desconto desnecessário para quem teria comprado de qualquer jeito).
 
-## Problem
+## Problema
 
 Personalização baseada em regras ("se carrinho > X, mostra Y") trata todos os clientes como iguais dentro do segmento. Modelos genéricos de propensão usam sinais frágeis e ignoram **o que faz aquela compra específica acontecer agora**: timing, contexto, similaridade, elasticidade.
 
 IA aplicada sem explicabilidade vira caixa-preta — o time comercial não confia na recomendação e a desliga.
 
-## Solution
+## Solução
 
 A infinity6 conecta comportamento, contexto e ativação em três camadas:
 
@@ -36,7 +36,7 @@ A infinity6 conecta comportamento, contexto e ativação em três camadas:
 - **i6 ElasticPrice** — calibra o incentivo certo (desconto, brinde, bundle) pela elasticidade real do cluster.
 - **i6 Signal** — entrega o argumento dinâmico (explicabilidade vira frase pronta) ao canal de ativação: site, app, e-mail, WhatsApp, PDV.
 
-## Application
+## Aplicação
 
 Pluga em e-commerce, CRM, app e PDV via API. Cada evento de sessão dispara reavaliação de propensão; o argumento que volta já vem com a explicação por feature.
 
@@ -44,14 +44,14 @@ Pluga em e-commerce, CRM, app e PDV via API. Cada evento de sessão dispara reav
 - **Anonimização nativa** — opera sobre identificadores anonimizados.
 - **A/B nativo** — toda recomendação carrega janela de teste contra o baseline.
 
-## Results
+## Resultados
 
 - **+22%** Conversão em tráfego anônimo | E-commerce
 - **+31%** Cross-sell guiado vs. regra fixa | Varejo
 - **−18%** Cupom desnecessário (clientes que comprariam a preço cheio) | E-commerce
 - **+12 p.p.** Aderência de mix por cluster de loja | Varejo
 
-## FAQ
+## Perguntas frequentes
 
 **Funciona para tráfego anônimo (sem login)?**
 Sim. O i6 RecSys gera propensão para visitantes anônimos com base em padrão de sessão, dispositivo, contexto e similaridade com clusters conhecidos.

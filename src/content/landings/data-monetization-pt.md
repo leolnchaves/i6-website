@@ -13,7 +13,7 @@ related_stories: "customer-engagement-online-sales, cross-sell-propensity-intell
 cover_image: null
 ---
 
-## Pain
+## Dor
 
 A maior parte das empresas convive com a mesma frustração: **89% não monetizam os próprios dados**. Os ativos existem — histórico transacional, navegação, perfil de cliente, sinais de canal — mas raramente viram receita incremental.
 
@@ -21,13 +21,13 @@ A maior parte das empresas convive com a mesma frustração: **89% não monetiza
 - Cross-sell empurrado pelo "tem em estoque", não pela propensão real.
 - Dados ricos, decisões pobres: BI mostra o passado, mas ninguém antecipa o próximo movimento.
 
-## Problem
+## Problema
 
 Plataformas de personalização genéricas tratam todos os clientes como iguais "depois do clustering". Modelos enlatados de propensão usam regras simplificadas que ignoram **contexto, timing e elasticidade individual**. O resultado: campanhas com ROI marginal e mix homogêneo entre lojas radicalmente diferentes.
 
 Sem motor proprietário treinado no comportamento real do negócio, monetizar dado vira *vanity metric* — não margem.
 
-## Solution
+## Solução
 
 A infinity6 transforma dado parado em decisão ativa em três frentes integradas:
 
@@ -35,7 +35,7 @@ A infinity6 transforma dado parado em decisão ativa em três frentes integradas
 - **i6 ElasticPrice** — calibra desconto, brinde ou bundle pela elasticidade real de cada cluster, em vez de promoção horizontal.
 - **i6 Signal** — entrega a próxima ação comercial ao time de marketing, CRM ou loja: para quem, quando, com qual oferta.
 
-## Application
+## Aplicação
 
 A IA pluga em ERPs, e-commerces e CRMs via API, ingere histórico transacional + comportamental anonimizado e devolve scores e recomendações com frequência diária ou em tempo real.
 
@@ -43,14 +43,14 @@ A IA pluga em ERPs, e-commerces e CRMs via API, ingere histórico transacional +
 - **Atribuição mensurável** — cada recomendação carrega janela de teste A/B contra o baseline.
 - **Cluster dinâmico** — o cluster de cliente, loja ou produto reaprende a cada ciclo, não é segmentação congelada.
 
-## Results
+## Resultados
 
 - **+22%** Ticket médio em recomendados | E-commerce
 - **+31%** Conversão em cross-sell guiado | Varejo
 - **+4,8 p.p.** Margem em campanhas elastic-driven | CPG
 - **3,2×** ROI de campanhas direcionadas vs. blast | Varejo
 
-## FAQ
+## Perguntas frequentes
 
 **Preciso ter um data lake maduro para começar?**
 Não. O modelo fundacional i6-RecSys-Base.g1 já vem pré-treinado em 1,45 bilhão de registros (e-commerce, bancário, telecom, varejo). Conectamos com o que existe e o ajuste fino acontece sobre os seus dados.
