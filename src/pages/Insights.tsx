@@ -18,7 +18,15 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
     <article className="group h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all overflow-hidden">
       <div className="h-28 overflow-hidden bg-white/5 relative">
         {cover ? (
-          <img src={cover} alt={insight.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          <>
+            <img
+              src={cover}
+              alt={insight.title}
+              className="w-full h-full object-cover saturate-[0.75] brightness-90 blur-[1px] group-hover:saturate-100 group-hover:brightness-100 group-hover:blur-0 group-hover:scale-105 transition-all duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 pointer-events-none" />
+          </>
         ) : (
           <div
             className="w-full h-full flex items-center justify-center relative overflow-hidden"
