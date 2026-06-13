@@ -16,7 +16,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
 
   const cardContent = (
     <article className="group h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all overflow-hidden">
-      <div className="h-40 overflow-hidden bg-white/5 relative">
+      <div className="h-28 overflow-hidden bg-white/5 relative">
         {cover ? (
           <img src={cover} alt={insight.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         ) : (
@@ -28,29 +28,29 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
             }}
             aria-hidden="true"
           >
-            <span className="text-3xl md:text-4xl font-bold uppercase tracking-[0.25em] text-white/10 select-none">
+            <span className="text-xl md:text-2xl font-bold uppercase tracking-[0.25em] text-white/10 select-none">
               {typeLabel}
             </span>
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_80%_90%,rgba(244,132,95,0.08),transparent_50%)]" />
           </div>
         )}
       </div>
-      <div className="p-6 flex-1 flex flex-col">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded bg-[#F4845F]/15 text-[#F4845F]">
+      <div className="p-4 flex-1 flex flex-col">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#F4845F]/15 text-[#F4845F]">
             {typeLabel}
           </span>
-          {isExternal && <ExternalLink size={14} className="text-white/40" />}
-          <time className="text-xs text-white/40 ml-auto">
+          {isExternal && <ExternalLink size={12} className="text-white/40" />}
+          <time className="text-[10px] text-white/40 ml-auto">
             {new Date(insight.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
           </time>
         </div>
-        <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors">
+        <h2 className="text-sm font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors line-clamp-2">
           {insight.title}
         </h2>
-        <p className="text-sm text-white/60 flex-1">{insight.excerpt}</p>
+        <p className="text-xs text-white/60 flex-1 line-clamp-3">{insight.excerpt}</p>
         {insight.read_time && insight.type === 'i6 Article' && (
-          <p className="text-xs text-white/40 mt-4">{insight.read_time} min</p>
+          <p className="text-[10px] text-white/40 mt-3">{insight.read_time} min</p>
         )}
       </div>
     </article>
@@ -94,7 +94,7 @@ const Insights = () => {
         {insights.length === 0 ? (
           <p className="text-white/50">{language === 'pt' ? 'Em breve, novos conteúdos' : 'New content coming soon'}</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {insights.map((i) => <InsightCard key={`${i.slug}-${i.language}`} insight={i} />)}
           </div>
         )}
