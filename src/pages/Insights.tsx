@@ -94,7 +94,7 @@ const Insights = () => {
         {insights.length === 0 ? (
           <p className="text-white/50">{language === 'pt' ? 'Em breve, novos conteúdos' : 'New content coming soon'}</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {insights.map((i) => <InsightCard key={`${i.slug}-${i.language}`} insight={i} />)}
           </div>
         )}
