@@ -5,7 +5,11 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
   repository_dispatch:
-    types: [insights-updated, research-updated, landings-updated, stories-updated]
+    types: [content-updated, insights-updated, research-updated, landings-updated, stories-updated]
+
+concurrency:
+  group: deploy-gh-pages
+  cancel-in-progress: true
 
 permissions:
   contents: read
