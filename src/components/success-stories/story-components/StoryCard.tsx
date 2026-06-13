@@ -43,12 +43,13 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, language }) => {
 
       <div className="p-6 relative">
         {/* Image */}
-        <div className="w-full h-32 bg-white/5 rounded-lg mb-4 overflow-hidden">
+        <div className="w-full h-32 bg-white/5 rounded-lg mb-4 overflow-hidden relative">
           <LazyImage
             src={story.image_url}
             alt={story.company_name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover saturate-[0.75] brightness-90 blur-[1px] group-hover:saturate-100 group-hover:brightness-100 group-hover:blur-0 transition-all duration-500"
           />
+          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 pointer-events-none" />
         </div>
 
         {/* Industry tag */}
