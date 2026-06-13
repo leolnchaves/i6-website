@@ -49,7 +49,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
           {insight.title}
         </h2>
         <p className="text-sm text-white/60 flex-1">{insight.excerpt}</p>
-        {insight.read_time && insight.type === 'article' && (
+        {insight.read_time && insight.type === 'i6 Article' && (
           <p className="text-xs text-white/40 mt-4">{insight.read_time} min</p>
         )}
       </div>
