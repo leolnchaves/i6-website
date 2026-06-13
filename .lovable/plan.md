@@ -1,29 +1,20 @@
-## Problema
+## Reduzir cards da página /insights
 
-Texto do corpo aparece praticamente preto sobre o fundo escuro em três tipos de página:
+Arquivo: `src/pages/Insights.tsx` (componente `InsightCard`)
 
-- `/[lang]/solutions/<slug>` — `src/pages/TransformationLanding.tsx`
-- `/[lang]/i6-intelligence/<slug>` (Research) — `src/pages/IntelligenceArticle.tsx`
-- Insights — `src/pages/InsightArticle.tsx`
+Mudanças:
 
-Todas renderizam Markdown com classes `prose prose-invert prose-p:text-white/75 ...`. O pacote `@tailwindcss/typography` está em `package.json`, mas **não está registrado no `tailwind.config.ts`**, então as classes `prose-*` não geram CSS e o texto cai para a cor padrão (preto).
+1. **Grid**: trocar `md:grid-cols-2 lg:grid-cols-3` por `sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4` — mais cards por linha, cada um ~25% mais estreito.
+2. **Imagem de capa**: reduzir altura de `h-40` para `h-28`.
+3. **Padding interno**: `p-6` → `p-4`.
+4. **Tipografia**:
+   - Título: `text-lg` → `text-sm` + `mb-2` mantém
+   - Excerpt: `text-sm` → `text-xs`, adicionar `line-clamp-3`
+   - Marca de tipo (badge): manter `text-xs` mas com `px-1.5 py-0.5`
+   - Placeholder "I6 ON MEDIA": `text-3xl md:text-4xl` → `text-xl md:text-2xl`
+5. **Gap do grid**: `gap-6` → `gap-4`.
+6. **Margens internas**: `mb-3` (header) → `mb-2`; `mt-4` (read_time) → `mt-3`.
 
-## Mudança
+Resultado: cards ~40% menores em área, mantendo hierarquia visual e legibilidade. Não altera lógica, dados ou roteamento — apenas presentation/Tailwind no `Insights.tsx`.
 
-Arquivo único: `tailwind.config.ts` (linha 136).
-
-```ts
-// antes
-plugins: [require("tailwindcss-animate")],
-
-// depois
-plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-```
-
-Nenhuma outra alteração necessária — as classes `prose-invert prose-p:text-white/75 prose-strong:text-white prose-headings:text-white prose-a:text-[#F4845F]` já estão corretas nos três componentes.
-
-## Validação
-
-1. `/pt/solutions/demand-supply-efficiency` e outras 3 landings — corpo em branco/cinza claro
-2. `/pt/i6-intelligence/ruptura-gondola-ia-preditiva` — corpo legível, `<strong>` em branco
-3. Um artigo de Insights — mesma verificação
+Não mexer em `InsightsSection.tsx` (home) pois o pedido é específico da tela `/insights`.
