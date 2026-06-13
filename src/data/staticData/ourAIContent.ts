@@ -447,7 +447,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           { value: '~50', label: 'public/acquired sources (2026)' },
         ],
         mix: [
-          { value: '15%', label: 'banking transactions' },
+          { value: '15%', label: 'financial product behavior' },
           { value: '45%', label: 'e-commerce' },
           { value: '20%', label: 'telecom' },
           { value: '20%', label: 'wholesale / retail' },
