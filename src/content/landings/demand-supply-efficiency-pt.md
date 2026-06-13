@@ -13,7 +13,7 @@ related_stories: "demand-forecast-accuracy, sales-forecast-precision, marketplac
 cover_image: null
 ---
 
-## Pain
+## Dor
 
 Equipes de demanda, compras e operações convivem com três custos invisíveis que erodem margem todo mês:
 
@@ -23,13 +23,13 @@ Equipes de demanda, compras e operações convivem com três custos invisíveis 
 
 A combinação típica é a pior: falta no SKU certo, sobra no SKU errado.
 
-## Problem
+## Problema
 
 ERPs convencionais reposicionam estoque com **médias móveis e ponto de pedido fixo**. Funciona em SKUs estáveis, mas subestima a cauda longa de variabilidade — exatamente onde a ruptura mais dói. Planilhas de comprador não escalam para 10.000 SKUs × centenas de PDVs × 365 dias.
 
 IA genérica também falha quando é apenas previsão sem decisão: prever bem sem **conectar previsão à política de estoque e à alocação** deixa o ganho no slide do diretor, não no resultado.
 
-## Solution
+## Solução
 
 A infinity6 conecta três motores em um único ciclo prescritivo:
 
@@ -37,7 +37,7 @@ A infinity6 conecta três motores em um único ciclo prescritivo:
 - **i6 RecSys** — otimiza mix por PDV e ajusta sortimento por cluster comportamental de loja.
 - **i6 Signal** — entrega a próxima ação ao time de compras e logística em linguagem de negócio: o que pedir, quanto, para onde, agora.
 
-## Application
+## Aplicação
 
 A IA fica acima do ERP — devolve recomendações via API ou arquivo. Compra e transferência continuam no sistema atual.
 
@@ -45,14 +45,14 @@ A IA fica acima do ERP — devolve recomendações via API ou arquivo. Compra e 
 - **Restrições reais** incorporadas: lead time do fornecedor, shelf life, nível de serviço alvo por categoria, margem ponderada.
 - **Explicabilidade** por SKU: cada recomendação vem com os fatores que a sustentam, prontos para discussão com o comprador.
 
-## Results
+## Resultados
 
 - **−38%** Ruptura em SKUs A/B (90 dias) | Varejo farma
 - **−14%** Capital empatado em overstock | Varejo farma
 - **+6,2 p.p.** Margem bruta da categoria OTC | Varejo farma
 - **96,4%** Nível de serviço (era 91,8%) | Varejo farma
 
-## FAQ
+## Perguntas frequentes
 
 **Em quanto tempo o resultado aparece?**
 O ciclo de aprendizado do i6 Previsio precisa de 6 a 10 semanas de histórico recente. Resultados materiais aparecem entre o 60º e o 90º dia em produção.

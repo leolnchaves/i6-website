@@ -13,7 +13,7 @@ related_stories: "sales-forecast-precision, demand-forecast-accuracy, marketplac
 cover_image: null
 ---
 
-## Pain
+## Dor
 
 Operações modernas convivem com decisões que chegam tarde:
 
@@ -22,7 +22,7 @@ Operações modernas convivem com decisões que chegam tarde:
 - **Manutenção corretiva** quando a preditiva já indicava o ativo em risco há semanas.
 - **Time operando dashboard**, não decisão — o dado existe, a ação não.
 
-## Problem
+## Problema
 
 Sistemas tradicionais de operação são **reativos por design**: registram o que aconteceu e alertam quando o limite estoura. Faltam três coisas que IA genérica também não entrega:
 
@@ -30,7 +30,7 @@ Sistemas tradicionais de operação são **reativos por design**: registram o qu
 2. **Conexão entre previsão e ação** — sem ativar o time certo, a previsão vira gráfico.
 3. **Aprendizado contextual** — modelo que entende sazonalidade, restrição local, lead time real do fornecedor.
 
-## Solution
+## Solução
 
 A infinity6 transforma operação reativa em operação antecipatória:
 
@@ -38,7 +38,7 @@ A infinity6 transforma operação reativa em operação antecipatória:
 - **i6 RecSys** — prioriza ordens e alocações pelo impacto esperado em margem e nível de serviço, não pela fila FIFO.
 - **i6 Signal** — entrega a próxima ação para compras, supply chain, logística e manutenção, em linguagem de negócio.
 
-## Application
+## Aplicação
 
 A camada preditiva opera sobre ERP, WMS, TMS e MES via API. O time de operação continua nos sistemas atuais — recebe a recomendação prescritiva como input.
 
@@ -46,14 +46,14 @@ A camada preditiva opera sobre ERP, WMS, TMS e MES via API. O time de operação
 - **Priorização por impacto financeiro**: a fila opera pela margem em risco, não pela ordem de chegada.
 - **Ciclo de aprendizado contínuo**: cada decisão executada realimenta o modelo.
 
-## Results
+## Resultados
 
 - **−27%** Pedidos de urgência | Indústria de bens de consumo
 - **+18%** OTIF (On-time, in-full) | Varejo
 - **−42%** Manutenção corretiva não planejada | Indústria
 - **−14%** Custo logístico por pedido | Distribuição
 
-## FAQ
+## Perguntas frequentes
 
 **Funciona para indústria de processo, não só varejo?**
 Sim. O i6 Previsio opera para SKU-PDV-dia no varejo e para ativo-componente-semana na indústria, com o mesmo modelo fundacional e ajuste fino por contexto.
