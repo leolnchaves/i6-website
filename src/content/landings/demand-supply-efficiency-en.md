@@ -31,7 +31,7 @@ Generic AI also fails when it is only forecasting without decision: forecasting 
 
 ## Solution
 
-infinity6 connects three engines in a single prescriptive cycle:
+infinity6 connects two predictive engines and the i6 Signal conversational layer in a single prescriptive cycle:
 
 - **i6 Previsio** — probabilistic forecast per SKU-store-day (full distribution, not just expected value), with adaptive models that relearn every cycle.
 - **i6 RecSys** — optimizes mix per store and tunes assortment by behavioral store cluster.
