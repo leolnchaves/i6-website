@@ -77,8 +77,8 @@ const Insights = () => {
 
   const heading = language === 'pt' ? 'Insights' : 'Insights';
   const subheading = language === 'pt'
-    ? 'Artigos, análises e conteúdos sobre IA preditiva, forecast, pricing e crescimento de receita.'
-    : 'Articles, analysis and content on predictive AI, forecasting, pricing and revenue growth.';
+    ? 'Artigos, análises e conteúdos de mídia sobre IA preditiva, forecast, pricing e crescimento de receita.'
+    : 'Articles, analysis and media content on predictive AI, forecasting, pricing and revenue growth.';
 
   return (
     <>
