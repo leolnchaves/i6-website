@@ -31,7 +31,7 @@ IA genérica também falha quando é apenas previsão sem decisão: prever bem s
 
 ## Solução
 
-A infinity6 conecta três motores em um único ciclo prescritivo:
+A infinity6 conecta dois motores preditivos e a camada conversacional do i6 Signal em um único ciclo prescritivo:
 
 - **i6 Previsio** — previsão probabilística por SKU-PDV-dia (distribuição completa, não apenas valor esperado), com modelos adaptativos que reaprendem em cada ciclo.
 - **i6 RecSys** — otimiza mix por PDV e ajusta sortimento por cluster comportamental de loja.
