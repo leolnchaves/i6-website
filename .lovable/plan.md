@@ -1,40 +1,42 @@
-## Objetivo
 
-Replicar, nas páginas dedicadas de Success Story (`/success-stories/:slug`), o mesmo tratamento de hero usado em i6 Research: imagem horizontal full-bleed com escurecimento + tints, e título/subtítulo ancorados no canto inferior esquerdo sobre a imagem.
+# Preview ao vivo de 3 fundos animados para a hero
 
-Escopo restrito: **somente** imagem do topo + título (`story.title`) + subtítulo (`story.client` e/ou `story.description`). Demais blocos (Resultados, Desafio, Solução, Soluções Aplicadas, Quote, Outras Histórias, CTA) ficam intactos.
+As prévias estáticas do design tool não mostram animação — por isso nenhuma das opções "se mexeu" pra você. A solução é montar uma página temporária no próprio projeto, onde os 3 fundos rodam de verdade (CSS/SVG animados), você compara, escolhe, e aí aplico na hero da home.
 
-## Mudanças
+## O que vou fazer
 
-Arquivo único: `src/pages/SuccessStoryArticle.tsx`
+1. Criar uma rota temporária `/motion-preview` (sem header/footer, fora do menu) com 3 painéis full-screen empilhados, cada um com:
+   - Fundo navy `#0B1224`
+   - Um dos 3 backgrounds animados rodando
+   - O título "Movement Intelligence" + subtítulo + CTA no centro (apenas para você sentir como fica com o conteúdo real)
+   - Um rótulo discreto no canto identificando a opção
 
-1. Remover o `<header>` atual (segment chip + h1 + client + description) e o `<img>` separado abaixo.
-2. Inserir, no mesmo lugar, o bloco hero full-bleed espelhado do `IntelligenceArticle.tsx` (linhas 132–164):
-   - `relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden mb-12`
-   - container interno `h-[420px] md:h-[560px]`
-   - `<img>` com `filter brightness-[0.7] saturate-[0.85] contrast-[1.05]` (mesmo tratamento já aprovado)
-   - 3 camadas: navy tint `bg-[#0B1224]/35`, fade vertical bottom, fade lateral
-   - Texto bottom-left dentro de `container mx-auto max-w-4xl px-6 flex flex-col justify-end pb-8 md:pb-12` (max-w-4xl para casar com o `<article>` da página)
-   - Pré-título pequeno com segmento: `infinity6 · {story.segment}` em `text-[#F4845F]` uppercase tracking-wide
-   - `<h1>` com `story.title`
-   - Subtítulo: `story.client` em destaque + `story.description` em linha menor (mantém os dois campos visíveis, só muda o layout)
-3. Manter o link "Back to Stories" acima do hero (igual ao Research que mantém o "Voltar").
-4. Se `story.image` estiver vazio, renderizar o hero apenas com o fundo navy + texto (sem `<img>`), preservando a estrutura.
+2. As 3 opções (todas suaves, minimalistas, sem clichê de IA, somente CSS/SVG, leves):
 
-Nada mais é alterado: SEO/Helmet, métricas, challenge/solution, quote, related, CTAFinal permanecem como estão.
+   **Opção A — Aurora Drift**  
+   2–3 "blobs" de coral muito desfocados (`blur-3xl`, opacidade ~8%) flutuando devagar pelo fundo (loop de 20–30s). Sensação: névoa coral respirando. Zero linhas, zero ruído visual.
 
-## Resultado visual
+   **Opção B — Constelação de Dados**  
+   Pontos coral minúsculos espalhados, conectados por linhas finíssimas (opacidade ~10–15%). Cada nó pulsa devagar; algumas linhas têm um "traço de luz" percorrendo (stroke-dashoffset). Sensação: rede neural sutil. Movimento quase imperceptível.
 
-```text
-[← Back to Stories]
-┌──────────────────────────────────── full-bleed ─────────────────────────┐
-│   (imagem escurecida + navy tint + fades)                               │
-│                                                                         │
-│                                                                         │
-│   infinity6 · Indústria                                                 │
-│   Marketplace Excellence in Pharmacy                                    │
-│   EMS Farma                                                             │
-│   Resumo curto da empresa…                                              │
-└─────────────────────────────────────────────────────────────────────────┘
-[Resultados / Desafio / Solução / ... permanecem inalterados]
-```
+   **Opção C — Linhas de Fluxo Horizontais**  
+   3–4 linhas horizontais finíssimas (1px, opacidade ~8%) atravessando a tela, com pequenos pontos coral deslizando ao longo delas em velocidades diferentes (loop infinito). Sensação: dados fluindo lateralmente — alinhado direto com "Data moves". Bem mais minimalista que as ondas atuais.
+
+3. Substituo a `<WaveBackground />` atual apenas nessa página de preview — a home fica intacta até você escolher.
+
+4. Você abre `/motion-preview`, role pelas 3, me diz "quero a B", e aí eu:
+   - Substituo o conteúdo de `src/components/hometeste/WaveBackground.tsx` pela opção escolhida (ou crio um novo componente)
+   - Removo a rota `/motion-preview` e arquivos temporários
+
+## Arquivos
+
+- **Criar**: `src/pages/MotionPreview.tsx` (página temporária)
+- **Criar**: `src/components/hometeste/motion-options/MotionAuroraDrift.tsx`, `MotionConstellation.tsx`, `MotionFlowLines.tsx`
+- **Editar**: `src/App.tsx` — adicionar rota `/motion-preview` (sem layout, sem i18n)
+- **Não tocar**: `HeroMovimento.tsx`, `WaveBackground.tsx`, nenhuma outra página
+
+Tudo CSS/SVG puro (keyframes Tailwind + animações SMIL do SVG quando necessário) — sem libs novas, sem impacto de build.
+
+## Próximo passo depois da escolha
+
+Quando você disser qual opção escolheu, eu aplico na home e limpo os arquivos temporários em um único passo.
