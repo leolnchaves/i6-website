@@ -80,7 +80,7 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
         subtitle: 'To receive this content, leave your name and email',
         name: 'Name',
         email: 'Email',
-        cta: 'Receive by email',
+        cta: 'Unlock content',
         sending: 'Sending...',
         successTitle: 'All set',
         successMsgBefore: "Thanks! We're sending the material to your inbox right now. It should arrive in a few minutes — if you don't see it, please check your ",
