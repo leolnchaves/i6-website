@@ -23,7 +23,7 @@ import HomeTeste from "./pages/HomeTeste";
 import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
-import IntelligenceArticle from "./pages/IntelligenceArticle";
+import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
 import ErrorBoundary from "./components/common/ErrorBoundary";
