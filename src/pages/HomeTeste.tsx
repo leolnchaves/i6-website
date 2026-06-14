@@ -7,6 +7,7 @@ import InsightsSection from '@/components/hometeste/InsightsSection';
 import CTAFinal from '@/components/hometeste/CTAFinal';
 import SEOHead from '@/components/common/SEOHead';
 import RealResultsStrip from '@/components/common/RealResultsStrip';
+import TestemunhosCompact from '@/components/hometeste/TestemunhosCompact';
 
 const HomeTeste = () => (
   <>
@@ -16,6 +17,7 @@ const HomeTeste = () => (
     <SinaisSection />
     
     <RealResultsStrip compact />
+    <TestemunhosCompact />
     <ClientesSection />
     <InsightsSection />
     <CTAFinal />
