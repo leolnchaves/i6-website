@@ -115,6 +115,36 @@ const StoryModalSkeleton = memo(() => (
   </div>
 ));
 
+// Retry dynamic imports to handle stale chunks after a deploy (GH Pages serves
+// cached index.html pointing to chunk hashes that no longer exist).
+function retryDynamicImport<T>(factory: () => Promise<T>, retries = 1): Promise<T> {
+  return factory().catch((err) => {
+    const msg = String(err?.message || err);
+    const isChunkError =
+      /ChunkLoadError|Loading chunk|Failed to fetch dynamically imported module|Importing a module script failed/i.test(
+        msg,
+      );
+    if (isChunkError && retries > 0) {
+      return retryDynamicImport(factory, retries - 1);
+    }
+    if (isChunkError && typeof window !== 'undefined') {
+      // Force a full reload to fetch the latest index.html + chunk manifest.
+      const key = '__sscReloadedOnce';
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, '1');
+        window.location.reload();
+      }
+    }
+    throw err;
+  });
+}
+
+// IMPORTANT: declare React.lazy at module scope (not inside the component) so
+// the lazy reference is stable across renders and Suspense doesn't remount.
+const StoryCard = React.lazy(() =>
+  retryDynamicImport(() => import('../story-components/StoryCard')),
+);
+
 // Wrapper com Suspense para lazy loading
 interface LazyStoryCardProps {
   story: any;
@@ -122,8 +152,6 @@ interface LazyStoryCardProps {
 }
 
 export const LazyStoryCard: React.FC<LazyStoryCardProps> = memo((props) => {
-  const StoryCard = React.lazy(() => import('../story-components/StoryCard'));
-
   return (
     <Suspense fallback={<StoryCardSkeleton />}>
       <StoryCard {...props} />
@@ -132,3 +160,4 @@ export const LazyStoryCard: React.FC<LazyStoryCardProps> = memo((props) => {
 });
 
 LazyStoryCard.displayName = 'LazyStoryCard';
+
