@@ -3,7 +3,7 @@ import { useParams, Link, Navigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsight, resolveCoverImage } from '@/hooks/useInsights';
