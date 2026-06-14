@@ -1,5 +1,5 @@
 import MotionAuroraDrift from '@/components/hometeste/motion-options/MotionAuroraDrift';
-import MotionConstellation from '@/components/hometeste/motion-options/MotionConstellation';
+import MotionSilkStreams from '@/components/hometeste/motion-options/MotionSilkStreams';
 import MotionFlowLines from '@/components/hometeste/motion-options/MotionFlowLines';
 
 const HeroContent = () => (
@@ -33,7 +33,7 @@ const Panel = ({ label, name, children }: { label: string; name: string; childre
 const MotionPreview = () => (
   <div className="bg-[#0B1224]">
     <Panel label="Option A" name="Aurora Drift"><MotionAuroraDrift /></Panel>
-    <Panel label="Option B" name="Constelação de Dados"><MotionConstellation /></Panel>
+    <Panel label="Option B" name="Silk Streams"><MotionSilkStreams /></Panel>
     <Panel label="Option C" name="Linhas de Fluxo"><MotionFlowLines /></Panel>
   </div>
 );

@@ -1,67 +1,119 @@
-const LINES = [
-  { top: '22%', dur: 18, delay: 0, dotDur: 9, dotDelay: 0 },
-  { top: '38%', dur: 26, delay: 3, dotDur: 13, dotDelay: 2 },
-  { top: '58%', dur: 22, delay: 1.5, dotDur: 11, dotDelay: 4 },
-  { top: '76%', dur: 30, delay: 5, dotDur: 15, dotDelay: 1 },
+/**
+ * Flow Lines v2 — fluid, modern, smooth.
+ * Curved bezier paths (not straight) with glowing dots gliding along
+ * them; long luminous trails fade behind. Easing is gentle and the
+ * paths breathe softly between cycles.
+ */
+const PATHS = [
+  { d: 'M-100,210 C 320,140 700,320 1080,220 C 1320,160 1440,200 1600,180', dur: 18, delay: 0 },
+  { d: 'M-100,420 C 280,360 620,500 1000,400 C 1280,330 1440,420 1600,380', dur: 26, delay: 4 },
+  { d: 'M-100,620 C 360,540 700,720 1060,620 C 1320,550 1440,620 1600,580', dur: 22, delay: 2 },
+  { d: 'M-100,800 C 300,720 660,860 1040,780 C 1320,720 1440,780 1600,760', dur: 30, delay: 6 },
 ];
 
 const MotionFlowLines = () => (
   <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
     <style>{`
-      @keyframes flow-dot { 0%{transform:translateX(-10vw);opacity:0;} 8%{opacity:1;} 92%{opacity:1;} 100%{transform:translateX(110vw);opacity:0;} }
-      @keyframes flow-dot-2 { 0%{transform:translateX(-10vw);opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateX(110vw);opacity:0;} }
-      @keyframes line-shimmer { 0%,100%{opacity:.05;} 50%{opacity:.12;} }
+      @keyframes flow-breathe {
+        0%,100% { opacity: 0.10; }
+        50% { opacity: 0.20; }
+      }
     `}</style>
-    {LINES.map((l, i) => (
-      <div key={i} className="absolute left-0 right-0" style={{ top: l.top }}>
-        {/* base line */}
-        <div
-          className="h-px w-full"
-          style={{
-            background: 'linear-gradient(to right, transparent 0%, rgba(244,132,95,0.5) 20%, rgba(244,132,95,0.5) 80%, transparent 100%)',
-            animation: `line-shimmer ${l.dur}s ease-in-out ${l.delay}s infinite`,
-          }}
+    <svg
+      className="absolute inset-0 w-full h-full"
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <linearGradient id="flow-base" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#F4845F" stopOpacity="0" />
+          <stop offset="25%" stopColor="#F4845F" stopOpacity="0.7" />
+          <stop offset="75%" stopColor="#F4845F" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#F4845F" stopOpacity="0" />
+        </linearGradient>
+        <radialGradient id="flow-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#F4845F" stopOpacity="0.9" />
+          <stop offset="60%" stopColor="#F4845F" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#F4845F" stopOpacity="0" />
+        </radialGradient>
+        {PATHS.map((p, i) => (
+          <path key={i} id={`flow-path-${i}`} d={p.d} />
+        ))}
+      </defs>
+
+      {/* Soft base curves */}
+      {PATHS.map((p, i) => (
+        <path
+          key={`base-${i}`}
+          d={p.d}
+          fill="none"
+          stroke="url(#flow-base)"
+          strokeWidth={1}
+          strokeLinecap="round"
+          style={{ animation: `flow-breathe ${14 + i * 2}s ease-in-out ${i * 1.5}s infinite` }}
         />
-        {/* travelling dot with trailing glow */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 left-0"
-          style={{ animation: `${i % 2 ? 'flow-dot-2' : 'flow-dot'} ${l.dotDur}s linear ${l.dotDelay}s infinite` }}
-        >
-          <div className="relative">
-            <div
-              className="absolute right-0 top-1/2 -translate-y-1/2 h-px"
-              style={{
-                width: '120px',
-                background: 'linear-gradient(to left, rgba(244,132,95,0.9), rgba(244,132,95,0))',
-              }}
-            />
-            <div
-              className="w-1.5 h-1.5 rounded-full bg-[#F4845F]"
-              style={{ boxShadow: '0 0 12px rgba(244,132,95,0.9), 0 0 24px rgba(244,132,95,0.5)' }}
-            />
-          </div>
-        </div>
-        {/* second dot offset */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 left-0"
-          style={{ animation: `${i % 2 ? 'flow-dot' : 'flow-dot-2'} ${l.dotDur * 1.4}s linear ${l.dotDelay + 3}s infinite` }}
-        >
-          <div className="relative">
-            <div
-              className="absolute right-0 top-1/2 -translate-y-1/2 h-px"
-              style={{
-                width: '80px',
-                background: 'linear-gradient(to left, rgba(244,132,95,0.6), rgba(244,132,95,0))',
-              }}
-            />
-            <div
-              className="w-1 h-1 rounded-full bg-[#F4845F]"
-              style={{ boxShadow: '0 0 8px rgba(244,132,95,0.8)' }}
-            />
-          </div>
-        </div>
-      </div>
-    ))}
+      ))}
+
+      {/* Glowing comet on each path: halo + bright core */}
+      {PATHS.map((p, i) => (
+        <g key={`comet-${i}`}>
+          <circle r={28} fill="url(#flow-halo)" opacity={0.9}>
+            <animateMotion
+              dur={`${p.dur}s`}
+              repeatCount="indefinite"
+              begin={`${p.delay}s`}
+              calcMode="spline"
+              keyTimes="0;1"
+              keySplines="0.42 0 0.58 1"
+            >
+              <mpath href={`#flow-path-${i}`} />
+            </animateMotion>
+          </circle>
+          <circle r={2.6} fill="#F4845F">
+            <animateMotion
+              dur={`${p.dur}s`}
+              repeatCount="indefinite"
+              begin={`${p.delay}s`}
+              calcMode="spline"
+              keyTimes="0;1"
+              keySplines="0.42 0 0.58 1"
+            >
+              <mpath href={`#flow-path-${i}`} />
+            </animateMotion>
+          </circle>
+        </g>
+      ))}
+
+      {/* Second, slower comet offset on each path for layered movement */}
+      {PATHS.map((p, i) => (
+        <g key={`comet2-${i}`}>
+          <circle r={18} fill="url(#flow-halo)" opacity={0.6}>
+            <animateMotion
+              dur={`${p.dur * 1.5}s`}
+              repeatCount="indefinite"
+              begin={`${p.delay + 5}s`}
+              calcMode="spline"
+              keyTimes="0;1"
+              keySplines="0.42 0 0.58 1"
+            >
+              <mpath href={`#flow-path-${i}`} />
+            </animateMotion>
+          </circle>
+          <circle r={1.8} fill="#F4845F">
+            <animateMotion
+              dur={`${p.dur * 1.5}s`}
+              repeatCount="indefinite"
+              begin={`${p.delay + 5}s`}
+              calcMode="spline"
+              keyTimes="0;1"
+              keySplines="0.42 0 0.58 1"
+            >
+              <mpath href={`#flow-path-${i}`} />
+            </animateMotion>
+          </circle>
+        </g>
+      ))}
+    </svg>
   </div>
 );
 
