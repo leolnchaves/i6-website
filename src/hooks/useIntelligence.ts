@@ -17,11 +17,14 @@ export interface IntelligenceFrontmatter {
   faq?: string;
   related_product?: string;     // anchor on /solutions (e.g. "i6previsio", "i6recsys")
   related_story_slug?: string;  // success story slug
+  gated?: boolean;              // requires lead-gate form before reading
+  asset_url?: string | null;    // optional PDF sent by i6Hub after gate submit
 }
 
 export interface IntelligencePiece extends IntelligenceFrontmatter {
   content: string;
 }
+
 
 function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
