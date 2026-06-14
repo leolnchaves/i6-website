@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
-import WaveBackground from './WaveBackground';
+
 
 const HeroMovimento = () => {
   const { language } = useLanguage();
@@ -25,8 +25,6 @@ const HeroMovimento = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1224] overflow-hidden">
-      <WaveBackground />
-
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <h1 className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold text-white leading-tight tracking-tight">
           {copy.title}

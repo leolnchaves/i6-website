@@ -1,18 +1,18 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import HeaderNovo from '@/components/hometeste/HeaderNovo';
 import FooterNovo from '@/components/hometeste/FooterNovo';
-import VerticalWaves from '@/components/solutions/VerticalWaves';
+import WaveBackground from '@/components/hometeste/WaveBackground';
 import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
 const DarkLayout = () => {
   const location = useLocation();
-  const hideWaves = ['/', '/privacy-policy', '/ethics-policy'].some((p) =>
+  const hideWaves = ['/privacy-policy', '/ethics-policy'].some((p) =>
     location.pathname === p || location.pathname.endsWith(p)
   );
 
   return (
   <div className="min-h-screen bg-[#0B1224] relative">
-    {!hideWaves && <VerticalWaves />}
+    {!hideWaves && <WaveBackground />}
     <div className="relative">
       <div className="relative z-[20]">
         <HeaderNovo />
