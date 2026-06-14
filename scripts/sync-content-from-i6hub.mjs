@@ -369,6 +369,9 @@ async function cleanupOrphans(dir, keepSet, label) {
   const onDisk = await fs.readdir(dir).catch(() => []);
   for (const name of onDisk) {
     if (!/\.(jpe?g|png|webp|svg)$/i.test(name)) continue;
+    // Só remover arquivos que o próprio sync produziu (padrão `${slug}-logo.ext`).
+    // Logos de parceiros e legados versionados em git não devem ser tocados.
+    if (label === 'logo' && !/-logo\.(jpe?g|png|webp|svg)$/i.test(name)) continue;
     if (keepSet.has(name)) continue;
     await fs.rm(path.join(dir, name), { force: true });
     removed++;

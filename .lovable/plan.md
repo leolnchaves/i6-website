@@ -1,29 +1,69 @@
 ## Diagnóstico
 
-O `public/sitemap.xml` **está correto** e já inclui as 4 landings (PT+EN), `/our-ai`, `/i6-intelligence`, success stories, insights, contato, políticas e home — 252 linhas, XML válido. As URLs no sitemap batem exatamente com os `<link rel="canonical">` emitidos pelo `TransformationLanding.tsx` (mesmo domínio `https://infinity6.ai`, mesmo path, sem trailing slash). O `robots.txt` referencia `Sitemap: https://infinity6.ai/sitemap.xml`.
+O carrossel funciona no preview Lovable, mas **todos os arquivos** de `public/content/logos/*.png` retornam **404 em infinity6.ai** (testei 11 nomes — todos 404, inclusive `EMS-COR.png` usado em success stories). O markdown `partners-logos.md` (mesmo diretório pai) é servido normalmente. Sitemap `lastmod: 2026-06-14` confirma que o deploy GH Pages está fresco — então o problema **não é cache nem deploy travado**: os arquivos saem do dist.
 
-A mensagem do Google Search Console **"Nenhum sitemap de referência detectado"** na inspeção de URL **não significa que o sitemap está errado**. Ela significa apenas que, no momento em que o Google indexou aquela URL, ele ainda não tinha lido um sitemap contendo-a. Causas típicas:
+A causa está em `scripts/sync-content-from-i6hub.mjs` (rodado no workflow `.github/workflows/deploy-gh-pages.yml`, step "Sync stories from i6Hub CMS"):
 
-1. As landings foram adicionadas ao sitemap **depois** que o Google descobriu as URLs por outros caminhos (links internos, indexação manual).
-2. O Google ainda não re-buscou `sitemap.xml` desde a última atualização (o `lastmod` global do arquivo não muda automaticamente).
-3. O sitemap nunca foi **submetido manualmente** em Search Console → Sitemaps.
+```js
+// linhas 366-381
+async function cleanupOrphans(dir, keepSet, label) {
+  const onDisk = await fs.readdir(dir).catch(() => []);
+  for (const name of onDisk) {
+    if (!/\.(jpe?g|png|webp|svg)$/i.test(name)) continue;
+    if (keepSet.has(name)) continue;
+    await fs.rm(path.join(dir, name), { force: true });
+    ...
+  }
+}
+...
+const removedLogos = await cleanupOrphans(LOGO_DIR, keepLogo, 'logo');
+```
 
-## Ações no código
+`LOGO_DIR = 'public/content/logos'` e `keepLogo` só contém os arquivos materializados pelo feed de stories (nomeados `${slug}-logo.{ext}`). Logo:
 
-**1. Atualizar `lastmod` das landings e do nosso conteúdo recente para `2026-06-14`** em `public/sitemap.xml`:
-- 4 landings PT + 4 EN (hoje estão `2026-06-12`)
-- `/our-ai` PT+EN
-- `/i6-intelligence` index + artigo
-Isso sinaliza freshness e força o Google a re-baixar o sitemap na próxima passagem.
+- Todos os logos de parceiros (`ems-new.png`, `multi.png`, `biolab.png`, `bmg-new.png`, `unicred.png`, `germed-new.png`, `legrand-new.png`, `alpargatas-new.png`) e os logos clássicos (`EMS-COR.png`, `EMS.png`, `ACHE.png`, etc. — 29 arquivos versionados em git) são considerados "orphan" e **deletados a cada build** antes do `npm run build`.
+- O markdown `partners-logos.md` aponta para esses arquivos → no site publicado, os `<img>` quebram (404).
+- Localmente e no preview Lovable o script não roda, por isso o carrossel funciona lá.
 
-**2. Nada mais a mudar no código** — canonical, hreflang, robots.txt e prerender de stubs SEO já estão coerentes.
+## Correção
 
-## Ações que **você** precisa fazer no Google Search Console (fora do código)
+Limitar `cleanupOrphans` aos arquivos cujo nome segue o padrão produzido pelo próprio sync (`*-logo.{ext}`). Assim:
 
-1. **Search Console → Sitemaps** → adicionar `https://infinity6.ai/sitemap.xml` e clicar em **Enviar** (mesmo se já estiver lá, reenvie depois do deploy de hoje).
-2. Em **Inspeção de URL**, colar cada landing (ex.: `https://infinity6.ai/pt/solutions/demand-supply-efficiency`) → **Solicitar indexação**. Em 1-3 dias o status muda para "URL está nos sitemaps enviados".
-3. Opcional: reenviar também em Bing Webmaster Tools.
+- Logos de stories continuam rotacionando corretamente (novos cases sobrescrevem, slugs removidos são limpos).
+- Logos de parceiros e logos legados versionados em git ficam intactos.
 
-## Observação técnica
+### Mudança em `scripts/sync-content-from-i6hub.mjs`
 
-O `public/sitemap.xml` é **estático e versionado** (não é gerado por script). O workflow `.github/workflows/deploy-gh-pages.yml` apenas faz `cp public/sitemap.xml dist/sitemap.xml`. Portanto, atualizar `lastmod` aqui e fazer commit/deploy é suficiente — não há gerador automático para reconfigurar.
+Em `cleanupOrphans`, adicionar filtro por sufixo `-logo.` quando `label === 'logo'`:
+
+```js
+async function cleanupOrphans(dir, keepSet, label) {
+  if (!dir) return 0;
+  let removed = 0;
+  const onDisk = await fs.readdir(dir).catch(() => []);
+  for (const name of onDisk) {
+    if (!/\.(jpe?g|png|webp|svg)$/i.test(name)) continue;
+    // Só remover arquivos que o sync produziu (padrão `${slug}-logo.ext`).
+    // Não tocar em logos de parceiros / legados versionados em git.
+    if (label === 'logo' && !/-logo\.(jpe?g|png|webp|svg)$/i.test(name)) continue;
+    if (keepSet.has(name)) continue;
+    await fs.rm(path.join(dir, name), { force: true });
+    removed++;
+    console.log(`[cleanup ${label}] removed orphan ${name}`);
+  }
+  return removed;
+}
+```
+
+Nenhum outro arquivo precisa mudar. Os PNGs dos parceiros já estão em git e voltarão ao dist no próximo deploy.
+
+## Verificação após implementação
+
+1. Após push no `main`, esperar o workflow "Deploy to GitHub Pages" concluir.
+2. `curl -I https://infinity6.ai/content/logos/ems-new.png` deve retornar **200**.
+3. Abrir `https://infinity6.ai/pt` e conferir o carrossel "Líderes que já dominam a Inteligência de Movimento".
+
+## Fora do escopo
+
+- Não vou mexer no `ClientesSection.tsx`, `usePartnersContent.ts` nem no markdown — eles estão corretos.
+- Não vou mover logos para outro diretório nem renomear arquivos.
