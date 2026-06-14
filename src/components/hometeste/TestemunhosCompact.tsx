@@ -36,7 +36,7 @@ const TestemunhosCompact = memo(() => {
     en: {
       title: 'What our clients say',
       subtitle: 'Results in the voice of those running the operation',
-      cta: 'See the results these clients have been recovering',
+      cta: 'See success stories',
     },
   }[language];
 
