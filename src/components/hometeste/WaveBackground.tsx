@@ -48,26 +48,6 @@ const Curves = () => (
       className="motion-safe:animate-[curve-flow-1_17s_ease-in-out_infinite_reverse]"
       style={{ transformOrigin: '80px 600px' }}
     />
-    {/* Curva 5 — frequência mais alta, fina */}
-    <path
-      d="M96,-40 C140,80 60,180 110,280 C160,380 70,480 120,580 C170,680 80,780 130,880 C180,980 90,1080 140,1180 C190,1280 100,1320 150,1340"
-      fill="none"
-      stroke="rgba(244,132,95,0.3)"
-      strokeWidth="1.4"
-      strokeLinecap="round"
-      className="motion-safe:animate-[curve-flow-2_12s_ease-in-out_infinite]"
-      style={{ transformOrigin: '100px 600px' }}
-    />
-    {/* Curva 6 — alta frequência, externa, bem sutil */}
-    <path
-      d="M120,-40 C160,60 80,140 130,220 C180,300 90,380 140,460 C190,540 100,620 150,700 C200,780 110,860 160,940 C210,1020 120,1100 170,1180 C220,1260 130,1320 180,1340"
-      fill="none"
-      stroke="rgba(244,132,95,0.2)"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      className="motion-safe:animate-[curve-flow-3_15s_ease-in-out_infinite_reverse]"
-      style={{ transformOrigin: '130px 600px' }}
-    />
   </svg>
 );
 
