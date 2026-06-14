@@ -41,10 +41,10 @@ const TestemunhosCompact = memo(() => {
   }[language];
 
   return (
-    <section className="py-16">
+    <section className="pt-6 pb-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-white mb-3">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-3">
             {copy.title}
           </h2>
           <p className="text-base text-white/55 max-w-xl mx-auto leading-relaxed">
@@ -59,17 +59,17 @@ const TestemunhosCompact = memo(() => {
             opts={{ loop: testimonials.length > 1, align: 'center' }}
             plugins={[Autoplay({ delay: 7000 })]}
           >
-            <CarouselContent className="-ml-2 md:-ml-3">
+            <CarouselContent className="-ml-2 md:-ml-3 items-stretch">
               {testimonials.map((t) => (
                 <CarouselItem
                   key={t.id}
                   className="pl-2 md:pl-3 basis-full sm:basis-1/2 lg:basis-1/3"
                 >
                   <div className="group h-full">
-                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 h-full transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-[#F4845F]/5 hover:-translate-y-0.5 relative flex flex-col min-h-[200px]">
+                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 h-full transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-[#F4845F]/5 hover:-translate-y-0.5 relative flex flex-col">
                       <Quote className="w-4 h-4 text-[#F4845F]/60 mb-2" />
 
-                      <blockquote className="text-sm leading-relaxed text-white/80 mb-3 font-light flex-grow line-clamp-4">
+                      <blockquote className="text-[13px] leading-relaxed text-white/80 mb-3 font-light flex-grow">
                         "{t.quote}"
                       </blockquote>
 
