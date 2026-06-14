@@ -384,11 +384,36 @@ for (const it of items) {
     }
   }
 
+  const fileName = CONFIG.fileName(it);
+  const prev = existingMdSnapshot[fileName] ?? {};
+  // Validate fallback paths still exist on disk (basename match in IMG_DIR / LOGO_DIR).
+  const fallbackExists = async (webPath, dir) => {
+    if (!webPath || !dir) return false;
+    const base = path.basename(String(webPath));
+    return await fileExists(path.join(dir, base));
+  };
+  const coverFallback = (!coverOut && prev.cover_image && await fallbackExists(prev.cover_image, IMG_DIR))
+    ? prev.cover_image
+    : null;
+  const logoFallback = (!logoOut && prev.logo && await fallbackExists(prev.logo, LOGO_DIR))
+    ? prev.logo
+    : null;
+  if (coverFallback) {
+    keepCover.add(path.basename(coverFallback));
+    coverCounters.preserved++;
+    console.log(`[${TYPE}] ${slug} -> preserved cover from existing MD (${path.basename(coverFallback)})`);
+  }
+  if (logoFallback) {
+    keepLogo.add(path.basename(logoFallback));
+    logoCounters.preserved++;
+    console.log(`[${TYPE}] ${slug} -> preserved logo from existing MD (${path.basename(logoFallback)})`);
+  }
+
   const md = CONFIG.frontmatter(it, {
-    coverLocal: coverOut?.localPath ?? null,
-    logoLocal:  logoOut?.localPath  ?? null,
+    coverLocal: coverOut?.localPath ?? coverFallback ?? null,
+    logoLocal:  logoOut?.localPath  ?? logoFallback  ?? null,
   });
-  await fs.writeFile(path.join(MD_DIR, CONFIG.fileName(it)), md);
+  await fs.writeFile(path.join(MD_DIR, fileName), md);
 }
 
 // ---------- Cleanup orphan images ----------
