@@ -3,13 +3,12 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIntelligencePiece, resolveIntelligenceCover } from '@/hooks/useIntelligence';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import LeadGateForm from '@/components/insights/LeadGateForm';
-import { Button } from '@/components/ui/button';
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -173,19 +172,7 @@ const IntelligenceArticle = () => {
           />
         ) : (
           <>
-            {pdfUrl && (
-              <div className="mb-8">
-                <Button
-                  asChild
-                  className="bg-[#F4845F] hover:bg-[#F4845F]/90 text-white shadow-[0_0_20px_rgba(244,132,95,0.3)]"
-                >
-                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
-                    <Download className="w-4 h-4 mr-2" />
-                    {language === 'pt' ? 'Baixar PDF' : 'Download PDF'}
-                  </a>
-                </Button>
-              </div>
-            )}
+
 
             <div className="prose prose-invert prose-headings:text-white prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-p:text-white/80 prose-li:text-white/80 prose-strong:text-white prose-a:text-[#F4845F] hover:prose-a:underline max-w-none">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.content}</ReactMarkdown>

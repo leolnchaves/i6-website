@@ -3,7 +3,7 @@ import { useParams, Link, Navigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsight, resolveCoverImage } from '@/hooks/useInsights';
@@ -171,19 +171,7 @@ const InsightArticle = () => {
           />
         ) : (
           <>
-            {pdfUrl && (
-              <div className="mb-8">
-                <Button
-                  asChild
-                  className="bg-[#F4845F] hover:bg-[#F4845F]/90 text-white shadow-[0_0_20px_rgba(244,132,95,0.3)]"
-                >
-                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
-                    <Download className="w-4 h-4 mr-2" />
-                    {language === 'pt' ? 'Baixar PDF' : 'Download PDF'}
-                  </a>
-                </Button>
-              </div>
-            )}
+
             <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/80 prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/80">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{insight.content}</ReactMarkdown>
             </div>
