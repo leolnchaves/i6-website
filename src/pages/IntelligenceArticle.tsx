@@ -135,9 +135,11 @@ const IntelligenceArticle = () => {
               <img
                 src={cover}
                 alt={piece.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover filter brightness-[0.7] saturate-[0.85] contrast-[1.05]"
               />
             )}
+            {/* navy tint to normalize divergent palettes into site theme */}
+            <div className="absolute inset-0 bg-[#0B1224]/35" />
             {/* long vertical fade into navy at the bottom */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/40 to-[#0B1224]" />
             {/* subtle side fade so the image dissolves into the page sides too */}
