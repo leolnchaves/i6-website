@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
@@ -17,7 +17,18 @@ const InsightArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const { language } = useLanguage();
   const localized = useLocalizedPath();
+  const location = useLocation();
   const insight = useInsight(slug || '');
+
+  // Determine the surrounding context:
+  // - `/insights/<slug>` is the media listing context (i6 on Media, i6 Social)
+  // - `/i6-intelligence/<slug>` is the intelligence context (i6 Article, i6 eBook)
+  const inIntel = location.pathname.includes('/i6-intelligence/');
+  const isIntelType = !!insight && (insight.type === 'i6 Article' || insight.type === 'i6 eBook');
+  const backPath = inIntel ? '/i6-intelligence' : '/insights';
+  const backLabel = language === 'pt'
+    ? (inIntel ? 'Voltar para i6 Research' : 'Voltar para Insights')
+    : (inIntel ? 'Back to i6 Research' : 'Back to Insights');
 
   // Clean up legacy unlock entries from older versions of the gate flow
   useEffect(() => {
@@ -36,10 +47,20 @@ const InsightArticle = () => {
     }
   }, [insight]);
 
-  if (!insight) return <Navigate to={localized('/insights')} replace />;
+  if (!insight) return <Navigate to={localized(backPath)} replace />;
+
+  // Cross-listing redirects: i6 Article / i6 eBook belong under /i6-intelligence;
+  // i6 on Media / i6 Social belong under /insights.
+  if (isIntelType && !inIntel) {
+    return <Navigate to={localized(`/i6-intelligence/${insight.slug}`)} replace />;
+  }
+  if (!isIntelType && inIntel) {
+    return <Navigate to={localized(`/insights/${insight.slug}`)} replace />;
+  }
+
   if (insight.type !== 'i6 Article' && !insight.gated) {
     if (!insight.external_url) {
-      return <Navigate to={localized('/insights')} replace />;
+      return <Navigate to={localized(backPath)} replace />;
     }
     return (
       <section className="container mx-auto px-6 pt-32 pb-20 max-w-2xl text-center">
@@ -61,10 +82,10 @@ const InsightArticle = () => {
             </a>
           </Button>
           <Link
-            to={localized('/insights')}
+            to={localized(backPath)}
             className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors"
           >
-            <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para Insights' : 'Back to Insights'}
+            <ArrowLeft size={16} /> {backLabel}
           </Link>
         </div>
       </section>
@@ -72,7 +93,8 @@ const InsightArticle = () => {
   }
 
   const cover = resolveCoverImage(insight.cover_image);
-  const url = `${BASE_URL}/${language}/insights/${insight.slug}`;
+  const canonicalBase = isIntelType ? 'i6-intelligence' : 'insights';
+  const url = `${BASE_URL}/${language}/${canonicalBase}/${insight.slug}`;
   const isLocked = insight.gated === true;
   const pdfUrl = insight.asset_url
     ? (insight.asset_url.startsWith('http')
@@ -88,9 +110,9 @@ const InsightArticle = () => {
         <title>{`${insight.title} | infinity6`}</title>
         <meta name="description" content={insight.excerpt} />
         <link rel="canonical" href={url} />
-        <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/insights/${insight.slug}`} />
-        <link rel="alternate" hrefLang="pt-BR" href={`${BASE_URL}/pt/insights/${insight.slug}`} />
-        <link rel="alternate" hrefLang="x-default" href={`${BASE_URL}/en/insights/${insight.slug}`} />
+        <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/${canonicalBase}/${insight.slug}`} />
+        <link rel="alternate" hrefLang="pt-BR" href={`${BASE_URL}/pt/${canonicalBase}/${insight.slug}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${BASE_URL}/en/${canonicalBase}/${insight.slug}`} />
 
         <meta property="og:type" content="article" />
         <meta property="og:title" content={insight.title} />
@@ -115,15 +137,15 @@ const InsightArticle = () => {
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${language}` },
-            { '@type': 'ListItem', position: 2, name: 'Insights', item: `${BASE_URL}/${language}/insights` },
+            { '@type': 'ListItem', position: 2, name: inIntel ? 'i6 Research' : 'Insights', item: `${BASE_URL}/${language}/${canonicalBase}` },
             { '@type': 'ListItem', position: 3, name: insight.title, item: url },
           ],
         })}</script>
       </Helmet>
 
       <article className="container mx-auto px-6 pt-32 pb-20 max-w-3xl">
-        <Link to={localized('/insights')} className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] mb-8 transition-colors">
-          <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para Insights' : 'Back to Insights'}
+        <Link to={localized(backPath)} className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] mb-8 transition-colors">
+          <ArrowLeft size={16} /> {backLabel}
         </Link>
 
         <header className="mb-10">
@@ -141,9 +163,10 @@ const InsightArticle = () => {
 
         {isLocked ? (
           <LeadGateForm
-            insightTitle={insight.title}
-            insightSlug={insight.slug}
-            insightId={insight.id}
+            kind="insight"
+            title={insight.title}
+            slug={insight.slug}
+            id={insight.id}
             pdfUrl={pdfUrl}
           />
         ) : (
