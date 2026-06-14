@@ -101,22 +101,37 @@ const SuccessStoryArticle = () => {
           <ArrowLeft size={16} /> {t.back}
         </Link>
 
-        <header className="mb-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-white/50 mb-4">
-            <Building2 className="w-3 h-3" /> {story.segment}
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{story.title}</h1>
-          <p className="text-xl text-white/70 mb-6">{story.client}</p>
-          {story.description && <p className="text-base text-white/60">{story.description}</p>}
-        </header>
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden mb-12">
+          <div className="relative h-[420px] md:h-[560px]">
+            {story.image && (
+              <img
+                src={story.image}
+                alt={story.title}
+                className="absolute inset-0 w-full h-full object-cover filter brightness-[0.7] saturate-[0.85] contrast-[1.05]"
+              />
+            )}
+            <div className="absolute inset-0 bg-[#0B1224]/35" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/40 to-[#0B1224]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224]/50 via-transparent to-[#0B1224]/50" />
 
-        {story.image && (
-          <img
-            src={story.image}
-            alt={story.title}
-            className="w-full rounded-xl mb-12 object-cover max-h-[420px]"
-          />
-        )}
+            <div className="relative h-full container mx-auto max-w-4xl px-6 flex flex-col justify-end pb-8 md:pb-12">
+              <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-4 inline-flex items-center gap-2">
+                <Building2 className="w-3 h-3" /> infinity6 · {story.segment}
+              </p>
+              <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 leading-[1.1] tracking-tight">
+                {story.title}
+              </h1>
+              <p className="text-lg md:text-xl text-white/85 mb-2 leading-relaxed max-w-2xl">
+                {story.client}
+              </p>
+              {story.description && (
+                <p className="text-sm md:text-base text-white/70 leading-relaxed max-w-2xl">
+                  {story.description}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
 
         {metrics.length > 0 && (
           <section className="mb-12">
