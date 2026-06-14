@@ -1,34 +1,76 @@
-# Fix: Research sync grava `gated` e `asset_url`
+# Hero do Research — imagem full-bleed com fade no bottom
 
-Diagnóstico confirmado. Em `scripts/sync-content-from-i6hub.mjs`, `fmInsights` (linhas 249/254) já serializa `gated` e `asset_url`, mas `fmResearch` (linhas 262–283) ignora os dois campos — então o feed do i6Hub pode entregar `gated: true` + PDF e o `.md` de Research sai sem nada, fazendo o `IntelligenceArticle` cair direto no conteúdo destrancado.
+Substituir o bloco arredondado por uma **imagem full-bleed (de borda a borda da viewport)** que se dissolve no navy do site na base. Título e subtítulo ficam menores, ancorados no canto inferior esquerdo da imagem. Back-link + kicker continuam acima, e o conteúdo do artigo continua como hoje (`max-w-3xl`, sem sobrepor a imagem).
 
-## Mudanças
+## Estrutura
 
-### 1) `scripts/sync-content-from-i6hub.mjs` — `fmResearch`
+```text
+container max-w-3xl (back-link + kicker)
+ ← Back to i6 Research
+ INFINITY6 · RESEARCH
 
-Adicionar as duas linhas, espelhando o padrão de `fmInsights`:
+────── FULL-BLEED (100vw) ──────
+│ [imagem cover, object-cover, ~520px]      │
+│                                            │
+│ gradiente vertical na base:                │
+│   transparente → #0B1224 (fade longo,      │
+│   ~40% da altura, sem corte visível)       │
+│                                            │
+│ container max-w-3xl (alinhado ao corpo):   │
+│   Título (text-2xl md:text-4xl, bold)     │
+│   Subtítulo (text-sm md:text-base, /85)   │
+│   data · read time   (text-xs, /60)       │
+│   ↑ ancorados em justify-end + left        │
+─────────────────────────────────────────────
 
-```js
-`featured: ${!!it.featured}`,
-`gated: ${!!it.gated}`,                                    // ← novo
-finalCover ? `cover_image: ${yaml(finalCover)}` : null,
-it.related_product ? `related_product: ${it.related_product}` : null,
-it.related_story_slug ? `related_story_slug: ${it.related_story_slug}` : null,
-it.asset_url ? `asset_url: ${yaml(it.asset_url)}` : null,  // ← novo
+container max-w-3xl (corpo markdown, como hoje)
 ```
 
-`gated` sempre escrito (booleano explícito, como em Insights). `asset_url` só quando presente.
+## Detalhes
 
-### 2) `src/content/intelligence/README.md` — schema
+### Quebra do container (full-bleed)
 
-Adicionar `gated` e `asset_url` à lista de campos aceitos no frontmatter de Research, com a mesma semântica documentada em Insights (gate via `LeadGateForm`, PDF opcional liberado após submit).
+A imagem precisa sair do `max-w-3xl` da `<article>`. Técnica padrão:
 
-## Fora de escopo (do lado do app)
+```tsx
+<div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+  ...
+</div>
+```
 
-- `useIntelligence.ts` já lê `gated` e `asset_url` da frontmatter (linhas 17–19 do hook), e `IntelligenceArticle.tsx` já usa `piece.gated`/`pdfUrl`. Nada a mudar no runtime.
+Aplicado a um wrapper que contém a imagem + gradiente + texto. Largura = 100vw, sem scroll horizontal (já há `overflow-x-hidden` no body do site; vou validar).
 
-## Ação no i6Hub (lado de fora deste repo)
+### Imagem + fade
 
-No registro do research `ruptura-gondola-ia-preditiva`, marcar **PT** como `gated: true` e popular `asset_url` (copiando o do EN ou um PDF dedicado em PT). Depois rodar o sync — o `.md` PT vai passar a sair com gate ativo.
+- `<img>` `absolute inset-0 w-full h-full object-cover` dentro de um container `relative h-[420px] md:h-[560px]`.
+- Camada de fade: `absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/30 to-[#0B1224]` — fade longo, começa ~60% da altura, termina 100% opaco na base, sem linha visível.
+- Camada lateral sutil opcional: `bg-gradient-to-r from-[#0B1224]/40 via-transparent to-[#0B1224]/40` para integração lateral (opacidade baixa).
 
-Posso seguir?
+### Texto
+
+- Wrapper interno: `relative h-full container mx-auto max-w-3xl px-6 flex flex-col justify-end pb-10 md:pb-14`.
+- Título: `text-2xl md:text-4xl font-bold leading-[1.1] tracking-tight text-white mb-3`.
+- Subtítulo: `text-sm md:text-base text-white/85 leading-relaxed mb-4 max-w-2xl`.
+- Meta (data · read time): `text-xs text-white/60`.
+- Tudo ancorado **bottom-left** dentro do container do corpo, então o texto fica visualmente alinhado com o markdown abaixo.
+
+### Fallback sem cover
+
+Quando `piece.cover_image` for nulo (caso atual do `ruptura-gondola-ia-preditiva`), o full-bleed mantém apenas o gradiente navy + título/subtítulo/meta. Nada de borda nem placeholder visível.
+
+### Corpo do artigo
+
+Permanece como está hoje: `max-w-3xl`, sem sobrepor a imagem, com `pt-12` para respiro depois do fade.
+
+## Validação
+
+- Conferir no preview que não aparece scroll horizontal (especialmente em mobile com scrollbar custom).
+- Conferir contraste do subtítulo sobre regiões claras da imagem (o gradiente cobre principalmente a metade inferior — se a imagem tiver céu claro na base, o subtítulo continua legível pelo fade `/0B1224` opaco).
+
+## Fora de escopo
+
+- `InsightArticle.tsx`.
+- Listagem `/i6-intelligence`.
+- Conteúdo do markdown.
+
+Confirma que sigo?
