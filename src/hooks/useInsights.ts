@@ -78,6 +78,8 @@ const modules = import.meta.glob('/src/content/insights/*.md', {
 }) as Record<string, string>;
 
 const VALID_TYPES: InsightType[] = ['i6 on Media', 'i6 Article', 'i6 eBook', 'i6 Social'];
+const MEDIA_TYPES: InsightType[] = ['i6 on Media', 'i6 Social'];
+const INTELLIGENCE_INSIGHT_TYPES: InsightType[] = ['i6 Article', 'i6 eBook'];
 
 const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
@@ -109,17 +111,43 @@ const ALL: Insight[] = Object.entries(modules)
 
 ALL.sort((a, b) => (a.date < b.date ? 1 : -1));
 
+/**
+ * Insights page (`/insights`) is media-focused.
+ * Only `i6 on Media` and `i6 Social` items are listed here.
+ * `i6 Article` and `i6 eBook` items live under `/i6-intelligence`.
+ */
 export const useInsights = (limit?: number) => {
   const { language } = useLanguage();
   const [items, setItems] = useState<Insight[]>([]);
 
   useEffect(() => {
-    const filtered = ALL.filter((i) => i.language === language);
+    const filtered = ALL.filter(
+      (i) => i.language === language && MEDIA_TYPES.includes(i.type),
+    );
     setItems(limit ? filtered.slice(0, limit) : filtered);
   }, [language, limit]);
 
   return items;
 };
+
+/**
+ * Returns `i6 Article` + `i6 eBook` items used by the
+ * `/i6-intelligence` listing alongside Research pieces.
+ */
+export const useIntelligenceInsights = () => {
+  const { language } = useLanguage();
+  const [items, setItems] = useState<Insight[]>([]);
+
+  useEffect(() => {
+    const filtered = ALL.filter(
+      (i) => i.language === language && INTELLIGENCE_INSIGHT_TYPES.includes(i.type),
+    );
+    setItems(filtered);
+  }, [language]);
+
+  return items;
+};
+
 
 export const useFeaturedInsights = (limit?: number) => {
   const { language } = useLanguage();
