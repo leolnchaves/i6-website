@@ -1,5 +1,5 @@
 import MotionAuroraDrift from '@/components/hometeste/motion-options/MotionAuroraDrift';
-import MotionConstellation from '@/components/hometeste/motion-options/MotionConstellation';
+import MotionSilkStreams from '@/components/hometeste/motion-options/MotionSilkStreams';
 import MotionFlowLines from '@/components/hometeste/motion-options/MotionFlowLines';
 
 const HeroContent = () => (
