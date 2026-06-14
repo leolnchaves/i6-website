@@ -1,76 +1,37 @@
-# Hero do Research — imagem full-bleed com fade no bottom
+# Waves apenas no hero da home
 
-Substituir o bloco arredondado por uma **imagem full-bleed (de borda a borda da viewport)** que se dissolve no navy do site na base. Título e subtítulo ficam menores, ancorados no canto inferior esquerdo da imagem. Back-link + kicker continuam acima, e o conteúdo do artigo continua como hoje (`max-w-3xl`, sem sobrepor a imagem).
+Hoje as side waves vivem em `DarkLayout` como camada `fixed` que cobre todas as rotas. Vamos restringir a presença **somente ao hero da home** e aproveitar o confinamento para escalar e afastar das bordas.
 
-## Estrutura
+## Mudanças
 
-```text
-container max-w-3xl (back-link + kicker)
- ← Back to i6 Research
- INFINITY6 · RESEARCH
+### 1) `DarkLayout.tsx`
 
-────── FULL-BLEED (100vw) ──────
-│ [imagem cover, object-cover, ~520px]      │
-│                                            │
-│ gradiente vertical na base:                │
-│   transparente → #0B1224 (fade longo,      │
-│   ~40% da altura, sem corte visível)       │
-│                                            │
-│ container max-w-3xl (alinhado ao corpo):   │
-│   Título (text-2xl md:text-4xl, bold)     │
-│   Subtítulo (text-sm md:text-base, /85)   │
-│   data · read time   (text-xs, /60)       │
-│   ↑ ancorados em justify-end + left        │
-─────────────────────────────────────────────
+- Remover `import` e render de `<WaveBackground />` e a lógica `hideWaves`.
+- Demais páginas ficam com navy puro (`#0B1224`).
 
-container max-w-3xl (corpo markdown, como hoje)
-```
+### 2) `HeroMovimento.tsx`
 
-## Detalhes
+- Importar `WaveBackground` e renderizá-lo dentro da `<section>` do hero, como **camada `absolute`** confinada à seção (não mais `fixed`).
+- A `<section>` já é `relative ... overflow-hidden`, então o wave fica recortado nos limites do hero — some assim que o usuário rola para a próxima seção.
 
-### Quebra do container (full-bleed)
+### 3) `WaveBackground.tsx` — redimensionar e afastar da borda
 
-A imagem precisa sair do `max-w-3xl` da `<article>`. Técnica padrão:
+Com o wave restrito ao hero, podemos torná-lo mais imponente:
 
-```tsx
-<div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
-  ...
-</div>
-```
+- Trocar `fixed left-0 top-0 h-full w-[72px]` por `absolute inset-y-0 left-0 h-full w-[180px]` (cerca de 2,5× a largura atual).
+- Adicionar um espelhamento à direita: render duas cópias, uma em `left-0` e outra em `right-0 scale-x-[-1]` (ou via prop) para equilibrar visualmente o hero.
+- Ajustar o `viewBox` para `0 0 180 1200` e redesenhar os paths para ocuparem a faixa maior, **afastando as curvas da borda**: âncoras horizontais deslocadas em ~40–60px para o miolo (curva principal por volta de `x=80–100`, em vez de `x=19`).
+- Aumentar `strokeWidth` proporcionalmente (~1.4–2.2) e manter as opacidades coral atuais.
+- Manter o `linear-gradient mask` para suavizar o lado interno, agora com transição mais longa (`black 35% → transparent 100%`) já que há mais espaço.
 
-Aplicado a um wrapper que contém a imagem + gradiente + texto. Largura = 100vw, sem scroll horizontal (já há `overflow-x-hidden` no body do site; vou validar).
+### 4) Memória `mem://style/global/vertical-waves`
 
-### Imagem + fade
-
-- `<img>` `absolute inset-0 w-full h-full object-cover` dentro de um container `relative h-[420px] md:h-[560px]`.
-- Camada de fade: `absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/30 to-[#0B1224]` — fade longo, começa ~60% da altura, termina 100% opaco na base, sem linha visível.
-- Camada lateral sutil opcional: `bg-gradient-to-r from-[#0B1224]/40 via-transparent to-[#0B1224]/40` para integração lateral (opacidade baixa).
-
-### Texto
-
-- Wrapper interno: `relative h-full container mx-auto max-w-3xl px-6 flex flex-col justify-end pb-10 md:pb-14`.
-- Título: `text-2xl md:text-4xl font-bold leading-[1.1] tracking-tight text-white mb-3`.
-- Subtítulo: `text-sm md:text-base text-white/85 leading-relaxed mb-4 max-w-2xl`.
-- Meta (data · read time): `text-xs text-white/60`.
-- Tudo ancorado **bottom-left** dentro do container do corpo, então o texto fica visualmente alinhado com o markdown abaixo.
-
-### Fallback sem cover
-
-Quando `piece.cover_image` for nulo (caso atual do `ruptura-gondola-ia-preditiva`), o full-bleed mantém apenas o gradiente navy + título/subtítulo/meta. Nada de borda nem placeholder visível.
-
-### Corpo do artigo
-
-Permanece como está hoje: `max-w-3xl`, sem sobrepor a imagem, com `pt-12` para respiro depois do fade.
-
-## Validação
-
-- Conferir no preview que não aparece scroll horizontal (especialmente em mobile com scrollbar custom).
-- Conferir contraste do subtítulo sobre regiões claras da imagem (o gradiente cobre principalmente a metade inferior — se a imagem tiver céu claro na base, o subtítulo continua legível pelo fade `/0B1224` opaco).
+Reescrever para refletir que as waves agora vivem **apenas no hero da home** (lado esquerdo + direito), confinadas à seção. Remover a regra antiga "shown on all pages except /privacy-policy and /ethics-policy".
 
 ## Fora de escopo
 
-- `InsightArticle.tsx`.
-- Listagem `/i6-intelligence`.
-- Conteúdo do markdown.
+- Animações (`curve-flow-*`) permanecem.
+- Cores do design system (`#F4845F`) permanecem.
+- Outras seções da home (Tese, Sinais, etc.) ficam sem waves, com navy puro.
 
 Confirma que sigo?
