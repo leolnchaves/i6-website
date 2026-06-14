@@ -73,6 +73,8 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
       featured: fm.featured === true,
       related_product: fm.related_product,
       related_story_slug: fm.related_story_slug,
+      gated: fm.gated === true,
+      asset_url: fm.asset_url ?? null,
       slug: fm.slug || path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
       content,
     } as IntelligencePiece;
@@ -80,6 +82,7 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
   .filter((x): x is IntelligencePiece => x !== null);
 
 ALL.sort((a, b) => (a.date < b.date ? 1 : -1));
+
 
 export const useIntelligence = (limit?: number) => {
   const { language } = useLanguage();
