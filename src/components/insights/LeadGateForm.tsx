@@ -60,7 +60,7 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
         subtitle: 'Para receber este conteúdo, deixe seu nome e email',
         name: 'Nome',
         email: 'Email',
-        cta: 'Receber por email',
+        cta: 'Liberar conteúdo',
         sending: 'Enviando...',
         successTitle: 'Tudo certo',
         successMsgBefore: 'Obrigado! Já estamos enviando o material para o seu email. Ele deve chegar em alguns minutos — se não aparecer na caixa de entrada, dá uma olhadinha na pasta de ',
