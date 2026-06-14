@@ -123,25 +123,37 @@ const IntelligenceArticle = () => {
       <article className="container mx-auto px-6 pt-32 pb-20 max-w-3xl">
         <Link
           to={localized('/i6-intelligence')}
-          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#F4845F] transition-colors mb-5"
         >
           <ArrowLeft size={16} /> {language === 'pt' ? 'Voltar para i6 Research' : 'Back to i6 Research'}
         </Link>
 
-        <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Research</p>
-        <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">{piece.title}</h1>
-        <p className="text-base text-white/60 mb-8">{piece.excerpt}</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-4">infinity6 · Research</p>
 
-        <div className="flex items-center gap-3 text-xs text-white/40 mb-12">
-          <time>
-            {new Date(piece.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { day: '2-digit', month: 'long', year: 'numeric' })}
-          </time>
-          {piece.read_time && <><span>·</span><span>{piece.read_time} min</span></>}
+        <div className="relative rounded-2xl overflow-hidden min-h-[360px] md:min-h-[480px] flex flex-col justify-end p-6 md:p-12 mb-12 bg-gradient-to-br from-[#0B1224] via-[#11193a] to-[#0B1224] border border-white/5">
+          {cover && (
+            <img
+              src={cover}
+              alt={piece.title}
+              className="absolute inset-0 w-full h-full object-cover opacity-35"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1224] via-[#0B1224]/75 to-[#0B1224]/30" />
+          <div className="relative z-10">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-[1.05] tracking-tight">
+              {piece.title}
+            </h1>
+            <p className="text-base md:text-xl text-white/85 mb-6 leading-relaxed">
+              {piece.excerpt}
+            </p>
+            <div className="flex items-center gap-3 text-xs text-white/60">
+              <time>
+                {new Date(piece.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { day: '2-digit', month: 'long', year: 'numeric' })}
+              </time>
+              {piece.read_time && <><span>·</span><span>{piece.read_time} min</span></>}
+            </div>
+          </div>
         </div>
-
-        {cover && (
-          <img src={cover} alt={piece.title} className="w-full rounded-xl mb-10" />
-        )}
 
         {isLocked ? (
           <LeadGateForm
