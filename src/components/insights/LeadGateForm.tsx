@@ -24,14 +24,24 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+export type LeadGateKind = 'insight' | 'research';
+
 interface LeadGateFormProps {
-  insightTitle: string;
-  insightSlug: string;
-  insightId?: string;
-  pdfUrl?: string;
+  /**
+   * - 'insight'  → /insights/<slug>; after submit shows "we emailed it" screen.
+   * - 'research' → /i6-intelligence/<slug>; after submit calls `onUnlock`
+   *                so the article body is revealed inline. PDF is still
+   *                sent by i6Hub via email and lead is registered.
+   */
+  kind: LeadGateKind;
+  title: string;
+  slug: string;
+  id?: string;
+  pdfUrl?: string | null;
+  onUnlock?: () => void;
 }
 
-const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGateFormProps) => {
+const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
@@ -95,16 +105,20 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
       setSubmitting(true);
 
       try {
-        const url = `https://infinity6.ai/${language}/insights/${insightSlug}`;
+        const basePath = kind === 'research' ? 'i6-intelligence' : 'insights';
+        const url = `https://infinity6.ai/${language}/${basePath}/${slug}`;
         const ctx = getLeadContext();
+        const tag = kind === 'research' ? '[Lead Research]' : '[Lead Insights]';
+        const idLabel = kind === 'research' ? 'Research' : 'Insight';
+        const origin = kind === 'research' ? 'lead-gate-research' : 'lead-gate-insights';
         const message = [
-          '[Lead Insights]',
-          `Insight: ${insightTitle}`,
-          `Slug: ${insightSlug}`,
-          `ID: ${insightId || '-'}`,
+          tag,
+          `${idLabel}: ${title}`,
+          `Slug: ${slug}`,
+          `ID: ${id || '-'}`,
           `URL: ${url}`,
           `Idioma: ${language}`,
-          'Origem: lead-gate-insights',
+          `Origem: ${origin}`,
           '',
           formatLeadContextForMessage(ctx),
         ].join('\n');
@@ -112,10 +126,10 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('email', data.email);
-        formData.append('company', insightTitle);
+        formData.append('company', title);
         formData.append('message', message);
-        formData.append('subscription', `insight:${insightSlug}`);
-        formData.append('insight_id', insightId || '');
+        formData.append('subscription', `${kind}:${slug}`);
+        formData.append('insight_id', id || '');
         formData.append('token', SHARED_FORM_TOKEN);
         // Anexa todos os campos de tracking planos (anonymous_id, session_id,
         // first/last touch, journey, language, user_agent, etc.)
@@ -127,11 +141,29 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
           body: formData,
         });
 
-        trackEvent(TRACKER_EVENTS.INSIGHT_DOWNLOAD_COMPLETED, {
-          insight_id: insightId,
-          insight_slug: insightSlug,
-          language,
-        });
+        if (kind === 'research') {
+          trackEvent(TRACKER_EVENTS.RESEARCH_UNLOCKED, {
+            research_id: id,
+            research_slug: slug,
+            language,
+          });
+        } else {
+          trackEvent(TRACKER_EVENTS.INSIGHT_DOWNLOAD_COMPLETED, {
+            insight_id: id,
+            insight_slug: slug,
+            language,
+          });
+        }
+
+        if (kind === 'research' && onUnlock) {
+          try {
+            localStorage.setItem(`i6_unlocked_research:${slug}:${language}`, '1');
+          } catch {
+            /* localStorage unavailable */
+          }
+          onUnlock();
+          return;
+        }
 
         setSubmitted(true);
       } catch (err) {
@@ -141,7 +173,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
         setSubmitting(false);
       }
     },
-    [insightId, insightSlug, insightTitle, language, pdfUrl, t.error, toast],
+    [id, slug, title, language, pdfUrl, kind, onUnlock, t.error, toast],
   );
 
 
@@ -179,7 +211,7 @@ const LeadGateForm = ({ insightTitle, insightSlug, insightId, pdfUrl }: LeadGate
       <p className="text-white/70 mb-6">{t.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-        <input type="hidden" name="insight_id" value={insightId ?? ''} readOnly />
+        <input type="hidden" name="insight_id" value={id ?? ''} readOnly />
 
         {/* Honeypot: hidden from humans (CSS + aria), bots fill it */}
         <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>

@@ -17,11 +17,14 @@ export interface IntelligenceFrontmatter {
   faq?: string;
   related_product?: string;     // anchor on /solutions (e.g. "i6previsio", "i6recsys")
   related_story_slug?: string;  // success story slug
+  gated?: boolean;              // requires lead-gate form before reading
+  asset_url?: string | null;    // optional PDF sent by i6Hub after gate submit
 }
 
 export interface IntelligencePiece extends IntelligenceFrontmatter {
   content: string;
 }
+
 
 function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
@@ -70,6 +73,8 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
       featured: fm.featured === true,
       related_product: fm.related_product,
       related_story_slug: fm.related_story_slug,
+      gated: fm.gated === true,
+      asset_url: fm.asset_url ?? null,
       slug: fm.slug || path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
       content,
     } as IntelligencePiece;
@@ -77,6 +82,7 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
   .filter((x): x is IntelligencePiece => x !== null);
 
 ALL.sort((a, b) => (a.date < b.date ? 1 : -1));
+
 
 export const useIntelligence = (limit?: number) => {
   const { language } = useLanguage();

@@ -23,7 +23,7 @@ import HomeTeste from "./pages/HomeTeste";
 import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
-import IntelligenceArticle from "./pages/IntelligenceArticle";
+import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -81,7 +81,7 @@ const LocalizedRoutes = () => {
         <Route path="insights" element={<Insights />} />
         <Route path="insights/:slug" element={<InsightArticle />} />
         <Route path="i6-intelligence" element={<Intelligence />} />
-        <Route path="i6-intelligence/:slug" element={<IntelligenceArticle />} />
+        <Route path="i6-intelligence/:slug" element={<IntelligenceOrInsightArticle />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

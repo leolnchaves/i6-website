@@ -6,7 +6,9 @@ import { useFeaturedInsights, type Insight } from '@/hooks/useInsights';
 
 const InsightMiniCard = ({ insight }: { insight: Insight }) => {
   const localized = useLocalizedPath();
-  const isExternal = !insight.gated && insight.type !== 'i6 Article' && !!insight.external_url;
+  const isIntelType = insight.type === 'i6 Article' || insight.type === 'i6 eBook';
+  const isExternal = !insight.gated && !isIntelType && !!insight.external_url;
+  const internalBase = isIntelType ? 'i6-intelligence' : 'insights';
 
   const inner = (
     <div className="group h-full p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all">
@@ -24,7 +26,7 @@ const InsightMiniCard = ({ insight }: { insight: Insight }) => {
   return isExternal ? (
     <a href={insight.external_url!} target="_blank" rel="noopener noreferrer">{inner}</a>
   ) : (
-    <Link to={localized(`/insights/${insight.slug}`)}>{inner}</Link>
+    <Link to={localized(`/${internalBase}/${insight.slug}`)}>{inner}</Link>
   );
 };
 

@@ -7,6 +7,9 @@ export const TRACKER_EVENTS = {
   INSIGHT_VIEW: 'insight_view',
   INSIGHT_DOWNLOAD_STARTED: 'insight_download_started',
   INSIGHT_DOWNLOAD_COMPLETED: 'insight_download_completed',
+  // Research funnel (i6 Research gated content)
+  RESEARCH_VIEW: 'research_view',
+  RESEARCH_UNLOCKED: 'research_unlocked',
   // Contact funnel
   CONTACT_FORM_STARTED: 'contact_form_started',
   CONTACT_FORM_SUBMITTED: 'contact_form_submitted',
