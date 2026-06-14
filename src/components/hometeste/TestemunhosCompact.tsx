@@ -31,12 +31,12 @@ const TestemunhosCompact = memo(() => {
     pt: {
       title: 'O que dizem nossos clientes',
       subtitle: 'Resultados na voz de quem está na operação',
-      cta: 'Veja os resultados que esses clientes têm recuperado',
+      cta: 'Ver histórias de sucesso',
     },
     en: {
       title: 'What our clients say',
       subtitle: 'Results in the voice of those running the operation',
-      cta: 'See the results these clients have been recovering',
+      cta: 'See success stories',
     },
   }[language];
 
