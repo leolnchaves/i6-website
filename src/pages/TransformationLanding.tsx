@@ -68,31 +68,57 @@ const HeroSection = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }
 };
 
 const SolutionEngines = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }) => {
-  const engines = csv(piece.related_engines).map((id) => ENGINE_META[id]).filter(Boolean);
-  if (engines.length === 0) return null;
+  const ids = csv(piece.related_engines);
+  const engines = ids.filter((id) => id !== 'i6signal').map((id) => ENGINE_META[id]).filter(Boolean);
+  const hasSignal = ids.includes('i6signal');
   const localized = useLocalizedPath();
+  if (engines.length === 0 && !hasSignal) return null;
+  const SignalIcon = ENGINE_META.i6signal.icon;
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-      {engines.map((e) => {
-        const Icon = e.icon;
-        return (
-          <Link
-            key={e.anchor}
-            to={localized(`/our-ai#${e.anchor}`)}
-            className="group flex items-start gap-4 border border-white/10 rounded-lg p-5 bg-white/[0.02] hover:border-[#F4845F]/40 hover:bg-white/[0.04] transition-all"
-          >
-            <div className="shrink-0 w-10 h-10 rounded-md border border-white/10 flex items-center justify-center text-[#F4845F] group-hover:border-[#F4845F]/50 transition-colors">
-              <Icon size={18} strokeWidth={1.5} />
-            </div>
-            <div className="flex-1">
-              <h4 className="text-sm font-semibold text-white group-hover:text-[#F4845F] transition-colors">{e.name}</h4>
-              <p className="text-xs text-white/50 mt-1">
-                {lang === 'pt' ? 'Ver o motor →' : 'See the engine →'}
-              </p>
-            </div>
-          </Link>
-        );
-      })}
+    <div className="mt-8 space-y-4">
+      {engines.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {engines.map((e) => {
+            const Icon = e.icon;
+            return (
+              <Link
+                key={e.anchor}
+                to={localized(`/our-ai#${e.anchor}`)}
+                className="group flex items-start gap-4 border border-white/10 rounded-lg p-5 bg-white/[0.02] hover:border-[#F4845F]/40 hover:bg-white/[0.04] transition-all"
+              >
+                <div className="shrink-0 w-10 h-10 rounded-md border border-white/10 flex items-center justify-center text-[#F4845F] group-hover:border-[#F4845F]/50 transition-colors">
+                  <Icon size={18} strokeWidth={1.5} />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4845F] transition-colors">{e.name}</h4>
+                  <p className="text-xs text-white/50 mt-1">
+                    {lang === 'pt' ? 'Ver o motor →' : 'See the engine →'}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+      {hasSignal && (
+        <Link
+          to={localized(`/our-ai#${ENGINE_META.i6signal.anchor}`)}
+          className="group flex items-start gap-4 border border-[#F4845F]/30 rounded-lg p-5 bg-[#F4845F]/[0.04] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.07] transition-all"
+        >
+          <div className="shrink-0 w-10 h-10 rounded-md border border-[#F4845F]/40 flex items-center justify-center text-[#F4845F] group-hover:border-[#F4845F] transition-colors">
+            <SignalIcon size={18} strokeWidth={1.5} />
+          </div>
+          <div className="flex-1">
+            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#F4845F]/80 mb-1">
+              {lang === 'pt' ? 'Interface preditiva conversacional' : 'Conversational predictive interface'}
+            </p>
+            <h4 className="text-sm font-semibold text-white group-hover:text-[#F4845F] transition-colors">{ENGINE_META.i6signal.name}</h4>
+            <p className="text-xs text-white/50 mt-1">
+              {lang === 'pt' ? 'Conhecer o i6 Signal →' : 'Discover i6 Signal →'}
+            </p>
+          </div>
+        </Link>
+      )}
     </div>
   );
 };
