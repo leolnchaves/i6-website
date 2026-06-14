@@ -104,6 +104,35 @@ await fs.mkdir(MD_DIR, { recursive: true });
 if (IMG_DIR)  await fs.mkdir(IMG_DIR,  { recursive: true });
 if (LOGO_DIR) await fs.mkdir(LOGO_DIR, { recursive: true });
 
+// ---------- Snapshot existing MDs (for fallback) BEFORE cleanup ----------
+const existingMdSnapshot = {}; // fileName -> { cover_image, logo }
+{
+  const names = await fs.readdir(MD_DIR).catch(() => []);
+  for (const n of names) {
+    if (!n.endsWith('.md') || n.toLowerCase() === 'readme.md') continue;
+    try {
+      const raw = await fs.readFile(path.join(MD_DIR, n), 'utf8');
+      const fmMatch = raw.match(/^---\s*\n([\s\S]*?)\n---/);
+      if (!fmMatch) continue;
+      const body = fmMatch[1];
+      const pick = (key) => {
+        const m = body.match(new RegExp(`^${key}:\\s*(.*)$`, 'm'));
+        if (!m) return null;
+        let v = m[1].trim();
+        if (!v || v === 'null' || v === '~') return null;
+        if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+          v = v.slice(1, -1);
+        }
+        return v || null;
+      };
+      existingMdSnapshot[n] = {
+        cover_image: pick('cover_image'),
+        logo: pick('logo'),
+      };
+    } catch { /* ignore */ }
+  }
+}
+
 // ---------- Cleanup .md (preserve README.md) ----------
 const existingMd = await fs.readdir(MD_DIR);
 await Promise.all(
@@ -355,11 +384,36 @@ for (const it of items) {
     }
   }
 
+  const fileName = CONFIG.fileName(it);
+  const prev = existingMdSnapshot[fileName] ?? {};
+  // Validate fallback paths still exist on disk (basename match in IMG_DIR / LOGO_DIR).
+  const fallbackExists = async (webPath, dir) => {
+    if (!webPath || !dir) return false;
+    const base = path.basename(String(webPath));
+    return await fileExists(path.join(dir, base));
+  };
+  const coverFallback = (!coverOut && prev.cover_image && await fallbackExists(prev.cover_image, IMG_DIR))
+    ? prev.cover_image
+    : null;
+  const logoFallback = (!logoOut && prev.logo && await fallbackExists(prev.logo, LOGO_DIR))
+    ? prev.logo
+    : null;
+  if (coverFallback) {
+    keepCover.add(path.basename(coverFallback));
+    coverCounters.preserved++;
+    console.log(`[${TYPE}] ${slug} -> preserved cover from existing MD (${path.basename(coverFallback)})`);
+  }
+  if (logoFallback) {
+    keepLogo.add(path.basename(logoFallback));
+    logoCounters.preserved++;
+    console.log(`[${TYPE}] ${slug} -> preserved logo from existing MD (${path.basename(logoFallback)})`);
+  }
+
   const md = CONFIG.frontmatter(it, {
-    coverLocal: coverOut?.localPath ?? null,
-    logoLocal:  logoOut?.localPath  ?? null,
+    coverLocal: coverOut?.localPath ?? coverFallback ?? null,
+    logoLocal:  logoOut?.localPath  ?? logoFallback  ?? null,
   });
-  await fs.writeFile(path.join(MD_DIR, CONFIG.fileName(it)), md);
+  await fs.writeFile(path.join(MD_DIR, fileName), md);
 }
 
 // ---------- Cleanup orphan images ----------
