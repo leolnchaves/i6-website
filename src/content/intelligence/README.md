@@ -39,6 +39,10 @@ excerpt: "1 a 3 frases, citation magnet"   # 140–280 caracteres
 read_time: 8                                # opcional, em minutos
 featured: true                              # opcional, destaca no índice
 cover_image: /lovable-uploads/xxx.png       # opcional, caminho relativo ou URL absoluta
+gated: false                                # opcional, true → exige LeadGateForm antes de liberar o conteúdo
+asset_url: /assets/research/xxx.pdf         # opcional, PDF liberado após o gate (também enviado por email pelo i6Hub)
+related_product: i6previsio                 # opcional, âncora em /solutions
+related_story_slug: marketplace-excellence-pharmacy   # opcional, link cruzado para case
 ---
 ```
 
