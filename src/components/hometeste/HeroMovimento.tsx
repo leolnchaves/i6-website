@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
+import WaveBackground from '@/components/hometeste/WaveBackground';
 
 
 const HeroMovimento = () => {
