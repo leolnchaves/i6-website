@@ -5,61 +5,45 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsights, resolveCoverImage, type Insight } from '@/hooks/useInsights';
 import SEOHead from '@/components/common/SEOHead';
+import i6SymbolFallback from '@/assets/images/i6-symbol-white.png';
 
 const InsightCard = ({ insight }: { insight: Insight }) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const isExternal = !insight.gated && insight.type !== 'i6 Article' && !!insight.external_url;
-  const cover = resolveCoverImage(insight.cover_image);
+  const resolved = resolveCoverImage(insight.cover_image);
+  const hasLogo = !!resolved;
+  const logoSrc = resolved || i6SymbolFallback;
 
   const typeLabel = insight.type;
 
   const cardContent = (
-    <article className="group h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all overflow-hidden">
-      <div className="h-28 overflow-hidden bg-white/5 relative">
-        {cover ? (
-          <>
-            <img
-              src={cover}
-              alt={insight.title}
-              className="w-full h-full object-cover saturate-[0.75] brightness-90 blur-[1px] group-hover:saturate-100 group-hover:brightness-100 group-hover:blur-0 group-hover:scale-105 transition-all duration-500"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 pointer-events-none" />
-          </>
-        ) : (
-          <div
-            className="w-full h-full flex items-center justify-center relative overflow-hidden"
-            style={{
-              background:
-                'radial-gradient(120% 80% at 30% 20%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0) 60%), linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
-            }}
-            aria-hidden="true"
-          >
-            <span className="text-xl md:text-2xl font-bold uppercase tracking-[0.25em] text-white/10 select-none">
-              {typeLabel}
-            </span>
-            <span className="absolute inset-0 bg-[radial-gradient(circle_at_80%_90%,rgba(244,132,95,0.08),transparent_50%)]" />
-          </div>
-        )}
-      </div>
-      <div className="p-4 flex-1 flex flex-col">
-        <div className="flex items-center gap-2 mb-2">
+    <article className="group relative h-full flex flex-col rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all p-5">
+      <div className="flex items-start gap-3 mb-4">
+        <div className="flex items-center gap-2 flex-wrap min-w-0">
           <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#F4845F]/15 text-[#F4845F]">
             {typeLabel}
           </span>
-          {isExternal && <ExternalLink size={12} className="text-white/40" />}
-          <time className="text-[10px] text-white/40 ml-auto">
+          <time className="text-[10px] text-white/40">
             {new Date(insight.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
           </time>
         </div>
-        <h2 className="text-sm font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors line-clamp-2">
-          {insight.title}
-        </h2>
-        <p className="text-xs text-white/60 flex-1 line-clamp-3">{insight.excerpt}</p>
+        <img
+          src={logoSrc}
+          alt={hasLogo ? `${insight.title} source logo` : 'infinity6'}
+          className={`ml-auto h-8 max-w-[96px] object-contain shrink-0 transition-opacity duration-300 ${hasLogo ? 'opacity-80 group-hover:opacity-100' : 'opacity-40 group-hover:opacity-60'}`}
+          loading="lazy"
+        />
+      </div>
+      <h2 className="text-sm font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors line-clamp-2">
+        {insight.title}
+      </h2>
+      <p className="text-xs text-white/60 flex-1 line-clamp-3">{insight.excerpt}</p>
+      <div className="flex items-center gap-2 mt-4 text-[10px] text-white/40">
         {insight.read_time && insight.type === 'i6 Article' && (
-          <p className="text-[10px] text-white/40 mt-3">{insight.read_time} min</p>
+          <span>{insight.read_time} min</span>
         )}
+        {isExternal && <ExternalLink size={12} className="ml-auto text-white/40" />}
       </div>
     </article>
   );
