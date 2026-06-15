@@ -11,23 +11,27 @@ const MotionAuroraVertical = () => (
     aria-hidden
   >
     <style>{`
+      /* Seamless loops: start == end, using gentle elliptical drift */
       @keyframes aurora-rise-1 {
-        0%   { transform: translate3d(-10%, 110%, 0) scale(1); }
-        50%  { transform: translate3d(5%, 30%, 0) scale(1.15); }
-        100% { transform: translate3d(-10%, -40%, 0) scale(1); }
+        0%   { transform: translate3d(-10%, 60%, 0) scale(1); opacity: 0.85; }
+        25%  { transform: translate3d(2%, 20%, 0) scale(1.1); opacity: 1; }
+        50%  { transform: translate3d(8%, -10%, 0) scale(1.05); opacity: 0.9; }
+        75%  { transform: translate3d(-4%, 25%, 0) scale(0.95); opacity: 0.95; }
+        100% { transform: translate3d(-10%, 60%, 0) scale(1); opacity: 0.85; }
       }
       @keyframes aurora-rise-2 {
-        0%   { transform: translate3d(10%, 130%, 0) scale(0.9); }
-        50%  { transform: translate3d(-8%, 50%, 0) scale(1.1); }
-        100% { transform: translate3d(10%, -30%, 0) scale(0.9); }
+        0%   { transform: translate3d(5%, 90%, 0) scale(0.95); opacity: 0.7; }
+        33%  { transform: translate3d(-8%, 40%, 0) scale(1.1); opacity: 0.95; }
+        66%  { transform: translate3d(10%, 5%, 0) scale(1); opacity: 0.8; }
+        100% { transform: translate3d(5%, 90%, 0) scale(0.95); opacity: 0.7; }
       }
       @keyframes aurora-rise-3 {
-        0%   { transform: translate3d(-5%, 150%, 0) scale(1.05); }
-        50%  { transform: translate3d(8%, 60%, 0) scale(0.95); }
-        100% { transform: translate3d(-5%, -20%, 0) scale(1.05); }
+        0%   { transform: translate3d(-2%, 40%, 0) scale(1); opacity: 0.8; }
+        50%  { transform: translate3d(6%, -5%, 0) scale(1.15); opacity: 1; }
+        100% { transform: translate3d(-2%, 40%, 0) scale(1); opacity: 0.8; }
       }
       @keyframes aurora-shimmer {
-        0%, 100% { opacity: 0.85; }
+        0%, 100% { opacity: 0.8; }
         50%      { opacity: 0.55; }
       }
     `}</style>
