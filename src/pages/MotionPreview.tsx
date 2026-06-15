@@ -1,6 +1,6 @@
-import MotionAuroraDrift from '@/components/hometeste/motion-options/MotionAuroraDrift';
-import MotionSilkStreams from '@/components/hometeste/motion-options/MotionSilkStreams';
-import MotionFlowLines from '@/components/hometeste/motion-options/MotionFlowLines';
+import MotionVerticalRain from '@/components/hometeste/motion-options/MotionVerticalRain';
+import MotionAuroraVertical from '@/components/hometeste/motion-options/MotionAuroraVertical';
+import MotionAscendingStreams from '@/components/hometeste/motion-options/MotionAscendingStreams';
 
 const HeroContent = () => (
   <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -32,9 +32,9 @@ const Panel = ({ label, name, children }: { label: string; name: string; childre
 
 const MotionPreview = () => (
   <div className="bg-[#0B1224]">
-    <Panel label="Option A" name="Aurora Drift"><MotionAuroraDrift /></Panel>
-    <Panel label="Option B" name="Silk Streams"><MotionSilkStreams /></Panel>
-    <Panel label="Option C" name="Linhas de Fluxo"><MotionFlowLines /></Panel>
+    <Panel label="Option A" name="Vertical Rain"><MotionVerticalRain /></Panel>
+    <Panel label="Option B" name="Aurora Vertical"><MotionAuroraVertical /></Panel>
+    <Panel label="Option C" name="Ascending Streams"><MotionAscendingStreams /></Panel>
   </div>
 );
 
