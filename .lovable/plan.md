@@ -1,42 +1,27 @@
+# 3 novas opções de movimento — foco lateral esquerda, fluxo vertical
 
-# Preview ao vivo de 3 fundos animados para a hero
+Vou substituir as 3 opções atuais (Aurora Drift, Silk Streams, Flow Lines) por 3 novas variações, todas centradas na **faixa lateral esquerda** com movimento **vertical suave** (cima→baixo ou baixo→cima). Tudo continua em SVG/CSS puro, sem libs, navy `#0B1224` + coral `#F4845F`.
 
-As prévias estáticas do design tool não mostram animação — por isso nenhuma das opções "se mexeu" pra você. A solução é montar uma página temporária no próprio projeto, onde os 3 fundos rodam de verdade (CSS/SVG animados), você compara, escolhe, e aí aplico na hero da home.
+A página `/motion-preview` continua mostrando os 3 painéis empilhados para você comparar lado a lado antes de aplicarmos no hero.
 
-## O que vou fazer
+## Opção A — Vertical Rain (Chuva de Dados)
 
-1. Criar uma rota temporária `/motion-preview` (sem header/footer, fora do menu) com 3 painéis full-screen empilhados, cada um com:
-   - Fundo navy `#0B1224`
-   - Um dos 3 backgrounds animados rodando
-   - O título "Movement Intelligence" + subtítulo + CTA no centro (apenas para você sentir como fica com o conteúdo real)
-   - Um rótulo discreto no canto identificando a opção
+Faixa de ~30% da largura na esquerda. Linhas verticais finíssimas (1px) caindo lentamente de cima para baixo, com pequenos pontos coral brilhantes deslizando dentro delas, deixando rastro vertical curto. Velocidades e delays diferentes em cada linha → sensação de fluxo contínuo de dados. Fade suave nas bordas superior e inferior.
 
-2. As 3 opções (todas suaves, minimalistas, sem clichê de IA, somente CSS/SVG, leves):
+## Opção B — Aurora Vertical (Coluna de Luz)
 
-   **Opção A — Aurora Drift**  
-   2–3 "blobs" de coral muito desfocados (`blur-3xl`, opacidade ~8%) flutuando devagar pelo fundo (loop de 20–30s). Sensação: névoa coral respirando. Zero linhas, zero ruído visual.
+Coluna lateral esquerda com 2–3 "blobs" coral muito difusos (`blur` alto, opacidade ~20–30%) subindo lentamente em loop, como uma aurora boreal vertical. Sem linhas, só luz. Movimento muito lento (40–60s) — extremamente sutil, moderno e premium. Inspirado na referência tipo "ambient glow".
 
-   **Opção B — Constelação de Dados**  
-   Pontos coral minúsculos espalhados, conectados por linhas finíssimas (opacidade ~10–15%). Cada nó pulsa devagar; algumas linhas têm um "traço de luz" percorrendo (stroke-dashoffset). Sensação: rede neural sutil. Movimento quase imperceptível.
+## Opção C — Ascending Streams (Fluxo Ascendente)
 
-   **Opção C — Linhas de Fluxo Horizontais**  
-   3–4 linhas horizontais finíssimas (1px, opacidade ~8%) atravessando a tela, com pequenos pontos coral deslizando ao longo delas em velocidades diferentes (loop infinito). Sensação: dados fluindo lateralmente — alinhado direto com "Data moves". Bem mais minimalista que as ondas atuais.
+3–4 curvas verticais bezier finas, partindo da base e subindo até o topo, ocupando a faixa esquerda. Pontos de luz coral sobem ao longo das curvas (`animateMotion`) com rastro brilhante. As próprias curvas pulsam de leve (`stroke-dasharray` shimmer). Sensação de "sinais" subindo — inteligência emergindo dos dados.
 
-3. Substituo a `<WaveBackground />` atual apenas nessa página de preview — a home fica intacta até você escolher.
+## Detalhes técnicos
 
-4. Você abre `/motion-preview`, role pelas 3, me diz "quero a B", e aí eu:
-   - Substituo o conteúdo de `src/components/hometeste/WaveBackground.tsx` pela opção escolhida (ou crio um novo componente)
-   - Removo a rota `/motion-preview` e arquivos temporários
+- Cria: `MotionVerticalRain.tsx`, `MotionAuroraVertical.tsx`, `MotionAscendingStreams.tsx` em `src/components/hometeste/motion-options/`
+- Remove: `MotionAuroraDrift.tsx`, `MotionSilkStreams.tsx`, `MotionFlowLines.tsx`
+- Atualiza: `src/pages/MotionPreview.tsx` com os 3 novos imports e labels
+- Não toca em: `HeroMovimento.tsx`, `WaveBackground.tsx`, ou qualquer outro arquivo
+- Faixa lateral: container absoluto `left-0 top-0 h-full w-[35%]` com `mask-image` lateral pra fade suave na borda direita
 
-## Arquivos
-
-- **Criar**: `src/pages/MotionPreview.tsx` (página temporária)
-- **Criar**: `src/components/hometeste/motion-options/MotionAuroraDrift.tsx`, `MotionConstellation.tsx`, `MotionFlowLines.tsx`
-- **Editar**: `src/App.tsx` — adicionar rota `/motion-preview` (sem layout, sem i18n)
-- **Não tocar**: `HeroMovimento.tsx`, `WaveBackground.tsx`, nenhuma outra página
-
-Tudo CSS/SVG puro (keyframes Tailwind + animações SMIL do SVG quando necessário) — sem libs novas, sem impacto de build.
-
-## Próximo passo depois da escolha
-
-Quando você disser qual opção escolheu, eu aplico na home e limpo os arquivos temporários em um único passo.
+Depois que você escolher uma, faço a aplicação no hero e limpo os arquivos temporários em um único passo.
