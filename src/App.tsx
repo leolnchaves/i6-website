@@ -26,7 +26,7 @@ import Intelligence from "./pages/Intelligence";
 import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
-import MotionPreview from "./pages/MotionPreview";
+
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
 import { logger } from "./utils/logger";
@@ -108,9 +108,6 @@ const App = () => {
                 <Sonner />
                 <ScrollToTop />
                 <Routes>
-
-                  {/* Temporary motion background preview */}
-                  <Route path="/motion-preview" element={<MotionPreview />} />
 
                   {/* Localized site */}
                   <Route path="/:lang/*" element={<LocalizedRoutes />} />

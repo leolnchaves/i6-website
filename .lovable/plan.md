@@ -1,27 +1,25 @@
-# 3 novas opções de movimento — foco lateral esquerda, fluxo vertical
+## Goal
+Add the Vertical Rain animation to the real home hero (`HeroMovimento`) and remove all temporary motion-preview code so nothing leftover stays in the repo.
 
-Vou substituir as 3 opções atuais (Aurora Drift, Silk Streams, Flow Lines) por 3 novas variações, todas centradas na **faixa lateral esquerda** com movimento **vertical suave** (cima→baixo ou baixo→cima). Tudo continua em SVG/CSS puro, sem libs, navy `#0B1224` + coral `#F4845F`.
+## Changes
 
-A página `/motion-preview` continua mostrando os 3 painéis empilhados para você comparar lado a lado antes de aplicarmos no hero.
+1. **`src/components/hometeste/HeroMovimento.tsx`**
+   - Import `MotionVerticalRain` from `@/components/hometeste/motion-options/MotionVerticalRain`.
+   - Render it inside the hero `<section>`, alongside `<WaveBackground />`, before the content `<div>`. It will sit absolutely on the left side (already configured inside the component with its own mask).
 
-## Opção A — Vertical Rain (Chuva de Dados)
+2. **Move the motion file out of the temporary folder** (cleanup):
+   - Move `src/components/hometeste/motion-options/MotionVerticalRain.tsx` → `src/components/hometeste/MotionVerticalRain.tsx`.
+   - Update the import in `HeroMovimento.tsx` accordingly.
 
-Faixa de ~30% da largura na esquerda. Linhas verticais finíssimas (1px) caindo lentamente de cima para baixo, com pequenos pontos coral brilhantes deslizando dentro delas, deixando rastro vertical curto. Velocidades e delays diferentes em cada linha → sensação de fluxo contínuo de dados. Fade suave nas bordas superior e inferior.
+3. **Delete temporary preview artifacts:**
+   - `src/pages/MotionPreview.tsx`
+   - `src/components/hometeste/motion-options/MotionAuroraVertical.tsx`
+   - `src/components/hometeste/motion-options/MotionLightRays.tsx`
+   - The now-empty folder `src/components/hometeste/motion-options/`
 
-## Opção B — Aurora Vertical (Coluna de Luz)
+4. **`src/App.tsx`**
+   - Remove the `MotionPreview` import (line 29).
+   - Remove the `/motion-preview` route (lines 112–113).
 
-Coluna lateral esquerda com 2–3 "blobs" coral muito difusos (`blur` alto, opacidade ~20–30%) subindo lentamente em loop, como uma aurora boreal vertical. Sem linhas, só luz. Movimento muito lento (40–60s) — extremamente sutil, moderno e premium. Inspirado na referência tipo "ambient glow".
-
-## Opção C — Ascending Streams (Fluxo Ascendente)
-
-3–4 curvas verticais bezier finas, partindo da base e subindo até o topo, ocupando a faixa esquerda. Pontos de luz coral sobem ao longo das curvas (`animateMotion`) com rastro brilhante. As próprias curvas pulsam de leve (`stroke-dasharray` shimmer). Sensação de "sinais" subindo — inteligência emergindo dos dados.
-
-## Detalhes técnicos
-
-- Cria: `MotionVerticalRain.tsx`, `MotionAuroraVertical.tsx`, `MotionAscendingStreams.tsx` em `src/components/hometeste/motion-options/`
-- Remove: `MotionAuroraDrift.tsx`, `MotionSilkStreams.tsx`, `MotionFlowLines.tsx`
-- Atualiza: `src/pages/MotionPreview.tsx` com os 3 novos imports e labels
-- Não toca em: `HeroMovimento.tsx`, `WaveBackground.tsx`, ou qualquer outro arquivo
-- Faixa lateral: container absoluto `left-0 top-0 h-full w-[35%]` com `mask-image` lateral pra fade suave na borda direita
-
-Depois que você escolher uma, faço a aplicação no hero e limpo os arquivos temporários em um único passo.
+## Out of scope
+No changes to `WaveBackground`, copy, layout, or any other page/component.
