@@ -1,62 +1,60 @@
-## Mudança proposta no card de /insights
+## Reordenação dos depoimentos + novo Namir + ajustes de empresa
 
-A faixa de imagem de capa (~112px) é removida. O card vira **tipográfico**, com um **logo no canto superior direito** representando a fonte do conteúdo (veículo, canal, cliente ou própria infinity6).
+Nova ordem em ambos os arquivos (`public/content/testimonials-pt.md` e `public/content/testimonials-en.md`):
 
-**Sem alteração no frontmatter / no fluxo do i6hub.** O campo `cover_image` que hoje vira capa passa a ser tratado pelo front como **logo**. Quando vier nulo, entra o **fallback automático**: símbolo branco da infinity6 (imagem em anexo).
+1. **Marcus Sanchez** — EMS Farma (sem alteração)
+2. **Namir Bernardo** — Data & Analytics Manager, Unicred do Brasil (novo)
+3. **Paulo Lima** — empresa muda de **Grupo NC** → **Grupo EMS**
+4. **Diego Neufert** — empresa muda de **Grupo NC** → **Grupo EMS**
 
-### Como ficaria
+### PT — `public/content/testimonials-pt.md` (conteúdo final)
+```
+# Depoimentos
 
-```text
-┌──────────────────────────────────────────┐
-│  ON MEDIA · 12 jun 2026     [veículo]   │  ← cover_image renderizada como logo top-right
-│                                          │
-│  Título do insight em até                │
-│  duas linhas                             │
-│                                          │
-│  Resumo curto em até três linhas         │
-│  descrevendo o conteúdo publicado…       │
-│                                          │
-│  5 min · ↗                               │
-└──────────────────────────────────────────┘
+## Depoimento 1
+**Quote:** A EMS tem liderado a adoção de IA na indústria farmacêutica e a parceria com a infinity6 reforça esse protagonismo. Em poucas semanas, conseguimos transformar dados em ações inteligentes que geram impacto imediato e mensurável.
+**Author:** Marcus Sanchez
+**Title:** Acionista EMS Farma
+**Company:** EMS Farma
+**LinkedIn:** https://www.linkedin.com/in/marcus-sanchez-0710ba1b3/
+**Rating:** 5
+
+---
+
+## Depoimento 2
+**Quote:** A parceria com a infinity6 demonstra o poder dos dados como ativo estratégico: IA avançada e visão de negócio que se traduzem em valor real para a empresa.
+**Author:** Namir Bernardo
+**Title:** Data & Analytics Manager
+**Company:** Unicred do Brasil
+**Rating:** 5
+
+---
+
+## Depoimento 3
+**Quote:** Time com alta capacidade técnica e excelente visão de negócio, desenvolvendo soluções criativas e eficazes.
+**Author:** Paulo Lima
+**Title:** Gerente de Novos Canais
+**Company:** Grupo EMS
+**LinkedIn:** https://www.linkedin.com/in/pauloelima/
+**Rating:** 5
+
+---
+
+## Depoimento 4
+**Quote:** Através da parceria com a infinity6, estamos avançando exponencialmente na aplicação de IA especializada em resultados de negócio. O Pedido Inteligente é um exemplo que amplia nossa capacidade de prever, decidir e agir em escala.
+**Author:** Diego Neufert
+**Title:** VP de Tecnologia
+**Company:** Grupo EMS
+**LinkedIn:** https://br.linkedin.com/in/neufert
+**Rating:** 5
+
+---
 ```
 
-Quando `cover_image` é nulo:
+### EN — `public/content/testimonials-en.md`
+Mesma ordem e mesmas alterações de empresa. Quote do Namir traduzida:
+> "The partnership with infinity6 demonstrates the power of data as a strategic asset: advanced AI and business vision that translate into real value for the company."
 
-```text
-│  ARTICLE · 12 jun 2026          [⟨i6⟩]  │  ← símbolo branco infinity6 (fallback)
-```
-
-### Detalhes visuais do card
-
-- **Sem faixa de imagem**: bloco `<div className="h-28 ...">` removido do `InsightCard`, junto com o background gradient placeholder.
-- **Logo top-right**:
-  - Altura ~32px, `max-w-[96px]`, `object-contain`, alinhada ao topo direito do card.
-  - Opacidade `0.8` em repouso → `1` no hover.
-  - Sem borda/caixa em volta — deixa o glyph respirar sobre o fundo navy.
-- **Fallback**: símbolo branco infinity6 (anexo) renderizado quando `cover_image` é null/vazio, com `opacity-50` para não competir com o título (é marca neutra, não fonte específica).
-- **Padding** do card sobe para `p-5`. Chip do tipo + data continuam na primeira linha (à esquerda do logo). Ícone external (`↗`) e `read_time` descem para o rodapé do card.
-- **Hover**: borda coral `#F4845F/40`, título coral, leve `bg-white/[0.08]` (mantém o comportamento atual).
-
-### Lógica do logo (no `InsightCard`)
-
-```ts
-const logo = insight.cover_image
-  ? resolveCoverImage(insight.cover_image)   // usa o que o i6hub mandar
-  : i6SymbolFallback;                         // símbolo branco infinity6
-const isFallback = !insight.cover_image;
-```
-
-`resolveCoverImage` continua igual (já lida com URL absoluta vs. relativa). `<img>` recebe `object-contain` e classes diferentes via `isFallback` (opacidade menor + width fixa pequena).
-
-### Arquivos afetados
-
-- `src/pages/Insights.tsx` — reescrever `InsightCard`: remove faixa de imagem, novo header com logo top-right + fallback, padding ajustado, external/read-time movidos para rodapé.
-- `src/assets/images/i6-symbol-white.png` — adicionar o símbolo branco anexado (será o asset do fallback). Importado direto no `InsightCard`.
-- **Sem mudança**: `src/hooks/useInsights.ts` (frontmatter intacto), `InsightsSection` da home, página de detalhe, SEO, filtros, fluxo i6hub.
-
-### Fora do escopo
-
-- Página de detalhe `/insights/:slug` — segue usando `cover_image` como capa visual ali (não mexo agora; se quiser, fazemos depois).
-- Qualquer mudança no processo de upload no i6hub.
-
-Aprovo e implemento?
+### Observações
+- Namir sem `LinkedIn` (não informado) — campo é opcional.
+- Estes arquivos alimentam tanto `TestemunhosCompact` (home) quanto `TestimonialsSection` (success stories), cobrindo os "dois lugares" do site.
