@@ -1,6 +1,6 @@
 import MotionVerticalRain from '@/components/hometeste/motion-options/MotionVerticalRain';
 import MotionAuroraVertical from '@/components/hometeste/motion-options/MotionAuroraVertical';
-import MotionAscendingStreams from '@/components/hometeste/motion-options/MotionAscendingStreams';
+import MotionLightRays from '@/components/hometeste/motion-options/MotionLightRays';
 
 const HeroContent = () => (
   <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -34,7 +34,7 @@ const MotionPreview = () => (
   <div className="bg-[#0B1224]">
     <Panel label="Option A" name="Vertical Rain"><MotionVerticalRain /></Panel>
     <Panel label="Option B" name="Aurora Vertical"><MotionAuroraVertical /></Panel>
-    <Panel label="Option C" name="Ascending Streams"><MotionAscendingStreams /></Panel>
+    <Panel label="Option C" name="Light Rays & Neural Circuit"><MotionLightRays /></Panel>
   </div>
 );
 
