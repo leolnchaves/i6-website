@@ -15,6 +15,7 @@
 **Author:** Namir Bernardo
 **Title:** Data & Analytics Manager
 **Company:** Unicred do Brasil
+**LinkedIn:** https://www.linkedin.com/in/namirbernardo
 **Rating:** 5
 
 ---
