@@ -1,23 +1,18 @@
 // Option A — Vertical Rain: data streaks falling on the left side
+// Positions are relative to the narrow left strip container (0–100% of strip width)
 const LINES = [
-  { x: 4, dur: 7, delay: 0, op: 0.5 },
-  { x: 9, dur: 11, delay: 2, op: 0.35 },
-  { x: 15, dur: 9, delay: 4, op: 0.6 },
-  { x: 21, dur: 13, delay: 1, op: 0.4 },
-  { x: 27, dur: 8, delay: 5, op: 0.55 },
-  { x: 32, dur: 12, delay: 3, op: 0.3 },
-  { x: 38, dur: 10, delay: 6, op: 0.45 },
+  { x: 12, dur: 7, delay: 0, op: 0.5 },
+  { x: 26, dur: 11, delay: 2, op: 0.35 },
+  { x: 40, dur: 9, delay: 4, op: 0.6 },
+  { x: 55, dur: 13, delay: 1, op: 0.4 },
+  { x: 68, dur: 8, delay: 5, op: 0.55 },
+  { x: 80, dur: 12, delay: 3, op: 0.3 },
+  { x: 92, dur: 10, delay: 6, op: 0.45 },
 ];
 
 const MotionVerticalRain = () => (
   <div
-    className="absolute inset-0 pointer-events-none overflow-hidden"
-    style={{
-      maskImage:
-        'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 55%)',
-      WebkitMaskImage:
-        'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 55%)',
-    }}
+    className="absolute top-0 bottom-0 left-0 pointer-events-none overflow-hidden w-[22%] sm:w-[20%] md:w-[18%] lg:w-[16%]"
     aria-hidden
   >
     <style>{`
