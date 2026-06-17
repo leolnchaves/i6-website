@@ -81,7 +81,7 @@ const ModernSolutionCard = memo(({
       ref={cardRef}
       id={anchorId}
       itemScope
-      itemType="https://schema.org/Product"
+      itemType="https://schema.org/SoftwareApplication"
       aria-label={`${engine} — ${title}`}
       className={`group relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-700 hover:scale-[1.02] ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -90,7 +90,8 @@ const ModernSolutionCard = memo(({
     >
       <meta itemProp="brand" content="infinity6" />
       <meta itemProp="name" content={engine} />
-      <meta itemProp="category" content="AI software" />
+      <meta itemProp="applicationCategory" content="BusinessApplication" />
+      <meta itemProp="operatingSystem" content="Cloud" />
       {/* Coral accent bar at top */}
       <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
 
