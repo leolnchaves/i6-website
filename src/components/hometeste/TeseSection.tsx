@@ -113,36 +113,40 @@ const TeseSection = () => {
 
   const copy = {
     pt: {
-      question: 'Seus dados geram vantagem competitiva\nou só alimentam dashboards?',
+      question: 'Dados parados são margem que vai direto para o concorrente.',
       stats: [
         { value: 89, label: 'das empresas não monetizam seus dados' },
         { value: 69, label: 'das empresas não usam dados para decisões estratégicas' },
         { value: 89, label: 'das empresas não personalizam experiências baseadas em comportamento' },
       ],
-      narrativeBold: 'Dados parados são margem que vai para o concorrente.',
-      narrativeRest: 'A incapacidade de antecipar movimentos transforma informação em custo e gera ineficiências que drenam sua margem.',
+      narrativeBold: 'Dados parados não antecipam demanda, intenção ou valor.',
+      narrativeRest: 'Quando comportamento, preço, estoque, canal, crédito e jornada não se movem em tempo real, empresas reagem tarde, perdem margem e deixam crescimento na mesa.',
       bullets: [
-        { title: 'Ruptura e Miopia de Mix', desc: 'O custo de ter o produto certo no lugar errado, ou um sortimento desalinhado com o comportamento real de consumo.' },
-        { title: 'Inacurácia de Demanda', desc: 'Produção baseada no "retrovisor", gerando excessos de estoque ou perdas críticas de oportunidade por falta de visão antecipada.' },
-        { title: 'Margem sob Pressão', desc: 'Precificação puramente reativa e descontos agressivos para desovar o que a falta de previsão acumulou.' },
-        { title: 'Ineficiência Comercial', desc: 'Esforço de vendas disperso em PDVs de baixa propensão, enquanto janelas de oportunidade real se fecham sem ativação.' },
+        { title: 'Demanda que chega tarde demais', desc: 'A gente só percebe a mudança quando já virou ruptura, excesso ou compra errada. O sinal existia, mas não virou antecipação a tempo.' },
+        { title: 'Mix desalinhado com o cliente real', desc: 'Tem produto sobrando onde não gira e faltando onde o cliente queria comprar. O sortimento parece certo na planilha, mas não acompanha canal, região, loja ou jornada.' },
+        { title: 'Conversão baixa por falta de relevância', desc: 'A oferta aparece para a pessoa errada, no momento errado ou sem contexto. O cliente até interage, mas a jornada não entende intenção suficiente para converter.' },
+        { title: 'Campanhas movidas por calendário, não por propensão', desc: 'O CRM dispara porque chegou a hora da régua, não porque o cliente está pronto para comprar. Isso consome verba, desgasta a base e perde oportunidades reais.' },
+        { title: 'Cross-sell e up-sell no tentativa e erro', desc: 'A próxima melhor oferta ainda depende de regra, feeling ou segmentação ampla. Resultado, ofertas genéricas, baixa conversão e valor perdido na base.' },
+        { title: 'Margem e esforço comercial sob pressão', desc: 'Vendas, preço e canais operam sem saber onde há maior probabilidade de impacto. A empresa gasta energia em baixa propensão e chega tarde nas melhores oportunidades.' },
       ],
       bridge: 'Dados, sozinhos, não criam vantagem competitiva.\nO problema não é falta de dado, é falta de movimento.',
     },
     en: {
-      question: 'Does your data drive competitive advantage\nor just feed dashboards?',
+      question: 'Idle data is margin going straight to your competitor.',
       stats: [
         { value: 89, label: "of companies don't monetize their data" },
         { value: 69, label: "of companies don't use data for strategic decisions" },
         { value: 89, label: "of companies don't personalize experiences based on behavior" },
       ],
-      narrativeBold: "Your idle data is your competitor's profit.",
-      narrativeRest: "The inability to anticipate movements turns information into cost and creates inefficiencies that drain your margin.",
+      narrativeBold: "Idle data doesn't anticipate demand, intent or value.",
+      narrativeRest: "When behavior, price, inventory, channel, credit and journey don't move in real time, companies react late, lose margin and leave growth on the table.",
       bullets: [
-        { title: 'Stockouts & Mix Myopia', desc: 'The cost of having the right product in the wrong place, or an assortment misaligned with actual consumer behavior.' },
-        { title: 'Demand Inaccuracy', desc: 'Production based on the rearview mirror, generating excess inventory or critical missed opportunities due to lack of forward vision.' },
-        { title: 'Margin Under Pressure', desc: 'Purely reactive pricing and aggressive discounts to offload what poor forecasting accumulated.' },
-        { title: 'Commercial Inefficiency', desc: 'Sales effort scattered across low-propensity stores, while real opportunity windows close without activation.' },
+        { title: 'Demand that arrives too late', desc: 'We only notice the change once it has already turned into stockout, excess or the wrong purchase. The signal was there, but it never became anticipation in time.' },
+        { title: 'Mix misaligned with the real customer', desc: 'Products pile up where they don\'t sell and run out where customers wanted to buy. The assortment looks right on the spreadsheet, but it doesn\'t follow channel, region, store or journey.' },
+        { title: 'Low conversion due to lack of relevance', desc: 'The offer reaches the wrong person, at the wrong moment or without context. The customer engages, but the journey doesn\'t read enough intent to convert.' },
+        { title: 'Calendar-driven campaigns, not propensity-driven', desc: 'The CRM fires because it\'s time on the cadence, not because the customer is ready to buy. It burns budget, wears out the base and misses real opportunities.' },
+        { title: 'Cross-sell and up-sell by trial and error', desc: 'The next best offer still depends on rules, gut feeling or broad segmentation. The result is generic offers, low conversion and value left in the base.' },
+        { title: 'Margin and commercial effort under pressure', desc: 'Sales, pricing and channels operate without knowing where impact is most likely. The company spends energy on low propensity and arrives late at the best opportunities.' },
       ],
       bridge: "Data alone doesn't create competitive advantage.\nThe problem isn't lack of data — it's lack of movement.",
     },
@@ -180,10 +184,10 @@ const TeseSection = () => {
               <strong className="text-[#0B1224]">{copy.narrativeBold}</strong>{' '}
               {copy.narrativeRest}
             </p>
-            <ul className="space-y-2">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {copy.bullets.map((b, i) => (
-                <li key={i} className="pl-4 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-2 pr-3">
-                  <p className="text-sm md:text-base">
+                <li key={i} className="pl-3 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-1.5 pr-2">
+                  <p className="text-xs md:text-sm leading-snug">
                     <span className="font-bold text-[#F4845F]">{b.title}:</span>{' '}
                     <span className="text-[#0F172A]/70">{b.desc}</span>
                   </p>
