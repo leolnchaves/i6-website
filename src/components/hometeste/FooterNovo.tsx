@@ -21,9 +21,19 @@ const FooterNovo = () => {
   );
 
   const desc =
-    language === 'pt'
-      ? 'Tecnologia que conecta dados e decisões em tempo real.\nCresça com velocidade, escale com precisão.'
-      : 'Technology that connects data and decisions in real time.\nGrow faster, scale smarter.';
+    language === 'pt' ? (
+      <>
+        Data moves. <span className="font-bold text-white/60">You grow.</span>
+        <br />
+        Transformamos comportamento vivo em crescimento previsível.
+      </>
+    ) : (
+      <>
+        Data moves. <span className="font-bold text-white/60">You grow.</span>
+        <br />
+        We turn live behavior into predictable growth.
+      </>
+    );
 
   const copyright =
     language === 'pt'
