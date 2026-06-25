@@ -1,10 +1,10 @@
 export const successStoriesData = {
   en: {
     hero: {
-      title: 'Real Results from',
-      subtitle: 'Real Clients',
+      title: 'Real results.',
+      subtitle: 'Measurable impact.',
       description:
-        'Discover how leading companies are transforming their operations and accelerating growth with infinity6 predictive AI.',
+        'See how companies are turning data into growth with applied predictive AI.',
     },
     testimonials: {
       title: 'What Our Clients Say',
