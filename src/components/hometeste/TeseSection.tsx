@@ -184,9 +184,9 @@ const TeseSection = () => {
               <strong className="text-[#0B1224]">{copy.narrativeBold}</strong>{' '}
               {copy.narrativeRest}
             </p>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <ul className="space-y-1">
               {copy.bullets.map((b, i) => (
-                <li key={i} className="pl-3 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-1.5 pr-2">
+                <li key={i} className="pl-3 border-l-[3px] border-[#F4845F] bg-[#F4845F]/5 rounded-r-lg py-1 pr-2">
                   <p className="text-xs md:text-sm leading-snug">
                     <span className="font-bold text-[#F4845F]">{b.title}:</span>{' '}
                     <span className="text-[#0F172A]/70">{b.desc}</span>
