@@ -1,28 +1,30 @@
-## 1. Salvar protocolo de release como memória permanente
+## Problema
 
-Criar `mem://deployment/release-flow` com o passo-a-passo, e adicionar ao `mem://index.md` (seção Core) para aplicar em toda futura solicitação de `patch`/`minor`/`major`.
+Nas landings de `/solutions/<slug>`, o título de cada seção (Pain, Problem, Solution, Application, Results, FAQ) é renderizado direto do texto do H2 do Markdown (`pain.title`, `problem.title`, etc.). Quando o MD da edição PT tem o H2 em inglês (ou foi sincronizado/editado fora do padrão), o título aparece em inglês mesmo no idioma PT — exatamente o caso da screenshot: eyebrow "A DOR REAL" em PT, mas título "Pain" em inglês.
 
-**Conteúdo da memória:**
-- Quando o usuário pedir `patch`, `minor` ou `major` → publicar release no GitHub que dispara o GH Actions de deploy.
-- Repo: `leolnchaves/i6-website`, branch `main`.
-- Fluxo:
-  1. `GET /repos/leolnchaves/i6-website/releases/latest` para pegar última tag.
-  2. Bumpar versão conforme pedido (semver: patch = x.y.Z+1, minor = x.Y+1.0, major = X+1.0.0).
-  3. `POST /repos/leolnchaves/i6-website/releases` com `tag_name`, `name`, `body` (descrição em PT-BR com bullets das mudanças do turno) e `target_commitish: main`.
-  4. Auth via header `Authorization: Bearer $GITHUB_RELEASE_TOKEN`.
-  5. Informar URL da release + lembrar que deploy fica live em ~2 min em infinity6.ai.
-- Nunca pedir confirmação do bump quando o usuário já especificou; perguntar só se ele disser apenas "publica".
+## Solução
 
-## 2. Publicar v1.2.5 (patch)
+Desacoplar o título visível do texto do H2. Renderizar título **e** eyebrow a partir de um mapa localizado fixo, indexado pelo `section.id` (que já é normalizado para `pain | problem | solution | application | results | faq` independentemente da língua do heading).
 
-Criar release no GitHub via API com:
-- `tag_name: v1.2.5`
-- Body descrevendo:
-  - Ajuste de copy no hero de `/success-stories` (PT + EN)
-  - Footer: novo texto "Data moves. **You grow.**" + tagline atualizada (PT + EN)
+### Mapa de títulos (PT / EN)
 
-Após criação, retornar a URL da release ao usuário.
+| section.id   | PT (title)     | EN (title)     |
+|--------------|----------------|----------------|
+| pain         | Dor            | Pain           |
+| problem      | Problema       | Problem        |
+| solution     | Solução        | Solution       |
+| application  | Aplicação      | Application    |
+| results      | Resultados     | Results        |
+| faq          | Perguntas frequentes | FAQ      |
 
-## Detalhes técnicos
-- 2 arquivos de memória (`mem://deployment/release-flow.md` + update no `mem://index.md`) — escritos em paralelo.
-- 1 chamada `curl POST` para a API do GitHub.
+Eyebrows (já localizados no código) continuam como estão.
+
+### Alteração
+
+Em `src/pages/TransformationLanding.tsx`, trocar `title={pain.title}` (e os demais) por `title={SECTION_TITLES[language].pain}`, etc. Mesma coisa para o título da seção FAQ (`FAQList`) e Results.
+
+Sem mudanças em conteúdo Markdown, sem mudanças em rotas, parser, ou SEO. Apenas presentation.
+
+## Arquivos afetados
+
+- `src/pages/TransformationLanding.tsx` — adicionar `SECTION_TITLES` constante e usar nos 5 `SectionShell` + no `FAQList`.
