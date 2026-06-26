@@ -2,8 +2,10 @@ import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLocalizedPath } from '@/utils/localizedPath';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
 import type { SuccessStoryItem } from '@/hooks/useSuccessStoriesMarkdown';
-import i6Logo from '@/assets/images/i6-symbol-white.png';
+
+const i6Logo = getPublicAssetUrl('content/logos/infinity6_CMYK_color_symbol_72dpi.png');
 
 interface RelatedStoryMiniCardProps {
   story: SuccessStoryItem;
