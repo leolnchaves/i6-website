@@ -166,28 +166,23 @@ const ResultsStrip = ({ piece }: { piece: LandingPiece }) => {
 };
 
 const RelatedStories = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }) => {
-  const stories = csv(piece.related_stories);
+  const slugs = csv(piece.related_stories).slice(0, 3);
+  if (slugs.length === 0) return null;
+
+  const stories = slugs
+    .map((slug) => getStoryBySlug(slug, lang))
+    .filter(Boolean) as NonNullable<ReturnType<typeof getStoryBySlug>>[];
+
   if (stories.length === 0) return null;
-  const localized = useLocalizedPath();
+
   return (
     <SectionShell
       eyebrow={lang === 'pt' ? 'Provas reais' : 'Real proof'}
       title={lang === 'pt' ? 'Cases relacionados' : 'Related cases'}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {stories.map((slug) => (
-          <Link
-            key={slug}
-            to={localized(`/success-stories/${slug}`)}
-            className="group block border border-white/10 rounded-lg p-5 bg-white/[0.02] hover:border-[#F4845F]/40 hover:bg-white/[0.04] transition-all"
-          >
-            <p className="text-xs uppercase tracking-wider text-[#F4845F] mb-2">
-              {lang === 'pt' ? 'Case de sucesso' : 'Success story'}
-            </p>
-            <p className="text-sm text-white group-hover:text-[#F4845F] font-medium transition-colors">
-              {slug.replace(/-/g, ' ')} →
-            </p>
-          </Link>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {stories.map((story) => (
+          <RelatedStoryMiniCard key={story.slug} story={story} language={lang} />
         ))}
       </div>
     </SectionShell>
