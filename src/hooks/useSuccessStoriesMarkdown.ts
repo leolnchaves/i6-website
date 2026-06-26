@@ -24,6 +24,7 @@ export interface SuccessStoryItem {
   published: boolean;
   sortOrder: number;
   language: 'pt' | 'en';
+  clientAnon: boolean;
 }
 
 interface UseSuccessStoriesMarkdownReturn {
@@ -65,7 +66,7 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
       continue;
     }
 
-    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && s.endsWith("'"))) {
       value = value.slice(1, -1).replace(/\\"/g, '"');
     }
     if (value === '' || value === 'null' || value === '~') data[key] = '';
@@ -113,10 +114,21 @@ const ALL: SuccessStoryItem[] = Object.entries(modules)
       published: fm.published !== false,
       sortOrder: typeof fm.sort_order === 'number' ? (fm.sort_order as number) : 999,
       language: (fm.language === 'en' ? 'en' : 'pt') as 'pt' | 'en',
+      clientAnon: fm.client_anon === true,
     } as SuccessStoryItem;
   })
   .filter((x): x is SuccessStoryItem => x !== null)
   .filter(s => s.published);
+
+export const getStoryBySlug = (slug: string, language: 'pt' | 'en'): SuccessStoryItem | null => {
+  const story = ALL.find(s => s.slug === slug && s.language === language);
+  if (!story) return null;
+  return {
+    ...story,
+    image: getPublicAssetUrl(story.image),
+    logo: getPublicAssetUrl(story.logo),
+  };
+};
 
 export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => {
   const [stories, setStories] = useState<SuccessStoryItem[]>([]);
