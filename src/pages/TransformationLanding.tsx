@@ -298,7 +298,7 @@ const TransformationLanding = () => {
       )}
 
       {problem && (
-        <SectionShell eyebrow={language === 'pt' ? 'Por que IA genérica falha' : 'Why generic AI fails'} title={language === 'pt' ? 'Problema' : 'Problem'}>
+        <SectionShell eyebrow={language === 'pt' ? 'Onde as soluções tradicionais falham' : 'Where traditional solutions fail'} title={language === 'pt' ? 'Problema' : 'Problem'}>
           <MarkdownBody md={problem.body} />
         </SectionShell>
       )}
