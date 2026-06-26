@@ -6,6 +6,8 @@ import { ArrowRight, Layers, TrendingUp, DollarSign, MessageSquare, type LucideI
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanding, isLandingSlug, type LandingPiece } from '@/hooks/useLandings';
+import { getStoryBySlug } from '@/hooks/useSuccessStoriesMarkdown';
+import RelatedStoryMiniCard from '@/components/landings/RelatedStoryMiniCard';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
 
 const BASE_URL = 'https://infinity6.ai';
