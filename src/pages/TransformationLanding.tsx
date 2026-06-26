@@ -292,33 +292,33 @@ const TransformationLanding = () => {
       <HeroSection piece={piece} lang={language} />
 
       {pain && (
-        <SectionShell eyebrow={language === 'pt' ? 'A dor real' : 'The real pain'} title={pain.title}>
+        <SectionShell eyebrow={language === 'pt' ? 'A dor real' : 'The real pain'} title={language === 'pt' ? 'Dor' : 'Pain'}>
           <MarkdownBody md={pain.body} />
         </SectionShell>
       )}
 
       {problem && (
-        <SectionShell eyebrow={language === 'pt' ? 'Por que IA genérica falha' : 'Why generic AI fails'} title={problem.title}>
+        <SectionShell eyebrow={language === 'pt' ? 'Por que IA genérica falha' : 'Why generic AI fails'} title={language === 'pt' ? 'Problema' : 'Problem'}>
           <MarkdownBody md={problem.body} />
         </SectionShell>
       )}
 
       {solution && (
-        <SectionShell eyebrow={language === 'pt' ? 'Motores aplicados' : 'Applied engines'} title={solution.title}>
+        <SectionShell eyebrow={language === 'pt' ? 'Motores aplicados' : 'Applied engines'} title={language === 'pt' ? 'Solução' : 'Solution'}>
           <MarkdownBody md={solution.body} />
           <SolutionEngines piece={piece} lang={language} />
         </SectionShell>
       )}
 
       {application && (
-        <SectionShell eyebrow={language === 'pt' ? 'Como roda em produção' : 'How it runs in production'} title={application.title}>
+        <SectionShell eyebrow={language === 'pt' ? 'Como roda em produção' : 'How it runs in production'} title={language === 'pt' ? 'Aplicação' : 'Application'}>
           <MarkdownBody md={application.body} />
           <ApplicationFlow lang={language} />
         </SectionShell>
       )}
 
       {results && (
-        <SectionShell eyebrow={language === 'pt' ? 'Resultados em números' : 'Results in numbers'} title={results.title}>
+        <SectionShell eyebrow={language === 'pt' ? 'Resultados em números' : 'Results in numbers'} title={language === 'pt' ? 'Resultados' : 'Results'}>
           <ResultsStrip piece={piece} />
         </SectionShell>
       )}
