@@ -66,7 +66,7 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
       continue;
     }
 
-    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && s.endsWith("'"))) {
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
       value = value.slice(1, -1).replace(/\\"/g, '"');
     }
     if (value === '' || value === 'null' || value === '~') data[key] = '';
