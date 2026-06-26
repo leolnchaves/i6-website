@@ -28,7 +28,7 @@ const RelatedStoryMiniCard: React.FC<RelatedStoryMiniCardProps> = memo(({ story,
         <img
           src={logoUrl}
           alt={story.clientAnon ? 'infinity6' : story.client}
-          className="max-h-10 max-w-[120px] object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-500"
+          className={`max-h-10 max-w-[120px] object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-500 ${story.clientAnon ? 'brightness-0 invert' : ''}`}
         />
       </div>
 
