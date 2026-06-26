@@ -51,7 +51,7 @@ const HeroSection = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }
           {piece.hero_headline || piece.title}
         </h1>
         {piece.hero_sub && (
-          <p className="text-base md:text-lg text-white/65 max-w-2xl leading-relaxed mb-10">
+          <p className="text-base md:text-lg text-white/65 leading-relaxed mb-10">
             {piece.hero_sub}
           </p>
         )}
