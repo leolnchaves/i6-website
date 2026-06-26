@@ -5,7 +5,9 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsights, resolveCoverImage, type Insight } from '@/hooks/useInsights';
 import SEOHead from '@/components/common/SEOHead';
-import i6SymbolFallback from '@/assets/images/i6-symbol-white.png';
+import { getPublicAssetUrl } from '@/utils/assetUtils';
+
+const i6SymbolFallback = getPublicAssetUrl('content/logos/infinity6_CMYK_color_symbol_72dpi.png');
 
 const InsightCard = ({ insight }: { insight: Insight }) => {
   const { language } = useLanguage();
