@@ -101,12 +101,12 @@ const HeaderNovo = () => {
                   <ChevronDown size={14} className={`transition-transform ${solutionsOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {solutionsOpen && (
-                  <ul className="absolute left-0 top-full mt-2 min-w-[260px] rounded-lg border border-white/10 bg-[#0B1224]/95 backdrop-blur-md shadow-xl py-2">
+                  <ul className="absolute left-0 top-full mt-2 w-max rounded-lg border border-white/10 bg-[#0B1224]/95 backdrop-blur-md shadow-xl py-2">
                     {solutionsSubMenu.map((sl) => (
                       <li key={sl.to}>
                         <Link
                           to={sl.to}
-                          className="block px-4 py-2 text-sm text-white/80 hover:text-[#F4845F] hover:bg-white/5 transition-colors"
+                          className="block px-4 py-2 text-sm text-white/80 hover:text-[#F4845F] hover:bg-white/5 transition-colors whitespace-nowrap"
                         >
                           {sl.label}
                         </Link>
