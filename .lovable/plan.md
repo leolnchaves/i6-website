@@ -1,46 +1,45 @@
-## Objetivo
+## Causa
 
-Fazer o **sub-hero** (`hero_sub`) das páginas de Landing (`/solutions/<slug>`) renderizar formatação Markdown — negrito, itálico, listas, links — exatamente como o corpo (Pain / Problem / Solution / Application) já faz hoje via `MarkdownBody`.
+O body das seções (Dor, Problema, Solução, Aplicação) funciona porque o conteúdo do `.md` que vem **depois do frontmatter** chega ao `MarkdownBody` com newlines reais — então o `ReactMarkdown` + `remarkGfm` cria parágrafos e renderiza `**negrito**` corretamente.
 
-## Onde está hoje
+O `hero_sub` mora **dentro do frontmatter** como string entre aspas. O parser caseiro em `src/hooks/useLandings.ts` (linhas 39-59) não decodifica escape sequences, então `"...inteligentes.\n\n**Monetizar...**"` chega ao Hero com os caracteres `\` e `n` literais, sem newline. Sem newline duplo, o `remarkGfm` não quebra parágrafo, e isso atrapalha o reconhecimento do `**...**` ao redor.
 
-Em `src/pages/TransformationLanding.tsx`, dentro de `HeroSection`, o `hero_sub` é renderizado como texto puro:
+O `HeroSection` em `src/pages/TransformationLanding.tsx` (linhas 55-59) **já está igual ao `MarkdownBody`**: usa `ReactMarkdown` + `remarkGfm` dentro de `prose prose-invert`. Não precisa mexer no JSX. Basta entregar ao componente uma string com newlines reais — exatamente como o body já recebe.
 
-```tsx
-{piece.hero_sub && (
-  <p className="text-base md:text-lg text-white/65 leading-relaxed mb-10">
-    {piece.hero_sub}
-  </p>
-)}
+## Solução
+
+Ajustar **apenas** `parseFrontmatter` em `src/hooks/useLandings.ts` para decodificar escape sequences quando o valor estiver entre aspas duplas. Uma única adição, ~4 linhas, logo após o trecho que remove as aspas (linhas 50-52):
+
+```ts
+if (value.startsWith('"') && rawWasDoubleQuoted) {
+  value = value
+    .replace(/\\n/g, '\n')
+    .replace(/\\t/g, '\t')
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
 ```
 
-Resultado: `**negrito**` aparece literal, listas não renderizam.
+Com isso, **todas as 8 landings** (4 slugs × pt/en) passam a renderizar `hero_sub` com parágrafos e negrito automaticamente, sem tocar em nenhum `.md` e sem alterar nenhum componente React. O comportamento fica idêntico ao do body.
 
-## Mudança
+## Por que isso cobre tudo
 
-Trocar esse `<p>` por um bloco `ReactMarkdown` + `remark-gfm` (mesmas libs já importadas no arquivo), envolvido em uma `div` com as mesmas classes tipográficas do sub-hero atual + tokens `prose` para suportar negrito, itálico, listas e links com o tom de cor branco/coral do tema.
+- `TransformationLanding.tsx` é o único arquivo de página que consome `hero_sub` (já validado por `rg`).
+- O fix é no parser compartilhado por todas as landings — qualquer `hero_sub` que use `\n\n` e `**...**` passa a funcionar.
+- Strings entre aspas simples ou sem aspas seguem literais (preserva semântica YAML).
+- Não afeta o body (que nunca passou por essa função para a parte de conteúdo) nem outros campos (`description`, `hero_kicker`, etc., que não usam escapes hoje).
 
-Pseudocódigo da substituição:
+## Validação
 
-```tsx
-{piece.hero_sub && (
-  <div className="prose prose-invert max-w-3xl text-base md:text-lg text-white/65 leading-relaxed mb-10
-                  prose-p:text-white/65 prose-strong:text-white prose-li:text-white/65
-                  prose-a:text-[#F4845F] hover:prose-a:underline">
-    <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.hero_sub}</ReactMarkdown>
-  </div>
-)}
-```
+Abrir no preview as 8 rotas e confirmar negrito + parágrafos no subhero, sem `\n` visível:
 
-Nenhuma mudança em:
-- Parser de frontmatter (`useLandings.ts`) — já entrega a string crua, `**...**` sobrevive.
-- Conteúdo dos `.md` de landings — o autor passa a poder usar `**negrito**`, listas, etc. no `hero_sub` quando quiser.
-- Body das seções — já usa `MarkdownBody`, permanece igual.
-- SEO/JSON-LD — `description` continua a vir do campo `description` (plain), não do `hero_sub`.
+- `/pt/solutions/data-monetization` e `/en/...`
+- `/pt/solutions/behavior-conversion` e `/en/...`
+- `/pt/solutions/demand-supply-efficiency` e `/en/...`
+- `/pt/solutions/predictive-operations` e `/en/...`
 
-## Detalhes técnicos
+E confirmar que o body das mesmas páginas continua renderizando idêntico ao atual (não-regressão).
 
-- Arquivo único alterado: `src/pages/TransformationLanding.tsx` (lines 55–59, dentro de `HeroSection`).
-- `ReactMarkdown` e `remarkGfm` já estão importados no topo do arquivo — sem novas dependências.
-- O wrapper `prose` herda tipografia do sub-hero (tamanho + cor), apenas habilitando os elementos inline/bloco do MD.
-- Caso o `hero_sub` seja uma única linha sem markdown (caso atual de todos os 8 arquivos `.md`), o resultado visual é idêntico ao atual.
+## Arquivos alterados
+
+- `src/hooks/useLandings.ts` — apenas dentro da função `parseFrontmatter`.
