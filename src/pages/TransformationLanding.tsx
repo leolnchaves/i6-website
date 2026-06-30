@@ -49,11 +49,11 @@ const HeroSection = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }
             {piece.hero_kicker}
           </p>
         )}
-        <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight max-w-3xl mb-6">
+        <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-6">
           {piece.hero_headline || piece.title}
         </h1>
         {piece.hero_sub && (
-          <div className="prose prose-invert max-w-3xl text-base md:text-lg leading-relaxed mb-10 prose-p:text-white/65 prose-strong:text-white prose-li:text-white/65 prose-a:text-[#F4845F] hover:prose-a:underline">
+          <div className="prose prose-invert max-w-none text-base md:text-lg leading-relaxed mb-10 prose-p:text-white/65 prose-strong:text-white prose-li:text-white/65 prose-a:text-[#F4845F] hover:prose-a:underline">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.hero_sub}</ReactMarkdown>
           </div>
         )}
