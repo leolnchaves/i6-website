@@ -47,8 +47,18 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
     if (idx === -1) continue;
     const key = line.slice(0, idx).trim();
     let value: string = line.slice(idx + 1).trim();
-    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    const isDoubleQuoted = value.startsWith('"') && value.endsWith('"') && value.length >= 2;
+    const isSingleQuoted = value.startsWith("'") && value.endsWith("'") && value.length >= 2;
+    if (isDoubleQuoted || isSingleQuoted) {
       value = value.slice(1, -1);
+    }
+    if (isDoubleQuoted) {
+      value = value
+        .replace(/\\\\/g, '\u0000')
+        .replace(/\\n/g, '\n')
+        .replace(/\\t/g, '\t')
+        .replace(/\\"/g, '"')
+        .replace(/\u0000/g, '\\');
     }
     if (value === '' || value === 'null' || value === '~') data[key] = null;
     else if (value === 'true') data[key] = true;
