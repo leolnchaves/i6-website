@@ -6,7 +6,7 @@ export const ptTranslations = {
   'header.solutions.aiSolutions': 'AI Solutions',
   'header.solutions.proprietaryAi': 'Proprietary AI',
   'header.solutions.demandSupply': 'Demanda & Supply',
-  'header.solutions.dataMonetization': 'Estratégia de Monetização de Dados',
+  'header.solutions.dataMonetization': 'Monetização de Dados',
   'header.solutions.predictiveOps': 'Operações Preditivas',
   'header.solutions.behaviorConversion': 'Comportamento & Conversão',
   'header.successStories': 'Cases de Sucesso',

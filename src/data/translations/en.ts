@@ -6,7 +6,7 @@ export const enTranslations = {
   'header.solutions.aiSolutions': 'AI Solutions',
   'header.solutions.proprietaryAi': 'Proprietary AI',
   'header.solutions.demandSupply': 'Demand & Supply',
-  'header.solutions.dataMonetization': 'Data Monetization Strategy',
+  'header.solutions.dataMonetization': 'Data Monetization',
   'header.solutions.predictiveOps': 'Predictive Operations',
   'header.solutions.behaviorConversion': 'Behavior & Conversion',
   'header.successStories': 'Success Stories',
