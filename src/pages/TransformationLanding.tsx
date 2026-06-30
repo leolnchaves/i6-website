@@ -53,9 +53,9 @@ const HeroSection = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }
           {piece.hero_headline || piece.title}
         </h1>
         {piece.hero_sub && (
-          <p className="text-base md:text-lg text-white/65 leading-relaxed mb-10">
-            {piece.hero_sub}
-          </p>
+          <div className="prose prose-invert max-w-3xl text-base md:text-lg leading-relaxed mb-10 prose-p:text-white/65 prose-strong:text-white prose-li:text-white/65 prose-a:text-[#F4845F] hover:prose-a:underline">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.hero_sub}</ReactMarkdown>
+          </div>
         )}
         <Link
           to={localized('/contact')}
