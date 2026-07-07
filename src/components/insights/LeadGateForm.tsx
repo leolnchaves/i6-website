@@ -64,13 +64,15 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
 
   const t = language === 'pt'
     ? {
-        title: 'Conteúdo exclusivo',
-        subtitle: 'Para receber este conteúdo, deixe seu nome e email',
+        title: mode === 'resend' ? 'Reenviar PDF por e-mail' : 'Conteúdo exclusivo',
+        subtitle: mode === 'resend'
+          ? 'Confirme seu nome e e-mail e reenviaremos o PDF na hora'
+          : 'Para receber este conteúdo, deixe seu nome e email',
         name: 'Nome',
         email: 'Email',
-        cta: 'Liberar conteúdo',
+        cta: mode === 'resend' ? 'Reenviar por e-mail' : 'Liberar conteúdo',
         sending: 'Enviando...',
-        successTitle: 'Tudo certo',
+        successTitle: mode === 'resend' ? 'PDF reenviado' : 'Tudo certo',
         successMsgBefore: 'Obrigado! Já estamos enviando o material para o seu email. Ele deve chegar em alguns minutos — se não aparecer na caixa de entrada, dá uma olhadinha na pasta de ',
         successMsgStrong: 'SPAM',
         successMsgAfter: '.',
@@ -84,13 +86,15 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
         invalidEmail: 'Email inválido',
       }
     : {
-        title: 'Exclusive content',
-        subtitle: 'To receive this content, leave your name and email',
+        title: mode === 'resend' ? 'Resend PDF to my email' : 'Exclusive content',
+        subtitle: mode === 'resend'
+          ? 'Confirm your name and email and we will resend the PDF right away'
+          : 'To receive this content, leave your name and email',
         name: 'Name',
         email: 'Email',
-        cta: 'Unlock content',
+        cta: mode === 'resend' ? 'Resend to my email' : 'Unlock content',
         sending: 'Sending...',
-        successTitle: 'All set',
+        successTitle: mode === 'resend' ? 'PDF resent' : 'All set',
         successMsgBefore: "Thanks! We're sending the material to your inbox right now. It should arrive in a few minutes — if you don't see it, please check your ",
         successMsgStrong: 'Spam',
         successMsgAfter: ' folder.',
@@ -103,6 +107,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
         invalidName: 'Enter your name',
         invalidEmail: 'Invalid email',
       };
+
 
   const onSubmit = useCallback(
     async (data: FormData) => {
