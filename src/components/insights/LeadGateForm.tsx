@@ -25,6 +25,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export type LeadGateKind = 'insight' | 'research';
+export type LeadGateMode = 'gate' | 'resend';
 
 interface LeadGateFormProps {
   /**
@@ -34,6 +35,12 @@ interface LeadGateFormProps {
    *                sent by i6Hub via email and lead is registered.
    */
   kind: LeadGateKind;
+  /**
+   * - 'gate'   → initial lock (default). Research: onUnlock is called.
+   * - 'resend' → user already unlocked; button re-triggers the same lead
+   *              submission so i6Hub resends the PDF. onUnlock is NOT called.
+   */
+  mode?: LeadGateMode;
   title: string;
   slug: string;
   id?: string;
@@ -41,7 +48,8 @@ interface LeadGateFormProps {
   onUnlock?: () => void;
 }
 
-const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
+const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
+
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
@@ -56,13 +64,15 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
 
   const t = language === 'pt'
     ? {
-        title: 'Conteúdo exclusivo',
-        subtitle: 'Para receber este conteúdo, deixe seu nome e email',
+        title: mode === 'resend' ? 'Reenviar PDF por e-mail' : 'Conteúdo exclusivo',
+        subtitle: mode === 'resend'
+          ? 'Confirme seu nome e e-mail e reenviaremos o PDF na hora'
+          : 'Para receber este conteúdo, deixe seu nome e email',
         name: 'Nome',
         email: 'Email',
-        cta: 'Liberar conteúdo',
+        cta: mode === 'resend' ? 'Reenviar por e-mail' : 'Liberar conteúdo',
         sending: 'Enviando...',
-        successTitle: 'Tudo certo',
+        successTitle: mode === 'resend' ? 'PDF reenviado' : 'Tudo certo',
         successMsgBefore: 'Obrigado! Já estamos enviando o material para o seu email. Ele deve chegar em alguns minutos — se não aparecer na caixa de entrada, dá uma olhadinha na pasta de ',
         successMsgStrong: 'SPAM',
         successMsgAfter: '.',
@@ -76,13 +86,15 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
         invalidEmail: 'Email inválido',
       }
     : {
-        title: 'Exclusive content',
-        subtitle: 'To receive this content, leave your name and email',
+        title: mode === 'resend' ? 'Resend PDF to my email' : 'Exclusive content',
+        subtitle: mode === 'resend'
+          ? 'Confirm your name and email and we will resend the PDF right away'
+          : 'To receive this content, leave your name and email',
         name: 'Name',
         email: 'Email',
-        cta: 'Unlock content',
+        cta: mode === 'resend' ? 'Resend to my email' : 'Unlock content',
         sending: 'Sending...',
-        successTitle: 'All set',
+        successTitle: mode === 'resend' ? 'PDF resent' : 'All set',
         successMsgBefore: "Thanks! We're sending the material to your inbox right now. It should arrive in a few minutes — if you don't see it, please check your ",
         successMsgStrong: 'Spam',
         successMsgAfter: ' folder.',
@@ -95,6 +107,7 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
         invalidName: 'Enter your name',
         invalidEmail: 'Invalid email',
       };
+
 
   const onSubmit = useCallback(
     async (data: FormData) => {
@@ -155,7 +168,7 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
           });
         }
 
-        if (kind === 'research' && onUnlock) {
+        if (kind === 'research' && mode === 'gate' && onUnlock) {
           try {
             localStorage.setItem(`i6_unlocked_research:${slug}:${language}`, '1');
           } catch {
@@ -165,6 +178,7 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
           return;
         }
 
+
         setSubmitted(true);
       } catch (err) {
         console.error('LeadGateForm submit error:', err);
@@ -173,7 +187,7 @@ const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormP
         setSubmitting(false);
       }
     },
-    [id, slug, title, language, pdfUrl, kind, onUnlock, t.error, toast],
+    [id, slug, title, language, pdfUrl, kind, mode, onUnlock, t.error, toast],
   );
 
 

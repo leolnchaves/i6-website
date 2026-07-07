@@ -3,12 +3,14 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Mail, CheckCircle2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIntelligencePiece, resolveIntelligenceCover } from '@/hooks/useIntelligence';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import LeadGateForm from '@/components/insights/LeadGateForm';
+
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -44,6 +46,8 @@ const IntelligenceArticle = () => {
   // so refresh keeps the content unlocked.
   const unlockKey = piece ? `i6_unlocked_research:${piece.slug}:${piece.language}` : '';
   const [unlocked, setUnlocked] = useState(false);
+  const [resendOpen, setResendOpen] = useState(false);
+
 
   useEffect(() => {
     if (!unlockKey) return;
@@ -172,13 +176,83 @@ const IntelligenceArticle = () => {
             pdfUrl={pdfUrl}
             onUnlock={() => setUnlocked(true)}
           />
+        ) : piece.asset_url ? (
+          <>
+            <div className="my-4 p-8 md:p-10 rounded-2xl border border-[#F4845F]/30 bg-gradient-to-br from-white/5 to-[#F4845F]/5 backdrop-blur-sm text-center">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#F4845F]/15 border border-[#F4845F]/30 flex items-center justify-center">
+                <CheckCircle2 className="w-7 h-7 text-[#F4845F]" />
+              </div>
+              <h2 className="text-2xl font-semibold text-white mb-2">
+                {language === 'pt' ? 'PDF enviado para o seu e-mail' : 'PDF sent to your email'}
+              </h2>
+              <p className="text-white/70 max-w-md mx-auto">
+                {language === 'pt' ? (
+                  <>Verifique sua caixa de entrada — se não achar, olhe a pasta de <strong className="text-white">SPAM</strong>.</>
+                ) : (
+                  <>Please check your inbox — if you don't see it, look in your <strong className="text-white">Spam</strong> folder.</>
+                )}
+              </p>
+              {!resendOpen && (
+                <Button
+                  type="button"
+                  onClick={() => setResendOpen(true)}
+                  className="mt-6 bg-[#F4845F] hover:bg-[#F4845F]/90 text-white font-semibold border border-[#F4845F]/50 shadow-[0_0_20px_rgba(244,132,95,0.3)] hover:shadow-[0_0_30px_rgba(244,132,95,0.5)] transition-all"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  {language === 'pt' ? 'Reenviar por e-mail' : 'Resend to my email'}
+                </Button>
+              )}
+            </div>
+
+            {resendOpen && (
+              <LeadGateForm
+                kind="research"
+                mode="resend"
+                title={piece.title}
+                slug={piece.slug}
+                id={piece.id}
+                pdfUrl={pdfUrl}
+              />
+            )}
+
+            <div className="mt-16 pt-8 border-t border-white/10 space-y-6">
+              {(piece.related_product || piece.related_story_slug) && (
+                <div className="flex flex-wrap gap-3">
+                  {piece.related_product && (
+                    <Link
+                      to={localized(`/solutions#${piece.related_product}`)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F4845F]/40 text-[#F4845F] hover:bg-[#F4845F]/10 text-xs font-semibold uppercase tracking-wider transition-colors"
+                    >
+                      {language === 'pt' ? 'Ver a solução relacionada' : 'See the related solution'}
+                    </Link>
+                  )}
+                  {piece.related_story_slug && (
+                    <Link
+                      to={localized(`/success-stories/${piece.related_story_slug}`)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-white/80 hover:bg-white/5 text-xs font-semibold uppercase tracking-wider transition-colors"
+                    >
+                      {language === 'pt' ? 'Ler o case relacionado' : 'Read the related case'}
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              <Link
+                to={localized('/contact')}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F4845F] hover:bg-[#F4845F]/90 text-white text-sm font-semibold transition-all shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+              >
+                {language === 'pt' ? 'Colocar Dados em Movimento' : 'Put Data in Motion'}
+              </Link>
+            </div>
+          </>
+
         ) : (
           <>
-
-
             <div className="prose prose-invert prose-headings:text-white prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-p:text-white/80 prose-li:text-white/80 prose-strong:text-white prose-a:text-[#F4845F] hover:prose-a:underline max-w-none">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.content}</ReactMarkdown>
             </div>
+
+
 
             <div className="mt-16 pt-8 border-t border-white/10 space-y-6">
               {/* Cross-links: related product (Solutions anchor) + related success story */}
