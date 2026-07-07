@@ -25,6 +25,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export type LeadGateKind = 'insight' | 'research';
+export type LeadGateMode = 'gate' | 'resend';
 
 interface LeadGateFormProps {
   /**
@@ -34,6 +35,12 @@ interface LeadGateFormProps {
    *                sent by i6Hub via email and lead is registered.
    */
   kind: LeadGateKind;
+  /**
+   * - 'gate'   → initial lock (default). Research: onUnlock is called.
+   * - 'resend' → user already unlocked; button re-triggers the same lead
+   *              submission so i6Hub resends the PDF. onUnlock is NOT called.
+   */
+  mode?: LeadGateMode;
   title: string;
   slug: string;
   id?: string;
@@ -41,7 +48,8 @@ interface LeadGateFormProps {
   onUnlock?: () => void;
 }
 
-const LeadGateForm = ({ kind, title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
+const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
+
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
