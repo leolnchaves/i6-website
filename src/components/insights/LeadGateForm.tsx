@@ -187,7 +187,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
         setSubmitting(false);
       }
     },
-    [id, slug, title, language, pdfUrl, kind, onUnlock, t.error, toast],
+    [id, slug, title, language, pdfUrl, kind, mode, onUnlock, t.error, toast],
   );
 
 
