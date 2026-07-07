@@ -216,6 +216,15 @@ const IntelligenceArticle = () => {
             )}
 
 
+          </>
+        ) : (
+          <>
+            <div className="prose prose-invert prose-headings:text-white prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-p:text-white/80 prose-li:text-white/80 prose-strong:text-white prose-a:text-[#F4845F] hover:prose-a:underline max-w-none">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.content}</ReactMarkdown>
+            </div>
+
+
+
             <div className="mt-16 pt-8 border-t border-white/10 space-y-6">
               {/* Cross-links: related product (Solutions anchor) + related success story */}
               {(piece.related_product || piece.related_story_slug) && (
