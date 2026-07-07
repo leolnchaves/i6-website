@@ -356,6 +356,14 @@ const itemsMissingCover = [];
 for (const it of items) {
   const slug = it.slug;
 
+  if (TYPE === 'research') {
+    console.log(
+      `[research] slug=${slug} lang=${it.language} gated_raw=${JSON.stringify(it.gated)} gated_out=${!!it.gated} has_asset=${!!it.asset_url}`,
+    );
+  }
+
+
+
   const coverRef  = it.cover_image ?? '';
   const coverData = it.cover_image_data ?? null;
   const coverMime = it.cover_image_mime ?? null;
