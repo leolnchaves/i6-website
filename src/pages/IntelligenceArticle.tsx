@@ -46,6 +46,8 @@ const IntelligenceArticle = () => {
   // so refresh keeps the content unlocked.
   const unlockKey = piece ? `i6_unlocked_research:${piece.slug}:${piece.language}` : '';
   const [unlocked, setUnlocked] = useState(false);
+  const [resendOpen, setResendOpen] = useState(false);
+
 
   useEffect(() => {
     if (!unlockKey) return;
