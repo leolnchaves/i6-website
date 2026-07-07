@@ -215,8 +215,37 @@ const IntelligenceArticle = () => {
               />
             )}
 
+            <div className="mt-16 pt-8 border-t border-white/10 space-y-6">
+              {(piece.related_product || piece.related_story_slug) && (
+                <div className="flex flex-wrap gap-3">
+                  {piece.related_product && (
+                    <Link
+                      to={localized(`/solutions#${piece.related_product}`)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F4845F]/40 text-[#F4845F] hover:bg-[#F4845F]/10 text-xs font-semibold uppercase tracking-wider transition-colors"
+                    >
+                      {language === 'pt' ? 'Ver a solução relacionada' : 'See the related solution'}
+                    </Link>
+                  )}
+                  {piece.related_story_slug && (
+                    <Link
+                      to={localized(`/success-stories/${piece.related_story_slug}`)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-white/80 hover:bg-white/5 text-xs font-semibold uppercase tracking-wider transition-colors"
+                    >
+                      {language === 'pt' ? 'Ler o case relacionado' : 'Read the related case'}
+                    </Link>
+                  )}
+                </div>
+              )}
 
+              <Link
+                to={localized('/contact')}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F4845F] hover:bg-[#F4845F]/90 text-white text-sm font-semibold transition-all shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+              >
+                {language === 'pt' ? 'Colocar Dados em Movimento' : 'Put Data in Motion'}
+              </Link>
+            </div>
           </>
+
         ) : (
           <>
             <div className="prose prose-invert prose-headings:text-white prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-p:text-white/80 prose-li:text-white/80 prose-strong:text-white prose-a:text-[#F4845F] hover:prose-a:underline max-w-none">
