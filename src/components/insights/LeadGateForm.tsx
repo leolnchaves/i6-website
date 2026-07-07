@@ -168,7 +168,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
           });
         }
 
-        if (kind === 'research' && onUnlock) {
+        if (kind === 'research' && mode === 'gate' && onUnlock) {
           try {
             localStorage.setItem(`i6_unlocked_research:${slug}:${language}`, '1');
           } catch {
@@ -177,6 +177,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
           onUnlock();
           return;
         }
+
 
         setSubmitted(true);
       } catch (err) {
