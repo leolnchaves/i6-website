@@ -406,8 +406,10 @@ const coverCache = new Map(); // baseName -> { localPath, fileName }
 const logoCache  = new Map();
 const keepCover  = new Set();
 const keepLogo   = new Set();
+const keepBodyImages = new Set(); // relative paths like "slug/lang/body-1.jpg"
 const coverCounters = { written: 0, reused: 0, preserved: 0 };
 const logoCounters  = { written: 0, reused: 0, preserved: 0 };
+const bodyCounters  = { written: 0 };
 const itemsWithCover = [];
 const itemsMissingCover = [];
 
@@ -420,36 +422,77 @@ for (const it of items) {
     );
   }
 
-
-
-  const coverRef  = it.cover_image ?? '';
+  // Cover: new signed object takes priority; base64/URL/on-disk are fallbacks.
+  const coverSigned = pickSignedObj(it.cover);
+  const coverRef  = typeof it.cover_image === 'string' ? it.cover_image : '';
   const coverData = it.cover_image_data ?? null;
   const coverMime = it.cover_image_mime ?? null;
 
-  if (coverRef || coverData) itemsWithCover.push(slug);
+  if (coverSigned || coverRef || coverData) itemsWithCover.push(slug);
 
   let coverOut = null;
   if (IMG_DIR) {
     coverOut = await materializeImage({
       slug, baseName: slug, dir: IMG_DIR, webPath: CONFIG.imgWebPath,
+      signedObj: coverSigned,
       refPath: coverRef, dataB64: coverData, mime: coverMime,
       cache: coverCache, keepSet: keepCover, counters: coverCounters, label: 'cover',
     });
-    if (!coverOut && (coverRef || coverData)) itemsMissingCover.push(slug);
+    if (!coverOut && (coverSigned || coverRef || coverData)) itemsMissingCover.push(slug);
   }
 
   let logoOut = null;
   if (TYPE === 'stories' && LOGO_DIR) {
-    const logoRef  = it.logo_image ?? it.logo ?? '';
+    const logoSigned = pickSignedObj(it.logo);
+    const logoRef  = typeof it.logo_image === 'string'
+      ? it.logo_image
+      : (typeof it.logo === 'string' ? it.logo : '');
     const logoData = it.logo_data ?? null;
     const logoMime = it.logo_mime ?? null;
-    if (logoRef || logoData) {
+    if (logoSigned || logoRef || logoData) {
       logoOut = await materializeImage({
         slug, baseName: `${slug}-logo`, dir: LOGO_DIR, webPath: CONFIG.logoWebPath,
+        signedObj: logoSigned,
         refPath: logoRef, dataB64: logoData, mime: logoMime,
         cache: logoCache, keepSet: keepLogo, counters: logoCounters, label: 'logo',
       });
     }
+  }
+
+  // Body images (insights only, new HUB format). Each item is { path, url, mime }
+  // where path is "slug/lang/kind-n.ext" — used as-is under IMG_DIR.
+  let rewrittenBody = it.content ?? it.body_md ?? '';
+  if (TYPE === 'insights' && IMG_DIR && Array.isArray(it.body_images) && it.body_images.length) {
+    const downloads = it.body_images
+      .filter((img) => img && typeof img.url === 'string' && typeof img.path === 'string')
+      .map(async (img) => {
+        const relPath = img.path.replace(/^\/+/, '');
+        const absPath = path.join(IMG_DIR, relPath);
+        const bytes = await downloadSigned({
+          signedUrl: img.url, absPath, slug, label: `body_image ${relPath}`,
+        });
+        keepBodyImages.add(relPath);
+        bodyCounters.written++;
+        console.log(`[${TYPE}] ${slug} -> wrote body image ${relPath} (${bytes}B)`);
+        return relPath;
+      });
+    const rels = await Promise.all(downloads);
+
+    // Rewrite ![alt](basename.ext) references so the browser resolves them
+    // against /content/insights/<slug>/<lang>/ regardless of route depth.
+    const basenames = new Set(rels.map((r) => path.basename(r)));
+    // Assume all body images share the same directory (slug/lang/).
+    const dir = rels.length ? path.posix.dirname(rels[0].split(path.sep).join('/')) : `${slug}/${it.language}`;
+    const webBase = `${CONFIG.imgWebPath}/${dir}`;
+    rewrittenBody = rewrittenBody.replace(
+      /!\[([^\]]*)\]\(([^)\s]+)(\s+"[^"]*")?\)/g,
+      (m, alt, url, title = '') => {
+        if (/^https?:\/\//i.test(url) || url.startsWith('/')) return m;
+        const base = path.basename(url);
+        if (!basenames.has(base)) return m;
+        return `![${alt}](${webBase}/${base}${title})`;
+      },
+    );
   }
 
   const fileName = CONFIG.fileName(it);
@@ -477,12 +520,16 @@ for (const it of items) {
     console.log(`[${TYPE}] ${slug} -> preserved logo from existing MD (${path.basename(logoFallback)})`);
   }
 
-  const md = CONFIG.frontmatter(it, {
+  const itForFm = rewrittenBody !== (it.content ?? it.body_md ?? '')
+    ? { ...it, content: rewrittenBody, body_md: rewrittenBody }
+    : it;
+  const md = CONFIG.frontmatter(itForFm, {
     coverLocal: coverOut?.localPath ?? coverFallback ?? null,
     logoLocal:  logoOut?.localPath  ?? logoFallback  ?? null,
   });
   await fs.writeFile(path.join(MD_DIR, fileName), md);
 }
+
 
 // ---------- Cleanup orphan images ----------
 async function cleanupOrphans(dir, keepSet, label) {
