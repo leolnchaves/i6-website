@@ -173,7 +173,16 @@ const InsightArticle = () => {
           <>
 
             <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/80 prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/80 prose-img:rounded-xl prose-img:my-8 prose-img:w-full">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{insight.content}</ReactMarkdown>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({ node, ...props }) => (
+                    <a {...props} target="_blank" rel="noopener noreferrer" />
+                  ),
+                }}
+              >
+                {insight.content}
+              </ReactMarkdown>
             </div>
           </>
         )}
