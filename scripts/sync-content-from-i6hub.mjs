@@ -10,13 +10,19 @@
  *   node scripts/sync-content-from-i6hub.mjs --type=stories
  *
  * Per item, image strategy (cover and, for stories, logo):
- *   1. base64 (<field>_data + <field>_mime)
- *   2. absolute URL (http/https) -> download
- *   3. relative path already on disk -> preserved
+ *   1. new object form { path, url, mime } from HUB (signed Supabase URL) -> download
+ *   2. base64 (<field>_data + <field>_mime)  [DEPRECATED, remove after 1 release]
+ *   3. absolute URL (http/https) -> download
+ *   4. relative path already on disk -> preserved
  *
- * Orphan images in IMG_DIR are only cleaned at the END, and only when the
- * slug is no longer present in the feed.
+ * For insights, body_images: [{ path, url, mime }] is also downloaded and
+ * body_md image references are rewritten to absolute paths under
+ * /content/insights/<slug>/<lang>/.
+ *
+ * Orphan images are cleaned at the END, only when the slug is no longer in
+ * the feed.
  */
+
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
