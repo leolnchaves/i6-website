@@ -32,6 +32,16 @@ export interface Insight extends InsightFrontmatter {
  *   key: 123
  *   key: null
  */
+function decodeYamlEscapes(v: string): string {
+  return v
+    .replace(/\\r\\n/g, '\n')
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\n')
+    .replace(/\\t/g, '\t')
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
+
 function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { data: {}, content: raw };
@@ -46,13 +56,15 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
     const key = line.slice(0, idx).trim();
     let value: string = line.slice(idx + 1).trim();
 
-    // strip wrapping quotes
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
+    // strip wrapping quotes; JSON-style escapes only decoded for double-quoted strings
+    let wasDoubleQuoted = false;
+    if (value.startsWith('"') && value.endsWith('"')) {
+      value = value.slice(1, -1);
+      wasDoubleQuoted = true;
+    } else if (value.startsWith("'") && value.endsWith("'")) {
       value = value.slice(1, -1);
     }
+    if (wasDoubleQuoted) value = decodeYamlEscapes(value);
 
     if (value === '' || value === 'null' || value === '~') {
       data[key] = null;
@@ -69,6 +81,35 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
 
   return { data, content: content.trim() };
 }
+
+/**
+ * Strip common markdown syntax from a string so it can be shown as plain text
+ * (card excerpts, meta descriptions). Does NOT truncate — visual clamping is
+ * the caller's job.
+ */
+function plainTextExcerpt(raw: string): string {
+  if (!raw) return '';
+  return raw
+    // fenced code blocks
+    .replace(/```[\s\S]*?```/g, ' ')
+    // inline code
+    .replace(/`([^`]*)`/g, '$1')
+    // images ![alt](url) -> alt
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    // links [label](url) -> label
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    // headings, blockquotes at line start
+    .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+    .replace(/^\s{0,3}>\s?/gm, '')
+    // bold/italic/strike markers
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(.*?)\1/g, '$2')
+    .replace(/~~(.*?)~~/g, '$1')
+    // collapse whitespace
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 
 // Eagerly import all markdown files at build time
 const modules = import.meta.glob('/src/content/insights/*.md', {
@@ -93,7 +134,8 @@ const ALL: Insight[] = Object.entries(modules)
       type: fm.type,
       date: fm.date,
       language: fm.language,
-      excerpt: fm.excerpt || '',
+      excerpt: plainTextExcerpt(fm.excerpt || ''),
+
       cluster: fm.cluster,
       cover_image: fm.cover_image ?? null,
       external_url: fm.external_url ?? null,

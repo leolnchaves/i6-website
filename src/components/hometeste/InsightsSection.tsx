@@ -18,7 +18,7 @@ const InsightMiniCard = ({ insight }: { insight: Insight }) => {
         </span>
         {isExternal && <ExternalLink size={14} className="text-white/40" />}
       </div>
-      <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors line-clamp-2">{insight.title}</h3>
+      <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#F4845F] transition-colors">{insight.title}</h3>
       <p className="text-sm text-white/60 line-clamp-3">{insight.excerpt}</p>
     </div>
   );

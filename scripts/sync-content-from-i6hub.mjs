@@ -10,13 +10,19 @@
  *   node scripts/sync-content-from-i6hub.mjs --type=stories
  *
  * Per item, image strategy (cover and, for stories, logo):
- *   1. base64 (<field>_data + <field>_mime)
- *   2. absolute URL (http/https) -> download
- *   3. relative path already on disk -> preserved
+ *   1. new object form { path, url, mime } from HUB (signed Supabase URL) -> download
+ *   2. base64 (<field>_data + <field>_mime)  [DEPRECATED, remove after 1 release]
+ *   3. absolute URL (http/https) -> download
+ *   4. relative path already on disk -> preserved
  *
- * Orphan images in IMG_DIR are only cleaned at the END, and only when the
- * slug is no longer present in the feed.
+ * For insights, body_images: [{ path, url, mime }] is also downloaded and
+ * body_md image references are rewritten to absolute paths under
+ * /content/insights/<slug>/<lang>/.
+ *
+ * Orphan images are cleaned at the END, only when the slug is no longer in
+ * the feed.
  */
+
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -157,12 +163,35 @@ const extFromUrl = (u) => {
 const fileExists = async (p) => { try { await fs.access(p); return true; } catch { return false; } };
 
 /**
+ * Fetch a signed URL and write it to disk. Aborts the process on failure —
+ * we never publish an item with a missing image.
+ */
+async function downloadSigned({ signedUrl, absPath, slug, label }) {
+  let r;
+  try {
+    r = await fetch(signedUrl);
+  } catch (e) {
+    console.error(`[${TYPE}] ${slug} FATAL: fetch failed for ${label}: ${e.message}`);
+    process.exit(1);
+  }
+  if (!r.ok) {
+    console.error(`[${TYPE}] ${slug} FATAL: ${label} download HTTP ${r.status}`);
+    process.exit(1);
+  }
+  const buf = Buffer.from(await r.arrayBuffer());
+  await fs.mkdir(path.dirname(absPath), { recursive: true });
+  await fs.writeFile(absPath, buf);
+  return buf.length;
+}
+
+/**
  * Materialize one image (cover or logo) for one item.
+ * Priority: new signed-URL object > base64 (deprecated) > absolute URL > on-disk path.
  * Returns { localPath, fileName } | null.
  */
 async function materializeImage({
   slug, baseName, dir, webPath,
-  refPath, dataB64, mime,
+  signedObj, refPath, dataB64, mime,
   cache, keepSet, counters, label,
 }) {
   if (!dir) return null;
@@ -173,7 +202,24 @@ async function materializeImage({
     return cache.get(baseName);
   }
 
-  // 1) base64
+  // 1) NEW: signed URL object { path, url, mime }
+  if (signedObj && signedObj.url) {
+    const ext = mimeToExt(signedObj.mime) ?? extFromUrl(signedObj.path || signedObj.url) ?? 'jpg';
+    const fileName = `${baseName}.${ext}`;
+    const bytes = await downloadSigned({
+      signedUrl: signedObj.url,
+      absPath: path.join(dir, fileName),
+      slug, label,
+    });
+    const out = { localPath: `${webPath}/${fileName}`, fileName };
+    cache.set(baseName, out);
+    keepSet.add(fileName);
+    counters.written++;
+    console.log(`[${TYPE}] ${slug} -> wrote ${label} via signed url (${ext}, ${bytes}B)`);
+    return out;
+  }
+
+  // 2) base64 [DEPRECATED — remove after HUB fully migrated]
   if (dataB64 && mime) {
     const ext = mimeToExt(mime);
     if (ext) {
@@ -184,7 +230,7 @@ async function materializeImage({
         cache.set(baseName, out);
         keepSet.add(fileName);
         counters.written++;
-        console.log(`[${TYPE}] ${slug} -> wrote ${label} via base64 (${ext})`);
+        console.warn(`[deprecated] [${TYPE}] ${slug} -> ${label} via base64 fallback (${ext})`);
         return out;
       } catch (e) {
         console.warn(`[${TYPE}] ${slug} -> base64 ${label} write failed: ${e.message}`);
@@ -194,7 +240,7 @@ async function materializeImage({
     }
   }
 
-  // 2) absolute URL
+  // 3) absolute URL
   if (refPath && /^https?:\/\//i.test(refPath)) {
     try {
       const r = await fetch(refPath);
@@ -216,7 +262,7 @@ async function materializeImage({
     }
   }
 
-  // 3) relative path already on disk
+  // 4) relative path already on disk
   if (refPath && !/^https?:\/\//i.test(refPath)) {
     const fileName = path.basename(refPath);
     const onDisk = path.join(dir, fileName);
@@ -233,6 +279,18 @@ async function materializeImage({
 
   return null;
 }
+
+/**
+ * Extract the new-form signed image object regardless of which field name the
+ * HUB uses. Accepts an object with at least { url }.
+ */
+function pickSignedObj(...candidates) {
+  for (const c of candidates) {
+    if (c && typeof c === 'object' && !Array.isArray(c) && typeof c.url === 'string') return c;
+  }
+  return null;
+}
+
 
 // ---------- Frontmatter writers ----------
 function fmInsights(it, { coverLocal }) {
@@ -348,8 +406,10 @@ const coverCache = new Map(); // baseName -> { localPath, fileName }
 const logoCache  = new Map();
 const keepCover  = new Set();
 const keepLogo   = new Set();
+const keepBodyImages = new Set(); // relative paths like "slug/lang/body-1.jpg"
 const coverCounters = { written: 0, reused: 0, preserved: 0 };
 const logoCounters  = { written: 0, reused: 0, preserved: 0 };
+const bodyCounters  = { written: 0 };
 const itemsWithCover = [];
 const itemsMissingCover = [];
 
@@ -362,36 +422,77 @@ for (const it of items) {
     );
   }
 
-
-
-  const coverRef  = it.cover_image ?? '';
+  // Cover: new signed object takes priority; base64/URL/on-disk are fallbacks.
+  const coverSigned = pickSignedObj(it.cover);
+  const coverRef  = typeof it.cover_image === 'string' ? it.cover_image : '';
   const coverData = it.cover_image_data ?? null;
   const coverMime = it.cover_image_mime ?? null;
 
-  if (coverRef || coverData) itemsWithCover.push(slug);
+  if (coverSigned || coverRef || coverData) itemsWithCover.push(slug);
 
   let coverOut = null;
   if (IMG_DIR) {
     coverOut = await materializeImage({
       slug, baseName: slug, dir: IMG_DIR, webPath: CONFIG.imgWebPath,
+      signedObj: coverSigned,
       refPath: coverRef, dataB64: coverData, mime: coverMime,
       cache: coverCache, keepSet: keepCover, counters: coverCounters, label: 'cover',
     });
-    if (!coverOut && (coverRef || coverData)) itemsMissingCover.push(slug);
+    if (!coverOut && (coverSigned || coverRef || coverData)) itemsMissingCover.push(slug);
   }
 
   let logoOut = null;
   if (TYPE === 'stories' && LOGO_DIR) {
-    const logoRef  = it.logo_image ?? it.logo ?? '';
+    const logoSigned = pickSignedObj(it.logo);
+    const logoRef  = typeof it.logo_image === 'string'
+      ? it.logo_image
+      : (typeof it.logo === 'string' ? it.logo : '');
     const logoData = it.logo_data ?? null;
     const logoMime = it.logo_mime ?? null;
-    if (logoRef || logoData) {
+    if (logoSigned || logoRef || logoData) {
       logoOut = await materializeImage({
         slug, baseName: `${slug}-logo`, dir: LOGO_DIR, webPath: CONFIG.logoWebPath,
+        signedObj: logoSigned,
         refPath: logoRef, dataB64: logoData, mime: logoMime,
         cache: logoCache, keepSet: keepLogo, counters: logoCounters, label: 'logo',
       });
     }
+  }
+
+  // Body images (insights only, new HUB format). Each item is { path, url, mime }
+  // where path is "slug/lang/kind-n.ext" — used as-is under IMG_DIR.
+  let rewrittenBody = it.content ?? it.body_md ?? '';
+  if (TYPE === 'insights' && IMG_DIR && Array.isArray(it.body_images) && it.body_images.length) {
+    const downloads = it.body_images
+      .filter((img) => img && typeof img.url === 'string' && typeof img.path === 'string')
+      .map(async (img) => {
+        const relPath = img.path.replace(/^\/+/, '');
+        const absPath = path.join(IMG_DIR, relPath);
+        const bytes = await downloadSigned({
+          signedUrl: img.url, absPath, slug, label: `body_image ${relPath}`,
+        });
+        keepBodyImages.add(relPath);
+        bodyCounters.written++;
+        console.log(`[${TYPE}] ${slug} -> wrote body image ${relPath} (${bytes}B)`);
+        return relPath;
+      });
+    const rels = await Promise.all(downloads);
+
+    // Rewrite ![alt](basename.ext) references so the browser resolves them
+    // against /content/insights/<slug>/<lang>/ regardless of route depth.
+    const basenames = new Set(rels.map((r) => path.basename(r)));
+    // Assume all body images share the same directory (slug/lang/).
+    const dir = rels.length ? path.posix.dirname(rels[0].split(path.sep).join('/')) : `${slug}/${it.language}`;
+    const webBase = `${CONFIG.imgWebPath}/${dir}`;
+    rewrittenBody = rewrittenBody.replace(
+      /!\[([^\]]*)\]\(([^)\s]+)(\s+"[^"]*")?\)/g,
+      (m, alt, url, title = '') => {
+        if (/^https?:\/\//i.test(url) || url.startsWith('/')) return m;
+        const base = path.basename(url);
+        if (!basenames.has(base)) return m;
+        return `![${alt}](${webBase}/${base}${title})`;
+      },
+    );
   }
 
   const fileName = CONFIG.fileName(it);
@@ -419,12 +520,16 @@ for (const it of items) {
     console.log(`[${TYPE}] ${slug} -> preserved logo from existing MD (${path.basename(logoFallback)})`);
   }
 
-  const md = CONFIG.frontmatter(it, {
+  const itForFm = rewrittenBody !== (it.content ?? it.body_md ?? '')
+    ? { ...it, content: rewrittenBody, body_md: rewrittenBody }
+    : it;
+  const md = CONFIG.frontmatter(itForFm, {
     coverLocal: coverOut?.localPath ?? coverFallback ?? null,
     logoLocal:  logoOut?.localPath  ?? logoFallback  ?? null,
   });
   await fs.writeFile(path.join(MD_DIR, fileName), md);
 }
+
 
 // ---------- Cleanup orphan images ----------
 async function cleanupOrphans(dir, keepSet, label) {
@@ -447,6 +552,38 @@ async function cleanupOrphans(dir, keepSet, label) {
 const removedCovers = await cleanupOrphans(IMG_DIR, keepCover, 'cover');
 const removedLogos  = await cleanupOrphans(LOGO_DIR, keepLogo, 'logo');
 
+// Body-image orphan cleanup (insights only). Walks slug subdirs and removes
+// any file whose relative path isn't in keepBodyImages.
+async function cleanupBodyOrphans(dir, keepSet) {
+  if (!dir) return 0;
+  let removed = 0;
+  const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => []);
+  for (const ent of entries) {
+    if (!ent.isDirectory()) continue;
+    const slugDir = path.join(dir, ent.name);
+    const walk = async (rel) => {
+      const abs = path.join(dir, rel);
+      const kids = await fs.readdir(abs, { withFileTypes: true }).catch(() => []);
+      for (const k of kids) {
+        const kRel = path.posix.join(rel.split(path.sep).join('/'), k.name);
+        if (k.isDirectory()) { await walk(path.join(rel, k.name)); continue; }
+        if (!/\.(jpe?g|png|webp|svg)$/i.test(k.name)) continue;
+        if (keepSet.has(kRel)) continue;
+        await fs.rm(path.join(dir, kRel), { force: true });
+        removed++;
+        console.log(`[cleanup body] removed orphan ${kRel}`);
+      }
+    };
+    await walk(ent.name);
+    // Remove empty slug dirs left behind.
+    const left = await fs.readdir(slugDir).catch(() => []);
+    if (left.length === 0) await fs.rm(slugDir, { recursive: true, force: true }).catch(() => {});
+  }
+  return removed;
+}
+const removedBody = TYPE === 'insights' ? await cleanupBodyOrphans(IMG_DIR, keepBodyImages) : 0;
+
+
 // ---------- Summary ----------
 console.log('---');
 console.log(`Type:              ${TYPE}`);
@@ -456,7 +593,12 @@ console.log(`Covers written:    ${coverCounters.written}`);
 console.log(`Covers reused:     ${coverCounters.reused}`);
 console.log(`Covers preserved:  ${coverCounters.preserved}`);
 console.log(`Covers removed:    ${removedCovers}`);
+if (TYPE === 'insights') {
+  console.log(`Body images written: ${bodyCounters.written}`);
+  console.log(`Body images removed: ${removedBody}`);
+}
 if (TYPE === 'stories') {
+
   console.log(`Logos written:     ${logoCounters.written}`);
   console.log(`Logos reused:      ${logoCounters.reused}`);
   console.log(`Logos preserved:   ${logoCounters.preserved}`);
