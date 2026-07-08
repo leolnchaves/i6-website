@@ -163,12 +163,35 @@ const extFromUrl = (u) => {
 const fileExists = async (p) => { try { await fs.access(p); return true; } catch { return false; } };
 
 /**
+ * Fetch a signed URL and write it to disk. Aborts the process on failure —
+ * we never publish an item with a missing image.
+ */
+async function downloadSigned({ signedUrl, absPath, slug, label }) {
+  let r;
+  try {
+    r = await fetch(signedUrl);
+  } catch (e) {
+    console.error(`[${TYPE}] ${slug} FATAL: fetch failed for ${label}: ${e.message}`);
+    process.exit(1);
+  }
+  if (!r.ok) {
+    console.error(`[${TYPE}] ${slug} FATAL: ${label} download HTTP ${r.status}`);
+    process.exit(1);
+  }
+  const buf = Buffer.from(await r.arrayBuffer());
+  await fs.mkdir(path.dirname(absPath), { recursive: true });
+  await fs.writeFile(absPath, buf);
+  return buf.length;
+}
+
+/**
  * Materialize one image (cover or logo) for one item.
+ * Priority: new signed-URL object > base64 (deprecated) > absolute URL > on-disk path.
  * Returns { localPath, fileName } | null.
  */
 async function materializeImage({
   slug, baseName, dir, webPath,
-  refPath, dataB64, mime,
+  signedObj, refPath, dataB64, mime,
   cache, keepSet, counters, label,
 }) {
   if (!dir) return null;
@@ -179,7 +202,24 @@ async function materializeImage({
     return cache.get(baseName);
   }
 
-  // 1) base64
+  // 1) NEW: signed URL object { path, url, mime }
+  if (signedObj && signedObj.url) {
+    const ext = mimeToExt(signedObj.mime) ?? extFromUrl(signedObj.path || signedObj.url) ?? 'jpg';
+    const fileName = `${baseName}.${ext}`;
+    const bytes = await downloadSigned({
+      signedUrl: signedObj.url,
+      absPath: path.join(dir, fileName),
+      slug, label,
+    });
+    const out = { localPath: `${webPath}/${fileName}`, fileName };
+    cache.set(baseName, out);
+    keepSet.add(fileName);
+    counters.written++;
+    console.log(`[${TYPE}] ${slug} -> wrote ${label} via signed url (${ext}, ${bytes}B)`);
+    return out;
+  }
+
+  // 2) base64 [DEPRECATED — remove after HUB fully migrated]
   if (dataB64 && mime) {
     const ext = mimeToExt(mime);
     if (ext) {
@@ -190,7 +230,7 @@ async function materializeImage({
         cache.set(baseName, out);
         keepSet.add(fileName);
         counters.written++;
-        console.log(`[${TYPE}] ${slug} -> wrote ${label} via base64 (${ext})`);
+        console.warn(`[deprecated] [${TYPE}] ${slug} -> ${label} via base64 fallback (${ext})`);
         return out;
       } catch (e) {
         console.warn(`[${TYPE}] ${slug} -> base64 ${label} write failed: ${e.message}`);
@@ -200,7 +240,7 @@ async function materializeImage({
     }
   }
 
-  // 2) absolute URL
+  // 3) absolute URL
   if (refPath && /^https?:\/\//i.test(refPath)) {
     try {
       const r = await fetch(refPath);
@@ -222,7 +262,7 @@ async function materializeImage({
     }
   }
 
-  // 3) relative path already on disk
+  // 4) relative path already on disk
   if (refPath && !/^https?:\/\//i.test(refPath)) {
     const fileName = path.basename(refPath);
     const onDisk = path.join(dir, fileName);
@@ -239,6 +279,18 @@ async function materializeImage({
 
   return null;
 }
+
+/**
+ * Extract the new-form signed image object regardless of which field name the
+ * HUB uses. Accepts an object with at least { url }.
+ */
+function pickSignedObj(...candidates) {
+  for (const c of candidates) {
+    if (c && typeof c === 'object' && !Array.isArray(c) && typeof c.url === 'string') return c;
+  }
+  return null;
+}
+
 
 // ---------- Frontmatter writers ----------
 function fmInsights(it, { coverLocal }) {
