@@ -249,7 +249,16 @@ const IntelligenceArticle = () => {
         ) : (
           <>
             <div className="prose prose-invert prose-headings:text-white prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-p:text-white/80 prose-li:text-white/80 prose-strong:text-white prose-a:text-[#F4845F] hover:prose-a:underline max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{piece.content}</ReactMarkdown>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({ node, ...props }) => (
+                    <a {...props} target="_blank" rel="noopener noreferrer" />
+                  ),
+                }}
+              >
+                {piece.content}
+              </ReactMarkdown>
             </div>
 
 
