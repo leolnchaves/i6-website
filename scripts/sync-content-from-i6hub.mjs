@@ -552,6 +552,38 @@ async function cleanupOrphans(dir, keepSet, label) {
 const removedCovers = await cleanupOrphans(IMG_DIR, keepCover, 'cover');
 const removedLogos  = await cleanupOrphans(LOGO_DIR, keepLogo, 'logo');
 
+// Body-image orphan cleanup (insights only). Walks slug subdirs and removes
+// any file whose relative path isn't in keepBodyImages.
+async function cleanupBodyOrphans(dir, keepSet) {
+  if (!dir) return 0;
+  let removed = 0;
+  const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => []);
+  for (const ent of entries) {
+    if (!ent.isDirectory()) continue;
+    const slugDir = path.join(dir, ent.name);
+    const walk = async (rel) => {
+      const abs = path.join(dir, rel);
+      const kids = await fs.readdir(abs, { withFileTypes: true }).catch(() => []);
+      for (const k of kids) {
+        const kRel = path.posix.join(rel.split(path.sep).join('/'), k.name);
+        if (k.isDirectory()) { await walk(path.join(rel, k.name)); continue; }
+        if (!/\.(jpe?g|png|webp|svg)$/i.test(k.name)) continue;
+        if (keepSet.has(kRel)) continue;
+        await fs.rm(path.join(dir, kRel), { force: true });
+        removed++;
+        console.log(`[cleanup body] removed orphan ${kRel}`);
+      }
+    };
+    await walk(ent.name);
+    // Remove empty slug dirs left behind.
+    const left = await fs.readdir(slugDir).catch(() => []);
+    if (left.length === 0) await fs.rm(slugDir, { recursive: true, force: true }).catch(() => {});
+  }
+  return removed;
+}
+const removedBody = TYPE === 'insights' ? await cleanupBodyOrphans(IMG_DIR, keepBodyImages) : 0;
+
+
 // ---------- Summary ----------
 console.log('---');
 console.log(`Type:              ${TYPE}`);
@@ -561,7 +593,12 @@ console.log(`Covers written:    ${coverCounters.written}`);
 console.log(`Covers reused:     ${coverCounters.reused}`);
 console.log(`Covers preserved:  ${coverCounters.preserved}`);
 console.log(`Covers removed:    ${removedCovers}`);
+if (TYPE === 'insights') {
+  console.log(`Body images written: ${bodyCounters.written}`);
+  console.log(`Body images removed: ${removedBody}`);
+}
 if (TYPE === 'stories') {
+
   console.log(`Logos written:     ${logoCounters.written}`);
   console.log(`Logos reused:      ${logoCounters.reused}`);
   console.log(`Logos preserved:   ${logoCounters.preserved}`);
