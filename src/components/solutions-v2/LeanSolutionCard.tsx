@@ -24,9 +24,14 @@ const LeanSolutionCard = memo(({ solution }: Props) => {
       <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-[#F4845F] transition-colors">
         {solution.title}
       </h4>
-      <p className="text-sm text-white/70 leading-snug mb-4">
+      <p className="text-sm text-white/70 leading-snug mb-2">
         {solution.tagline}
       </p>
+      {solution.description && (
+        <p className="text-sm text-white/60 leading-snug mb-4">
+          {solution.description}
+        </p>
+      )}
       <div className="rounded-lg bg-white/5 border border-white/10 px-3">
         <Row label="Resolve" value={solution.resolve} />
         <Row label="Entrega" value={solution.entrega} />
