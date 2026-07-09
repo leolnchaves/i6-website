@@ -15,15 +15,15 @@ const SolutionsV2Hero = memo(() => {
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-4">
             {hero.eyebrow}
           </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
-            IA aplicada para{' '}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight text-white">
+            IA aplicada para prever demanda, recomendar decisões e{' '}
             <span
               className="text-[#F4845F]"
               style={{ textShadow: '0 0 30px rgba(244,132,95,0.3), 0 0 60px rgba(244,132,95,0.15)' }}
             >
-              prever demanda
-            </span>
-            , recomendar decisões e capturar crescimento com precisão.
+              capturar crescimento
+            </span>{' '}
+            com precisão.
           </h1>
           <p className="text-base sm:text-lg text-white/65 leading-relaxed max-w-3xl mx-auto mb-8">
             {hero.subtitle}
