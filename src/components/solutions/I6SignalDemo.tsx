@@ -256,7 +256,7 @@ const content = {
         ],
       },
       comercial: {
-        label: 'Commercial',
+        label: 'Commercial Focus',
         question: 'Where should I focus commercial efforts this month?',
         title: 'Commercial Prioritization — February 2026',
         analysis: 'Potential vs performance analysis identified 8 territories with significant revenue gaps. The top 3 priority territories concentrate 62% of the total gap ($178k), with high conversion probability based on historical response to similar commercial actions.',
