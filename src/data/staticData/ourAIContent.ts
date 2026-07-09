@@ -181,41 +181,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         ],
       },
     },
-    dualValue: {
-      title: 'O impacto não vem só de prever, mas de como a IA se conecta ao contexto do problema',
-      columns: [
-        {
-          title: 'Clareza ao caos',
-          points: [
-            'Enxergar padrões que o olho humano não percebe e agir em escala sobre eles',
-            'Detectar intenção antes que a pessoa declare interesse',
-            'Permitir que decisões antes reativas se tornem proativas e autônomas',
-          ],
-          formula: 'consumo + tempo + contexto + similaridade = insight acionável',
-        },
-        {
-          title: 'Números se movem',
-          points: [
-            'Aprende o comportamento de um cliente, canal ou produto específico',
-            'Usa o contexto para ajustar cada decisão ao objetivo de negócio',
-            'Não tenta ser inteligente sobre tudo — apenas sobre o que realmente importa',
-          ],
-          formula: 'dados + contexto + decisão = influência',
-        },
-      ],
-    },
-    learnInfluence: {
-      title: 'IA aprende. Influência vende.',
-      lead: 'Fine tuning a partir do comportamento isolado — mirando não apenas precisão, mas resultado de negócio: margem, conversão, market share, savings.',
-      stages: [
-        { label: 'Fine tuning', detail: 'Calibração a partir do comportamento isolado' },
-        { label: 'Necessidade específica', detail: 'Para influência e continuidade da jornada' },
-        { label: 'Resultado de negócio', detail: 'Necessidades do negócio e metas a alcançar' },
-      ],
-      journey: ['interesse', 'pesquisa', 'compra'],
-      conclusion: 'Afinidade comportamental e contextual gera propensão real baseada em influência',
-      attributes: ['Relevância', 'Oportunidade', 'Timing', 'Necessidade', 'Substituição', 'Elasticidade', 'Similaridade', 'Explicabilidade'],
-    },
     diversity: {
       title: 'Balanceamento de diversidade',
       lead: 'Ao analisar comportamentos únicos e padrões de recomendação, identificamos os melhores produtos inexplorados para cada cliente — garantindo sugestões diversas e relevantes além do histórico.',
