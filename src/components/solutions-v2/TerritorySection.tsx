@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { solutionsV2Content, type TerritoryId } from '@/data/solutionsV2/content';
+import { solutionsV2Content } from '@/data/solutionsV2/content';
+import { TerritoryId } from '@/types/solutionsV2';
 import LeanSolutionCard from './LeanSolutionCard';
 
 interface Props {
