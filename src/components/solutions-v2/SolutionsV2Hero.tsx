@@ -13,7 +13,7 @@ const SolutionsV2Hero = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center text-white">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-4">
-            {hero.eyebrow}
+            Soluções infinity6
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
             IA aplicada para{' '}
