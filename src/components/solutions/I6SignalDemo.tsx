@@ -76,7 +76,7 @@ const content = {
         ],
       },
       pricing: {
-        label: 'Precificação',
+        label: 'Preço Ótimo',
         question: 'Qual o preço ótimo para o Ibuprofeno 400mg nesta região?',
         title: 'Otimização de Preço — Ibuprofeno 400mg (Região Sudeste)',
         analysis: 'A análise de elasticidade-preço para o Ibuprofeno 400mg na Região Sudeste indica que o preço atual de R$ 18,90 está 7% acima do ponto ótimo. A redução para R$ 17,50 maximizaria a margem de contribuição total, com aumento estimado de 12% no volume e ganho líquido de R$ 43.000/mês na região.',
