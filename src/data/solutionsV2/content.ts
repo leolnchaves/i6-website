@@ -152,7 +152,7 @@ export const solutionsV2Content = {
     title: 'i6 Signal',
     tagline: 'A camada conversacional que transforma predição em decisão.',
     description:
-      'O i6 Signal conecta os sinais preditivos da infinity6 aos times de negócio, permitindo entender rapidamente onde agir, por que agir e qual impacto esperado.',
+      'O i6 Signal conecta os sinais preditivos dos modelos aos times de negócio, permitindo entender rapidamente onde agir, por que agir e qual impacto esperado.',
     examplesTitle: 'Exemplos de sinais',
     examples: [
       'SKU com alto risco de ruptura.',
