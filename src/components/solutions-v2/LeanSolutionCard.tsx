@@ -34,8 +34,8 @@ const LeanSolutionCard = memo(({ solution }: Props) => {
       )}
       <div className="rounded-lg bg-white/5 border border-white/10 px-3">
         <Row label="Resolve" value={solution.resolve} />
-        <Row label="Entrega" value={solution.entrega} />
-        <Row label="Impacto" value={solution.impacto} />
+        <Row label="Entrega" value={solution.delivery} />
+        <Row label="Impacto" value={solution.impact} />
       </div>
     </article>
   );
