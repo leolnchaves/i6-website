@@ -169,7 +169,7 @@ export const solutionsV2Content = {
   howWeImplement: {
     eyebrow: 'Como implementamos',
     title: 'Validação antes da escala. Resultado antes do discurso.',
-    costNote: 'Custo zero até o passo 3. Você só avança com validação de resultado.',
+    costNote: 'Custo zero até o Backtest. Você só avança com validação do potencial de resultado.',
     steps: [
       {
         n: '01',
