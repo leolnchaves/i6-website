@@ -24,7 +24,7 @@ const TerritoriesBlock = memo(() => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {territories.items.map((t) => (
+          {territories.map((t) => (
             <a
               key={t.id}
               href={`#territory-${t.id}`}

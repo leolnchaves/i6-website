@@ -17,7 +17,7 @@ const SignalLayerBlock = memo(() => {
             {signal.title}
           </h2>
           <p className="text-lg text-white/80 leading-snug mb-4">
-            {signal.subtitle}
+            {signal.tagline}
           </p>
           <p className="text-base text-white/60 leading-relaxed">
             {signal.description}
