@@ -278,7 +278,7 @@ const content = {
         ],
       },
       mix: {
-        label: 'Mix',
+        label: 'Mix / Assortment',
         question: 'What is the ideal mix for the West Coast?',
         title: 'Mix Optimization — West Coast',
         analysis: 'Analysis of current vs recommended mix for the West Coast reveals misalignment in 3 key categories. The current mix over-indexes analgesics (38% vs recommended 29%) and under-indexes antihypertensives (12% vs recommended 19%). The projected adjustment would impact +$62k/month in regional contribution margin.',
