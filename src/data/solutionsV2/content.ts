@@ -324,7 +324,7 @@ const en: SolutionsV2Content = {
         'Companies lose revenue when they plan demand, targets, assortment and orders based only on history, averages or commercial pressure. We turn market, behavior, inventory, sell-out and channel signals into predictive decisions to orient operations with extreme efficiency.',
       chips: [
         'Demand Forecasting',
-        'Predictive Commercial Targets',
+        'Predictive Commercial Goals',
         'Predictive Assortment & Order Recommendation',
       ],
     },
@@ -378,7 +378,7 @@ const en: SolutionsV2Content = {
     {
       id: 'predictive-commercial-targets',
       territory: 'planning',
-      title: 'Predictive Commercial Targets',
+      title: 'Predictive Commercial Goals',
       tagline:
         'Set targets based on real demand potential, not just history or commercial pressure.',
       resolve: 'Top-down targets disconnected from real market potential.',
