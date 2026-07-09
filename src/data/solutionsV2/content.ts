@@ -173,7 +173,7 @@ export const solutionsV2Content = {
       {
         n: '01',
         title: 'Ingestão dos dados',
-        description: 'Integramos dados comerciais, transacionais, comportamentais, operacionais e externos.',
+        description: 'Integramos dados comerciais, transacionais, comportamentais, operacionais e externos, sem necessidade de dados sensíveis (dados anonimizados na origem).',
       },
       {
         n: '02',
