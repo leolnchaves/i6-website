@@ -18,21 +18,21 @@ const LeanSolutionCard = memo(({ solution }: Props) => {
   return (
     <article
       id={solution.id}
-      className="group relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 p-5"
+      className="group relative flex flex-col h-full rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 p-5"
     >
       <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
-      <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-[#F4845F] transition-colors">
+      <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-[#F4845F] transition-colors line-clamp-1 min-h-[1lh]">
         {solution.title}
       </h4>
-      <p className="text-sm text-white/70 leading-snug mb-2">
+      <p className="text-sm text-white/70 leading-snug mb-2 line-clamp-2 min-h-[2lh]">
         {solution.tagline}
       </p>
       {solution.description && (
-        <p className="text-sm text-white/60 leading-snug mb-4">
+        <p className="text-sm text-white/60 leading-snug mb-4 line-clamp-2 min-h-[2lh]">
           {solution.description}
         </p>
       )}
-      <div className="rounded-lg bg-white/5 border border-white/10 px-3">
+      <div className="flex-grow rounded-lg bg-white/5 border border-white/10 px-3">
         <Row label="Resolve" value={solution.resolve} />
         <Row label="Entrega" value={solution.entrega} />
         <Row label="Impacto" value={solution.impacto} />
