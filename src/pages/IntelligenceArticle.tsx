@@ -261,6 +261,18 @@ const IntelligenceArticle = () => {
               </ReactMarkdown>
             </div>
 
+            {piece.cta_form && piece.cta_form_text && (
+              <ArticleCTAForm
+                kind="research"
+                title={piece.title}
+                slug={piece.slug}
+                id={piece.id}
+                ctaText={piece.cta_form_text}
+              />
+            )}
+
+
+
 
 
             <div className="mt-16 pt-8 border-t border-white/10 space-y-6">
