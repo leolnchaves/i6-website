@@ -28,7 +28,7 @@ export const solutionsV2Content = {
     eyebrow: 'Soluções',
     title: 'IA aplicada para prever demanda, recomendar decisões e capturar crescimento com precisão.',
     subtitle:
-      'A infinity6 transforma dados de clientes, produtos, canais, PDVs, estoque e preço em decisões preditivas para aumentar receita, proteger margem e reduzir desperdício operacional.',
+      'Transformamos dados de clientes, produtos, canais, PDVs, estoque e preço em decisões preditivas para aumentar receita, proteger margem e reduzir desperdício operacional.',
     ctaLabel: 'Ver cases de sucesso',
     ctaHref: '/success-stories',
   },
