@@ -35,7 +35,7 @@ export const solutionsV2Content = {
   territories: [
     {
       id: 'growth',
-      eyebrow: 'Território 1',
+      eyebrow: 'Alavanca Preditiva de Valor 1',
       title: 'Growth & Customer Intelligence',
       tagline: 'Venda mais para clientes, visitantes e canais com maior propensão de conversão.',
       description:
@@ -44,7 +44,7 @@ export const solutionsV2Content = {
     },
     {
       id: 'planning',
-      eyebrow: 'Território 2',
+      eyebrow: 'Alavanca Preditiva de Valor 2',
       title: 'Demand, Supply & Commercial Planning',
       tagline: 'Planeje melhor, venda melhor e reduza desperdício operacional.',
       description:
@@ -53,7 +53,7 @@ export const solutionsV2Content = {
     },
     {
       id: 'pricing',
-      eyebrow: 'Território 3',
+      eyebrow: 'Alavanca Preditiva de Valor 3',
       title: 'Pricing & Margin Intelligence',
       tagline: 'Ajuste preço ao movimento real de mercado, cliente, estoque e margem.',
       description:
