@@ -7,7 +7,7 @@ const HowWeImplement = memo(() => {
   const { howWeImplement } = solutionsContent[language];
 
   const costBadge = (
-    <div className="flex items-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#0B1224] px-4 py-2 shadow-lg shadow-black/20 w-full">
+    <div className="flex items-center justify-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#0B1224] px-4 py-2 shadow-lg shadow-black/20 w-full">
       <span className="h-2 w-2 rounded-full bg-[#F4845F] shrink-0" />
       <span className="text-sm font-semibold text-[#F4845F]">
         {howWeImplement.costNote}
