@@ -45,7 +45,7 @@ export const solutionsV2Content = {
     {
       id: 'planning',
       eyebrow: 'Alavanca Preditiva de Valor',
-      title: 'Demand, Supply & Commercial Planning',
+      title: 'Demanda, Distribuição e Planejamento Comercial',
       tagline: 'Planeje melhor, venda melhor e reduza desperdício operacional.',
       description:
         'Empresas perdem receita quando planejam demanda, metas, sortimento e pedidos com base apenas em histórico, média ou pressão comercial. Transformamos sinais de mercado, comportamento, estoque, sell-out e canal em decisões preditivas para orientar a operação com extrema eficiência.',
@@ -54,7 +54,7 @@ export const solutionsV2Content = {
     {
       id: 'pricing',
       eyebrow: 'Alavanca Preditiva de Valor',
-      title: 'Pricing & Margin Intelligence',
+      title: 'Precificação e Inteligência de Margem',
       tagline: 'Ajuste preço ao movimento real de mercado, cliente, estoque e margem.',
       description:
         'Preço não é tabela. É uma alavanca direta de margem, giro e conversão. Nós transformamos elasticidade, forecast, concorrência, estoque, demanda e comportamento em recomendações de preço dinâmicas, mensuráveis e governadas.',
