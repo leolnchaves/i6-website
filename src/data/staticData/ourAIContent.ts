@@ -16,8 +16,12 @@ export interface ChallengeRow {
 export interface OurAIContent {
   hero: { eyebrow: string; title: string; subtitle: string; lead: string };
   thesis: {
+    eyebrow: string;
     title: string;
     pillars: { title: string; text: string }[];
+    stages: { label: string; detail: string }[];
+    journey: string[];
+    attributes: string[];
     foundation: {
       label: string;
       name: string;
@@ -101,7 +105,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Três motores próprios que aprendem comportamento, antecipam decisão e prescrevem ação — não geram texto, geram resultado.',
     },
     thesis: {
+      eyebrow: 'Do comportamento ao resultado',
       title: 'IA só precisa saber o que muda o jogo',
+      stages: [
+        { label: 'Fine tuning', detail: 'Calibração a partir do comportamento isolado' },
+        { label: 'Necessidade específica', detail: 'Para influência e continuidade da jornada' },
+        { label: 'Resultado de negócio', detail: 'Necessidades do negócio e metas a alcançar' },
+      ],
+      journey: ['interesse', 'pesquisa', 'compra'],
+      attributes: ['Relevância', 'Oportunidade', 'Timing', 'Necessidade', 'Substituição', 'Elasticidade', 'Similaridade', 'Explicabilidade'],
       pillars: [
         {
           title: 'Clareza do problema',
@@ -374,7 +386,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Three in-house engines that learn behavior, anticipate decisions and prescribe action — they do not generate text, they generate outcomes.',
     },
     thesis: {
+      eyebrow: 'From behavior to outcome',
       title: 'AI only needs to know what changes the game',
+      stages: [
+        { label: 'Fine tuning', detail: 'Calibration from isolated behavior' },
+        { label: 'Specific need', detail: 'For influence and journey continuity' },
+        { label: 'Business outcome', detail: 'Business needs and goals to achieve' },
+      ],
+      journey: ['interest', 'research', 'purchase'],
+      attributes: ['Relevance', 'Opportunity', 'Timing', 'Need', 'Substitution', 'Elasticity', 'Similarity', 'Explainability'],
       pillars: [
         {
           title: 'Clarity of the problem',
