@@ -59,7 +59,9 @@ export interface OurAIContent {
   };
   explainability: {
     title: string;
+    eyebrow: string;
     lead: string;
+    description: string;
     steps: {
       title: string;
       description: string;
