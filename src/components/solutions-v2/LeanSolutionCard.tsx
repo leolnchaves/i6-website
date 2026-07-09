@@ -21,7 +21,7 @@ const LeanSolutionCard = memo(({ solution, labels }: Props) => {
       id={solution.id}
       className="group relative flex flex-col h-full rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 p-5"
     >
-      <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-[#F4845F] transition-colors line-clamp-1 min-h-[1lh]">
+      <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-[#F4845F] transition-colors min-h-[2lh] leading-tight">
         {solution.title}
       </h4>
       <p className="text-sm text-white/70 leading-snug mb-2 line-clamp-2 min-h-[2lh]">
