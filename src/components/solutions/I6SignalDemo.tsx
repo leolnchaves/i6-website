@@ -183,7 +183,7 @@ const content = {
     emptyState: 'What predictive insight shall we discover today?',
     scenarios: {
       supply: {
-        label: 'Supply',
+        label: 'Stockout',
         question: 'Which SKUs are at risk of stockout in the next 3 months?',
         title: 'Stockout Risk Analysis — Next Quarter',
         analysis: 'Demand projection vs replenishment capacity for the next 90 days indicates 5 SKUs with elevated stockout probability. SKU 44210 (Dipyrone 500mg) leads the risk (94%) due to autumn seasonality and 22-day lead time from the primary supplier. The estimated cumulative impact is $102,000 in quarterly revenue if no preventive action is taken.',
