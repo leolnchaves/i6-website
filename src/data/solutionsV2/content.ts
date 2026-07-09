@@ -36,7 +36,7 @@ export const solutionsV2Content = {
     {
       id: 'growth',
       eyebrow: 'Alavanca Preditiva de Valor',
-      title: 'Growth & Customer Intelligence',
+      title: 'Crescimento & Inteligência de Consumidor',
       tagline: 'Venda mais para clientes, visitantes e canais com maior propensão de conversão.',
       description:
         'Quando todo cliente recebe a mesma oferta, a empresa desperdiça mídia, CRM, força comercial e oportunidade de receita. Nós antecipamos intenção, a próxima melhor oferta e quais produtos têm maior potencial de conversão.',
