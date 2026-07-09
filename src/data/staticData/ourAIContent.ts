@@ -386,7 +386,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Three in-house engines that learn behavior, anticipate decisions and prescribe action — they do not generate text, they generate outcomes.',
     },
     thesis: {
+      eyebrow: 'From behavior to outcome',
       title: 'AI only needs to know what changes the game',
+      stages: [
+        { label: 'Fine tuning', detail: 'Calibration from isolated behavior' },
+        { label: 'Specific need', detail: 'For influence and journey continuity' },
+        { label: 'Business outcome', detail: 'Business needs and goals to achieve' },
+      ],
+      journey: ['interest', 'research', 'purchase'],
+      attributes: ['Relevance', 'Opportunity', 'Timing', 'Need', 'Substitution', 'Elasticity', 'Similarity', 'Explainability'],
       pillars: [
         {
           title: 'Clarity of the problem',
