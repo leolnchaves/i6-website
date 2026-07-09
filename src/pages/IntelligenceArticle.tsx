@@ -10,6 +10,7 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIntelligencePiece, resolveIntelligenceCover } from '@/hooks/useIntelligence';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import LeadGateForm from '@/components/insights/LeadGateForm';
+import ArticleCTAForm from '@/components/insights/ArticleCTAForm';
 
 
 const BASE_URL = 'https://infinity6.ai';
@@ -260,6 +261,18 @@ const IntelligenceArticle = () => {
                 {piece.content}
               </ReactMarkdown>
             </div>
+
+            {piece.cta_form && piece.cta_form_text && (
+              <ArticleCTAForm
+                kind="research"
+                title={piece.title}
+                slug={piece.slug}
+                id={piece.id}
+                ctaText={piece.cta_form_text}
+              />
+            )}
+
+
 
 
 

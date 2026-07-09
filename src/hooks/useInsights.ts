@@ -19,6 +19,8 @@ export interface InsightFrontmatter {
   featured?: boolean;
   gated?: boolean;
   asset_url?: string | null;
+  cta_form?: boolean;
+  cta_form_text?: string | null;
 }
 
 export interface Insight extends InsightFrontmatter {
@@ -143,6 +145,8 @@ const ALL: Insight[] = Object.entries(modules)
       featured: fm.featured === true,
       gated: fm.gated === true,
       asset_url: fm.asset_url ?? null,
+      cta_form: fm.cta_form === true,
+      cta_form_text: fm.cta_form_text ?? null,
       slug:
         fm.slug ||
         path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),

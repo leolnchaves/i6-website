@@ -19,12 +19,24 @@ export interface IntelligenceFrontmatter {
   related_story_slug?: string;  // success story slug
   gated?: boolean;              // requires lead-gate form before reading
   asset_url?: string | null;    // optional PDF sent by i6Hub after gate submit
+  cta_form?: boolean;
+  cta_form_text?: string | null;
 }
 
 export interface IntelligencePiece extends IntelligenceFrontmatter {
   content: string;
 }
 
+
+function decodeYamlEscapes(v: string): string {
+  return v
+    .replace(/\\r\\n/g, '\n')
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\n')
+    .replace(/\\t/g, '\t')
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
 
 function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
@@ -37,9 +49,14 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
     if (idx === -1) continue;
     const key = line.slice(0, idx).trim();
     let value: string = line.slice(idx + 1).trim();
-    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    let wasDoubleQuoted = false;
+    if (value.startsWith('"') && value.endsWith('"')) {
+      value = value.slice(1, -1);
+      wasDoubleQuoted = true;
+    } else if (value.startsWith("'") && value.endsWith("'")) {
       value = value.slice(1, -1);
     }
+    if (wasDoubleQuoted) value = decodeYamlEscapes(value);
     if (value === '' || value === 'null' || value === '~') data[key] = null;
     else if (value === 'true') data[key] = true;
     else if (value === 'false') data[key] = false;
@@ -75,6 +92,8 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
       related_story_slug: fm.related_story_slug,
       gated: fm.gated === true,
       asset_url: fm.asset_url ?? null,
+      cta_form: fm.cta_form === true,
+      cta_form_text: fm.cta_form_text ?? null,
       slug: fm.slug || path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
       content,
     } as IntelligencePiece;
