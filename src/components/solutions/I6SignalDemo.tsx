@@ -146,7 +146,7 @@ const content = {
         ],
       },
       pdv: {
-        label: 'Comportamento',
+        label: 'Compra / Recompra',
         question: 'Qual o comportamento de compra e recompra da Losartana Potássica 50mg na região de São Paulo?',
         title: 'Comportamento de Compra e Recompra — Losartana Potássica 50mg (São Paulo)',
         analysis: 'A análise de comportamento de PDV na região de São Paulo revela que a Losartana Potássica 50mg apresenta taxa de recompra crescente nos últimos 6 meses, passando de 62% em setembro para 78% em fevereiro. O ciclo médio de recompra é de 28 dias, alinhado à posologia padrão. Farmácias com programa de fidelidade apresentam taxa de recompra 15pp superior à média regional, indicando forte correlação entre ações de retenção e recorrência.',
