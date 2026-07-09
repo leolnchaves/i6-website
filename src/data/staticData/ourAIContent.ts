@@ -16,8 +16,12 @@ export interface ChallengeRow {
 export interface OurAIContent {
   hero: { eyebrow: string; title: string; subtitle: string; lead: string };
   thesis: {
+    eyebrow: string;
     title: string;
     pillars: { title: string; text: string }[];
+    stages: { label: string; detail: string }[];
+    journey: string[];
+    attributes: string[];
     foundation: {
       label: string;
       name: string;
