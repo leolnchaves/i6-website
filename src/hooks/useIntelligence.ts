@@ -19,6 +19,8 @@ export interface IntelligenceFrontmatter {
   related_story_slug?: string;  // success story slug
   gated?: boolean;              // requires lead-gate form before reading
   asset_url?: string | null;    // optional PDF sent by i6Hub after gate submit
+  cta_form?: boolean;
+  cta_form_text?: string | null;
 }
 
 export interface IntelligencePiece extends IntelligenceFrontmatter {
