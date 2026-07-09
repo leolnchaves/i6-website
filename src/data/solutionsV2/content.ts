@@ -8,6 +8,7 @@ export interface LeanSolution {
   territory: TerritoryId;
   title: string;
   tagline: string;
+  description?: string;
   resolve: string;
   entrega: string;
   impacto: string;
