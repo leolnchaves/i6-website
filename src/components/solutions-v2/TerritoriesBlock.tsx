@@ -35,13 +35,13 @@ const TerritoriesBlock = memo(() => {
               className="group relative flex flex-col rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] p-6"
             >
               <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#F4845F] transition-colors">
+              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#F4845F] transition-colors line-clamp-2 min-h-[2lh]">
                 {t.title}
               </h3>
-              <p className="text-sm text-white/70 leading-snug mb-4">
+              <p className="text-sm text-white/70 leading-snug mb-4 line-clamp-3 min-h-[3lh]">
                 {t.tagline}
               </p>
-              <ul className="flex flex-wrap gap-1.5 mb-5">
+              <ul className="flex flex-wrap gap-1.5 mb-5 min-h-[3.5rem]">
                 {t.chips.map((c) => (
                   <li
                     key={c}

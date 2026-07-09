@@ -1,41 +1,20 @@
-## Contexto
-Na página `/pt/solutions-v2`, os cards de solução (`LeanSolutionCard`) exibem um quadro interno com as três linhas **RESOLVE**, **ENTREGA** e **IMPACTO**. Como os textos superiores (título + tagline) e os textos internos têm tamanhos diferentes, os quadros ficam com alturas distintas e desalinhados entre os cards da mesma linha, conforme screenshot.
+Ajustar o alinhamento dos badges (chips) dentro dos cards de "Alavancas Preditivas de Valor" em `/pt/solutions-v2`.
 
-## Objetivo
-Fazer com que os quadros internos tenham **sempre a mesma altura** e estejam **visualmente alinhados** entre si em cada linha do grid, sem quebrar a leitura do conteúdo.
+### Problema
+Os cards de território (`TerritoriesBlock`) têm títulos e taglines de tamanhos variados, fazendo com que a lista de badges (chips) inicie em alturas diferentes entre os três cards. A screenshot mostra o desalinhamento visual.
 
-## Arquivos envolvidos
-- `src/components/solutions-v2/LeanSolutionCard.tsx` — componente do card.
-- `src/components/solutions-v2/TerritorySection.tsx` — grid que renderiza os cards.
-- `src/data/solutionsV2/content.ts` — dados dos cards (apenas leitura para validar textos).
+### Solução
+Normalizar a altura ocupada pelo título e pela tagline em cada card, para que o bloco de badges sempre comece na mesma altura:
 
-## Estratégia de implementação
+1. Em `src/components/solutions-v2/TerritoriesBlock.tsx`:
+   - Aplicar `line-clamp-2` + `min-h-[2lh]` no título (`h3`), garantindo espaço para até 2 linhas.
+   - Aplicar `line-clamp-3` + `min-h-[3lh]` no subtítulo/tagline (`p`), garantindo espaço para até 3 linhas.
+   - Manter a lista de badges logo abaixo, sem empurrá-la para baixo com `mt-auto`.
+   - (Opcional) Garantir `min-h` consistente no bloco de badges caso a quebra de linha varie entre cards.
 
-1. **Fazer o card ocupar toda a altura da linha do grid**
-   - Adicionar `h-full` e `flex flex-col` no `<article>`.
-   - O grid do `TerritorySection` já usa `items-stretch` por padrão, então os cards de uma mesma linha terão a mesma altura total.
+### Escopo
+Apenas ajuste de layout no componente `TerritoriesBlock`. Nenhuma alteração de conteúdo ou funcionalidade.
 
-2. **Padronizar a altura do bloco superior (título + tagline + descrição opcional)**
-   - Aplicar `line-clamp-1` no título.
-   - Aplicar `line-clamp-2` na tagline.
-   - Aplicar `line-clamp-2` na descrição opcional, quando existir.
-   - Isso garante que o espaço acima do quadro interno seja consistente em todos os cards da mesma linha, independentemente da variação de texto.
-
-3. **Fazer o quadro interno crescer e ocupar o espaço restante de forma igualitária**
-   - Adicionar `flex-grow` no container do quadro interno (`rounded-lg bg-white/5 ...`).
-   - Assim, como todos os cards da linha têm a mesma altura total e o bloco superior tem a mesma altura padronizada, o quadro interno terá **altura idêntica** em todos os cards da linha.
-
-4. **Manter a leitura dos textos internos**
-   - As três linhas (RESOLVE, ENTREGA, IMPACTO) continuam com seu conteúdo completo, sem truncamento.
-   - O espaço extra, quando houver, ficará na parte inferior do quadro, mantendo a hierarquia visual.
-
-## Validação
-- Abrir `/pt/solutions-v2` no preview.
-- Verificar as três seções de alavanca (Growth, Planning, Pricing).
-- Confirmar que os quadros internos de cada linha de 3 cards estão com a mesma altura e alinhados na base/superior.
-- Verificar que nenhum texto foi cortado ou ficou ilegível.
-
-## Escopo fora deste plano
-- Não alterar o conteúdo/copy dos cards.
-- Não modificar a paleta, bordas ou estilos visuais dos quadros.
-- Não mexer em outros componentes da página (hero, signal, implementação, etc.).
+### Validação
+- Visualizar `/pt/solutions-v2` e confirmar que os badges dos 3 cards iniciam na mesma altura horizontal.
+- Rodar `bun run build` para garantir que não há erros.
