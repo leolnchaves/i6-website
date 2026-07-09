@@ -84,7 +84,7 @@ export const solutionsV2Content = {
       id: 'predictive-campaign-targeting',
       territory: 'growth',
       title: 'Predictive Campaign Targeting',
-      tagline: 'Ative menos clientes, com mais precisão e mais resultado.',
+      tagline: 'Ative os clientes certos, com mais precisão, mais resultado e menos custo.',
       resolve: 'Campanhas amplas, caras e pouco eficientes.',
       entrega: 'Score de propensão, audiência priorizada e régua de ativação.',
       impacto: 'Maior conversão, menor CAC e ROI de marketing mais mensurável.',
