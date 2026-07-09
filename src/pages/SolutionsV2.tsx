@@ -5,7 +5,7 @@ import TerritoriesBlock from '@/components/solutions-v2/TerritoriesBlock';
 import TerritorySection from '@/components/solutions-v2/TerritorySection';
 import SignalLayerBlock from '@/components/solutions-v2/SignalLayerBlock';
 import HowWeImplement from '@/components/solutions-v2/HowWeImplement';
-import SummaryBullets from '@/components/solutions-v2/SummaryBullets';
+
 import RealResultsStrip from '@/components/common/RealResultsStrip';
 import SolutionsCTA from '@/components/solutions/SolutionsCTA';
 
@@ -23,7 +23,6 @@ const SolutionsV2 = memo(() => {
       <TerritorySection territoryId="pricing" />
       <SignalLayerBlock />
       <HowWeImplement />
-      <SummaryBullets />
       <RealResultsStrip />
       <SolutionsCTA />
     </>
