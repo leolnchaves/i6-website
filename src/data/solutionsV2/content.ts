@@ -177,8 +177,8 @@ export const solutionsV2Content = {
       },
       {
         n: '02',
-        title: 'Fine-tuning dos modelos',
-        description: 'Adaptamos motores proprietários ao contexto do cliente, segmento, canal, produto e objetivo de negócio.',
+        title: 'Modelagem e Fine-tuning',
+        description: 'Modelamos os motores proprietários ao contexto do cliente, segmento, canal, produto e objetivo de negócio.',
       },
       {
         n: '03',
