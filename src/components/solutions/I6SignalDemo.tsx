@@ -573,6 +573,8 @@ const I6SignalDemo = memo(() => {
 
   const handleScenarioClick = (sc: Scenario) => {
     if (sc === activeScenario && phase === 'responding') return;
+    // Highlight selected scenario immediately
+    setActiveScenario(sc);
     // Clear current chat
     setPhase('idle');
     setShowResponse(false);
