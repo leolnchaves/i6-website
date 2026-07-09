@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { LeanSolution } from '@/data/solutionsV2/content';
+import type { LeanSolution } from '@/types/solutionsV2';
 
 interface Props {
   solution: LeanSolution;
