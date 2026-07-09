@@ -1,20 +1,41 @@
-Ajustar o alinhamento dos badges (chips) dentro dos cards de "Alavancas Preditivas de Valor" em `/pt/solutions-v2`.
+# Ajustes no demo i6 Signal
 
-### Problema
-Os cards de território (`TerritoriesBlock`) têm títulos e taglines de tamanhos variados, fazendo com que a lista de badges (chips) inicie em alturas diferentes entre os três cards. A screenshot mostra o desalinhamento visual.
+Arquivo único: `src/components/solutions/I6SignalDemo.tsx`
 
-### Solução
-Normalizar a altura ocupada pelo título e pela tagline em cada card, para que o bloco de badges sempre comece na mesma altura:
+## 1. Renomear labels dos botões (PT e EN)
 
-1. Em `src/components/solutions-v2/TerritoriesBlock.tsx`:
-   - Aplicar `line-clamp-2` + `min-h-[2lh]` no título (`h3`), garantindo espaço para até 2 linhas.
-   - Aplicar `line-clamp-3` + `min-h-[3lh]` no subtítulo/tagline (`p`), garantindo espaço para até 3 linhas.
-   - Manter a lista de badges logo abaixo, sem empurrá-la para baixo com `mt-auto`.
-   - (Opcional) Garantir `min-h` consistente no bloco de badges caso a quebra de linha varie entre cards.
+PT (`pt.scenarios.*.label`):
 
-### Escopo
-Apenas ajuste de layout no componente `TerritoriesBlock`. Nenhuma alteração de conteúdo ou funcionalidade.
+| De | Para |
+|---|---|
+| Abastecimento | Ruptura |
+| Previsão | Sazonalidade |
+| Precificação | Preço Ótimo |
+| Comercial | Foco Comercial |
+| Mix | Mix / Sortimento |
+| Comportamento | Compra / Recompra |
 
-### Validação
-- Visualizar `/pt/solutions-v2` e confirmar que os badges dos 3 cards iniciam na mesma altura horizontal.
-- Rodar `bun run build` para garantir que não há erros.
+EN (`en.scenarios.*.label`) — equivalentes traduzidos:
+
+| De | Para |
+|---|---|
+| Supply | Stockout |
+| Forecast | Seasonality |
+| Pricing | Optimal Price |
+| Commercial | Commercial Focus |
+| Mix | Mix / Assortment |
+| Behavior | Purchase / Repurchase |
+
+Somente o campo `label` muda. Títulos, perguntas, tabelas e demais conteúdos permanecem.
+
+## 2. Destacar o botão imediatamente ao clicar
+
+Comportamento atual: `handleScenarioClick` limpa o chat e inicia o preenchimento do input; `activeScenario` só é atualizado depois, quando `startAnimation` roda ao fim da digitação — por isso o laranja só aparece após a resposta.
+
+Correção: em `handleScenarioClick` (e por consistência em `handleSuggestedQuestionClick` quando o cenário mudar), chamar `setActiveScenario(sc)` imediatamente, antes de iniciar o preenchimento do input. O destaque passa a acompanhar o clique; a animação de digitação e resposta segue igual.
+
+## 3. Aumentar a altura do quadro do Intelliboard no demo
+
+Aumentar a altura máxima/visível da área de resposta/demo (Intelliboard) para que mais texto da resposta seja exibido sem scroll excessivo. Ajustar o container interno (área de mensagens/tabela) — sem modificar o layout externo da página ou quebrar a proporção do componente.
+
+Nenhuma outra lógica é alterada.

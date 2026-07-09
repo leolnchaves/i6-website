@@ -28,7 +28,7 @@ const content = {
     emptyState: 'Qual insight preditivo vamos descobrir hoje?',
     scenarios: {
       supply: {
-        label: 'Abastecimento',
+        label: 'Ruptura',
         question: 'Quais SKUs estão em risco de ruptura nos próximos 3 meses?',
         title: 'Análise de Risco de Ruptura — Próximo Trimestre',
         analysis: 'A projeção de demanda vs capacidade de reposição para os próximos 90 dias indica 5 SKUs com probabilidade elevada de ruptura. O SKU 44210 (Dipirona 500mg) lidera o risco (94%) devido à sazonalidade de outono e lead time de 22 dias do fornecedor principal. O impacto acumulado estimado é de R$ 510.000 em receita no trimestre caso nenhuma ação preventiva seja tomada.',
@@ -54,7 +54,7 @@ const content = {
         ],
       },
       forecast: {
-        label: 'Previsão',
+        label: 'Sazonalidade',
         question: 'Qual a sazonalidade e tendência do produto mais vendido para o último quarter?',
         title: 'Análise Mensal do Item Mais Vendido (ID: 28822)',
         analysis: 'O produto ID 28822 (Paracetamol 750mg) apresenta forte componente sazonal com pico em dezembro (+34% vs média). A tendência de longo prazo é de crescimento de 8,2% ao trimestre, impulsionada por expansão de cobertura em farmácias independentes. O modelo apresentou alta acurácia preditiva neste item, o que representa uma predição de alta confiabilidade para o planejamento comercial.',
@@ -76,7 +76,7 @@ const content = {
         ],
       },
       pricing: {
-        label: 'Precificação',
+        label: 'Preço Ótimo',
         question: 'Qual o preço ótimo para o Ibuprofeno 400mg nesta região?',
         title: 'Otimização de Preço — Ibuprofeno 400mg (Região Sudeste)',
         analysis: 'A análise de elasticidade-preço para o Ibuprofeno 400mg na Região Sudeste indica que o preço atual de R$ 18,90 está 7% acima do ponto ótimo. A redução para R$ 17,50 maximizaria a margem de contribuição total, com aumento estimado de 12% no volume e ganho líquido de R$ 43.000/mês na região.',
@@ -101,7 +101,7 @@ const content = {
         ],
       },
       comercial: {
-        label: 'Comercial',
+        label: 'Foco Comercial',
         question: 'Onde devo focar o esforço comercial este mês?',
         title: 'Priorização Comercial — Fevereiro 2026',
         analysis: 'A análise de potencial vs performance identificou 8 territórios com gap significativo de receita. Os 3 territórios prioritários concentram 62% do gap total (R$ 890k), com alta probabilidade de conversão baseada no histórico de resposta a ações comerciais similares.',
@@ -123,7 +123,7 @@ const content = {
         ],
       },
       mix: {
-        label: 'Mix',
+        label: 'Mix / Sortimento',
         question: 'Qual mix ideal para a região Sul?',
         title: 'Otimização de Mix — Região Sul',
         analysis: 'A análise do mix atual vs recomendado para a Região Sul revela desalinhamento em 3 categorias principais. O mix atual sobre-indexa analgésicos (38% vs recomendado 29%) e sub-indexa anti-hipertensivos (12% vs recomendado 19%). O ajuste projetado impactaria em +R$ 312k/mês na margem de contribuição regional.',
@@ -146,7 +146,7 @@ const content = {
         ],
       },
       pdv: {
-        label: 'Comportamento',
+        label: 'Compra / Recompra',
         question: 'Qual o comportamento de compra e recompra da Losartana Potássica 50mg na região de São Paulo?',
         title: 'Comportamento de Compra e Recompra — Losartana Potássica 50mg (São Paulo)',
         analysis: 'A análise de comportamento de PDV na região de São Paulo revela que a Losartana Potássica 50mg apresenta taxa de recompra crescente nos últimos 6 meses, passando de 62% em setembro para 78% em fevereiro. O ciclo médio de recompra é de 28 dias, alinhado à posologia padrão. Farmácias com programa de fidelidade apresentam taxa de recompra 15pp superior à média regional, indicando forte correlação entre ações de retenção e recorrência.',
@@ -183,7 +183,7 @@ const content = {
     emptyState: 'What predictive insight shall we discover today?',
     scenarios: {
       supply: {
-        label: 'Supply',
+        label: 'Stockout',
         question: 'Which SKUs are at risk of stockout in the next 3 months?',
         title: 'Stockout Risk Analysis — Next Quarter',
         analysis: 'Demand projection vs replenishment capacity for the next 90 days indicates 5 SKUs with elevated stockout probability. SKU 44210 (Dipyrone 500mg) leads the risk (94%) due to autumn seasonality and 22-day lead time from the primary supplier. The estimated cumulative impact is $102,000 in quarterly revenue if no preventive action is taken.',
@@ -209,7 +209,7 @@ const content = {
         ],
       },
       forecast: {
-        label: 'Forecast',
+        label: 'Seasonality',
         question: 'What is the seasonality and trend of the best-selling product for the last quarter?',
         title: 'Monthly Analysis of Best-Selling Item (ID: 28822)',
         analysis: 'Product ID 28822 (Paracetamol 750mg) shows a strong seasonal component with a peak in December (+34% vs average). The long-term trend shows 8.2% growth per quarter, driven by coverage expansion in independent pharmacies. The model showed high predictive accuracy for this item, representing a highly reliable prediction for commercial planning.',
@@ -231,7 +231,7 @@ const content = {
         ],
       },
       pricing: {
-        label: 'Pricing',
+        label: 'Optimal Price',
         question: 'What is the optimal price for Ibuprofen 400mg in this region?',
         title: 'Price Optimization — Ibuprofen 400mg (Northeast Region)',
         analysis: 'Price elasticity analysis for Ibuprofen 400mg in the Northeast Region indicates the current price of $3.80 is 7% above the optimal point. Reducing to $3.50 would maximize total contribution margin, with an estimated 12% volume increase and net gain of $8,600/month in the region.',
@@ -256,7 +256,7 @@ const content = {
         ],
       },
       comercial: {
-        label: 'Commercial',
+        label: 'Commercial Focus',
         question: 'Where should I focus commercial efforts this month?',
         title: 'Commercial Prioritization — February 2026',
         analysis: 'Potential vs performance analysis identified 8 territories with significant revenue gaps. The top 3 priority territories concentrate 62% of the total gap ($178k), with high conversion probability based on historical response to similar commercial actions.',
@@ -278,7 +278,7 @@ const content = {
         ],
       },
       mix: {
-        label: 'Mix',
+        label: 'Mix / Assortment',
         question: 'What is the ideal mix for the West Coast?',
         title: 'Mix Optimization — West Coast',
         analysis: 'Analysis of current vs recommended mix for the West Coast reveals misalignment in 3 key categories. The current mix over-indexes analgesics (38% vs recommended 29%) and under-indexes antihypertensives (12% vs recommended 19%). The projected adjustment would impact +$62k/month in regional contribution margin.',
@@ -301,7 +301,7 @@ const content = {
         ],
       },
       pdv: {
-        label: 'Behavior',
+        label: 'Purchase / Repurchase',
         question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the Greater New York area?',
         title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (Greater New York)',
         analysis: 'POS behavior analysis in the Greater New York area reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
@@ -573,6 +573,8 @@ const I6SignalDemo = memo(() => {
 
   const handleScenarioClick = (sc: Scenario) => {
     if (sc === activeScenario && phase === 'responding') return;
+    // Highlight selected scenario immediately
+    setActiveScenario(sc);
     // Clear current chat
     setPhase('idle');
     setShowResponse(false);
@@ -590,13 +592,12 @@ const I6SignalDemo = memo(() => {
     let targetScenario: Scenario = activeScenario;
     for (const sc of scenarios) {
       if (t.scenarios[sc].questions.includes(questionText)) {
-        // Use current scenario's question text for the chat, but we need to find matching scenario
-        // Actually the suggested questions are follow-ups, so we keep current scenario context
-        // We'll just type the question into input and replay current scenario
         targetScenario = sc;
         break;
       }
     }
+    // Highlight the corresponding scenario immediately if it changed
+    setActiveScenario(targetScenario);
     // Clear current chat
     setPhase('idle');
     setShowResponse(false);
@@ -655,7 +656,7 @@ const I6SignalDemo = memo(() => {
           </div>
 
           {/* ── Main body ── */}
-          <div className="flex h-[450px] md:h-[500px]">
+          <div className="flex h-[520px] md:h-[620px]">
             {/* Sidebar — light theme, hidden on mobile */}
             <div className="hidden md:flex flex-col w-52 bg-white border-r border-gray-200 flex-shrink-0">
               {/* Angle dropdown */}
