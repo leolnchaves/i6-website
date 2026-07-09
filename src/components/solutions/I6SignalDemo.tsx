@@ -209,7 +209,7 @@ const content = {
         ],
       },
       forecast: {
-        label: 'Forecast',
+        label: 'Seasonality',
         question: 'What is the seasonality and trend of the best-selling product for the last quarter?',
         title: 'Monthly Analysis of Best-Selling Item (ID: 28822)',
         analysis: 'Product ID 28822 (Paracetamol 750mg) shows a strong seasonal component with a peak in December (+34% vs average). The long-term trend shows 8.2% growth per quarter, driven by coverage expansion in independent pharmacies. The model showed high predictive accuracy for this item, representing a highly reliable prediction for commercial planning.',
