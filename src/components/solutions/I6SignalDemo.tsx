@@ -231,7 +231,7 @@ const content = {
         ],
       },
       pricing: {
-        label: 'Pricing',
+        label: 'Optimal Price',
         question: 'What is the optimal price for Ibuprofen 400mg in this region?',
         title: 'Price Optimization — Ibuprofen 400mg (Northeast Region)',
         analysis: 'Price elasticity analysis for Ibuprofen 400mg in the Northeast Region indicates the current price of $3.80 is 7% above the optimal point. Reducing to $3.50 would maximize total contribution margin, with an estimated 12% volume increase and net gain of $8,600/month in the region.',
