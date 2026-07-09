@@ -1,10 +1,12 @@
 import { memo } from 'react';
 import { Sparkles } from 'lucide-react';
-import { solutionsV2Content } from '@/data/solutionsV2/content';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { solutionsContent } from '@/data/solutionsV2/content';
 import I6SignalDemo from '@/components/solutions/I6SignalDemo';
 
 const SignalLayerBlock = memo(() => {
-  const { signal } = solutionsV2Content;
+  const { language } = useLanguage();
+  const { signal } = solutionsContent[language];
 
   return (
     <section className="py-16 md:py-20 bg-[#0B1224] border-t border-white/5">

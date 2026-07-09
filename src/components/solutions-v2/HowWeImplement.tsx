@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import { solutionsV2Content } from '@/data/solutionsV2/content';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { solutionsContent } from '@/data/solutionsV2/content';
 
 const HowWeImplement = memo(() => {
-  const { howWeImplement } = solutionsV2Content;
+  const { language } = useLanguage();
+  const { howWeImplement } = solutionsContent[language];
 
   const costBadge = (
     <div className="flex items-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#0B1224] px-4 py-2 shadow-lg shadow-black/20 w-full">

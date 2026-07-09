@@ -2,11 +2,13 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLocalizedPath } from '@/utils/localizedPath';
-import { solutionsV2Content } from '@/data/solutionsV2/content';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { solutionsContent } from '@/data/solutionsV2/content';
 
 const SolutionsV2Hero = memo(() => {
   const localized = useLocalizedPath();
-  const { hero } = solutionsV2Content;
+  const { language } = useLanguage();
+  const { hero } = solutionsContent[language];
 
   return (
     <section className="w-full flex items-center justify-center pt-28 pb-8 relative bg-[#0B1224]">
@@ -16,14 +18,14 @@ const SolutionsV2Hero = memo(() => {
             {hero.eyebrow}
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight text-white">
-            IA aplicada para prever demanda, recomendar decisões e{' '}
+            {hero.titleBefore}
             <span
               className="text-[#F4845F]"
               style={{ textShadow: '0 0 30px rgba(244,132,95,0.3), 0 0 60px rgba(244,132,95,0.15)' }}
             >
-              capturar crescimento
-            </span>{' '}
-            com precisão.
+              {hero.titleHighlight}
+            </span>
+            {hero.titleAfter}
           </h1>
           <p className="text-base sm:text-lg text-white/65 leading-relaxed max-w-3xl mx-auto mb-8">
             {hero.subtitle}

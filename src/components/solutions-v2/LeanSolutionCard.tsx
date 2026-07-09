@@ -1,8 +1,9 @@
 import { memo } from 'react';
-import type { LeanSolution } from '@/data/solutionsV2/content';
+import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/content';
 
 interface Props {
   solution: LeanSolution;
+  labels: SolutionsV2Content['labels'];
 }
 
 const Row = ({ label, value }: { label: string; value: string }) => (
@@ -14,7 +15,7 @@ const Row = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-const LeanSolutionCard = memo(({ solution }: Props) => {
+const LeanSolutionCard = memo(({ solution, labels }: Props) => {
   return (
     <article
       id={solution.id}
@@ -32,9 +33,9 @@ const LeanSolutionCard = memo(({ solution }: Props) => {
         </p>
       )}
       <div className="flex-grow rounded-lg bg-white/5 border border-white/10 px-3">
-        <Row label="Resolve" value={solution.resolve} />
-        <Row label="Entrega" value={solution.entrega} />
-        <Row label="Impacto" value={solution.impacto} />
+        <Row label={labels.resolve} value={solution.resolve} />
+        <Row label={labels.entrega} value={solution.entrega} />
+        <Row label={labels.impacto} value={solution.impacto} />
       </div>
     </article>
   );
