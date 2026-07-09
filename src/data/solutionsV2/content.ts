@@ -175,27 +175,27 @@ export const solutionsV2Content = {
       {
         n: '01',
         title: 'Ingestão dos dados',
-        description: 'Integramos dados comerciais, transacionais, comportamentais, operacionais e externos, sem necessidade de dados sensíveis (dados anonimizados na origem).',
+        description: 'Integramos dados comerciais, transacionais, comportamentais, operacionais e externos, com anonimização na origem e sem necessidade de dados sensíveis.',
       },
       {
         n: '02',
-        title: 'Modelagem e Fine-tuning',
-        description: 'Modelamos os motores proprietários ao contexto do cliente, segmento, canal, produto e objetivo de negócio.',
+        title: 'Fine-tuning dos modelos',
+        description: 'Ajustamos os motores proprietários ao contexto do cliente, segmento, canal, produto e objetivo de negócio.',
       },
       {
         n: '03',
         title: 'Backtest',
-        description: 'Comparamos recomendação preditiva contra resultado real antes da ativação, para dar clareza do potencial dos resultados preditivos antes mesmo das integrações.',
+        description: 'Comparamos recomendações preditivas com resultados reais antes da ativação, validando impacto potencial, aderência operacional e clareza para escala.',
       },
       {
         n: '04',
         title: 'Ativação',
-        description: 'Entregamos os outputs preditivos por API, lake-to-lake, arquivos operacionais, plugins para ERP e CRM, ou widgets embarcáveis. Também habilitamos o i6Signal como camada conversacional, usando os aprendizados comportamentais dos modelos para transformar predição em decisão acionável.',
+        description: 'Entregamos outputs por API, lake-to-lake, arquivos operacionais, plugins para ERP/CRM ou widgets, com i6Signal para consulta, explicação e ativação dos sinais.',
       },
       {
         n: '05',
         title: 'Aprendizado contínuo',
-        description: 'Recalibramos modelos conforme demanda, estoque, preço, comportamento e resposta comercial evoluem.',
+        description: 'Recalibramos os modelos conforme demanda, estoque, preço, comportamento e resposta comercial evoluem, mantendo os sinais atualizados e acionáveis.',
       },
     ],
     footer: 'IA aplicada para capturar valor onde a operação ainda decide tarde demais.',
