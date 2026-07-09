@@ -4,6 +4,15 @@ import { solutionsV2Content } from '@/data/solutionsV2/content';
 const HowWeImplement = memo(() => {
   const { howWeImplement } = solutionsV2Content;
 
+  const costBadge = (
+    <div className="inline-flex items-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#0B1224] px-4 py-2 shadow-lg shadow-black/20">
+      <span className="h-2 w-2 rounded-full bg-[#F4845F]" />
+      <span className="text-sm font-semibold text-[#F4845F]">
+        {howWeImplement.costNote}
+      </span>
+    </div>
+  );
+
   return (
     <section className="py-16 md:py-20 bg-[#0B1224] border-t border-white/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -16,29 +25,30 @@ const HowWeImplement = memo(() => {
           </h2>
         </div>
 
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#F4845F]/10 px-4 py-2">
-            <span className="h-2 w-2 rounded-full bg-[#F4845F]" />
-            <span className="text-sm font-semibold text-[#F4845F]">
-              {howWeImplement.costNote}
-            </span>
+        <div className="relative">
+          <ol className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {howWeImplement.steps.map((step) => (
+              <li
+                key={step.n}
+                className="relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 p-5"
+              >
+                <span className="text-3xl font-bold text-[#F4845F]/80 leading-none block mb-3">
+                  {step.n}
+                </span>
+                <h3 className="text-sm font-bold text-white mb-1.5">{step.title}</h3>
+                <p className="text-xs text-white/60 leading-relaxed">{step.description}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="hidden md:block absolute left-0 bottom-0 w-[calc(60%-0.4rem)] translate-y-1/2 z-10">
+            {costBadge}
           </div>
         </div>
 
-        <ol className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          {howWeImplement.steps.map((step) => (
-            <li
-              key={step.n}
-              className="relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 p-5"
-            >
-              <span className="text-3xl font-bold text-[#F4845F]/80 leading-none block mb-3">
-                {step.n}
-              </span>
-              <h3 className="text-sm font-bold text-white mb-1.5">{step.title}</h3>
-              <p className="text-xs text-white/60 leading-relaxed">{step.description}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="md:hidden flex justify-center mt-8">
+          {costBadge}
+        </div>
       </div>
     </section>
   );
