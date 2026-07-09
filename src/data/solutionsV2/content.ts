@@ -188,7 +188,7 @@ export const solutionsV2Content = {
       {
         n: '04',
         title: 'Ativação',
-        description: 'Entregamos outputs por API, painel, arquivo operacional ou infinity6 Signal.',
+        description: 'Entregamos os outputs preditivos por API, lake-to-lake, arquivos operacionais, plugins para ERP e CRM, ou widgets embarcáveis. Também habilitamos o i6Signal como camada conversacional, usando os aprendizados comportamentais dos modelos para transformar predição em decisão acionável.',
       },
       {
         n: '05',
