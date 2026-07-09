@@ -10,7 +10,7 @@ const SummaryBullets = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="mb-8 text-center">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
-            {summary.eyebrow}
+            Conclusão
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">
             {summary.title}
@@ -18,13 +18,16 @@ const SummaryBullets = memo(() => {
         </div>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {summary.bullets.map((b) => (
+          {summary.bullets.map((b, idx) => (
             <li
-              key={b}
+              key={idx}
               className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 px-4 py-3"
             >
               <Check className="w-4 h-4 text-[#F4845F] mt-1 flex-shrink-0" />
-              <span className="text-sm text-white/80 leading-snug">{b}</span>
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-bold text-white">{b.title}</span>
+                <span className="text-sm text-white/80 leading-snug">{b.description}</span>
+              </div>
             </li>
           ))}
         </ul>

@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { solutionsV2Content, type TerritoryId } from '@/data/solutionsV2/content';
+import { solutionsV2Content } from '@/data/solutionsV2/content';
+import { TerritoryId } from '@/types/solutionsV2';
 import LeanSolutionCard from './LeanSolutionCard';
 
 interface Props {
@@ -7,8 +8,8 @@ interface Props {
 }
 
 const TerritorySection = memo(({ territoryId }: Props) => {
-  const territory = solutionsV2Content.territories.find((t) => t.id === territoryId);
-  const solutions = solutionsV2Content.solutions.filter((s) => s.territory === territoryId);
+  const territory = solutionsV2Content.territories.items.find((t) => t.id === territoryId);
+  const solutions = solutionsV2Content.solutions.filter((s) => s.territoryId === territoryId);
   if (!territory) return null;
 
   return (

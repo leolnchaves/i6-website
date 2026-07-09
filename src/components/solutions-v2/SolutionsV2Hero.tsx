@@ -13,7 +13,7 @@ const SolutionsV2Hero = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center text-white">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-4">
-            {hero.eyebrow}
+            Soluções infinity6
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
             IA aplicada para{' '}
@@ -29,10 +29,10 @@ const SolutionsV2Hero = memo(() => {
             {hero.subtitle}
           </p>
           <Link
-            to={localized(hero.ctaHref)}
+            to={localized('/contact')}
             className="group inline-flex items-center gap-2 px-6 py-3 bg-transparent text-white font-semibold rounded-xl border border-white/40 transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.35)]"
           >
-            {hero.ctaLabel}
+            {hero.cta}
             <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
