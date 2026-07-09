@@ -454,41 +454,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         ],
       },
     },
-    dualValue: {
-      title: 'Impact does not come from predicting alone, but from how AI connects to the problem context',
-      columns: [
-        {
-          title: 'Clarity from chaos',
-          points: [
-            'See patterns the human eye misses and act on them at scale',
-            'Detect intent before the person declares interest',
-            'Turn reactive decisions into proactive, autonomous ones',
-          ],
-          formula: 'consumption + time + context + similarity = actionable insight',
-        },
-        {
-          title: 'Numbers move',
-          points: [
-            'Learns the behavior of a specific customer, channel or product',
-            'Uses context to align each decision to the business objective',
-            "Doesn't try to be smart about everything — only about what actually matters",
-          ],
-          formula: 'data + context + decision = influence',
-        },
-      ],
-    },
-    learnInfluence: {
-      title: 'AI learns. Influence sells.',
-      lead: 'Fine tuning from isolated behavior — targeting not just accuracy, but business outcomes: margin, conversion, market share, savings.',
-      stages: [
-        { label: 'Fine tuning', detail: 'Calibration from isolated behavior' },
-        { label: 'Specific need', detail: 'For influence and journey continuity' },
-        { label: 'Business outcome', detail: 'Business needs and goals to achieve' },
-      ],
-      journey: ['interest', 'research', 'purchase'],
-      conclusion: 'Behavioral and contextual affinity generate real propensity grounded in influence',
-      attributes: ['Relevance', 'Opportunity', 'Timing', 'Need', 'Substitution', 'Elasticity', 'Similarity', 'Explainability'],
-    },
     diversity: {
       title: 'Diversity balancing',
       lead: 'By analyzing unique behaviors and recommendation patterns, we identify the best unexplored products for each customer — ensuring diverse, relevant suggestions beyond purchase history.',
