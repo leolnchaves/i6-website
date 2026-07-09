@@ -59,7 +59,9 @@ export interface OurAIContent {
   };
   explainability: {
     title: string;
+    eyebrow: string;
     lead: string;
+    description: string;
     steps: {
       title: string;
       description: string;
@@ -243,7 +245,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     explainability: {
       title: 'Explicabilidade que vira argumento de venda',
-      lead: 'Para cada previsão, o modelo retorna as características que influenciaram a recomendação. O insight vira um argumento dinâmico, pronto para o ponto de venda.',
+      eyebrow: 'XAI orientada a negócio',
+      lead: 'Aplicamos XAI — Explainable AI — para transformar outputs preditivos em recomendações claras, rastreáveis e acionáveis.',
+      description: 'Mais do que mostrar um score, explicamos os principais sinais que influenciaram cada decisão: comportamento, propensão, estoque, margem, demanda, elasticidade e similaridade. Assim, a IA deixa de ser uma caixa preta e passa a apoiar decisões comerciais, operacionais e estratégicas com contexto, confiança e argumento de negócio.',
       steps: [
         {
           title: 'Identifica motivadores',
@@ -549,7 +553,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     explainability: {
       title: 'Explainability that becomes a sales argument',
-      lead: 'For each prediction, the model returns the features that influenced the recommendation. The insight becomes a dynamic argument, ready for the point of sale.',
+      eyebrow: 'XAI for Business',
+      lead: 'We apply XAI — Explainable AI — to turn predictive outputs into clear, traceable, actionable recommendations.',
+      description: 'More than showing a score, we explain the key signals behind every decision: behavior, propensity, inventory, margin, demand, elasticity and similarity. This way AI stops being a black box and starts supporting commercial, operational and strategic decisions with context, confidence and business rationale.',
       steps: [
         {
           title: 'Identify drivers',
