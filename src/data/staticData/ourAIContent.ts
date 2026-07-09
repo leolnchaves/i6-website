@@ -105,7 +105,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Três motores próprios que aprendem comportamento, antecipam decisão e prescrevem ação — não geram texto, geram resultado.',
     },
     thesis: {
+      eyebrow: 'Do comportamento ao resultado',
       title: 'IA só precisa saber o que muda o jogo',
+      stages: [
+        { label: 'Fine tuning', detail: 'Calibração a partir do comportamento isolado' },
+        { label: 'Necessidade específica', detail: 'Para influência e continuidade da jornada' },
+        { label: 'Resultado de negócio', detail: 'Necessidades do negócio e metas a alcançar' },
+      ],
+      journey: ['interesse', 'pesquisa', 'compra'],
+      attributes: ['Relevância', 'Oportunidade', 'Timing', 'Necessidade', 'Substituição', 'Elasticidade', 'Similaridade', 'Explicabilidade'],
       pillars: [
         {
           title: 'Clareza do problema',
