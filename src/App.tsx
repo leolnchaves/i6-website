@@ -12,6 +12,7 @@ const ScrollToTop = () => { useScrollToTop(); return null; };
 
 import DarkLayout from "./components/DarkLayout";
 import Solutions from "./pages/Solutions";
+import SolutionsV2 from "./pages/SolutionsV2";
 import SuccessStories from "./pages/SuccessStories";
 import SuccessStoryArticle from "./pages/SuccessStoryArticle";
 import Contact from "./pages/Contact";
@@ -71,6 +72,7 @@ const LocalizedRoutes = () => {
       <Route element={<DarkLayout />}>
         <Route index element={<HomeTeste />} />
         <Route path="solutions" element={<Solutions />} />
+        <Route path="solutions-v2" element={<SolutionsV2 />} />
         <Route path="solutions/:slug" element={<TransformationLanding />} />
         <Route path="our-ai" element={<OurAI />} />
         <Route path="success-stories" element={<SuccessStories />} />
