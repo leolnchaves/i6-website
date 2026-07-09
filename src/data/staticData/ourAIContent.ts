@@ -33,22 +33,6 @@ export interface OurAIContent {
     items: EngineDef[];
     differentiators: { title: string; items: string[] };
   };
-  dualValue: {
-    title: string;
-    columns: {
-      title: string;
-      points: string[];
-      formula: string;
-    }[];
-  };
-  learnInfluence: {
-    title: string;
-    lead: string;
-    stages: { label: string; detail: string }[];
-    journey: string[];
-    conclusion: string;
-    attributes: string[];
-  };
   diversity: {
     title: string;
     lead: string;
