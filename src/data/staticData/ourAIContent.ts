@@ -33,22 +33,6 @@ export interface OurAIContent {
     items: EngineDef[];
     differentiators: { title: string; items: string[] };
   };
-  dualValue: {
-    title: string;
-    columns: {
-      title: string;
-      points: string[];
-      formula: string;
-    }[];
-  };
-  learnInfluence: {
-    title: string;
-    lead: string;
-    stages: { label: string; detail: string }[];
-    journey: string[];
-    conclusion: string;
-    attributes: string[];
-  };
   diversity: {
     title: string;
     lead: string;
@@ -196,41 +180,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           'Ajuste fino do equilíbrio entre metas comerciais',
         ],
       },
-    },
-    dualValue: {
-      title: 'O impacto não vem só de prever, mas de como a IA se conecta ao contexto do problema',
-      columns: [
-        {
-          title: 'Clareza ao caos',
-          points: [
-            'Enxergar padrões que o olho humano não percebe e agir em escala sobre eles',
-            'Detectar intenção antes que a pessoa declare interesse',
-            'Permitir que decisões antes reativas se tornem proativas e autônomas',
-          ],
-          formula: 'consumo + tempo + contexto + similaridade = insight acionável',
-        },
-        {
-          title: 'Números se movem',
-          points: [
-            'Aprende o comportamento de um cliente, canal ou produto específico',
-            'Usa o contexto para ajustar cada decisão ao objetivo de negócio',
-            'Não tenta ser inteligente sobre tudo — apenas sobre o que realmente importa',
-          ],
-          formula: 'dados + contexto + decisão = influência',
-        },
-      ],
-    },
-    learnInfluence: {
-      title: 'IA aprende. Influência vende.',
-      lead: 'Fine tuning a partir do comportamento isolado — mirando não apenas precisão, mas resultado de negócio: margem, conversão, market share, savings.',
-      stages: [
-        { label: 'Fine tuning', detail: 'Calibração a partir do comportamento isolado' },
-        { label: 'Necessidade específica', detail: 'Para influência e continuidade da jornada' },
-        { label: 'Resultado de negócio', detail: 'Necessidades do negócio e metas a alcançar' },
-      ],
-      journey: ['interesse', 'pesquisa', 'compra'],
-      conclusion: 'Afinidade comportamental e contextual gera propensão real baseada em influência',
-      attributes: ['Relevância', 'Oportunidade', 'Timing', 'Necessidade', 'Substituição', 'Elasticidade', 'Similaridade', 'Explicabilidade'],
     },
     diversity: {
       title: 'Balanceamento de diversidade',
@@ -504,41 +453,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           'Fine-tuned balance across business goals',
         ],
       },
-    },
-    dualValue: {
-      title: 'Impact does not come from predicting alone, but from how AI connects to the problem context',
-      columns: [
-        {
-          title: 'Clarity from chaos',
-          points: [
-            'See patterns the human eye misses and act on them at scale',
-            'Detect intent before the person declares interest',
-            'Turn reactive decisions into proactive, autonomous ones',
-          ],
-          formula: 'consumption + time + context + similarity = actionable insight',
-        },
-        {
-          title: 'Numbers move',
-          points: [
-            'Learns the behavior of a specific customer, channel or product',
-            'Uses context to align each decision to the business objective',
-            "Doesn't try to be smart about everything — only about what actually matters",
-          ],
-          formula: 'data + context + decision = influence',
-        },
-      ],
-    },
-    learnInfluence: {
-      title: 'AI learns. Influence sells.',
-      lead: 'Fine tuning from isolated behavior — targeting not just accuracy, but business outcomes: margin, conversion, market share, savings.',
-      stages: [
-        { label: 'Fine tuning', detail: 'Calibration from isolated behavior' },
-        { label: 'Specific need', detail: 'For influence and journey continuity' },
-        { label: 'Business outcome', detail: 'Business needs and goals to achieve' },
-      ],
-      journey: ['interest', 'research', 'purchase'],
-      conclusion: 'Behavioral and contextual affinity generate real propensity grounded in influence',
-      attributes: ['Relevance', 'Opportunity', 'Timing', 'Need', 'Substitution', 'Elasticity', 'Similarity', 'Explainability'],
     },
     diversity: {
       title: 'Diversity balancing',

@@ -9,7 +9,7 @@ import ThesisSection from '@/components/our-ai/ThesisSection';
 import EnginesGrid from '@/components/our-ai/EnginesGrid';
 import DiversityBalanceSection from '@/components/our-ai/DiversityBalanceSection';
 import ExplainabilitySection from '@/components/our-ai/ExplainabilitySection';
-import UnifiedImpactSection from '@/components/our-ai/UnifiedImpactSection';
+
 import SecuritySection from '@/components/our-ai/SecuritySection';
 import ChallengesAccordion from '@/components/our-ai/ChallengesAccordion';
 import CommunitySection from '@/components/our-ai/CommunitySection';
@@ -104,7 +104,7 @@ const OurAI = memo(() => {
       <DiversityBalanceSection content={c.diversity} />
       <ExplainabilitySection content={c.explainability} />
       <ThesisSection content={c.thesis} />
-      <UnifiedImpactSection dualValue={c.dualValue} learnInfluence={c.learnInfluence} />
+      
       <SecuritySection content={c.security} />
       <ChallengesAccordion content={c.challenges} />
       <CommunitySection content={c.community} />
