@@ -9,6 +9,7 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsight, resolveCoverImage } from '@/hooks/useInsights';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import LeadGateForm from '@/components/insights/LeadGateForm';
+import ArticleCTAForm from '@/components/insights/ArticleCTAForm';
 import { Button } from '@/components/ui/button';
 
 const BASE_URL = 'https://infinity6.ai';
