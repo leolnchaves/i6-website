@@ -101,7 +101,7 @@ const content = {
         ],
       },
       comercial: {
-        label: 'Comercial',
+        label: 'Foco Comercial',
         question: 'Onde devo focar o esforço comercial este mês?',
         title: 'Priorização Comercial — Fevereiro 2026',
         analysis: 'A análise de potencial vs performance identificou 8 territórios com gap significativo de receita. Os 3 territórios prioritários concentram 62% do gap total (R$ 890k), com alta probabilidade de conversão baseada no histórico de resposta a ações comerciais similares.',
