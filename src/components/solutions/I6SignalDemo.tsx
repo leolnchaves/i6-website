@@ -123,7 +123,7 @@ const content = {
         ],
       },
       mix: {
-        label: 'Mix',
+        label: 'Mix / Sortimento',
         question: 'Qual mix ideal para a região Sul?',
         title: 'Otimização de Mix — Região Sul',
         analysis: 'A análise do mix atual vs recomendado para a Região Sul revela desalinhamento em 3 categorias principais. O mix atual sobre-indexa analgésicos (38% vs recomendado 29%) e sub-indexa anti-hipertensivos (12% vs recomendado 19%). O ajuste projetado impactaria em +R$ 312k/mês na margem de contribuição regional.',
