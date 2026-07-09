@@ -161,9 +161,11 @@ export const solutionsV2Content = {
       'Cliente com alta propensão de recompra.',
       'PDV com oportunidade de pedido adicional.',
       'Produto com margem abaixo do potencial.',
+      'Cliente com alta propensão de cross-sell.',
       'Cluster com necessidade de markdown.',
-      'Campanha com audiência prioritária.',
       'Meta comercial desalinhada ao potencial real.',
+      'SKU com demanda prevista fora do mix atual.',
+      'Campanha com audiência prioritária.',
     ],
   },
   howWeImplement: {
