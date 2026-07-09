@@ -22,7 +22,7 @@ const TerritoriesBlock = memo(() => {
             Alavancas Preditivas de Valor
           </h2>
           <p className="mt-4 max-w-3xl mx-auto text-sm md:text-base text-white/70 leading-relaxed">
-            Organizamos nossas soluções em três frentes de impacto, exatamente onde sua operação precisa capturar resultado: crescimento e inteligência de consumidor, planejamento operacional / comercial e inteligência de preço.
+            Organizamos nossas soluções em frentes de impacto, orientadas exatamente para onde as operações precisam capturar resultado.
           </p>
         </div>
 
