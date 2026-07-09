@@ -23,7 +23,6 @@ const SolutionsV2 = memo(() => {
       <TerritorySection territoryId="pricing" />
       <SignalLayerBlock />
       <HowWeImplement />
-      
       <RealResultsStrip />
       <SolutionsCTA />
     </>
