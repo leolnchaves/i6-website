@@ -54,7 +54,7 @@ const content = {
         ],
       },
       forecast: {
-        label: 'Previsão',
+        label: 'Sazonalidade',
         question: 'Qual a sazonalidade e tendência do produto mais vendido para o último quarter?',
         title: 'Análise Mensal do Item Mais Vendido (ID: 28822)',
         analysis: 'O produto ID 28822 (Paracetamol 750mg) apresenta forte componente sazonal com pico em dezembro (+34% vs média). A tendência de longo prazo é de crescimento de 8,2% ao trimestre, impulsionada por expansão de cobertura em farmácias independentes. O modelo apresentou alta acurácia preditiva neste item, o que representa uma predição de alta confiabilidade para o planejamento comercial.',
