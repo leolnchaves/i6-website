@@ -113,11 +113,9 @@ export const solutionsV2Content = {
       id: 'mix-assortment-order',
       territory: 'planning',
       title: 'Mix, Sortimento e Pedido Ideal',
-      tagline: 'Recomende o produto certo, no lugar certo e na quantidade certa.',
-      description:
-        'A infinity6 identifica o melhor mix por loja, PDV, região, cluster ou cliente e recomenda pedidos com maior potencial de venda, giro e margem.',
-      resolve: 'Sortimento padronizado, pedidos baseados em média, feeling ou repetição histórica e baixa aderência ao comportamento real de cada ponto de venda.',
-      entrega: 'Recomendação de mix, inclusão ou substituição de SKUs, quantidade sugerida, pedido incremental e próxima melhor ação comercial.',
+      tagline: 'Recomende o mix certo e o pedido ideal por loja, PDV, região, cluster ou cliente.',
+      resolve: 'Sortimento padronizado e pedidos baseados em média, feeling ou repetição histórica.',
+      entrega: 'Mix ideal, inclusão ou substituição de SKUs, volume sugerido, pedido incremental e próxima ação comercial.',
       impacto: 'Maior ticket, mais positivação de produtos, melhor giro, menos ruptura e menos estoque parado.',
     },
     // Pricing & Margin Intelligence
