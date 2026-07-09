@@ -41,7 +41,7 @@ const TerritoriesBlock = memo(() => {
               <p className="text-sm text-white/70 leading-snug mb-4 line-clamp-3 min-h-[3lh]">
                 {t.tagline}
               </p>
-              <ul className="flex flex-wrap gap-1.5 mb-5 min-h-[3.5rem]">
+              <ul className="flex flex-wrap gap-1.5 mb-5 min-h-[4.5rem]">
                 {t.chips.map((c) => (
                   <li
                     key={c}
