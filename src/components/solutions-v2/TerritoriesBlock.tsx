@@ -19,8 +19,11 @@ const TerritoriesBlock = memo(() => {
             Onde a infinity6 gera valor
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Três territórios de decisão preditiva
+            Três alavancas preditivas de valor
           </h2>
+          <p className="mt-4 max-w-3xl mx-auto text-sm md:text-base text-white/70 leading-relaxed">
+            Organizamos nossas soluções em três frentes de impacto, exatamente onde sua operação precisa capturar resultado: crescimento e inteligência de consumidor, planejamento operacional / comercial e inteligência de preço.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -52,7 +55,7 @@ const TerritoriesBlock = memo(() => {
                 ))}
               </ul>
               <div className="mt-auto flex items-center gap-1.5 text-xs font-medium text-[#F4845F]">
-                Ver soluções deste território
+                Ver soluções desta alavanca preditiva de valor
                 <ArrowDown className="w-3.5 h-3.5" />
               </div>
             </a>
