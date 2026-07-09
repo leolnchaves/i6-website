@@ -52,7 +52,7 @@ const TerritoriesBlock = memo(() => {
                 ))}
               </ul>
               <div className="mt-auto flex items-center gap-1.5 text-xs font-medium text-[#F4845F]">
-                Ver soluções desta alavanca preditiva de valor
+                Ver as soluções desta alavanca
                 <ArrowDown className="w-3.5 h-3.5" />
               </div>
             </a>
