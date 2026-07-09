@@ -35,7 +35,7 @@ export const solutionsV2Content = {
   territories: [
     {
       id: 'growth',
-      eyebrow: 'Alavanca Preditiva de Valor 1',
+      eyebrow: 'Alavanca Preditiva de Valor',
       title: 'Growth & Customer Intelligence',
       tagline: 'Venda mais para clientes, visitantes e canais com maior propensão de conversão.',
       description:
@@ -44,16 +44,16 @@ export const solutionsV2Content = {
     },
     {
       id: 'planning',
-      eyebrow: 'Alavanca Preditiva de Valor 2',
+      eyebrow: 'Alavanca Preditiva de Valor',
       title: 'Demand, Supply & Commercial Planning',
       tagline: 'Planeje melhor, venda melhor e reduza desperdício operacional.',
       description:
         'Empresas perdem receita quando planejam demanda, metas, sortimento e pedidos com base apenas em histórico, média ou pressão comercial. A infinity6 transforma sinais de mercado, comportamento, estoque, sell-out e canal em decisões preditivas para orientar a operação.',
-      chips: ['Demand Forecasting', 'Metas Comerciais Preditivas', 'Recomendação de Mix e Pedido Ideal', 'Assortment Optimization'],
+      chips: ['Demand Forecasting', 'Metas Comerciais Preditivas', 'Mix, Sortimento e Pedido Ideal'],
     },
     {
       id: 'pricing',
-      eyebrow: 'Alavanca Preditiva de Valor 3',
+      eyebrow: 'Alavanca Preditiva de Valor',
       title: 'Pricing & Margin Intelligence',
       tagline: 'Ajuste preço ao movimento real de mercado, cliente, estoque e margem.',
       description:

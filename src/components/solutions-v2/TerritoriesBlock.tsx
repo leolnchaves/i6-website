@@ -35,9 +35,6 @@ const TerritoriesBlock = memo(() => {
               className="group relative flex flex-col rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] p-6"
             >
               <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
-              <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#F4845F]/80 mb-3">
-                {t.eyebrow}
-              </p>
               <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#F4845F] transition-colors">
                 {t.title}
               </h3>
