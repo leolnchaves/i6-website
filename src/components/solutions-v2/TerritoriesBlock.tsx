@@ -41,11 +41,11 @@ const TerritoriesBlock = memo(() => {
               <p className="text-sm text-white/70 leading-snug mb-4 line-clamp-3 min-h-[3lh]">
                 {t.tagline}
               </p>
-              <ul className="flex flex-wrap gap-1.5 mb-5 min-h-[4.5rem]">
+              <ul className="flex flex-col gap-1.5 mb-4">
                 {t.chips.map((c) => (
                   <li
                     key={c}
-                    className="text-[11px] text-white/60 border border-white/10 rounded-full px-2 py-0.5"
+                    className="text-[11px] text-white/60 border border-white/10 rounded-full px-2 py-0.5 w-fit"
                   >
                     {c}
                   </li>
