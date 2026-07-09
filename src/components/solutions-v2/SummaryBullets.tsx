@@ -18,13 +18,16 @@ const SummaryBullets = memo(() => {
         </div>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {summary.bullets.map((b) => (
+          {summary.bullets.map((b, idx) => (
             <li
-              key={b}
+              key={idx}
               className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 px-4 py-3"
             >
               <Check className="w-4 h-4 text-[#F4845F] mt-1 flex-shrink-0" />
-              <span className="text-sm text-white/80 leading-snug">{b}</span>
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-bold text-white">{b.title}</span>
+                <span className="text-sm text-white/80 leading-snug">{b.description}</span>
+              </div>
             </li>
           ))}
         </ul>
