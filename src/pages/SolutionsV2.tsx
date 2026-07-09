@@ -19,7 +19,7 @@ const SolutionsV2 = memo(() => {
       <SolutionsV2Hero />
       <TerritoriesBlock />
       <TerritorySection territoryId="growth" />
-      <TerritorySection territoryId="planning" />
+      <TerritorySection territoryId="demand" />
       <TerritorySection territoryId="pricing" />
       <SignalLayerBlock />
       <HowWeImplement />
