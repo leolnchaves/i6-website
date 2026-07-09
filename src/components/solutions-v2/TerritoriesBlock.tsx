@@ -1,9 +1,11 @@
 import { memo } from 'react';
 import { ArrowDown } from 'lucide-react';
-import { solutionsV2Content } from '@/data/solutionsV2/content';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { solutionsContent } from '@/data/solutionsV2/content';
 
 const TerritoriesBlock = memo(() => {
-  const { territories } = solutionsV2Content;
+  const { language } = useLanguage();
+  const { territories, territoriesBlock } = solutionsContent[language];
 
   const handleScroll = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -16,13 +18,13 @@ const TerritoriesBlock = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-10">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
-            Onde a predição vira resultado
+            {territoriesBlock.eyebrow}
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Alavancas Preditivas de Valor
+            {territoriesBlock.title}
           </h2>
           <p className="mt-4 max-w-3xl mx-auto text-sm md:text-base text-white/70 leading-relaxed">
-            Organizamos nossas soluções em frentes de impacto, orientadas exatamente para onde as operações precisam capturar resultado.
+            {territoriesBlock.intro}
           </p>
         </div>
 
@@ -52,7 +54,7 @@ const TerritoriesBlock = memo(() => {
                 ))}
               </ul>
               <div className="mt-auto flex items-center gap-1.5 text-xs font-medium text-[#F4845F]">
-                Ver as soluções desta alavanca
+                {territoriesBlock.ctaLabel}
                 <ArrowDown className="w-3.5 h-3.5" />
               </div>
             </a>

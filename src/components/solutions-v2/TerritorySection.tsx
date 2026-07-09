@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { solutionsV2Content, type TerritoryId } from '@/data/solutionsV2/content';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { solutionsContent, type TerritoryId } from '@/data/solutionsV2/content';
 import LeanSolutionCard from './LeanSolutionCard';
 
 interface Props {
@@ -7,8 +8,10 @@ interface Props {
 }
 
 const TerritorySection = memo(({ territoryId }: Props) => {
-  const territory = solutionsV2Content.territories.find((t) => t.id === territoryId);
-  const solutions = solutionsV2Content.solutions.filter((s) => s.territory === territoryId);
+  const { language } = useLanguage();
+  const content = solutionsContent[language];
+  const territory = content.territories.find((t) => t.id === territoryId);
+  const solutions = content.solutions.filter((s) => s.territory === territoryId);
   if (!territory) return null;
 
   return (
@@ -34,7 +37,7 @@ const TerritorySection = memo(({ territoryId }: Props) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {solutions.map((s) => (
-            <LeanSolutionCard key={s.id} solution={s} />
+            <LeanSolutionCard key={s.id} solution={s} labels={content.labels} />
           ))}
         </div>
       </div>
