@@ -16,10 +16,10 @@ const TerritoriesBlock = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-10">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
-            Onde a infinity6 gera valor
+            Onde a predição vira resultado
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Três alavancas preditivas de valor
+            Alavancas Preditivas de Valor
           </h2>
           <p className="mt-4 max-w-3xl mx-auto text-sm md:text-base text-white/70 leading-relaxed">
             Organizamos nossas soluções em três frentes de impacto, exatamente onde sua operação precisa capturar resultado: crescimento e inteligência de consumidor, planejamento operacional / comercial e inteligência de preço.
