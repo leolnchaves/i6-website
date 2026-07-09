@@ -16,6 +16,15 @@ const HowWeImplement = memo(() => {
           </h2>
         </div>
 
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#F4845F]/10 px-4 py-2">
+            <span className="h-2 w-2 rounded-full bg-[#F4845F]" />
+            <span className="text-sm font-semibold text-[#F4845F]">
+              {howWeImplement.costNote}
+            </span>
+          </div>
+        </div>
+
         <ol className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {howWeImplement.steps.map((step) => (
             <li
@@ -30,10 +39,6 @@ const HowWeImplement = memo(() => {
             </li>
           ))}
         </ol>
-
-        <p className="text-center text-sm text-white/70 italic mt-8 max-w-2xl mx-auto">
-          {howWeImplement.footer}
-        </p>
       </div>
     </section>
   );
