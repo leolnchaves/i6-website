@@ -553,7 +553,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     explainability: {
       title: 'Explainability that becomes a sales argument',
-      lead: 'For each prediction, the model returns the features that influenced the recommendation. The insight becomes a dynamic argument, ready for the point of sale.',
+      eyebrow: 'XAI for Business',
+      lead: 'We apply XAI — Explainable AI — to turn predictive outputs into clear, traceable, actionable recommendations.',
+      description: 'More than showing a score, we explain the key signals behind every decision: behavior, propensity, inventory, margin, demand, elasticity and similarity. This way AI stops being a black box and starts supporting commercial, operational and strategic decisions with context, confidence and business rationale.',
       steps: [
         {
           title: 'Identify drivers',
