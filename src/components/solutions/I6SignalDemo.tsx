@@ -28,7 +28,7 @@ const content = {
     emptyState: 'Qual insight preditivo vamos descobrir hoje?',
     scenarios: {
       supply: {
-        label: 'Abastecimento',
+        label: 'Ruptura',
         question: 'Quais SKUs estão em risco de ruptura nos próximos 3 meses?',
         title: 'Análise de Risco de Ruptura — Próximo Trimestre',
         analysis: 'A projeção de demanda vs capacidade de reposição para os próximos 90 dias indica 5 SKUs com probabilidade elevada de ruptura. O SKU 44210 (Dipirona 500mg) lidera o risco (94%) devido à sazonalidade de outono e lead time de 22 dias do fornecedor principal. O impacto acumulado estimado é de R$ 510.000 em receita no trimestre caso nenhuma ação preventiva seja tomada.',
