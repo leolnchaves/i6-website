@@ -10,7 +10,7 @@ const SummaryBullets = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="mb-8 text-center">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
-            {summary.eyebrow}
+            Conclusão
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">
             {summary.title}
