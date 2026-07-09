@@ -151,10 +151,10 @@ export const solutionsV2Content = {
   ] as LeanSolution[],
   signal: {
     eyebrow: 'Camada transversal',
-    title: 'infinity6 Signal',
+    title: 'i6 Signal',
     tagline: 'A camada conversacional que transforma predição em decisão.',
     description:
-      'O infinity6 Signal conecta os sinais preditivos da infinity6 aos times de negócio, permitindo entender rapidamente onde agir, por que agir e qual impacto esperado.',
+      'O i6 Signal conecta os sinais preditivos da infinity6 aos times de negócio, permitindo entender rapidamente onde agir, por que agir e qual impacto esperado.',
     examplesTitle: 'Exemplos de sinais',
     examples: [
       'SKU com alto risco de ruptura.',
@@ -183,7 +183,7 @@ export const solutionsV2Content = {
       {
         n: '03',
         title: 'Backtest',
-        description: 'Comparamos recomendação preditiva contra resultado real antes da ativação.',
+        description: 'Comparamos recomendação preditiva contra resultado real antes da ativação, para dar clareza do potencial dos resultados preditivos antes mesmo das integrações.',
       },
       {
         n: '04',
