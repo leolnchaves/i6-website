@@ -39,7 +39,7 @@ export const solutionsV2Content = {
       title: 'Growth & Customer Intelligence',
       tagline: 'Venda mais para clientes, visitantes e canais com maior propensão de conversão.',
       description:
-        'Quando todo cliente recebe a mesma oferta, a empresa desperdiça mídia, CRM, força comercial e oportunidade de receita. A infinity6 antecipa intenção, próxima melhor oferta e produtos com maior potencial de conversão.',
+        'Quando todo cliente recebe a mesma oferta, a empresa desperdiça mídia, CRM, força comercial e oportunidade de receita. Nós antecipamos intenção, a próxima melhor oferta e quais produtos têm maior potencial de conversão.',
       chips: ['Predictive Personalization', 'Smart Discovery', 'Predictive Campaign Targeting'],
     },
     {
@@ -48,7 +48,7 @@ export const solutionsV2Content = {
       title: 'Demand, Supply & Commercial Planning',
       tagline: 'Planeje melhor, venda melhor e reduza desperdício operacional.',
       description:
-        'Empresas perdem receita quando planejam demanda, metas, sortimento e pedidos com base apenas em histórico, média ou pressão comercial. A infinity6 transforma sinais de mercado, comportamento, estoque, sell-out e canal em decisões preditivas para orientar a operação.',
+        'Empresas perdem receita quando planejam demanda, metas, sortimento e pedidos com base apenas em histórico, média ou pressão comercial. Transformamos sinais de mercado, comportamento, estoque, sell-out e canal em decisões preditivas para orientar a operação com extrema eficiência.',
       chips: ['Demand Forecasting', 'Metas Comerciais Preditivas', 'Mix, Sortimento e Pedido Ideal'],
     },
     {
@@ -57,7 +57,7 @@ export const solutionsV2Content = {
       title: 'Pricing & Margin Intelligence',
       tagline: 'Ajuste preço ao movimento real de mercado, cliente, estoque e margem.',
       description:
-        'Preço não é tabela. É uma alavanca direta de margem, giro e conversão. A infinity6 transforma elasticidade, forecast, concorrência, estoque, demanda e comportamento em recomendações de preço dinâmicas, mensuráveis e governadas.',
+        'Preço não é tabela. É uma alavanca direta de margem, giro e conversão. Nós transformamos elasticidade, forecast, concorrência, estoque, demanda e comportamento em recomendações de preço dinâmicas, mensuráveis e governadas.',
       chips: ['Price-to-Margin', 'Price-to-Turnover', 'Price-to-Conversion'],
     },
   ] as Territory[],
