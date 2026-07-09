@@ -1,47 +1,61 @@
 ## Objetivo
 
-Trazer de volta o bloco removido (anexo 1: Step 01 / Step 02 / Step 03 + chips de atributos) e inseri-lo dentro da mesma seção de "IA só precisa saber o que muda o jogo" (anexo 2), com o eyebrow laranja **"DO COMPORTAMENTO AO RESULTADO"** posicionado **acima** do título da seção.
-
-Estrutura final da seção (uma única seção unificada em `/our-ai`):
-
-```text
-    DO COMPORTAMENTO AO RESULTADO     ← eyebrow laranja (novo, acima)
-   IA só precisa saber o que muda o jogo    ← título existente
-
-[Clareza do problema]  [Isolar o comportamento]  [Aderência contextual]   ← 3 pilares atuais
-
-[STEP 01 Fine tuning] → [STEP 02 Necessidade específica] → [STEP 03 Resultado de negócio]
-                          interesse → pesquisa → compra
-
-  (Relevância)(Oportunidade)(Timing)(Necessidade)(Substituição)(Elasticidade)(Similaridade)(Explicabilidade)
-```
-
-O bloco de duas colunas "Clareza ao caos / Números se movem" (removido junto) **não volta** — apenas os steps + chips.
+1. Migrar a página `/pt/solutions-v2` (PT) para `/pt/solutions`, substituindo o conteúdo atual.
+2. Remover a rota de preview `/pt/solutions-v2`.
+3. Criar a versão EN em `/en/solutions` seguindo exatamente o mesmo padrão de i18n já usado no restante do site (mesma arquitetura de hoje), usando os nomes oficiais das alavancas e soluções do anexo.
 
 ## Escopo
 
-### 1. `src/data/staticData/ourAIContent.ts`
-Estender a interface `thesis` e o conteúdo PT/EN:
+### 1. Substituir `/solutions` pela composição do V2
 
-- Adicionar `eyebrow: string` em `thesis`
-  - PT: `'Do comportamento ao resultado'`
-  - EN: `'From behavior to outcome'`
-- Adicionar `stages: { label; detail }[]`, `journey: string[]` e `attributes: string[]` em `thesis` (valores recuperados do commit anterior):
-  - PT stages: Fine tuning / Necessidade específica / Resultado de negócio
-  - PT journey: interesse → pesquisa → compra
-  - PT attributes: Relevância, Oportunidade, Timing, Necessidade, Substituição, Elasticidade, Similaridade, Explicabilidade
-  - EN equivalentes recuperados do histórico
+- `src/pages/Solutions.tsx` passa a renderizar exatamente o que `SolutionsV2.tsx` renderiza hoje:
+`SolutionsV2Hero` → `TerritoriesBlock` → 3× `TerritorySection` → `SignalLayerBlock` → `HowWeImplement` → `RealResultsStrip` → `SolutionsCTA`.
+- Mantém `SEOHead page="solutions"` (indexável, sem `noindex`).
+- Saem da página: `SolutionsHero` (antigo), `StaticSolutionsGrid`, `SolutionsFAQ` e o JSON-LD de `FAQPage`.
 
-### 2. `src/components/our-ai/ThesisSection.tsx`
-- Renderizar o `eyebrow` (uppercase, `tracking-[0.3em]`, `text-[#F4845F]`) **acima** do `<h2>`.
-- Após o grid de 3 pilares, renderizar o bloco de steps + journey embutida no Step 02 + chips de atributos, reutilizando o markup do `UnifiedImpactSection` original (apenas a parte "Bridge / Horizontal flow / Attributes chips").
-- Não recriar as duas colunas "Clareza ao caos / Números se movem".
+### 2. Remover o preview
 
-### 3. `src/pages/OurAI.tsx`
-- Nenhuma mudança necessária (já renderiza `ThesisSection`).
-- Não reintroduzir `UnifiedImpactSection` nem os campos `dualValue` / `learnInfluence`.
+- Remover rota `solutions-v2` e import de `SolutionsV2` em `src/App.tsx`.
+- Deletar `src/pages/SolutionsV2.tsx`.
+- `src/components/solutions-v2/*` permanecem — passam a ser a implementação oficial de `/solutions`.
+- Deletar arquivos que ficam órfãos após checar refs: `src/components/solutions/SolutionsHero.tsx`, `StaticSolutionsGrid.tsx`, `SolutionsFAQ.tsx` e dados associados (ex.: `solutionsFaqData`).
 
-## Notas técnicas
-- Ordem visual dentro da seção: eyebrow → título → 3 pilares → steps → chips. Mantém `bg-[#0B1224]` e `max-w-6xl`.
-- Sem mudanças de rota, SEO, ou i18n além dos textos citados acima.
-- Sem publicação de tag; o usuário pedirá o patch depois.
+### 3. Internacionalização (mesmo padrão do site: `useLanguage()` + objeto por idioma)
+
+- `src/data/solutionsV2/content.ts`: passa a exportar `solutionsContent: Record<Language, SolutionsV2Content>` com blocos `pt` e `en`. Nenhuma mudança de layout.
+- `hero.title` dividido em `titleBefore` + `titleHighlight` + `titleAfter` para preservar o realce laranja em ambos os idiomas.
+- Labels hoje hardcoded nos componentes migram para o content por idioma:
+  - `LeanSolutionCard`: `Resolve / Entrega / Impacto` → `Resolve / Deliver / Impact`.
+  - `TerritoriesBlock`: label "Ver as soluções desta alavanca" → "See this lever's solutions".
+- Componentes atualizados para ler `solutionsContent[language]` via `useLanguage()`:
+`SolutionsV2Hero`, `TerritoriesBlock`, `TerritorySection`, `LeanSolutionCard`, `SignalLayerBlock`, `HowWeImplement`, `SummaryBullets` (se usado).
+- `I6SignalDemo` já é i18n — sem mudança.
+
+### 4. Conteúdo EN — nomes obrigatórios do anexo
+
+- **Alavancas**:
+  - Growth & Customer Intelligence
+  - Demand, Supply & Commercial Planning
+  - Pricing & Margin Intelligence
+- **Soluções**:
+  - Predictive Personalization
+  - Smart Discovery
+  - Predictive Campaign Targeting
+  - Demand Forecasting
+  - Predictive Commercial Goals
+  - Predictive Assortment & Order Recommendation
+  - Price-to-Margin
+  - Price-to-Turnover
+  - Price-to-Conversion
+- Chips das alavancas em EN espelham exatamente os nomes das soluções acima.
+- Demais textos (hero, taglines, descriptions, Resolve/Deliver/Impact, bloco Signal, "How we implement", badge de custo zero, summary) traduzidos mantendo tom e intenção do PT atual.
+
+### 5. Fora de escopo
+
+- Sem alteração de layout, cores, espaçamentos, animações ou SEO metadata/sitemap.
+- Sem publicação de tag/patch neste passo.
+
+## Verificação
+
+- Conferir visualmente `/pt/solutions` e `/en/solutions` (hero com destaque laranja correto, 3 alavancas, cards com labels Resolve/Deliver/Impact em EN, badge de custo zero, Signal, How we implement, CTA).
+- Confirmar que `/pt/solutions-v2` e `/en/solutions-v2` retornam 404 (rota removida).
