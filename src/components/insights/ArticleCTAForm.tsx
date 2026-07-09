@@ -117,7 +117,7 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
         formData.append('email', data.email);
         formData.append('company', title);
         formData.append('message', message);
-        formData.append('subscription', `${kind === 'research' ? 'research-cta' : 'article-cta'}:${slug}`);
+        formData.append('subscription', `${kind}:${slug}`);
         formData.append('insight_id', id || '');
         formData.append('token', SHARED_FORM_TOKEN);
         Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
