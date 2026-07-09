@@ -169,6 +169,7 @@ export const solutionsV2Content = {
   howWeImplement: {
     eyebrow: 'Como implementamos',
     title: 'Validação antes da escala. Resultado antes do discurso.',
+    costNote: 'Custo zero até o passo 3. Você só avança com validação de resultado.',
     steps: [
       {
         n: '01',
@@ -177,7 +178,7 @@ export const solutionsV2Content = {
       },
       {
         n: '02',
-        title: 'Fine-tuning dos modelos',
+        title: 'Modelagem IA',
         description: 'Ajustamos os motores proprietários ao contexto do cliente, segmento, canal, produto e objetivo de negócio.',
       },
       {
@@ -187,7 +188,7 @@ export const solutionsV2Content = {
       },
       {
         n: '04',
-        title: 'Ativação',
+        title: 'Piloto / Ativação',
         description: 'Entregamos outputs por API, lake-to-lake, arquivos operacionais, plugins para ERP/CRM ou widgets, com i6Signal para consulta, explicação e ativação dos sinais.',
       },
       {
@@ -196,7 +197,6 @@ export const solutionsV2Content = {
         description: 'Recalibramos os modelos conforme demanda, estoque, preço, comportamento e resposta comercial evoluem, mantendo os sinais atualizados e acionáveis.',
       },
     ],
-    footer: 'IA aplicada para capturar valor onde a operação ainda decide tarde demais.',
   },
   summary: {
     eyebrow: 'Em resumo',
