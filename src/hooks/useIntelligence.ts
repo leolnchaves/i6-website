@@ -92,6 +92,8 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
       related_story_slug: fm.related_story_slug,
       gated: fm.gated === true,
       asset_url: fm.asset_url ?? null,
+      cta_form: fm.cta_form === true,
+      cta_form_text: fm.cta_form_text ?? null,
       slug: fm.slug || path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
       content,
     } as IntelligencePiece;
