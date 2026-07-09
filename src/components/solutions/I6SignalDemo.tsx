@@ -592,13 +592,12 @@ const I6SignalDemo = memo(() => {
     let targetScenario: Scenario = activeScenario;
     for (const sc of scenarios) {
       if (t.scenarios[sc].questions.includes(questionText)) {
-        // Use current scenario's question text for the chat, but we need to find matching scenario
-        // Actually the suggested questions are follow-ups, so we keep current scenario context
-        // We'll just type the question into input and replay current scenario
         targetScenario = sc;
         break;
       }
     }
+    // Highlight the corresponding scenario immediately if it changed
+    setActiveScenario(targetScenario);
     // Clear current chat
     setPhase('idle');
     setShowResponse(false);
