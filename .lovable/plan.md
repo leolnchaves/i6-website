@@ -1,15 +1,21 @@
-Ajustar a apresentação do destaque de custo zero na seção "Como implementamos" de `/solutions-v2` para que ele fique colado nos cards dos passos 1, 2 e 3, sobrepondo parcialmente a borda inferior desses cards.
+## Plano: Ajustar nomes PT das soluções nos cards
 
-Alterações propostas:
+### Escopo
+Atualizar os nomes em português das soluções exibidas nos cards da página `/solutions-v2` (arquivo `src/data/solutionsV2/content.ts`) conforme a tabela anexada. Os nomes em inglês serão tratados posteriormente.
 
-1. Remover o pill centralizado atual (entre título e grid de passos).
-2. Adicionar um badge/label "Custo zero" que sobrepõe os cards 01, 02 e 03, posicionado na parte inferior do card com `absolute` e sobreposição negativa (`-bottom-3` ou similar) para criar o efeito de "colado" sobrepondo o card - não é um badge por card, mas um bagde unico, extenso, cobrindo os 3 cards.
-3. Manter a legibilidade: fundo escuro com borda/accento coral, texto claro, sombra sutil para separar do fundo da seção.
-4. Preservar o texto completo do destaque no bagde único.
+### Mapeamento a aplicar
+- **Predictive Personalization** → **Personalização Preditiva**
+- **Smart Discovery** → **Descoberta Preditiva**
+- **Predictive Campaign Targeting** → **Campanhas por Propensão**
+- **Demand Forecasting** → **Forecast Preditivo de Demanda**
+- **Price-to-Margin** → **Preço Orientado à Margem**
+- **Price-to-Turnover** → **Preço Orientado ao Giro**
+- **Price-to-Conversion** → **Preço Orientado à Conversão**
+- **Metas Comerciais Preditivas** e **Mix, Sortimento e Pedido Ideal** permanecem iguais (já alinhados à tabela).
 
-Arquivos envolvidos:
-
-- `src/data/solutionsV2/content.ts` — ajustar estrutura do `howWeImplement` para remover o `costNote` centralizado e adicionar um campo de destaque por passo (ex: `zeroCost: true` nos passos 1–3, com texto do badge).
-- `src/components/solutions-v2/HowWeImplement.tsx` — renderizar o badge nos cards 01–03 com posicionamento absoluto e sobreposição na borda inferior, e ajustar espaçamento do container para evitar colapso visual.
-
-Observação: ajuste aplicado apenas na versão PT de `/solutions-v2`.
+### Ações
+1. Localizar em `src/data/solutionsV2/content.ts` os arrays `chips` e os campos `title` que contêm os nomes acima.
+2. Substituir os valores pelos nomes PT recomendados, mantendo o restante do texto, estrutura e links inalterados.
+3. Verificar se há referências idênticas em outros arquivos (traduções, FAQ, success stories) que precisem de ajuste para manter consistência, mas limitar as alterações aos cards conforme solicitado.
+4. Rodar build para garantir que não haja erros.
+5. Apresentar o resultado e perguntar se deseja publicar a patch no GitHub.

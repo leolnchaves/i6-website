@@ -40,7 +40,7 @@ export const solutionsV2Content = {
       tagline: 'Venda mais para clientes, visitantes e canais com maior propensão de conversão.',
       description:
         'Quando todo cliente recebe a mesma oferta, a empresa desperdiça mídia, CRM, força comercial e oportunidade de receita. Nós antecipamos intenção, a próxima melhor oferta e quais produtos têm maior potencial de conversão.',
-      chips: ['Predictive Personalization', 'Smart Discovery', 'Predictive Campaign Targeting'],
+      chips: ['Personalização Preditiva', 'Descoberta Preditiva', 'Campanhas por Propensão'],
     },
     {
       id: 'planning',
@@ -49,7 +49,7 @@ export const solutionsV2Content = {
       tagline: 'Planeje melhor, venda melhor e reduza desperdício operacional.',
       description:
         'Empresas perdem receita quando planejam demanda, metas, sortimento e pedidos com base apenas em histórico, média ou pressão comercial. Transformamos sinais de mercado, comportamento, estoque, sell-out e canal em decisões preditivas para orientar a operação com extrema eficiência.',
-      chips: ['Demand Forecasting', 'Metas Comerciais Preditivas', 'Mix, Sortimento e Pedido Ideal'],
+      chips: ['Forecast Preditivo de Demanda', 'Metas Comerciais Preditivas', 'Mix, Sortimento e Pedido Ideal'],
     },
     {
       id: 'pricing',
@@ -58,7 +58,7 @@ export const solutionsV2Content = {
       tagline: 'Ajuste preço ao movimento real de mercado, cliente, estoque e margem.',
       description:
         'Preço não é tabela. É uma alavanca direta de margem, giro e conversão. Nós transformamos elasticidade, forecast, concorrência, estoque, demanda e comportamento em recomendações de preço dinâmicas, mensuráveis e governadas.',
-      chips: ['Price-to-Margin', 'Price-to-Turnover', 'Price-to-Conversion'],
+      chips: ['Preço Orientado à Margem', 'Preço Orientado ao Giro', 'Preço Orientado à Conversão'],
     },
   ] as Territory[],
   solutions: [
@@ -66,7 +66,7 @@ export const solutionsV2Content = {
     {
       id: 'predictive-personalization',
       territory: 'growth',
-      title: 'Predictive Personalization',
+      title: 'Personalização Preditiva',
       tagline: 'Antecipe a próxima melhor oferta para cada cliente.',
       resolve: 'CRM genérico, baixa conversão e desperdício de acionamento.',
       entrega: 'NBA, NBO, cross-sell, up-sell e reativação.',
@@ -75,7 +75,7 @@ export const solutionsV2Content = {
     {
       id: 'smart-discovery',
       territory: 'growth',
-      title: 'Smart Discovery',
+      title: 'Descoberta Preditiva',
       tagline: 'Transforme tráfego anônimo em receita incremental.',
       resolve: 'Visitantes anônimos tratados como ruído.',
       entrega: 'Recomendação contextual em tempo real, mesmo antes da identificação.',
@@ -84,7 +84,7 @@ export const solutionsV2Content = {
     {
       id: 'predictive-campaign-targeting',
       territory: 'growth',
-      title: 'Predictive Campaign Targeting',
+      title: 'Campanhas por Propensão',
       tagline: 'Ative os clientes certos, com mais precisão, mais resultado e menos custo.',
       resolve: 'Campanhas amplas, caras e pouco eficientes.',
       entrega: 'Score de propensão, audiência priorizada e régua de ativação.',
@@ -94,7 +94,7 @@ export const solutionsV2Content = {
     {
       id: 'demand-forecasting',
       territory: 'planning',
-      title: 'Demand Forecasting',
+      title: 'Forecast Preditivo de Demanda',
       tagline: 'Antecipe demanda antes da ruptura, do excesso ou da perda de venda.',
       resolve: 'Forecast médio demais para uma operação granular.',
       entrega: 'Previsão de demanda por SKU, loja, PDV, canal, região ou cliente.',
@@ -122,7 +122,7 @@ export const solutionsV2Content = {
     {
       id: 'price-to-margin',
       territory: 'pricing',
-      title: 'Price-to-Margin',
+      title: 'Preço Orientado à Margem',
       tagline: 'Capture margem por SKU sem romper governança comercial.',
       resolve: 'SKUs com elasticidade, estoque e pressão competitiva diferentes tratados da mesma forma.',
       entrega: 'Preço ótimo, intervalo de confiança e cenários alternativos.',
@@ -131,7 +131,7 @@ export const solutionsV2Content = {
     {
       id: 'price-to-turnover',
       territory: 'pricing',
-      title: 'Price-to-Turnover',
+      title: 'Preço Orientado ao Giro',
       tagline: 'Acelere giro sem destruir margem.',
       resolve: 'Estoque parado, markdown tardio e margem corroída.',
       entrega: 'Preço recomendado e markdown progressivo por loja, região ou cluster.',
@@ -140,7 +140,7 @@ export const solutionsV2Content = {
     {
       id: 'price-to-conversion',
       territory: 'pricing',
-      title: 'Price-to-Conversion',
+      title: 'Preço Orientado à Conversão',
       tagline: 'Maximize conversão e receita por sessão com governança de margem.',
       resolve: 'Sessões com intenções diferentes recebendo o mesmo preço.',
       entrega: 'Preço contextual por sessão, respeitando margem mínima e política comercial.',
