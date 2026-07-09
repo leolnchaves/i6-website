@@ -27,7 +27,7 @@ const SignalLayerBlock = memo(() => {
       
       <I6SignalDemo />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mt-16">
+      <div className="max-w-6xl mx-auto px-4 mt-16">
         <div className="rounded-2xl bg-white/5 border border-white/10 p-8">
           <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#F4845F]/80 mb-6 text-center">
             {signal.examplesTitle}
