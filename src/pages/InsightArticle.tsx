@@ -185,6 +185,16 @@ const InsightArticle = () => {
                 {insight.content}
               </ReactMarkdown>
             </div>
+
+            {insight.cta_form && insight.cta_form_text && (
+              <ArticleCTAForm
+                kind="insight"
+                title={insight.title}
+                slug={insight.slug}
+                id={insight.id}
+                ctaText={insight.cta_form_text}
+              />
+            )}
           </>
         )}
       </article>
