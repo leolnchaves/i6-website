@@ -301,7 +301,7 @@ const content = {
         ],
       },
       pdv: {
-        label: 'Behavior',
+        label: 'Purchase / Repurchase',
         question: 'What is the purchase and repurchase behavior of Losartan Potassium 50mg in the Greater New York area?',
         title: 'Purchase & Repurchase Behavior — Losartan Potassium 50mg (Greater New York)',
         analysis: 'POS behavior analysis in the Greater New York area reveals that Losartan Potassium 50mg shows an increasing repurchase rate over the past 6 months, rising from 62% in September to 78% in February. The average repurchase cycle is 28 days, aligned with standard dosing. Pharmacies with loyalty programs show a repurchase rate 15pp above the regional average, indicating a strong correlation between retention actions and recurrence.',
