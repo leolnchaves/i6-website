@@ -12,7 +12,11 @@ const ExplainabilitySection = memo(({ content }: Props) => {
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="text-center mb-10 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{content.title}</h2>
-          <p className="text-sm md:text-base text-white/55 leading-relaxed">{content.lead}</p>
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#F4845F]/30 bg-[#F4845F]/10 text-[#F4845F] text-[10px] md:text-[11px] font-semibold tracking-[0.25em] uppercase mb-4">
+            {content.eyebrow}
+          </span>
+          <p className="text-sm md:text-base text-white/70 leading-relaxed mb-4">{content.lead}</p>
+          <p className="text-sm md:text-base text-white/55 leading-relaxed">{content.description}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-4 relative">
