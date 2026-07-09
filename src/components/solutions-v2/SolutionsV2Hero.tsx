@@ -29,10 +29,10 @@ const SolutionsV2Hero = memo(() => {
             {hero.subtitle}
           </p>
           <Link
-            to={localized(hero.ctaHref)}
+            to={localized('/contact')}
             className="group inline-flex items-center gap-2 px-6 py-3 bg-transparent text-white font-semibold rounded-xl border border-white/40 transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.35)]"
           >
-            {hero.ctaLabel}
+            {hero.cta}
             <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
