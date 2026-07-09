@@ -49,7 +49,7 @@ export const solutionsV2Content = {
       tagline: 'Planeje melhor, venda melhor e reduza desperdício operacional.',
       description:
         'Empresas perdem receita quando planejam demanda, metas, sortimento e pedidos com base apenas em histórico, média ou pressão comercial. A infinity6 transforma sinais de mercado, comportamento, estoque, sell-out e canal em decisões preditivas para orientar a operação.',
-      chips: ['Demand Forecasting', 'Metas Comerciais Preditivas', 'Recomendação de Mix e Pedido Ideal', 'Assortment Optimization'],
+      chips: ['Demand Forecasting', 'Metas Comerciais Preditivas', 'Mix, Sortimento e Pedido Ideal'],
     },
     {
       id: 'pricing',
