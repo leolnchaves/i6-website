@@ -8,6 +8,7 @@ export interface LeanSolution {
   territory: TerritoryId;
   title: string;
   tagline: string;
+  description?: string;
   resolve: string;
   entrega: string;
   impacto: string;
@@ -109,22 +110,15 @@ export const solutionsV2Content = {
       impacto: 'Melhor alocação de esforço comercial, menos distorção de incentivo e maior previsibilidade de receita.',
     },
     {
-      id: 'mix-and-order-recommendation',
+      id: 'mix-assortment-order',
       territory: 'planning',
-      title: 'Recomendação de Mix e Pedido Ideal',
-      tagline: 'Oriente o que vender, para quem vender e em qual volume.',
-      resolve: 'Pedido baseado em média, feeling ou repetição histórica.',
-      entrega: 'Recomendação de mix, volume, reposição, substituição e próxima melhor ação comercial.',
-      impacto: 'Maior ticket, mais positivação de produtos, melhor giro e menos ruptura.',
-    },
-    {
-      id: 'assortment-optimization',
-      territory: 'planning',
-      title: 'Assortment Optimization',
-      tagline: 'Ajuste o sortimento ao comportamento real de cada loja, região ou cluster.',
-      resolve: 'Sortimento padronizado onde a demanda é local.',
-      entrega: 'Recomendação de sortimento por loja, PDV, região ou cluster.',
-      impacto: 'Mais giro, menos estoque parado e melhor performance por ponto de venda.',
+      title: 'Mix, Sortimento e Pedido Ideal',
+      tagline: 'Recomende o produto certo, no lugar certo e na quantidade certa.',
+      description:
+        'A infinity6 identifica o melhor mix por loja, PDV, região, cluster ou cliente e recomenda pedidos com maior potencial de venda, giro e margem.',
+      resolve: 'Sortimento padronizado, pedidos baseados em média, feeling ou repetição histórica e baixa aderência ao comportamento real de cada ponto de venda.',
+      entrega: 'Recomendação de mix, inclusão ou substituição de SKUs, quantidade sugerida, pedido incremental e próxima melhor ação comercial.',
+      impacto: 'Maior ticket, mais positivação de produtos, melhor giro, menos ruptura e menos estoque parado.',
     },
     // Pricing & Margin Intelligence
     {
