@@ -268,8 +268,8 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 />
               </div>
 
-              <div className="mt-[1.5vmin] rounded-xl bg-white/[0.03] border border-white/10 p-[1.8vmin] text-[1.5vmin] text-white/80 leading-relaxed">
-                <span className="block text-[1.2vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
+              <div className="mt-[1.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/50 p-[2.2vmin] text-[1.9vmin] text-white/95 leading-relaxed">
+                <span className="block text-[1.5vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
                   {content.rationaleLabel}
                 </span>
                 {selected.insight}

@@ -1,28 +1,18 @@
-# Latência do modelo no painel conclusivo
+## Ajustes no painel conclusivo (Price-to-Margin)
 
-Ajustar o painel conclusivo (após pipeline concluir) do demo Price-to-Margin em `/kiosk`:
+Trocar a hierarquia visual entre KPIs e o bloco "POR QUE ESTE PREÇO" em `src/components/kiosk/demos/PriceToMarginDemo.tsx`.
 
-## Mudanças
+### 1. Bloco "POR QUE ESTE PREÇO" — vira o destaque
+- Fundo coral `bg-[#F4845F]/15` com borda `border-[#F4845F]/50` (o visual que hoje está nos KPIs).
+- Eyebrow "POR QUE ESTE PREÇO" maior: `text-[1.5vmin]` (era 1.2vmin), mantendo tracking wide.
+- Texto do insight maior: `text-[1.9vmin]` (era 1.5vmin), leading relaxado, cor `text-white/95`.
+- Padding interno maior (`p-[2.2vmin]`) pra dar peso ao bloco.
 
-1. **Combinar Margem + Δ Margem em uma célula única**
-   - MetricPill "Margem" passa a exibir: `57.7% · +6.8 pp` (valor recomendado + delta em ponto percentual).
-   - Remove o MetricPill separado de "Δ Margem".
+### 2. MetricPills (Preço, Margem, Δ Receita, Latência) — recuam
+- Estado `highlight` passa a usar fundo dark `bg-white/[0.03]` com borda `border-white/10` (mesmo dos pills neutros).
+- Label do KPI muda de coral para manter coral (`text-[#F4845F]`) — já está.
+- **Valor** do KPI passa a ser coral (`text-[#F4845F]`) em vez de branco, pra manter o toque de destaque na cor mas sem o fundo laranja.
+- Hint da latência segue em `text-white/50`.
 
-2. **Novo MetricPill "Latência do modelo"** no lugar liberado
-   - Label PT: "Latência do modelo" · EN: "Model latency"
-   - Valor: número quebrado entre 50–100ms, gerado por produto com `Math.random()` fixado por SKU (ex.: 63.42 ms, 78.91 ms, 91.07 ms, 57.28 ms) para parecer real.
-   - Gerado uma vez por seleção (useMemo por `selectedId`) para não ficar mudando durante a exibição.
-   - Sub-label discreta: PT "média mercado 50–100 ms" · EN "market avg 50–100 ms" — texto pequeno abaixo do valor dentro da mesma pill.
-
-## Arquivos
-
-- `src/data/kiosk/demos/priceToMargin.ts`
-  - Adicionar `productLabels.latency` e `productLabels.latencyHint` em PT/EN.
-- `src/components/kiosk/demos/PriceToMarginDemo.tsx`
-  - Grid segue `grid-cols-2`: [Preço recomendado] [Margem c/ Δpp] · [Δ Receita] [Latência].
-  - Estender `MetricPill` para aceitar `hint` opcional (linha pequena abaixo do valor).
-  - `useMemo` para latência aleatória por SKU (ex.: `50 + Math.random() * 50`, com 2 casas).
-
-## Fora de escopo
-
-- Sem alterações no pipeline, nos produtos ou no fluxo de zoom.
+### Fora de escopo
+- Sem mudanças no pipeline, produtos, latência gerada ou copy.
