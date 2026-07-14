@@ -240,7 +240,10 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       recommended: 'Recommended price',
       deltaRevenue: 'Δ Revenue',
       deltaMargin: 'Δ Margin',
+      latency: 'Model latency',
+      latencyHint: 'market avg 50–100 ms',
     },
+
     objectiveLabel: 'Objective: margin',
     reasoningTitle: 'How the model is thinking',
     reasoningSubtitle: 'Predictive pipeline · i6ElasticPrice',
