@@ -32,6 +32,10 @@ export interface PriceToMarginDemoContent {
   storeName: string;
   catalogLabel: string;
   pickHint: string;
+  zoomHint: string;
+  backToCatalog: string;
+  idealPriceBadge: string;
+  analyzingLabel: string;
   productLabels: {
     cost: string;
     price: string;
