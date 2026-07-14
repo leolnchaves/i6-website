@@ -67,8 +67,8 @@ const Blog = () => {
         <meta name="description" content={t('blog.pageSubtitle')} />
       </Helmet>
 
-      <section className="container mx-auto px-6 pt-32 pb-20">
-        <header className="mb-10 max-w-3xl">
+      <section className="container mx-auto px-6 pt-24 pb-20">
+        <header className="mb-6 max-w-3xl">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F4845F]">
             {t('blog.badge')}
           </span>
@@ -76,7 +76,7 @@ const Blog = () => {
           <p className="text-lg text-white/70 mt-3">{t('blog.pageSubtitle')}</p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:max-h-[62vh]">
           {heroArticle && (
             <div className="lg:col-span-2">
               <BlogHero article={heroArticle} />
