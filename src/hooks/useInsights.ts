@@ -80,6 +80,13 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
       data[key] = true;
     } else if (value === 'false') {
       data[key] = false;
+    } else if (/^\[.*\]$/.test(value)) {
+      // Inline YAML list: [a, b, "c"]
+      data[key] = value
+        .slice(1, -1)
+        .split(',')
+        .map((s) => s.trim().replace(/^["']|["']$/g, ''))
+        .filter(Boolean);
     } else if (/^-?\d+(\.\d+)?$/.test(value)) {
       data[key] = Number(value);
     } else {
