@@ -147,7 +147,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 59.5,
     deltaRevenuePct: 9.1,
     deltaMarginPct: 5.1,
-    insight: 'High recurrence · mid price sensitivity',
+    insight: 'Very high-recurrence SKU (42-day repurchase cycle). Mid price sensitivity is offset by the loyal subscription cluster, which drives 61% of volume. The new level preserves new-buyer conversion and expands margin on the recurring core.',
   },
   {
     id: 'sku-3',
