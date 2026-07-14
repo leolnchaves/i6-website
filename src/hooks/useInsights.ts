@@ -21,6 +21,12 @@ export interface InsightFrontmatter {
   asset_url?: string | null;
   cta_form?: boolean;
   cta_form_text?: string | null;
+  /** i6 Blog: marks the hero article. If several are true, the most recent wins. */
+  is_default?: boolean;
+  /** i6 Blog: groups articles into a horizontal rail. */
+  theme?: string;
+  /** i6 Blog: secondary filter tags. Accepts YAML inline list `tags: [a, b]`. */
+  tags?: string[];
 }
 
 export interface Insight extends InsightFrontmatter {
