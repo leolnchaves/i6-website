@@ -1,59 +1,37 @@
-## Reestrutura do demo Price-to-Margin
+# Áreas de toque no /kiosk
 
-Objetivo: transformar a experiência em uma narrativa clara — o user escolhe um produto **sem preço**, vê o modelo pensar, e só então o preço "aparece" no produto com destaque.
+Ajustar o botão "← Escolher outro produto" e demais interações do kiosk para atingir o alvo mínimo de toque com dedo em tela capacitiva (mínimo 44px, alvo 72px conforme boas práticas de totem).
 
-### Layout final (split-screen mantido)
+## Alvos a ajustar
 
-```text
-┌───────────────────────────┬───────────────────────────┐
-│ ESQUERDA (Cenário)        │ DIREITA (Raciocínio + Δ)  │
-│                           │                           │
-│ [browser bar VivaShop]    │  Como o modelo pensa      │
-│                           │  ── passo 1 ✓             │
-│  Estado A (grid inicial): │  ── passo 2 ✓             │
-│   4 cards de produto      │  ── passo 3 …             │
-│   SEM preço, SEM margem   │  ── passo 4               │
-│   Call-out: "Toque para   │  ── passo 5               │
-│   descobrir o preço ideal"│                           │
-│                           │  ┌─ Painel conclusivo ──┐ │
-│  Estado B (após clique):  │  │ (aparece só no fim)  │ │
-│   Produto em ZOOM         │  │ Preço recomendado    │ │
-│   ainda sem preço         │  │ Margem               │ │
-│   enquanto pipeline roda  │  │ Δ Receita  Δ Margem  │ │
-│                           │  │ [Aplicar preço]      │ │
-│  Estado C (pipeline done):│  └──────────────────────┘ │
-│   Preço aparece no card   │                           │
-│   grande com destaque     │                           │
-│   (pulse coral, badge     │                           │
-│   "Preço ideal")          │                           │
-└───────────────────────────┴───────────────────────────┘
-```
+1. **`PriceToMarginDemo.tsx` — Botão "Escolher outro produto"**
+   - Hoje: texto pequeno (`text-[1.4vmin]`), sem padding, sem hit-area.
+   - Alvo: botão em pill com `min-h-[8vmin]`, padding `px-[3vmin] py-[2vmin]`, texto `text-[1.8vmin]`, borda `border border-white/20`, `rounded-full`, ícone de seta maior.
 
-### Mudanças por arquivo
+2. **`PriceToMarginDemo.tsx` — Cards de produto do catálogo**
+   - Garantir `min-h-[18vmin]` e `p-[2vmin]` (verificar se já cumpre) para toque confortável em qualquer parte do card.
 
-**`src/components/kiosk/demos/PriceToMarginDemo.tsx`**
-- Remover `currentPrice` e `currentMargin` da renderização dos cards de produto (grid inicial). Manter apenas imagem, categoria, nome.
-- Adicionar call-out acima do grid: *"Toque em um produto para descobrir o preço ideal"* (PT) / *"Tap a product to reveal the ideal price"* (EN).
-- Ao selecionar um produto: substituir o grid 2×2 por uma **view de produto em zoom** (imagem grande, nome, categoria) — ainda **sem preço** enquanto `progress < pipeline.length`.
-- Quando `done === true`: revelar o **preço final** dentro da view de zoom, com badge coral "Preço ideal" e animação de pulse/glow. Sem interpolação animada — o preço "surge" no momento do done.
-- Botão "voltar ao catálogo" pequeno no canto para permitir escolher outro SKU.
-- Mover o **painel conclusivo** (Preço recomendado, Margem, Δ Receita, Δ Margem, botão "Aplicar preço") de baixo do grid esquerdo para **logo abaixo do pipeline no lado direito**, dentro do mesmo card do raciocínio. Aparece só quando `done`.
-- Remover o `MetricPill` de "recomendado/margem" que aparecia durante a animação — nada de métricas até o fim.
+3. **`I6SignalDemo` — Chips de perguntas pré-definidas**
+   - Aumentar padding e altura mínima dos chips para `min-h-[8vmin]`, `px-[3vmin]`.
 
-**`src/data/kiosk/demos/priceToMargin.ts`**
-- Adicionar strings: `zoomHint` (call-out inicial), `backToCatalog`, `idealPriceBadge` em `pt` e `en`.
-- Nada muda no schema de `DemoProduct` — `currentPrice`/`currentMargin` continuam nos dados (para o Δ), só não são renderizados.
+4. **`SolutionsGrid` do Kiosk (grid pós-quiz)**
+   - Garantir `min-h-[10vmin]` nos cards de solução.
 
-### Timeline da interação
+5. **`QuizScreen` — Botões de resposta**
+   - Auditar `min-h-[10vmin]` e espaçamento entre opções ≥ `2vmin` para evitar toque acidental.
 
-1. **Idle**: grid 2×2, produtos sem preço, hint "Toque para descobrir o preço ideal".
-2. **Clique**: transição para zoom-view do produto (sem preço). Pipeline começa (passo 1 ativa).
-3. **Durante ~7,4s**: passos avançam à direita, produto permanece em zoom sem preço.
-4. **Done**:
-   - Preço "ideal" surge no card do produto com pulse coral + badge.
-   - Painel conclusivo (métricas + Δ + CTA) desliza para baixo do pipeline no lado direito.
-5. **Botão discreto** "← Escolher outro produto" reseta `selectedId` e `progress`.
+6. **`EbookCTA` — Inputs e botão de envio**
+   - Inputs `min-h-[8vmin]`, botão CTA `min-h-[9vmin]` com padding generoso.
 
-### Fora de escopo
-- Não mexer nos outros 8 demos textuais.
-- Não alterar `SolutionsGrid`, `KioskShell`, quiz ou eBook CTA.
+7. **`AttractScreen`**
+   - Área inteira já é tap-to-start; sem mudanças.
+
+## Escopo
+
+- Apenas ajustes visuais/dimensionais (Tailwind classes) nos componentes do `/kiosk`.
+- Sem mudanças de lógica, texto ou fluxo.
+- Sem impacto em outras rotas do site.
+
+## Validação
+
+- Abrir `/kiosk` no preview, percorrer os passos (attract → quiz → results → demo Price-to-Margin → i6Signal → CTA eBook) e confirmar que todos os elementos clicáveis têm no mínimo ~72px de altura efetiva.

@@ -108,10 +108,11 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 <button
                   type="button"
                   onClick={reset}
-                  className="self-start text-[1.4vmin] text-white/60 hover:text-[#F4845F] mb-[1.5vmin]"
+                  className="self-start inline-flex items-center gap-[1vmin] min-h-[8vmin] px-[3vmin] py-[2vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.8vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition mb-[2vmin]"
                 >
                   {content.backToCatalog}
                 </button>
+
 
                 <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[2vmin]">
                   <div className="aspect-[4/3] rounded-xl overflow-hidden bg-white/5 mb-[1.5vmin]">
