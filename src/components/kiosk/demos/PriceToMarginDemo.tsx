@@ -258,17 +258,13 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                   highlight
                 />
               </div>
-              <div className="mt-[1.5vmin] rounded-xl bg-white/[0.03] border border-white/10 p-[1.5vmin] text-[1.4vmin] text-white/70 leading-snug">
-                <strong className="text-[#F4845F]">·</strong> {selected.insight}
+              <div className="mt-[1.5vmin] rounded-xl bg-white/[0.03] border border-white/10 p-[1.8vmin] text-[1.5vmin] text-white/80 leading-relaxed">
+                <span className="block text-[1.2vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
+                  {content.rationaleLabel}
+                </span>
+                {selected.insight}
               </div>
-              <button
-                type="button"
-                className="mt-[1.5vmin] w-full rounded-lg bg-[#F4845F] text-white text-[1.8vmin] font-semibold py-[1.5vmin] flex items-center justify-center gap-[1vmin]"
-                disabled
-              >
-                <TrendingUp className="w-[2vmin] h-[2vmin]" />
-                {content.ctaLabel}
-              </button>
+
             </div>
           )}
         </div>
