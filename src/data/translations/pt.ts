@@ -33,6 +33,7 @@ export const ptTranslations = {
   'blog.filterAll': 'Todos',
   'blog.empty': 'Em breve, novos artigos',
   'blog.minRead': 'min de leitura',
+  'blog.themeFallback': 'Sem tema',
 
   
   // Hero Section
