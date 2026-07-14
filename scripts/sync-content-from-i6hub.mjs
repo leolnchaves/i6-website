@@ -312,6 +312,11 @@ function fmInsights(it, { coverLocal }) {
     it.asset_url ? `asset_url: ${yaml(it.asset_url)}` : null,
     it.cta_form ? `cta_form: true` : null,
     it.cta_form_text ? `cta_form_text: ${yaml(it.cta_form_text)}` : null,
+    it.theme ? `theme: ${yaml(it.theme)}` : null,
+    it.is_default ? `is_default: true` : null,
+    Array.isArray(it.tags) && it.tags.length
+      ? `tags: [${it.tags.map((t) => yaml(String(t))).join(', ')}]`
+      : null,
     it.excerpt ? `excerpt: ${yaml(it.excerpt)}` : null,
     '---',
     '',
