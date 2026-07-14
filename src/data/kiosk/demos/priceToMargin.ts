@@ -177,7 +177,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 66.0,
     deltaRevenuePct: 14.6,
     deltaMarginPct: 5.0,
-    insight: 'Seasonal peak · elasticity dropping',
+    insight: 'Seasonal peak detected over the past 3 weeks (searches +38%, competitor clicks +22%). Elasticity drops from −1.1 to −0.4 in this regime. Ideal window to capture margin before the typical conversion surge of the season.',
   },
 ];
 
