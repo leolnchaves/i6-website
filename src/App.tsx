@@ -24,6 +24,7 @@ import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
 import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
+import Blog from "./pages/Blog";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
 
