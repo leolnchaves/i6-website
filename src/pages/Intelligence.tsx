@@ -46,7 +46,7 @@ const THEME_LABELS_EN: Record<string, string> = {
   propensity: 'Propensity',
 };
 
-type FeedKind = 'i6 Research' | 'i6 Article' | 'i6 eBook';
+type FeedKind = 'i6 Research' | 'i6 eBook';
 
 interface FeedItem {
   kind: FeedKind;
