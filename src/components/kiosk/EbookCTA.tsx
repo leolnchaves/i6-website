@@ -111,13 +111,13 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
                 inputMode="text"
                 aria-label={t.nameLabel}
                 {...register('name')}
-                className="w-[26vmin] rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
+                className="w-full rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
               />
               {errors.name && (
                 <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidName}</span>
               )}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-1 min-w-0">
               <input
                 type="email"
                 placeholder={t.emailLabel}
@@ -125,7 +125,7 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
                 inputMode="email"
                 aria-label={t.emailLabel}
                 {...register('email')}
-                className="w-[32vmin] rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
+                className="w-full rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
               />
               {errors.email && (
                 <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidEmail}</span>
