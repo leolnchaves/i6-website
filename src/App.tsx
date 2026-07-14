@@ -24,6 +24,7 @@ import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
 import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
+import Blog from "./pages/Blog";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
 
@@ -83,6 +84,8 @@ const LocalizedRoutes = () => {
         <Route path="insights/:slug" element={<InsightArticle />} />
         <Route path="i6-intelligence" element={<Intelligence />} />
         <Route path="i6-intelligence/:slug" element={<IntelligenceOrInsightArticle />} />
+        <Route path="i6-blog" element={<Blog />} />
+        <Route path="i6-blog/:slug" element={<InsightArticle />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

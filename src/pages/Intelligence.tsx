@@ -46,7 +46,7 @@ const THEME_LABELS_EN: Record<string, string> = {
   propensity: 'Propensity',
 };
 
-type FeedKind = 'i6 Research' | 'i6 Article' | 'i6 eBook';
+type FeedKind = 'i6 Research' | 'i6 eBook';
 
 interface FeedItem {
   kind: FeedKind;
@@ -91,7 +91,6 @@ function fromInsight(i: Insight): FeedItem {
 
 const KIND_BADGE_LABEL: Record<FeedKind, string> = {
   'i6 Research': 'i6 Research',
-  'i6 Article': 'i6 Article',
   'i6 eBook': 'i6 eBook',
 };
 
@@ -220,7 +219,7 @@ const Intelligence = () => {
   const sectorLabels = language === 'pt' ? SECTOR_LABELS_PT : SECTOR_LABELS_EN;
   const themeLabels = language === 'pt' ? THEME_LABELS_PT : THEME_LABELS_EN;
 
-  const kinds: FeedKind[] = ['i6 Research', 'i6 Article', 'i6 eBook'];
+  const kinds: FeedKind[] = ['i6 Research', 'i6 eBook'];
 
   return (
     <>

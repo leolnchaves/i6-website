@@ -27,7 +27,11 @@ const IntelligenceOrInsightArticle = () => {
   if (piece) {
     return <IntelligenceArticle />;
   }
-  if (insight && (insight.type === 'i6 Article' || insight.type === 'i6 eBook')) {
+  // i6 Article moved to /i6-blog — preserve old links with a redirect.
+  if (insight && insight.type === 'i6 Article') {
+    return <Navigate to={localized(`/i6-blog/${insight.slug}`)} replace />;
+  }
+  if (insight && insight.type === 'i6 eBook') {
     return <InsightArticle />;
   }
   // Avoid the no-op of returning Navigate when nothing matched yet during
