@@ -16,10 +16,10 @@ const BlogHero = ({ article }: Props) => {
   return (
     <Link
       to={localized(`/i6-blog/${article.slug}`)}
-      className="group block relative rounded-3xl overflow-hidden isolate"
+      className="group block relative rounded-3xl overflow-hidden isolate h-full"
     >
       {/* Background image, feathered on all sides */}
-      <div className="relative aspect-[21/9] w-full">
+      <div className="relative aspect-[21/9] lg:aspect-auto lg:h-full w-full">
         {cover ? (
           <img
             src={cover}
