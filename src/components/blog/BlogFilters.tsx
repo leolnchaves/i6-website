@@ -1,7 +1,12 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
+interface ThemeOption {
+  value: string;
+  label: string;
+}
+
 interface Props {
-  themes: string[];
+  themes: ThemeOption[];
   tags: string[];
   activeTheme: string | null;
   activeTag: string | null;
