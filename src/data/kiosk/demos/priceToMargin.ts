@@ -132,7 +132,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 57.7,
     deltaRevenuePct: 12.4,
     deltaMarginPct: 6.8,
-    insight: 'Low elasticity · stable competition',
+    insight: 'Estimated elasticity of −0.7 signals low demand reaction to price. Competition stable over the last 8 weeks and consistent turnover open a +16% headroom on ticket. The raise captures margin without hurting projected volume or shelf position.',
   },
   {
     id: 'sku-2',
