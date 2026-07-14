@@ -106,8 +106,8 @@ const Blog = () => {
           <p className="mt-16 text-white/50">{t('blog.empty')}</p>
         )}
 
-        {byTheme.map(([theme, list]) => (
-          <ThemeRail key={theme} title={theme} articles={list} />
+        {byTheme.map(({ label, items }) => (
+          <ThemeRail key={label} title={label} articles={items} />
         ))}
       </section>
     </>
