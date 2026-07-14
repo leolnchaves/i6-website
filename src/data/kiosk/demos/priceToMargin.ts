@@ -50,6 +50,7 @@ export interface PriceToMarginDemoContent {
   reasoningSubtitle: string;
   pipeline: PipelineStep[];
   ctaLabel: string;
+  rationaleLabel: string;
   doneLabel: string;
   products: DemoProduct[];
 }
