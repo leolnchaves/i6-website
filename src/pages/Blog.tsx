@@ -66,38 +66,36 @@ const Blog = () => {
         <meta name="description" content={t('blog.pageSubtitle')} />
       </Helmet>
 
-      <div className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <header className="mb-10 max-w-3xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F4845F]">
-              {t('blog.badge')}
-            </span>
-            <h1 className="sr-only">{t('blog.pageTitle')}</h1>
-            <p className="text-lg text-white/70 mt-3">{t('blog.pageSubtitle')}</p>
-          </header>
+      <section className="container mx-auto px-6 pt-32 pb-20">
+        <header className="mb-10 max-w-3xl">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F4845F]">
+            {t('blog.badge')}
+          </span>
+          <h1 className="sr-only">{t('blog.pageTitle')}</h1>
+          <p className="text-lg text-white/70 mt-3">{t('blog.pageSubtitle')}</p>
+        </header>
 
-          {heroArticle && <BlogHero article={heroArticle} />}
+        {heroArticle && <BlogHero article={heroArticle} />}
 
-          <RecentStrip articles={recent} />
+        <RecentStrip articles={recent} />
 
-          <BlogFilters
-            themes={themes}
-            tags={tags}
-            activeTheme={activeTheme}
-            activeTag={activeTag}
-            onThemeChange={setActiveTheme}
-            onTagChange={setActiveTag}
-          />
+        <BlogFilters
+          themes={themes}
+          tags={tags}
+          activeTheme={activeTheme}
+          activeTag={activeTag}
+          onThemeChange={setActiveTheme}
+          onTagChange={setActiveTag}
+        />
 
-          {byTheme.length === 0 && articles.length === 0 && (
-            <p className="mt-16 text-white/50">{t('blog.empty')}</p>
-          )}
+        {byTheme.length === 0 && articles.length === 0 && (
+          <p className="mt-16 text-white/50">{t('blog.empty')}</p>
+        )}
 
-          {byTheme.map(([theme, list]) => (
-            <ThemeRail key={theme} title={theme} articles={list} />
-          ))}
-        </div>
-      </div>
+        {byTheme.map(([theme, list]) => (
+          <ThemeRail key={theme} title={theme} articles={list} />
+        ))}
+      </section>
     </>
   );
 };
