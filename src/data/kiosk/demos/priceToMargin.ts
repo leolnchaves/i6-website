@@ -50,6 +50,7 @@ export interface PriceToMarginDemoContent {
   reasoningSubtitle: string;
   pipeline: PipelineStep[];
   ctaLabel: string;
+  rationaleLabel: string;
   doneLabel: string;
   products: DemoProduct[];
 }
@@ -68,7 +69,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 57.7,
     deltaRevenuePct: 12.4,
     deltaMarginPct: 6.8,
-    insight: 'Elasticidade baixa · concorrência estável',
+    insight: 'Elasticidade estimada de −0,7 sinaliza baixa reação de demanda ao preço. Concorrência estável nas últimas 8 semanas e giro consistente abrem headroom de +16% no ticket. O reajuste captura margem sem comprometer o volume projetado nem a posição relativa no shelf digital.',
   },
   {
     id: 'sku-2',
@@ -83,7 +84,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 59.5,
     deltaRevenuePct: 9.1,
     deltaMarginPct: 5.1,
-    insight: 'Alta recorrência · sensibilidade a preço média',
+    insight: 'SKU de altíssima recorrência (ciclo de recompra de 42 dias). Sensibilidade a preço média compensada pela fidelidade do cluster de assinantes, que representa 61% do volume. O novo patamar preserva conversão de novos compradores e expande margem no core recorrente.',
   },
   {
     id: 'sku-3',
@@ -98,7 +99,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 60.6,
     deltaRevenuePct: 7.5,
     deltaMarginPct: 4.9,
-    insight: 'Categoria líder · giro alto sustenta reajuste',
+    insight: 'Líder de categoria com giro 2,3× acima da mediana. O modelo detecta headroom competitivo de R$ 4,20 antes do próximo comparável relevante. Reajuste absorvido pelo mix e pelo posicionamento premium, sem risco de erosão de share no trimestre.',
   },
   {
     id: 'sku-4',
@@ -113,7 +114,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 66.0,
     deltaRevenuePct: 14.6,
     deltaMarginPct: 5.0,
-    insight: 'Pico sazonal iniciando · elasticidade cai',
+    insight: 'Início do pico sazonal detectado nas últimas 3 semanas (buscas +38%, cliques em concorrentes +22%). Elasticidade cai de −1,1 para −0,4 nesse regime. Janela ideal de captura de margem antes da aceleração de conversão típica da temporada.',
   },
 ];
 
@@ -131,7 +132,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 57.7,
     deltaRevenuePct: 12.4,
     deltaMarginPct: 6.8,
-    insight: 'Low elasticity · stable competition',
+    insight: 'Estimated elasticity of −0.7 signals low demand reaction to price. Competition stable over the last 8 weeks and consistent turnover open a +16% headroom on ticket. The raise captures margin without hurting projected volume or shelf position.',
   },
   {
     id: 'sku-2',
@@ -146,7 +147,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 59.5,
     deltaRevenuePct: 9.1,
     deltaMarginPct: 5.1,
-    insight: 'High recurrence · mid price sensitivity',
+    insight: 'Very high-recurrence SKU (42-day repurchase cycle). Mid price sensitivity is offset by the loyal subscription cluster, which drives 61% of volume. The new level preserves new-buyer conversion and expands margin on the recurring core.',
   },
   {
     id: 'sku-3',
@@ -161,7 +162,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 60.6,
     deltaRevenuePct: 7.5,
     deltaMarginPct: 4.9,
-    insight: 'Category leader · high turnover sustains raise',
+    insight: 'Category leader with turnover 2.3× above the median. The model detects $4.20 of competitive headroom before the next relevant benchmark. The raise is absorbed by mix and premium positioning, with no share erosion risk this quarter.',
   },
   {
     id: 'sku-4',
@@ -176,7 +177,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 66.0,
     deltaRevenuePct: 14.6,
     deltaMarginPct: 5.0,
-    insight: 'Seasonal peak · elasticity dropping',
+    insight: 'Seasonal peak detected over the past 3 weeks (searches +38%, competitor clicks +22%). Elasticity drops from −1.1 to −0.4 in this regime. Ideal window to capture margin before the typical conversion surge of the season.',
   },
 ];
 
@@ -211,6 +212,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       { label: 'Recomendando novo preço', microMetric: 'confiança: 94%', durationMs: 1200 },
     ],
     ctaLabel: 'Aplicar preço',
+    rationaleLabel: 'Por que este preço',
     doneLabel: 'Recomendação pronta',
     products: productsPt,
   },
@@ -244,6 +246,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       { label: 'Recommending new price', microMetric: 'confidence: 94%', durationMs: 1200 },
     ],
     ctaLabel: 'Apply price',
+    rationaleLabel: 'Why this price',
     doneLabel: 'Recommendation ready',
     products: productsEn,
   },
