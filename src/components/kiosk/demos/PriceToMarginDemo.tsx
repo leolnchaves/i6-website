@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, Sparkles, TrendingUp } from 'lucide-react';
+import { Check, Sparkles } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import { priceToMarginDemo, type DemoProduct } from '@/data/kiosk/demos/priceToMargin';
 
