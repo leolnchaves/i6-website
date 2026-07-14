@@ -25,7 +25,7 @@ export const enTranslations = {
   // Blog
   'blog.pageTitle': 'i6 Blog',
   'blog.pageSubtitle': 'Reflections, analyses and ideas from the infinity6 team on applied business AI.',
-  'blog.badge': 'i6 Article',
+  'blog.badge': 'i6 BLOG',
   'blog.readArticle': 'Read article',
   'blog.recentTitle': 'Recent insights',
   'blog.filterTheme': 'Theme',
