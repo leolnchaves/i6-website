@@ -114,7 +114,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 66.0,
     deltaRevenuePct: 14.6,
     deltaMarginPct: 5.0,
-    insight: 'Pico sazonal iniciando · elasticidade cai',
+    insight: 'Início do pico sazonal detectado nas últimas 3 semanas (buscas +38%, cliques em concorrentes +22%). Elasticidade cai de −1,1 para −0,4 nesse regime. Janela ideal de captura de margem antes da aceleração de conversão típica da temporada.',
   },
 ];
 
