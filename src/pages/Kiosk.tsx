@@ -70,9 +70,7 @@ const Kiosk = () => {
   const handleQuizSubmit = (t: TerritoryId[]) => {
     setTerritories(t);
     setStage('results');
-    // Auto-select first solution so the results screen is not empty
-    const first = sContent.solutions.find((s) => t.includes(s.territory));
-    if (first) setSelectedSolutionId(first.id);
+    setSelectedSolutionId(null);
   };
 
   const handleSelectSolution = (id: string) => {
