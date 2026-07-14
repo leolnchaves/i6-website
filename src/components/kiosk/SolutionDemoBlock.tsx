@@ -1,12 +1,20 @@
 import { Sparkles } from 'lucide-react';
 import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/content';
+import type { KioskLang } from '@/data/kiosk/config';
+import PriceToMarginDemo from './demos/PriceToMarginDemo';
 
 interface Props {
   solution: LeanSolution;
   labels: SolutionsV2Content['labels'];
+  lang: KioskLang;
 }
 
-const SolutionDemoBlock = ({ solution, labels }: Props) => {
+const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
+  // Interactive pilot demo for Price-to-Margin
+  if (solution.id === 'price-to-margin') {
+    return <PriceToMarginDemo lang={lang} />;
+  }
+
   return (
     <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[4vmin]">
       <div className="flex items-center gap-[2vmin] mb-[2.5vmin]">

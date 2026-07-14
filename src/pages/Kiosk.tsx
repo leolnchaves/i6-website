@@ -163,7 +163,12 @@ const Kiosk = () => {
             <div id="kiosk-solution-demo" className="mt-[6vmin] flex flex-col gap-[4vmin]">
               {selectedSolution ? (
                 <>
-                  <SolutionDemoBlock solution={selectedSolution} labels={sContent.labels} />
+                  <SolutionDemoBlock
+                    key={selectedSolution.id}
+                    solution={selectedSolution}
+                    labels={sContent.labels}
+                    lang={lang}
+                  />
                   <KioskSignalDemo
                     lang={lang}
                     content={kContent}
