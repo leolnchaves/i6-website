@@ -72,10 +72,8 @@ const Blog = () => {
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F4845F]">
               {t('blog.badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">
-              {t('blog.pageTitle')}
-            </h1>
-            <p className="text-lg text-white/70">{t('blog.pageSubtitle')}</p>
+            <h1 className="sr-only">{t('blog.pageTitle')}</h1>
+            <p className="text-lg text-white/70 mt-3">{t('blog.pageSubtitle')}</p>
           </header>
 
           {heroArticle && <BlogHero article={heroArticle} />}
