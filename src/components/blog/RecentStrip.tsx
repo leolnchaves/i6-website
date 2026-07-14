@@ -4,11 +4,28 @@ import type { Insight } from '@/hooks/useInsights';
 
 interface Props {
   articles: Insight[];
+  layout?: 'row' | 'side';
 }
 
-const RecentStrip = ({ articles }: Props) => {
+const RecentStrip = ({ articles, layout = 'row' }: Props) => {
   const { t } = useLanguage();
   if (articles.length === 0) return null;
+
+  if (layout === 'side') {
+    const list = articles.slice(0, 3);
+    return (
+      <section className="flex flex-col h-full">
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+          {t('blog.recentTitle')}
+        </h2>
+        <div className="flex-1 grid gap-3" style={{ gridTemplateRows: `repeat(${list.length}, minmax(0, 1fr))` }}>
+          {list.map((a) => (
+            <BlogCard key={a.slug} article={a} variant="horizontal" />
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mt-16">
