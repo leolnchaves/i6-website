@@ -162,7 +162,7 @@ const productsEn: DemoProduct[] = [
     recommendedMargin: 60.6,
     deltaRevenuePct: 7.5,
     deltaMarginPct: 4.9,
-    insight: 'Category leader · high turnover sustains raise',
+    insight: 'Category leader with turnover 2.3× above the median. The model detects $4.20 of competitive headroom before the next relevant benchmark. The raise is absorbed by mix and premium positioning, with no share erosion risk this quarter.',
   },
   {
     id: 'sku-4',
