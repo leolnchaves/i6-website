@@ -91,7 +91,6 @@ function fromInsight(i: Insight): FeedItem {
 
 const KIND_BADGE_LABEL: Record<FeedKind, string> = {
   'i6 Research': 'i6 Research',
-  'i6 Article': 'i6 Article',
   'i6 eBook': 'i6 eBook',
 };
 
