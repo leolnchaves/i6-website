@@ -99,7 +99,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 60.6,
     deltaRevenuePct: 7.5,
     deltaMarginPct: 4.9,
-    insight: 'Categoria líder · giro alto sustenta reajuste',
+    insight: 'Líder de categoria com giro 2,3× acima da mediana. O modelo detecta headroom competitivo de R$ 4,20 antes do próximo comparável relevante. Reajuste absorvido pelo mix e pelo posicionamento premium, sem risco de erosão de share no trimestre.',
   },
   {
     id: 'sku-4',
