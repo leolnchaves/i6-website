@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Loader2, CheckCircle2, Download, X } from 'lucide-react';
+import { Loader2, CheckCircle2, Send } from 'lucide-react';
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
@@ -24,7 +24,6 @@ interface Props {
 }
 
 const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Props) => {
-  const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
@@ -32,19 +31,10 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const t = content.ebook;
-
-  const onOpen = () => {
-    setOpen(true);
-    setSubmitted(false);
-    setError(false);
-    reset();
-  };
-  const onClose = () => setOpen(false);
 
   const onSubmit = useCallback(
     async (data: FormData) => {
@@ -94,14 +84,10 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
   );
 
   return (
-    <>
-      {/* Trigger card */}
-      <button
-        type="button"
-        onClick={onOpen}
-        className="w-full text-left rounded-3xl border-2 border-[#F4845F] bg-gradient-to-br from-[#F4845F]/20 to-[#F4845F]/5 p-[4vmin] min-h-[16vmin] flex items-center justify-between gap-[3vmin] shadow-[0_0_40px_rgba(244,132,95,0.25)]"
-      >
-        <div>
+    <div className="w-full rounded-3xl border-2 border-[#F4845F] bg-gradient-to-br from-[#F4845F]/20 to-[#F4845F]/5 p-[4vmin] shadow-[0_0_40px_rgba(244,132,95,0.25)]">
+      <div className="flex items-center gap-[4vmin]">
+        {/* Left: copy */}
+        <div className="flex-1 min-w-0">
           <p className="text-[1.7vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
             {t.eyebrow}
           </p>
@@ -110,113 +96,83 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
           </h3>
           <p className="text-[2vmin] text-white/75">{t.subtitle}</p>
         </div>
-        <span className="flex-shrink-0 w-[10vmin] h-[10vmin] rounded-2xl bg-[#F4845F] flex items-center justify-center shadow-[0_0_30px_rgba(244,132,95,0.5)]">
-          <Download className="w-[5vmin] h-[5vmin] text-white" strokeWidth={2.5} />
-        </span>
-      </button>
 
-      {/* Modal */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-[4vmin] bg-[#0B1224]/90 backdrop-blur-sm">
-          <div className="relative w-full max-w-[90vw] rounded-3xl bg-[#0B1224] border-2 border-[#F4845F]/40 p-[5vmin] shadow-2xl">
+        {/* Right: inline form or success */}
+        {!submitted ? (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex items-center gap-[1.5vmin] flex-shrink-0"
+          >
+            <div className="flex flex-col">
+              <input
+                type="text"
+                placeholder={t.nameLabel}
+                autoComplete="off"
+                inputMode="text"
+                aria-label={t.nameLabel}
+                {...register('name')}
+                className="w-[26vmin] rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
+              />
+              {errors.name && (
+                <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidName}</span>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <input
+                type="email"
+                placeholder={t.emailLabel}
+                autoComplete="off"
+                inputMode="email"
+                aria-label={t.emailLabel}
+                {...register('email')}
+                className="w-[32vmin] rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
+              />
+              {errors.email && (
+                <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidEmail}</span>
+              )}
+            </div>
+
+            {/* Honeypot */}
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              {...register(HONEYPOT_FIELD)}
+              className="hidden"
+              aria-hidden="true"
+            />
+
             <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-[3vmin] right-[3vmin] w-[8vmin] h-[8vmin] rounded-full bg-white/10 flex items-center justify-center"
-              aria-label="Close"
+              type="submit"
+              disabled={submitting}
+              aria-label={t.submit}
+              className="flex-shrink-0 h-[8vmin] px-[4vmin] rounded-full text-[2.2vmin] font-bold bg-[#F4845F] text-white shadow-[0_0_30px_rgba(244,132,95,0.5)] disabled:opacity-60 flex items-center justify-center gap-[1.5vmin]"
             >
-              <X className="w-[4vmin] h-[4vmin] text-white" />
+              {submitting ? (
+                <Loader2 className="w-[3vmin] h-[3vmin] animate-spin" />
+              ) : (
+                <>
+                  <Send className="w-[2.6vmin] h-[2.6vmin]" strokeWidth={2.5} />
+                  <span>{t.submit}</span>
+                </>
+              )}
             </button>
-
-            {!submitted ? (
-              <>
-                <p className="text-[1.7vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1.5vmin]">
-                  {t.eyebrow}
-                </p>
-                <h3 className="text-[3.4vmin] font-bold text-white leading-tight mb-[1vmin]">
-                  {t.title(ebookTitle)}
-                </h3>
-                <p className="text-[2.2vmin] text-white/70 mb-[4vmin]">{t.subtitle}</p>
-
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[2.5vmin]">
-                  <div>
-                    <label className="block text-[1.8vmin] font-semibold text-white/80 mb-[1vmin]">
-                      {t.nameLabel}
-                    </label>
-                    <input
-                      type="text"
-                      autoComplete="off"
-                      inputMode="text"
-                      {...register('name')}
-                      className="w-full rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2.4vmin] px-[3vmin] py-[2.5vmin] focus:border-[#F4845F] focus:outline-none"
-                    />
-                    {errors.name && (
-                      <p className="mt-[1vmin] text-[1.8vmin] text-[#F4845F]">{t.invalidName}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-[1.8vmin] font-semibold text-white/80 mb-[1vmin]">
-                      {t.emailLabel}
-                    </label>
-                    <input
-                      type="email"
-                      autoComplete="off"
-                      inputMode="email"
-                      {...register('email')}
-                      className="w-full rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2.4vmin] px-[3vmin] py-[2.5vmin] focus:border-[#F4845F] focus:outline-none"
-                    />
-                    {errors.email && (
-                      <p className="mt-[1vmin] text-[1.8vmin] text-[#F4845F]">{t.invalidEmail}</p>
-                    )}
-                  </div>
-
-                  {/* Honeypot */}
-                  <input
-                    type="text"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    {...register(HONEYPOT_FIELD)}
-                    className="hidden"
-                    aria-hidden="true"
-                  />
-
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="mt-[2vmin] w-full rounded-full px-[6vmin] py-[3.5vmin] text-[3vmin] font-bold bg-[#F4845F] text-white shadow-[0_0_40px_rgba(244,132,95,0.5)] disabled:opacity-60 flex items-center justify-center gap-[2vmin]"
-                  >
-                    {submitting ? (
-                      <>
-                        <Loader2 className="w-[3vmin] h-[3vmin] animate-spin" />
-                        {t.sending}
-                      </>
-                    ) : (
-                      t.submit
-                    )}
-                  </button>
-
-                  {error && (
-                    <p className="text-center text-[2vmin] text-[#F4845F]">{t.error}</p>
-                  )}
-                  <p className="text-center text-[1.6vmin] text-white/50">{t.privacy}</p>
-                </form>
-              </>
-            ) : (
-              <div className="text-center py-[4vmin]">
-                <div className="mx-auto w-[14vmin] h-[14vmin] rounded-full bg-[#F4845F]/15 border-2 border-[#F4845F]/60 flex items-center justify-center mb-[3vmin]">
-                  <CheckCircle2 className="w-[8vmin] h-[8vmin] text-[#F4845F]" />
-                </div>
-                <h4 className="text-[3.6vmin] font-bold text-white mb-[2vmin]">
-                  {t.successTitle}
-                </h4>
-                <p className="text-[2.2vmin] text-white/80 mb-[2vmin]">{t.successBody}</p>
-                <p className="text-[1.9vmin] text-white/55">{t.successFooter}</p>
-              </div>
-            )}
+          </form>
+        ) : (
+          <div className="flex-shrink-0 flex items-center gap-[2vmin] rounded-2xl bg-[#F4845F]/10 border-2 border-[#F4845F]/50 px-[3vmin] py-[2.5vmin]">
+            <CheckCircle2 className="w-[5vmin] h-[5vmin] text-[#F4845F] flex-shrink-0" />
+            <div>
+              <p className="text-[2.2vmin] font-bold text-white leading-tight">{t.successTitle}</p>
+              <p className="text-[1.6vmin] text-white/70 leading-tight mt-[0.4vmin]">{t.successBody}</p>
+            </div>
           </div>
-        </div>
+        )}
+      </div>
+
+      {error && (
+        <p className="mt-[2vmin] text-[1.7vmin] text-[#F4845F] text-right">{t.error}</p>
       )}
-    </>
+    </div>
   );
 };
 
