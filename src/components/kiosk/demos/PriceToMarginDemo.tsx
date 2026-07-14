@@ -22,7 +22,6 @@ const PriceToMarginDemo = ({ lang }: Props) => {
     [content.products, selectedId],
   );
 
-  // Advance pipeline steps when a product is selected
   useEffect(() => {
     if (!selected) {
       setProgress(0);
@@ -33,26 +32,21 @@ const PriceToMarginDemo = ({ lang }: Props) => {
     let elapsed = 0;
     content.pipeline.forEach((step, i) => {
       elapsed += step.durationMs;
-      timers.push(
-        setTimeout(() => {
-          setProgress(i + 1);
-        }, elapsed),
-      );
+      timers.push(setTimeout(() => setProgress(i + 1), elapsed));
     });
-    return () => {
-      timers.forEach(clearTimeout);
-    };
+    return () => timers.forEach(clearTimeout);
   }, [selected, content.pipeline]);
 
-  // Interpolate price/margin as steps advance
-  const t = selected ? Math.min(progress / content.pipeline.length, 1) : 0;
-  const livePrice = selected ? selected.currentPrice + (selected.recommendedPrice - selected.currentPrice) * t : 0;
-  const liveMargin = selected ? selected.currentMargin + (selected.recommendedMargin - selected.currentMargin) * t : 0;
-  const done = selected && progress >= content.pipeline.length;
+  const done = !!selected && progress >= content.pipeline.length;
+
+  const reset = () => {
+    setSelectedId(null);
+    setProgress(0);
+  };
 
   return (
     <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[3vmin]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[3vmin] items-start">
         {/* LEFT — scenario */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col">
           {/* Fake browser bar */}
@@ -76,97 +70,97 @@ const PriceToMarginDemo = ({ lang }: Props) => {
               </span>
             </div>
 
-            {/* Product grid */}
-            <div className="grid grid-cols-2 gap-[1.5vmin]">
-              {content.products.map((p) => {
-                const isActive = selectedId === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => setSelectedId(p.id)}
-                    className={`text-left rounded-xl border-2 p-[1.5vmin] transition-all bg-white/[0.03] ${
-                      isActive
-                        ? 'border-[#F4845F] shadow-[0_0_20px_rgba(244,132,95,0.3)] bg-[#F4845F]/10'
-                        : 'border-white/10'
-                    }`}
-                  >
-                    <div className="aspect-square rounded-lg overflow-hidden bg-white/5 mb-[1vmin]">
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                    </div>
-                    <span className="block text-[1.3vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]">
-                      {p.category}
-                    </span>
-                    <span className="block text-[1.6vmin] leading-tight text-white/90 font-semibold mb-[0.8vmin] min-h-[3.6vmin]">
-                      {p.name}
-                    </span>
-                    <div className="flex justify-between text-[1.4vmin] text-white/60">
-                      <span>{currency(p.currentPrice, lang)}</span>
-                      <span>{p.currentMargin.toFixed(1)}%</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+            {!selected ? (
+              <>
+                {/* Attention hint */}
+                <div className="mb-[1.5vmin] rounded-xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.4vmin] flex items-center gap-[1.2vmin] animate-pulse">
+                  <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#F4845F]" />
+                  <span className="text-[1.6vmin] text-white/90 font-semibold">
+                    {content.pickHint}
+                  </span>
+                </div>
 
-            {/* Selected product live panel */}
-            {selected ? (
-              <div className="mt-[2vmin] rounded-xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] p-[2vmin]">
-                <div className="flex items-center justify-between mb-[1.2vmin]">
-                  <span className="text-[1.5vmin] font-semibold text-white/90">{selected.name}</span>
-                  {done && (
-                    <span className="flex items-center gap-[0.6vmin] text-[1.3vmin] font-semibold text-[#F4845F]">
-                      <Check className="w-[1.8vmin] h-[1.8vmin]" />
-                      {content.doneLabel}
-                    </span>
-                  )}
-                </div>
+                {/* Product grid — NO price/margin visible */}
                 <div className="grid grid-cols-2 gap-[1.5vmin]">
-                  <MetricPill
-                    label={content.productLabels.recommended}
-                    value={currency(livePrice, lang)}
-                    highlight={done}
-                  />
-                  <MetricPill
-                    label={content.productLabels.margin}
-                    value={`${liveMargin.toFixed(1)}%`}
-                    highlight={done}
-                  />
-                  {done && (
-                    <>
-                      <MetricPill
-                        label={content.productLabels.deltaRevenue}
-                        value={`+${selected.deltaRevenuePct.toFixed(1)}%`}
-                        highlight
-                      />
-                      <MetricPill
-                        label={content.productLabels.deltaMargin}
-                        value={`+${selected.deltaMarginPct.toFixed(1)} pp`}
-                        highlight
-                      />
-                    </>
-                  )}
+                  {content.products.map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setSelectedId(p.id)}
+                      className="text-left rounded-xl border-2 p-[1.5vmin] transition-all bg-white/[0.03] border-white/10 hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]"
+                    >
+                      <div className="aspect-square rounded-lg overflow-hidden bg-white/5 mb-[1vmin]">
+                        <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                      </div>
+                      <span className="block text-[1.3vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]">
+                        {p.category}
+                      </span>
+                      <span className="block text-[1.6vmin] leading-tight text-white/90 font-semibold min-h-[3.6vmin]">
+                        {p.name}
+                      </span>
+                    </button>
+                  ))}
                 </div>
-                {done && (
-                  <button
-                    type="button"
-                    className="mt-[1.5vmin] w-full rounded-lg bg-[#F4845F] text-white text-[1.8vmin] font-semibold py-[1.5vmin] flex items-center justify-center gap-[1vmin]"
-                    disabled
-                  >
-                    <TrendingUp className="w-[2vmin] h-[2vmin]" />
-                    {content.ctaLabel}
-                  </button>
-                )}
-              </div>
+              </>
             ) : (
-              <p className="mt-[2vmin] text-[1.6vmin] text-white/50 text-center py-[2vmin]">
-                {content.pickHint}
-              </p>
+              /* Zoom view — single product */
+              <div className="flex flex-col animate-fade-in">
+                <button
+                  type="button"
+                  onClick={reset}
+                  className="self-start text-[1.4vmin] text-white/60 hover:text-[#F4845F] mb-[1.5vmin]"
+                >
+                  {content.backToCatalog}
+                </button>
+
+                <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[2vmin]">
+                  <div className="aspect-[4/3] rounded-xl overflow-hidden bg-white/5 mb-[1.5vmin]">
+                    <img
+                      src={selected.image}
+                      alt={selected.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="block text-[1.4vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.4vmin]">
+                    {selected.category}
+                  </span>
+                  <h5 className="text-[2.4vmin] leading-tight text-white font-bold mb-[1.5vmin]">
+                    {selected.name}
+                  </h5>
+
+                  {/* Price reveal zone */}
+                  <div className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-[2vmin] min-h-[10vmin] flex items-center justify-center">
+                    {!done ? (
+                      <div className="flex items-center gap-[1.5vmin] text-white/60">
+                        <span className="w-[2vmin] h-[2vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
+                        <span className="text-[1.6vmin]">{content.analyzingLabel}</span>
+                      </div>
+                    ) : (
+                      <div className="w-full flex items-center justify-between animate-fade-in">
+                        <div>
+                          <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.4vmin]">
+                            {content.idealPriceBadge}
+                          </span>
+                          <span
+                            className="block text-[4.2vmin] font-bold text-white leading-none"
+                            style={{ textShadow: '0 0 24px rgba(244,132,95,0.5)' }}
+                          >
+                            {currency(selected.recommendedPrice, lang)}
+                          </span>
+                        </div>
+                        <span className="rounded-full bg-[#F4845F] text-white text-[1.4vmin] font-bold px-[1.6vmin] py-[0.8vmin] animate-pulse">
+                          ✓
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
 
-        {/* RIGHT — reasoning */}
+        {/* RIGHT — reasoning + conclusion */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2.5vmin] flex flex-col">
           <div className="flex items-center gap-[1.5vmin] mb-[2vmin]">
             <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
@@ -178,7 +172,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-[1.4vmin] flex-1">
+          <div className="flex flex-col gap-[1.4vmin]">
             {content.pipeline.map((step, i) => {
               const state = !selected
                 ? 'idle'
@@ -232,9 +226,49 @@ const PriceToMarginDemo = ({ lang }: Props) => {
             })}
           </div>
 
-          {selected && (
-            <div className="mt-[1.5vmin] rounded-xl bg-white/[0.03] border border-white/10 p-[1.5vmin] text-[1.4vmin] text-white/70 leading-snug">
-              <strong className="text-[#F4845F]">·</strong> {selected.insight}
+          {/* Conclusive panel — appears after pipeline is done */}
+          {done && selected && (
+            <div className="mt-[2vmin] rounded-2xl border border-[#F4845F]/50 bg-[#F4845F]/[0.08] p-[2vmin] animate-fade-in">
+              <div className="flex items-center justify-between mb-[1.5vmin]">
+                <span className="text-[1.6vmin] font-semibold text-white/90">{selected.name}</span>
+                <span className="flex items-center gap-[0.6vmin] text-[1.4vmin] font-semibold text-[#F4845F]">
+                  <Check className="w-[1.8vmin] h-[1.8vmin]" />
+                  {content.doneLabel}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-[1.5vmin]">
+                <MetricPill
+                  label={content.productLabels.recommended}
+                  value={currency(selected.recommendedPrice, lang)}
+                  highlight
+                />
+                <MetricPill
+                  label={content.productLabels.margin}
+                  value={`${selected.recommendedMargin.toFixed(1)}%`}
+                  highlight
+                />
+                <MetricPill
+                  label={content.productLabels.deltaRevenue}
+                  value={`+${selected.deltaRevenuePct.toFixed(1)}%`}
+                  highlight
+                />
+                <MetricPill
+                  label={content.productLabels.deltaMargin}
+                  value={`+${selected.deltaMarginPct.toFixed(1)} pp`}
+                  highlight
+                />
+              </div>
+              <div className="mt-[1.5vmin] rounded-xl bg-white/[0.03] border border-white/10 p-[1.5vmin] text-[1.4vmin] text-white/70 leading-snug">
+                <strong className="text-[#F4845F]">·</strong> {selected.insight}
+              </div>
+              <button
+                type="button"
+                className="mt-[1.5vmin] w-full rounded-lg bg-[#F4845F] text-white text-[1.8vmin] font-semibold py-[1.5vmin] flex items-center justify-center gap-[1vmin]"
+                disabled
+              >
+                <TrendingUp className="w-[2vmin] h-[2vmin]" />
+                {content.ctaLabel}
+              </button>
             </div>
           )}
         </div>
