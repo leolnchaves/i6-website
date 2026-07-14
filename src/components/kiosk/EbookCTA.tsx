@@ -101,9 +101,9 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
         {!submitted ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex items-center gap-[1.5vmin] flex-shrink-0"
+            className="flex items-start gap-[1.5vmin] w-full"
           >
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-1 min-w-0">
               <input
                 type="text"
                 placeholder={t.nameLabel}
