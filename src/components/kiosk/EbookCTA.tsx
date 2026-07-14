@@ -85,9 +85,9 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
 
   return (
     <div className="w-full rounded-3xl border-2 border-[#F4845F] bg-gradient-to-br from-[#F4845F]/20 to-[#F4845F]/5 p-[4vmin] shadow-[0_0_40px_rgba(244,132,95,0.25)]">
-      <div className="flex items-center gap-[4vmin]">
-        {/* Left: copy */}
-        <div className="flex-1 min-w-0">
+      <div className="flex flex-col gap-[3vmin]">
+        {/* Top: copy */}
+        <div className="min-w-0">
           <p className="text-[1.7vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
             {t.eyebrow}
           </p>
@@ -97,7 +97,7 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
           <p className="text-[2vmin] text-white/75">{t.subtitle}</p>
         </div>
 
-        {/* Right: inline form or success */}
+        {/* Bottom: inline form or success */}
         {!submitted ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
