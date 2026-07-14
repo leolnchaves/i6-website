@@ -44,7 +44,10 @@ export interface PriceToMarginDemoContent {
     recommended: string;
     deltaRevenue: string;
     deltaMargin: string;
+    latency: string;
+    latencyHint: string;
   };
+
   objectiveLabel: string;
   reasoningTitle: string;
   reasoningSubtitle: string;
