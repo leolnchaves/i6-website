@@ -171,6 +171,7 @@ const ALL: Insight[] = Object.entries(modules)
       cta_form_text: fm.cta_form_text ?? null,
       is_default: fm.is_default === true,
       theme: fm.theme,
+      theme_label: fm.theme_label,
       tags,
       slug:
         fm.slug ||
