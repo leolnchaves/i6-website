@@ -1,24 +1,34 @@
-## Reduzir altura do bloco hero + recentes no /i6-blog
+## Objetivo
+Padronizar o cabeçalho de `/i6-blog` para ficar idêntico em espaçamento, fonte e estilo aos de `/i6-intelligence` e `/insights`. Nenhuma outra parte da página é alterada.
 
-Objetivo: deixar filtros e primeiros temas "espiando" na fold para incentivar scroll.
+## Padrão de referência
+- Wrapper: `<section className="container mx-auto px-6 pt-32 pb-20">`
+- Header: `<header className="max-w-3xl mb-10">`
+- Eyebrow laranja (peso normal, sem bold): `text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3`
+- Texto do eyebrow: `infinity6 · Blog` (idêntico em PT e EN, seguindo o padrão de Intelligence e Insights)
+- H1 oculto: `sr-only`
+- Subtítulo: `text-lg text-white/70` (sem `mt-3`)
 
-### Alvos e mudanças
+## Mudanças
 
-1. **`src/pages/Blog.tsx`**
-   - Reduzir top-padding do section de `pt-32` para `pt-24` e o gap do header (`mb-10` → `mb-6`) para trazer o hero mais alto.
-   - Aplicar `lg:max-h-[62vh]` no grid `hero + recentes` para limitar a altura vertical do bloco em telas grandes.
+### 1. `src/pages/Blog.tsx`
+Ajustar apenas o wrapper `<section>` e o `<header>` inicial:
 
-2. **`src/components/blog/BlogHero.tsx`**
-   - Reduzir tamanho de fonte do título: `text-3xl md:text-4xl lg:text-4xl xl:text-5xl` → `text-2xl md:text-3xl lg:text-3xl xl:text-4xl`.
-   - Reduzir padding interno: `p-6 md:p-10 lg:p-14` → `p-6 md:p-8 lg:p-10`.
-   - Manter proporção `aspect-[21/9]` em mobile e `h-full` no lg, mas com a nova max-height do grid, o card fica mais baixo.
-   - Reduzir `mb-6` do link "Ler artigo" para `mb-2` e `mb-3 md:mb-4` do título para `mb-2 md:mb-3`.
+```tsx
+<section className="container mx-auto px-6 pt-32 pb-20">
+  <header className="max-w-3xl mb-10">
+    <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">
+      infinity6 · Blog
+    </p>
+    <h1 className="sr-only">{t('blog.pageTitle')}</h1>
+    <p className="text-lg text-white/70">{t('blog.pageSubtitle')}</p>
+  </header>
+  {/* restante da página inalterado */}
+</section>
+```
 
-3. **`src/components/blog/RecentStrip.tsx`** (layout side)
-   - Reduzir altura dos cards horizontais de `h-[110px] md:h-[120px]` para `h-[92px] md:h-[100px]`.
-   - Reduzir gap entre cards de `gap-3` para `gap-2.5`.
-   - Reduzir `mb-3` do título "Insights recentes" para `mb-2`.
+O eyebrow deixa de usar `t('blog.badge')` e passa a ser a string fixa `infinity6 · Blog`, igual ao padrão das outras páginas (`infinity6 · Executive Research`, `infinity6 · Na Mídia`/`In the Media`).
 
-### Fora de escopo
-- Nada em mobile/tablet layout row.
-- Sem mudanças em ThemeRail, filtros ou conteúdo.
+### O que NÃO muda
+- Hero em destaque, coluna de "Insights recentes", filtros e rails por tema permanecem exatamente como estão.
+- Traduções `blog.badge` continuam existindo (ainda são usadas em `BlogHero.tsx` para o chip laranja sobre a imagem).
