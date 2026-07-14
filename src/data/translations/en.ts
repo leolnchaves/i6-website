@@ -13,6 +13,12 @@ export const enTranslations = {
   'header.community': 'Community',
   'header.insights': 'Insights',
   'header.intelligence': 'i6 Research',
+  'header.proprietaryAi': 'Proprietary AI',
+  'header.research': 'i6 Research',
+  'header.research.hub': 'i6 Research',
+  'header.research.media': 'i6 in the Media',
+  'header.research.blog': 'i6 Blog',
+  'header.research.comingSoon': 'Coming soon',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
   
