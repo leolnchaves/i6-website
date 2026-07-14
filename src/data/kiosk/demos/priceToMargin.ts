@@ -186,7 +186,11 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     scenarioSubtitle: 'Catálogo · Precificação em tempo real',
     storeName: 'VivaShop B2B',
     catalogLabel: 'Catálogo',
-    pickHint: 'Toque em um produto para simular',
+    pickHint: 'Toque em um produto para descobrir o preço ideal',
+    zoomHint: 'Analisando o produto',
+    backToCatalog: '← Escolher outro produto',
+    idealPriceBadge: 'Preço ideal',
+    analyzingLabel: 'Aguarde · o modelo está pensando',
     productLabels: {
       cost: 'Custo',
       price: 'Preço',
