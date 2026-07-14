@@ -302,14 +302,12 @@ const MetricPill = ({
   highlight?: boolean;
 }) => (
   <div
-    className={`rounded-lg p-[1.2vmin] border ${
-      highlight ? 'bg-[#F4845F]/15 border-[#F4845F]/50' : 'bg-white/5 border-white/10'
-    }`}
+    className={`rounded-lg p-[1.2vmin] border bg-white/[0.03] border-white/10`}
   >
     <span className="block text-[1.2vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F] mb-[0.3vmin]">
       {label}
     </span>
-    <span className="block text-[2vmin] font-bold text-white leading-none">{value}</span>
+    <span className="block text-[2vmin] font-bold text-[#F4845F] leading-none">{value}</span>
     {hint && (
       <span className="block mt-[0.6vmin] text-[1.1vmin] text-white/50 leading-none">{hint}</span>
     )}
