@@ -50,13 +50,14 @@ const Blog = () => {
   }, [articles, activeTheme, activeTag, heroArticle]);
 
   const byTheme = useMemo(() => {
-    const map = new Map<string, Insight[]>();
+    const map = new Map<string, { label: string; items: Insight[] }>();
     filtered.forEach((a) => {
-      const key = a.theme || t('blog.themeFallback');
-      if (!map.has(key)) map.set(key, []);
-      map.get(key)!.push(a);
+      const key = a.theme || '__none__';
+      const label = a.theme_label || a.theme || t('blog.themeFallback');
+      if (!map.has(key)) map.set(key, { label, items: [] });
+      map.get(key)!.items.push(a);
     });
-    return Array.from(map.entries());
+    return Array.from(map.values());
   }, [filtered, t]);
 
   return (
