@@ -23,13 +23,16 @@ const InsightArticle = () => {
 
   // Determine the surrounding context:
   // - `/insights/<slug>` is the media listing context (i6 on Media, i6 Social)
-  // - `/i6-intelligence/<slug>` is the intelligence context (i6 Article, i6 eBook)
+  // - `/i6-intelligence/<slug>` is the intelligence context (i6 eBook)
+  // - `/i6-blog/<slug>` is the blog context (i6 Article)
   const inIntel = location.pathname.includes('/i6-intelligence/');
-  const isIntelType = !!insight && (insight.type === 'i6 Article' || insight.type === 'i6 eBook');
-  const backPath = inIntel ? '/i6-intelligence' : '/insights';
+  const inBlog = location.pathname.includes('/i6-blog/');
+  const isBlogType = !!insight && insight.type === 'i6 Article';
+  const isIntelType = !!insight && insight.type === 'i6 eBook';
+  const backPath = inBlog ? '/i6-blog' : inIntel ? '/i6-intelligence' : '/insights';
   const backLabel = language === 'pt'
-    ? (inIntel ? 'Voltar para i6 Research' : 'Voltar para Insights')
-    : (inIntel ? 'Back to i6 Research' : 'Back to Insights');
+    ? (inBlog ? 'Voltar para o Blog' : inIntel ? 'Voltar para i6 Research' : 'Voltar para Insights')
+    : (inBlog ? 'Back to Blog' : inIntel ? 'Back to i6 Research' : 'Back to Insights');
 
   // Clean up legacy unlock entries from older versions of the gate flow
   useEffect(() => {
@@ -50,12 +53,15 @@ const InsightArticle = () => {
 
   if (!insight) return <Navigate to={localized(backPath)} replace />;
 
-  // Cross-listing redirects: i6 Article / i6 eBook belong under /i6-intelligence;
-  // i6 on Media / i6 Social belong under /insights.
+  // Cross-listing redirects: i6 Article → /i6-blog, i6 eBook → /i6-intelligence,
+  // media types → /insights.
+  if (isBlogType && !inBlog) {
+    return <Navigate to={localized(`/i6-blog/${insight.slug}`)} replace />;
+  }
   if (isIntelType && !inIntel) {
     return <Navigate to={localized(`/i6-intelligence/${insight.slug}`)} replace />;
   }
-  if (!isIntelType && inIntel) {
+  if (!isBlogType && !isIntelType && (inIntel || inBlog)) {
     return <Navigate to={localized(`/insights/${insight.slug}`)} replace />;
   }
 
