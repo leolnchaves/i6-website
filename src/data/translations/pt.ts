@@ -21,6 +21,19 @@ export const ptTranslations = {
   'header.research.comingSoon': 'Em breve',
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
+
+  // Blog
+  'blog.pageTitle': 'i6 Blog',
+  'blog.pageSubtitle': 'Reflexões, análises e ideias do time infinity6 sobre IA aplicada a negócios.',
+  'blog.badge': 'i6 Article',
+  'blog.readArticle': 'Ler artigo',
+  'blog.recentTitle': 'Insights recentes',
+  'blog.filterTheme': 'Tema',
+  'blog.filterTags': 'Tags',
+  'blog.filterAll': 'Todos',
+  'blog.empty': 'Em breve, novos artigos',
+  'blog.minRead': 'min de leitura',
+
   
   // Hero Section
   'hero.infinite': 'Infinitas',
