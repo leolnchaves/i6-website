@@ -313,6 +313,7 @@ function fmInsights(it, { coverLocal }) {
     it.cta_form ? `cta_form: true` : null,
     it.cta_form_text ? `cta_form_text: ${yaml(it.cta_form_text)}` : null,
     it.theme ? `theme: ${yaml(it.theme)}` : null,
+    it.theme_label ? `theme_label: ${yaml(it.theme_label)}` : null,
     it.is_default ? `is_default: true` : null,
     Array.isArray(it.tags) && it.tags.length
       ? `tags: [${it.tags.map((t) => yaml(String(t))).join(', ')}]`
