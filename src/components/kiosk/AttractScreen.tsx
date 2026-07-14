@@ -1,4 +1,5 @@
 import type { QuizContent } from '@/data/kiosk/config';
+import logoWhite from '@/assets/infinity6-logo-white.png';
 
 interface Props {
   content: QuizContent;
@@ -20,9 +21,12 @@ const AttractScreen = ({ content, onStart }: Props) => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center gap-[3vmin]">
-        <span className="text-[2.6vmin] tracking-[0.4em] uppercase text-[#F4845F] font-semibold">
-          {content.attract.brand}
-        </span>
+        <img
+          src={logoWhite}
+          alt={content.attract.brand}
+          className="h-[7vmin] w-auto object-contain"
+        />
+
         <h1 className="text-[7vmin] leading-[1.05] font-bold max-w-[80vw]">
           {content.attract.headline}
         </h1>
