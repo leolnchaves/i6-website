@@ -25,7 +25,7 @@ export const ptTranslations = {
   // Blog
   'blog.pageTitle': 'i6 Blog',
   'blog.pageSubtitle': 'Reflexões, análises e ideias do time infinity6 sobre IA aplicada a negócios.',
-  'blog.badge': 'i6 Article',
+  'blog.badge': 'i6 BLOG',
   'blog.readArticle': 'Ler artigo',
   'blog.recentTitle': 'Insights recentes',
   'blog.filterTheme': 'Tema',
