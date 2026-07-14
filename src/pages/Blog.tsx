@@ -29,9 +29,15 @@ const Blog = () => {
   );
 
   const themes = useMemo(() => {
-    const set = new Set<string>();
-    articles.forEach((a) => a.theme && set.add(a.theme));
-    return Array.from(set);
+    const map = new Map<string, string>();
+    articles.forEach((a) => {
+      if (!a.theme) return;
+      const existing = map.get(a.theme);
+      if (!existing || existing === a.theme) {
+        map.set(a.theme, a.theme_label || existing || a.theme);
+      }
+    });
+    return Array.from(map, ([value, label]) => ({ value, label }));
   }, [articles]);
 
   const tags = useMemo(() => {

@@ -1,7 +1,12 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
+interface ThemeOption {
+  value: string;
+  label: string;
+}
+
 interface Props {
-  themes: string[];
+  themes: ThemeOption[];
   tags: string[];
   activeTheme: string | null;
   activeTag: string | null;
@@ -36,8 +41,8 @@ const BlogFilters = ({
             {t('blog.filterAll')}
           </button>
           {themes.map((th) => (
-            <button key={th} onClick={() => onThemeChange(th)} className={chipClass(activeTheme === th)}>
-              {th}
+            <button key={th.value} onClick={() => onThemeChange(th.value)} className={chipClass(activeTheme === th.value)}>
+              {th.label}
             </button>
           ))}
         </div>
