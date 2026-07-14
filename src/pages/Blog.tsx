@@ -67,13 +67,13 @@ const Blog = () => {
         <meta name="description" content={t('blog.pageSubtitle')} />
       </Helmet>
 
-      <section className="container mx-auto px-6 pt-24 pb-20">
-        <header className="mb-6 max-w-3xl">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F4845F]">
-            {t('blog.badge')}
-          </span>
+      <section className="container mx-auto px-6 pt-32 pb-20">
+        <header className="max-w-3xl mb-10">
+          <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">
+            infinity6 · Blog
+          </p>
           <h1 className="sr-only">{t('blog.pageTitle')}</h1>
-          <p className="text-lg text-white/70 mt-3">{t('blog.pageSubtitle')}</p>
+          <p className="text-lg text-white/70">{t('blog.pageSubtitle')}</p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:max-h-[62vh]">
