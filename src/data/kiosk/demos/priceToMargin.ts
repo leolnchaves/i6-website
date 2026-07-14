@@ -84,7 +84,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 59.5,
     deltaRevenuePct: 9.1,
     deltaMarginPct: 5.1,
-    insight: 'Alta recorrência · sensibilidade a preço média',
+    insight: 'SKU de altíssima recorrência (ciclo de recompra de 42 dias). Sensibilidade a preço média compensada pela fidelidade do cluster de assinantes, que representa 61% do volume. O novo patamar preserva conversão de novos compradores e expande margem no core recorrente.',
   },
   {
     id: 'sku-3',
