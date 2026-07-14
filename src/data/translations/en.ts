@@ -33,6 +33,7 @@ export const enTranslations = {
   'blog.filterAll': 'All',
   'blog.empty': 'New articles coming soon',
   'blog.minRead': 'min read',
+  'blog.themeFallback': 'Uncategorized',
 
   
   // Hero Section
