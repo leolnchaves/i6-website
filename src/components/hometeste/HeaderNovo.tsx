@@ -44,7 +44,7 @@ const HeaderNovo = () => {
   const researchMenu: ResearchItem[] = [
     { to: localized('/i6-intelligence'), label: t('header.research.hub') },
     { to: localized('/insights'), label: t('header.research.media') },
-    { label: t('header.research.blog'), comingSoon: true },
+    { to: localized('/i6-blog'), label: t('header.research.blog') },
     { to: localized('/solutions/demand-supply-efficiency'), label: t('header.solutions.demandSupply') },
     { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization') },
     { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps') },
