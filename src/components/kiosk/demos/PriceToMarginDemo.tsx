@@ -293,10 +293,12 @@ const PriceToMarginDemo = ({ lang }: Props) => {
 const MetricPill = ({
   label,
   value,
+  hint,
   highlight,
 }: {
   label: string;
   value: string;
+  hint?: string;
   highlight?: boolean;
 }) => (
   <div
@@ -308,7 +310,11 @@ const MetricPill = ({
       {label}
     </span>
     <span className="block text-[2vmin] font-bold text-white leading-none">{value}</span>
+    {hint && (
+      <span className="block mt-[0.6vmin] text-[1.1vmin] text-white/50 leading-none">{hint}</span>
+    )}
   </div>
 );
+
 
 export default PriceToMarginDemo;
