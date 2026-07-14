@@ -27,6 +27,7 @@ import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
 import Blog from "./pages/Blog";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
+import Kiosk from "./pages/Kiosk";
 
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
@@ -111,6 +112,9 @@ const App = () => {
                 <Sonner />
                 <ScrollToTop />
                 <Routes>
+
+                  {/* Standalone kiosk / totem experience (no header/footer, no lang prefix) */}
+                  <Route path="/kiosk" element={<Kiosk />} />
 
                   {/* Localized site */}
                   <Route path="/:lang/*" element={<LocalizedRoutes />} />
