@@ -22,6 +22,13 @@ const PriceToMarginDemo = ({ lang }: Props) => {
     [content.products, selectedId],
   );
 
+  // Latência fake por SKU (50–100 ms) — estável enquanto o produto está selecionado
+  const latencyMs = useMemo(() => {
+    if (!selectedId) return '0.00';
+    return (50 + Math.random() * 50).toFixed(2);
+  }, [selectedId]);
+
+
   useEffect(() => {
     if (!selected) {
       setProgress(0);
@@ -245,7 +252,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 />
                 <MetricPill
                   label={content.productLabels.margin}
-                  value={`${selected.recommendedMargin.toFixed(1)}%`}
+                  value={`${selected.recommendedMargin.toFixed(1)}% · +${selected.deltaMarginPct.toFixed(1)} pp`}
                   highlight
                 />
                 <MetricPill
@@ -254,11 +261,13 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                   highlight
                 />
                 <MetricPill
-                  label={content.productLabels.deltaMargin}
-                  value={`+${selected.deltaMarginPct.toFixed(1)} pp`}
+                  label={content.productLabels.latency}
+                  value={`${latencyMs} ms`}
+                  hint={content.productLabels.latencyHint}
                   highlight
                 />
               </div>
+
               <div className="mt-[1.5vmin] rounded-xl bg-white/[0.03] border border-white/10 p-[1.8vmin] text-[1.5vmin] text-white/80 leading-relaxed">
                 <span className="block text-[1.2vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
                   {content.rationaleLabel}
@@ -284,10 +293,12 @@ const PriceToMarginDemo = ({ lang }: Props) => {
 const MetricPill = ({
   label,
   value,
+  hint,
   highlight,
 }: {
   label: string;
   value: string;
+  hint?: string;
   highlight?: boolean;
 }) => (
   <div
@@ -299,7 +310,11 @@ const MetricPill = ({
       {label}
     </span>
     <span className="block text-[2vmin] font-bold text-white leading-none">{value}</span>
+    {hint && (
+      <span className="block mt-[0.6vmin] text-[1.1vmin] text-white/50 leading-none">{hint}</span>
+    )}
   </div>
 );
+
 
 export default PriceToMarginDemo;

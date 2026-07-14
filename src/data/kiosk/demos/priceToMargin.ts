@@ -44,7 +44,10 @@ export interface PriceToMarginDemoContent {
     recommended: string;
     deltaRevenue: string;
     deltaMargin: string;
+    latency: string;
+    latencyHint: string;
   };
+
   objectiveLabel: string;
   reasoningTitle: string;
   reasoningSubtitle: string;
@@ -200,7 +203,10 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       recommended: 'Preço recomendado',
       deltaRevenue: 'Δ Receita',
       deltaMargin: 'Δ Margem',
+      latency: 'Latência do modelo',
+      latencyHint: 'média mercado 50–100 ms',
     },
+
     objectiveLabel: 'Objetivo: margem',
     reasoningTitle: 'Como o modelo está pensando',
     reasoningSubtitle: 'Pipeline preditivo · i6ElasticPrice',
@@ -234,7 +240,10 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       recommended: 'Recommended price',
       deltaRevenue: 'Δ Revenue',
       deltaMargin: 'Δ Margin',
+      latency: 'Model latency',
+      latencyHint: 'market avg 50–100 ms',
     },
+
     objectiveLabel: 'Objective: margin',
     reasoningTitle: 'How the model is thinking',
     reasoningSubtitle: 'Predictive pipeline · i6ElasticPrice',
