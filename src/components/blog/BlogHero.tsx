@@ -68,7 +68,7 @@ const BlogHero = ({ article }: Props) => {
               </span>
             )}
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4 max-w-3xl leading-tight group-hover:text-[#F4845F] transition-colors">
+          <h2 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 md:mb-4 max-w-3xl leading-tight group-hover:text-[#F4845F] transition-colors">
             {article.title}
           </h2>
           <p className="text-base md:text-lg text-white/80 max-w-2xl mb-6 line-clamp-3">
