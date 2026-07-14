@@ -76,9 +76,21 @@ const Blog = () => {
           <p className="text-lg text-white/70 mt-3">{t('blog.pageSubtitle')}</p>
         </header>
 
-        {heroArticle && <BlogHero article={heroArticle} />}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {heroArticle && (
+            <div className="lg:col-span-2">
+              <BlogHero article={heroArticle} />
+            </div>
+          )}
+          <div className="lg:col-span-1">
+            <RecentStrip articles={recent} layout="side" />
+          </div>
+        </div>
 
-        <RecentStrip articles={recent} />
+        {/* Mobile/tablet fallback: original horizontal strip below the hero */}
+        <div className="lg:hidden">
+          <RecentStrip articles={recent} layout="row" />
+        </div>
 
         <BlogFilters
           themes={themes}
