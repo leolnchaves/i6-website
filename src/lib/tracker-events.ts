@@ -18,6 +18,10 @@ export const TRACKER_EVENTS = {
   // Generic engagement
   CTA_CLICK: 'cta_click',
   SCROLL_75: 'scroll_75',
+  // Kiosk (totem) experience
+  KIOSK_SESSION_STARTED: 'kiosk_session_started',
+  KIOSK_SOLUTION_SELECTED: 'kiosk_solution_selected',
+  KIOSK_EBOOK_REQUESTED: 'kiosk_ebook_requested',
 } as const;
 
 export type TrackerEventName = (typeof TRACKER_EVENTS)[keyof typeof TRACKER_EVENTS];
