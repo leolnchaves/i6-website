@@ -144,7 +144,7 @@ const InsightArticle = () => {
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${language}` },
-            { '@type': 'ListItem', position: 2, name: inIntel ? 'i6 Research' : 'Insights', item: `${BASE_URL}/${language}/${canonicalBase}` },
+            { '@type': 'ListItem', position: 2, name: inBlog ? 'i6 Blog' : inIntel ? 'i6 Research' : 'Insights', item: `${BASE_URL}/${language}/${canonicalBase}` },
             { '@type': 'ListItem', position: 3, name: insight.title, item: url },
           ],
         })}</script>
