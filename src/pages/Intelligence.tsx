@@ -219,7 +219,7 @@ const Intelligence = () => {
   const sectorLabels = language === 'pt' ? SECTOR_LABELS_PT : SECTOR_LABELS_EN;
   const themeLabels = language === 'pt' ? THEME_LABELS_PT : THEME_LABELS_EN;
 
-  const kinds: FeedKind[] = ['i6 Research', 'i6 Article', 'i6 eBook'];
+  const kinds: FeedKind[] = ['i6 Research', 'i6 eBook'];
 
   return (
     <>
