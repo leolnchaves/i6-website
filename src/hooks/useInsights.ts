@@ -25,6 +25,8 @@ export interface InsightFrontmatter {
   is_default?: boolean;
   /** i6 Blog: groups articles into a horizontal rail. */
   theme?: string;
+  /** i6 Blog: human-readable name for `theme` (sent by i6Hub). */
+  theme_label?: string;
   /** i6 Blog: secondary filter tags. Accepts YAML inline list `tags: [a, b]`. */
   tags?: string[];
 }
@@ -169,6 +171,7 @@ const ALL: Insight[] = Object.entries(modules)
       cta_form_text: fm.cta_form_text ?? null,
       is_default: fm.is_default === true,
       theme: fm.theme,
+      theme_label: fm.theme_label,
       tags,
       slug:
         fm.slug ||
