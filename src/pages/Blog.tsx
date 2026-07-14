@@ -83,7 +83,7 @@ const Blog = () => {
           <p className="text-lg text-white/70">{t('blog.pageSubtitle')}</p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:max-h-[62vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:h-[62vh]">
           {heroArticle && (
             <div className="lg:col-span-2">
               <BlogHero article={heroArticle} />
