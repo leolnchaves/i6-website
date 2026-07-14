@@ -42,21 +42,22 @@ const Blog = () => {
 
   const filtered = useMemo(() => {
     return articles.filter((a) => {
+      if (heroArticle && a.slug === heroArticle.slug) return false;
       if (activeTheme && a.theme !== activeTheme) return false;
       if (activeTag && !(a.tags || []).includes(activeTag)) return false;
       return true;
     });
-  }, [articles, activeTheme, activeTag]);
+  }, [articles, activeTheme, activeTag, heroArticle]);
 
   const byTheme = useMemo(() => {
     const map = new Map<string, Insight[]>();
     filtered.forEach((a) => {
-      const key = a.theme || (language === 'pt' ? 'Outros' : 'Other');
+      const key = a.theme || t('blog.themeFallback');
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(a);
     });
     return Array.from(map.entries());
-  }, [filtered, language]);
+  }, [filtered, t]);
 
   return (
     <>
