@@ -13,6 +13,12 @@ export const ptTranslations = {
   'header.community': 'Comunidade',
   'header.insights': 'Insights',
   'header.intelligence': 'i6 Research',
+  'header.proprietaryAi': 'Proprietary AI',
+  'header.research': 'i6 Research',
+  'header.research.hub': 'i6 Research',
+  'header.research.media': 'i6 na Mídia',
+  'header.research.blog': 'i6 Blog',
+  'header.research.comingSoon': 'Em breve',
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
   
