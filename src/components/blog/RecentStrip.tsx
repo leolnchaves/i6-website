@@ -14,13 +14,15 @@ const RecentStrip = ({ articles, layout = 'row' }: Props) => {
   if (layout === 'side') {
     const list = articles.slice(0, 3);
     return (
-      <section className="flex flex-col h-full">
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+      <section className="flex flex-col h-full max-h-full overflow-hidden">
+        <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-white/60 mb-3">
           {t('blog.recentTitle')}
         </h2>
-        <div className="flex-1 grid gap-3" style={{ gridTemplateRows: `repeat(${list.length}, minmax(0, 1fr))` }}>
+        <div className="flex flex-col gap-3">
           {list.map((a) => (
-            <BlogCard key={a.slug} article={a} variant="horizontal" />
+            <div key={a.slug} className="h-[110px] md:h-[120px]">
+              <BlogCard article={a} variant="horizontal" dense />
+            </div>
           ))}
         </div>
       </section>
@@ -29,7 +31,7 @@ const RecentStrip = ({ articles, layout = 'row' }: Props) => {
 
   return (
     <section className="mt-16">
-      <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-white/60 mb-4">
         {t('blog.recentTitle')}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

@@ -1,53 +1,72 @@
-## Objetivo
+# Ajustes na página /i6-blog
 
-Reorganizar o topo da página `/i6-blog` em duas colunas horizontais:
-- **Esquerda (~2/3)**: o artigo em destaque (hero), como está hoje.
-- **Direita (~1/3)**: título "INSIGHTS RECENTES / RECENT INSIGHTS" no topo (alinhado com o topo do hero) e, abaixo, cards de artigos recentes empilhados verticalmente, com formato mais alongado (horizontal), ocupando exatamente a mesma altura do hero.
+Três mudanças independentes na apresentação dos cards.
 
-No mobile/tablet, mantém stack (hero em cima, recentes abaixo) — split só a partir de `lg`.
+## 1. Recent strip cabendo no viewport do hero
 
-## Mudanças
+**Problema:** cada card horizontal em `RecentStrip` (layout `side`) cresce para preencher 1/3 da altura do hero. Com hero em aspect-ratio grande, os cards ficam altos demais.
 
-### 1. `src/pages/Blog.tsx`
-- Envolver `BlogHero` e `RecentStrip` num wrapper grid: `grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch`.
-- Hero ocupa `lg:col-span-2`, RecentStrip ocupa `lg:col-span-1`.
-- Reduzir `recent` para 3–4 itens (para caberem alongados dentro da altura do hero); manter 5 no fallback mobile.
-- Remover o `mt-16` de `RecentStrip` quando estiver no split (passar prop `layout="side"`).
+**Ajuste em `src/components/blog/RecentStrip.tsx` (layout `side`):**
+- Trocar `flex-1 grid` com `gridTemplateRows` por uma pilha `flex flex-col gap-3` com **altura fixa por card** (`h-[110px] md:h-[120px]`), sem esticar.
+- Envolver em container com `max-h-full overflow-hidden` para nunca ultrapassar a coluna do hero.
 
-### 2. `src/components/blog/BlogHero.tsx`
-- Trocar `aspect-[21/9]` por algo compatível com a nova largura (col-span-2). Sugestão: manter `aspect-[16/10]` OU aplicar `h-full` e deixar o grid `items-stretch` igualar a altura ao conteúdo da coluna direita.
-- Ajustar tamanho do título (`text-3xl md:text-4xl` em vez de `md:text-5xl`) para caber melhor na largura reduzida.
+**Ajuste em `src/components/blog/BlogCard.tsx` (variant `horizontal`):**
+- Reduzir padding interno (`p-3 md:p-4`), imagem em `w-1/3` em vez de `w-2/5`.
+- `line-clamp-2` no título, tamanho `text-sm`.
+- Esconder a linha de theme quando espaço apertado (manter apenas badge i6 BLOG + data).
 
-### 3. `src/components/blog/RecentStrip.tsx`
-- Nova prop `layout: 'row' | 'side'` (default `'row'`, preservando uso atual).
-- Quando `layout='side'`:
-  - Título "INSIGHTS RECENTES" no topo, alinhado ao topo do hero (sem `mt-16`).
-  - Container `flex flex-col h-full` para casar altura do hero via `items-stretch` do grid pai.
-  - Lista com `flex-1 grid grid-rows-3 gap-3` (3 cards) ou `grid-rows-4` (4 cards) — cada card ocupa uma fração igual da altura.
-  - Passar `variant="horizontal"` para `BlogCard`.
+**Ajuste em `src/pages/Blog.tsx`:**
+- Nada estrutural — o grid `items-stretch` continua, mas com cards de altura fixa a coluna direita simplesmente empilha e para; se sobrar espaço vazio abaixo do 3º card, tudo bem (hero define altura).
 
-### 4. `src/components/blog/BlogCard.tsx`
-- Adicionar variante `variant?: 'default' | 'horizontal'`.
-- No modo `horizontal`: layout `flex flex-row` — thumbnail à esquerda (largura fixa ~40%), texto à direita (título + data + tag), altura total do card = 100% do slot do grid pai. Manter o mesmo design system (bordas, hover, cores) do card atual — só reorganiza em linha.
+Resultado: hero + 3 recentes cabem na dobra sem scroll.
 
-### 5. Traduções (opcional/leve)
-- Nenhuma chave nova obrigatória: reaproveitar `blog.recentTitle` (já existe: "INSIGHTS RECENTES" / "RECENT INSIGHTS").
+## 2. Título "INSIGHTS RECENTES" mais suave
 
-## Layout (ASCII)
+Em `RecentStrip.tsx`:
+- `text-xs font-medium uppercase tracking-[0.2em] text-white/60 mb-3`
+- Remover `text-xl md:text-2xl font-bold text-white`.
+
+Aplicado só ao layout `side` (o `row` mobile pode seguir o mesmo padrão para consistência).
+
+## 3. Redesign dos rails de temas
+
+**Problema atual:** `ThemeRail` alterna tamanhos `sm/md/lg` (larguras 280/340/420px, alturas de imagem diferentes) → cards desalinhados, aspecto amador.
+
+**Novo design — "Editorial Row":**
 
 ```text
-┌───────────────────────────────┬───────────────────────┐
-│                               │ INSIGHTS RECENTES     │
-│                               ├───────────────────────┤
-│                               │ [img] Título ...      │
-│         HERO DESTAQUE         ├───────────────────────┤
-│                               │ [img] Título ...      │
-│                               ├───────────────────────┤
-│                               │ [img] Título ...      │
-└───────────────────────────────┴───────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│ TEMA                                          ‹ ›            │
+├──────────────────────────────────────────────────────────────┤
+│  ╭────────╮  Título grande do artigo em destaque             │
+│  │ cover  │  Excerpt em 2 linhas, cinza suave                │
+│  │ 16:10  │  ─────                                           │
+│  ╰────────╯  BADGE · data · X min                            │
+│                                                              │
+│  ── divisor sutil ──                                         │
+│                                                              │
+│  ╭────────╮  Próximo título                                  │
+│  │ cover  │  Excerpt…                                        │
+│  ╰────────╯                                                  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
+- Rail vira uma **lista horizontal de "painéis"** onde cada painel contém 2-3 artigos empilhados no formato horizontal (imagem quadrada à esquerda, texto à direita), separados por um divisor sutil `border-white/5`.
+- Cada painel: `w-[85vw] sm:w-[520px]`, altura fixa uniforme.
+- Todos os cards do mesmo tamanho → alinhamento visual limpo.
+- Hover: glow radial coral discreto no painel inteiro + título coral no item apontado.
+- Imagem em `rounded-xl`, aspect quadrado `w-24 h-24 md:w-28 md:h-28`, ao invés de banner em cima.
+- Setas ‹ › continuam navegando painéis.
+
+**Implementação:**
+- Reescrever `src/components/blog/ThemeRail.tsx`: agrupar `articles` em chunks de 3 e renderizar um `ThemePanel` por chunk.
+- Criar componente inline `ThemePanel` (mesmo arquivo) que renderiza 3 `BlogCard variant="horizontal"` compactos separados por `<div className="h-px bg-white/5" />`.
+- Reusar o `BlogCard` horizontal com uma variante `compact` (imagem menor, sem theme chip, `line-clamp-2` no título) — ou passar prop `dense`.
+
+**Título do tema:** manter `text-2xl md:text-3xl font-bold`, mas adicionar um sublinhado curto coral (`h-0.5 w-10 bg-[#F4845F] mt-2`) para dar assinatura visual moderna sem pesar.
+
 ## Notas técnicas
-- `items-stretch` no grid + `h-full` nos filhos garante equalização de altura sem números mágicos.
-- Filtros, rails por tema e demais seções permanecem inalterados abaixo do split.
-- Sem alteração de dados/hooks.
+
+- Nenhuma mudança em hooks, sync ou rota — só apresentação.
+- `BlogCard` ganha prop opcional `dense?: boolean` para o modo compacto usado nos painéis de tema.
+- Verificar visualmente com viewport 1280×1800 após aplicar.
