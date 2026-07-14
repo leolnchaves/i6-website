@@ -21,6 +21,19 @@ export const enTranslations = {
   'header.research.comingSoon': 'Coming soon',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
+
+  // Blog
+  'blog.pageTitle': 'i6 Blog',
+  'blog.pageSubtitle': 'Reflections, analyses and ideas from the infinity6 team on applied business AI.',
+  'blog.badge': 'i6 Article',
+  'blog.readArticle': 'Read article',
+  'blog.recentTitle': 'Recent insights',
+  'blog.filterTheme': 'Theme',
+  'blog.filterTags': 'Tags',
+  'blog.filterAll': 'All',
+  'blog.empty': 'New articles coming soon',
+  'blog.minRead': 'min read',
+
   
   // Hero Section
   'hero.infinite': 'Endless',
