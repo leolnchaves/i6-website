@@ -200,7 +200,10 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       recommended: 'Preço recomendado',
       deltaRevenue: 'Δ Receita',
       deltaMargin: 'Δ Margem',
+      latency: 'Latência do modelo',
+      latencyHint: 'média mercado 50–100 ms',
     },
+
     objectiveLabel: 'Objetivo: margem',
     reasoningTitle: 'Como o modelo está pensando',
     reasoningSubtitle: 'Pipeline preditivo · i6ElasticPrice',
