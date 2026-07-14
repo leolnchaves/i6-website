@@ -1,25 +1,24 @@
-## Ajustes nos rails de temas do /i6-blog
+## Reduzir altura do bloco hero + recentes no /i6-blog
 
-Alvo: `src/components/blog/ThemeRail.tsx`.
+Objetivo: deixar filtros e primeiros temas "espiando" na fold para incentivar scroll.
 
-### Mudanças
+### Alvos e mudanças
 
-1. **Layout em grade de 3 colunas**
-   - Substituir o carrossel horizontal (`overflow-x-auto` + painéis de 520px) por um grid responsivo: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-0`.
-   - Remover botões de navegação (setas) e a lógica de `scrollBy` — não são mais necessários.
-   - Cada card ocupa uma célula; as linhas se preenchem automaticamente da esquerda para a direita.
+1. **`src/pages/Blog.tsx`**
+   - Reduzir top-padding do section de `pt-32` para `pt-24` e o gap do header (`mb-10` → `mb-6`) para trazer o hero mais alto.
+   - Aplicar `lg:max-h-[62vh]` no grid `hero + recentes` para limitar a altura vertical do bloco em telas grandes.
 
-2. **Remover moldura, manter separadores sutis**
-   - Remover o wrapper `ThemePanel` (borda `border-white/10`, `bg-[#0B1224]/80`, padding, glow do painel).
-   - Renderizar `EditorialRow` diretamente dentro do grid.
-   - Manter o divisor horizontal apenas entre linhas (não entre colunas): usar `border-b border-white/5` em cada card exceto os da última linha visível, com padding vertical (`py-4`) para dar respiro. Como o número de linhas é dinâmico, aplicar `border-b` em todos e deixar visualmente natural (a última linha fica com uma borda também, discreta — aceitável dado que `white/5` é bem sutil).
+2. **`src/components/blog/BlogHero.tsx`**
+   - Reduzir tamanho de fonte do título: `text-3xl md:text-4xl lg:text-4xl xl:text-5xl` → `text-2xl md:text-3xl lg:text-3xl xl:text-4xl`.
+   - Reduzir padding interno: `p-6 md:p-10 lg:p-14` → `p-6 md:p-8 lg:p-10`.
+   - Manter proporção `aspect-[21/9]` em mobile e `h-full` no lg, mas com a nova max-height do grid, o card fica mais baixo.
+   - Reduzir `mb-6` do link "Ler artigo" para `mb-2` e `mb-3 md:mb-4` do título para `mb-2 md:mb-3`.
 
-3. **Corrigir escopo do hover**
-   - Hoje o `group` está no painel inteiro, então mover o mouse sobre qualquer card destaca todos.
-   - Colocar `group` em cada `EditorialRow` (Link) individualmente.
-   - Título usa `group-hover:text-[#F4845F]` — já está por card, mas passa a responder só ao próprio card.
-   - Imagem: aumentar o zoom no hover do próprio card de `group-hover:scale-105` para `group-hover:scale-110` para dar mais destaque.
+3. **`src/components/blog/RecentStrip.tsx`** (layout side)
+   - Reduzir altura dos cards horizontais de `h-[110px] md:h-[120px]` para `h-[92px] md:h-[100px]`.
+   - Reduzir gap entre cards de `gap-3` para `gap-2.5`.
+   - Reduzir `mb-3` do título "Insights recentes" para `mb-2`.
 
 ### Fora de escopo
-- Nenhuma mudança em `BlogCard`, `RecentStrip`, `BlogHero` ou `Blog.tsx`.
-- Sem alterações de conteúdo, cores globais ou i18n.
+- Nada em mobile/tablet layout row.
+- Sem mudanças em ThemeRail, filtros ou conteúdo.
