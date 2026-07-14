@@ -135,7 +135,8 @@ const modules = import.meta.glob('/src/content/insights/*.md', {
 
 const VALID_TYPES: InsightType[] = ['i6 on Media', 'i6 Article', 'i6 eBook', 'i6 Social'];
 const MEDIA_TYPES: InsightType[] = ['i6 on Media', 'i6 Social'];
-const INTELLIGENCE_INSIGHT_TYPES: InsightType[] = ['i6 Article', 'i6 eBook'];
+/** i6 Intelligence page keeps eBooks alongside Research. i6 Article moved to /i6-blog. */
+const INTELLIGENCE_INSIGHT_TYPES: InsightType[] = ['i6 eBook'];
 
 const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
@@ -143,6 +144,12 @@ const ALL: Insight[] = Object.entries(modules)
     const fm = data as Partial<InsightFrontmatter>;
     if (!fm.title || !fm.language || !fm.type || !fm.date) return null;
     if (!VALID_TYPES.includes(fm.type as InsightType)) return null;
+    const rawTags = (fm as { tags?: unknown }).tags;
+    const tags: string[] | undefined = Array.isArray(rawTags)
+      ? (rawTags as unknown[]).map((t) => String(t)).filter(Boolean)
+      : typeof rawTags === 'string' && rawTags
+        ? [rawTags]
+        : undefined;
     return {
       id: fm.id,
       title: fm.title,
@@ -160,6 +167,9 @@ const ALL: Insight[] = Object.entries(modules)
       asset_url: fm.asset_url ?? null,
       cta_form: fm.cta_form === true,
       cta_form_text: fm.cta_form_text ?? null,
+      is_default: fm.is_default === true,
+      theme: fm.theme,
+      tags,
       slug:
         fm.slug ||
         path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en)$/, ''),
@@ -173,7 +183,7 @@ ALL.sort((a, b) => (a.date < b.date ? 1 : -1));
 /**
  * Insights page (`/insights`) is media-focused.
  * Only `i6 on Media` and `i6 Social` items are listed here.
- * `i6 Article` and `i6 eBook` items live under `/i6-intelligence`.
+ * `i6 eBook` items live under `/i6-intelligence` and `i6 Article` under `/i6-blog`.
  */
 export const useInsights = (limit?: number) => {
   const { language } = useLanguage();
@@ -190,8 +200,8 @@ export const useInsights = (limit?: number) => {
 };
 
 /**
- * Returns `i6 Article` + `i6 eBook` items used by the
- * `/i6-intelligence` listing alongside Research pieces.
+ * Returns `i6 eBook` items used by the `/i6-intelligence` listing
+ * alongside Research pieces.
  */
 export const useIntelligenceInsights = () => {
   const { language } = useLanguage();
@@ -206,6 +216,24 @@ export const useIntelligenceInsights = () => {
 
   return items;
 };
+
+/**
+ * Returns `i6 Article` items powering the `/i6-blog` page.
+ */
+export const useBlogArticles = () => {
+  const { language } = useLanguage();
+  const [items, setItems] = useState<Insight[]>([]);
+
+  useEffect(() => {
+    const filtered = ALL.filter(
+      (i) => i.language === language && i.type === 'i6 Article',
+    );
+    setItems(filtered);
+  }, [language]);
+
+  return items;
+};
+
 
 
 export const useFeaturedInsights = (limit?: number) => {
