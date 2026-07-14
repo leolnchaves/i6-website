@@ -84,6 +84,8 @@ const LocalizedRoutes = () => {
         <Route path="insights/:slug" element={<InsightArticle />} />
         <Route path="i6-intelligence" element={<Intelligence />} />
         <Route path="i6-intelligence/:slug" element={<IntelligenceOrInsightArticle />} />
+        <Route path="i6-blog" element={<Blog />} />
+        <Route path="i6-blog/:slug" element={<InsightArticle />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
