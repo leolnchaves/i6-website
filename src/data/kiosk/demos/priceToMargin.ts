@@ -246,6 +246,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       { label: 'Recommending new price', microMetric: 'confidence: 94%', durationMs: 1200 },
     ],
     ctaLabel: 'Apply price',
+    rationaleLabel: 'Why this price',
     doneLabel: 'Recommendation ready',
     products: productsEn,
   },
