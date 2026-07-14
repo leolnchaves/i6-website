@@ -7,6 +7,8 @@ interface Props {
   article: Insight;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'horizontal';
+  /** Compact horizontal layout: smaller image, less padding, no theme chip. */
+  dense?: boolean;
 }
 
 /**
@@ -14,7 +16,7 @@ interface Props {
  * so the card doesn't move. Cover image (if any) sits on top with rounded
  * corners; text lives below.
  */
-const BlogCard = ({ article, size = 'md', variant = 'default' }: Props) => {
+const BlogCard = ({ article, size = 'md', variant = 'default', dense = false }: Props) => {
   const { t, language } = useLanguage();
   const localized = useLocalizedPath();
   const cover = resolveCoverImage(article.cover_image);
@@ -38,7 +40,7 @@ const BlogCard = ({ article, size = 'md', variant = 'default' }: Props) => {
         />
         <article className="relative h-full flex flex-row rounded-2xl border border-white/10 bg-[#0B1224]/80 backdrop-blur-sm group-hover:border-[#F4845F]/40 transition-colors overflow-hidden">
           {cover && (
-            <div className="w-2/5 shrink-0 overflow-hidden bg-white/5">
+            <div className={`${dense ? 'w-1/3' : 'w-2/5'} shrink-0 overflow-hidden bg-white/5`}>
               <img
                 src={cover}
                 alt={article.title}
@@ -47,18 +49,22 @@ const BlogCard = ({ article, size = 'md', variant = 'default' }: Props) => {
               />
             </div>
           )}
-          <div className="p-4 md:p-5 flex-1 flex flex-col min-w-0">
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
+          <div className={`${dense ? 'p-3 md:p-4' : 'p-4 md:p-5'} flex-1 flex flex-col min-w-0`}>
+            <div className={`flex items-center gap-2 ${dense ? 'mb-1.5' : 'mb-2'} flex-wrap`}>
               <span className="text-[10px] font-semibold uppercase tracking-[0.2em] px-2 py-0.5 rounded bg-[#F4845F]/15 text-[#F4845F]">
                 {t('blog.badge')}
               </span>
-              {article.theme && (
+              {!dense && article.theme && (
                 <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 text-white/60">
                   {article.theme}
                 </span>
               )}
             </div>
-            <h3 className="font-semibold text-white group-hover:text-[#F4845F] transition-colors mb-2 text-sm md:text-base line-clamp-3">
+            <h3
+              className={`font-semibold text-white group-hover:text-[#F4845F] transition-colors mb-2 ${
+                dense ? 'text-sm line-clamp-2' : 'text-sm md:text-base line-clamp-3'
+              }`}
+            >
               {article.title}
             </h3>
             <div className="flex items-center gap-2 text-xs text-white/40 mt-auto">
