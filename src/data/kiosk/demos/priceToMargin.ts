@@ -69,7 +69,7 @@ const productsPt: DemoProduct[] = [
     recommendedMargin: 57.7,
     deltaRevenuePct: 12.4,
     deltaMarginPct: 6.8,
-    insight: 'Elasticidade baixa · concorrência estável',
+    insight: 'Elasticidade estimada de −0,7 sinaliza baixa reação de demanda ao preço. Concorrência estável nas últimas 8 semanas e giro consistente abrem headroom de +16% no ticket. O reajuste captura margem sem comprometer o volume projetado nem a posição relativa no shelf digital.',
   },
   {
     id: 'sku-2',
