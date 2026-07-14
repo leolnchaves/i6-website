@@ -82,7 +82,7 @@ const Blog = () => {
               <BlogHero article={heroArticle} />
             </div>
           )}
-          <div className="lg:col-span-1">
+          <div className="hidden lg:block lg:col-span-1">
             <RecentStrip articles={recent} layout="side" />
           </div>
         </div>
