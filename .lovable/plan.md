@@ -1,138 +1,70 @@
 
-# Landing Kiosk — Quiz → Demo → eBook (retrato, 1080×1920)
+# Piloto: Demo interativo Price-to-Margin no /kiosk
 
-Landing dedicada em URL próprio, **fora do site** (sem header/footer, sem multi-idioma no header), otimizada para totem vertical multitoque de 10 pontos rodando em modo kiosk. Fluxo em 3 telas dentro da mesma rota.
+Substitui o bloco textual atual (`SolutionDemoBlock`) por uma experiência split-screen real quando a solução ativa é `price-to-margin`. Nas outras 8 soluções, mantém o bloco textual atual como fallback (serão convertidas em levas futuras).
 
-## Rota e visibilidade
+Ajuste extra pedido: os cards de solução (grid superior) devem ficar **em uma única linha, sem quebrar**, mesmo com 3 opções.
 
-- Nova rota: **`/kiosk`** (idioma via `?lang=pt|en`, default `pt`).
-- Fora do `DarkLayout` — sem `HeaderNovo`/`FooterNovo`/CookieBanner.
-- `Helmet` com `noindex, nofollow`. Não entra em `sitemap.xml`, `llms.txt` nem no header.
+## Fluxo do demo (o que o visitante vê)
 
-## Comportamento kiosk (envolve todas as telas)
+Layout split 50/50 dentro do card do demo, altura fixa (~62vmin):
 
-- Botão inicial "Iniciar experiência" dispara `requestFullscreen()` (browser exige gesto).
-- **Auto-reset por inatividade**: 90 s sem toque → volta ao attract screen e zera o estado do quiz/demo.
-- `user-select: none`, `oncontextmenu` bloqueado, `touch-action: manipulation` (sem zoom por double-tap, sem delay de 300 ms).
-- Botões e chips com **alvo mínimo 72×72 px**. Tipografia escalada via `clamp()` para funcionar em 1080×1920 nativo.
-- Sem links externos que tirem o visitante da experiência (nem para o site infinity6, exceto CTA final).
+**Lado esquerdo — cenário real (mock e-comm B2B fiel)**
+- Header falso: "VivaShop B2B · Catálogo".
+- Grade de 4 produtos (card com imagem gerada, nome, custo, preço atual, margem %, giro).
+- O visitante toca em um produto → card fica destacado (borda coral) e vira o "produto selecionado".
+- Ao selecionar, aparece no rodapé esquerdo o card do produto ampliado com "Preço atual R$ X · Margem Y%". Esse valor é animado durante o passo-a-passo do modelo: sobe/desce, e no fim mostra "Preço recomendado R$ Z · Margem W% · Δ Receita/Margem".
 
-## Tela 0 — Attract screen
+**Lado direito — raciocínio do modelo (script determinístico animado)**
+Pipeline de 5 passos que roda ao selecionar o produto:
+1. Lendo histórico de vendas e elasticidade do SKU
+2. Detectando concorrência e sazonalidade
+3. Simulando 10.000 cenários de preço
+4. Otimizando para **margem** (objetivo do quiz)
+5. Recomendando novo preço
 
-- Loop visual (partículas + call-to-action pulsante) com texto "Toque para começar".
-- Tap → entra na Tela 1 e dispara fullscreen.
+Cada passo tem: ícone, label, barra de progresso animada (via `requestAnimationFrame`/setInterval com cleanup), micro-métrica que aparece (ex: "elasticidade estimada: -1.4", "SKUs comparáveis: 312"). Enquanto passos avançam, o preço/margem do produto selecionado no lado esquerdo é interpolado do valor inicial até o recomendado. No passo 5 aparece o CTA visual "Aplicar preço" (não clicável — é demo).
 
-## Tela 1 — Quiz de qualificação
+Cada produto tem seu próprio preço recomendado e delta pré-calculado (dados estáticos), garantindo previsibilidade no totem.
 
-Perguntas de múltipla escolha derivadas das alavancas de `src/data/solutionsV2/content.ts` (Growth / Planning / Pricing). Objetivo: mapear o visitante para 1–3 soluções relevantes.
+## Arquivos
 
-Perguntas propostas (2 a 3, respondidas com 1 tap cada):
+**Novo — `src/data/kiosk/demos/priceToMargin.ts`**
+Exporta `priceToMarginDemo` (PT/EN):
+- `scenarioTitle`, `scenarioSubtitle`
+- `products`: array de 4 SKUs `{ id, name, image, cost, currentPrice, currentMargin, turnover, recommendedPrice, recommendedMargin, deltaRevenue, deltaMargin, insight }`
+- `pipeline`: 5 passos `{ label, microMetric, durationMs }`
+- `ctaLabel`, `objectiveLabel` ("Objetivo: margem")
 
-1. **Qual é o seu maior desafio hoje?**
-   - Crescer receita / conversão / ticket → territory `growth`
-   - Prever demanda e evitar ruptura ou excesso → territory `planning`
-   - Precificar melhor e proteger margem → territory `pricing`
-   - _(seleção múltipla permitida)_
+**Novo — `src/components/kiosk/demos/PriceToMarginDemo.tsx`**
+Componente que recebe `lang` e renderiza o split-screen. Estado local:
+- `selectedProductId`
+- `stepIndex` (0..5, 5 = concluído)
+- `interpolatedPrice`, `interpolatedMargin` (derivados do progresso)
 
-2. **Qual é o seu segmento?**
-   - Varejo / Indústria / Farma / Marketplace / Serviços
-   - _(usado só para personalizar copy do demo e do eBook, não filtra soluções)_
+Ao selecionar produto → dispara timeline com `setTimeout` encadeados respeitando `durationMs` de cada passo, com `useEffect` cleanup ao trocar de produto/desmontar. Reset limpo ao trocar produto.
 
-3. **Qual horizonte importa mais?**
-   - Ação imediata (hoje / esta semana)
-   - Planejamento tático (mês)
-   - Estratégia (trimestre / ano)
-   - _(usado para escolher o script padrão do i6Signal)_
+Imagens: 4 PNGs gerados via `imagegen` (frascos/embalagens genéricas de produtos farma/consumo, fundo neutro) em `src/assets/kiosk/`.
 
-Regra de filtragem: cada opção da pergunta 1 mapeia para um `territoryId` do `content.ts`. As soluções (`LeanSolutionCard`) desses territórios ficam visíveis na Tela 2; o resto some.
+**Editar — `src/components/kiosk/SolutionDemoBlock.tsx`**
+Adicionar switch: se `solution.id === 'price-to-margin'` renderiza `<PriceToMarginDemo />`, senão mantém o layout atual de cards textuais. Prop signature ganha `lang`.
 
-Estado do quiz vive em `useState` no `Kiosk.tsx` — nada em localStorage (kiosk é anônimo por sessão).
+**Editar — `src/pages/Kiosk.tsx`**
+Passar `lang` para `<SolutionDemoBlock>`. Ao trocar de solução, o `SolutionDemoBlock` remonta (via `key={selectedSolution.id}`) para resetar o estado do demo.
 
-## Tela 2 — Demo personalizado
+**Editar — `src/components/kiosk/SolutionsGrid.tsx`**
+Trocar `grid-cols-1 md:grid-cols-2` por `flex flex-nowrap gap-[2.5vmin]` com cada card em `flex-1 min-w-0`. Reduzir padding interno/tipografia proporcionalmente para caber 2–3 cards em uma linha sem quebrar (usando `vmin` já garante escala).
 
-Layout vertical, empilhado:
+## Detalhes técnicos
 
-```text
-┌────────────────────────────┐
-│  Eyebrow "SUAS ALAVANCAS"  │
-│  Cards das soluções        │  ← só as filtradas pelo quiz
-│  (LeanSolutionCard         │
-│   adaptado, targets ≥72px) │
-├────────────────────────────┤
-│  Demo da solução escolhida │  ← aparece ao tocar num card
-│  (bloco expandido inline)  │
-├────────────────────────────┤
-│  i6Signal demo             │  ← perguntas pré-definidas
-│  (chips grandes, filtrados │     ligadas à solução escolhida
-│   pela solução ativa)      │     e à resposta da pergunta 3
-├────────────────────────────┤
-│  CTA eBook (Tela 3)        │
-└────────────────────────────┘
-```
+- Animação: puro React state + `setTimeout`/`requestAnimationFrame` com cleanup em `useEffect return`. Sem libs externas.
+- Interpolação preço/margem: linear entre snapshots de cada passo (steps 3 e 4 fazem o maior movimento).
+- Sem chamadas de rede, sem LLM — 100% determinístico, offline-friendly para totem.
+- Tracking: emite `KIOSK_SOLUTION_SELECTED` já existente; adiciona `kiosk_demo_product_selected` opcional (não bloqueador do piloto).
+- Acessibilidade toque: alvos ≥ 72px mantidos, `touch-action: manipulation` já aplicado no shell.
 
-**Cards de alavancas**: reaproveitam a estética do `LeanSolutionCard.tsx` mas em versão kiosk (padding maior, ícone maior, sem hover — só estado ativo por toque).
+## Fora do escopo deste piloto
 
-**Bloco de demo da solução**: conteúdo textual + visual (gráfico simples ou tabela) por solução. Fonte: campos já existentes em `content.ts` (`overview`, `keyFeatures`, `businessResults`) + um payload novo `kioskDemo` por solução (KPI + 1 mini-visual) que adiciono ao `content.ts`. Sem mexer nas soluções renderizadas em `/solutions` — só campo adicional opcional.
-
-**i6Signal embed**: nova variante `KioskSignalDemo` derivada de `src/components/solutions/I6SignalDemo.tsx`. Mesma lógica de scripts e destaque imediato ao tocar; UI redesenhada em vertical, chips grandes, sem menu lateral. As perguntas exibidas são filtradas por `solutionId` ativa (mapa novo `solutionId → questionIds`).
-
-## Tela 3 — CTA eBook (gated)
-
-Card fixo no final da Tela 2 (não é rota separada — abre modal fullscreen ao tocar).
-
-- Título: "Receba o eBook `<nome do eBook mapeado à solução ativa>`".
-- Formulário grande: **Nome + Email** (mesmo esquema Zod do `LeadGateForm`).
-- Comportamento idêntico ao gated hoje:
-  - POST para `APPS_SCRIPT_URL` com `subscription: "i6-kiosk:<solution-slug>"`, `token: SHARED_FORM_TOKEN`, campos de tracking do `getLeadContextFields()`.
-  - i6Hub registra o lead e dispara o PDF do eBook por email.
-- Tela de sucesso: "Enviamos o eBook para seu email — confira a caixa de entrada (ou SPAM)".
-- Após 20 s na tela de sucesso, volta para a Tela 2 (ou attract, se ninguém interagir).
-
-Mapa `solutionId → ebookAssetId` fica em `src/data/kiosk/ebooks.ts`. O PDF em si vive no i6Hub — o kiosk só passa o identificador via `subscription`, seguindo o padrão do `LeadGateForm`.
-
-## Arquivos a criar
-
-```text
-src/pages/Kiosk.tsx                              ← rota + máquina de estados (attract/quiz/demo/success)
-src/components/kiosk/KioskShell.tsx              ← fullscreen + inatividade + reset
-src/components/kiosk/AttractScreen.tsx
-src/components/kiosk/QuizStep.tsx                ← 1 pergunta por vez, chips grandes
-src/components/kiosk/QuizProgress.tsx
-src/components/kiosk/SolutionLeversStrip.tsx     ← cards das alavancas filtradas
-src/components/kiosk/SolutionDemoBlock.tsx       ← demo expandido da solução ativa
-src/components/kiosk/KioskSignalDemo.tsx         ← variante vertical do I6SignalDemo
-src/components/kiosk/EbookCTACard.tsx            ← card fixo no fim da tela 2
-src/components/kiosk/EbookLeadModal.tsx          ← modal fullscreen com form (nome+email)
-src/hooks/useInactivityTimer.ts
-src/hooks/useFullscreen.ts
-src/data/kiosk/quiz.ts                           ← perguntas + mapeamento p/ territoryIds
-src/data/kiosk/ebooks.ts                         ← solutionId → ebookAssetId + copy
-```
-
-## Arquivos a modificar
-
-- `src/App.tsx`: registrar `<Route path="/kiosk" element={<Kiosk />} />` **fora** do `DarkLayout` e fora do `LocalizedRoutes`.
-- `src/data/solutionsV2/content.ts`: adicionar campo opcional `kioskDemo?: { kpi: string; visual: 'bars' | 'line' | 'table'; data: ... }` em cada solução (não quebra nada existente).
-- `public/sitemap.xml` e `public/llms.txt`: garantir que `/kiosk` **não** apareça (nenhuma mudança se já não estão listados — só validar).
-
-## Reaproveitamento
-
-- **Config de lead**: mesmo `APPS_SCRIPT_URL`, `SHARED_FORM_TOKEN`, `HONEYPOT_FIELD`, `getLeadContextFields()`, mesma estrutura de mensagem do `LeadGateForm.tsx`. Só muda o `subscription` para `i6-kiosk:<slug>`.
-- **Design tokens**: mesmos do site (`#0B1224` bg, `#F4845F` accent). Nada de novo no `index.css`.
-- **Tracker**: adicionar 3 eventos novos em `src/lib/tracker-events.ts` (`kiosk_session_started`, `kiosk_solution_selected`, `kiosk_ebook_requested`).
-
-## Fora do escopo
-
-- Publicação em domínio próprio (`totem.infinity6.ai`).
-- Detecção de orientação (assume retrato).
-- PWA / offline.
-- Trocador de idioma dentro do kiosk (fixado via `?lang`).
-- Multitoque com 2+ dedos (1 dedo resolve todo o fluxo).
-
-## Validação antes de publicar
-
-1. Testar `/kiosk?lang=pt` na preview forçando 1080×1920 via DevTools.
-2. Confirmar fluxo completo: attract → quiz → demo filtrado por resposta → seleção de solução → i6Signal → CTA eBook → sucesso → auto-reset em 90 s.
-3. Confirmar que `/kiosk` retorna `noindex` e não aparece em sitemap/llms/header.
-4. Confirmar que o lead chega no i6Hub com `subscription: i6-kiosk:<slug>` e o email do PDF é disparado.
-5. Release patch (v1.2.20) quando aprovado.
+- Demos de Turnover, Conversion, Growth (5 soluções), Planning (2 soluções) — permanecem no bloco textual atual até aprovarmos o padrão.
+- Chamada real a modelo/LLM.
+- Persistência de leads adicionais no i6Hub (fluxo do eBook já existente cobre).
