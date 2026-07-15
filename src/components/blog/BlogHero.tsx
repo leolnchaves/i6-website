@@ -71,9 +71,10 @@ const BlogHero = ({ article }: Props) => {
           <h2 className="text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-bold text-white mb-2 md:mb-3 max-w-3xl leading-tight group-hover:text-[#F4845F] transition-colors">
             {article.title}
           </h2>
-          <p className="text-base md:text-lg text-white/80 max-w-2xl mb-2 line-clamp-3">
+          <p className="text-base md:text-lg text-white/80 max-w-2xl mb-2 line-clamp-2 md:line-clamp-3">
             {article.excerpt}
           </p>
+
           <span className="inline-flex items-center gap-2 text-sm font-medium text-[#F4845F]">
             {t('blog.readArticle')}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
