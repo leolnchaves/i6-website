@@ -19,7 +19,7 @@ const BlogHero = ({ article }: Props) => {
       className="group block relative rounded-3xl overflow-hidden isolate h-full"
     >
       {/* Background image, feathered on all sides */}
-      <div className="relative aspect-[21/9] lg:aspect-auto lg:h-full w-full">
+      <div className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-full w-full">
         {cover ? (
           <img
             src={cover}
