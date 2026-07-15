@@ -19,7 +19,7 @@ const BlogHero = ({ article }: Props) => {
       className="group block relative rounded-3xl overflow-hidden isolate h-full"
     >
       {/* Background image, feathered on all sides */}
-      <div className="relative aspect-[21/9] lg:aspect-auto lg:h-full w-full">
+      <div className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-full w-full">
         {cover ? (
           <img
             src={cover}
@@ -51,7 +51,7 @@ const BlogHero = ({ article }: Props) => {
         />
 
         {/* Content */}
-        <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 lg:p-10 max-w-4xl">
+        <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8 lg:p-10 max-w-4xl">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-[10px] md:text-xs font-semibold uppercase tracking-[0.2em] px-3 py-1 rounded-full bg-[#F4845F]/20 text-[#F4845F] border border-[#F4845F]/40 backdrop-blur-sm">
               {t('blog.badge')}
@@ -71,9 +71,10 @@ const BlogHero = ({ article }: Props) => {
           <h2 className="text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-bold text-white mb-2 md:mb-3 max-w-3xl leading-tight group-hover:text-[#F4845F] transition-colors">
             {article.title}
           </h2>
-          <p className="text-base md:text-lg text-white/80 max-w-2xl mb-2 line-clamp-3">
+          <p className="text-base md:text-lg text-white/80 max-w-2xl mb-2 line-clamp-2 md:line-clamp-3">
             {article.excerpt}
           </p>
+
           <span className="inline-flex items-center gap-2 text-sm font-medium text-[#F4845F]">
             {t('blog.readArticle')}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
