@@ -51,7 +51,7 @@ const BlogHero = ({ article }: Props) => {
         />
 
         {/* Content */}
-        <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 lg:p-10 max-w-4xl">
+        <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8 lg:p-10 max-w-4xl">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-[10px] md:text-xs font-semibold uppercase tracking-[0.2em] px-3 py-1 rounded-full bg-[#F4845F]/20 text-[#F4845F] border border-[#F4845F]/40 backdrop-blur-sm">
               {t('blog.badge')}
