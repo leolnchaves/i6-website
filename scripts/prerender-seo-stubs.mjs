@@ -20,6 +20,7 @@ const DIST = resolve('dist');
 const PUBLIC_CONTENT = resolve('public/content');
 const INTELLIGENCE_DIR = resolve('src/content/intelligence');
 const LANDINGS_DIR = resolve('src/content/landings');
+const INSIGHTS_DIR = resolve('src/content/insights');
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
