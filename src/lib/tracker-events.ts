@@ -20,6 +20,8 @@ export const TRACKER_EVENTS = {
   SCROLL_75: 'scroll_75',
   // Kiosk (totem) experience
   KIOSK_SESSION_STARTED: 'kiosk_session_started',
+  KIOSK_QUIZ_ANSWERED: 'kiosk_quiz_answered',
+  KIOSK_QUIZ_COMPLETED: 'kiosk_quiz_completed',
   KIOSK_SOLUTION_SELECTED: 'kiosk_solution_selected',
   KIOSK_EBOOK_REQUESTED: 'kiosk_ebook_requested',
 } as const;
