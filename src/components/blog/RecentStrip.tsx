@@ -20,7 +20,7 @@ const RecentStrip = ({ articles, layout = 'row' }: Props) => {
         </h2>
         <div className="flex flex-col gap-2.5 flex-1 min-h-0">
           {list.map((a) => (
-            <div key={a.slug} className="flex-1 min-h-0">
+            <div key={a.slug} className="h-1/3 min-h-0">
               <BlogCard article={a} variant="horizontal" dense />
             </div>
           ))}
