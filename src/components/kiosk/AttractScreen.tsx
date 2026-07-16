@@ -27,9 +27,11 @@ const AttractScreen = ({ content, onStart }: Props) => {
           className="h-[7vmin] w-auto object-contain"
         />
 
-        <h1 className="text-[7vmin] leading-[1.05] font-bold max-w-[80vw]">
-          {content.attract.headline}
-        </h1>
+        <h1
+          className="text-[7vmin] leading-[1.05] font-bold max-w-[80vw]"
+          dangerouslySetInnerHTML={{ __html: content.attract.headline }}
+        />
+
         <div className="mt-[8vmin] px-[6vmin] py-[3vmin] rounded-full bg-[#F4845F] text-white text-[3vmin] font-semibold shadow-[0_0_60px_rgba(244,132,95,0.5)] animate-pulse">
           {content.attract.tapHint}
         </div>

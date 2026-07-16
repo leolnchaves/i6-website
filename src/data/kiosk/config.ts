@@ -199,7 +199,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     attract: {
       brand: 'infinity6',
-      headline: 'IA aplicada que vira decisão.',
+      headline: 'Decida <span class="text-[#F4845F]">ANTES</span> do mercado',
       tapHint: 'Toque para começar',
     },
     footer: {
@@ -315,7 +315,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     attract: {
       brand: 'infinity6',
-      headline: 'Applied AI that becomes decision.',
+      headline: 'Decide <span class="text-[#F4845F]">BEFORE</span> the market',
       tapHint: 'Tap to begin',
     },
     footer: {
