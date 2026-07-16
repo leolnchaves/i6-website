@@ -1,34 +1,103 @@
-# Plano
 
-## 1) Hero do blog truncado no mobile
+## Objetivo
 
-**Causa:** em `src/components/blog/BlogHero.tsx` (linha 22) o container usa `aspect-[21/9]` no mobile. Essa proporção é muito baixa para o formato retrato do celular, então o bloco de texto (badge + título + excerpt + CTA), posicionado com `absolute inset-0 flex flex-col justify-end`, transborda para cima e é cortado pelo `overflow-hidden` do card.
+Trocar o quiz atual do `/kiosk` (1 pergunta, escolha de território) por um fluxo de **3 perguntas obrigatórias + 1 pergunta de desempate condicional** que pontuam as 3 soluções de pricing. O resultado abre direto na solução vencedora — ou, se persistir empate, mostra as 3 pra o visitante tocar.
 
-**Correção (só mobile — desktop fica igual):**
-- Trocar `aspect-[21/9] lg:aspect-auto lg:h-full` por uma proporção mais alta no mobile, ex.: `aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-full`.
-- Reduzir `line-clamp-3` do excerpt para `line-clamp-2` no mobile (`line-clamp-2 md:line-clamp-3`) para garantir folga.
-- Ajustar padding do bloco de conteúdo no mobile (`p-5 md:p-8`) para caber melhor.
+Escopo: só PT nesta rodada (o EN atual do quiz fica intocado por enquanto; se alguém abrir `?lang=en` continua vendo o quiz antigo até subirmos a tradução).
 
-Sem mudança de layout desktop e sem tocar em BlogCard/RecentStrip.
+## Perguntas e pesos
 
-## 2) Conteúdo MD divergente entre preview e produção
+Cada resposta soma pontos em um dos 3 buckets: `margin`, `turnover`, `conversion`.
 
-Isso **não é bug** — é comportamento arquitetural do site:
+**Q1 — Roteamento: "Com que frequência o seu preço precisa mudar para acompanhar o mercado?"**
+- Uma vez por mês, ou por semana → margin +2
+- Toda semana, e muda de novo quando o produto encalha → turnover +2
+- A cada visita do cliente ao site → conversion +2
+- Nunca mudou. É tabela fixa → 0 (segue sem pontuar)
 
-- Todo conteúdo dinâmico (insights, research, landings, stories) mora no i6Hub CMS.
-- O workflow `.github/workflows/deploy-gh-pages.yml` roda `scripts/sync-content-from-i6hub.mjs` em 4 etapas (insights/research/landings/stories) **a cada deploy**. Isso reescreve `src/content/**` e `public/content/**` com o estado atual do CMS.
-- O **preview do Lovable não executa esse sync** — ele serve apenas o que está commitado no repositório. Como faz várias semanas que ninguém commita esses MDs manualmente, o preview mostra um snapshot antigo (arquivos que já foram removidos do i6Hub ainda existem no repo, e novos artigos criados só no i6Hub não aparecem aqui).
-- Em PRD (infinity6.ai) o conteúdo está sempre correto porque o sync roda no build da GH Action.
+**Q2 — Granularidade: "Qual é a menor unidade em que o preço é decidido hoje?"**
+- O SKU. Mesmo preço em todo canal → margin +2
+- O SKU em cada loja ou região → turnover +2
+- O produto, para cada cliente que entra → conversion +2
 
-**Opções (escolha uma na aprovação):**
+**Q3 — Dor: "O que mais te incomoda no preço atual?"**
+- Margem que ficou na mesa em SKUs que aguentavam mais → margin +2
+- Estoque parado e desconto dado no momento errado → turnover +2
+- Visita que entrou, olhou e não converteu → conversion +2
 
-- **A. Não mexer** — apenas documentar. Preview segue sendo "layout/código", produção segue sendo "conteúdo real". Recomendado, é como funciona hoje.
-- **B. Rodar o sync uma vez agora** e commitar o resultado, para o preview refletir o estado atual do i6Hub neste momento. Requer que os secrets `I6HUB_FEED_URL*` e `I6HUB_SYNC_TOKEN` estejam disponíveis no ambiente Lovable (hoje eles vivem só nos GitHub Secrets). Se não estiverem, precisaria cadastrá-los como secrets do projeto Lovable.
-- **C. Adicionar um passo automático de sync no dev-server do preview** (via script rodando no `predev`). Mesmo pré-requisito de secrets da opção B; adiciona latência ao boot do preview.
+**Q4 — Desempate (só aparece se, após Q3, os 2 maiores buckets estiverem empatados):**
+"O produto tem prazo para sair (coleção, validade, temporada)?"
+- Sim → turnover +1
+- Não, o giro é estável → margin +1
+- O prazo é a própria sessão → conversion +1
+
+**Resolução final:**
+- Vencedor único → abre direto o demo da solução (`price-to-margin` | `price-to-turnover` | `price-to-conversion`).
+- Empate persistente OU todos zerados → mostra os 3 cards de pricing e deixa o visitante tocar (comportamento parecido com o results atual, mas filtrado só para as 3 soluções de pricing).
+
+## Fluxo de tela
+
+```text
+Attract
+   ↓ (tap)
+Q1 → Q2 → Q3 → [Q4 se empate] → Results
+                                    │
+                          ┌─────────┴──────────┐
+                          │                    │
+                    vencedor único       empate/zerado
+                          │                    │
+                  abre solução           mostra 3 cards
+                  direto no demo         de pricing p/ tocar
+```
+
+Cada pergunta é uma tela cheia (single-question), com as 3–4 opções em botões grandes touch-friendly (mesmo padrão visual do QuizScreen atual: pills grandes, coral no selecionado, min-h touch). Progresso "Passo X de 3" no topo. Botão "Continuar" só habilita após selecionar uma opção (single-select agora, não multi).
+
+## Arquivos afetados
+
+**Dados (PT-only nesta rodada):**
+- `src/data/kiosk/config.ts` — trocar a shape do quiz:
+  - Novo tipo `PricingBucket = 'margin' | 'turnover' | 'conversion'`.
+  - `QuizContent` passa a ter `questions: QuizQuestion[]` (3 perguntas base) + `tiebreaker: QuizQuestion` (Q4).
+  - Cada `QuizOption` ganha `weights: Partial<Record<PricingBucket, number>>` em vez de `territory`.
+  - Textos de intro/results ajustados ("suas alavancas preditivas" → algo mais alinhado a pricing, ex.: "sua estratégia de preço recomendada").
+  - EN mantém a estrutura antiga por ora — vou manter os dois formatos coexistindo via feature flag no lang, ou simplesmente marcar EN como "coming soon" e forçar `?lang=pt`. **Decisão sugerida:** no EN, esconder toggle de idioma e forçar PT temporariamente (mais simples).
+
+**Componentes:**
+- `src/components/kiosk/QuizScreen.tsx` — refatorar para receber `question: QuizQuestion` + índice + total, e chamar `onAnswer(weights)` a cada tela. Single-select em vez de multi.
+- `src/pages/Kiosk.tsx` — nova máquina de estado do quiz:
+  - `stage: 'attract' | 'quiz' | 'results'`
+  - `quizStep: 0..2` para Q1–Q3, `4` para tiebreaker
+  - `scores: { margin, turnover, conversion }`
+  - Ao terminar Q3, decide se roda Q4 (empate entre os dois maiores) ou pula pra results.
+  - Resultado: `winner` = bucket com score único max → mapeia para solutionId; caso contrário `winners = [...]`.
+- Results:
+  - Se `winner` único: seleciona automaticamente a solução vencedora (`setSelectedSolutionId`) e faz scroll pro demo.
+  - Se empate: renderiza `SolutionsGrid` filtrado só nas 3 de pricing (`price-to-margin`, `price-to-turnover`, `price-to-conversion`), sem auto-select.
+
+**Tracking:**
+- `src/lib/tracker-events.ts` — adicionar `KIOSK_PRICING_QUIZ_ANSWERED` (por pergunta, com peso escolhido) e `KIOSK_PRICING_RESULT` (com bucket vencedor ou "tie").
+- Manter `KIOSK_SESSION_STARTED` e `KIOSK_SOLUTION_SELECTED`.
+
+## Mapeamento bucket → solução
+
+```
+margin     → price-to-margin
+turnover   → price-to-turnover
+conversion → price-to-conversion
+```
 
 ## Detalhes técnicos
 
-Arquivo alterado no item 1:
-- `src/components/blog/BlogHero.tsx` — apenas classes Tailwind no wrapper do cover e no `<p>` do excerpt.
+- Q4 aparece se `max(scores) == segundoMaior(scores)` E `max > 0`. Se todos zerados após Q3, pula Q4 e vai direto pro fallback (mostra os 3).
+- Após Q4, se ainda empatar, cai no fallback dos 3 cards.
+- `handleQuizSubmit` no `Kiosk.tsx` some; entra `handleAnswer(weights)` que soma no state e avança step.
+- `territories` state deixa de ser usado no fluxo novo; posso remover ou manter zerado. Vou remover a filtragem por território no results e usar filtragem por ID fixo das 3 de pricing.
+- EN: no toggle de idioma da AttractScreen, escondo o botão EN temporariamente (comentário no código pra reativar quando traduzirmos).
 
-Nenhum arquivo alterado para o item 2 até você decidir A/B/C.
+## Fora do escopo
+
+- Tradução EN do novo quiz (fica pra próxima release).
+- Mudanças nos demos de Price-to-Turnover e Price-to-Conversion (hoje só temos demo de Price-to-Margin; os outros dois já caem no `SolutionDemoBlock` padrão).
+- Nenhuma mudança nas outras solutions (Growth/Planning) — elas simplesmente somem do kiosk agora que o fluxo é 100% pricing.
+
+Se preferir manter Growth/Planning como uma pergunta 0 ("Seu foco hoje é crescer, prever ou precificar?") antes do fluxo de pricing, me avise antes de eu construir — a base atual suporta essa variação com pouco esforço extra.
