@@ -49,8 +49,8 @@ const BlogCard = ({ article, size = 'md', variant = 'default', dense = false }: 
               />
             </div>
           )}
-          <div className={`${dense ? 'p-3 md:p-4' : 'p-4 md:p-5'} flex-1 flex flex-col min-w-0`}>
-            <div className={`flex items-center gap-2 ${dense ? 'mb-1.5' : 'mb-2'} flex-wrap`}>
+          <div className={`${dense ? 'px-3 py-2.5 md:px-4 md:py-3' : 'p-4 md:p-5'} flex-1 flex flex-col min-w-0`}>
+            <div className={`flex items-center gap-2 ${dense ? 'mb-1' : 'mb-2'} flex-wrap shrink-0`}>
               <span className="text-[10px] font-semibold uppercase tracking-[0.2em] px-2 py-0.5 rounded bg-[#F4845F]/15 text-[#F4845F]">
                 {t('blog.badge')}
               </span>
@@ -61,13 +61,13 @@ const BlogCard = ({ article, size = 'md', variant = 'default', dense = false }: 
               )}
             </div>
             <h3
-              className={`font-semibold text-white group-hover:text-[#F4845F] transition-colors mb-2 ${
-                dense ? 'text-sm line-clamp-2' : 'text-sm md:text-base line-clamp-3'
+              className={`font-semibold text-white group-hover:text-[#F4845F] transition-colors mb-2 leading-snug ${
+                dense ? 'text-sm' : 'text-sm md:text-base'
               }`}
             >
               {article.title}
             </h3>
-            <div className="flex items-center gap-2 text-xs text-white/40 mt-auto">
+            <div className="flex items-center gap-2 text-xs text-white/40 mt-auto shrink-0">
               <time>
                 {new Date(article.date).toLocaleDateString(
                   language === 'pt' ? 'pt-BR' : 'en-US',
