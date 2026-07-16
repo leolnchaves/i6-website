@@ -27,7 +27,7 @@ const AttractScreen = ({ content, onStart }: Props) => {
           className="h-[16vmin] w-auto object-contain"
         />
         <p className="-mt-[1vmin] text-[1.8vmin] font-medium tracking-wide text-white/75 max-w-[70vw]">
-          The Platform for Decision Advantage
+          The Platform for <strong className="font-bold text-white">Decision Advantage</strong>
         </p>
       </div>
 
