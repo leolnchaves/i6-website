@@ -28,9 +28,14 @@ const Blog = () => {
     [articles, heroArticle],
   );
 
+  const filterable = useMemo(
+    () => articles.filter((a) => a.slug !== heroArticle?.slug),
+    [articles, heroArticle],
+  );
+
   const themes = useMemo(() => {
     const map = new Map<string, string>();
-    articles.forEach((a) => {
+    filterable.forEach((a) => {
       if (!a.theme) return;
       const existing = map.get(a.theme);
       if (!existing || existing === a.theme) {
@@ -38,13 +43,13 @@ const Blog = () => {
       }
     });
     return Array.from(map, ([value, label]) => ({ value, label }));
-  }, [articles]);
+  }, [filterable]);
 
   const tags = useMemo(() => {
     const set = new Set<string>();
-    articles.forEach((a) => a.tags?.forEach((t) => set.add(t)));
+    filterable.forEach((a) => a.tags?.forEach((t) => set.add(t)));
     return Array.from(set);
-  }, [articles]);
+  }, [filterable]);
 
   const filtered = useMemo(() => {
     return articles.filter((a) => {
