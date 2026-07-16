@@ -2,10 +2,21 @@ import type { TerritoryId } from '@/data/solutionsV2/content';
 
 export type KioskLang = 'pt' | 'en';
 
+export type PricingBucket = 'margin' | 'turnover' | 'conversion';
+
 export interface QuizOption {
   id: string;
   label: string;
-  territory: TerritoryId;
+  /** Peso somado a cada bucket de pricing. Ausência = 0. */
+  weights: Partial<Record<PricingBucket, number>>;
+}
+
+export interface QuizQuestion {
+  id: string;
+  eyebrow: string;
+  text: string;
+  helper?: string;
+  options: QuizOption[];
 }
 
 export interface QuizContent {
@@ -15,17 +26,18 @@ export interface QuizContent {
     subtitle: string;
     startCta: string;
   };
-  question: {
-    label: string;
-    text: string;
-    helper: string;
-  };
-  options: QuizOption[];
+  /** As três perguntas base (Q1..Q3). */
+  questions: QuizQuestion[];
+  /** Q4 — só exibida em caso de empate entre os dois maiores buckets. */
+  tiebreaker: QuizQuestion;
+  progressLabel: string; // ex.: "Passo {current} de {total}"
   continueCta: string;
   results: {
     eyebrow: string;
     title: string;
     subtitle: string;
+    tieTitle: string;
+    tieSubtitle: string;
     selectSolutionHint: string;
     signalEyebrow: string;
     signalTitle: string;
@@ -60,45 +72,112 @@ export interface QuizContent {
   };
 }
 
+/** Bucket vencedor → solutionId correspondente. */
+export const bucketToSolutionId: Record<PricingBucket, string> = {
+  margin: 'price-to-margin',
+  turnover: 'price-to-turnover',
+  conversion: 'price-to-conversion',
+};
+
+/** IDs das 3 soluções de pricing (usadas no fallback de empate). */
+export const PRICING_SOLUTION_IDS = [
+  'price-to-margin',
+  'price-to-turnover',
+  'price-to-conversion',
+] as const;
+
+// Territory kept exported for legacy imports elsewhere (unused here now).
+export type { TerritoryId };
+
 export const kioskContent: Record<KioskLang, QuizContent> = {
   pt: {
     intro: {
       eyebrow: 'infinity6 · Experiência Interativa',
-      title: 'Descubra em 30 segundos como a IA da infinity6 pode gerar valor para o seu negócio.',
-      subtitle: 'Responda uma pergunta rápida e veja soluções e sinais preditivos personalizados para o seu contexto.',
+      title: 'Descubra em 30 segundos qual estratégia de preço faz mais sentido para o seu negócio.',
+      subtitle:
+        'Responda três perguntas rápidas e veja qual das soluções de pricing preditivo da infinity6 se encaixa no seu contexto.',
       startCta: 'Começar',
     },
-    question: {
-      label: 'Passo 1 de 1',
-      text: 'Qual é o seu maior desafio hoje?',
-      helper: 'Selecione uma ou mais opções.',
-    },
-    options: [
+    questions: [
       {
-        id: 'grow',
-        label: 'Crescer receita, conversão e ticket',
-        territory: 'growth',
+        id: 'q1-roteamento',
+        eyebrow: 'Pergunta 1',
+        text: 'Com que frequência o seu preço precisa mudar para acompanhar o mercado?',
+        helper: 'Escolha a opção que mais se aproxima da sua realidade.',
+        options: [
+          { id: 'q1-mensal', label: 'Uma vez por mês, ou por semana', weights: { margin: 2 } },
+          {
+            id: 'q1-encalhe',
+            label: 'Toda semana, e muda de novo quando o produto encalha',
+            weights: { turnover: 2 },
+          },
+          { id: 'q1-sessao', label: 'A cada visita do cliente ao site', weights: { conversion: 2 } },
+          { id: 'q1-fixo', label: 'Nunca mudou. É tabela fixa', weights: {} },
+        ],
       },
       {
-        id: 'plan',
-        label: 'Prever demanda e evitar ruptura ou excesso',
-        territory: 'planning',
+        id: 'q2-granularidade',
+        eyebrow: 'Pergunta 2',
+        text: 'Qual é a menor unidade em que o preço é decidido hoje?',
+        helper: 'Nível em que o preço realmente varia na sua operação.',
+        options: [
+          { id: 'q2-sku', label: 'O SKU. Mesmo preço em todo canal', weights: { margin: 2 } },
+          { id: 'q2-sku-loja', label: 'O SKU em cada loja ou região', weights: { turnover: 2 } },
+          {
+            id: 'q2-cliente',
+            label: 'O produto, para cada cliente que entra',
+            weights: { conversion: 2 },
+          },
+        ],
       },
       {
-        id: 'price',
-        label: 'Precificar melhor e proteger margem',
-        territory: 'pricing',
+        id: 'q3-dor',
+        eyebrow: 'Pergunta 3',
+        text: 'O que mais te incomoda no preço atual?',
+        helper: 'A dor que você mais gostaria de resolver primeiro.',
+        options: [
+          {
+            id: 'q3-margem',
+            label: 'Margem que ficou na mesa em SKUs que aguentavam mais',
+            weights: { margin: 2 },
+          },
+          {
+            id: 'q3-estoque',
+            label: 'Estoque parado e desconto dado no momento errado',
+            weights: { turnover: 2 },
+          },
+          {
+            id: 'q3-conversao',
+            label: 'Visita que entrou, olhou e não converteu',
+            weights: { conversion: 2 },
+          },
+        ],
       },
     ],
-    continueCta: 'Ver soluções',
+    tiebreaker: {
+      id: 'q4-desempate',
+      eyebrow: 'Última pergunta',
+      text: 'O produto tem prazo para sair (coleção, validade, temporada)?',
+      helper: 'Ajuda a definir a estratégia final.',
+      options: [
+        { id: 'q4-sim', label: 'Sim', weights: { turnover: 1 } },
+        { id: 'q4-nao', label: 'Não, o giro é estável', weights: { margin: 1 } },
+        { id: 'q4-sessao', label: 'O prazo é a própria sessão', weights: { conversion: 1 } },
+      ],
+    },
+    progressLabel: 'Passo {current} de {total}',
+    continueCta: 'Continuar',
     results: {
-      eyebrow: 'Suas alavancas preditivas',
-      title: 'Estas são as soluções mais relevantes para o seu desafio.',
-      subtitle: 'Toque em uma solução para ver o exemplo de aplicação.',
+      eyebrow: 'Sua estratégia de preço recomendada',
+      title: 'Esta é a solução de pricing mais aderente ao seu contexto.',
+      subtitle: 'Explore o exemplo de aplicação abaixo.',
+      tieTitle: 'Seu perfil combina mais de uma frente de pricing.',
+      tieSubtitle: 'Toque em uma solução para ver o exemplo de aplicação.',
       selectSolutionHint: 'Toque em uma solução acima',
       signalEyebrow: 'i6 Signal',
       signalTitle: 'Converse com a camada preditiva.',
-      signalSubtitle: 'Toque em uma pergunta para ver como a infinity6 transforma dados em decisão.',
+      signalSubtitle:
+        'Toque em uma pergunta para ver como a infinity6 transforma dados em decisão.',
       signalPickHint: 'Escolha uma pergunta',
     },
     ebook: {
@@ -128,28 +207,89 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tagline: 'infinity6 · IA aplicada a resultado',
     },
   },
+  // NOTE: EN mirrors the PT structure so nothing quebra type-wise, mas o toggle
+  // de idioma está temporariamente oculto no AttractScreen — traduzimos na
+  // próxima rodada.
   en: {
     intro: {
       eyebrow: 'infinity6 · Interactive Experience',
-      title: 'Discover in 30 seconds how infinity6 AI can create value for your business.',
-      subtitle: 'Answer one quick question and see solutions and predictive signals tailored to your context.',
+      title: 'Discover in 30 seconds which pricing strategy fits your business.',
+      subtitle:
+        'Answer three quick questions and see which infinity6 predictive pricing solution matches your context.',
       startCta: 'Start',
     },
-    question: {
-      label: 'Step 1 of 1',
-      text: 'What is your biggest challenge today?',
-      helper: 'Select one or more options.',
-    },
-    options: [
-      { id: 'grow', label: 'Grow revenue, conversion and ticket', territory: 'growth' },
-      { id: 'plan', label: 'Forecast demand and avoid stockout or excess', territory: 'planning' },
-      { id: 'price', label: 'Price better and protect margin', territory: 'pricing' },
+    questions: [
+      {
+        id: 'q1-routing',
+        eyebrow: 'Question 1',
+        text: 'How often does your price need to change to follow the market?',
+        helper: 'Pick the option closest to your reality.',
+        options: [
+          { id: 'q1-monthly', label: 'Once a month, or once a week', weights: { margin: 2 } },
+          {
+            id: 'q1-stuck',
+            label: 'Weekly, and again when a product gets stuck',
+            weights: { turnover: 2 },
+          },
+          { id: 'q1-session', label: 'On every customer visit', weights: { conversion: 2 } },
+          { id: 'q1-fixed', label: 'Never. It is a fixed price list', weights: {} },
+        ],
+      },
+      {
+        id: 'q2-granularity',
+        eyebrow: 'Question 2',
+        text: 'What is the smallest unit at which price is decided today?',
+        options: [
+          { id: 'q2-sku', label: 'The SKU. Same price across channels', weights: { margin: 2 } },
+          { id: 'q2-sku-store', label: 'The SKU per store or region', weights: { turnover: 2 } },
+          {
+            id: 'q2-customer',
+            label: 'The product, per customer visiting',
+            weights: { conversion: 2 },
+          },
+        ],
+      },
+      {
+        id: 'q3-pain',
+        eyebrow: 'Question 3',
+        text: 'What bothers you the most about pricing today?',
+        options: [
+          {
+            id: 'q3-margin',
+            label: 'Margin left on the table on SKUs that could hold more',
+            weights: { margin: 2 },
+          },
+          {
+            id: 'q3-stock',
+            label: 'Stuck inventory and discounts given at the wrong moment',
+            weights: { turnover: 2 },
+          },
+          {
+            id: 'q3-conversion',
+            label: 'Visits that came, looked and did not convert',
+            weights: { conversion: 2 },
+          },
+        ],
+      },
     ],
-    continueCta: 'See solutions',
+    tiebreaker: {
+      id: 'q4-tiebreak',
+      eyebrow: 'Last question',
+      text: 'Does the product have a deadline to leave (collection, expiry, season)?',
+      options: [
+        { id: 'q4-yes', label: 'Yes', weights: { turnover: 1 } },
+        { id: 'q4-no', label: 'No, turnover is steady', weights: { margin: 1 } },
+        { id: 'q4-session', label: 'The deadline is the session itself', weights: { conversion: 1 } },
+      ],
+    },
+    progressLabel: 'Step {current} of {total}',
+    continueCta: 'Continue',
     results: {
-      eyebrow: 'Your predictive levers',
-      title: 'These are the solutions most relevant to your challenge.',
-      subtitle: 'Tap a solution to see an example.',
+      eyebrow: 'Your recommended pricing strategy',
+      title: 'This is the pricing solution that best fits your context.',
+      subtitle: 'Explore the example below.',
+      tieTitle: 'Your profile combines more than one pricing angle.',
+      tieSubtitle: 'Tap a solution to see the example.',
       selectSolutionHint: 'Tap a solution above',
       signalEyebrow: 'i6 Signal',
       signalTitle: 'Chat with the predictive layer.',
@@ -187,7 +327,6 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
 
 /**
  * Map from solutionId → i6Signal scenario keys to show for that solution.
- * Scenario keys must match `Scenario` type from I6SignalDemo.tsx.
  */
 export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv')[]> = {
   'predictive-personalization': ['pdv', 'comercial'],
@@ -201,11 +340,6 @@ export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing
   'price-to-conversion': ['pricing', 'comercial'],
 };
 
-/**
- * Per-solution eBook copy. The actual PDF asset lives in i6Hub — the kiosk
- * only passes an identifier via the `subscription` field so i6Hub knows which
- * PDF to email. Titles here are shown to the visitor.
- */
 export const solutionEbook: Record<string, { pt: string; en: string }> = {
   'predictive-personalization': {
     pt: 'Personalização Preditiva na prática',

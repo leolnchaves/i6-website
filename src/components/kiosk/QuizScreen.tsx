@@ -1,54 +1,60 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
-import type { QuizContent } from '@/data/kiosk/config';
-import type { TerritoryId } from '@/data/solutionsV2/content';
+import type { PricingBucket, QuizQuestion } from '@/data/kiosk/config';
 
 interface Props {
-  content: QuizContent;
-  onSubmit: (territoryIds: TerritoryId[]) => void;
+  question: QuizQuestion;
+  stepIndex: number; // 0-based (base questions)
+  totalSteps: number; // number of base questions (used for progress text)
+  progressLabel: string; // "Passo {current} de {total}"
+  continueCta: string;
+  isTiebreaker?: boolean;
+  onAnswer: (weights: Partial<Record<PricingBucket, number>>, optionId: string) => void;
 }
 
-const QuizScreen = ({ content, onSubmit }: Props) => {
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+const QuizScreen = ({
+  question,
+  stepIndex,
+  totalSteps,
+  progressLabel,
+  continueCta,
+  isTiebreaker,
+  onAnswer,
+}: Props) => {
+  const [selected, setSelected] = useState<string | null>(null);
 
-  const toggle = (id: string) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
+  const progress = isTiebreaker
+    ? question.eyebrow
+    : progressLabel
+        .replace('{current}', String(stepIndex + 1))
+        .replace('{total}', String(totalSteps));
 
   const submit = () => {
-    if (selected.size === 0) return;
-    const territories = content.options
-      .filter((o) => selected.has(o.id))
-      .map((o) => o.territory);
-    // Dedupe while preserving order
-    const unique = Array.from(new Set(territories));
-    onSubmit(unique);
+    if (!selected) return;
+    const opt = question.options.find((o) => o.id === selected);
+    if (!opt) return;
+    onAnswer(opt.weights, opt.id);
   };
 
   return (
     <div className="flex flex-col items-center min-h-screen px-[6vmin] py-[8vmin]">
       <div className="w-full max-w-[92vw] text-center">
         <p className="text-[1.8vmin] tracking-[0.4em] uppercase text-[#F4845F] font-semibold mb-[3vmin]">
-          {content.intro.eyebrow}
+          {progress}
         </p>
-        <h2 className="text-[4.5vmin] font-bold leading-tight mb-[2vmin]">
-          {content.question.text}
-        </h2>
-        <p className="text-[2.2vmin] text-white/60 mb-[6vmin]">{content.question.helper}</p>
+        <h2 className="text-[4.5vmin] font-bold leading-tight mb-[2vmin]">{question.text}</h2>
+        {question.helper && (
+          <p className="text-[2.2vmin] text-white/60 mb-[6vmin]">{question.helper}</p>
+        )}
 
         <div className="flex flex-col gap-[2.5vmin]">
-          {content.options.map((opt) => {
-            const isSel = selected.has(opt.id);
+          {question.options.map((opt) => {
+            const isSel = selected === opt.id;
             return (
               <button
                 key={opt.id}
                 type="button"
-                onClick={() => toggle(opt.id)}
+                onClick={() => setSelected(opt.id)}
                 className={`w-full flex items-center gap-[3vmin] rounded-2xl px-[4vmin] py-[3.5vmin] text-left transition-all border-2 min-h-[10vmin] ${
                   isSel
                     ? 'bg-[#F4845F]/15 border-[#F4845F] shadow-[0_0_30px_rgba(244,132,95,0.3)]'
@@ -71,14 +77,14 @@ const QuizScreen = ({ content, onSubmit }: Props) => {
         <button
           type="button"
           onClick={submit}
-          disabled={selected.size === 0}
+          disabled={!selected}
           className={`mt-[8vmin] w-full max-w-[70vw] mx-auto rounded-full px-[6vmin] py-[3.5vmin] text-[3vmin] font-bold transition-all min-h-[10vmin] ${
-            selected.size === 0
+            !selected
               ? 'bg-white/10 text-white/40 cursor-not-allowed'
               : 'bg-[#F4845F] text-white shadow-[0_0_40px_rgba(244,132,95,0.5)]'
           }`}
         >
-          {content.continueCta}
+          {continueCta}
         </button>
       </div>
     </div>
