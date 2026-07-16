@@ -363,24 +363,69 @@ for (const lang of ['en', 'pt']) {
 }
 
 
-// Insights articles (only the published one for now — extend if more land in content/)
-const insightArticles = [
-  { slug: 'previsao-demanda-ia', pt: { title: 'Previsão de Demanda com IA: do Forecast Estatístico ao Adaptativo', description: 'Como modelos preditivos de nova geração superam ARIMA e Prophet em ambientes voláteis de varejo e indústria.' }, en: { title: 'Demand Forecasting with AI: From Statistical to Adaptive Forecasts', description: 'How next-generation predictive models outperform ARIMA and Prophet in volatile retail and industry environments.' } },
-];
-for (const article of insightArticles) {
-  for (const lang of ['en', 'pt']) {
-    const meta = article[lang];
-    const path = `/${lang}/insights/${article.slug}`;
+// ---- Insights (i6 Article / i6 eBook / i6 on Media / i6 Social) ----
+// Driven by markdown in src/content/insights/ (synced from i6Hub in CI).
+// Route mapping matches the React router:
+//   i6 Article  -> /{lang}/i6-blog/{slug}
+//   i6 eBook    -> /{lang}/i6-intelligence/{slug}
+//   i6 on Media -> /{lang}/insights/{slug}
+//   i6 Social   -> /{lang}/insights/{slug}
+const INSIGHT_ROUTE = {
+  'i6 Article': 'i6-blog',
+  'i6 eBook': 'i6-intelligence',
+  'i6 on Media': 'insights',
+  'i6 Social': 'insights',
+};
+
+// Strip common markdown syntax from excerpts so they don't leak into <meta> tags.
+function excerptToPlain(raw) {
+  if (!raw) return '';
+  return String(raw)
+    .replace(/\\r\\n|\\n|\\r/g, ' ')
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(.*?)\1/g, '$2')
+    .replace(/~~(.*?)~~/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+if (existsSync(INSIGHTS_DIR)) {
+  const files = readdirSync(INSIGHTS_DIR).filter((f) => f.endsWith('.md'));
+  for (const file of files) {
+    const raw = readFileSync(join(INSIGHTS_DIR, file), 'utf8');
+    const { data: fm } = parseFrontmatter(raw);
+    if (!fm.title || !fm.language || !fm.slug || !fm.type || !fm.date) continue;
+    const segment = INSIGHT_ROUTE[fm.type];
+    if (!segment) continue;
+    const lang = fm.language;
+    if (lang !== 'en' && lang !== 'pt') continue;
+
+    const path = `/${lang}/${segment}/${fm.slug}`;
+    const title = `${fm.title} | infinity6`;
+    const description = excerptToPlain(fm.excerpt || '');
+    const cover = fm.cover_image ? String(fm.cover_image) : undefined;
+
     const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Article',
-      headline: meta.title,
-      description: meta.description,
+      headline: fm.title,
+      description,
+      datePublished: fm.date,
+      inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
       author: { '@type': 'Organization', name: 'infinity6' },
       publisher: { '@type': 'Organization', name: 'infinity6', logo: { '@type': 'ImageObject', url: OG_IMAGE } },
       mainEntityOfPage: `${BASE_URL}${path}`,
+      ...(cover ? { image: cover.startsWith('http') ? cover : `${BASE_URL}${cover.startsWith('/') ? '' : '/'}${cover}` } : {}),
     };
-    const html = buildStub(template, { lang, path, title: `${meta.title} | infinity6`, description: meta.description, h1: meta.title, jsonLd });
+    const html = buildStub(template, {
+      lang, path, title, description, h1: fm.title,
+      image: cover,
+      jsonLd,
+    });
     writeStub(path, html);
     count++;
   }
