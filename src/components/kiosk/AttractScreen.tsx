@@ -20,13 +20,13 @@ const AttractScreen = ({ content, onStart }: Props) => {
         <div className="absolute w-[30vmin] h-[30vmin] rounded-full border border-[#F4845F]/40 animate-ping" style={{ animationDuration: '1.8s' }} />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 inline-block">
         <img
           src={logoWhite}
           alt={content.attract.brand}
-          className="h-[16vmin] w-auto object-contain"
+          className="h-[16vmin] w-auto object-contain block"
         />
-        <p className="-mt-[1vmin] text-[1.8vmin] font-medium tracking-wide text-white/75 max-w-[70vw]">
+        <p className="-mt-[3vmin] mx-auto w-[62%] text-center text-[1.6vmin] font-medium tracking-wide text-white/80 whitespace-nowrap">
           The Platform for <strong className="font-bold text-white">Decision Advantage</strong>
         </p>
       </div>
