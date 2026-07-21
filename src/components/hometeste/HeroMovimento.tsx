@@ -9,18 +9,17 @@ const HeroMovimento = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
 
+  const coralGlow = '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)';
   const copy = {
     pt: {
-      title: 'Inteligência de Movimento',
-      subtitle: 'Data moves. You Grow.',
-      desc: 'IA preditiva que orquestra demanda, preço, sortimento e propensão, entregando eficiência de distribuição, proteção de margem e conversão com menor CAC.',
-      cta: 'Colocar Dados em Movimento',
+      titleHtml: `Decida <span style="color:#F4845F; text-shadow:${coralGlow}">antes</span> do mercado`,
+      desc: 'Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.',
+      cta: 'Antecipe sua próxima decisão. Agora.',
     },
     en: {
-      title: 'Movement Intelligence',
-      subtitle: 'Data moves. You Grow.',
-      desc: 'Predictive AI that orchestrates demand, price, assortment and propensity. Distribute smarter, protect margin and convert at lower CAC.',
-      cta: 'Set Data in Motion',
+      titleHtml: `Decide <span style="color:#F4845F; text-shadow:${coralGlow}">before</span> the market`,
+      desc: 'We turn demand, price, inventory and behavior signals into decisions that protect margin, accelerate turnover and increase conversion.',
+      cta: 'Get ahead of your next decision. Now.',
     },
   }[language];
 
@@ -28,15 +27,17 @@ const HeroMovimento = () => {
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1224] overflow-hidden">
       <MotionVerticalRain />
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold text-white leading-tight tracking-tight">
-          {copy.title}
-        </h1>
+        <h1
+          className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold text-white leading-tight tracking-tight"
+          dangerouslySetInnerHTML={{ __html: copy.titleHtml }}
+        />
         <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
-          Data moves. <span className="font-semibold" style={{ textShadow: '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)' }}>You Grow.</span>
+          The Platform for <span className="font-semibold" style={{ textShadow: coralGlow }}>Decision Advantage</span>
         </p>
         <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
           {copy.desc}
         </p>
+
         <Link
           to={localized('/contact')}
           className="group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
