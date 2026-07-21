@@ -12,12 +12,13 @@ const HeroMovimento = () => {
   const coralGlow = '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)';
   const copy = {
     pt: {
-      titleHtml: `Decida <span style="color:#F4845F; text-shadow:${coralGlow}">antes</span> do mercado`,
+      titleHtml: `Decida <span style="color:#F4845F">antes</span> do mercado`,
       desc: 'Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.',
       cta: 'Antecipe sua próxima decisão. Agora.',
     },
     en: {
-      titleHtml: `Decide <span style="color:#F4845F; text-shadow:${coralGlow}">before</span> the market`,
+      titleHtml: `Decide <span style="color:#F4845F">before</span> the market`,
+
       desc: 'We turn demand, price, inventory and behavior signals into decisions that protect margin, accelerate turnover and increase conversion.',
       cta: 'Get ahead of your next decision. Now.',
     },
