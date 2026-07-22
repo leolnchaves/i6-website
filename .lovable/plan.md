@@ -1,24 +1,26 @@
-## Atualizar Hero (PT/EN) em `src/components/hometeste/HeroMovimento.tsx`
+## Substituir chuva de gotas por ondas coral sutis no Hero
 
-**Título (h1)** — mantém fonte/tamanho, destaca "antes"/"before" em coral (#F4845F) com glow suave (mesmo padrão do atual "You Grow"):
+**Arquivo:** `src/components/hometeste/HeroMovimento.tsx` (+ asset da imagem)
 
-- PT: `Decida <span coral>antes</span> do mercado`
-- EN: `Decide <span coral>before</span> the market`
+### Passos
 
-**Subtítulo coral** — passa a slogan único (mesmo PT/EN), com glow apenas em "Decision Advantage":
+1. **Subir a imagem via Lovable Assets** (sem AI edit, preserva shape/estilo exatos):
+   - `lovable-assets create --file /mnt/user-uploads/fundo_site.png --filename hero-waves.png > src/assets/hero-waves.png.asset.json`
 
-- `The Platform for <span glow>Decision Advantage</span>`
+2. **Remover a chuva de gotas** do `HeroMovimento.tsx`:
+   - Remover `import MotionVerticalRain` e o `<MotionVerticalRain />`.
+   - Arquivo `MotionVerticalRain.tsx` fica no repo (não excluído sem pedido).
 
-**Descrição (parágrafo branco/60)** — nova cópia:
+3. **Adicionar a imagem como fundo do hero, recolorindo apenas via CSS** (mantém traços/design 100% iguais):
+   - `<img>` `absolute inset-0 w-full h-full object-cover pointer-events-none select-none` `aria-hidden`.
+   - Recolorir para o coral padrão `#F4845F` usando filtro CSS que preserva a forma:
+     - `filter: brightness(0) saturate(100%) invert(64%) sepia(48%) saturate(1100%) hue-rotate(330deg) brightness(96%) contrast(92%)` (equivalente ao coral do site; ajusto no build se necessário validando visualmente).
+   - Opacidade sutil: `opacity: 0.18` (bem baixa, integra ao navy sem competir com o conteúdo).
+   - `mix-blend-mode: screen` para as ondas se fundirem no `#0B1224` sem virarem manchas escuras.
 
-- PT: `Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.`
-- EN: `We turn demand, price, inventory and behavior signals into decisions that protect margin, accelerate turnover and increase conversion.`
+4. **Posicionamento do conteúdo entre as ondas**:
+   - A imagem tem ondas concentradas no topo e no rodapé com faixa limpa no meio; o bloco central (título/sub/descrição/CTA) já usa `flex items-center justify-center` — cai naturalmente na faixa livre. `z-10` no conteúdo garante que fica acima da imagem.
 
-**CTA** — PT: "Antecipe sua próxima decisão. Agora.".  
-EN- EN: "Get ahead of your next decision. Now."
-
-### Detalhes técnicos
-
-- `dangerouslySetInnerHTML` no `<h1>` para injetar o `<span>` coral em "antes"/"before" com `textShadow` equivalente ao do "You Grow".
-- Subtítulo vira string fixa com o `<span>` glow em "Decision Advantage".
-- Alteração restrita ao componente `HeroMovimento.tsx`; troca do lema em outras seções fica para próximos passos.
+### Fora de escopo
+- Não altero copy, cores do título/CTA, scroll indicator, nem outras seções.
+- Não uso AI para editar a imagem — a recoloração é 100% via filtro CSS para preservar shape/estilo/design.
