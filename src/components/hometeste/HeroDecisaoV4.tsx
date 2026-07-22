@@ -19,7 +19,7 @@ const HeroDecisaoV4 = () => {
           className="w-full max-h-[54vh] object-contain select-none animate-fade-in"
           style={{
             objectPosition: 'center 62%',
-            transform: 'translateY(16vh)',
+            transform: 'translateY(22vh)',
             opacity: 0.34,
             imageRendering: 'auto',
             maskImage:
