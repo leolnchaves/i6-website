@@ -163,7 +163,7 @@ const ComoFuncionamosSection = () => {
         titleStart: 'Como transformamos sinais em ',
         titleHighlight: 'decisões acionáveis',
         subtitle:
-          'Da leitura do contexto à ativação no canal, a i6 combina predição, recomendação e execução para antecipar a próxima melhor decisão.',
+          'Da leitura do contexto à ativação no canal, combinamos predição, recomendação e execução para antecipar a próxima melhor decisão.',
         sourcesLabel: 'Capturamos de qualquer ecossistema',
         activationLabel: 'Ativamos em qualquer ecossistema',
         steps: [
