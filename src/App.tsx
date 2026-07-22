@@ -20,6 +20,9 @@ import EthicsPolicy from "./pages/EthicsPolicy";
 
 import NotFound from "./pages/NotFound";
 import HomeTeste from "./pages/HomeTeste";
+import HomeV1 from "./pages/HomeV1";
+import HomeV2 from "./pages/HomeV2";
+import HomeV3 from "./pages/HomeV3";
 import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
@@ -72,6 +75,9 @@ const LocalizedRoutes = () => {
     <Routes>
       <Route element={<DarkLayout />}>
         <Route index element={<HomeTeste />} />
+        <Route path="home-v1" element={<HomeV1 />} />
+        <Route path="home-v2" element={<HomeV2 />} />
+        <Route path="home-v3" element={<HomeV3 />} />
         <Route path="solutions" element={<Solutions />} />
         <Route path="solutions/:slug" element={<TransformationLanding />} />
         <Route path="our-ai" element={<OurAI />} />
