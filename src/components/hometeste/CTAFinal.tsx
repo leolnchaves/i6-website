@@ -11,13 +11,15 @@ const CTAFinal = () => {
 
   const copy = {
     pt: {
-      lineStart: 'O mercado não espera.\nSua próxima decisão também ',
+      line1: 'O mercado não espera.',
+      line2Start: 'Sua próxima decisão também ',
       lineHighlight: 'não deveria.',
       cta: isMobile ? 'Pronto para transformar\ndados em lucro?' : 'Pronto para transformar dados em lucro?',
     },
     en: {
-      lineStart: 'The market doesn\'t wait.\nYour next decision ',
-      lineHighlight: 'shouldn\'t either.',
+      line1: "The market doesn't wait.",
+      line2Start: 'Your next decision ',
+      lineHighlight: "shouldn't either.",
       cta: isMobile ? 'Ready to turn\ndata into profit?' : 'Ready to turn data into profit?',
     },
   }[language];
@@ -25,8 +27,9 @@ const CTAFinal = () => {
   return (
     <section className="relative py-14 md:py-20 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-        <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug whitespace-pre-line">
-          {copy.lineStart}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
+        <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug">
+          {copy.line1}<br />
+          {copy.line2Start}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
         </p>
         <Link
           to={localized('/contact')}
