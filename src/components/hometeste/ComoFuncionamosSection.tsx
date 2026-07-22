@@ -1,31 +1,29 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-type LogoItem = { name: string; slug: string };
+type LogoItem = { name: string; slug: string; color?: string };
 
 const sources: LogoItem[] = [
-  { name: 'Oracle', slug: 'oracle' },
+  { name: 'Oracle', slug: 'oracle', color: 'F80000' },
   { name: 'SAP', slug: 'sap' },
   { name: 'Snowflake', slug: 'snowflake' },
   { name: 'Databricks', slug: 'databricks' },
   { name: 'BigQuery', slug: 'googlebigquery' },
   { name: 'PostgreSQL', slug: 'postgresql' },
-  { name: 'AWS S3', slug: 'amazons3' },
-  { name: 'Salesforce', slug: 'salesforce' },
+  { name: 'AWS S3', slug: 'amazonwebservices', color: 'FF9900' },
   { name: 'MongoDB', slug: 'mongodb' },
   { name: 'Kafka', slug: 'apachekafka' },
 ];
 
 const activations: LogoItem[] = [
-  { name: 'Salesforce', slug: 'salesforce' },
+  { name: 'Salesforce', slug: 'salesforce', color: '00A1E0' },
   { name: 'HubSpot', slug: 'hubspot' },
   { name: 'SAP', slug: 'sap' },
   { name: 'Shopify', slug: 'shopify' },
   { name: 'WhatsApp', slug: 'whatsapp' },
-  { name: 'Gmail', slug: 'gmail' },
-  { name: 'Slack', slug: 'slack' },
   { name: 'Zendesk', slug: 'zendesk' },
-  { name: 'RD Station', slug: 'rdstation' },
+  { name: 'RD Station', slug: 'rdstation', color: '19B4FE' },
+  { name: 'Marketo', slug: 'marketo', color: '5C4C9F' },
   { name: 'Meta Ads', slug: 'meta' },
 ];
 
@@ -45,7 +43,7 @@ const Chip = ({
     }`}
   >
     <img
-      src={`https://cdn.simpleicons.org/${item.slug}`}
+      src={`https://cdn.simpleicons.org/${item.slug}${item.color ? `/${item.color}` : ''}`}
       alt=""
       loading="lazy"
       className="w-4 h-4"
