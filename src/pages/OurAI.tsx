@@ -15,7 +15,7 @@ import ChallengesAccordion from '@/components/our-ai/ChallengesAccordion';
 import CommunitySection from '@/components/our-ai/CommunitySection';
 import ResearchSection from '@/components/our-ai/ResearchSection';
 import GlossarySection from '@/components/our-ai/GlossarySection';
-import OurAICTA from '@/components/our-ai/OurAICTA';
+import CTAFinal from '@/components/hometeste/CTAFinal';
 import RealResultsStrip from '@/components/common/RealResultsStrip';
 
 const BASE_URL = 'https://infinity6.ai';
@@ -111,7 +111,7 @@ const OurAI = memo(() => {
       <ResearchSection content={c.research} />
       <RealResultsStrip />
       <GlossarySection content={c.glossary} />
-      <OurAICTA content={c.cta} />
+      <CTAFinal />
     </>
   );
 });
