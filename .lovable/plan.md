@@ -1,50 +1,43 @@
-## Nova seção "Como Funciona" acima do i6Signal
+## Refinar seção "Como Funciona" — logos reais + conexões laterais
 
-Criar `src/components/hometeste/ComoFuncionamosSection.tsx` e inseri-lo em `HomeTeste.tsx` logo acima de `SinaisSection`.
+Reestruturar `src/components/hometeste/ComoFuncionamosSection.tsx` para posicionar as fontes de dados à **esquerda** conectadas apenas ao card **01 (Captura de sinais)**, e as ferramentas de ativação à **direita** conectadas apenas ao card **04 (Ativação)**, ambos com logos reais das marcas.
 
-**Diretriz principal:** manter o design system atual do site (padrões de `SinaisSection`, `InsightsSection`, etc.) — mesma tipografia, mesmos tokens coral `#F4845F`, mesma linguagem de cards `rounded-2xl bg-white/5 border border-white/10`, mesmos badges e espaçamentos. O anexo é apenas referência conceitual da estrutura (eyebrow, título, 4 passos numerados, faixa lateral) — **não copiar o visual do anexo literalmente**.
+### Layout novo (desktop)
 
-### Diferenciação de fundo
+```text
+┌──────────┐   ┌────┐ ┌────┐ ┌────┐ ┌────┐   ┌──────────┐
+│ SOURCES  │──▶│ 01 │ │ 02 │ │ 03 │ │ 04 │◀──│ ACTIVATION│
+│ (logos)  │   └────┘ └────┘ └────┘ └────┘   │  (logos)  │
+└──────────┘                                  └──────────┘
+```
 
-Único desvio deliberado do padrão: fundo levemente mais claro que o `#0B1224` da home para criar alívio visual entre `HeroDecisaoV4` e `SinaisSection`. Usar `#111a30` (ou gradiente sutil), mantendo coerência com a paleta.
+- Grid `lg:grid-cols-[auto_1fr_auto]` com três colunas: sources · steps · activation.
+- Coluna esquerda: pequeno rótulo vertical "Capturamos de qualquer ecossistema" + stack vertical de chips de origens.
+- Coluna direita: rótulo "Ativamos em qualquer ecossistema" + stack vertical de chips de ativação.
+- Coluna central: 4 cards numerados (mantém design atual).
+- Conectores coral finos (SVG ou `div` com borda) ligando: chips da esquerda → borda esquerda do card **01**; chips da direita → borda direita do card **04**. Nada conectando aos cards 02 e 03.
 
-### Estrutura da seção (top → bottom)
+### Mobile / tablet
 
-1. **Header** (padrão do site)
-   - Badge coral estilo `SinaisSection`: `COMO FUNCIONA` / `HOW IT WORKS`
-   - Título h2 com destaque coral em trecho final: "Como transformamos sinais em **decisões acionáveis**"
-   - Subtítulo curto white/50.
+- Empilhar: bloco de sources acima do card 01, cards em coluna, bloco de activation abaixo do card 04. Sem tentar renderizar linhas conectoras em mobile — apenas separadores discretos.
 
-2. **Faixa de ORIGENS de dados** (nova — antes do passo 01)
-   - Rótulo pequeno à esquerda: "Capturamos de qualquer ecossistema" / "We capture from any ecosystem"
-   - Chips minimalistas em linha (wrap): Oracle, SAP, Snowflake, Databricks, BigQuery, PostgreSQL, S3, Salesforce, MongoDB, Redshift, Kafka
-   - Estilo dos chips: mesmo padrão dos differentiators de `EnginesGrid` (`rounded-full border border-white/10 bg-white/[0.02]`), com ícone `lucide-react` monocromático (`Database`, `Cloud`, `Server`).
-   - Linha vertical fina coral conectando à seção dos passos (mesmo estilo do connector já usado em `SinaisSection` e `EnginesGrid`).
+### Logos reais
 
-3. **4 passos numerados** (sem ícones — apenas numeração)
-   - Grid `grid-cols-1 md:grid-cols-4 gap-6`.
-   - Cada card: mesmo padrão `p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50` de `SinaisSection`.
-   - Conteúdo do card: número grande em coral (ex: `01` em ~48px, font-bold, opacidade/tratamento discreto) + título white + descrição white/70.
-   - Textos:
-     - 01 — Captura de sinais → Demanda, preço, estoque, comportamento e contexto de mercado.
-     - 02 — Predição → **Modelos proprietários** identificam risco, intenção, elasticidade e propensão.
-     - 03 — Recomendação priorizada → A melhor ação por objetivo, canal, cliente, SKU ou praça.
-     - 04 — Ativação → A decisão chega à operação no ecossistema do cliente.
-   - **Sem** a faixa "Entrega em → CRM | Pricing | Supply | Sales" do anexo.
+Usar **simple-icons CDN** (`https://cdn.simpleicons.org/{slug}/{hex}`) via `<img>`. Vantagens:
+- Zero dependências novas, zero binários no repo.
+- Logos oficiais e monocromáticos, permitindo aplicar o tom "escurecido" que o site pede (usar cor `9CA3AF` ou similar).
+- Fácil aplicar hover para brilhar (`filter: brightness(1.3)` ou trocar hex).
 
-4. **Faixa de ATIVAÇÃO / ECOSSISTEMA** (nova — depois do passo 04)
-   - Rótulo: "Ativamos em qualquer ecossistema do cliente" / "We activate in any client ecosystem"
-   - Mesmo padrão visual dos chips da faixa de origens (consistência), mas com ferramentas de ativação: CRM, ERP, Salesforce, HubSpot, SAP, Shopify, App, WhatsApp, E-mail, Push, POS.
-   - Cada chip com ícone `lucide-react` apropriado (`Users`, `Boxes`, `Smartphone`, `MessageSquare`, `Mail`, `Bell`, `ShoppingBag`).
-   - Layout: chips em rede com linhas finas coral conectando alguns entre si (SVG discreto de fundo), transmitindo a ideia de "conectado em qualquer ecossistema" sem quebrar o padrão minimalista do site.
+Chips ficam com o mesmo estilo atual (`rounded-full border border-white/10 bg-white/[0.02]`), apenas trocando o ícone `lucide` por `<img>` da logo (`w-3.5 h-3.5`).
 
-### Internacionalização
+**Sources (esquerda):** Oracle, SAP, Snowflake, Databricks, Google BigQuery (`googlebigquery`), PostgreSQL, Amazon S3 (`amazons3`), Salesforce, MongoDB, Amazon Redshift (`amazonredshift`), Apache Kafka (`apachekafka`).
 
-Todos os textos via `useLanguage()` no padrão dos demais componentes de `hometeste/`. Nomes de ferramentas permanecem iguais em ambos idiomas.
+**Activation (direita):** Salesforce, HubSpot, SAP, Shopify, WhatsApp, Gmail (`gmail`) para E-mail, Apple/Google Play para App (ou manter ícone genérico), etc. Ajustar a lista para caber vertical sem exagero (~8 itens).
 
-### Arquivos afetados
+### Fallback
 
-- **Criar:** `src/components/hometeste/ComoFuncionamosSection.tsx`
-- **Editar:** `src/pages/HomeTeste.tsx` — inserir `<ComoFuncionamosSection />` acima de `<SinaisSection />`
+Se algum slug não existir no CDN, cair para ícone `lucide-react` correspondente (Try/catch via `onError` no `<img>`).
 
-Nenhuma outra alteração no site.
+### Arquivo
+
+- **Editar apenas:** `src/components/hometeste/ComoFuncionamosSection.tsx`
