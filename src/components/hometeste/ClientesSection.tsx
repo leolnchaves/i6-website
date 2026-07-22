@@ -6,8 +6,8 @@ const ClientesSection = () => {
   const { language } = useLanguage();
 
   const title = language === 'pt'
-    ? 'Líderes que já dominam a Inteligência de Movimento'
-    : 'Leaders who master Movement Intelligence';
+   ? 'Líderes que transformam antecipação em vantagem'
+   : 'Leaders who turn anticipation into advantage';
 
   if (loading || partners.length === 0) return null;
 
