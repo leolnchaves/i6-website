@@ -1,4 +1,5 @@
 import HeroDecisaoV4 from '@/components/hometeste/HeroDecisaoV4';
+import ComoFuncionamosSection from '@/components/hometeste/ComoFuncionamosSection';
 import SinaisSection from '@/components/hometeste/SinaisSection';
 import ClientesSection from '@/components/hometeste/ClientesSection';
 
@@ -12,6 +13,7 @@ const HomeTeste = () => (
   <>
     <SEOHead page="home" />
     <HeroDecisaoV4 />
+    <ComoFuncionamosSection />
     <SinaisSection />
     
     <RealResultsStrip compact />
