@@ -11,7 +11,7 @@ const SinaisSection = () => {
 
   const copy = {
     pt: {
-      badge: 'SINAIS',
+      badge: 'QUEM SOMOS',
       titleLine1Start: 'Somos especialistas em ',
       titleLine1Highlight: 'IA aplicada',
       titleLine2: 'que transforma dados em decisões antecipadas.',
@@ -47,7 +47,7 @@ const SinaisSection = () => {
       ],
     },
     en: {
-      badge: 'SIGNALS',
+      badge: 'WHO WE ARE',
       titleLine1Start: 'We are specialists in ',
       titleLine1Highlight: 'applied AI',
       titleLine2: 'that transforms data into anticipated decisions.',
