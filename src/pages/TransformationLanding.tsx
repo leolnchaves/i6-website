@@ -8,7 +8,7 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanding, isLandingSlug, type LandingPiece } from '@/hooks/useLandings';
 import { getStoryBySlug } from '@/hooks/useSuccessStoriesMarkdown';
 import RelatedStoryMiniCard from '@/components/landings/RelatedStoryMiniCard';
-import SolutionsCTA from '@/components/solutions/SolutionsCTA';
+import CTAFinal from '@/components/hometeste/CTAFinal';
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -322,7 +322,7 @@ const TransformationLanding = () => {
 
       <RelatedStories piece={piece} lang={language} />
       <FAQList piece={piece} lang={language} />
-      <SolutionsCTA />
+      <CTAFinal />
     </>
   );
 };

@@ -5,7 +5,7 @@ import TerritorySection from '@/components/solutions-v2/TerritorySection';
 import SignalLayerBlock from '@/components/solutions-v2/SignalLayerBlock';
 import HowWeImplement from '@/components/solutions-v2/HowWeImplement';
 import RealResultsStrip from '@/components/common/RealResultsStrip';
-import SolutionsCTA from '@/components/solutions/SolutionsCTA';
+import CTAFinal from '@/components/hometeste/CTAFinal';
 import SEOHead from '@/components/common/SEOHead';
 
 const Solutions = memo(() => {
@@ -20,7 +20,7 @@ const Solutions = memo(() => {
       <SignalLayerBlock />
       <HowWeImplement />
       <RealResultsStrip />
-      <SolutionsCTA />
+      <CTAFinal />
     </>
   );
 });
