@@ -71,9 +71,9 @@ export interface SolutionsV2Content {
 const pt: SolutionsV2Content = {
   hero: {
     eyebrow: 'Soluções',
-    titleBefore: 'IA aplicada para prever demanda, recomendar decisões e ',
+    titleBefore: 'IA aplicada para ',
     titleHighlight: 'capturar crescimento',
-    titleAfter: ' com precisão.',
+    titleAfter: ' e margem com precisão.',
     subtitle:
       'Transformamos dados de clientes, produtos, canais, PDVs, estoque e preço em decisões preditivas para aumentar receita, proteger margem e reduzir desperdício operacional.',
     ctaLabel: 'Ver cases de sucesso',
@@ -285,9 +285,9 @@ const pt: SolutionsV2Content = {
 const en: SolutionsV2Content = {
   hero: {
     eyebrow: 'Solutions',
-    titleBefore: 'AI applied to forecast demand, recommend decisions and ',
+    titleBefore: 'AI applied to ',
     titleHighlight: 'capture growth',
-    titleAfter: ' with precision.',
+    titleAfter: ' and margin with precision.',
     subtitle:
       'We turn customer, product, channel, POS, inventory and price data into predictive decisions that increase revenue, protect margin and reduce operational waste.',
     ctaLabel: 'See success stories',
