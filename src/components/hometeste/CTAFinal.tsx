@@ -14,7 +14,7 @@ const CTAFinal = () => {
       line1: 'O mercado não espera.',
       line2Start: 'Sua próxima decisão também ',
       lineHighlight: 'não deveria.',
-      cta: isMobile ? 'Pronto para transformar\ndados em lucro?' : 'Pronto para transformar dados em lucro?',
+      cta: isMobile ? 'Antecipe sua\npróxima decisão' : 'Antecipe sua próxima decisão',
     },
     en: {
       line1: "The market doesn't wait.",
