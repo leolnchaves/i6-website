@@ -1,10 +1,10 @@
-## Ajuste em `src/components/hometeste/HeroDecisaoV4.tsx`
+Em telas curtas, o container do diagrama está fixando a altura (`h-[min(78vh,980px)]`) com `w-auto`, o que faz a imagem encolher pela altura e perder largura lateral.
 
-Manter a proporção da imagem (sem esticar), aumentar o cap de altura para que a largura cresça e chegue à borda horizontal disponível, e descer o wrapper para o espaço entre o título e o bloco descrição+CTA.
+## Ajuste
 
-Uma única mudança na linha 14–15:
+Em `src/components/hometeste/HeroDecisaoV4.tsx`, trocar o dimensionamento para ser guiado pela largura, mantendo o `top-[18vh]` intacto:
 
-- Wrapper externo: `top-[8vh]` → `top-[26vh]`
-- Wrapper interno: `h-[min(62vh,780px)]` → `h-[min(78vh,980px)]`
+- Wrapper interno: `w-[min(112vw,1550px)] h-auto` (remover a restrição de altura).
+- Imagem: `w-full h-auto` (em vez de `h-full w-auto`).
 
-Nada mais muda: título continua em `pt-[16vh]`, bloco descrição+CTA em `bottom-[5vh]`, máscara, opacidade e classes de imagem (`h-full w-auto max-w-none`) permanecem. Se ainda faltar largura no MacBook 13", aumento o cap para 88vh em micro-ajuste.
+Assim a imagem sempre usa a largura panorâmica disponível, e a altura acompanha proporcionalmente — sem alterar posição vertical nem o topo do gráfico.
