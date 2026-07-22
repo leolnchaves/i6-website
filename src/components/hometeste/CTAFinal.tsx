@@ -20,7 +20,7 @@ const CTAFinal = () => {
       line1: "The market doesn't wait.",
       line2Start: 'Your next decision ',
       lineHighlight: "shouldn't either.",
-      cta: isMobile ? 'Ready to turn\ndata into profit?' : 'Ready to turn data into profit?',
+      cta: isMobile ? 'Anticipate your\nnext decision' : 'Anticipate your next decision',
     },
   }[language];
 
