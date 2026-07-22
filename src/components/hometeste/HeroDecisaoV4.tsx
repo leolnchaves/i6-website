@@ -40,7 +40,7 @@ const HeroDecisaoV4 = () => {
       />
 
       {/* Bloco de título no topo */}
-      <div className="relative z-10 pt-[14vh] px-6">
+      <div className="relative z-10 pt-[16vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
           <h1
             className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
