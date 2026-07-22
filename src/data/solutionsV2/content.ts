@@ -235,7 +235,7 @@ const pt: SolutionsV2Content = {
   },
   howWeImplement: {
     eyebrow: 'Como implementamos',
-    title: 'Validação antes da escala. Resultado antes do discurso.',
+    title: 'Validação antes da escala.\nResultado antes do discurso.',
     costNote:
       'Custo zero até o Backtest. Você só avança com validação do potencial de resultado.',
     steps: [
