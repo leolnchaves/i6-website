@@ -1,30 +1,48 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-type LogoItem = { name: string; slug: string; color?: string };
+import oracleLogo from '@/assets/logos/oracle.png.asset.json';
+import sapLogo from '@/assets/logos/sap.svg.asset.json';
+import snowflakeLogo from '@/assets/logos/snowflake.svg.asset.json';
+import databricksLogo from '@/assets/logos/databricks.svg.asset.json';
+import bigqueryLogo from '@/assets/logos/googlebigquery.svg.asset.json';
+import postgresLogo from '@/assets/logos/postgresql.svg.asset.json';
+import awsLogo from '@/assets/logos/aws.svg.asset.json';
+import mongoLogo from '@/assets/logos/mongodb.svg.asset.json';
+import kafkaLogo from '@/assets/logos/apachekafka.svg.asset.json';
+import salesforceLogo from '@/assets/logos/salesforce.png.asset.json';
+import hubspotLogo from '@/assets/logos/hubspot.svg.asset.json';
+import shopifyLogo from '@/assets/logos/shopify.svg.asset.json';
+import whatsappLogo from '@/assets/logos/whatsapp.svg.asset.json';
+import zendeskLogo from '@/assets/logos/zendesk.svg.asset.json';
+import rdstationLogo from '@/assets/logos/rdstation.png.asset.json';
+import marketoLogo from '@/assets/logos/marketo.png.asset.json';
+import metaLogo from '@/assets/logos/meta.svg.asset.json';
+
+type LogoItem = { name: string; src: string };
 
 const sources: LogoItem[] = [
-  { name: 'Oracle', slug: 'oracle', color: 'F80000' },
-  { name: 'SAP', slug: 'sap' },
-  { name: 'Snowflake', slug: 'snowflake' },
-  { name: 'Databricks', slug: 'databricks' },
-  { name: 'BigQuery', slug: 'googlebigquery' },
-  { name: 'PostgreSQL', slug: 'postgresql' },
-  { name: 'AWS S3', slug: 'amazonwebservices', color: 'FF9900' },
-  { name: 'MongoDB', slug: 'mongodb' },
-  { name: 'Kafka', slug: 'apachekafka' },
+  { name: 'Oracle', src: oracleLogo.url },
+  { name: 'SAP', src: sapLogo.url },
+  { name: 'Snowflake', src: snowflakeLogo.url },
+  { name: 'Databricks', src: databricksLogo.url },
+  { name: 'BigQuery', src: bigqueryLogo.url },
+  { name: 'PostgreSQL', src: postgresLogo.url },
+  { name: 'AWS S3', src: awsLogo.url },
+  { name: 'MongoDB', src: mongoLogo.url },
+  { name: 'Kafka', src: kafkaLogo.url },
 ];
 
 const activations: LogoItem[] = [
-  { name: 'Salesforce', slug: 'salesforce', color: '00A1E0' },
-  { name: 'HubSpot', slug: 'hubspot' },
-  { name: 'SAP', slug: 'sap' },
-  { name: 'Shopify', slug: 'shopify' },
-  { name: 'WhatsApp', slug: 'whatsapp' },
-  { name: 'Zendesk', slug: 'zendesk' },
-  { name: 'RD Station', slug: 'rdstation', color: '19B4FE' },
-  { name: 'Marketo', slug: 'marketo', color: '5C4C9F' },
-  { name: 'Meta Ads', slug: 'meta' },
+  { name: 'Salesforce', src: salesforceLogo.url },
+  { name: 'HubSpot', src: hubspotLogo.url },
+  { name: 'SAP', src: sapLogo.url },
+  { name: 'Shopify', src: shopifyLogo.url },
+  { name: 'WhatsApp', src: whatsappLogo.url },
+  { name: 'Zendesk', src: zendeskLogo.url },
+  { name: 'RD Station', src: rdstationLogo.url },
+  { name: 'Marketo', src: marketoLogo.url },
+  { name: 'Meta Ads', src: metaLogo.url },
 ];
 
 const Chip = ({
@@ -43,10 +61,10 @@ const Chip = ({
     }`}
   >
     <img
-      src={`https://cdn.simpleicons.org/${item.slug}${item.color ? `/${item.color}` : ''}`}
+      src={item.src}
       alt=""
       loading="lazy"
-      className="w-4 h-4"
+      className="w-4 h-4 object-contain"
     />
     <span className="font-medium">{item.name}</span>
   </div>
