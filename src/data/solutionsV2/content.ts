@@ -453,7 +453,7 @@ const en: SolutionsV2Content = {
   },
   howWeImplement: {
     eyebrow: 'How we implement',
-    title: 'Validation before scale. Results before rhetoric.',
+    title: 'Validation before scale.\nResults before rhetoric.',
     costNote: 'Zero cost through Backtest. You only move forward with validated potential.',
     steps: [
       {
