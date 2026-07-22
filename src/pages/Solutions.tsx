@@ -20,7 +20,7 @@ const Solutions = memo(() => {
       <SignalLayerBlock />
       <HowWeImplement />
       <RealResultsStrip />
-      <SolutionsCTA />
+      <CTAFinal />
     </>
   );
 });
