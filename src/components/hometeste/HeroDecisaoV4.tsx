@@ -12,12 +12,12 @@ const HeroDecisaoV4 = () => {
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
       <div className="absolute inset-x-0 top-[8vh] z-0 flex justify-center pointer-events-none">
-        <div className="w-[min(112vw,1550px)] h-auto flex items-center justify-center">
+        <div className="w-auto max-w-[min(112vw,1550px)] h-[min(62vh,780px)] flex items-center justify-center">
           <img
             src={heroDecisao}
             alt=""
             aria-hidden
-            className="w-full h-auto max-w-none select-none"
+            className="h-full w-auto max-w-none select-none"
             style={{
               opacity: 0.93,
               imageRendering: 'auto',
