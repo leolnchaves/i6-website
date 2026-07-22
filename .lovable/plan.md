@@ -1,10 +1,23 @@
-## Trocar imagem do hero V4 por versão achatada
+## Problema
+O PNG do diagrama tem fundo azul-escuro próximo (mas não idêntico) ao `#0B1224` da hero. Como a imagem é opaca (com `opacity: 0.93` + máscara radial), a diferença de tom vira uma "moldura" perceptível ao redor do diagrama.
 
-1. Criar asset pointer via `lovable-assets` a partir de `/mnt/user-uploads/ChatGPT_Image_22_de_jul._de_2026_18_26_06.png` → `src/assets/hero-decisao-panorama-wide.png.asset.json`.
-2. Em `src/components/hometeste/HeroDecisaoV4.tsx`:
-   - Trocar o import de `hero-decisao-panorama.png` pelo novo asset pointer (usar `.url`).
-   - Redimensionar guiado pela largura: wrapper `w-[min(100vw,1750px)] h-auto`, imagem `w-full h-auto`.
-   - Centralizar verticalmente entre o título e o bloco texto+CTA usando `top-1/2 -translate-y-1/2` (em vez do `top-[18vh]` fixo), mantendo z-index e máscara radial atuais.
-3. Preservar tudo mais intacto: título, descrição, CTA, halo, glow do "antes".
+## Solução
+Tornar o fundo do PNG **transparente** para que o `#0B1224` da hero apareça atrás dos traços/nós, eliminando qualquer diferença de cor. Aproveitar para descer imagem e bloco Texto+CTA em 4vh.
 
-Resultado: imagem panorâmica achatada ocupando a largura total sem esticar, centralizada no vale entre título e CTA.
+### Passos
+1. **Reprocessar o asset** (`ChatGPT_Image_22_de_jul._de_2026_18_57_20.png`) via Python/PIL:
+   - Ler o PNG original em alta resolução.
+   - Converter pixels do fundo escuro em alpha 0, preservando traços coral/branco e seu glow.
+   - Abordagem: `alpha = max(R,G,B)` normalizado (subtraindo levemente o piso escuro). Áreas pretas/navy viram totalmente transparentes; o glow coral mantém suavidade natural, sem halo retangular.
+   - Salvar em 2x (~3832×1642) como PNG com transparência.
+2. **Publicar novo asset** via `lovable-assets create` → `src/assets/hero-decisao-transparent-hd.png.asset.json`.
+3. **Atualizar `HeroDecisaoV4.tsx`**:
+   - Trocar o import para o novo asset transparente.
+   - Remover `opacity: 0.93` (deixar 1.0) e remover a `maskImage` radial (a transparência já faz o fade natural).
+   - Descer a **imagem em 4vh**: `-translate-y-[calc(50%-4vh)]` → `-translate-y-[calc(50%-8vh)]`.
+   - Descer o **bloco Texto+CTA em 4vh**: `bottom-[9vh]` → `bottom-[5vh]`.
+   - Manter tamanho e responsividade atuais.
+4. **Manter** o halo `radial-gradient` atrás do título (protege legibilidade do H1, não afeta o fundo).
+
+### Resultado esperado
+Diagrama flutua sobre o `#0B1224` sem qualquer "retângulo" ou variação tonal visível; imagem e CTA 4vh mais baixos.
