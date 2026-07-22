@@ -42,27 +42,24 @@ const HeroDecisaoV4 = () => {
         <div className="text-center max-w-4xl mx-auto">
           <h1
             className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
-            dangerouslySetInnerHTML={{ __html: `The Platform for <span style="color:#F4845F">Decision Advantage</span>` }}
+            dangerouslySetInnerHTML={{ __html: `The Platform for<br/><span style="color:#F4845F">Decision Advantage</span>` }}
           />
-          <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
-            Decida <span className="font-semibold" style={{ textShadow: coralGlow }}>antes</span> do mercado
-          </p>
         </div>
       </div>
 
-      {/* CTA + descrição colados ao final */}
+      {/* Descrição + CTA colados ao final */}
       <div className="absolute bottom-[5vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
         <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
+          <p className="text-base sm:text-lg text-white/70 leading-relaxed">
+            Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.
+          </p>
           <Link
             to={localized('/contact')}
             className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
           >
-            Antecipe sua próxima decisão. Agora.
+            Decida antes do mercado. Agora.
             <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
           </Link>
-          <p className="text-base sm:text-lg text-white/70 leading-relaxed">
-            Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.
-          </p>
         </div>
       </div>
     </section>
