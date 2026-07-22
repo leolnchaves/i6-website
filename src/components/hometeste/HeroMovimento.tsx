@@ -26,16 +26,16 @@ const HeroMovimento = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1224] overflow-hidden">
-      {/* Wave background — coral waves with transparent bg, subtle overlay on navy */}
+      {/* Wave background — only bottom waves visible, coral tint on navy */}
       <img
         src={heroWaves.url}
         alt=""
         aria-hidden
-        className="absolute inset-0 w-full h-full object-cover scale-110 pointer-events-none select-none"
+        className="absolute inset-x-0 bottom-0 w-full h-[55%] object-cover object-bottom pointer-events-none select-none"
         style={{
-          opacity: 0.55,
-          maskImage: 'radial-gradient(ellipse 80% 90% at center, black 45%, transparent 92%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 90% at center, black 45%, transparent 92%)',
+          opacity: 0.9,
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 100%)',
         }}
       />
 
