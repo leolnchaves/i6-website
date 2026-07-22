@@ -3,39 +3,42 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
 import heroDecisao from '@/assets/hero-decisao.png.asset.json';
 
-// V4 — Diagrama full-bleed ancorado no bottom; texto no "vale" (topo/centro), CTA no "pico" (abaixo)
+// V4 — Diagrama centralizado sem sobreposição; CTA acima da descrição
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
   const coralGlow = '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)';
 
   return (
-    <section className="relative min-h-screen bg-[#0B1224] overflow-hidden">
-      {/* Diagrama full-bleed ancorado no bottom */}
-      <img
-        src={heroDecisao.url}
-        alt=""
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 w-full h-[85%] object-cover object-bottom pointer-events-none select-none animate-fade-in"
-        style={{
-          opacity: 0.38,
-          maskImage:
-            'linear-gradient(to bottom, transparent 0%, black 18%, black 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to bottom, transparent 0%, black 18%, black 100%)',
-        }}
-      />
+    <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
+      {/* Diagrama centralizado */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img
+          src={heroDecisao.url}
+          alt=""
+          aria-hidden
+          className="w-full max-h-[70vh] object-contain select-none animate-fade-in"
+          style={{
+            objectPosition: 'center 58%',
+            opacity: 0.32,
+            maskImage:
+              'radial-gradient(ellipse 85% 85% at center, black 60%, transparent 100%)',
+            WebkitMaskImage:
+              'radial-gradient(ellipse 85% 85% at center, black 60%, transparent 100%)',
+          }}
+        />
+      </div>
 
-      {/* Halo no vale (upper-center) pra dar respiro ao texto */}
+      {/* Halo suave atrás do texto (topo) */}
       <div
-        className="absolute inset-x-0 top-[18%] h-[38%] pointer-events-none"
+        className="absolute inset-x-0 top-[14%] h-[30%] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 55% 80% at center, rgba(11,18,36,0.75) 0%, rgba(11,18,36,0.35) 55%, rgba(11,18,36,0) 90%)',
+            'radial-gradient(ellipse 55% 80% at center, rgba(11,18,36,0.7) 0%, rgba(11,18,36,0.3) 55%, rgba(11,18,36,0) 90%)',
         }}
       />
 
-      {/* Bloco de texto no vale */}
-      <div className="relative z-10 pt-[16vh] px-6">
+      {/* Bloco de título no topo */}
+      <div className="relative z-10 pt-[14vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
           <h1
             className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
@@ -47,19 +50,19 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* Descrição + CTA no pico, colados ao final */}
-      <div className="absolute bottom-[6vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
-        <div className="text-center max-w-2xl mx-auto">
-          <p className="text-base sm:text-lg text-white/70 leading-relaxed">
-            Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.
-          </p>
+      {/* CTA + descrição colados ao final */}
+      <div className="absolute bottom-[5vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
+        <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
           <Link
             to={localized('/contact')}
-            className="group inline-flex items-center gap-2 mt-8 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
+            className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
           >
             Antecipe sua próxima decisão. Agora.
             <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
           </Link>
+          <p className="text-base sm:text-lg text-white/70 leading-relaxed">
+            Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.
+          </p>
         </div>
       </div>
     </section>
