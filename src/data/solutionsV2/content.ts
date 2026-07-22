@@ -29,6 +29,8 @@ export interface SolutionsV2Content {
     eyebrow: string;
     titleBefore: string;
     titleHighlight: string;
+    titleMiddle?: string;
+    titleHighlight2?: string;
     titleAfter: string;
     subtitle: string;
     ctaLabel: string;
