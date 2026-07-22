@@ -235,18 +235,39 @@ const ComoFuncionamosSection = () => {
                   <stop offset="0%" stopColor="#F4845F" stopOpacity="0.7" />
                   <stop offset="100%" stopColor="#F4845F" stopOpacity="0.15" />
                 </linearGradient>
+                <filter id="pGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="1.2" result="b" />
+                  <feMerge>
+                    <feMergeNode in="b" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
               </defs>
               {leftPaths.map((d, i) => (
-                <path key={`l-${i}`} d={d} stroke="url(#strokeL)" strokeWidth={1.2} fill="none" />
+                <path key={`l-${i}`} id={`path-l-${i}`} d={d} stroke="url(#strokeL)" strokeWidth={1.2} fill="none" />
               ))}
               {rightPaths.map((d, i) => (
-                <path key={`r-${i}`} d={d} stroke="url(#strokeR)" strokeWidth={1.2} fill="none" />
+                <path key={`r-${i}`} id={`path-r-${i}`} d={d} stroke="url(#strokeR)" strokeWidth={1.2} fill="none" />
               ))}
               {leftEnds.map((p, i) => (
                 <circle key={`ld-${i}`} cx={p.x} cy={p.y} r={2.5} fill="#F4845F" />
               ))}
               {rightEnds.map((p, i) => (
                 <circle key={`rd-${i}`} cx={p.x} cy={p.y} r={2.5} fill="#F4845F" />
+              ))}
+              {leftPaths.map((_, i) => (
+                <circle key={`lp-${i}`} r={2.2} fill="#F4845F" filter="url(#pGlow)">
+                  <animateMotion dur="2.6s" repeatCount="indefinite" begin={`${i * 0.25}s`}>
+                    <mpath href={`#path-l-${i}`} />
+                  </animateMotion>
+                </circle>
+              ))}
+              {rightPaths.map((_, i) => (
+                <circle key={`rp-${i}`} r={2.2} fill="#F4845F" filter="url(#pGlow)">
+                  <animateMotion dur="2.6s" repeatCount="indefinite" begin={`${i * 0.22}s`}>
+                    <mpath href={`#path-r-${i}`} />
+                  </animateMotion>
+                </circle>
               ))}
             </svg>
 
