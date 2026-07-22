@@ -1,23 +1,24 @@
-Plano para corrigir a imagem central da `/pt/home-v4`:
+## Problema
+Na V4, o wrapper do diagrama usa `overflow-hidden` + `object-cover` com altura fixa (`clamp(300px,41vh,410px)`). Isso força a imagem a preencher o box e corta as extremidades verticais (as pontas superiores/inferiores das curvas do diagrama). Além disso, a máscara radial (`98% 94%`) apara ainda mais os cantos.
 
-1. **Corrigir a causa do redimensionamento**
-   - O container atual limita a imagem por altura (`top-[38vh] bottom-[22vh]`) e o `<img>` usa `object-contain` com `h-full`.
-   - Como o asset é panorâmico, o navegador está preservando a proporção pela altura disponível, deixando a largura visual muito menor que o espaço horizontal.
+O usuário quer manter o tamanho e a posição atuais, apenas parar de cortar as laterais superior/inferior do desenho.
 
-2. **Trocar para dimensionamento guiado pela largura**
-   - Remover o encaixe baseado em `top + bottom + h-full`.
-   - Usar uma faixa central com largura responsiva maior (`w-screen`/`min()`/`clamp`) e altura automática pela proporção da imagem.
-   - Manter `object-contain`, mas sem forçar `h-full`, para a imagem ocupar a largura sem distorcer.
+## Ajuste em `src/components/hometeste/HeroDecisaoV4.tsx`
 
-3. **Reposicionar a faixa entre título e texto inferior**
-   - Fixar o diagrama numa área central com `top` responsivo ou `translate-y` aplicado no wrapper correto.
-   - Garantir distância do título e do bloco inferior em desktop e mobile.
+1. **Wrapper do diagrama**
+   - Remover `overflow-hidden` do wrapper interno.
+   - Trocar altura fixa por `h-auto`, mantendo a largura panorâmica (`w-[min(112vw,1550px)]`) para preservar a posição horizontal atual.
 
-4. **Ajustar responsividade**
-   - Desktop: diagrama largo, ocupando praticamente todo o espaço horizontal disponível.
-   - Telas menores: reduzir proporcionalmente sem cortar textos nem sobrepor CTA.
-   - Manter o asset sem esticar artificialmente, preservando proporção.
+2. **Imagem**
+   - Trocar `object-cover` + `h-full` por `h-auto w-full`, para que a proporção real seja respeitada e nada seja recortado.
+   - Remover o `objectPosition` (não é mais necessário sem cover).
+   - Afrouxar a máscara radial para `ellipse 100% 100%` com fade só nos cantos externos (`black 88%, transparent 100%`), garantindo que o corpo do diagrama fique intacto.
 
-5. **Validar visualmente**
-   - Conferir `/pt/home-v4` em viewport desktop semelhante ao print enviado.
-   - Confirmar que o diagrama fica centralizado, mais largo, legível e sem sobreposição com título, texto ou CTA.
+3. **Camadas de texto (sem alterações estruturais)**
+   - Título e bloco CTA continuam com `z-10` sobre o diagrama; o halo radial de topo permanece para dar contraste ao título.
+   - Se depois notarmos leve toque do diagrama no CTA ao usar `h-auto`, ajustaremos apenas o `top-[31vh]` do wrapper — não a imagem.
+
+## Validação
+- Abrir `/pt/home-v4` via Playwright headless (1280×1800) e capturar screenshot para confirmar que:
+  - As extremidades superiores/inferiores das curvas aparecem completas.
+  - Título e CTA continuam nas mesmas posições sem sobreposição visível.
