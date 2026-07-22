@@ -14,7 +14,9 @@ const SinaisSection = () => {
       badge: 'QUEM SOMOS',
       titleLine1Start: 'Somos especialistas em ',
       titleLine1Highlight: 'IA aplicada',
-      titleLine2: 'que transforma dados em decisões antecipadas.',
+      titleLine2Start: 'que transforma decisões antecipadas em ',
+      titleLine2Highlight: 'resultados',
+      titleLine2End: '.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
       i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
