@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
-import heroWaves from '@/assets/hero-waves.png.asset.json';
+import heroWaves from '@/assets/hero-waves-coral.png.asset.json';
 
 
 const HeroMovimento = () => {
