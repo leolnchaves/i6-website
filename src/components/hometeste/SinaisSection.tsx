@@ -52,7 +52,7 @@ const SinaisSection = () => {
       badge: 'WHO WE ARE',
       titleLine1Start: 'We are specialists in ',
       titleLine1Highlight: 'applied AI',
-      titleLine2Start: 'that turns anticipated decisions into ',
+      titleLine2Start: 'that turns decisions into ',
       titleLine2Highlight: 'results',
       titleLine2End: '.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
