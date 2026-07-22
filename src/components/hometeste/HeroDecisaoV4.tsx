@@ -11,20 +11,20 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* Diagrama ancorado na faixa central-inferior */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[38%] bottom-[22vh] w-[112vw] max-w-none flex items-center justify-center pointer-events-none animate-fade-in">
+      <div className="absolute left-1/2 -translate-x-1/2 top-[34vh] bottom-[17vh] w-[118vw] max-w-[1800px] flex items-center justify-center pointer-events-none">
         <img
           src={heroDecisao.url}
           alt=""
           aria-hidden
-          className="w-full h-full object-contain select-none"
+          className="w-full h-full object-fill select-none"
           style={{
-            opacity: 0.55,
+            opacity: 0.62,
             mixBlendMode: 'screen',
             imageRendering: 'auto',
             maskImage:
-              'radial-gradient(ellipse 92% 95% at center, black 78%, transparent 100%)',
+              'radial-gradient(ellipse 96% 92% at center, black 72%, transparent 100%)',
             WebkitMaskImage:
-              'radial-gradient(ellipse 92% 95% at center, black 78%, transparent 100%)',
+              'radial-gradient(ellipse 96% 92% at center, black 72%, transparent 100%)',
           }}
         />
       </div>
