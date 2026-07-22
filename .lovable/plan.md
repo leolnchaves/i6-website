@@ -1,26 +1,20 @@
-## Substituir chuva de gotas por ondas coral sutis no Hero
+## Ajustar fundo de ondas do Hero — mais fluido, sem mudar cor de fundo
 
-**Arquivo:** `src/components/hometeste/HeroMovimento.tsx` (+ asset da imagem)
+**Arquivo:** `src/components/hometeste/HeroMovimento.tsx`
+
+### Diagnóstico
+- O `mix-blend-mode: screen` estava clareando o navy `#0B1224` onde as ondas passam, dando impressão de que o fundo mudou. **Remover o blend mode.**
+- Sem blend, a imagem PNG mostra os limites retangulares e as ondas parecem "coladas" sobre o navy. **Aplicar máscara de fade nas bordas** para dissolver os limites e integrar de forma fluida.
 
 ### Passos
 
-1. **Subir a imagem via Lovable Assets** (sem AI edit, preserva shape/estilo exatos):
-   - `lovable-assets create --file /mnt/user-uploads/fundo_site.png --filename hero-waves.png > src/assets/hero-waves.png.asset.json`
-
-2. **Remover a chuva de gotas** do `HeroMovimento.tsx`:
-   - Remover `import MotionVerticalRain` e o `<MotionVerticalRain />`.
-   - Arquivo `MotionVerticalRain.tsx` fica no repo (não excluído sem pedido).
-
-3. **Adicionar a imagem como fundo do hero, recolorindo apenas via CSS** (mantém traços/design 100% iguais):
-   - `<img>` `absolute inset-0 w-full h-full object-cover pointer-events-none select-none` `aria-hidden`.
-   - Recolorir para o coral padrão `#F4845F` usando filtro CSS que preserva a forma:
-     - `filter: brightness(0) saturate(100%) invert(64%) sepia(48%) saturate(1100%) hue-rotate(330deg) brightness(96%) contrast(92%)` (equivalente ao coral do site; ajusto no build se necessário validando visualmente).
-   - Opacidade sutil: `opacity: 0.18` (bem baixa, integra ao navy sem competir com o conteúdo).
-   - `mix-blend-mode: screen` para as ondas se fundirem no `#0B1224` sem virarem manchas escuras.
-
-4. **Posicionamento do conteúdo entre as ondas**:
-   - A imagem tem ondas concentradas no topo e no rodapé com faixa limpa no meio; o bloco central (título/sub/descrição/CTA) já usa `flex items-center justify-center` — cai naturalmente na faixa livre. `z-10` no conteúdo garante que fica acima da imagem.
+1. **Remover `mixBlendMode: 'screen'`** do `<img>` das ondas — mantém o fundo navy `#0B1224` intacto.
+2. **Manter recoloração via filtro CSS** (`hue-rotate` + `saturate`) para preservar shape/desenho e chegar no coral.
+3. **Reduzir opacidade** para `~0.14` (mais discreto, menos "sobreposto").
+4. **Adicionar máscara de dissolução** nas bordas superior/inferior/laterais usando `maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 85%)'` (ou linear vertical) — faz as ondas surgirem/dissolverem suavemente no navy em vez de terminarem em linha reta.
+5. **Escalar levemente** com `object-cover` + `scale-110` para as pontas das ondas saírem do viewport, reforçando a sensação de fluidez contínua.
 
 ### Fora de escopo
-- Não altero copy, cores do título/CTA, scroll indicator, nem outras seções.
-- Não uso AI para editar a imagem — a recoloração é 100% via filtro CSS para preservar shape/estilo/design.
+- Cor de fundo do hero segue `#0B1224` (não altero).
+- Conteúdo (título/sub/desc/CTA) e scroll indicator inalterados.
+- Sem AI edit na imagem — todo ajuste é CSS.
