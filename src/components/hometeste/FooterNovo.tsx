@@ -23,13 +23,13 @@ const FooterNovo = () => {
   const desc =
     language === 'pt' ? (
       <>
-        Data moves. <span className="font-bold text-white/60">You grow.</span>
+        Decida <span className="font-bold text-[#F4845F] drop-shadow-[0_0_12px_rgba(244,132,95,0.5)]">antes</span> do mercado.
         <br />
         Transformamos comportamento vivo em crescimento previsível.
       </>
     ) : (
       <>
-        Data moves. <span className="font-bold text-white/60">You grow.</span>
+        Decide <span className="font-bold text-[#F4845F] drop-shadow-[0_0_12px_rgba(244,132,95,0.5)]">before</span> the market.
         <br />
         We turn live behavior into predictable growth.
       </>
