@@ -285,9 +285,9 @@ const pt: SolutionsV2Content = {
 const en: SolutionsV2Content = {
   hero: {
     eyebrow: 'Solutions',
-    titleBefore: 'AI applied to forecast demand, recommend decisions and ',
+    titleBefore: 'AI applied to ',
     titleHighlight: 'capture growth',
-    titleAfter: ' with precision.',
+    titleAfter: ' and margin with precision.',
     subtitle:
       'We turn customer, product, channel, POS, inventory and price data into predictive decisions that increase revenue, protect margin and reduce operational waste.',
     ctaLabel: 'See success stories',
