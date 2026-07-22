@@ -75,7 +75,9 @@ const pt: SolutionsV2Content = {
     eyebrow: 'Soluções',
     titleBefore: 'IA aplicada para ',
     titleHighlight: 'capturar crescimento',
-    titleAfter: ' e margem com precisão.',
+    titleMiddle: ' e ',
+    titleHighlight2: 'margem',
+    titleAfter: ' com precisão.',
     subtitle:
       'Transformamos dados de clientes, produtos, canais, PDVs, estoque e preço em decisões preditivas para aumentar receita, proteger margem e reduzir desperdício operacional.',
     ctaLabel: 'Ver cases de sucesso',
