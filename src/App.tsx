@@ -23,6 +23,7 @@ import HomeTeste from "./pages/HomeTeste";
 import HomeV1 from "./pages/HomeV1";
 import HomeV2 from "./pages/HomeV2";
 import HomeV3 from "./pages/HomeV3";
+import HomeV4 from "./pages/HomeV4";
 import Insights from "./pages/Insights";
 import InsightArticle from "./pages/InsightArticle";
 import Intelligence from "./pages/Intelligence";
