@@ -1,30 +1,50 @@
-## Diagnóstico
+## Nova seção "Como Funciona" acima do i6Signal
 
-Os diagramas parecem "apagados" porque a extração de transparência usada até agora deriva o alpha da **luminância** (pixel escuro = transparente). Isso funciona para remover o fundo, mas **também reduz a opacidade das próprias linhas coral e brancas** — os traços viram semi-transparentes e se misturam com o `#0B1224` do hero, perdendo saturação e nitidez. Além disso, a EN atual foi padded/reescalada, o que degradou o pixel.
+Criar `src/components/hometeste/ComoFuncionamosSection.tsx` e inseri-lo em `HomeTeste.tsx` logo acima de `SinaisSection`.
 
-## Ajuste
+**Diretriz principal:** manter o design system atual do site (padrões de `SinaisSection`, `InsightsSection`, etc.) — mesma tipografia, mesmos tokens coral `#F4845F`, mesma linguagem de cards `rounded-2xl bg-white/5 border border-white/10`, mesmos badges e espaçamentos. O anexo é apenas referência conceitual da estrutura (eyebrow, título, 4 passos numerados, faixa lateral) — **não copiar o visual do anexo literalmente**.
 
-**1. Nova imagem EN (upload atual)**
-- Anexo tem 1920×640 (ratio 3.0, mais panorâmica que PT 3832×1642 / ratio 2.33).
-- Processar sem esticar: upscale Lanczos ~2x para nitidez retina.
+### Diferenciação de fundo
 
-**2. Reprocessar ambas as imagens com extração de alpha por "background subtraction"** em vez de luminância:
-   - Detectar cor de fundo (navy ~#0B1224).
-   - Alpha = distância cromática ao fundo (com curva suave nas bordas para antialiasing).
-   - **Unpremultiplicar** o RGB pelo alpha para restaurar a cor original das linhas — resultado: traços coral com saturação total e brancos com brilho pleno, sem halo escuro.
-   - Aplicar leve boost de contraste (~1.1) para compensar qualquer suavização residual.
+Único desvio deliberado do padrão: fundo levemente mais claro que o `#0B1224` da home para criar alívio visual entre `HeroDecisaoV4` e `SinaisSection`. Usar `#111a30` (ou gradiente sutil), mantendo coerência com a paleta.
 
-**3. Manter dimensões harmônicas entre PT e EN**
-   - PT permanece 3832×1642 (já em alta res).
-   - EN escalada para largura equivalente ao conteúdo visual da PT — tratamento que preserve a densidade de pixels percebida, sem alterar `HeroDecisaoV4.tsx`.
+### Estrutura da seção (top → bottom)
 
-**4. Substituir os pointers**:
-   - `hero-decisao-transparent-hd.png.asset.json` (PT reprocessada)
-   - `hero-decisao-transparent-hd-en.png.asset.json` (EN nova)
-   - Deletar assets antigos via `lovable-assets delete`.
+1. **Header** (padrão do site)
+   - Badge coral estilo `SinaisSection`: `COMO FUNCIONA` / `HOW IT WORKS`
+   - Título h2 com destaque coral em trecho final: "Como transformamos sinais em **decisões acionáveis**"
+   - Subtítulo curto white/50.
 
-Nenhuma alteração em `HeroDecisaoV4.tsx`.
+2. **Faixa de ORIGENS de dados** (nova — antes do passo 01)
+   - Rótulo pequeno à esquerda: "Capturamos de qualquer ecossistema" / "We capture from any ecosystem"
+   - Chips minimalistas em linha (wrap): Oracle, SAP, Snowflake, Databricks, BigQuery, PostgreSQL, S3, Salesforce, MongoDB, Redshift, Kafka
+   - Estilo dos chips: mesmo padrão dos differentiators de `EnginesGrid` (`rounded-full border border-white/10 bg-white/[0.02]`), com ícone `lucide-react` monocromático (`Database`, `Cloud`, `Server`).
+   - Linha vertical fina coral conectando à seção dos passos (mesmo estilo do connector já usado em `SinaisSection` e `EnginesGrid`).
 
-### Observação sobre proporção
+3. **4 passos numerados** (sem ícones — apenas numeração)
+   - Grid `grid-cols-1 md:grid-cols-4 gap-6`.
+   - Cada card: mesmo padrão `p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50` de `SinaisSection`.
+   - Conteúdo do card: número grande em coral (ex: `01` em ~48px, font-bold, opacidade/tratamento discreto) + título white + descrição white/70.
+   - Textos:
+     - 01 — Captura de sinais → Demanda, preço, estoque, comportamento e contexto de mercado.
+     - 02 — Predição → **Modelos proprietários** identificam risco, intenção, elasticidade e propensão.
+     - 03 — Recomendação priorizada → A melhor ação por objetivo, canal, cliente, SKU ou praça.
+     - 04 — Ativação → A decisão chega à operação no ecossistema do cliente.
+   - **Sem** a faixa "Entrega em → CRM | Pricing | Supply | Sales" do anexo.
 
-A EN nova (3.0) é mais larga que a PT (2.33). Como o hero centraliza verticalmente com `w-full h-auto`, a EN vai renderizar **mais baixa** que a PT no mesmo largura — ficando visualmente harmônica (mesma largura, menos altura). Se preferir altura idêntica à PT, posso adicionar padding transparente vertical na EN para chegar a 2.33; me diga se quer essa variação.
+4. **Faixa de ATIVAÇÃO / ECOSSISTEMA** (nova — depois do passo 04)
+   - Rótulo: "Ativamos em qualquer ecossistema do cliente" / "We activate in any client ecosystem"
+   - Mesmo padrão visual dos chips da faixa de origens (consistência), mas com ferramentas de ativação: CRM, ERP, Salesforce, HubSpot, SAP, Shopify, App, WhatsApp, E-mail, Push, POS.
+   - Cada chip com ícone `lucide-react` apropriado (`Users`, `Boxes`, `Smartphone`, `MessageSquare`, `Mail`, `Bell`, `ShoppingBag`).
+   - Layout: chips em rede com linhas finas coral conectando alguns entre si (SVG discreto de fundo), transmitindo a ideia de "conectado em qualquer ecossistema" sem quebrar o padrão minimalista do site.
+
+### Internacionalização
+
+Todos os textos via `useLanguage()` no padrão dos demais componentes de `hometeste/`. Nomes de ferramentas permanecem iguais em ambos idiomas.
+
+### Arquivos afetados
+
+- **Criar:** `src/components/hometeste/ComoFuncionamosSection.tsx`
+- **Editar:** `src/pages/HomeTeste.tsx` — inserir `<ComoFuncionamosSection />` acima de `<SinaisSection />`
+
+Nenhuma outra alteração no site.
