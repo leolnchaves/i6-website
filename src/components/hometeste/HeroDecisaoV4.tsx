@@ -10,22 +10,25 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* Diagrama ancorado na faixa central-inferior */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[38vh] bottom-[22vh] w-[104vw] max-w-[1700px] flex items-center justify-center pointer-events-none">
-        <img
-          src={heroDecisao}
-          alt=""
-          aria-hidden
-          className="w-full h-full object-contain select-none"
-          style={{
-            opacity: 0.92,
-            imageRendering: 'auto',
-            maskImage:
-              'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
-            WebkitMaskImage:
-              'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
-          }}
-        />
+      {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
+      <div className="absolute inset-x-0 top-[29vh] z-0 flex justify-center pointer-events-none overflow-hidden">
+        <div className="w-[min(108vw,1500px)] h-[clamp(320px,43vh,430px)] overflow-hidden flex items-center justify-center">
+          <img
+            src={heroDecisao}
+            alt=""
+            aria-hidden
+            className="w-full h-full max-w-none object-cover select-none"
+            style={{
+              opacity: 0.94,
+              imageRendering: 'auto',
+              objectPosition: 'center 45%',
+              maskImage:
+                'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
+              WebkitMaskImage:
+                'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
+            }}
+          />
+        </div>
       </div>
 
       {/* Halo suave atrás do texto (topo) */}
