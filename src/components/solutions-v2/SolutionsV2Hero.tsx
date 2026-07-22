@@ -25,6 +25,15 @@ const SolutionsV2Hero = memo(() => {
             >
               {hero.titleHighlight}
             </span>
+            {hero.titleMiddle}
+            {hero.titleHighlight2 && (
+              <span
+                className="text-[#F4845F]"
+                style={{ textShadow: '0 0 30px rgba(244,132,95,0.3), 0 0 60px rgba(244,132,95,0.15)' }}
+              >
+                {hero.titleHighlight2}
+              </span>
+            )}
             {hero.titleAfter}
           </h1>
           <p className="text-base sm:text-lg text-white/65 leading-relaxed max-w-3xl mx-auto mb-8">

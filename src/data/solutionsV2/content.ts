@@ -29,6 +29,8 @@ export interface SolutionsV2Content {
     eyebrow: string;
     titleBefore: string;
     titleHighlight: string;
+    titleMiddle?: string;
+    titleHighlight2?: string;
     titleAfter: string;
     subtitle: string;
     ctaLabel: string;
@@ -73,7 +75,9 @@ const pt: SolutionsV2Content = {
     eyebrow: 'Soluções',
     titleBefore: 'IA aplicada para ',
     titleHighlight: 'capturar crescimento',
-    titleAfter: ' e margem com precisão.',
+    titleMiddle: ' e ',
+    titleHighlight2: 'margem',
+    titleAfter: ' com precisão.',
     subtitle:
       'Transformamos dados de clientes, produtos, canais, PDVs, estoque e preço em decisões preditivas para aumentar receita, proteger margem e reduzir desperdício operacional.',
     ctaLabel: 'Ver cases de sucesso',
@@ -287,7 +291,9 @@ const en: SolutionsV2Content = {
     eyebrow: 'Solutions',
     titleBefore: 'AI applied to ',
     titleHighlight: 'capture growth',
-    titleAfter: ' and margin with precision.',
+    titleMiddle: ' and ',
+    titleHighlight2: 'margin',
+    titleAfter: ' with precision.',
     subtitle:
       'We turn customer, product, channel, POS, inventory and price data into predictive decisions that increase revenue, protect margin and reduce operational waste.',
     ctaLabel: 'See success stories',
