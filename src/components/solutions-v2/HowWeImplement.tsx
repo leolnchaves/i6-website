@@ -22,7 +22,7 @@ const HowWeImplement = memo(() => {
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
             {howWeImplement.eyebrow}
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
+          <h2 className="text-2xl md:text-3xl font-bold text-white whitespace-pre-line">
             {howWeImplement.title}
           </h2>
         </div>
