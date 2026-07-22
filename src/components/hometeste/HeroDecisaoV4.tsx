@@ -44,21 +44,23 @@ const HeroDecisaoV4 = () => {
           <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
             The Platform for <span className="font-semibold" style={{ textShadow: coralGlow }}>Decision Advantage</span>
           </p>
-          <p className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.
-          </p>
         </div>
       </div>
 
-      {/* CTA no pico */}
-      <div className="absolute bottom-[14vh] left-1/2 -translate-x-1/2 z-10 px-6">
-        <Link
-          to={localized('/contact')}
-          className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
-        >
-          Antecipe sua próxima decisão. Agora.
-          <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
-        </Link>
+      {/* Descrição + CTA no pico, colados ao final */}
+      <div className="absolute bottom-[6vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white/70 leading-relaxed">
+            Transformamos sinais de demanda, preço, estoque e comportamento em decisões que protegem margem, aceleram giro e aumentam conversão.
+          </p>
+          <Link
+            to={localized('/contact')}
+            className="group inline-flex items-center gap-2 mt-8 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
+          >
+            Antecipe sua próxima decisão. Agora.
+            <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
     </section>
   );
