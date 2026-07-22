@@ -1,1 +1,7 @@
-Em `src/components/hometeste/CTAFinal.tsx`, envolver a segunda frase (line2Start + span highlight) em um `<span className="whitespace-nowrap">` para forçar toda a frase "Sua próxima decisão também não deveria." em uma única linha, tanto em PT quanto em EN. Ampliar levemente o container (de `max-w-3xl` para `max-w-4xl`) se necessário para acomodar a linha em telas menores — mas testar primeiro apenas com `whitespace-nowrap`, pois em breakpoints ≥ md o texto cabe.
+Em `src/components/hometeste/ComoFuncionamosSection.tsx`, envolver o grid dos 4 cards (01–04) num container com:
+
+- Borda sutil coral (`border border-[#F4845F]/30`), cantos arredondados (`rounded-2xl`), leve sombra e background translúcido para reforçar a ideia de "produto".
+- Badge/tag no topo do box com o título **"i6 PLATFORM"** (uppercase, tracking-wide, cor coral), posicionada absolutamente sobre a borda superior (estilo fieldset), centralizada.
+- Padding interno para respirar entre a borda e os cards.
+- Manter as linhas SVG e as partículas animadas conectando as fontes (esquerda) e ativações (direita) aos cards — os paths continuam apontando para as posições dos cards, agora dentro do box.
+- Sem versão traduzida (nome do produto fixo em ambos idiomas).
