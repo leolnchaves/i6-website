@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
-import MotionVerticalRain from '@/components/hometeste/MotionVerticalRain';
+import heroWaves from '@/assets/hero-waves.png.asset.json';
 
 
 const HeroMovimento = () => {
@@ -26,7 +26,18 @@ const HeroMovimento = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1224] overflow-hidden">
-      <MotionVerticalRain />
+      {/* Wave background — recolored to coral via CSS filter, low opacity */}
+      <img
+        src={heroWaves.url}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        style={{
+          opacity: 0.22,
+          mixBlendMode: 'screen',
+          filter: 'hue-rotate(-8deg) saturate(1.15)',
+        }}
+      />
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <h1
           className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold text-white leading-tight tracking-tight"
