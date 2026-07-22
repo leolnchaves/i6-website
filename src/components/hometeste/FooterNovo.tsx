@@ -29,7 +29,7 @@ const FooterNovo = () => {
       </>
     ) : (
       <>
-        Decide <span className="font-bold text-[#F4845F] [text-shadow:0_0_8px_rgba(244,132,95,0.9),0_0_20px_rgba(244,132,95,0.5),0_0_35px_rgba(244,132,95,0.25)]">before</span> the market.
+        Decide <span className="font-bold text-white">before</span> the market.
         <br />
         We turn live behavior into predictable growth.
       </>
