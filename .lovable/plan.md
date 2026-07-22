@@ -1,7 +1,15 @@
-Em `src/components/hometeste/ComoFuncionamosSection.tsx`, envolver o grid dos 4 cards (01–04) num container com:
+Padronizar o bloco final "convite ao contato" usando `CTAFinal` (o mesmo do Home) em todas as páginas institucionais que hoje têm um CTA final diferente.
 
-- Borda sutil coral (`border border-[#F4845F]/30`), cantos arredondados (`rounded-2xl`), leve sombra e background translúcido para reforçar a ideia de "produto".
-- Badge/tag no topo do box com o título **"i6 PLATFORM"** (uppercase, tracking-wide, cor coral), posicionada absolutamente sobre a borda superior (estilo fieldset), centralizada.
-- Padding interno para respirar entre a borda e os cards.
-- Manter as linhas SVG e as partículas animadas conectando as fontes (esquerda) e ativações (direita) aos cards — os paths continuam apontando para as posições dos cards, agora dentro do box.
-- Sem versão traduzida (nome do produto fixo em ambos idiomas).
+**Substituições:**
+
+1. `src/pages/Solutions.tsx` — trocar `<SolutionsCTA />` por `<CTAFinal />`.
+2. `src/pages/TransformationLanding.tsx` — trocar `<SolutionsCTA />` por `<CTAFinal />`.
+3. `src/pages/OurAI.tsx` — trocar `<OurAICTA content={c.cta} />` por `<CTAFinal />`.
+
+**Não alterar** (são formulários de captura de leads, não CTAs finais de contato):
+- `ArticleCTAForm` em `InsightArticle` e `IntelligenceArticle`.
+- `EbookCTA` em `Kiosk`.
+
+**Não mexer** nas páginas que já usam `CTAFinal` (HomeTeste, SuccessStories, SuccessStoryArticle).
+
+**Limpeza opcional:** manter os componentes `SolutionsCTA` e `OurAICTA` no repo (não remover) para evitar quebras se forem reutilizados; apenas deixam de ser importados nas páginas acima.
