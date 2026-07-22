@@ -1,23 +1,34 @@
-## Problema
-O PNG do diagrama tem fundo azul-escuro próximo (mas não idêntico) ao `#0B1224` da hero. Como a imagem é opaca (com `opacity: 0.93` + máscara radial), a diferença de tom vira uma "moldura" perceptível ao redor do diagrama.
+## Objetivo
+Adotar o hero V4 (diagrama Decision) como hero oficial da home nos dois idiomas e remover as rotas experimentais.
 
-## Solução
-Tornar o fundo do PNG **transparente** para que o `#0B1224` da hero apareça atrás dos traços/nós, eliminando qualquer diferença de cor. Aproveitar para descer imagem e bloco Texto+CTA em 4vh.
+## Passos
 
-### Passos
-1. **Reprocessar o asset** (`ChatGPT_Image_22_de_jul._de_2026_18_57_20.png`) via Python/PIL:
-   - Ler o PNG original em alta resolução.
-   - Converter pixels do fundo escuro em alpha 0, preservando traços coral/branco e seu glow.
-   - Abordagem: `alpha = max(R,G,B)` normalizado (subtraindo levemente o piso escuro). Áreas pretas/navy viram totalmente transparentes; o glow coral mantém suavidade natural, sem halo retangular.
-   - Salvar em 2x (~3832×1642) como PNG com transparência.
-2. **Publicar novo asset** via `lovable-assets create` → `src/assets/hero-decisao-transparent-hd.png.asset.json`.
-3. **Atualizar `HeroDecisaoV4.tsx`**:
-   - Trocar o import para o novo asset transparente.
-   - Remover `opacity: 0.93` (deixar 1.0) e remover a `maskImage` radial (a transparência já faz o fade natural).
-   - Descer a **imagem em 4vh**: `-translate-y-[calc(50%-4vh)]` → `-translate-y-[calc(50%-8vh)]`.
-   - Descer o **bloco Texto+CTA em 4vh**: `bottom-[9vh]` → `bottom-[5vh]`.
-   - Manter tamanho e responsividade atuais.
-4. **Manter** o halo `radial-gradient` atrás do título (protege legibilidade do H1, não afeta o fundo).
+### 1. Adicionar asset EN
+- Upload da imagem anexa (`ChatGPT_Image_22_de_jul._de_2026_19_01_39.png`) via `lovable-assets create` → `src/assets/hero-decisao-transparent-hd-en.png.asset.json` (mesmo tratamento de transparência já validado no PT).
 
-### Resultado esperado
-Diagrama flutua sobre o `#0B1224` sem qualquer "retângulo" ou variação tonal visível; imagem e CTA 4vh mais baixos.
+### 2. Internacionalizar o HeroDecisaoV4
+Em `src/components/hometeste/HeroDecisaoV4.tsx`:
+- Ler o idioma via `useLanguage()`.
+- Escolher entre asset PT (`hero-decisao-transparent-hd.png`) e EN pelo idioma.
+- Textos por idioma:
+  - **H1**: "The Platform for<br/>Decision Advantage" (mantém em ambos, já é a marca) OU traduzir a estrutura? → **Mantém em inglês nos dois idiomas** (é o positioning statement da marca, consistente com o resto do site).
+  - **Descrição PT**: mantida atual.
+    **EN**: "We turn business, market and behavior signals into decisions that protect margin, accelerate turnover, increase conversion and reduce cost."
+  - **CTA PT**: "Decida antes do mercado. Agora." (antes destacado)
+    **EN**: "Decide before the market. Now." (before destacado)
+
+### 3. Substituir a home
+- `src/pages/HomeTeste.tsx`: trocar `<HeroMovimento />` por `<HeroDecisaoV4 />` (as demais seções permanecem).
+
+### 4. Remover rotas e páginas experimentais
+- Deletar arquivos: `src/pages/HomeV1.tsx`, `HomeV2.tsx`, `HomeV3.tsx`, `HomeV4.tsx`.
+- Deletar componentes obsoletos: `src/components/hometeste/HeroDecisaoV1.tsx`, `HeroDecisaoV2.tsx`, `HeroDecisaoV3.tsx` (HeroDecisaoV4 permanece pois vira o hero oficial).
+- `src/App.tsx`: remover imports e rotas `home-v1..home-v4`.
+
+### 5. Verificar
+- Build.
+- Confirmar `HeroMovimento` não fica órfão problemático (fica no repo como legado; posso deletar também se quiser — dizer no chat).
+
+## Confirmar antes de executar
+1. **H1** ("The Platform for Decision Advantage") permanece em inglês no PT também? (é o que está hoje na V4 PT).
+2. Publicar release após aplicar (bump minor `v1.3.0` já que é mudança de home)?
