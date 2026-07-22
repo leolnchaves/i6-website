@@ -11,13 +11,13 @@ const CTAFinal = () => {
 
   const copy = {
     pt: {
-      lineStart: 'Seus dados já têm as respostas.\nSó falta ',
-      lineHighlight: 'movimento.',
+      lineStart: 'O mercado não espera.\nSua próxima decisão também ',
+      lineHighlight: 'não deveria.',
       cta: isMobile ? 'Pronto para transformar\ndados em lucro?' : 'Pronto para transformar dados em lucro?',
     },
     en: {
-      lineStart: 'Your data already has the answers.\nAll it needs is ',
-      lineHighlight: 'movement.',
+      lineStart: 'The market doesn\'t wait.\nYour next decision ',
+      lineHighlight: 'shouldn\'t either.',
       cta: isMobile ? 'Ready to turn\ndata into profit?' : 'Ready to turn data into profit?',
     },
   }[language];
