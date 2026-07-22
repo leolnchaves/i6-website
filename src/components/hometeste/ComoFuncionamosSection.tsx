@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 type LogoItem = { name: string; slug: string };
 
@@ -28,27 +29,117 @@ const activations: LogoItem[] = [
   { name: 'Meta Ads', slug: 'meta' },
 ];
 
-const LOGO_COLOR = '9ca3af';
-
-const Logo = ({ item }: { item: LogoItem }) => (
-  <img
-    src={`https://cdn.simpleicons.org/${item.slug}/${LOGO_COLOR}`}
-    alt={item.name}
-    loading="lazy"
-    className="w-4 h-4 opacity-80 group-hover/chip:opacity-100 transition-opacity"
-  />
-);
-
-const Chip = ({ item }: { item: LogoItem }) => (
-  <span className="group/chip inline-flex items-center gap-2 text-xs md:text-sm text-white/70 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.02] hover:border-[#F4845F]/40 hover:text-white transition-colors">
-    <Logo item={item} />
-    {item.name}
-  </span>
+const Chip = ({
+  item,
+  align,
+  chipRef,
+}: {
+  item: LogoItem;
+  align: 'left' | 'right';
+  chipRef: (el: HTMLDivElement | null) => void;
+}) => (
+  <div
+    ref={chipRef}
+    className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-slate-200 shadow-[0_2px_8px_rgba(15,23,42,0.06)] text-slate-700 text-xs md:text-sm hover:shadow-[0_4px_16px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/40 transition-all ${
+      align === 'right' ? 'flex-row-reverse' : ''
+    }`}
+  >
+    <img
+      src={`https://cdn.simpleicons.org/${item.slug}`}
+      alt=""
+      loading="lazy"
+      className="w-4 h-4"
+    />
+    <span className="font-medium">{item.name}</span>
+  </div>
 );
 
 const ComoFuncionamosSection = () => {
   const { language } = useLanguage();
   const isPt = language === 'pt';
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const card01Ref = useRef<HTMLDivElement | null>(null);
+  const card04Ref = useRef<HTMLDivElement | null>(null);
+  const sourceRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const activationRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const [leftPaths, setLeftPaths] = useState<string[]>([]);
+  const [rightPaths, setRightPaths] = useState<string[]>([]);
+  const [leftEnds, setLeftEnds] = useState<{ x: number; y: number }[]>([]);
+  const [rightEnds, setRightEnds] = useState<{ x: number; y: number }[]>([]);
+  const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
+
+  const recalculate = () => {
+    const wrap = wrapperRef.current;
+    const c1 = card01Ref.current;
+    const c4 = card04Ref.current;
+    if (!wrap || !c1 || !c4) return;
+    const wr = wrap.getBoundingClientRect();
+    setSvgSize({ w: wr.width, h: wr.height });
+
+    const c1r = c1.getBoundingClientRect();
+    const c4r = c4.getBoundingClientRect();
+    const targetLeft = { x: c1r.left - wr.left, y: c1r.top - wr.top + c1r.height / 2 };
+    const targetRight = { x: c4r.right - wr.left, y: c4r.top - wr.top + c4r.height / 2 };
+
+    const lPaths: string[] = [];
+    const lEnds: { x: number; y: number }[] = [];
+    sourceRefs.current.forEach((el) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const sx = r.right - wr.left;
+      const sy = r.top - wr.top + r.height / 2;
+      const tx = targetLeft.x;
+      const ty = targetLeft.y;
+      const dx = Math.max(60, (tx - sx) * 0.6);
+      const c1x = sx + dx;
+      const c2x = tx - dx;
+      lPaths.push(`M ${sx} ${sy} C ${c1x} ${sy}, ${c2x} ${ty}, ${tx} ${ty}`);
+      lEnds.push({ x: sx, y: sy });
+    });
+    setLeftPaths(lPaths);
+    setLeftEnds(lEnds);
+
+    const rPaths: string[] = [];
+    const rEnds: { x: number; y: number }[] = [];
+    activationRefs.current.forEach((el) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const sx = r.left - wr.left;
+      const sy = r.top - wr.top + r.height / 2;
+      const tx = targetRight.x;
+      const ty = targetRight.y;
+      const dx = Math.max(60, (sx - tx) * 0.6);
+      const c1x = tx + dx;
+      const c2x = sx - dx;
+      rPaths.push(`M ${tx} ${ty} C ${c1x} ${ty}, ${c2x} ${sy}, ${sx} ${sy}`);
+      rEnds.push({ x: sx, y: sy });
+    });
+    setRightPaths(rPaths);
+    setRightEnds(rEnds);
+  };
+
+  useLayoutEffect(() => {
+    recalculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
+
+  useEffect(() => {
+    const ro = new ResizeObserver(() => recalculate());
+    if (wrapperRef.current) ro.observe(wrapperRef.current);
+    window.addEventListener('resize', recalculate);
+    // Recalc after webfonts/logos load
+    const t = window.setTimeout(recalculate, 300);
+    const t2 = window.setTimeout(recalculate, 1200);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', recalculate);
+      window.clearTimeout(t);
+      window.clearTimeout(t2);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const copy = isPt
     ? {
@@ -61,10 +152,10 @@ const ComoFuncionamosSection = () => {
         activationLabel: 'Ativamos em qualquer ecossistema',
         steps: [
           { title: 'Captura de sinais', desc: 'Demanda, preço, estoque, comportamento e contexto de mercado.' },
-          { title: 'Predição', desc: 'Modelos proprietários identificam risco, intenção, elasticidade e propensão.' },
+          { title: 'Predição', descBefore: '', highlight: 'Modelos proprietários', descAfter: ' identificam risco, intenção, elasticidade e propensão.' },
           { title: 'Recomendação priorizada', desc: 'A melhor ação por objetivo, canal, cliente, SKU ou praça.' },
           { title: 'Ativação', desc: 'A decisão chega à operação no ecossistema do cliente.' },
-        ],
+        ] as any[],
       }
     : {
         badge: 'HOW IT WORKS',
@@ -76,102 +167,161 @@ const ComoFuncionamosSection = () => {
         activationLabel: 'We activate in any ecosystem',
         steps: [
           { title: 'Signal capture', desc: 'Demand, price, inventory, behavior and market context.' },
-          { title: 'Prediction', desc: 'Proprietary models identify risk, intent, elasticity and propensity.' },
+          { title: 'Prediction', descBefore: '', highlight: 'Proprietary models', descAfter: ' identify risk, intent, elasticity and propensity.' },
           { title: 'Prioritized recommendation', desc: 'The best action by objective, channel, customer, SKU or region.' },
           { title: 'Activation', desc: 'The decision reaches operations across the client ecosystem.' },
-        ],
+        ] as any[],
       };
 
+  const stepRefs = [null, card01Ref, null, null, card04Ref];
+  const cardRefMap = (i: number) => (i === 0 ? card01Ref : i === 3 ? card04Ref : undefined);
+
   return (
-    <section className="py-14 md:py-20 bg-[#111a30]">
-      <div className="container mx-auto px-6 max-w-7xl">
-        {/* Header */}
-        <div className="mb-6">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4845F]/20 text-[#F4845F] text-xs font-semibold tracking-widest uppercase">
-            {copy.badge}
-          </span>
-        </div>
+    <section className="relative bg-[#F5F6FA]">
+      {/* Soft top transition from navy hero */}
+      <div className="h-10 bg-gradient-to-b from-[#0B1224] to-[#F5F6FA]" />
+      {/* Soft bottom transition to navy next section */}
 
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug mb-4">
-          {copy.titleStart}
-          <span className="text-[#F4845F] drop-shadow-[0_0_12px_rgba(244,132,95,0.5)]">
-            {copy.titleHighlight}
-          </span>
-        </h2>
-        <p className="text-white/50 text-base md:text-lg max-w-2xl mb-14">
-          {copy.subtitle}
-        </p>
-
-        {/* Desktop layout: sources | 4 steps | activation */}
-        <div className="hidden lg:grid grid-cols-[minmax(160px,200px)_1fr_minmax(160px,200px)] gap-6 items-stretch">
-          {/* LEFT — sources connected to card 01 */}
-          <div className="relative flex flex-col justify-center">
-            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">
-              {copy.sourcesLabel}
-            </p>
-            <div className="flex flex-col items-start gap-2">
-              {sources.map((s) => (
-                <Chip key={s.name} item={s} />
-              ))}
-            </div>
-            {/* Connector to card 01 */}
-            <div
-              aria-hidden
-              className="absolute top-1/2 right-0 h-px w-6 -translate-y-1/2 translate-x-full bg-gradient-to-r from-[#F4845F]/10 to-[#F4845F]/60"
-            />
-            <div
-              aria-hidden
-              className="absolute top-1/2 -right-6 w-1.5 h-1.5 rounded-full bg-[#F4845F] -translate-y-1/2 translate-x-full shadow-[0_0_8px_rgba(244,132,95,0.6)]"
-            />
+      <div className="py-12 md:py-16">
+        <div className="container mx-auto px-6 max-w-6xl">
+          {/* Header */}
+          <div className="mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4845F]/15 text-[#F4845F] text-xs font-semibold tracking-widest uppercase">
+              {copy.badge}
+            </span>
           </div>
 
-          {/* CENTER — 4 steps */}
-          <div className="grid grid-cols-4 gap-4">
-            {copy.steps.map((step, i) => (
-              <div
-                key={i}
-                className="group p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-300 hover:shadow-[0_0_24px_rgba(244,132,95,0.12)]"
-              >
-                <div className="text-4xl font-bold text-[#F4845F]/80 mb-4 leading-none tracking-tight">
-                  {String(i + 1).padStart(2, '0')}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 leading-snug mb-4">
+            {copy.titleStart}
+            <span className="text-[#F4845F]">{copy.titleHighlight}</span>
+          </h2>
+          <p className="text-slate-500 text-base md:text-lg max-w-2xl mb-12">
+            {copy.subtitle}
+          </p>
+        </div>
+
+        {/* Desktop — fluid graph */}
+        <div className="hidden lg:block container mx-auto px-6 max-w-[1400px]">
+          <div ref={wrapperRef} className="relative">
+            {/* SVG connectors */}
+            <svg
+              className="absolute inset-0 pointer-events-none"
+              width={svgSize.w}
+              height={svgSize.h}
+              viewBox={`0 0 ${svgSize.w} ${svgSize.h}`}
+            >
+              <defs>
+                <linearGradient id="strokeL" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#F4845F" stopOpacity="0.15" />
+                  <stop offset="100%" stopColor="#F4845F" stopOpacity="0.7" />
+                </linearGradient>
+                <linearGradient id="strokeR" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#F4845F" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#F4845F" stopOpacity="0.15" />
+                </linearGradient>
+              </defs>
+              {leftPaths.map((d, i) => (
+                <path key={`l-${i}`} d={d} stroke="url(#strokeL)" strokeWidth={1.2} fill="none" />
+              ))}
+              {rightPaths.map((d, i) => (
+                <path key={`r-${i}`} d={d} stroke="url(#strokeR)" strokeWidth={1.2} fill="none" />
+              ))}
+              {leftEnds.map((p, i) => (
+                <circle key={`ld-${i}`} cx={p.x} cy={p.y} r={2.5} fill="#F4845F" />
+              ))}
+              {rightEnds.map((p, i) => (
+                <circle key={`rd-${i}`} cx={p.x} cy={p.y} r={2.5} fill="#F4845F" />
+              ))}
+            </svg>
+
+            <div className="relative grid grid-cols-[minmax(170px,210px)_1fr_minmax(170px,210px)] gap-10 items-center">
+              {/* LEFT chips — staggered */}
+              <div className="relative">
+                <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-5">
+                  {copy.sourcesLabel}
+                </p>
+                <div className="flex flex-col gap-2.5">
+                  {sources.map((s, i) => (
+                    <div
+                      key={s.name}
+                      style={{
+                        marginLeft: `${[0, 14, 28, 20, 6, 0, 10, 24, 18, 4][i] ?? 0}px`,
+                      }}
+                    >
+                      <Chip
+                        item={s}
+                        align="left"
+                        chipRef={(el) => (sourceRefs.current[i] = el)}
+                      />
+                    </div>
+                  ))}
                 </div>
-                <h3 className="text-white text-base font-semibold mb-2">{step.title}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{step.desc}</p>
               </div>
-            ))}
-          </div>
 
-          {/* RIGHT — activations connected to card 04 */}
-          <div className="relative flex flex-col justify-center">
-            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4 text-right">
-              {copy.activationLabel}
-            </p>
-            <div className="flex flex-col items-end gap-2">
-              {activations.map((a) => (
-                <Chip key={a.name} item={a} />
-              ))}
+              {/* CENTER — 4 cards */}
+              <div className="grid grid-cols-4 gap-4">
+                {copy.steps.map((step, i) => {
+                  const ref = cardRefMap(i);
+                  return (
+                    <div
+                      key={i}
+                      ref={ref as any}
+                      className="group relative p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
+                    >
+                      <div className="text-4xl font-bold text-[#F4845F] mb-4 leading-none tracking-tight">
+                        {String(i + 1).padStart(2, '0')}
+                      </div>
+                      <h3 className="text-slate-900 text-base font-semibold mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        {step.desc ?? (
+                          <>
+                            <span className="font-semibold text-[#F4845F]">{step.highlight}</span>
+                            {step.descAfter}
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* RIGHT chips — staggered */}
+              <div className="relative">
+                <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-5 text-right">
+                  {copy.activationLabel}
+                </p>
+                <div className="flex flex-col gap-2.5 items-end">
+                  {activations.map((a, i) => (
+                    <div
+                      key={a.name}
+                      style={{
+                        marginRight: `${[0, 14, 28, 20, 6, 0, 10, 24, 18, 4][i] ?? 0}px`,
+                      }}
+                    >
+                      <Chip
+                        item={a}
+                        align="right"
+                        chipRef={(el) => (activationRefs.current[i] = el)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            {/* Connector to card 04 */}
-            <div
-              aria-hidden
-              className="absolute top-1/2 left-0 h-px w-6 -translate-y-1/2 -translate-x-full bg-gradient-to-l from-[#F4845F]/10 to-[#F4845F]/60"
-            />
-            <div
-              aria-hidden
-              className="absolute top-1/2 -left-6 w-1.5 h-1.5 rounded-full bg-[#F4845F] -translate-y-1/2 -translate-x-full shadow-[0_0_8px_rgba(244,132,95,0.6)]"
-            />
           </div>
         </div>
 
-        {/* Mobile/tablet fallback */}
-        <div className="lg:hidden space-y-8">
+        {/* Mobile / tablet */}
+        <div className="lg:hidden container mx-auto px-6 max-w-6xl space-y-8">
           <div>
-            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-3 text-center">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-3 text-center">
               {copy.sourcesLabel}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {sources.map((s) => (
-                <Chip key={s.name} item={s} />
+              {sources.map((s, i) => (
+                <Chip key={s.name} item={s} align="left" chipRef={() => {}} />
               ))}
             </div>
           </div>
@@ -180,29 +330,39 @@ const ComoFuncionamosSection = () => {
             {copy.steps.map((step, i) => (
               <div
                 key={i}
-                className="p-5 rounded-2xl bg-white/5 border border-white/10 transition-all"
+                className="p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)]"
               >
-                <div className="text-4xl font-bold text-[#F4845F]/80 mb-3 leading-none tracking-tight">
+                <div className="text-4xl font-bold text-[#F4845F] mb-3 leading-none tracking-tight">
                   {String(i + 1).padStart(2, '0')}
                 </div>
-                <h3 className="text-white text-base font-semibold mb-2">{step.title}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{step.desc}</p>
+                <h3 className="text-slate-900 text-base font-semibold mb-2">{step.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  {step.desc ?? (
+                    <>
+                      <span className="font-semibold text-[#F4845F]">{step.highlight}</span>
+                      {step.descAfter}
+                    </>
+                  )}
+                </p>
               </div>
             ))}
           </div>
 
           <div>
-            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-3 text-center">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-3 text-center">
               {copy.activationLabel}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {activations.map((a) => (
-                <Chip key={a.name} item={a} />
+              {activations.map((a, i) => (
+                <Chip key={a.name} item={a} align="right" chipRef={() => {}} />
               ))}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Soft bottom transition back to navy */}
+      <div className="h-10 bg-gradient-to-b from-[#F5F6FA] to-[#0F172A]" />
     </section>
   );
 };
