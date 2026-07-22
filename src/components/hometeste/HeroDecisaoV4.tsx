@@ -59,7 +59,7 @@ const HeroDecisaoV4 = () => {
             to={localized('/contact')}
             className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
           >
-            <span>Decida <span style={{ color: '#F4845F', textShadow: coralGlow }}>antes</span> do mercado. Agora.</span>
+            <span>Decida <span className="text-[#F4845F] group-hover:text-black transition-colors duration-300 [text-shadow:0_0_8px_rgba(244,132,95,0.9),0_0_20px_rgba(244,132,95,0.5),0_0_35px_rgba(244,132,95,0.25)]">antes</span> do mercado. Agora.</span>
             <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
           </Link>
         </div>
