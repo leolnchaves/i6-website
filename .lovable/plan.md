@@ -1,16 +1,30 @@
-## Problema
+## Diagnóstico
 
-A imagem PT tem 3832×1642 (ratio 2.33) e a EN tem 1774×887 (ratio 2.0). Como o `<img>` no hero usa `w-full` (largura fixa), a EN, sendo relativamente mais alta, renderiza mais alta e "sobe" mais no layout — daí a diferença visível.
+Os diagramas parecem "apagados" porque a extração de transparência usada até agora deriva o alpha da **luminância** (pixel escuro = transparente). Isso funciona para remover o fundo, mas **também reduz a opacidade das próprias linhas coral e brancas** — os traços viram semi-transparentes e se misturam com o `#0B1224` do hero, perdendo saturação e nitidez. Além disso, a EN atual foi padded/reescalada, o que degradou o pixel.
 
 ## Ajuste
 
-Reprocessar o asset EN transparente para ter exatamente as mesmas dimensões da PT (3832×1642), preenchendo as bordas laterais com pixels transparentes para preservar o conteúdo do diagrama e o mesmo enquadramento visual da versão PT.
+**1. Nova imagem EN (upload atual)**
+- Anexo tem 1920×640 (ratio 3.0, mais panorâmica que PT 3832×1642 / ratio 2.33).
+- Processar sem esticar: upscale Lanczos ~2x para nitidez retina.
 
-### Passos
+**2. Reprocessar ambas as imagens com extração de alpha por "background subtraction"** em vez de luminância:
+   - Detectar cor de fundo (navy ~#0B1224).
+   - Alpha = distância cromática ao fundo (com curva suave nas bordas para antialiasing).
+   - **Unpremultiplicar** o RGB pelo alpha para restaurar a cor original das linhas — resultado: traços coral com saturação total e brancos com brilho pleno, sem halo escuro.
+   - Aplicar leve boost de contraste (~1.1) para compensar qualquer suavização residual.
 
-1. Baixar a EN atual (`hero-decisao-transparent-hd-en.png`).
-2. Redimensionar mantendo aspect ratio até altura 1642, depois padding transparente centralizado até 3832 de largura (canvas final 3832×1642, igual à PT).
-3. Fazer upload via `lovable-assets create` e sobrescrever `src/assets/hero-decisao-transparent-hd-en.png.asset.json`.
-4. Deletar o asset antigo com `lovable-assets delete` no pointer anterior (antes de sobrescrever, salvar cópia do pointer antigo).
+**3. Manter dimensões harmônicas entre PT e EN**
+   - PT permanece 3832×1642 (já em alta res).
+   - EN escalada para largura equivalente ao conteúdo visual da PT — tratamento que preserve a densidade de pixels percebida, sem alterar `HeroDecisaoV4.tsx`.
 
-Nenhuma alteração em `HeroDecisaoV4.tsx` — o mesmo layout/tamanho/posição da PT passa a valer para a EN automaticamente.
+**4. Substituir os pointers**:
+   - `hero-decisao-transparent-hd.png.asset.json` (PT reprocessada)
+   - `hero-decisao-transparent-hd-en.png.asset.json` (EN nova)
+   - Deletar assets antigos via `lovable-assets delete`.
+
+Nenhuma alteração em `HeroDecisaoV4.tsx`.
+
+### Observação sobre proporção
+
+A EN nova (3.0) é mais larga que a PT (2.33). Como o hero centraliza verticalmente com `w-full h-auto`, a EN vai renderizar **mais baixa** que a PT no mesmo largura — ficando visualmente harmônica (mesma largura, menos altura). Se preferir altura idêntica à PT, posso adicionar padding transparente vertical na EN para chegar a 2.33; me diga se quer essa variação.
