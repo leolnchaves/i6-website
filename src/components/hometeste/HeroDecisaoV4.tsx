@@ -11,7 +11,7 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
-      <div className="absolute inset-x-0 top-[12vh] z-0 flex justify-center pointer-events-none">
+      <div className="absolute inset-x-0 top-[8vh] z-0 flex justify-center pointer-events-none">
         <div className="w-[min(112vw,1550px)] h-auto flex items-center justify-center">
           <img
             src={heroDecisao}
