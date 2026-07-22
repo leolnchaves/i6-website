@@ -17,8 +17,9 @@ const CTAFinal = () => {
       cta: isMobile ? 'Pronto para transformar\ndados em lucro?' : 'Pronto para transformar dados em lucro?',
     },
     en: {
-      lineStart: 'The market doesn\'t wait.\nYour next decision ',
-      lineHighlight: 'shouldn\'t either.',
+      line1: "The market doesn't wait.",
+      line2Start: 'Your next decision ',
+      lineHighlight: "shouldn't either.",
       cta: isMobile ? 'Ready to turn\ndata into profit?' : 'Ready to turn data into profit?',
     },
   }[language];
