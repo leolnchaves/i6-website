@@ -16,9 +16,10 @@ const HeroDecisaoV4 = () => {
           src={heroDecisao.url}
           alt=""
           aria-hidden
-          className="w-full max-h-[70vh] object-contain select-none animate-fade-in"
+          className="w-full max-h-[58vh] object-contain select-none animate-fade-in"
           style={{
-            objectPosition: 'center 58%',
+            objectPosition: 'center 62%',
+            transform: 'translateY(8vh)',
             opacity: 0.32,
             maskImage:
               'radial-gradient(ellipse 85% 85% at center, black 60%, transparent 100%)',
