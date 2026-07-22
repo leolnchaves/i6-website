@@ -79,6 +79,7 @@ const LocalizedRoutes = () => {
         <Route path="home-v1" element={<HomeV1 />} />
         <Route path="home-v2" element={<HomeV2 />} />
         <Route path="home-v3" element={<HomeV3 />} />
+        <Route path="home-v4" element={<HomeV4 />} />
         <Route path="solutions" element={<Solutions />} />
         <Route path="solutions/:slug" element={<TransformationLanding />} />
         <Route path="our-ai" element={<OurAI />} />
