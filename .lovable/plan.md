@@ -1,34 +1,16 @@
-## Objetivo
-Adotar o hero V4 (diagrama Decision) como hero oficial da home nos dois idiomas e remover as rotas experimentais.
+## Problema
 
-## Passos
+A imagem PT tem 3832×1642 (ratio 2.33) e a EN tem 1774×887 (ratio 2.0). Como o `<img>` no hero usa `w-full` (largura fixa), a EN, sendo relativamente mais alta, renderiza mais alta e "sobe" mais no layout — daí a diferença visível.
 
-### 1. Adicionar asset EN
-- Upload da imagem anexa (`ChatGPT_Image_22_de_jul._de_2026_19_01_39.png`) via `lovable-assets create` → `src/assets/hero-decisao-transparent-hd-en.png.asset.json` (mesmo tratamento de transparência já validado no PT).
+## Ajuste
 
-### 2. Internacionalizar o HeroDecisaoV4
-Em `src/components/hometeste/HeroDecisaoV4.tsx`:
-- Ler o idioma via `useLanguage()`.
-- Escolher entre asset PT (`hero-decisao-transparent-hd.png`) e EN pelo idioma.
-- Textos por idioma:
-  - **H1**: "The Platform for<br/>Decision Advantage" (mantém em ambos, já é a marca) OU traduzir a estrutura? → **Mantém em inglês nos dois idiomas** (é o positioning statement da marca, consistente com o resto do site).
-  - **Descrição PT**: mantida atual.
-    **EN**: "We turn business, market and behavior signals into decisions that protect margin, accelerate turnover, increase conversion and reduce cost."
-  - **CTA PT**: "Decida antes do mercado. Agora." (antes destacado)
-    **EN**: "Decide before the market. Now." (before destacado)
+Reprocessar o asset EN transparente para ter exatamente as mesmas dimensões da PT (3832×1642), preenchendo as bordas laterais com pixels transparentes para preservar o conteúdo do diagrama e o mesmo enquadramento visual da versão PT.
 
-### 3. Substituir a home
-- `src/pages/HomeTeste.tsx`: trocar `<HeroMovimento />` por `<HeroDecisaoV4 />` (as demais seções permanecem).
+### Passos
 
-### 4. Remover rotas e páginas experimentais
-- Deletar arquivos: `src/pages/HomeV1.tsx`, `HomeV2.tsx`, `HomeV3.tsx`, `HomeV4.tsx`.
-- Deletar componentes obsoletos: `src/components/hometeste/HeroDecisaoV1.tsx`, `HeroDecisaoV2.tsx`, `HeroDecisaoV3.tsx` (HeroDecisaoV4 permanece pois vira o hero oficial).
-- `src/App.tsx`: remover imports e rotas `home-v1..home-v4`.
+1. Baixar a EN atual (`hero-decisao-transparent-hd-en.png`).
+2. Redimensionar mantendo aspect ratio até altura 1642, depois padding transparente centralizado até 3832 de largura (canvas final 3832×1642, igual à PT).
+3. Fazer upload via `lovable-assets create` e sobrescrever `src/assets/hero-decisao-transparent-hd-en.png.asset.json`.
+4. Deletar o asset antigo com `lovable-assets delete` no pointer anterior (antes de sobrescrever, salvar cópia do pointer antigo).
 
-### 5. Verificar
-- Build.
-- Confirmar `HeroMovimento` não fica órfão problemático (fica no repo como legado; posso deletar também se quiser — dizer no chat).
-
-## Confirmar antes de executar
-1. **H1** ("The Platform for Decision Advantage") permanece em inglês no PT também? (é o que está hoje na V4 PT).
-2. Publicar release após aplicar (bump minor `v1.3.0` já que é mudança de home)?
+Nenhuma alteração em `HeroDecisaoV4.tsx` — o mesmo layout/tamanho/posição da PT passa a valer para a EN automaticamente.
