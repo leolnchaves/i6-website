@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
-import heroDecisao from '@/assets/hero-decisao-panorama.png';
+import heroDecisaoWide from '@/assets/hero-decisao-wide.png.asset.json';
 
 // V4 — Diagrama centralizado sem sobreposição; CTA acima da descrição
 const HeroDecisaoV4 = () => {
@@ -11,17 +11,16 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
-      <div className="absolute inset-x-0 top-[29vh] z-0 flex justify-center pointer-events-none overflow-hidden">
-        <div className="w-[min(108vw,1500px)] h-[clamp(320px,43vh,430px)] overflow-hidden flex items-center justify-center">
+      <div className="absolute inset-x-0 top-[31vh] z-0 flex justify-center pointer-events-none overflow-hidden">
+        <div className="w-[min(112vw,1550px)] flex items-center justify-center">
           <img
-            src={heroDecisao}
+            src={heroDecisaoWide.url}
             alt=""
             aria-hidden
-            className="w-full h-full max-w-none object-cover select-none"
+            className="w-full h-auto max-w-none object-contain select-none"
             style={{
-              opacity: 0.94,
+              opacity: 0.93,
               imageRendering: 'auto',
-              objectPosition: 'center 45%',
               maskImage:
                 'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
               WebkitMaskImage:
