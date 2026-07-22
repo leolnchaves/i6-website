@@ -295,34 +295,40 @@ const ComoFuncionamosSection = () => {
                 </div>
               </div>
 
-              {/* CENTER — 4 cards */}
-              <div className="grid grid-cols-4 gap-4">
-                {copy.steps.map((step, i) => {
-                  const ref = cardRefMap(i);
-                  return (
-                    <div
-                      key={i}
-                      ref={ref as any}
-                      className="group relative p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
-                    >
-                      <div className="text-4xl font-bold text-[#F4845F] mb-4 leading-none tracking-tight">
-                        {String(i + 1).padStart(2, '0')}
+              {/* CENTER — i6 PLATFORM box with 4 cards */}
+              <div className="relative rounded-2xl border border-[#F4845F]/30 bg-white/40 backdrop-blur-[2px] shadow-[0_10px_40px_rgba(244,132,95,0.08)] px-4 pt-8 pb-4">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#F5F6FA] border border-[#F4845F]/40 text-[#F4845F] text-[10px] font-bold tracking-[0.22em] uppercase whitespace-nowrap">
+                  i6 Platform
+                </span>
+                <div className="grid grid-cols-4 gap-4">
+                  {copy.steps.map((step, i) => {
+                    const ref = cardRefMap(i);
+                    return (
+                      <div
+                        key={i}
+                        ref={ref as any}
+                        className="group relative p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
+                      >
+                        <div className="text-4xl font-bold text-[#F4845F] mb-4 leading-none tracking-tight">
+                          {String(i + 1).padStart(2, '0')}
+                        </div>
+                        <h3 className="text-slate-900 text-base font-semibold mb-2">
+                          {step.title}
+                        </h3>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                          {step.desc ?? (
+                            <>
+                              <span className="font-semibold text-[#F4845F]">{step.highlight}</span>
+                              {step.descAfter}
+                            </>
+                          )}
+                        </p>
                       </div>
-                      <h3 className="text-slate-900 text-base font-semibold mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-slate-600 text-sm leading-relaxed">
-                        {step.desc ?? (
-                          <>
-                            <span className="font-semibold text-[#F4845F]">{step.highlight}</span>
-                            {step.descAfter}
-                          </>
-                        )}
-                      </p>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
+
 
               {/* RIGHT chips — staggered */}
               <div className="relative">
