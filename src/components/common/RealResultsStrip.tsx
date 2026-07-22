@@ -28,7 +28,7 @@ const RealResultsStrip = memo(({ title, compact, slugs }: Props) => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8">
           <div>
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-2">
-              {language === 'pt' ? 'Provas em números' : 'Proof in numbers'}
+              {language === 'pt' ? 'Antecipação em números' : 'Anticipation in numbers'}
             </p>
             <h2 className={`${compact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-bold text-white`}>
               {heading}
