@@ -291,7 +291,9 @@ const en: SolutionsV2Content = {
     eyebrow: 'Solutions',
     titleBefore: 'AI applied to ',
     titleHighlight: 'capture growth',
-    titleAfter: ' and margin with precision.',
+    titleMiddle: ' and ',
+    titleHighlight2: 'margin',
+    titleAfter: ' with precision.',
     subtitle:
       'We turn customer, product, channel, POS, inventory and price data into predictive decisions that increase revenue, protect margin and reduce operational waste.',
     ctaLabel: 'See success stories',
