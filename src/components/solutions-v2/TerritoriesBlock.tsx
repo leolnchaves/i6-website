@@ -23,7 +23,7 @@ const TerritoriesBlock = memo(() => {
           <h2 className="text-2xl md:text-3xl font-bold text-white">
             {territoriesBlock.title}
           </h2>
-          <p className="mt-4 max-w-3xl mx-auto text-sm md:text-base text-white/70 leading-relaxed">
+          <p className="mt-4 max-w-5xl mx-auto text-sm md:text-base text-white/70 leading-relaxed md:whitespace-nowrap">
             {territoriesBlock.intro}
           </p>
         </div>
