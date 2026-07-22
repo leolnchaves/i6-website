@@ -11,7 +11,8 @@ const CTAFinal = () => {
 
   const copy = {
     pt: {
-      lineStart: 'O mercado não espera.\nSua próxima decisão também ',
+      line1: 'O mercado não espera.',
+      line2Start: 'Sua próxima decisão também ',
       lineHighlight: 'não deveria.',
       cta: isMobile ? 'Pronto para transformar\ndados em lucro?' : 'Pronto para transformar dados em lucro?',
     },
