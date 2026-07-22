@@ -14,7 +14,7 @@ const SinaisSection = () => {
       badge: 'QUEM SOMOS',
       titleLine1Start: 'Somos especialistas em ',
       titleLine1Highlight: 'IA aplicada',
-      titleLine2Start: 'que transforma decisões antecipadas em ',
+      titleLine2Start: 'que transforma decisões em ',
       titleLine2Highlight: 'resultados',
       titleLine2End: '.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
