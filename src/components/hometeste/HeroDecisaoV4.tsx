@@ -11,21 +11,20 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
-      <div className="absolute inset-x-0 top-[31vh] z-0 flex justify-center pointer-events-none overflow-hidden">
-        <div className="w-[min(112vw,1550px)] h-[clamp(300px,41vh,410px)] overflow-hidden flex items-center justify-center">
+      <div className="absolute inset-x-0 top-[31vh] z-0 flex justify-center pointer-events-none">
+        <div className="w-[min(112vw,1550px)] h-auto flex items-center justify-center">
           <img
             src={heroDecisao}
             alt=""
             aria-hidden
-            className="w-full h-full max-w-none object-cover select-none"
+            className="w-full h-auto max-w-none select-none"
             style={{
               opacity: 0.93,
               imageRendering: 'auto',
-              objectPosition: 'center 45%',
               maskImage:
-                'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
+                'radial-gradient(ellipse 100% 100% at center, black 88%, transparent 100%)',
               WebkitMaskImage:
-                'radial-gradient(ellipse 98% 94% at center, black 78%, transparent 100%)',
+                'radial-gradient(ellipse 100% 100% at center, black 88%, transparent 100%)',
             }}
           />
         </div>
