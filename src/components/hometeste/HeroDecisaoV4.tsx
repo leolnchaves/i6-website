@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { ArrowRight } from 'lucide-react';
-import heroDecisao from '@/assets/hero-decisao.png.asset.json';
+import heroDecisao from '@/assets/hero-decisao-hd.png.asset.json';
 
 // V4 — Diagrama centralizado sem sobreposição; CTA acima da descrição
 const HeroDecisaoV4 = () => {
