@@ -26,18 +26,19 @@ const HeroMovimento = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1224] overflow-hidden">
-      {/* Wave background — recolored to coral via CSS filter, low opacity */}
+      {/* Wave background — coral waves with transparent bg, subtle overlay on navy */}
       <img
         src={heroWaves.url}
         alt=""
         aria-hidden
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full object-cover scale-110 pointer-events-none select-none"
         style={{
-          opacity: 0.22,
-          mixBlendMode: 'screen',
-          filter: 'hue-rotate(-8deg) saturate(1.15)',
+          opacity: 0.55,
+          maskImage: 'radial-gradient(ellipse 80% 90% at center, black 45%, transparent 92%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 90% at center, black 45%, transparent 92%)',
         }}
       />
+
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <h1
           className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold text-white leading-tight tracking-tight"
