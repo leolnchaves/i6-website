@@ -42,10 +42,10 @@ const HeroDecisaoV4 = () => {
         <div className="text-center max-w-4xl mx-auto">
           <h1
             className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
-            dangerouslySetInnerHTML={{ __html: `Decida <span style="color:#F4845F">antes</span> do mercado` }}
+            dangerouslySetInnerHTML={{ __html: `The Platform for <span style="color:#F4845F">Decision Advantage</span>` }}
           />
           <p className="mt-4 text-lg sm:text-xl md:text-2xl font-light text-[#F4845F] tracking-wide">
-            The Platform for <span className="font-semibold" style={{ textShadow: coralGlow }}>Decision Advantage</span>
+            Decida <span className="font-semibold" style={{ textShadow: coralGlow }}>antes</span> do mercado
           </p>
         </div>
       </div>
