@@ -12,7 +12,7 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-0 flex justify-center pointer-events-none">
+      <div className="absolute inset-x-0 top-1/2 -translate-y-[calc(50%-2vh)] z-0 flex justify-center pointer-events-none">
         <div className="w-[min(100vw,1750px)] h-auto flex items-center justify-center">
           <img
             src={heroDecisao}
@@ -51,7 +51,7 @@ const HeroDecisaoV4 = () => {
       </div>
 
       {/* Descrição + CTA colados ao final */}
-      <div className="absolute bottom-[9vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
+      <div className="absolute bottom-[7vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
         <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
             Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.
