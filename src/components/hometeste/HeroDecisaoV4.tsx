@@ -1,17 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroDecisaoAsset from '@/assets/hero-decisao-transparent-hd.png.asset.json';
-const heroDecisao = heroDecisaoAsset.url;
+import heroDecisaoPt from '@/assets/hero-decisao-transparent-hd.png.asset.json';
+import heroDecisaoEn from '@/assets/hero-decisao-transparent-hd-en.png.asset.json';
 
-// V4 — Diagrama centralizado sem sobreposição; CTA acima da descrição
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
-  const coralGlow = '0 0 8px rgba(244,132,95,0.9), 0 0 20px rgba(244,132,95,0.5), 0 0 35px rgba(244,132,95,0.25)';
+  const { language } = useLanguage();
+  const isPt = language === 'pt';
+  const heroDecisao = isPt ? heroDecisaoPt.url : heroDecisaoEn.url;
+
+  const description = isPt
+    ? 'Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.'
+    : 'We turn business, market and behavior signals into decisions that protect margin, accelerate turnover, increase conversion and reduce cost.';
+
+  const ctaBefore = isPt ? 'antes' : 'before';
+  const ctaPrefix = isPt ? 'Decida ' : 'Decide ';
+  const ctaSuffix = isPt ? ' do mercado. Agora.' : ' the market. Now.';
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* Diagrama dimensionado pela largura para preservar proporção e ocupar o eixo horizontal */}
       <div className="absolute inset-x-0 top-1/2 -translate-y-[calc(50%-8vh)] z-0 flex justify-center pointer-events-none">
         <div className="w-[min(100vw,1750px)] h-auto flex items-center justify-center">
           <img
@@ -24,7 +33,6 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* Halo suave atrás do texto (topo) */}
       <div
         className="absolute inset-x-0 top-[14%] h-[30%] pointer-events-none"
         style={{
@@ -33,7 +41,6 @@ const HeroDecisaoV4 = () => {
         }}
       />
 
-      {/* Bloco de título no topo */}
       <div className="relative z-10 pt-[16vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
           <h1
@@ -43,17 +50,22 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* Descrição + CTA colados ao final */}
       <div className="absolute bottom-[5vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
         <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
-            Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.
+            {description}
           </p>
           <Link
             to={localized('/contact')}
             className="group inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-[#F4845F]/60 animate-glow-coral transition-all duration-500 ease-out hover:bg-[#F4845F] hover:border-[#F4845F] hover:shadow-[0_0_30px_rgba(244,132,95,0.5),0_0_60px_rgba(244,132,95,0.2)]"
           >
-            <span>Decida <span className="text-[#F4845F] group-hover:text-black transition-colors duration-300 [text-shadow:0_0_8px_rgba(244,132,95,0.9),0_0_20px_rgba(244,132,95,0.5),0_0_35px_rgba(244,132,95,0.25)]">antes</span> do mercado. Agora.</span>
+            <span>
+              {ctaPrefix}
+              <span className="text-[#F4845F] group-hover:text-black transition-colors duration-300 [text-shadow:0_0_8px_rgba(244,132,95,0.9),0_0_20px_rgba(244,132,95,0.5),0_0_35px_rgba(244,132,95,0.25)]">
+                {ctaBefore}
+              </span>
+              {ctaSuffix}
+            </span>
             <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
           </Link>
         </div>

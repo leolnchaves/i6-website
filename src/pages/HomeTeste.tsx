@@ -1,4 +1,4 @@
-import HeroMovimento from '@/components/hometeste/HeroMovimento';
+import HeroDecisaoV4 from '@/components/hometeste/HeroDecisaoV4';
 import TeseSection from '@/components/hometeste/TeseSection';
 import SinaisSection from '@/components/hometeste/SinaisSection';
 import ClientesSection from '@/components/hometeste/ClientesSection';
@@ -12,7 +12,7 @@ import TestemunhosCompact from '@/components/hometeste/TestemunhosCompact';
 const HomeTeste = () => (
   <>
     <SEOHead page="home" />
-    <HeroMovimento />
+    <HeroDecisaoV4 />
     <TeseSection />
     <SinaisSection />
     
@@ -25,4 +25,3 @@ const HomeTeste = () => (
 );
 
 export default HomeTeste;
-
