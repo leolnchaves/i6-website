@@ -16,15 +16,16 @@ const HeroDecisaoV4 = () => {
           src={heroDecisao.url}
           alt=""
           aria-hidden
-          className="w-full max-h-[58vh] object-contain select-none animate-fade-in"
+          className="w-full max-h-[54vh] object-contain select-none animate-fade-in"
           style={{
             objectPosition: 'center 62%',
-            transform: 'translateY(8vh)',
-            opacity: 0.32,
+            transform: 'translateY(16vh)',
+            opacity: 0.34,
+            imageRendering: 'auto',
             maskImage:
-              'radial-gradient(ellipse 85% 85% at center, black 60%, transparent 100%)',
+              'radial-gradient(ellipse 88% 88% at center, black 65%, transparent 100%)',
             WebkitMaskImage:
-              'radial-gradient(ellipse 85% 85% at center, black 60%, transparent 100%)',
+              'radial-gradient(ellipse 88% 88% at center, black 65%, transparent 100%)',
           }}
         />
       </div>
