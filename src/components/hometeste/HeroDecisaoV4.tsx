@@ -51,7 +51,7 @@ const HeroDecisaoV4 = () => {
       </div>
 
       {/* Descrição + CTA colados ao final */}
-      <div className="absolute bottom-[5vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
+      <div className="absolute bottom-[9vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
         <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
             Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.
