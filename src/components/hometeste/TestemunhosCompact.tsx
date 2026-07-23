@@ -34,8 +34,8 @@ const TestemunhosCompact = memo(() => {
       cta: 'Ver histórias de sucesso',
     },
     en: {
-      title: 'What our clients say',
-      subtitle: 'Results in the voice of those running the operation',
+      title: 'In their words: those already deciding first.',
+      subtitle: 'Leaders share how anticipated decisions are driving real business impact.',
       cta: 'See success stories',
     },
   }[language];
