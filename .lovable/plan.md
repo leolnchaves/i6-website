@@ -1,47 +1,41 @@
-## Objetivo
-No `/kiosk`, os campos **Nome** e **E-mail** devem abrir um **teclado on-screen** (o totem é touchscreen, sem teclado físico) e o campo de e-mail deve exibir **sugestões dinâmicas de domínio** (`@gmail.com`, `@hotmail.com`, `@outlook.com`, `@yahoo.com`, `@icloud.com`).
+# Destacar o card "Por que este preço" no /kiosk
 
-## Onde
-- `src/components/kiosk/EbookCTA.tsx` — inputs de Nome / E-mail do form final.
+O bloco final do `PriceToMarginDemo` (linhas 271–276 de `src/components/kiosk/demos/PriceToMarginDemo.tsx`) hoje é apenas uma caixa coral estática. Como o totem é passivo (touch + tempo curto de atenção), precisamos forçar o olhar para essa conclusão sem tornar a UI cansativa.
 
-## Escopo
+## Estratégia visual em 3 camadas
 
-### 1. Teclado virtual (novo componente `KioskOnScreenKeyboard.tsx`)
-- Renderizado como **overlay fixo** na base da tela (posição `fixed`, ergonômico para totem retrato de 27").
-- Duas variantes de layout, controladas por prop `layout`:
-  - `text` (para Nome): QWERTY completo com maiúsculas/minúsculas via Shift, espaço, backspace, "Concluir".
-  - `email` (para E-mail): QWERTY + linha superior com `@ . _ -` + tecla `.com` + backspace + "Concluir". Sem Shift (mantém minúsculas por padrão, mais rápido para e-mails).
-- Aparece quando o input recebe foco (ou ao toque) e desaparece ao clicar em "Concluir" ou fora dos campos.
-- Cada tecla usa unidades `vmin` (consistente com o kiosk) e altura mínima confortável para dedo (~7vmin), com feedback visual `active:scale-[0.95]`.
-- Suprime o teclado nativo do SO (`readOnly` no input + gerenciamento manual do valor) para não competir com o teclado virtual.
+1. **Entrada com atraso deliberado** — o card aparece ~600 ms depois dos KPIs, com `scale 0.94 → 1` + `translateY(12px) → 0` + fade, sinalizando que é a "revelação" final da análise.
+2. **Ring pulsante contínuo (breathing glow)** — animação infinita de 2.4s no `box-shadow` coral (`rgba(244,132,95, .35 → .75 → .35)`) + leve pulsação da borda (`border-color` opacidade `.5 → 1 → .5`). Suave o suficiente para não distrair, forte o suficiente para puxar o olhar em qualquer distância.
+3. **Badge "INSIGHT" com ícone Sparkles animado** — pequeno chip coral no canto superior direito do card com ícone `Sparkles` (lucide-react) girando/piscando devagar. Reforça hierarquia sem competir com o texto.
 
-### 2. Sugestões de domínio de e-mail
-- Chips de sugestão renderizadas **acima do teclado** (ou logo abaixo do campo de e-mail) apenas quando:
-  - o input de e-mail está em foco, **e**
-  - o valor contém `@` **ou** tem pelo menos 2 caracteres sem `@`.
-- Lista fixa (mais usados no Brasil/global): `gmail.com`, `hotmail.com`, `outlook.com`, `yahoo.com`, `icloud.com`, `uol.com.br`, `bol.com.br`.
-- Comportamento:
-  - Se **ainda não tem `@`**: sugere `{typed}@gmail.com`, `{typed}@hotmail.com`, etc. (até 4 chips).
-  - Se **já tem `@`**: filtra domínios que começam com o texto após `@` e sugere `{local}@{domain}`.
-- Ao tocar em uma sugestão: preenche o input completo e mantém o teclado aberto para eventual ajuste.
+Bônus opcional (aprovar/rejeitar na hora): um `scrollIntoView({ block: 'center' })` do card 400 ms após montar, para garantir que ele fique 100% visível mesmo se o usuário estiver com o dedo na parte de baixo do totem.
 
-### 3. Integração com `react-hook-form`
-- Manter validação `zod` existente.
-- Como os inputs viram `readOnly` (para bloquear teclado nativo), o valor será controlado via `setValue()` do hook-form quando o teclado virtual insere/apaga caracteres.
-- Preservar honeypot e fluxo de envio como está.
+## Onde muda
 
-### 4. i18n
-- Legendas das teclas de ação ("Concluir", "Espaço") em PT e EN, adicionadas em `src/data/kiosk/config.ts` sob `ebook`:
-  - `keyboardDone: 'Concluir' | 'Done'`
-  - `keyboardSpace: 'Espaço' | 'Space'`
-  - `emailSuggestionsLabel: 'Sugestões' | 'Suggestions'`
+- `src/components/kiosk/demos/PriceToMarginDemo.tsx` — envolver o bloco do insight (linhas 271–276) em wrapper com as classes/estilos da animação; adicionar ícone `Sparkles` e badge "INSIGHT" (com `content.rationaleLabel` reaproveitado como texto principal). Injetar `@keyframes kiosk-insight-glow` e `kiosk-insight-in` no bloco `<style>` já existente (linhas 283–288).
+- Nenhum arquivo de i18n muda — o texto continua vindo de `content.rationaleLabel` e `selected.insight`.
 
-## Fora de escopo
-- Não altera o form de nenhuma outra página; só o CTA do totem.
-- Não implementa acentuação/caracteres especiais além do necessário para e-mail.
-- Não muda a estética/copy dos cards existentes — apenas adiciona o overlay e as chips.
+## Detalhes técnicos
 
-## Arquivos afetados
-- **Novo**: `src/components/kiosk/KioskOnScreenKeyboard.tsx`
-- **Editado**: `src/components/kiosk/EbookCTA.tsx` (foco/onChange/readOnly + integração)
-- **Editado**: `src/data/kiosk/config.ts` (labels PT/EN)
+```css
+@keyframes kiosk-insight-in {
+  0%   { opacity: 0; transform: translateY(12px) scale(.94); }
+  100% { opacity: 1; transform: translateY(0)    scale(1);   }
+}
+@keyframes kiosk-insight-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.55); }
+}
+```
+
+Card recebe:
+- `animation: kiosk-insight-in .5s ease-out .6s both, kiosk-insight-glow 2.4s ease-in-out .6s infinite`
+- Borda coral aumentada de `border` para `border-2`
+- Badge absoluto no topo direito com `Sparkles` + label ("INSIGHT" / "INSIGHT")
+
+Sem impacto em desktop `/solutions` — a mudança é isolada no componente do kiosk.
+
+## Perguntas antes de implementar
+
+1. Incluir o `scrollIntoView` automático (garante visibilidade em telas menores do totem em portrait)?
+2. Manter o glow **infinito** ou parar após ~6 s (3 pulsos) para não competir depois que o usuário já leu?

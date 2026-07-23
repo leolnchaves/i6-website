@@ -268,7 +268,13 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 />
               </div>
 
-              <div className="mt-[1.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/50 p-[2.2vmin] text-[1.9vmin] text-white/95 leading-relaxed">
+              <div
+                className="kiosk-insight-card relative mt-[1.5vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[2.2vmin] pr-[10vmin] text-[1.9vmin] text-white/95 leading-relaxed"
+              >
+                <div className="absolute top-[1.4vmin] right-[1.4vmin] flex items-center gap-[0.6vmin] px-[1.2vmin] py-[0.5vmin] rounded-full bg-[#F4845F] text-white text-[1.2vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
+                  <Sparkles className="w-[1.6vmin] h-[1.6vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
+                  <span>Insight</span>
+                </div>
                 <span className="block text-[1.5vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
                   {content.rationaleLabel}
                 </span>
@@ -284,6 +290,32 @@ const PriceToMarginDemo = ({ lang }: Props) => {
         @keyframes kiosk-progress {
           from { width: 0% }
           to { width: 100% }
+        }
+        @keyframes kiosk-insight-in {
+          0%   { opacity: 0; transform: translateY(12px) scale(.94); }
+          100% { opacity: 1; transform: translateY(0)    scale(1);   }
+        }
+        @keyframes kiosk-insight-glow {
+          0%, 100% {
+            box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25);
+            border-color: rgba(244,132,95,.55);
+          }
+          50% {
+            box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.60);
+            border-color: rgba(244,132,95,1);
+          }
+        }
+        @keyframes kiosk-insight-sparkle {
+          0%, 100% { transform: scale(1)    rotate(0deg);   opacity: 1;   }
+          50%      { transform: scale(1.25) rotate(15deg);  opacity: .85; }
+        }
+        .kiosk-insight-card {
+          animation:
+            kiosk-insight-in .5s ease-out .6s both,
+            kiosk-insight-glow 2.4s ease-in-out .6s infinite;
+        }
+        .kiosk-insight-sparkle {
+          animation: kiosk-insight-sparkle 1.8s ease-in-out infinite;
         }
       `}</style>
     </div>
