@@ -6,7 +6,7 @@ import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 const DarkLayout = () => (
   <div className="min-h-screen bg-[#0B1224] relative overflow-x-hidden">
     <div className="relative">
-      <div className="relative z-[20]">
+      <div className="relative z-[60]">
         <HeaderNovo />
       </div>
       <main className="relative z-[10]">

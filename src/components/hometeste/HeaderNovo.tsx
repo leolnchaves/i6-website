@@ -167,7 +167,7 @@ const HeaderNovo = () => {
 
     {/* Mobile menu — rendered outside <header> so `fixed` anchors to the viewport, not the backdrop-filtered header */}
     {menuOpen && (
-      <div className="md:hidden fixed inset-x-0 top-[80px] bottom-0 z-50 bg-[#0B1224] border-t border-white/10 px-6 pb-8 pt-4 overflow-y-auto overscroll-contain">
+      <div className="md:hidden fixed inset-x-0 top-[80px] bottom-0 z-[55] bg-[#0B1224] border-t border-white/10 px-6 pb-8 pt-4 overflow-y-auto overscroll-contain">
         <ul className="flex flex-col gap-4">
           {leftLinks.map((l) => (
             <li key={l.to}>
