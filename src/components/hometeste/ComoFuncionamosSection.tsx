@@ -307,7 +307,7 @@ const ComoFuncionamosSection = () => {
                       <div
                         key={i}
                         ref={ref as any}
-                        className="group relative h-full flex flex-col p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
+                        className="group relative h-full flex flex-col px-4 py-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
                       >
                         <div className="text-4xl font-bold text-[#F4845F] mb-4 leading-none tracking-tight">
                           {String(i + 1).padStart(2, '0')}
