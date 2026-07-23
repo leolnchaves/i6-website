@@ -1,31 +1,21 @@
-## Reprocessar a imagem de ondas preservando a gradação fina
+# Tela de atração do /kiosk — minimalismo puro
 
-O problema atual: a v2 recolore todos os pixels não‑brancos para `#F4845F` chapado, destruindo as linhas translúcidas do original e criando um efeito "montanhas sólidas".
+## Objetivo
+Remover completamente a decoração visual do rodapé (SVG de ondas atual) e deixar a tela com o mesmo fundo escuro do resto do totem — apenas headline, botão pulsante e assinatura (logo + slogan). Foco total no conteúdo, estética Apple-like.
 
-### Solução
+## Mudanças
 
-Reprocessar `/mnt/user-uploads/fundo_kiosk-2.png` (mesma arte do anexo 2), preservando o RGB original e removendo apenas o fundo branco:
+### `src/components/kiosk/AttractScreen.tsx`
+- Remover todo o bloco `<svg>` de ondas coral (defs, gradientes e paths) que ocupa o rodapé.
+- Remover o import não utilizado do asset `kiosk-waves-coral-v3.png.asset.json` (já foi retirado na iteração anterior, apenas confirmar).
+- Manter intacta a estrutura em três blocos (`justify-between`): headline no topo, botão pulsante ao centro, logo + slogan "The Platform for / Decision Advantage" no rodapé.
+- Manter os anéis pulsantes coral ao redor do botão — essa é a única energia visual da tela, e ela vem do CTA, não do fundo.
 
-```python
-# alpha = distância do branco (min(r,g,b) alto = branco → transparente)
-lum = min(r, g, b)
-alpha_new = (255 - lum)          # branco puro → 0, coral saturado → ~255
-alpha_new[lum > 240] = 0         # limpa ruído esbranquiçado
-# manter RGB do original (não recolorir)
-```
+### Assets órfãos
+- O arquivo `src/assets/kiosk-waves-coral-v3.png.asset.json` fica órfão. Podemos deletá-lo com `lovable-assets delete` para não deixar lixo no projeto.
 
-Isso mantém a translucidez natural das linhas — pixels claros ficam suavemente visíveis, pixels saturados de coral ficam mais opacos, exatamente como no anexo 2.
+## Resultado esperado
+Fundo dark uniforme (mesmo do restante do totem), sem gradientes, sem linhas, sem ondas. A composição respira: headline no topo, CTA respirando no centro com os anéis coral, assinatura discreta em baixo. Nada compete com o botão.
 
-### Passos
-
-1. Rodar o script acima gerando `/tmp/kiosk-waves-v3.png`.
-2. Upload via `lovable-assets create` → `src/assets/kiosk-waves-coral-v3.png.asset.json`.
-3. Atualizar import em `src/components/kiosk/AttractScreen.tsx` para v3.
-4. Manter `opacity: 0.75` sem `mix-blend-mode` (o próprio alpha já mescla naturalmente com o navy).
-5. Remover o pointer `kiosk-waves-coral-v2.png.asset.json` e deletar o asset antigo do CDN via `lovable-assets delete`.
-
-### Fallback (caso a v3 ainda não fique boa)
-
-Se a translucidez não convencer, gerar programaticamente uma versão em SVG com múltiplas curvas Bézier coral em stroke fino com blur (`feGaussianBlur`) e `stroke-opacity` decrescente — 100% escalável, sem depender do PNG. Estimo ~40 linhas de SVG. Só executamos esse fallback se a v3 falhar visualmente.
-
-Sem mexer em nenhum outro componente — mudança isolada ao AttractScreen do totem.
+## Detalhes técnicos
+Nenhuma lógica alterada — mudança puramente visual/JSX em um único componente. Sem impacto em rotas, dados, i18n ou responsividade.
