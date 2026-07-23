@@ -31,7 +31,7 @@ const HeroDecisaoV4 = () => {
       </div>
 
       {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
-      <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center px-4">
+      <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
         <picture className="w-full h-full flex items-center justify-center">
           <source media="(min-width: 768px)" srcSet={heroPanorama.url} />
           <img
