@@ -1,10 +1,30 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Building2, Quote } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 import CTAFinal from '@/components/hometeste/CTAFinal';
+
+const normalizeMd = (raw?: string) =>
+  raw ? raw.replace(/\\n/g, '\n').replace(/\\t/g, '\t') : '';
+
+const MdBlock = ({ children }: { children: string }) => (
+  <div className="prose prose-invert max-w-none prose-headings:text-white prose-p:text-white/70 prose-p:leading-relaxed prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/70 prose-blockquote:border-[#F4845F] prose-blockquote:text-white/80">
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        a: ({ node, ...props }) => (
+          <a {...props} target="_blank" rel="noopener noreferrer" />
+        ),
+      }}
+    >
+      {normalizeMd(children)}
+    </ReactMarkdown>
+  </div>
+);
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -160,25 +180,25 @@ const SuccessStoryArticle = () => {
           {story.challenge && (
             <section>
               <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.pain}</p>
-              <p className="text-white/70 leading-relaxed">{story.challenge}</p>
+              <MdBlock>{story.challenge}</MdBlock>
             </section>
           )}
           {story.whatToAnticipate && (
             <section>
               <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.anticipate}</p>
-              <p className="text-white/70 leading-relaxed">{story.whatToAnticipate}</p>
+              <MdBlock>{story.whatToAnticipate}</MdBlock>
             </section>
           )}
           {story.prediction && (
             <section>
               <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.prediction}</p>
-              <p className="text-white/70 leading-relaxed">{story.prediction}</p>
+              <MdBlock>{story.prediction}</MdBlock>
             </section>
           )}
           {story.solution && (
             <section>
               <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.solution}</p>
-              <p className="text-white/70 leading-relaxed">{story.solution}</p>
+              <MdBlock>{story.solution}</MdBlock>
             </section>
           )}
         </div>

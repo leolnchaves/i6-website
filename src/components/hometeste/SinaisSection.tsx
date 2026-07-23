@@ -95,7 +95,7 @@ const SinaisSection = () => {
 
   return (
     <section className="py-14 md:py-20 bg-[#0F172A]">
-      <div className="container mx-auto px-6 max-w-6xl">
+      <div className="container mx-auto px-6">
         {/* Badge */}
         <div className="mb-6">
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4845F]/20 text-[#F4845F] text-xs font-semibold tracking-widest uppercase">

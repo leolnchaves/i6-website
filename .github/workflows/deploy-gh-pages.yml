@@ -100,8 +100,13 @@ jobs:
       - name: Copy sitemap to dist
         run: cp public/sitemap.xml dist/sitemap.xml
 
+      - name: Inline lovable-assets into dist
+        run: node scripts/inline-lovable-assets.mjs
+
       - name: Prerender SEO stubs (per-route title, description, canonical, h1)
         run: node scripts/prerender-seo-stubs.mjs
+
+
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

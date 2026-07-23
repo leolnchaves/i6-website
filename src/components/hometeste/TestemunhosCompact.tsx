@@ -52,7 +52,7 @@ const TestemunhosCompact = memo(() => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto relative px-2">
+        <div className="w-full relative px-2">
           <Carousel
             setApi={setApi}
             className="w-full"
