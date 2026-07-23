@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroPanorama from '@/assets/hero-decisao-panorama-v3.png.asset.json';
-import heroMobile from '@/assets/hero-decisao-mobile-v2.png.asset.json';
+import heroPanorama from '@/assets/hero-decisao-panorama-v3-transparent.png.asset.json';
+import heroMobile from '@/assets/hero-decisao-mobile-v2-transparent.png.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
