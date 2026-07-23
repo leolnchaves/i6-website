@@ -72,7 +72,7 @@ const SuccessStoryArticle = () => {
           '@context': 'https://schema.org',
           '@type': 'Article',
           headline: story.title,
-          description: story.description || story.quote,
+          ...(story.description ? { description: story.description } : {}),
           author: { '@type': 'Organization', name: 'infinity6' },
           publisher: {
             '@type': 'Organization',
