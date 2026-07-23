@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroPanorama from '@/assets/hero-decisao-panorama-v2.png.asset.json';
-import heroMobile from '@/assets/hero-decisao-mobile.png.asset.json';
+import heroPanorama from '@/assets/hero-decisao-panorama-v3.png.asset.json';
+import heroMobile from '@/assets/hero-decisao-mobile-v2.png.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
@@ -44,7 +44,7 @@ const HeroDecisaoV4 = () => {
       </div>
 
       {/* 3. DESCRIÇÃO + CTA */}
-      <div className="relative z-10 flex-shrink-0 pb-[5vh] md:pb-[6vh] px-6">
+      <div className="relative z-10 flex-shrink-0 pb-[2vh] md:pb-[3vh] px-6">
         <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
             {description}
