@@ -55,7 +55,7 @@ const SuccessStoryArticle = () => {
       <Helmet>
         <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
         <title>{`${story.title} | infinity6`}</title>
-        <meta name="description" content={story.description || story.quote} />
+        {story.description && <meta name="description" content={story.description} />}
         <link rel="canonical" href={url} />
         <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/success-stories/${story.slug}`} />
         <link rel="alternate" hrefLang="pt-BR" href={`${BASE_URL}/pt/success-stories/${story.slug}`} />
