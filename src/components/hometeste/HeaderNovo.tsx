@@ -163,72 +163,75 @@ const HeaderNovo = () => {
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[80px] bottom-0 bg-[#0B1224] border-t border-white/10 px-6 pb-8 pt-4 overflow-y-auto overscroll-contain">
-          <ul className="flex flex-col gap-4">
-            {leftLinks.map((l) => (
-              <li key={l.to}>
-                <Link
-                  to={l.to}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <div className="text-white/50 uppercase tracking-wider text-xs mb-2">{t('header.research')}</div>
-              <ul className="flex flex-col gap-3 pl-3 border-l border-white/10">
-                {researchMenu.map((sl, i) => (
-                  <li key={sl.to ?? `coming-m-${i}`}>
-                    {sl.comingSoon || !sl.to ? (
-                      <span className="flex items-center gap-2 text-white/40 text-sm font-medium cursor-not-allowed">
-                        {sl.label}
-                        <span className="text-[10px] uppercase tracking-wider bg-white/10 text-white/60 px-1.5 py-0.5 rounded">
-                          {t('header.research.comingSoon')}
-                        </span>
-                      </span>
-                    ) : (
-                      <Link
-                        to={sl.to}
-                        onClick={() => setMenuOpen(false)}
-                        className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
-                      >
-                        {sl.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </li>
-            <li>
+      </nav>
+    </header>
+
+    {/* Mobile menu — rendered outside <header> so `fixed` anchors to the viewport, not the backdrop-filtered header */}
+    {menuOpen && (
+      <div className="md:hidden fixed inset-x-0 top-[80px] bottom-0 z-50 bg-[#0B1224] border-t border-white/10 px-6 pb-8 pt-4 overflow-y-auto overscroll-contain">
+        <ul className="flex flex-col gap-4">
+          {leftLinks.map((l) => (
+            <li key={l.to}>
               <Link
-                to={contactLink.to}
+                to={l.to}
                 onClick={() => setMenuOpen(false)}
                 className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
               >
-                {contactLink.label}
+                {l.label}
               </Link>
             </li>
-          </ul>
-          <div className="flex gap-2 mt-4">
-            {(['pt', 'en'] as const).map((lang) => (
-              <button
-                key={lang}
-                onClick={() => { setLanguage(lang); setMenuOpen(false); }}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                  language === lang ? 'bg-[#F4845F] text-white' : 'text-white/60 border border-white/20'
-                }`}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          ))}
+          <li>
+            <div className="text-white/50 uppercase tracking-wider text-xs mb-2">{t('header.research')}</div>
+            <ul className="flex flex-col gap-3 pl-3 border-l border-white/10">
+              {researchMenu.map((sl, i) => (
+                <li key={sl.to ?? `coming-m-${i}`}>
+                  {sl.comingSoon || !sl.to ? (
+                    <span className="flex items-center gap-2 text-white/40 text-sm font-medium cursor-not-allowed">
+                      {sl.label}
+                      <span className="text-[10px] uppercase tracking-wider bg-white/10 text-white/60 px-1.5 py-0.5 rounded">
+                        {t('header.research.comingSoon')}
+                      </span>
+                    </span>
+                  ) : (
+                    <Link
+                      to={sl.to}
+                      onClick={() => setMenuOpen(false)}
+                      className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+                    >
+                      {sl.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </li>
+          <li>
+            <Link
+              to={contactLink.to}
+              onClick={() => setMenuOpen(false)}
+              className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+            >
+              {contactLink.label}
+            </Link>
+          </li>
+        </ul>
+        <div className="flex gap-2 mt-4">
+          {(['pt', 'en'] as const).map((lang) => (
+            <button
+              key={lang}
+              onClick={() => { setLanguage(lang); setMenuOpen(false); }}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                language === lang ? 'bg-[#F4845F] text-white' : 'text-white/60 border border-white/20'
+              }`}
+            >
+              {lang.toUpperCase()}
+            </button>
+          ))}
         </div>
-      )}
-    </header>
+      </div>
+    )}
+    </>
   );
 };
 
