@@ -1,16 +1,15 @@
-# Ajustes na página de detalhe do case
+# Remover fallback do excerpt para `quote` nos metadados do case
 
-## 1. Unificar título do card com o do detalhe
+Hoje, quando `description` do MD está vazio, `SuccessStoryArticle.tsx` usa `story.quote` como fallback em vários metadados. Vamos remover esse fallback: se `description` estiver vazio, o campo simplesmente **não é emitido**.
 
-Card passa a exibir `title` (mesmo texto da hero do detalhe) em vez de `quote`.
+## Mudanças em `src/pages/SuccessStoryArticle.tsx`
 
-- `src/components/success-stories/ModernStoriesGrid.tsx`: trocar `customer_quote: story.quote` por `customer_quote: story.title` no mapeamento passado a `LazyStoryCard`.
-- `StoryCard.tsx`, MDs e página de detalhe permanecem inalterados. `quote` continua sendo usado no bloco de citação do detalhe.
-
-## 2. Alinhar logo do cliente à esquerda na hero do detalhe
-
-Em `src/pages/SuccessStoryArticle.tsx`, o `<img>` da logo está dentro de um `flex flex-col` sem `items-*`, o que faz o elemento esticar. Adicionar `self-start` (ou `mr-auto`) ao `<img>` para ancorá-lo à esquerda, mantendo o `h-10 md:h-12 w-auto`.
+- `<meta name="description">`: renderizar somente se `story.description` existir.
+- `<meta property="og:description">`: idem.
+- `Article` JSON-LD (`description`): incluir a chave apenas quando `story.description` existir (spread condicional, mesmo padrão já usado para `image`).
+- Parágrafo visível do excerpt na hero (linhas 127–131): já é condicional a `story.description` — permanece.
 
 ## Fora de escopo
 
-- Renomear a prop `customer_quote` do StoryCard (mudança apenas cosmética no código).
+- Card e demais telas não usam `description`; nada a alterar.
+- `quote` continua sendo exibido no bloco de citação da página de detalhe.

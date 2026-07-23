@@ -55,7 +55,7 @@ const SuccessStoryArticle = () => {
       <Helmet>
         <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
         <title>{`${story.title} | infinity6`}</title>
-        <meta name="description" content={story.description || story.quote} />
+        {story.description && <meta name="description" content={story.description} />}
         <link rel="canonical" href={url} />
         <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en/success-stories/${story.slug}`} />
         <link rel="alternate" hrefLang="pt-BR" href={`${BASE_URL}/pt/success-stories/${story.slug}`} />
@@ -63,7 +63,7 @@ const SuccessStoryArticle = () => {
 
         <meta property="og:type" content="article" />
         <meta property="og:title" content={story.title} />
-        <meta property="og:description" content={story.description || story.quote} />
+        {story.description && <meta property="og:description" content={story.description} />}
         <meta property="og:url" content={url} />
         {story.image && <meta property="og:image" content={story.image.startsWith('http') ? story.image : `${BASE_URL}${story.image}`} />}
         <meta name="twitter:card" content="summary_large_image" />
@@ -72,7 +72,7 @@ const SuccessStoryArticle = () => {
           '@context': 'https://schema.org',
           '@type': 'Article',
           headline: story.title,
-          description: story.description || story.quote,
+          ...(story.description ? { description: story.description } : {}),
           author: { '@type': 'Organization', name: 'infinity6' },
           publisher: {
             '@type': 'Organization',
