@@ -149,20 +149,36 @@ const SuccessStoryArticle = () => {
           </section>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-          <section>
-            <h2 className="text-xl font-semibold text-white mb-3">{t.challenge}</h2>
-            <p className="text-white/70 leading-relaxed">{story.challenge}</p>
-          </section>
-          <section>
-            <h2 className="text-xl font-semibold text-white mb-3">{t.solution}</h2>
-            <p className="text-white/70 leading-relaxed">{story.solution}</p>
-          </section>
+        <div className="space-y-10 mb-12">
+          {story.challenge && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.pain}</p>
+              <p className="text-white/70 leading-relaxed">{story.challenge}</p>
+            </section>
+          )}
+          {story.whatToAnticipate && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.anticipate}</p>
+              <p className="text-white/70 leading-relaxed">{story.whatToAnticipate}</p>
+            </section>
+          )}
+          {story.prediction && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.prediction}</p>
+              <p className="text-white/70 leading-relaxed">{story.prediction}</p>
+            </section>
+          )}
+          {story.solution && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.solution}</p>
+              <p className="text-white/70 leading-relaxed">{story.solution}</p>
+            </section>
+          )}
         </div>
 
         {story.solutions && story.solutions.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-xl font-semibold text-white mb-4">{t.appliedSolutions}</h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-4 font-semibold">{t.appliedSolutions}</h2>
             <div className="flex flex-wrap gap-2">
               {story.solutions.map((s, i) => (
                 <span
