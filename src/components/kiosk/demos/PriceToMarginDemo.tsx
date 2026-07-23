@@ -291,6 +291,32 @@ const PriceToMarginDemo = ({ lang }: Props) => {
           from { width: 0% }
           to { width: 100% }
         }
+        @keyframes kiosk-insight-in {
+          0%   { opacity: 0; transform: translateY(12px) scale(.94); }
+          100% { opacity: 1; transform: translateY(0)    scale(1);   }
+        }
+        @keyframes kiosk-insight-glow {
+          0%, 100% {
+            box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25);
+            border-color: rgba(244,132,95,.55);
+          }
+          50% {
+            box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.60);
+            border-color: rgba(244,132,95,1);
+          }
+        }
+        @keyframes kiosk-insight-sparkle {
+          0%, 100% { transform: scale(1)    rotate(0deg);   opacity: 1;   }
+          50%      { transform: scale(1.25) rotate(15deg);  opacity: .85; }
+        }
+        .kiosk-insight-card {
+          animation:
+            kiosk-insight-in .5s ease-out .6s both,
+            kiosk-insight-glow 2.4s ease-in-out .6s infinite;
+        }
+        .kiosk-insight-sparkle {
+          animation: kiosk-insight-sparkle 1.8s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
