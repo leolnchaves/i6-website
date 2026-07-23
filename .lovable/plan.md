@@ -1,25 +1,27 @@
-## Problema
+## Diagnóstico
 
-Na página de detalhe (`/success-stories/:slug`):
+O código da tela (`SuccessStoryArticle.tsx`) e o loader (`useSuccessStoriesMarkdown.ts`) já lêem `what_to_anticipate` e `prediction` e renderizam condicionalmente as seções "O QUE PRECISAVA SER ANTECIPADO" e "A PREDIÇÃO". Só aparecem se o campo vier preenchido no frontmatter.
 
-1. **Bloco de citação (`quote`)** é renderizado como texto puro (`<p>{story.quote}</p>` na linha 225 de `src/pages/SuccessStoryArticle.tsx`) — não passa por ReactMarkdown, então `>`, `**bold**`, listas e quebras não são interpretados.
-2. **Escapes `\\n` / `\\\n`** vindos do i6HUB não são normalizados. Hoje o `normalizeMd` só troca `\n` (barra + n) por newline. Quando o conteúdo chega como `\\n` (barra dupla + n) — visível no anexo como `\\\n\n\n>` — a substituição atual deixa uma barra residual e o `>` não vira blockquote.
+Verifiquei os 12 MDs em `src/content/stories/` — nenhum contém esses campos. A causa está no script de sync com o i6HUB:
 
-## Correções
+`scripts/sync-content-from-i6hub.mjs`, função `fmStories` (linha 377) — monta o frontmatter escrevendo `challenge` e `solution`, mas **não escreve** `what_to_anticipate` nem `prediction`. Mesmo que o HUB envie esses campos no JSON do feed, eles são descartados na geração do `.md`.
 
-### 1. `src/pages/SuccessStoryArticle.tsx`
+## Correção
 
-- Ampliar `normalizeMd` para lidar com múltiplos níveis de escape antes de aplicar a troca:
-  - Colapsar sequências `\\` → `\` (uma passagem) e então trocar `\n` → newline e `\t` → tab.
-  - Também remover a barra órfã antes de `\n` (`\\\n` → `\n`) que aparece no dump do HUB.
-- Passar `story.quote` pelo `MdBlock` em vez de `<p>`. Manter o wrapper visual (card com borda/ícone `Quote`) e as classes de tipografia, mas o corpo do texto vira Markdown com blockquote/negrito/quebras funcionando.
+Em `scripts/sync-content-from-i6hub.mjs`, dentro de `fmStories`, inserir logo após `challenge` (linha 394) e antes de `solution`:
 
-### 2. Verificar demais campos
+```js
+`what_to_anticipate: ${yaml(it.what_to_anticipate ?? '')}`,
+`prediction: ${yaml(it.prediction ?? '')}`,
+```
 
-Os campos `challenge`, `whatToAnticipate`, `prediction`, `solution` já usam `MdBlock` — herdam o `normalizeMd` melhorado automaticamente.
+Isso passa os campos do feed do HUB para o frontmatter. Se o HUB mandar string vazia, o campo fica `""` e a seção continua oculta (o `SuccessStoryArticle.tsx` já testa `story.whatToAnticipate && ...`).
+
+## Após o merge
+
+O sync roda no GitHub Actions no próximo deploy. Se algum case já estiver com os campos preenchidos no HUB, aparecerá automaticamente. Se o HUB ainda não expõe esses campos no feed JSON, será preciso ajustar o HUB — mas primeiro publicamos esta correção para validar.
 
 ## Fora do escopo
 
-- Não alterar `useSuccessStoriesMarkdown` (parsing do frontmatter) — o problema é apenas de exibição.
-- Não mexer em cards de listagem nem em outros artigos (Blog/Intelligence já usam ReactMarkdown).
-- Sem release nesta etapa; publicar patch só quando o usuário pedir.
+- Não altero `SuccessStoryArticle.tsx`, o hook, nem MDs individuais.
+- Sem release nesta etapa — publico patch depois que você confirmar.
