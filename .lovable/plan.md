@@ -1,31 +1,41 @@
-Ajustes exclusivos para mobile. Desktop permanece intacto.
+Adicionar Camil, MDS Group e Skyfit ao carrossel de logos da Home (`ClientesSection`).
 
-## 1) CTA final cortando no mobile (anexo 2)
-Arquivo: `src/components/hometeste/CTAFinal.tsx`
+## Contexto
+- Componente: `src/components/hometeste/ClientesSection.tsx` renderiza um marquee com `h-8 sm:h-10 max-w-[120px] object-contain`.
+- Fonte de dados: `public/content/partners-logos.md`, com PNGs em `public/content/logos/`.
+- Logos existentes já vêm recortadas próximo do conteúdo, para que o `object-contain` produza tamanho visual consistente.
 
-- O `<span className="whitespace-nowrap">` na linha 32 força a segunda frase ("Sua próxima decisão também não deveria.") em uma única linha. No mobile isso estoura a largura da viewport, cortando o texto e provavelmente causando também o problema 1 (overflow horizontal da página).
-- Alterar para `md:whitespace-nowrap` — mantém a linha única no desktop e permite quebra natural no mobile.
+## Problema das 3 uploads
+- `camil-logo.png`: horizontal, aspect ~3.4:1 — encaixa bem, apenas trim de margens.
+- `logo_mds_group_vertical_t_cores.png`: quase quadrado com muito espaço branco em volta; sem trim ficaria minúsculo dentro do `max-w-[120px]`.
+- `skyfit-logo-wordmark.png`: quadrado 1:1 (shield + wordmark); com `h-10` ficaria com ~40px de largura visual (ok), mas ainda tem padding branco a aparar.
 
-## 2) Tela /solutions cortando no meio (anexo 1)
-Diagnóstico: o corte com faixa branca à direita é sintoma clássico de overflow horizontal na página inteira. A causa mais provável é o próprio CTAFinal (item 1) — o `whitespace-nowrap` empurra a largura do documento além dos 393px do iPhone.
+## Passos
 
-- Após corrigir o item 1, validar via Playwright em 393x852 que `/pt/solutions` não tem mais overflow horizontal.
-- Se persistir, adicionar `overflow-x-hidden` como segurança no `<main>` de `src/components/DarkLayout.tsx` (somente afeta layout se houver overflow — não muda desktop).
+1. Copiar os 3 uploads do mount `/mnt/user-uploads/` para `/tmp/` e usar Python (Pillow) para:
+   - Aparar (trim) o fundo branco em volta de cada logo.
+   - Salvar como PNG otimizado em `public/content/logos/`:
+     - `camil.png`
+     - `mds-group.png`
+     - `skyfit.png`
+   - Meta de altura interna consistente (~200px de conteúdo) para casar com o peso visual das logos existentes.
 
-## 3) Menu mobile não rola (scroll vaza para o body)
-Arquivo: `src/components/hometeste/HeaderNovo.tsx`
+2. Atualizar `public/content/partners-logos.md` adicionando 3 novos blocos ao final:
+   ```
+   ## CAMIL
+   **Logo:** /content/logos/camil.png
+   **Name:** Camil
 
-Problema: o painel `md:hidden` aberto renderiza inline no fluxo do header. Quando o conteúdo do menu passa da viewport (ex.: no i6 Blog / Insights onde há dropdown com 7 itens + demais links), o scroll acontece na página (subindo o footer) em vez de rolar dentro do menu.
+   ## MDS GROUP
+   **Logo:** /content/logos/mds-group.png
+   **Name:** MDS Group
 
-Alterações no bloco de menu mobile (linhas ~158-221):
-- Transformar o container aberto em painel de altura limitada e scrollável:
-  - `fixed inset-x-0 top-[header-height] bottom-0 overflow-y-auto overscroll-contain` (em vez de posicionamento estático).
-- Ao abrir o menu (`menuOpen === true`):
-  - Aplicar `document.body.style.overflow = 'hidden'` via `useEffect` para travar o scroll do body enquanto o menu está aberto; restaurar ao fechar/desmontar.
-- Isso resolve o comportamento em qualquer página, incluindo `/i6-blog` e `/insights`, sem tocar em desktop (`md:hidden`).
+   ## SKYFIT
+   **Logo:** /content/logos/skyfit.png
+   **Name:** Skyfit
+   ```
+
+3. Nenhuma alteração em `ClientesSection.tsx` — o marquee já duplica automaticamente e as classes `h-10 max-w-[120px] object-contain` cuidam do enquadramento após o trim.
 
 ## Verificação
-Rodar Playwright headless em 393x852:
-1. `/pt/solutions` — screenshot da hero, checar ausência de scroll horizontal (`document.documentElement.scrollWidth === innerWidth`).
-2. `/pt` até o CTA final — screenshot mostrando a frase completa dentro da viewport.
-3. `/pt/i6-blog` — abrir menu, tentar rolar dentro do painel, confirmar que o footer não sobe e que todos os itens do menu ficam acessíveis.
+- Playwright em `/en` (viewport desktop), screenshot da seção "Leaders who turn anticipation into advantage" confirmando que Camil, MDS Group e Skyfit aparecem no marquee com peso visual semelhante às demais.
