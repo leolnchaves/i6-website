@@ -1,11 +1,18 @@
-## Causa
-Em `src/components/hometeste/HeaderNovo.tsx`, o `<header>` fixo usa `backdrop-blur-md`. No Chrome/Safari, `backdrop-filter` cria um **containing block** para descendentes `position: fixed`. O painel do menu mobile (`fixed inset-x-0 top-[80px] bottom-0`) está **dentro** desse header, então em vez de se ancorar na viewport ele se ancora na caixa do header (~80px de altura). Quando a página está scrollada, o painel fica confinado à faixa do header e só o primeiro item aparece, com o conteúdo da página vazando por trás.
+## Diagnóstico
 
-## Correção
-Editar apenas `src/components/hometeste/HeaderNovo.tsx`:
+`DarkLayout` envolve header e footer em wrappers `relative z-[20]` irmãos. Isso cria stacking contexts isolados: o `z-50` do menu mobile só vale dentro do wrapper do header, então o footer (irmão com o mesmo `z-[20]`, pintado depois) fica por cima do menu. Como o footer não é sobreposto, o "scroll" que o usuário faz dentro do menu na verdade rola o footer visível atrás, dando a sensação de menu travado.
 
-1. Retornar um **Fragment** (`<>...</>`) contendo o `<header>` e, como **irmão**, o painel do menu mobile — tirando o painel de dentro do header.
-2. Manter exatamente as mesmas classes do painel (`md:hidden fixed inset-x-0 top-[80px] bottom-0 bg-[#0B1224] ... overflow-y-auto overscroll-contain`), z-index igual ou superior ao header (`z-50`) para ficar acima do conteúdo.
-3. Nada mais muda: estado `menuOpen`, trava de scroll do body, itens do menu, botão toggle e desktop nav ficam intactos.
+## Plano
 
-Com o painel fora do elemento com `backdrop-filter`, o `fixed` volta a se ancorar na viewport e o menu sempre aparece do topo, independentemente do scroll da página.
+1. **Elevar o stacking context do header acima do footer** em `src/components/DarkLayout.tsx`:
+   - Wrapper do header: `z-[60]` (fica acima do footer).
+   - Wrapper do footer: mantém `z-[20]`.
+   - Main: mantém `z-[10]`.
+
+2. **Ajustar o menu mobile** em `src/components/hometeste/HeaderNovo.tsx` para consistência:
+   - Manter overlay `fixed inset-x-0 top-[80px] bottom-0` com `z-[55]` (dentro do novo contexto do header, portanto acima do footer).
+   - Nenhuma mudança de conteúdo/layout do menu.
+
+3. **Escopo**
+   - Só `DarkLayout.tsx` e `HeaderNovo.tsx`.
+   - Desktop e demais páginas não são afetados; a correção passa a valer para todas as rotas que usam `DarkLayout` (Blog, Research, Insights, Solutions, etc.).
