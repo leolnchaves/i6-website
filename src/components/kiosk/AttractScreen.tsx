@@ -13,59 +13,6 @@ const AttractScreen = ({ content, onStart }: Props) => {
       onClick={onStart}
       className="relative flex flex-col justify-between items-center w-full min-h-screen overflow-hidden px-12 pt-[10vmin] pb-[14vmin] text-center focus:outline-none"
     >
-      {/* Elegant flowing waves — inline SVG anchored to the bottom */}
-      <svg
-        aria-hidden
-        viewBox="0 0 1440 320"
-        preserveAspectRatio="none"
-        className="pointer-events-none select-none absolute inset-x-0 bottom-0 w-full h-[42vh] z-0 block"
-      >
-        <defs>
-          <linearGradient id="waveFade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#F4845F" stopOpacity="0" />
-            <stop offset="60%" stopColor="#F4845F" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#F4845F" stopOpacity="0.9" />
-          </linearGradient>
-          <linearGradient id="waveFadeSoft" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#F4845F" stopOpacity="0" />
-            <stop offset="100%" stopColor="#F4845F" stopOpacity="0.35" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M0,260 C240,180 480,320 720,240 C960,160 1200,300 1440,220 L1440,320 L0,320 Z"
-          fill="none"
-          stroke="url(#waveFadeSoft)"
-          strokeWidth="1"
-        />
-        <path
-          d="M0,240 C220,150 500,280 720,210 C940,140 1220,270 1440,190"
-          fill="none"
-          stroke="url(#waveFade)"
-          strokeWidth="1.2"
-          opacity="0.55"
-        />
-        <path
-          d="M0,270 C240,200 480,300 720,250 C960,200 1200,290 1440,230"
-          fill="none"
-          stroke="url(#waveFade)"
-          strokeWidth="1.2"
-          opacity="0.7"
-        />
-        <path
-          d="M0,295 C240,240 480,310 720,275 C960,240 1200,300 1440,260"
-          fill="none"
-          stroke="url(#waveFade)"
-          strokeWidth="1.4"
-          opacity="0.85"
-        />
-        <path
-          d="M0,315 C240,285 480,315 720,300 C960,285 1200,315 1440,290"
-          fill="none"
-          stroke="#F4845F"
-          strokeWidth="1.4"
-          opacity="0.9"
-        />
-      </svg>
 
 
       {/* TOP — headline */}
