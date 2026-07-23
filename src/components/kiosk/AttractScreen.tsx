@@ -1,6 +1,6 @@
 import type { QuizContent } from '@/data/kiosk/config';
 import symbolWhite from '@/assets/infinity6-symbol-white.png.asset.json';
-import wavesCoral from '@/assets/kiosk-waves-coral.jpg.asset.json';
+import wavesCoral from '@/assets/kiosk-waves-coral.png.asset.json';
 
 interface Props {
   content: QuizContent;
@@ -14,13 +14,13 @@ const AttractScreen = ({ content, onStart }: Props) => {
       onClick={onStart}
       className="relative flex flex-col justify-between items-center w-full min-h-screen overflow-hidden px-12 pt-[10vmin] pb-[14vmin] text-center focus:outline-none"
     >
-      {/* Waves — fixed to the exact bottom of the screen */}
+      {/* Waves — transparent PNG, blended and anchored to the exact bottom */}
       <img
         src={wavesCoral.url}
         alt=""
         aria-hidden
-        className="pointer-events-none select-none absolute inset-x-0 bottom-0 w-full h-auto z-0"
-        style={{ mixBlendMode: 'screen', opacity: 0.35 }}
+        className="pointer-events-none select-none absolute inset-x-0 bottom-0 w-full h-auto z-0 block"
+        style={{ opacity: 0.75 }}
       />
 
       {/* TOP — headline */}
