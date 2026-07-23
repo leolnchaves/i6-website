@@ -31,7 +31,7 @@ const TestemunhosCompact = memo(() => {
     pt: {
       title: 'Com a palavra: quem já está decidindo antes.',
       subtitle: 'Líderes compartilham como decisões antecipadas estão gerando impacto real nos negócios.',
-      cta: 'Ver histórias de sucesso',
+      cta: 'Veja histórias de sucesso',
     },
     en: {
       title: 'In their words: those already deciding first.',
