@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, Fragment } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
@@ -29,18 +29,25 @@ const HowWeImplement = memo(() => {
 
         <div className="relative">
           <ol className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {howWeImplement.steps.map((step) => (
-              <li
-                key={step.n}
-                className="relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 p-5"
-              >
-                <span className="text-3xl font-bold text-[#F4845F]/80 leading-none block mb-3">
-                  {step.n}
-                </span>
-                <h3 className="text-sm font-bold text-white mb-1.5">{step.title}</h3>
-                <p className="text-xs text-white/60 leading-relaxed">{step.description}</p>
-              </li>
+            {howWeImplement.steps.map((step, idx) => (
+              <Fragment key={step.n}>
+                <li
+                  className="relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 p-5"
+                >
+                  <span className="text-3xl font-bold text-[#F4845F]/80 leading-none block mb-3">
+                    {step.n}
+                  </span>
+                  <h3 className="text-sm font-bold text-white mb-1.5">{step.title}</h3>
+                  <p className="text-xs text-white/60 leading-relaxed">{step.description}</p>
+                </li>
+                {idx === 2 && (
+                  <li className="md:hidden list-none">
+                    {costBadge}
+                  </li>
+                )}
+              </Fragment>
             ))}
+
           </ol>
 
           <div className="hidden md:block absolute left-0 bottom-0 w-[calc(60%-0.4rem)] translate-y-1/2 z-10">
@@ -48,9 +55,6 @@ const HowWeImplement = memo(() => {
           </div>
         </div>
 
-        <div className="md:hidden flex justify-center mt-8">
-          {costBadge}
-        </div>
       </div>
     </section>
   );
