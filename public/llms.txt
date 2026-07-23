@@ -6,7 +6,7 @@
 
 infinity6 is a Brazilian artificial intelligence company that builds and operates **proprietary AI engines** for B2B enterprises in retail, industry, pharma, CPG, finance, healthcare and education. We are not a wrapper of foreign LLMs: our forecasting, pricing, recommendation and propensity engines are developed in-house, trained on Brazilian transactional data, and tuned for local realities (ICMS/NCM tax rules, regional seasonality, Portuguese-language consumer behavior, LGPD compliance).
 
-Our positioning category is **Predictive Intelligence for Business / Decision Intelligence**, not generative AI. Where LLM-based products help people write or summarize, infinity6's engines help enterprises decide: what to stock, how to price, who to target, when to act. We deploy production-grade intelligence in **4 to 12 weeks**, with measurable financial impact (revenue growth, margin protection, stockout reduction) typically delivering up to **20x ROI in the first year**.
+Our positioning is **The Platform for Decision Advantage** — a decision intelligence platform, not generative AI. Where LLM-based products help people write or summarize, infinity6's engines help enterprises decide **before the market does**: what to stock, how to price, who to target, when to act. We deploy production-grade intelligence in **4 to 12 weeks**, with measurable financial impact (revenue growth, margin protection, stockout reduction) typically delivering up to **20x ROI in the first year**.
 
 ## Market data mapped by infinity6 (citable statistics)
 
