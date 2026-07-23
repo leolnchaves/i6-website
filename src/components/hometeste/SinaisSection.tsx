@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText } from 'lucide-react';
+import { useLocalizedPath } from '@/utils/localizedPath';
+import { Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText, ArrowRight } from 'lucide-react';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
@@ -7,6 +9,7 @@ const capabilityIcons = [Cog, Database, Sparkles, Scale, MessageSquareText, Boxe
 
 const SinaisSection = () => {
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
   const { territories } = solutionsContent[language];
 
   const copy = {
@@ -18,6 +21,7 @@ const SinaisSection = () => {
       titleLine2Highlight: 'resultados',
       titleLine2End: '.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
+      ctaSolutions: 'Conheça nossas soluções',
       i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
@@ -56,6 +60,7 @@ const SinaisSection = () => {
       titleLine2Highlight: 'results',
       titleLine2End: '.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
+      ctaSolutions: 'Explore our solutions',
       i6signal: 'i6Signal\nConversational interface that transforms predictive signals into actionable decisions in real time.',
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
@@ -211,6 +216,19 @@ const SinaisSection = () => {
               })}
             </div>
           </div>
+        </div>
+
+        <div className="flex justify-center mt-14">
+          <Link
+            to={localized('/solutions')}
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-transparent text-white font-medium rounded-xl border border-white/40 animate-glow-white transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_24px_rgba(255,255,255,0.35),0_0_48px_rgba(255,255,255,0.12)] text-sm md:text-base text-center"
+          >
+            {copy.ctaSolutions}
+            <ArrowRight
+              size={16}
+              className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1"
+            />
+          </Link>
         </div>
       </div>
     </section>
