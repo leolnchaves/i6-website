@@ -199,7 +199,7 @@ const ComoFuncionamosSection = () => {
       {/* Soft bottom transition to navy next section */}
 
       <div className="py-12 md:py-16">
-        <div className="container mx-auto px-6 max-w-6xl">
+        <div className="container mx-auto px-6">
           {/* Header */}
           <div className="mb-6">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4845F]/15 text-[#F4845F] text-xs font-semibold tracking-widest uppercase">
@@ -217,7 +217,7 @@ const ComoFuncionamosSection = () => {
         </div>
 
         {/* Desktop — fluid graph */}
-        <div className="hidden lg:block container mx-auto px-6 max-w-6xl">
+        <div className="hidden lg:block container mx-auto px-6">
           <div ref={wrapperRef} className="relative">
             {/* SVG connectors */}
             <svg
@@ -357,7 +357,7 @@ const ComoFuncionamosSection = () => {
         </div>
 
         {/* Mobile / tablet */}
-        <div className="lg:hidden container mx-auto px-6 max-w-6xl space-y-8">
+        <div className="lg:hidden container mx-auto px-6 space-y-8">
           <div>
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-3 text-center">
               {copy.sourcesLabel}
