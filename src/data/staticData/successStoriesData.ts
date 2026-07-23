@@ -1,8 +1,8 @@
 export const successStoriesData = {
   en: {
     hero: {
-      title: 'Real results.',
-      subtitle: 'Measurable impact.',
+      title: 'Anticipated decisions.',
+      subtitle: 'Proven results.',
       description:
         'See how companies are turning data into growth with applied predictive AI.',
     },
@@ -13,8 +13,8 @@ export const successStoriesData = {
   },
   pt: {
     hero: {
-      title: 'Resultados reais.',
-      subtitle: 'Impacto mensurável.',
+      title: 'Decisões antecipadas.',
+      subtitle: 'Resultados comprovados.',
       description:
         'Veja como empresas estão transformando dados em crescimento com IA preditiva aplicada.',
     },
