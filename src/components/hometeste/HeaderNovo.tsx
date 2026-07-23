@@ -69,6 +69,7 @@ const HeaderNovo = () => {
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? 'bg-[#0B1224]/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
