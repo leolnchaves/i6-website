@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroDecisaoPt from '@/assets/hero-decisao-transparent-hd.png.asset.json';
-import heroDecisaoEn from '@/assets/hero-decisao-transparent-hd-en.png.asset.json';
+import heroPanorama from '@/assets/hero-decisao-panorama-v2.png.asset.json';
+import heroMobile from '@/assets/hero-decisao-mobile.png.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
   const { language } = useLanguage();
   const isPt = language === 'pt';
-  const heroDecisao = isPt ? heroDecisaoPt.url : heroDecisaoEn.url;
 
   const description = isPt
     ? 'Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.'
@@ -21,27 +20,8 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
-      <div className="absolute inset-x-0 top-1/2 -translate-y-[calc(50%-8vh)] z-0 flex justify-center pointer-events-none">
-        <div className="w-[min(100vw,1750px)] h-auto flex items-center justify-center">
-          <img
-            src={heroDecisao}
-            alt=""
-            aria-hidden
-            className="w-full h-auto max-w-none select-none"
-            style={{ imageRendering: 'auto' }}
-          />
-        </div>
-      </div>
-
-      <div
-        className="absolute inset-x-0 top-[14%] h-[30%] pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 55% 80% at center, rgba(11,18,36,0.7) 0%, rgba(11,18,36,0.3) 55%, rgba(11,18,36,0) 90%)',
-        }}
-      />
-
-      <div className="relative z-10 pt-[16vh] px-6">
+      {/* 1. TÍTULO */}
+      <div className="relative z-10 flex-shrink-0 pt-[10vh] md:pt-[12vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
           <h1
             className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
@@ -50,7 +30,21 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-[5vh] left-1/2 -translate-x-1/2 z-10 px-6 w-full">
+      {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
+      <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center px-4">
+        <picture className="w-full h-full flex items-center justify-center">
+          <source media="(min-width: 768px)" srcSet={heroPanorama.url} />
+          <img
+            src={heroMobile.url}
+            alt=""
+            aria-hidden
+            className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+          />
+        </picture>
+      </div>
+
+      {/* 3. DESCRIÇÃO + CTA */}
+      <div className="relative z-10 flex-shrink-0 pb-[5vh] md:pb-[6vh] px-6">
         <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
             {description}
