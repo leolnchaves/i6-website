@@ -1,18 +1,15 @@
-## Diagnóstico
+## Problema
+No mobile, a barra de tópicos do demo do i6 Signal (Supply, Forecast, Optimal Price, Commercial Focus, Mix/Assortment, PDV) fica em uma única linha horizontal e estoura a largura da tela.
 
-`DarkLayout` envolve header e footer em wrappers `relative z-[20]` irmãos. Isso cria stacking contexts isolados: o `z-50` do menu mobile só vale dentro do wrapper do header, então o footer (irmão com o mesmo `z-[20]`, pintado depois) fica por cima do menu. Como o footer não é sobreposto, o "scroll" que o usuário faz dentro do menu na verdade rola o footer visível atrás, dando a sensação de menu travado.
+## Solução
+Em `src/components/solutions/I6SignalDemo.tsx` (linhas ~622-638), permitir que a barra quebre em várias linhas no mobile, mantendo o visual atual no desktop:
 
-## Plano
+- No wrapper externo `<div className="flex justify-center mb-6">`: manter.
+- No container `inline-flex rounded-full ...`: trocar por `flex flex-wrap justify-center gap-1 rounded-2xl md:rounded-full md:inline-flex md:flex-nowrap` para que:
+  - No mobile: os botões empilhem em linhas (2-3 linhas), centralizados, com cantos arredondados suaves.
+  - No desktop (md+): comportamento atual preservado (pill contínua, uma linha).
+- Manter `whitespace-nowrap` em cada botão para que o rótulo de cada tópico não quebre internamente.
 
-1. **Elevar o stacking context do header acima do footer** em `src/components/DarkLayout.tsx`:
-   - Wrapper do header: `z-[60]` (fica acima do footer).
-   - Wrapper do footer: mantém `z-[20]`.
-   - Main: mantém `z-[10]`.
-
-2. **Ajustar o menu mobile** em `src/components/hometeste/HeaderNovo.tsx` para consistência:
-   - Manter overlay `fixed inset-x-0 top-[80px] bottom-0` com `z-[55]` (dentro do novo contexto do header, portanto acima do footer).
-   - Nenhuma mudança de conteúdo/layout do menu.
-
-3. **Escopo**
-   - Só `DarkLayout.tsx` e `HeaderNovo.tsx`.
-   - Desktop e demais páginas não são afetados; a correção passa a valer para todas as rotas que usam `DarkLayout` (Blog, Research, Insights, Solutions, etc.).
+## Escopo
+- Apenas ajuste visual/responsivo em `I6SignalDemo.tsx`.
+- Nenhuma mudança em textos, PT/EN, lógica ou outras seções.

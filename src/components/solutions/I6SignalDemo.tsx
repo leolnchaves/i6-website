@@ -620,7 +620,7 @@ const I6SignalDemo = memo(() => {
 
         {/* Scenario selector - continuous bar */}
         <div className="flex justify-center mb-6">
-          <div className="inline-flex rounded-full p-1 backdrop-blur-md bg-white/5 border border-white/10">
+          <div className="flex flex-wrap justify-center gap-1 rounded-2xl md:rounded-full md:inline-flex md:flex-nowrap p-1 backdrop-blur-md bg-white/5 border border-white/10">
             {(Object.keys(t.scenarios) as Scenario[]).map((sc) => (
               <button
                 key={sc}
