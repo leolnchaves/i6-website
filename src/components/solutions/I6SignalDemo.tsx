@@ -6,13 +6,8 @@ import {
   Heart, BookOpen, RotateCcw, Settings, BarChart3, Upload, Target,
   Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
 } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv';
-type Phase = 'idle' | 'typing' | 'responding';
-
-const TYPING_SPEED = 30;
-const RESPONSE_DELAY = 600;
+import { signalDemoContent as content, TYPING_SPEED, RESPONSE_DELAY, type Scenario, type Phase } from '@/data/signalDemo/content';
+import { SupplyTable, ForecastChart, ComercialChart, MixComparison, PdvBarChart } from '@/components/signalDemo/visualizations';
 
 // ─── Bilingual content ───────────────────────────────────────────
 
