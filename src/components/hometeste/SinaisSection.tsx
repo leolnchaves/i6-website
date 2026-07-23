@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText } from 'lucide-react';
+import { useLocalizedPath } from '@/utils/localizedPath';
+import { Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText, ArrowRight } from 'lucide-react';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
