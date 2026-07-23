@@ -1,38 +1,47 @@
 ## Objetivo
-Na tela de resultados de `/kiosk` (após o usuário receber a estratégia de preço), substituir o bloco atual do "i6 Signal" (`KioskSignalDemo` — simples, texto puro) pela mesma experiência interativa do demo do i6 Signal usado em `/solutions` (`I6SignalDemo` — Intelliboard com typing, tabelas, gráficos, análise executiva e ações). Com uma diferença: em vez do seletor de temas (pills "Preço Ótimo", "Mix", etc.), exibir **algumas perguntas inteiras** clicáveis, relacionadas à solução recomendada, cada uma disparando o mesmo fluxo de resposta.
+No `/kiosk`, os campos **Nome** e **E-mail** devem abrir um **teclado on-screen** (o totem é touchscreen, sem teclado físico) e o campo de e-mail deve exibir **sugestões dinâmicas de domínio** (`@gmail.com`, `@hotmail.com`, `@outlook.com`, `@yahoo.com`, `@icloud.com`).
 
-## Arquivos e mudanças
+## Onde
+- `src/components/kiosk/EbookCTA.tsx` — inputs de Nome / E-mail do form final.
 
-### 1. Novo componente: `src/components/kiosk/KioskSignalIntelliboard.tsx`
-Fork adaptado do `I6SignalDemo.tsx` (`src/components/solutions/I6SignalDemo.tsx`), com:
+## Escopo
 
-- **Reuso total dos dados** já existentes no próprio `I6SignalDemo` (cenários com `question`, `title`, `analysis`, `table/chartData/comercialChart/barChartData/comparison`, `actions`). Nada de duplicar conteúdo — importar o objeto `content` de lá (exportá-lo do `I6SignalDemo.tsx`) ou movê-lo para `src/data/signalDemo/content.ts` compartilhado por ambas as telas.
-- **Prop `solutionId`**: seleciona quais cenários (perguntas) mostrar via `solutionSignalMap` já existente em `src/data/kiosk/config.ts`. Ex.: `pricing-dynamics` → `['pricing', 'comercial']`.
-- **Seletor de perguntas (substitui as pills)**: lista vertical, cada item é um card grande touch-friendly (min-height ~10vmin) mostrando a pergunta inteira (`scenario.question`) — sem o pill "Preço Ótimo". Ao tocar, dispara o mesmo `handleScenarioClick` (typing → response) do demo original.
-- **Estado inicial**: nenhuma pergunta ativa; área de resposta vazia com hint tipo "Toque em uma pergunta para ver o insight".
-- **Bloco final "Perguntas Sugeridas"** do demo original: removido (fluxo linear único no kiosk).
+### 1. Teclado virtual (novo componente `KioskOnScreenKeyboard.tsx`)
+- Renderizado como **overlay fixo** na base da tela (posição `fixed`, ergonômico para totem retrato de 27").
+- Duas variantes de layout, controladas por prop `layout`:
+  - `text` (para Nome): QWERTY completo com maiúsculas/minúsculas via Shift, espaço, backspace, "Concluir".
+  - `email` (para E-mail): QWERTY + linha superior com `@ . _ -` + tecla `.com` + backspace + "Concluir". Sem Shift (mantém minúsculas por padrão, mais rápido para e-mails).
+- Aparece quando o input recebe foco (ou ao toque) e desaparece ao clicar em "Concluir" ou fora dos campos.
+- Cada tecla usa unidades `vmin` (consistente com o kiosk) e altura mínima confortável para dedo (~7vmin), com feedback visual `active:scale-[0.95]`.
+- Suprime o teclado nativo do SO (`readOnly` no input + gerenciamento manual do valor) para não competir com o teclado virtual.
 
-### 2. Ajustes de layout para TV 27" retrato / touchscreen
-- **Sidebar** do Intelliboard (Home, Ingestion Tokens, etc.): oculta no kiosk (`hidden` sempre) — não há valor num kiosk retrato.
-- **Área principal em coluna única**: header do Intelliboard no topo, lista de perguntas em seguida, área de resposta abaixo.
-- **Tipografia e touch targets em `vmin`**: perguntas ~2.4vmin, cards com padding 3vmin; áreas clicáveis com altura mínima de 9vmin.
-- **Input de digitação inferior**: manter só visual (não editável no kiosk); ou remover — recomendo remover para reforçar que o único caminho é tocar as perguntas.
-- **Animação de typing e delay de resposta**: mantidos idênticos ao demo `/solutions`.
+### 2. Sugestões de domínio de e-mail
+- Chips de sugestão renderizadas **acima do teclado** (ou logo abaixo do campo de e-mail) apenas quando:
+  - o input de e-mail está em foco, **e**
+  - o valor contém `@` **ou** tem pelo menos 2 caracteres sem `@`.
+- Lista fixa (mais usados no Brasil/global): `gmail.com`, `hotmail.com`, `outlook.com`, `yahoo.com`, `icloud.com`, `uol.com.br`, `bol.com.br`.
+- Comportamento:
+  - Se **ainda não tem `@`**: sugere `{typed}@gmail.com`, `{typed}@hotmail.com`, etc. (até 4 chips).
+  - Se **já tem `@`**: filtra domínios que começam com o texto após `@` e sugere `{local}@{domain}`.
+- Ao tocar em uma sugestão: preenche o input completo e mantém o teclado aberto para eventual ajuste.
 
-### 3. `src/pages/Kiosk.tsx`
-- Substituir `<KioskSignalDemo ... />` (linha ~280) por `<KioskSignalIntelliboard lang={lang} solutionId={selectedSolution.id} />`.
-- Remover o import antigo `KioskSignalDemo`.
+### 3. Integração com `react-hook-form`
+- Manter validação `zod` existente.
+- Como os inputs viram `readOnly` (para bloquear teclado nativo), o valor será controlado via `setValue()` do hook-form quando o teclado virtual insere/apaga caracteres.
+- Preservar honeypot e fluxo de envio como está.
 
-### 4. Limpeza
-- Manter `src/components/kiosk/KioskSignalDemo.tsx` e `src/data/kiosk/signals.ts` no repo por enquanto (não referenciados). Podem ser removidos numa passada futura.
-- `solutionSignalMap` em `src/data/kiosk/config.ts`: manter como está (já define os cenários por solução).
+### 4. i18n
+- Legendas das teclas de ação ("Concluir", "Espaço") em PT e EN, adicionadas em `src/data/kiosk/config.ts` sob `ebook`:
+  - `keyboardDone: 'Concluir' | 'Done'`
+  - `keyboardSpace: 'Espaço' | 'Space'`
+  - `emailSuggestionsLabel: 'Sugestões' | 'Suggestions'`
 
 ## Fora de escopo
-- Não altero o demo de `/solutions` (fica exatamente como está hoje).
-- Não altero textos/conteúdo dos cenários — reuso 1:1.
-- Não mexo em quiz, ebook CTA, price-to-margin ou header/footer do kiosk.
+- Não altera o form de nenhuma outra página; só o CTA do totem.
+- Não implementa acentuação/caracteres especiais além do necessário para e-mail.
+- Não muda a estética/copy dos cards existentes — apenas adiciona o overlay e as chips.
 
-## Detalhes técnicos
-- Para compartilhar o objeto `content` entre `I6SignalDemo.tsx` e o novo componente do kiosk, extrair para `src/data/signalDemo/content.ts` (ou exportar de `I6SignalDemo.tsx`). Recomendação: extrair para arquivo próprio — mais limpo e evita import cruzado entre features.
-- Tipos `Scenario` e `Phase` também migram para o mesmo arquivo compartilhado.
-- Ambos os componentes (`I6SignalDemo` original e `KioskSignalIntelliboard`) passam a importar de lá.
+## Arquivos afetados
+- **Novo**: `src/components/kiosk/KioskOnScreenKeyboard.tsx`
+- **Editado**: `src/components/kiosk/EbookCTA.tsx` (foco/onChange/readOnly + integração)
+- **Editado**: `src/data/kiosk/config.ts` (labels PT/EN)
