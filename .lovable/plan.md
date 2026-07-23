@@ -1,9 +1,13 @@
-## Harmonizar os 4 cards do "Como Funciona"
+## Objetivo
+Dar mais respiro aos textos nos 4 cards da i6 Platform sem alterar o tamanho externo do box.
 
-Os títulos têm tamanhos diferentes (1 ou 2 linhas) e as descrições começam em alturas distintas, deixando os cards desalinhados. Em `src/components/hometeste/ComoFuncionamosSection.tsx`:
+## Mudanças (apenas `src/components/hometeste/ComoFuncionamosSection.tsx`, grid desktop)
 
-1. **Grid dos cards (linha 303):** trocar `grid-cols-4 gap-4` por `grid-cols-4 gap-4 items-stretch` para que todos os cards ocupem a mesma altura.
-2. **Card (linha 310):** adicionar `h-full flex flex-col` ao className para o conteúdo se organizar verticalmente.
-3. **Título (linha 315):** adicionar `min-h-[3.25rem]` para reservar espaço de duas linhas em todos os títulos, alinhando o início das descrições no mesmo eixo Y.
+1. **Box i6 Platform** (linha 299): reduzir padding lateral interno
+   - `px-4` → `px-2`
+2. **Grid dos cards** (linha 303): aproximar cards
+   - `gap-4` → `gap-2`
+3. **Card individual** (linha 310): reduzir padding interno lateral para ganhar largura útil de texto
+   - `p-5` → `px-4 py-5`
 
-Nada de conteúdo muda — só o layout dos cards fica homogêneo.
+Resultado: cada card ganha ~16–20px de largura útil interna; box externo mantém as mesmas dimensões e posição da badge "i6 PLATFORM". Nada muda no mobile nem nas colunas laterais (chips CAPTURAMOS/ATIVAMOS).
