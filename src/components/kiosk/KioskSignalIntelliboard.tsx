@@ -14,16 +14,11 @@ import {
   MixComparison,
   PdvBarChart,
 } from '@/components/signalDemo/visualizations';
-import { solutionSignalMap, type KioskLang } from '@/data/kiosk/config';
+import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 
 type Props = {
   lang: KioskLang;
-  content: {
-    signalEyebrow: string;
-    signalTitle: string;
-    signalSubtitle: string;
-    signalPickHint: string;
-  };
+  content: QuizContent;
   solutionId: string;
 };
 
