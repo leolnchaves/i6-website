@@ -204,7 +204,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     footer: {
       resetLabel: 'Recomeçar',
-      tagline: 'infinity6 · IA aplicada a resultado',
+      tagline: 'infinity6 - the platform for decision advantage',
     },
   },
   // NOTE: EN mirrors the PT structure so nothing quebra type-wise, mas o toggle
@@ -320,7 +320,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     footer: {
       resetLabel: 'Restart',
-      tagline: 'infinity6 · applied AI for results',
+      tagline: 'infinity6 - the platform for decision advantage',
     },
   },
 };
