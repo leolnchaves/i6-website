@@ -1,26 +1,31 @@
-## Ondas coral na attract screen do /kiosk
+## Reprocessar a imagem de ondas preservando a gradação fina
 
-Encaixar a imagem `abstract-orange-smooth-wave-lines.jpg` como decoração na parte inferior da tela do totem, ancorada exatamente ao final da viewport (sem espaço abaixo), com opacidade reduzida. Subir levemente a logo + tagline para dar respiro em relação às ondas.
+O problema atual: a v2 recolore todos os pixels não‑brancos para `#F4845F` chapado, destruindo as linhas translúcidas do original e criando um efeito "montanhas sólidas".
+
+### Solução
+
+Reprocessar `/mnt/user-uploads/fundo_kiosk-2.png` (mesma arte do anexo 2), preservando o RGB original e removendo apenas o fundo branco:
+
+```python
+# alpha = distância do branco (min(r,g,b) alto = branco → transparente)
+lum = min(r, g, b)
+alpha_new = (255 - lum)          # branco puro → 0, coral saturado → ~255
+alpha_new[lum > 240] = 0         # limpa ruído esbranquiçado
+# manter RGB do original (não recolorir)
+```
+
+Isso mantém a translucidez natural das linhas — pixels claros ficam suavemente visíveis, pixels saturados de coral ficam mais opacos, exatamente como no anexo 2.
 
 ### Passos
 
-1. **Upload do asset** via `lovable-assets` a partir de `/mnt/user-uploads/abstract-orange-smooth-wave-lines.jpg`, salvando o pointer em `src/assets/kiosk-waves-coral.jpg.asset.json`.
+1. Rodar o script acima gerando `/tmp/kiosk-waves-v3.png`.
+2. Upload via `lovable-assets create` → `src/assets/kiosk-waves-coral-v3.png.asset.json`.
+3. Atualizar import em `src/components/kiosk/AttractScreen.tsx` para v3.
+4. Manter `opacity: 0.75` sem `mix-blend-mode` (o próprio alpha já mescla naturalmente com o navy).
+5. Remover o pointer `kiosk-waves-coral-v2.png.asset.json` e deletar o asset antigo do CDN via `lovable-assets delete`.
 
-2. **Editar `src/components/kiosk/AttractScreen.tsx`:**
-   - Adicionar uma camada absoluta ao final do `<button>` (o container já é `relative`):
-     ```tsx
-     <img
-       src={waves.url}
-       aria-hidden
-       className="pointer-events-none absolute inset-x-0 bottom-0 w-full h-auto opacity-30 select-none"
-     />
-     ```
-   - Como o fundo do totem é escuro (navy) e a imagem tem fundo branco, aplicar `mix-blend-mode: screen` (via `style`) para eliminar o branco e deixar apenas as ondas coral visíveis, mantendo `opacity` baixa (~0.35).
-   - Garantir que o botão tenha `overflow-hidden` para as ondas não vazarem em telas maiores.
-   - Subir o bloco inferior (símbolo + tagline) reduzindo o padding vertical do container de `py-[10vmin]` para `py-[8vmin]` e/ou adicionando `mb-[6vmin]` no bloco BOTTOM, de forma que a logo + "The Platform for Decision Advantage" fique acima da faixa de ondas.
+### Fallback (caso a v3 ainda não fique boa)
 
-### Notas técnicas
+Se a translucidez não convencer, gerar programaticamente uma versão em SVG com múltiplas curvas Bézier coral em stroke fino com blur (`feGaussianBlur`) e `stroke-opacity` decrescente — 100% escalável, sem depender do PNG. Estimo ~40 linhas de SVG. Só executamos esse fallback se a v3 falhar visualmente.
 
-- Z-index: as ondas ficam atrás (`z-0`), os blocos de conteúdo já usam `z-10`.
-- Nada muda no `AttractScreen` além de layout e uma imagem decorativa; sem lógica nova.
-- Apenas presentational — não afeta o fluxo do quiz nem outros componentes.
+Sem mexer em nenhum outro componente — mudança isolada ao AttractScreen do totem.
