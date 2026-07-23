@@ -271,10 +271,10 @@ const ComoFuncionamosSection = () => {
               ))}
             </svg>
 
-            <div className="relative grid grid-cols-[minmax(170px,210px)_1fr_minmax(170px,210px)] gap-10 items-center">
+            <div className="relative grid grid-cols-[minmax(180px,200px)_1fr_minmax(180px,200px)] gap-6 items-center">
               {/* LEFT chips — staggered */}
               <div className="relative">
-                <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-5">
+                <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-slate-400 mb-5">
                   {copy.sourcesLabel}
                 </p>
                 <div className="flex flex-col gap-2.5">
