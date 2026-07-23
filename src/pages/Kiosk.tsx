@@ -6,7 +6,7 @@ import AttractScreen from '@/components/kiosk/AttractScreen';
 import QuizScreen from '@/components/kiosk/QuizScreen';
 import SolutionsGrid from '@/components/kiosk/SolutionsGrid';
 import SolutionDemoBlock from '@/components/kiosk/SolutionDemoBlock';
-import KioskSignalDemo from '@/components/kiosk/KioskSignalDemo';
+import KioskSignalIntelliboard from '@/components/kiosk/KioskSignalIntelliboard';
 import EbookCTA from '@/components/kiosk/EbookCTA';
 import {
   kioskContent,
@@ -277,11 +277,12 @@ const Kiosk = () => {
                     labels={sContent.labels}
                     lang={lang}
                   />
-                  <KioskSignalDemo
+                  <KioskSignalIntelliboard
                     lang={lang}
                     content={kContent}
                     solutionId={selectedSolution.id}
                   />
+
                   <EbookCTA
                     lang={lang}
                     content={kContent}
