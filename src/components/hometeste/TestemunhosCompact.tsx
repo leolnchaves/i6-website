@@ -36,7 +36,7 @@ const TestemunhosCompact = memo(() => {
     en: {
       title: 'In their words: those already deciding first.',
       subtitle: 'Leaders share how anticipated decisions are driving real business impact.',
-      cta: 'See success stories',
+      cta: 'View success stories',
     },
   }[language];
 
