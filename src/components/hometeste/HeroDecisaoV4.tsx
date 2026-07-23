@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroPanorama from '@/assets/hero-decisao-panorama-v3-transparent.png.asset.json';
-import heroMobile from '@/assets/hero-decisao-mobile-v2-transparent.png.asset.json';
+import heroPanoramaPt from '@/assets/hero-decisao-panorama-v3-transparent.png.asset.json';
+import heroMobilePt from '@/assets/hero-decisao-mobile-v2-transparent.png.asset.json';
+import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-transparent.png.asset.json';
+import heroMobileEn from '@/assets/hero-decisao-mobile-en-transparent.png.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
@@ -33,9 +35,9 @@ const HeroDecisaoV4 = () => {
       {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
         <picture className="w-full h-full flex items-center justify-center">
-          <source media="(min-width: 768px)" srcSet={heroPanorama.url} />
+          <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
           <img
-            src={heroMobile.url}
+            src={isPt ? heroMobilePt.url : heroMobileEn.url}
             alt=""
             aria-hidden
             className="max-w-full max-h-full w-auto h-auto object-contain select-none"
