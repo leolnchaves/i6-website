@@ -12,6 +12,8 @@ export interface SuccessStoryItem {
   client: string;
   description: string;
   challenge: string;
+  whatToAnticipate: string;
+  prediction: string;
   solution: string;
   metric1: string;
   metric2: string;
