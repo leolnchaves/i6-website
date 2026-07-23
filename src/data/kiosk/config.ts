@@ -315,7 +315,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     attract: {
       brand: 'infinity6',
-      headline: 'Decide <span class="text-[#F4845F]">BEFORE</span> the market.',
+      headline: 'Decide <span class="text-[#F4845F]">before</span> the market.',
       tapHint: 'Tap to begin',
     },
     footer: {
