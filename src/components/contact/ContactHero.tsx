@@ -7,15 +7,15 @@ const ContactHero = memo(() => {
 
   const content = useMemo(() => ({
     pt: {
-      prefix: "Decida",
-      highlight: "antes",
-      suffix: "do mercado.",
+      prefix: "Sua",
+      highlight: "próxima vantagem",
+      suffix: "começa na próxima decisão.",
       description: "Fale com nosso time sobre antecipar demanda, proteger margem, acelerar giro e aumentar conversão."
     },
     en: {
-      prefix: "Decide",
-      highlight: "before",
-      suffix: "the market does.",
+      prefix: "Your",
+      highlight: "next advantage",
+      suffix: "starts with the next decision.",
       description: "Talk to our team about anticipating demand, protecting margin, accelerating turnover and increasing conversion."
     }
   }), []);
