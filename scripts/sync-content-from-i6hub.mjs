@@ -392,6 +392,8 @@ function fmStories(it, { coverLocal, logoLocal }) {
     `client_anon: ${!!it.client_anon}`,
     `description: ${yaml(it.description ?? '')}`,
     `challenge: ${yaml(it.challenge ?? '')}`,
+    `what_to_anticipate: ${yaml(it.what_to_anticipate ?? '')}`,
+    `prediction: ${yaml(it.prediction ?? '')}`,
     `solution: ${yaml(it.solution ?? '')}`,
     `metric1: ${yaml(it.metric1 ?? '')}`,
     `metric2: ${yaml(it.metric2 ?? '')}`,
