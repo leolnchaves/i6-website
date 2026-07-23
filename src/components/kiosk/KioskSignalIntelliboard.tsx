@@ -1,5 +1,6 @@
 import { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { Send, Lightbulb, Brain } from 'lucide-react';
+import avatarRicardo from '@/assets/images/avatar-ricardo.jpg';
 import {
   signalDemoContent,
   TYPING_SPEED,
