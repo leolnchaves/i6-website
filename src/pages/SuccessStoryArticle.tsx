@@ -117,6 +117,13 @@ const SuccessStoryArticle = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224]/50 via-transparent to-[#0B1224]/50" />
 
             <div className="relative h-full container mx-auto max-w-4xl px-6 flex flex-col justify-end pb-8 md:pb-12">
+              {!story.clientAnon && story.logo && (
+                <img
+                  src={story.logo}
+                  alt={`${story.client} logo`}
+                  className="h-10 md:h-12 w-auto object-contain mb-4 brightness-0 invert opacity-80"
+                />
+              )}
               <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-4 inline-flex items-center gap-2">
                 <Building2 className="w-3 h-3" /> infinity6 · {story.segment}
               </p>
