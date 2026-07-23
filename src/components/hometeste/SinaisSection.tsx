@@ -60,6 +60,7 @@ const SinaisSection = () => {
       titleLine2Highlight: 'results',
       titleLine2End: '.',
       subtitle: 'We detect signals that guide commercial, supply, and pricing decisions.',
+      ctaSolutions: 'Explore our solutions',
       i6signal: 'i6Signal\nConversational interface that transforms predictive signals into actionable decisions in real time.',
       capabilities: [
         'Proprietary AI engines with fine-tuning.',
