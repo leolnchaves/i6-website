@@ -268,7 +268,13 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 />
               </div>
 
-              <div className="mt-[1.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/50 p-[2.2vmin] text-[1.9vmin] text-white/95 leading-relaxed">
+              <div
+                className="kiosk-insight-card relative mt-[1.5vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[2.2vmin] pr-[10vmin] text-[1.9vmin] text-white/95 leading-relaxed"
+              >
+                <div className="absolute top-[1.4vmin] right-[1.4vmin] flex items-center gap-[0.6vmin] px-[1.2vmin] py-[0.5vmin] rounded-full bg-[#F4845F] text-white text-[1.2vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
+                  <Sparkles className="w-[1.6vmin] h-[1.6vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
+                  <span>Insight</span>
+                </div>
                 <span className="block text-[1.5vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
                   {content.rationaleLabel}
                 </span>
