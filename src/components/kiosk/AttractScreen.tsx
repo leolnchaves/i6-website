@@ -1,5 +1,6 @@
 import type { QuizContent } from '@/data/kiosk/config';
 import symbolWhite from '@/assets/infinity6-symbol-white.png.asset.json';
+import wavesCoral from '@/assets/kiosk-waves-coral.jpg.asset.json';
 
 interface Props {
   content: QuizContent;
@@ -11,8 +12,17 @@ const AttractScreen = ({ content, onStart }: Props) => {
     <button
       type="button"
       onClick={onStart}
-      className="relative flex flex-col justify-between items-center w-full min-h-screen px-12 py-[10vmin] text-center focus:outline-none"
+      className="relative flex flex-col justify-between items-center w-full min-h-screen overflow-hidden px-12 pt-[10vmin] pb-[14vmin] text-center focus:outline-none"
     >
+      {/* Waves — fixed to the exact bottom of the screen */}
+      <img
+        src={wavesCoral.url}
+        alt=""
+        aria-hidden
+        className="pointer-events-none select-none absolute inset-x-0 bottom-0 w-full h-auto z-0"
+        style={{ mixBlendMode: 'screen', opacity: 0.35 }}
+      />
+
       {/* TOP — headline */}
       <div className="relative z-10 flex items-center justify-center flex-1 w-full">
         <h1
@@ -34,8 +44,8 @@ const AttractScreen = ({ content, onStart }: Props) => {
         </div>
       </div>
 
-      {/* BOTTOM — symbol + tagline */}
-      <div className="relative z-10 flex flex-col items-center gap-[1.2vmin] flex-1 justify-end">
+      {/* BOTTOM — symbol + tagline (lifted above the waves) */}
+      <div className="relative z-10 flex flex-col items-center gap-[1.2vmin] flex-1 justify-end mb-[8vmin]">
         <img
           src={symbolWhite.url}
           alt={content.attract.brand}
