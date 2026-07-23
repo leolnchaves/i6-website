@@ -30,9 +30,8 @@ const HowWeImplement = memo(() => {
         <div className="relative">
           <ol className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {howWeImplement.steps.map((step, idx) => (
-              <>
+              <Fragment key={step.n}>
                 <li
-                  key={step.n}
                   className="relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 p-5"
                 >
                   <span className="text-3xl font-bold text-[#F4845F]/80 leading-none block mb-3">
@@ -42,12 +41,13 @@ const HowWeImplement = memo(() => {
                   <p className="text-xs text-white/60 leading-relaxed">{step.description}</p>
                 </li>
                 {idx === 2 && (
-                  <li key={`${step.n}-badge`} className="md:hidden list-none">
+                  <li className="md:hidden list-none">
                     {costBadge}
                   </li>
                 )}
-              </>
+              </Fragment>
             ))}
+
           </ol>
 
           <div className="hidden md:block absolute left-0 bottom-0 w-[calc(60%-0.4rem)] translate-y-1/2 z-10">
