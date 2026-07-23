@@ -49,3 +49,21 @@
 **Name:** Alpargatas
 
 ---
+
+## CAMIL
+**Logo:** /content/logos/camil.png
+**Name:** Camil
+
+---
+
+## MDS GROUP
+**Logo:** /content/logos/mds-group.png
+**Name:** MDS Group
+
+---
+
+## SKYFIT
+**Logo:** /content/logos/skyfit.png
+**Name:** Skyfit
+
+---
