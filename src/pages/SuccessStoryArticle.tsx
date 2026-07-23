@@ -63,7 +63,7 @@ const SuccessStoryArticle = () => {
 
         <meta property="og:type" content="article" />
         <meta property="og:title" content={story.title} />
-        <meta property="og:description" content={story.description || story.quote} />
+        {story.description && <meta property="og:description" content={story.description} />}
         <meta property="og:url" content={url} />
         {story.image && <meta property="og:image" content={story.image.startsWith('http') ? story.image : `${BASE_URL}${story.image}`} />}
         <meta name="twitter:card" content="summary_large_image" />
