@@ -38,10 +38,12 @@ const SuccessStoryArticle = () => {
 
   const t = {
     back: language === 'pt' ? 'Voltar para Histórias' : 'Back to Stories',
-    challenge: language === 'pt' ? 'Desafio' : 'Challenge',
-    solution: language === 'pt' ? 'Solução' : 'Solution',
-    appliedSolutions: language === 'pt' ? 'Soluções Aplicadas' : 'Applied Solutions',
-    results: language === 'pt' ? 'Resultados' : 'Results',
+    pain: language === 'pt' ? 'A DOR REAL' : 'THE REAL PAIN',
+    anticipate: language === 'pt' ? 'O QUE PRECISAVA SER ANTECIPADO' : 'WHAT NEEDED TO BE ANTICIPATED',
+    prediction: language === 'pt' ? 'A PREDIÇÃO' : 'THE PREDICTION',
+    solution: language === 'pt' ? 'A SOLUÇÃO' : 'THE SOLUTION',
+    appliedSolutions: language === 'pt' ? 'ALAVANCAS DE VALOR' : 'VALUE LEVERS',
+    results: language === 'pt' ? 'IMPACTO COMPROVADO' : 'PROVEN IMPACT',
     about: language === 'pt' ? 'Sobre o Cliente' : 'About the Client',
     related: language === 'pt' ? 'Outras Histórias' : 'Other Stories',
   };
