@@ -332,7 +332,7 @@ const ComoFuncionamosSection = () => {
 
               {/* RIGHT chips — staggered */}
               <div className="relative">
-                <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-5 text-right">
+                <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-slate-400 mb-5 text-right">
                   {copy.activationLabel}
                 </p>
                 <div className="flex flex-col gap-2.5 items-end">
