@@ -239,7 +239,7 @@ const Intelligence = () => {
         <header className="max-w-3xl mb-10">
           <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">infinity6 · Executive Research</p>
           <h1 className="sr-only">{heading}</h1>
-          <p className="text-lg text-white/70">{subheading}</p>
+          <p className="text-lg text-white/70 line-clamp-2">{subheading}</p>
         </header>
 
         <div className="flex flex-wrap items-center gap-2 mb-6">
