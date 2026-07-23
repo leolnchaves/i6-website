@@ -60,6 +60,9 @@ export interface QuizContent {
     successBody: string;
     successFooter: string;
     error: string;
+    keyboardDone: string;
+    keyboardSpace: string;
+    emailSuggestionsLabel: string;
   };
   attract: {
     brand: string;
@@ -196,6 +199,9 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       successBody: 'Enviamos o material para o seu email. Deve chegar em alguns minutos.',
       successFooter: 'Se não aparecer na caixa de entrada, verifique a pasta de SPAM.',
       error: 'Não foi possível enviar. Tente novamente.',
+      keyboardDone: 'Concluir',
+      keyboardSpace: 'Espaço',
+      emailSuggestionsLabel: 'Sugestões',
     },
     attract: {
       brand: 'infinity6',
@@ -312,6 +318,9 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       successBody: 'We just sent the material to your inbox. It should arrive in a few minutes.',
       successFooter: "If you don't see it, please check your SPAM folder.",
       error: 'Could not submit. Please try again.',
+      keyboardDone: 'Done',
+      keyboardSpace: 'Space',
+      emailSuggestionsLabel: 'Suggestions',
     },
     attract: {
       brand: 'infinity6',
