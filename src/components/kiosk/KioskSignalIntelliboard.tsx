@@ -177,9 +177,32 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
       </div>
 
       {/* Intelliboard response panel */}
-      <div className="rounded-[2vmin] bg-white shadow-2xl border border-white/10 overflow-hidden">
+      <div className="rounded-[2vmin] shadow-2xl border border-white/10 overflow-hidden">
+        {/* ── Intelliboard Header ── */}
+        <div
+          className="flex items-center justify-between px-[3vmin] py-[2vmin]"
+          style={{ background: 'linear-gradient(135deg, #0F1F36, #1E4A94, #0F1F36)' }}
+        >
+          <div className="flex items-center gap-[1vmin]">
+            <span className="text-orange-400 font-bold text-[3vmin] leading-none">i6</span>
+            <span className="text-white font-bold text-[2.6vmin] tracking-tight leading-none">Intelliboard</span>
+          </div>
+          <div className="flex items-center gap-[1.5vmin]">
+            <div className="text-right">
+              <p className="text-orange-400 text-[1.3vmin] font-semibold uppercase tracking-wide">VIVARIS PHARMA S.A.</p>
+              <p className="text-white text-[1.5vmin] font-medium">Leonardo Chaves</p>
+              <p className="text-white/50 text-[1.3vmin]">leonardo.chaves@vivarispharma.com</p>
+            </div>
+            <img
+              src={avatarRicardo}
+              alt="Leonardo Chaves"
+              className="h-[5vmin] w-[5vmin] rounded-full ring-2 ring-white/40 object-cover"
+            />
+          </div>
+        </div>
+
         {/* Chat surface */}
-        <div className="p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto">
+        <div className="bg-white p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto">
           {!activeScenario && (
             <div className="h-full min-h-[30vmin] flex items-center justify-center text-center">
               <div>
