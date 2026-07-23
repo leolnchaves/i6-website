@@ -59,7 +59,7 @@ const KioskOnScreenKeyboard = memo(
 
     return (
       <div
-        className="fixed inset-x-0 bottom-0 z-[80] bg-[#0B1224]/95 backdrop-blur-xl border-t-2 border-[#F4845F]/40 shadow-[0_-10px_60px_rgba(0,0,0,0.6)] px-[2vmin] pt-[2vmin] pb-[2.5vmin]"
+        className="relative w-full mt-[2vmin] rounded-3xl bg-[#0B1224]/95 backdrop-blur-xl border-2 border-[#F4845F]/40 shadow-[0_10px_60px_rgba(0,0,0,0.6)] px-[2vmin] pt-[2vmin] pb-[2.5vmin]"
         onMouseDown={(e) => e.preventDefault()}
         onTouchStart={(e) => e.stopPropagation()}
         role="dialog"
