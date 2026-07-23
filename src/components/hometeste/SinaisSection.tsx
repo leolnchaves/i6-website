@@ -217,6 +217,19 @@ const SinaisSection = () => {
             </div>
           </div>
         </div>
+
+        <div className="flex justify-center mt-14">
+          <Link
+            to={localized('/solutions')}
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-transparent text-white font-medium rounded-xl border border-white/40 animate-glow-white transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_24px_rgba(255,255,255,0.35),0_0_48px_rgba(255,255,255,0.12)] text-sm md:text-base text-center"
+          >
+            {copy.ctaSolutions}
+            <ArrowRight
+              size={16}
+              className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1"
+            />
+          </Link>
+        </div>
       </div>
     </section>
   );
