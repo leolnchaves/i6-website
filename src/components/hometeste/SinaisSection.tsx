@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
-import { Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText, ArrowDown } from 'lucide-react';
+import { Cog, Database, BarChart3, Boxes, Sparkles, Scale, MessageSquareText } from 'lucide-react';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
@@ -9,8 +7,7 @@ const capabilityIcons = [Cog, Database, Sparkles, Scale, MessageSquareText, Boxe
 
 const SinaisSection = () => {
   const { language } = useLanguage();
-  const localized = useLocalizedPath();
-  const { territories, territoriesBlock } = solutionsContent[language];
+  const { territories } = solutionsContent[language];
 
   const copy = {
     pt: {
