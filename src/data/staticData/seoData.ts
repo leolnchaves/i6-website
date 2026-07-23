@@ -11,25 +11,26 @@ type SEODataMap = Record<string, Record<Language, PageSEO>>;
 export const seoData: SEODataMap = {
   home: {
     pt: {
-      title: 'infinity6 – Inteligência Preditiva para Empresas',
-      description: 'Transformamos dados em decisões que antecipam o mercado. IA preditiva para aumentar receita, proteger margem e acelerar crescimento.',
+      title: 'infinity6 – The Platform for Decision Advantage',
+      description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.',
       keywords: [
-        'inteligência artificial para empresas',
+        'plataforma de decisão',
+        'decision advantage',
         'IA aplicada a negócios',
         'inteligência preditiva',
         'crescimento previsível',
         'growth intelligence',
-        'IA para crescimento',
         'IA para precificação',
         'machine learning para varejo',
       ],
     },
     en: {
-      title: 'infinity6 – Predictive Intelligence for Business',
-      description: 'We turn data into decisions that anticipate the market. Predictive AI to grow revenue, protect margins and accelerate growth.',
+      title: 'infinity6 – The Platform for Decision Advantage',
+      description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.',
       keywords: [
-        'artificial intelligence for business',
+        'decision advantage platform',
         'applied AI',
+        'decision intelligence',
         'predictive intelligence',
         'predictable growth',
         'growth intelligence',
