@@ -1,6 +1,6 @@
 import type { QuizContent } from '@/data/kiosk/config';
 import symbolWhite from '@/assets/infinity6-symbol-white.png.asset.json';
-import wavesCoral from '@/assets/kiosk-waves-coral.png.asset.json';
+import wavesCoral from '@/assets/kiosk-waves-coral-v2.png.asset.json';
 
 interface Props {
   content: QuizContent;
