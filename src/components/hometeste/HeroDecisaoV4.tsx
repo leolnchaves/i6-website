@@ -21,7 +21,7 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
       {/* 1. TÍTULO */}
-      <div className="relative z-10 flex-shrink-0 pt-[10vh] md:pt-[12vh] px-6">
+      <div className="relative z-10 flex-shrink-0 pt-[6vh] md:pt-[10vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
           <h1
             className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
