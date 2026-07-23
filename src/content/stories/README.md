@@ -28,8 +28,10 @@ segment: "Indústria"                      # Varejo | Indústria | Finanças | .
 client: "EMS Farma"
 client_anon: false                        # true = ocultar nome real do cliente
 description: "Resumo curto da empresa."
-challenge: "Texto do desafio (1–3 frases)."
-solution: "Texto da solução aplicada."
+challenge: "Texto da dor real (1–3 frases)."     # exibido como "A DOR REAL"
+what_to_anticipate: "O que precisava ser antecipado." # opcional
+prediction: "A predição gerada pela i6."          # opcional
+solution: "Texto da solução aplicada."            # exibido como "A SOLUÇÃO"
 metric1: "+23% de ticket médio por PDV"   # string única (valor + label)
 metric2: "+36% de conversão de novos SKUs"
 metric3: ""                                # vazio = não exibe
