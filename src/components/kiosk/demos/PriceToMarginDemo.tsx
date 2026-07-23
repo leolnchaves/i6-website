@@ -22,10 +22,10 @@ const PriceToMarginDemo = ({ lang }: Props) => {
     [content.products, selectedId],
   );
 
-  // Latência fake por SKU (50–100 ms) — estável enquanto o produto está selecionado
+  // Latência fake por SKU — sempre abaixo da média de mercado (~180 ms)
   const latencyMs = useMemo(() => {
     if (!selectedId) return '0.00';
-    return (50 + Math.random() * 50).toFixed(2);
+    return (22 + Math.random() * 26).toFixed(2);
   }, [selectedId]);
 
 

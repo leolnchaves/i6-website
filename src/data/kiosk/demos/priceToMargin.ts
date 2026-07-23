@@ -204,7 +204,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       deltaRevenue: 'Δ Receita',
       deltaMargin: 'Δ Margem',
       latency: 'Latência do modelo',
-      latencyHint: 'média mercado 50–100 ms',
+      latencyHint: 'média mercado ~180 ms',
     },
 
     objectiveLabel: 'Objetivo: margem',
@@ -241,7 +241,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
       deltaRevenue: 'Δ Revenue',
       deltaMargin: 'Δ Margin',
       latency: 'Model latency',
-      latencyHint: 'market avg 50–100 ms',
+      latencyHint: 'market avg ~180 ms',
     },
 
     objectiveLabel: 'Objective: margin',
