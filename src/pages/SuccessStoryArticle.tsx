@@ -38,10 +38,12 @@ const SuccessStoryArticle = () => {
 
   const t = {
     back: language === 'pt' ? 'Voltar para Histórias' : 'Back to Stories',
-    challenge: language === 'pt' ? 'Desafio' : 'Challenge',
-    solution: language === 'pt' ? 'Solução' : 'Solution',
-    appliedSolutions: language === 'pt' ? 'Soluções Aplicadas' : 'Applied Solutions',
-    results: language === 'pt' ? 'Resultados' : 'Results',
+    pain: language === 'pt' ? 'A DOR REAL' : 'THE REAL PAIN',
+    anticipate: language === 'pt' ? 'O QUE PRECISAVA SER ANTECIPADO' : 'WHAT NEEDED TO BE ANTICIPATED',
+    prediction: language === 'pt' ? 'A PREDIÇÃO' : 'THE PREDICTION',
+    solution: language === 'pt' ? 'A SOLUÇÃO' : 'THE SOLUTION',
+    appliedSolutions: language === 'pt' ? 'ALAVANCAS DE VALOR' : 'VALUE LEVERS',
+    results: language === 'pt' ? 'IMPACTO COMPROVADO' : 'PROVEN IMPACT',
     about: language === 'pt' ? 'Sobre o Cliente' : 'About the Client',
     related: language === 'pt' ? 'Outras Histórias' : 'Other Stories',
   };
@@ -115,6 +117,13 @@ const SuccessStoryArticle = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224]/50 via-transparent to-[#0B1224]/50" />
 
             <div className="relative h-full container mx-auto max-w-4xl px-6 flex flex-col justify-end pb-8 md:pb-12">
+              {!story.clientAnon && story.logo && (
+                <img
+                  src={story.logo}
+                  alt={`${story.client} logo`}
+                  className="h-10 md:h-12 w-auto object-contain mb-4 brightness-0 invert opacity-80"
+                />
+              )}
               <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-4 inline-flex items-center gap-2">
                 <Building2 className="w-3 h-3" /> infinity6 · {story.segment}
               </p>
@@ -135,7 +144,7 @@ const SuccessStoryArticle = () => {
 
         {metrics.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-white mb-6">{t.results}</h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-6 font-semibold">{t.results}</h2>
             <div className={`grid gap-4 ${metrics.length === 1 ? 'grid-cols-1' : metrics.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
               {metrics.map((m, i) => (
                 <div key={i} className="p-6 bg-white/5 rounded-xl border border-white/10 text-center">
@@ -147,20 +156,36 @@ const SuccessStoryArticle = () => {
           </section>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-          <section>
-            <h2 className="text-xl font-semibold text-white mb-3">{t.challenge}</h2>
-            <p className="text-white/70 leading-relaxed">{story.challenge}</p>
-          </section>
-          <section>
-            <h2 className="text-xl font-semibold text-white mb-3">{t.solution}</h2>
-            <p className="text-white/70 leading-relaxed">{story.solution}</p>
-          </section>
+        <div className="space-y-10 mb-12">
+          {story.challenge && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.pain}</p>
+              <p className="text-white/70 leading-relaxed">{story.challenge}</p>
+            </section>
+          )}
+          {story.whatToAnticipate && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.anticipate}</p>
+              <p className="text-white/70 leading-relaxed">{story.whatToAnticipate}</p>
+            </section>
+          )}
+          {story.prediction && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.prediction}</p>
+              <p className="text-white/70 leading-relaxed">{story.prediction}</p>
+            </section>
+          )}
+          {story.solution && (
+            <section>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-3 font-semibold">{t.solution}</p>
+              <p className="text-white/70 leading-relaxed">{story.solution}</p>
+            </section>
+          )}
         </div>
 
         {story.solutions && story.solutions.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-xl font-semibold text-white mb-4">{t.appliedSolutions}</h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-4 font-semibold">{t.appliedSolutions}</h2>
             <div className="flex flex-wrap gap-2">
               {story.solutions.map((s, i) => (
                 <span
