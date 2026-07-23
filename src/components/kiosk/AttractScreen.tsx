@@ -35,14 +35,15 @@ const AttractScreen = ({ content, onStart }: Props) => {
       </div>
 
       {/* BOTTOM — symbol + tagline */}
-      <div className="relative z-10 flex flex-col items-center gap-[2.5vmin] flex-1 justify-end">
+      <div className="relative z-10 flex flex-col items-center gap-[1.2vmin] flex-1 justify-end">
         <img
           src={symbolWhite.url}
           alt={content.attract.brand}
           className="h-[12vmin] w-auto object-contain"
         />
-        <p className="text-[3vmin] font-medium tracking-[0.03em] text-white/90">
-          The Platform for{' '}
+        <p className="text-[2.6vmin] font-semibold tracking-[0.02em] leading-[1.15] text-white/95">
+          The Platform for
+          <br />
           <span className="font-bold text-[#F4845F]">Decision Advantage</span>
         </p>
       </div>
