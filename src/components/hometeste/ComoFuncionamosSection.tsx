@@ -217,7 +217,7 @@ const ComoFuncionamosSection = () => {
         </div>
 
         {/* Desktop — fluid graph */}
-        <div className="hidden lg:block container mx-auto px-6 max-w-[1400px]">
+        <div className="hidden lg:block container mx-auto px-6 max-w-6xl">
           <div ref={wrapperRef} className="relative">
             {/* SVG connectors */}
             <svg

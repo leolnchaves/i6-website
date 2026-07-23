@@ -1,25 +1,19 @@
-## Ajuste do hero da Home
+## Alinhar imagens ao container de QUEM SOMOS
 
-O header usa `container mx-auto px-6`, então a logo (esquerda) e o seletor de idiomas (direita) ficam limitados a essa largura. Já a imagem panorâmica do hero em `HeroDecisaoV4.tsx` está em um `<div>` `w-full` sem container, o que a deixa esticar até o edge da tela e parecer grande demais.
+A seção "QUEM SOMOS" (`SinaisSection.tsx`) usa `container mx-auto px-6 max-w-6xl` (1152px). Vamos alinhar duas imagens a essa mesma largura, sem tocar em designs ou animações.
 
-### Alteração
+### Alterações
 
-Em `src/components/hometeste/HeroDecisaoV4.tsx`, na zona 2 (guardrail da imagem), envolver o `<picture>` num wrapper `container mx-auto px-6` para casar exatamente com o padding do header:
+**1) `src/components/hometeste/HeroDecisaoV4.tsx`** — wrapper interno da imagem do hero:
 
 ```tsx
-<div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
-  <div className="container mx-auto px-6 h-full flex items-center justify-center">
-    <picture className="w-full h-full flex items-center justify-center">
-      <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
-      <img
-        src={isPt ? heroMobilePt.url : heroMobileEn.url}
-        alt=""
-        aria-hidden
-        className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-      />
-    </picture>
-  </div>
-</div>
+<div className="container mx-auto px-6 max-w-6xl h-full flex items-center justify-center">
 ```
 
-Nada mais muda — título, descrição e CTA continuam iguais. Como `object-contain` respeita a caixa disponível, a imagem simplesmente encolhe proporcionalmente e passa a ter bordas laterais alinhadas com a logo e o seletor de idiomas.
+**2) `src/components/hometeste/ComoFuncionamosSection.tsx`** (linha 220) — bloco da animação desktop dos 4 passos:
+
+```tsx
+<div className="hidden lg:block container mx-auto px-6 max-w-6xl">
+```
+
+Apenas a largura muda; o SVG, cards, partículas e toda a animação permanecem exatamente como estão.
