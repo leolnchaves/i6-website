@@ -121,7 +121,7 @@ const SuccessStoryArticle = () => {
                 <img
                   src={story.logo}
                   alt={`${story.client} logo`}
-                  className="h-10 md:h-12 w-auto object-contain mb-4 brightness-0 invert opacity-80"
+                  className="self-start h-10 md:h-12 w-auto object-contain object-left mb-4 brightness-0 invert opacity-80"
                 />
               )}
               <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-4 inline-flex items-center gap-2">
