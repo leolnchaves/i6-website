@@ -8,8 +8,17 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 import CTAFinal from '@/components/hometeste/CTAFinal';
 
-const normalizeMd = (raw?: string) =>
-  raw ? raw.replace(/\\n/g, '\n').replace(/\\t/g, '\t') : '';
+const normalizeMd = (raw?: string) => {
+  if (!raw) return '';
+  let s = raw;
+  // Colapsa múltiplos níveis de escape ("\\\\n" -> "\\n" -> "\n")
+  for (let i = 0; i < 3; i++) {
+    const next = s.replace(/\\\\/g, '\\');
+    if (next === s) break;
+    s = next;
+  }
+  return s.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+};
 
 const MdBlock = ({ children }: { children: string }) => (
   <div className="prose prose-invert max-w-none prose-headings:text-white prose-p:text-white/70 prose-p:leading-relaxed prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/70 prose-blockquote:border-[#F4845F] prose-blockquote:text-white/80">
@@ -222,7 +231,9 @@ const SuccessStoryArticle = () => {
         {story.quote && (
           <section className="mb-12 p-8 rounded-xl bg-white/5 border border-white/10">
             <Quote className="w-8 h-8 text-[#F4845F] mb-4" />
-            <p className="text-lg md:text-xl text-white/85 italic mb-4">{story.quote}</p>
+            <div className="text-lg md:text-xl text-white/85 italic mb-4 [&_p]:text-white/85 [&_p]:italic">
+              <MdBlock>{story.quote}</MdBlock>
+            </div>
             {(story.customerName && story.customerName !== '-') && (
               <div className="text-sm text-white/60">
                 <span className="font-semibold text-white">{story.customerName}</span>
