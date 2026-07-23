@@ -6,9 +6,18 @@ import { useFeaturedInsights, type Insight } from '@/hooks/useInsights';
 
 const InsightMiniCard = ({ insight }: { insight: Insight }) => {
   const localized = useLocalizedPath();
-  const isIntelType = insight.type === 'i6 Article' || insight.type === 'i6 eBook';
-  const isExternal = !insight.gated && !isIntelType && !!insight.external_url;
-  const internalBase = isIntelType ? 'i6-intelligence' : 'insights';
+
+  // Route by type: eBook -> intelligence, Article -> blog, Media/Social -> insights (or external).
+  let internalPath: string;
+  if (insight.type === 'i6 eBook') {
+    internalPath = `/i6-intelligence/${insight.slug}`;
+  } else if (insight.type === 'i6 Article') {
+    internalPath = `/i6-blog/${insight.slug}`;
+  } else {
+    internalPath = `/insights/${insight.slug}`;
+  }
+  const isMedia = insight.type === 'i6 on Media' || insight.type === 'i6 Social';
+  const isExternal = isMedia && !insight.gated && !!insight.external_url;
 
   const inner = (
     <div className="group h-full p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-[#F4845F]/40 transition-all">
@@ -26,7 +35,7 @@ const InsightMiniCard = ({ insight }: { insight: Insight }) => {
   return isExternal ? (
     <a href={insight.external_url!} target="_blank" rel="noopener noreferrer">{inner}</a>
   ) : (
-    <Link to={localized(`/${internalBase}/${insight.slug}`)}>{inner}</Link>
+    <Link to={localized(internalPath)}>{inner}</Link>
   );
 };
 

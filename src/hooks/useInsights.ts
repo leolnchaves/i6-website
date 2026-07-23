@@ -128,12 +128,18 @@ function plainTextExcerpt(raw: string): string {
 }
 
 
-// Eagerly import all markdown files at build time
-const modules = import.meta.glob('/src/content/insights/*.md', {
+// Eagerly import all markdown files at build time from both content roots.
+const insightModules = import.meta.glob('/src/content/insights/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
 }) as Record<string, string>;
+const intelligenceModules = import.meta.glob('/src/content/intelligence/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
+const modules: Record<string, string> = { ...insightModules, ...intelligenceModules };
 
 const VALID_TYPES: InsightType[] = ['i6 on Media', 'i6 Article', 'i6 eBook', 'i6 Social'];
 const MEDIA_TYPES: InsightType[] = ['i6 on Media', 'i6 Social'];
@@ -144,6 +150,11 @@ const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
     const { data, content } = parseFrontmatter(raw);
     const fm = data as Partial<InsightFrontmatter>;
+    // For items under /content/intelligence/ without an explicit type, infer:
+    // gated/asset_url present -> i6 eBook (Research/eBook), otherwise i6 Article.
+    if (!fm.type && path.includes('/content/intelligence/')) {
+      fm.type = fm.asset_url ? 'i6 eBook' : 'i6 Article';
+    }
     if (!fm.title || !fm.language || !fm.type || !fm.date) return null;
     if (!VALID_TYPES.includes(fm.type as InsightType)) return null;
     const rawTags = (fm as { tags?: unknown }).tags;
