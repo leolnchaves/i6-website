@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, Fragment } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
