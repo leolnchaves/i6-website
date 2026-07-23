@@ -137,7 +137,7 @@ const SuccessStoryArticle = () => {
 
         {metrics.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-white mb-6">{t.results}</h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-6 font-semibold">{t.results}</h2>
             <div className={`grid gap-4 ${metrics.length === 1 ? 'grid-cols-1' : metrics.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
               {metrics.map((m, i) => (
                 <div key={i} className="p-6 bg-white/5 rounded-xl border border-white/10 text-center">
