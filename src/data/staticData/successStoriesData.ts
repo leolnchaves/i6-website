@@ -4,7 +4,7 @@ export const successStoriesData = {
       title: 'Anticipated decisions.',
       subtitle: 'Proven results.',
       description:
-        'See how companies are turning data into growth with applied predictive AI.',
+        'See how companies turn anticipation into competitive advantage.',
     },
     testimonials: {
       title: 'What Our Clients Say',
@@ -16,7 +16,7 @@ export const successStoriesData = {
       title: 'Decisões antecipadas.',
       subtitle: 'Resultados comprovados.',
       description:
-        'Veja como empresas estão transformando dados em crescimento com IA preditiva aplicada.',
+        'Veja como empresas transformam antecipação em vantagem competitiva.',
     },
     testimonials: {
       title: 'O Que Nossos Clientes Dizem',
