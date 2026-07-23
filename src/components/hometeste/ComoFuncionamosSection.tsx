@@ -300,19 +300,19 @@ const ComoFuncionamosSection = () => {
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#F5F6FA] border border-[#F4845F]/40 text-[#F4845F] text-[10px] font-bold tracking-[0.22em] uppercase whitespace-nowrap">
                   i6 Platform
                 </span>
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-4 gap-4 items-stretch">
                   {copy.steps.map((step, i) => {
                     const ref = cardRefMap(i);
                     return (
                       <div
                         key={i}
                         ref={ref as any}
-                        className="group relative p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
+                        className="group relative h-full flex flex-col p-5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_40px_rgba(244,132,95,0.18)] hover:border-[#F4845F]/50 transition-all duration-300"
                       >
                         <div className="text-4xl font-bold text-[#F4845F] mb-4 leading-none tracking-tight">
                           {String(i + 1).padStart(2, '0')}
                         </div>
-                        <h3 className="text-slate-900 text-base font-semibold mb-2">
+                        <h3 className="text-slate-900 text-base font-semibold mb-2 min-h-[3.25rem]">
                           {step.title}
                         </h3>
                         <p className="text-slate-600 text-sm leading-relaxed">
