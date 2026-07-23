@@ -111,20 +111,20 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
       <div className="text-center mb-[3vmin]">
         <div className="inline-flex items-center gap-[1.2vmin] px-[2vmin] py-[0.8vmin] rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 text-[1.5vmin] font-semibold tracking-[0.2em] uppercase mb-[1.5vmin]">
           <Brain className="w-[2vmin] h-[2vmin]" />
-          {content.signalEyebrow}
+          {content.results.signalEyebrow}
         </div>
         <h3 className="text-white text-[3.2vmin] font-bold leading-tight">
-          {content.signalTitle}
+          {content.results.signalTitle}
         </h3>
         <p className="text-white/60 text-[1.8vmin] mt-[1vmin] max-w-[70vmin] mx-auto">
-          {content.signalSubtitle}
+          {content.results.signalSubtitle}
         </p>
       </div>
 
       {/* Question cards */}
       <div className="mb-[2vmin]">
         <p className="text-orange-400 text-[1.4vmin] font-semibold uppercase tracking-[0.25em] mb-[1.5vmin] text-center">
-          {content.signalPickHint}
+          {content.results.signalPickHint}
         </p>
         <div className="grid grid-cols-1 gap-[2vmin]">
           {scenarios.map((sc) => {
