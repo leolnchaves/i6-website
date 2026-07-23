@@ -109,20 +109,37 @@ const SinaisSection = () => {
           {copy.subtitle}
         </p>
 
-        {/* 6 signal cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          {copy.cards.map((text, i) => {
-            const Icon = signalIcons[i];
-            return (
-              <div
-                key={i}
-                className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-300 hover:shadow-[0_0_24px_rgba(244,132,95,0.12)]"
-              >
-                <Icon className="w-7 h-7 text-[#F4845F] mb-4 group-hover:scale-110 transition-transform" />
-                <p className="text-white/80 text-sm leading-relaxed">{text}</p>
+        {/* 3 alavancas (mirrors /solutions territories) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
+          {territories.map((t) => (
+            <Link
+              key={t.id}
+              to={`${localized('/solutions')}#territory-${t.id}`}
+              className="group relative flex flex-col rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] p-6"
+            >
+              <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
+              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#F4845F] transition-colors line-clamp-2 min-h-[2lh]">
+                {t.title}
+              </h3>
+              <p className="text-sm text-white/70 leading-snug mb-4 line-clamp-3 min-h-[3lh]">
+                {t.tagline}
+              </p>
+              <ul className="flex flex-col gap-1.5 mb-4">
+                {t.chips.map((c) => (
+                  <li
+                    key={c}
+                    className="text-[11px] text-white/60 border border-white/10 rounded-full px-2 py-0.5 w-fit"
+                  >
+                    {c}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-auto flex items-center gap-1.5 text-xs font-medium text-[#F4845F]">
+                {territoriesBlock.ctaLabel}
+                <ArrowDown className="w-3.5 h-3.5" />
               </div>
-            );
-          })}
+            </Link>
+          ))}
         </div>
 
         {/* i6Signal highlight bullet - full width */}
