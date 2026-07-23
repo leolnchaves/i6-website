@@ -8,8 +8,17 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 import CTAFinal from '@/components/hometeste/CTAFinal';
 
-const normalizeMd = (raw?: string) =>
-  raw ? raw.replace(/\\n/g, '\n').replace(/\\t/g, '\t') : '';
+const normalizeMd = (raw?: string) => {
+  if (!raw) return '';
+  let s = raw;
+  // Colapsa múltiplos níveis de escape ("\\\\n" -> "\\n" -> "\n")
+  for (let i = 0; i < 3; i++) {
+    const next = s.replace(/\\\\/g, '\\');
+    if (next === s) break;
+    s = next;
+  }
+  return s.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+};
 
 const MdBlock = ({ children }: { children: string }) => (
   <div className="prose prose-invert max-w-none prose-headings:text-white prose-p:text-white/70 prose-p:leading-relaxed prose-a:text-[#F4845F] prose-strong:text-white prose-li:text-white/70 prose-blockquote:border-[#F4845F] prose-blockquote:text-white/80">
