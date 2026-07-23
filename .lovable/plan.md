@@ -1,15 +1,11 @@
-## Problema
-O carrossel usa uma única `<div>` flex com `gap-20` e conteúdo duplicado (`[...partners, ...partners]`), animando `translateX(0 → -50%)`.
-
-Como o `gap` também é aplicado entre o último item da primeira cópia e o primeiro da segunda, o ponto -50% da largura total **não coincide** com o início da segunda cópia — ele fica no meio desse gap. Resultado: ao chegar no fim (logo depois da SkyFit, hoje o último logo do MD), a animação salta/reseta visualmente em vez de continuar contínua.
+## Causa
+Em `src/components/hometeste/HeaderNovo.tsx`, o `<header>` fixo usa `backdrop-blur-md`. No Chrome/Safari, `backdrop-filter` cria um **containing block** para descendentes `position: fixed`. O painel do menu mobile (`fixed inset-x-0 top-[80px] bottom-0`) está **dentro** desse header, então em vez de se ancorar na viewport ele se ancora na caixa do header (~80px de altura). Quando a página está scrollada, o painel fica confinado à faixa do header e só o primeiro item aparece, com o conteúdo da página vazando por trás.
 
 ## Correção
-Editar apenas `src/components/hometeste/ClientesSection.tsx`:
+Editar apenas `src/components/hometeste/HeaderNovo.tsx`:
 
-1. Trocar o array `doubled` por **dois grupos irmãos idênticos**, cada um com `flex items-center gap-20 shrink-0`.
-2. O container externo (o que anima) também usa `flex gap-20` e recebe `animate-marquee`. Assim o espaçamento entre o último item do grupo A e o primeiro do grupo B é o mesmo que entre quaisquer dois logos internos, e `translateX(-50%)` alinha perfeitamente no início do grupo B.
-3. Manter tudo o resto (fade nas bordas, `overflow-hidden`, `animationDuration: '35s'`, tamanhos e opacidade dos logos, `usePartnersContent`, título PT/EN).
+1. Retornar um **Fragment** (`<>...</>`) contendo o `<header>` e, como **irmão**, o painel do menu mobile — tirando o painel de dentro do header.
+2. Manter exatamente as mesmas classes do painel (`md:hidden fixed inset-x-0 top-[80px] bottom-0 bg-[#0B1224] ... overflow-y-auto overscroll-contain`), z-index igual ou superior ao header (`z-50`) para ficar acima do conteúdo.
+3. Nada mais muda: estado `menuOpen`, trava de scroll do body, itens do menu, botão toggle e desktop nav ficam intactos.
 
-## Verificação
-- Nenhuma alteração em CSS/keyframes (o `@keyframes marquee` de 0 → -50% já está correto para o padrão de duplicação com dois grupos).
-- Sem mudanças em outros componentes, dados ou rotas.
+Com o painel fora do elemento com `backdrop-filter`, o `fixed` volta a se ancorar na viewport e o menu sempre aparece do topo, independentemente do scroll da página.
