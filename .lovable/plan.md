@@ -1,41 +1,25 @@
-## Diagnóstico
+## Ajuste do hero da Home
 
-A seção **existe** e está montada em `src/pages/HomeTeste.tsx` (componente `InsightsSection`, logo abaixo das logos/`ClientesSection`). Ela some porque `useFeaturedInsights` retorna zero itens no idioma atual — quando isso acontece, o componente faz `return null` (linha 38 de `InsightsSection.tsx`).
+O header usa `container mx-auto px-6`, então a logo (esquerda) e o seletor de idiomas (direita) ficam limitados a essa largura. Já a imagem panorâmica do hero em `HeroDecisaoV4.tsx` está em um `<div>` `w-full` sem container, o que a deixa esticar até o edge da tela e parecer grande demais.
 
-**Por que retorna zero:**
+### Alteração
 
-1. `useInsights.ts` (linha 132) só faz glob de `/src/content/insights/*.md`. Não carrega `/src/content/intelligence/` nem `/src/content/stories/`.
-2. Hoje os únicos MDs com `featured: true` estão em `src/content/intelligence/` (Research/eBooks) e em `src/content/stories/` (success stories) — nenhum deles entra em `ALL` do `useInsights`.
-3. Além disso, o MD `ruptura-gondola-ia-preditiva-*.md` não declara `type:` no frontmatter, então mesmo se fosse capturado seria descartado pelo filtro de `VALID_TYPES`.
+Em `src/components/hometeste/HeroDecisaoV4.tsx`, na zona 2 (guardrail da imagem), envolver o `<picture>` num wrapper `container mx-auto px-6` para casar exatamente com o padding do header:
 
-Resultado: `ALL` só tem itens de `insights/` (i6 on Media / i6 Social / i6 Article), e nenhum deles está marcado `featured: true` atualmente → `useFeaturedInsights` = `[]` → seção escondida.
+```tsx
+<div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
+  <div className="container mx-auto px-6 h-full flex items-center justify-center">
+    <picture className="w-full h-full flex items-center justify-center">
+      <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
+      <img
+        src={isPt ? heroMobilePt.url : heroMobileEn.url}
+        alt=""
+        aria-hidden
+        className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+      />
+    </picture>
+  </div>
+</div>
+```
 
-## Correção proposta
-
-Ampliar `useFeaturedInsights` para considerar destaques vindos de **todas as três fontes** que o site publica hoje (i6 on Media/Social, i6 Article do blog, i6 eBook/Research da Intelligence, e Success Stories), mantendo o link certo de cada card. Ou seja, "Featured on Home" volta a funcionar transversalmente como antes.
-
-### Mudanças
-
-**1. `src/hooks/useInsights.ts`**
-- Adicionar glob para `/src/content/intelligence/*.md` além de `/src/content/insights/*.md`.
-- Para MDs de `intelligence/`, se o frontmatter não tiver `type`, inferir: `type: 'i6 eBook'` quando `asset_url` (PDF) estiver presente, senão `type: 'i6 Article'` (a página de detalhe é a mesma `IntelligenceOrInsightArticle` que já roteia via `resolveArticleRoute`).
-- `useFeaturedInsights` continua filtrando por `language + featured === true`, agora enxergando ambas as pastas.
-
-**2. `src/components/hometeste/InsightsSection.tsx`**
-- Cobrir a rota correta por tipo:
-  - `i6 eBook` → `/i6-intelligence/<slug>`
-  - `i6 Article` → `/i6-blog/<slug>` (hoje o código manda para `/i6-intelligence`, o que está inconsistente com o menu novo)
-  - `i6 on Media` / `i6 Social` → external_url se existir, senão `/insights/<slug>`
-- Nenhuma mudança visual nos minicards.
-
-**3. Success stories em destaque (opcional, decidir na hora de implementar)**
-- Se você também quiser voltar a exibir mini-cards de success stories aqui (era comum na versão anterior), a alternativa mais limpa é criar um novo hook `useFeaturedContent` que combina `useFeaturedInsights` + stories com `featured: true` em `useSuccessStoriesMarkdown`. Fora do escopo mínimo — só entra se você pedir.
-
-### Como testar
-- Marcar `featured: true` em pelo menos 1 MD em `insights/` e 1 em `intelligence/` (PT e EN).
-- Home em `/pt` e `/en`: seção "Últimos Insights / Latest Insights" aparece com até 3 minicards; cada um leva à rota correta (blog / intelligence / insights externos).
-
-## Fora de escopo
-- Não mexer no visual do card, no layout da seção nem em outras páginas.
-- Não alterar frontmatter dos MDs existentes (isso continua no i6HUB).
-- Não trocar o texto do título/CTA da seção.
+Nada mais muda — título, descrição e CTA continuam iguais. Como `object-contain` respeita a caixa disponível, a imagem simplesmente encolhe proporcionalmente e passa a ter bordas laterais alinhadas com a logo e o seletor de idiomas.
