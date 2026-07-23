@@ -26,7 +26,7 @@ const ContactHero = memo(() => {
     <section className="w-full pt-28 pb-6 relative z-[10]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white [text-wrap:balance]">
             {text.prefix}{' '}
             <span
               className="text-[#F4845F]"
@@ -36,7 +36,7 @@ const ContactHero = memo(() => {
             </span>{' '}
             {text.suffix}
           </h1>
-          <p className="text-base sm:text-lg text-white/60 max-w-5xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-white/60 max-w-3xl mx-auto leading-relaxed [text-wrap:balance]">
             {text.description}
           </p>
         </div>
