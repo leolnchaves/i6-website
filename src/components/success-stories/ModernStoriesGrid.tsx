@@ -71,7 +71,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
                 metric2_label: story.metric2.split(' ').slice(1).join(' '),
                 metric3_value: story.metric3.split(' ')[0],
                 metric3_label: story.metric3.split(' ').slice(1).join(' '),
-                customer_quote: story.quote,
+                customer_quote: story.title,
                 customer_name: story.customerName,
                 customer_title: story.customerTitle,
                 image_url: story.image,
