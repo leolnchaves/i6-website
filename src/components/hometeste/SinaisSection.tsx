@@ -21,6 +21,7 @@ const SinaisSection = () => {
       titleLine2Highlight: 'resultados',
       titleLine2End: '.',
       subtitle: 'Detectamos sinais que orientam decisões comerciais, de supply e de pricing.',
+      ctaSolutions: 'Conheça nossas soluções',
       i6signal: 'i6Signal\nInterface conversacional que transforma sinais preditivos em decisões acionáveis em tempo real.',
       capabilities: [
         'Motores de IA proprietários com fine-tuning.',
