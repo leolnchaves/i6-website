@@ -29,8 +29,8 @@ const TestemunhosCompact = memo(() => {
 
   const copy = {
     pt: {
-      title: 'O que dizem nossos clientes',
-      subtitle: 'Resultados na voz de quem está na operação',
+      title: 'Com a palavra: quem já está decidindo antes.',
+      subtitle: 'Líderes compartilham como decisões antecipadas estão gerando impacto real nos negócios.',
       cta: 'Ver histórias de sucesso',
     },
     en: {
