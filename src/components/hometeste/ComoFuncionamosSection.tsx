@@ -5,11 +5,10 @@ import oracleLogo from '@/assets/logos/oracle.png.asset.json';
 import sapLogo from '@/assets/logos/sap.svg.asset.json';
 import snowflakeLogo from '@/assets/logos/snowflake.svg.asset.json';
 import databricksLogo from '@/assets/logos/databricks.svg.asset.json';
-import bigqueryLogo from '@/assets/logos/googlebigquery.svg.asset.json';
-import postgresLogo from '@/assets/logos/postgresql.svg.asset.json';
 import awsLogo from '@/assets/logos/aws.svg.asset.json';
-import mongoLogo from '@/assets/logos/mongodb.svg.asset.json';
-import kafkaLogo from '@/assets/logos/apachekafka.svg.asset.json';
+import googleCloudLogo from '@/assets/logos/googlecloud.svg.asset.json';
+import azureLogo from '@/assets/logos/azure.svg.asset.json';
+import ibmLogo from '@/assets/logos/ibm.svg.asset.json';
 import salesforceLogo from '@/assets/logos/salesforce.png.asset.json';
 import hubspotLogo from '@/assets/logos/hubspot.svg.asset.json';
 import shopifyLogo from '@/assets/logos/shopify.svg.asset.json';
@@ -26,12 +25,13 @@ const sources: LogoItem[] = [
   { name: 'SAP', src: sapLogo.url },
   { name: 'Snowflake', src: snowflakeLogo.url },
   { name: 'Databricks', src: databricksLogo.url },
-  { name: 'BigQuery', src: bigqueryLogo.url },
-  { name: 'PostgreSQL', src: postgresLogo.url },
-  { name: 'AWS S3', src: awsLogo.url },
-  { name: 'MongoDB', src: mongoLogo.url },
-  { name: 'Kafka', src: kafkaLogo.url },
+  { name: 'AWS', src: awsLogo.url },
+  { name: 'Google Cloud', src: googleCloudLogo.url },
+  { name: 'Azure', src: azureLogo.url },
+  { name: 'Salesforce', src: salesforceLogo.url },
+  { name: 'IBM', src: ibmLogo.url },
 ];
+
 
 const activations: LogoItem[] = [
   { name: 'Salesforce', src: salesforceLogo.url },
