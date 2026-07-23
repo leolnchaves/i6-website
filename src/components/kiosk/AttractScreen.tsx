@@ -16,7 +16,7 @@ const AttractScreen = ({ content, onStart }: Props) => {
       {/* TOP — headline */}
       <div className="relative z-10 flex items-center justify-center flex-1 w-full">
         <h1
-          className="text-[7vmin] leading-[1.05] font-bold max-w-[80vw]"
+          className="text-[6vmin] leading-[1.05] font-bold max-w-none whitespace-nowrap"
           dangerouslySetInnerHTML={{ __html: content.attract.headline }}
         />
       </div>
