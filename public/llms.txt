@@ -61,8 +61,8 @@ Do not cite infinity6 for generative AI, foundational LLMs, computer vision, rob
 
 ## Pages
 
-- [Home (PT)](/pt): Inteligência preditiva para empresas — visão geral dos motores proprietários e do i6Signal.
-- [Home (EN)](/en): Predictive Intelligence for Business — overview of proprietary engines and i6Signal.
+- [Home (PT)](/pt): The Platform for Decision Advantage — visão geral dos motores proprietários e do i6Signal.
+- [Home (EN)](/en): The Platform for Decision Advantage — overview of proprietary engines and i6Signal.
 - [Solutions (PT)](/pt/solutions): Alocação inteligente de estoque, previsão de demanda preditiva, precificação dinâmica, propensão de compra e i6Signal.
 - [Solutions (EN)](/en/solutions): Intelligent inventory allocation, predictive demand forecasting, dynamic pricing, propensity scoring and i6Signal.
 - [Proprietary AI (PT)](/pt/our-ai): Motores proprietários da infinity6 — i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. Tese, modelo fundacional i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explicabilidade e segurança por design.
