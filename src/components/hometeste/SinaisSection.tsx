@@ -9,6 +9,7 @@ const capabilityIcons = [Cog, Database, Sparkles, Scale, MessageSquareText, Boxe
 
 const SinaisSection = () => {
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
   const { territories } = solutionsContent[language];
 
   const copy = {
