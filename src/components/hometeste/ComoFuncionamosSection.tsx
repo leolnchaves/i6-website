@@ -296,11 +296,11 @@ const ComoFuncionamosSection = () => {
               </div>
 
               {/* CENTER — i6 PLATFORM box with 4 cards */}
-              <div className="relative rounded-2xl border border-[#F4845F]/30 bg-white/40 backdrop-blur-[2px] shadow-[0_10px_40px_rgba(244,132,95,0.08)] px-4 pt-8 pb-4">
+              <div className="relative rounded-2xl border border-[#F4845F]/30 bg-white/40 backdrop-blur-[2px] shadow-[0_10px_40px_rgba(244,132,95,0.08)] px-2 pt-8 pb-4">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#F5F6FA] border border-[#F4845F]/40 text-[#F4845F] text-[10px] font-bold tracking-[0.22em] uppercase whitespace-nowrap">
                   i6 Platform
                 </span>
-                <div className="grid grid-cols-4 gap-4 items-stretch">
+                <div className="grid grid-cols-4 gap-2 items-stretch">
                   {copy.steps.map((step, i) => {
                     const ref = cardRefMap(i);
                     return (
