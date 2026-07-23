@@ -104,6 +104,8 @@ const ALL: SuccessStoryItem[] = Object.entries(modules)
       client: asStr(fm.client),
       description: asStr(fm.description),
       challenge: asStr(fm.challenge),
+      whatToAnticipate: asStr(fm.what_to_anticipate),
+      prediction: asStr(fm.prediction),
       solution: asStr(fm.solution),
       metric1: asStr(fm.metric1),
       metric2: asStr(fm.metric2),
