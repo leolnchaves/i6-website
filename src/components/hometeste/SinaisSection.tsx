@@ -109,9 +109,8 @@ const SinaisSection = () => {
         {/* 3 alavancas (mirrors /solutions territories) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
           {territories.map((t) => (
-            <Link
+            <div
               key={t.id}
-              to={`${localized('/solutions')}#territory-${t.id}`}
               className="group relative flex flex-col rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] p-6"
             >
               <div className="absolute top-0 left-0 w-0 h-1 bg-[#F4845F] group-hover:w-full transition-all duration-700 ease-out rounded-t-2xl" />
@@ -131,11 +130,7 @@ const SinaisSection = () => {
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto flex items-center gap-1.5 text-xs font-medium text-[#F4845F]">
-                {territoriesBlock.ctaLabel}
-                <ArrowDown className="w-3.5 h-3.5" />
-              </div>
-            </Link>
+            </div>
           ))}
         </div>
 
