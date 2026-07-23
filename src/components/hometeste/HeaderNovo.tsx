@@ -162,9 +162,8 @@ const HeaderNovo = () => {
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
-
-      </nav>
     </header>
+
 
     {/* Mobile menu — rendered outside <header> so `fixed` anchors to the viewport, not the backdrop-filtered header */}
     {menuOpen && (
