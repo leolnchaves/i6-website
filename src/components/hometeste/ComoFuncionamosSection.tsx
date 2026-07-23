@@ -169,7 +169,7 @@ const ComoFuncionamosSection = () => {
         steps: [
           { title: 'Captura de sinais', desc: 'Demanda, preço, estoque, comportamento e contexto de mercado.' },
           { title: 'Predição', descBefore: '', highlight: 'Modelos proprietários', descAfter: ' identificam risco, intenção, elasticidade e propensão.' },
-          { title: 'Recomendação priorizada', desc: 'A melhor ação por objetivo, canal, cliente, SKU ou praça.' },
+          { title: 'Recomendação priorizada', desc: 'A melhor ação por objetivo, canal, cliente, SKU ou região.' },
           { title: 'Ativação', desc: 'A decisão chega à operação no ecossistema do cliente.' },
         ] as any[],
       }
