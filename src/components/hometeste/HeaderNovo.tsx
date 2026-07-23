@@ -41,6 +41,14 @@ const HeaderNovo = () => {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (menuOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [menuOpen]);
+
   const researchMenu: ResearchItem[] = [
     { to: localized('/i6-intelligence'), label: t('header.research.hub') },
     { to: localized('/insights'), label: t('header.research.media') },
@@ -156,7 +164,7 @@ const HeaderNovo = () => {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#0B1224] border-t border-white/10 px-6 pb-6 pt-2">
+        <div className="md:hidden fixed inset-x-0 top-[80px] bottom-0 bg-[#0B1224] border-t border-white/10 px-6 pb-8 pt-4 overflow-y-auto overscroll-contain">
           <ul className="flex flex-col gap-4">
             {leftLinks.map((l) => (
               <li key={l.to}>

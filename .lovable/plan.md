@@ -1,23 +1,31 @@
-## Objetivo
-Padronizar título/subtítulo das seções de testemunhos (Success Stories + Home) com o novo texto, em PT e EN.
+Ajustes exclusivos para mobile. Desktop permanece intacto.
 
-## Novos textos
+## 1) CTA final cortando no mobile (anexo 2)
+Arquivo: `src/components/hometeste/CTAFinal.tsx`
 
-**PT**
-- Título: `Com a palavra: quem já está decidindo antes.`
-- Subtítulo: `Líderes compartilham como decisões antecipadas estão gerando impacto real nos negócios.`
+- O `<span className="whitespace-nowrap">` na linha 32 força a segunda frase ("Sua próxima decisão também não deveria.") em uma única linha. No mobile isso estoura a largura da viewport, cortando o texto e provavelmente causando também o problema 1 (overflow horizontal da página).
+- Alterar para `md:whitespace-nowrap` — mantém a linha única no desktop e permite quebra natural no mobile.
 
-**EN** (tradução proposta)
-- Título: `In their words: those already deciding first.`
-- Subtítulo: `Leaders share how anticipated decisions are driving real business impact.`
+## 2) Tela /solutions cortando no meio (anexo 1)
+Diagnóstico: o corte com faixa branca à direita é sintoma clássico de overflow horizontal na página inteira. A causa mais provável é o próprio CTAFinal (item 1) — o `whitespace-nowrap` empurra a largura do documento além dos 393px do iPhone.
 
-## Arquivos a alterar
+- Após corrigir o item 1, validar via Playwright em 393x852 que `/pt/solutions` não tem mais overflow horizontal.
+- Se persistir, adicionar `overflow-x-hidden` como segurança no `<main>` de `src/components/DarkLayout.tsx` (somente afeta layout se houver overflow — não muda desktop).
 
-1. `src/data/staticData/successStoriesData.ts` — blocos `en.testimonials` e `pt.testimonials` (usados por `TestimonialsSection` em /success-stories).
-2. `src/data/translations/pt.ts` e `src/data/translations/en.ts` — chaves `successStories.testimonials.title` e `successStories.testimonials.subtitle` (mantém paridade com o dicionário i18n mesmo se não estiverem em uso ativo).
-3. `src/components/hometeste/TestemunhosCompact.tsx` — objeto `copy` (linhas 32-38), atualizando PT e EN.
+## 3) Menu mobile não rola (scroll vaza para o body)
+Arquivo: `src/components/hometeste/HeaderNovo.tsx`
 
-Nenhuma mudança em componentes/layout — apenas dados/textos.
+Problema: o painel `md:hidden` aberto renderiza inline no fluxo do header. Quando o conteúdo do menu passa da viewport (ex.: no i6 Blog / Insights onde há dropdown com 7 itens + demais links), o scroll acontece na página (subindo o footer) em vez de rolar dentro do menu.
 
-## Confirmação
-Ok com a tradução EN sugerida? Se preferir outra frase em inglês, me avise antes de eu implementar.
+Alterações no bloco de menu mobile (linhas ~158-221):
+- Transformar o container aberto em painel de altura limitada e scrollável:
+  - `fixed inset-x-0 top-[header-height] bottom-0 overflow-y-auto overscroll-contain` (em vez de posicionamento estático).
+- Ao abrir o menu (`menuOpen === true`):
+  - Aplicar `document.body.style.overflow = 'hidden'` via `useEffect` para travar o scroll do body enquanto o menu está aberto; restaurar ao fechar/desmontar.
+- Isso resolve o comportamento em qualquer página, incluindo `/i6-blog` e `/insights`, sem tocar em desktop (`md:hidden`).
+
+## Verificação
+Rodar Playwright headless em 393x852:
+1. `/pt/solutions` — screenshot da hero, checar ausência de scroll horizontal (`document.documentElement.scrollWidth === innerWidth`).
+2. `/pt` até o CTA final — screenshot mostrando a frase completa dentro da viewport.
+3. `/pt/i6-blog` — abrir menu, tentar rolar dentro do painel, confirmar que o footer não sobe e que todos os itens do menu ficam acessíveis.
