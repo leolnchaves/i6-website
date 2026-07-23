@@ -26,8 +26,8 @@ const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
 const seo = {
   home: {
-    pt: { title: 'infinity6 – Inteligência Preditiva para Empresas', description: 'Transformamos dados em decisões que antecipam o mercado. IA preditiva para aumentar receita, proteger margem e acelerar crescimento.' },
-    en: { title: 'infinity6 – Predictive Intelligence for Business', description: 'We turn data into decisions that anticipate the market. Predictive AI to grow revenue, protect margins and accelerate growth.' },
+    pt: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.' },
+    en: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.' },
   },
   solutions: {
     pt: { title: 'Soluções de IA Preditiva | infinity6', description: 'Recomendação em tempo real, preço dinâmico, forecasting adaptativo. Soluções de IA que aumentam ticket médio, reduzem churn e otimizam margem.' },

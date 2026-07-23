@@ -1,41 +1,43 @@
-# Destacar o card "Por que este preço" no /kiosk
+## Objetivo
+Substituir o slogan/tagline "Predictive Intelligence for Business" (e o equivalente PT "Inteligência Preditiva para Empresas") por **"The Platform for Decision Advantage"** em todos os artefatos de SEO/GEO/social que geram o preview de link (Slack, LinkedIn, WhatsApp, Google, crawlers de IA).
 
-O bloco final do `PriceToMarginDemo` (linhas 271–276 de `src/components/kiosk/demos/PriceToMarginDemo.tsx`) hoje é apenas uma caixa coral estática. Como o totem é passivo (touch + tempo curto de atenção), precisamos forçar o olhar para essa conclusão sem tornar a UI cansativa.
+## Onde está hoje (mapeado)
+1. `index.html` linhas 11–12 → `<title>` e `<meta name="description">`
+2. `index.html` linha 125 → `Organization.slogan` no JSON-LD ("We put decisions in motion")
+3. `index.html` linha 63 → `Organization.description` no JSON-LD (contém "predictive intelligence engines")
+4. `src/data/staticData/seoData.ts` → bloco `home.pt` e `home.en` (título + descrição + keywords)
+5. `scripts/prerender-seo-stubs.mjs` linhas 29–30 → fallbacks pt/en usados nos stubs pré-renderizados por rota
+6. `public/llms.txt` linhas 9 e 65 → posicionamento GEO (para crawlers de LLMs) e descrição da home EN
 
-## Estratégia visual em 3 camadas
+## Mudanças propostas
 
-1. **Entrada com atraso deliberado** — o card aparece ~600 ms depois dos KPIs, com `scale 0.94 → 1` + `translateY(12px) → 0` + fade, sinalizando que é a "revelação" final da análise.
-2. **Ring pulsante contínuo (breathing glow)** — animação infinita de 2.4s no `box-shadow` coral (`rgba(244,132,95, .35 → .75 → .35)`) + leve pulsação da borda (`border-color` opacidade `.5 → 1 → .5`). Suave o suficiente para não distrair, forte o suficiente para puxar o olhar em qualquer distância.
-3. **Badge "INSIGHT" com ícone Sparkles animado** — pequeno chip coral no canto superior direito do card com ícone `Sparkles` (lucide-react) girando/piscando devagar. Reforça hierarquia sem competir com o texto.
+### Títulos (tag `<title>` e `og:title`)
+- PT: `infinity6 – The Platform for Decision Advantage`
+- EN: `infinity6 – The Platform for Decision Advantage`
+(mantido em inglês nos dois idiomas porque é o slogan-marca, alinhado ao hero da home)
 
-Bônus opcional (aprovar/rejeitar na hora): um `scrollIntoView({ block: 'center' })` do card 400 ms após montar, para garantir que ele fique 100% visível mesmo se o usuário estiver com o dedo na parte de baixo do totem.
+### Meta description
+- PT: `Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.`
+- EN: `Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.`
 
-## Onde muda
+### JSON-LD Organization
+- `slogan`: `"The Platform for Decision Advantage"`
+- `description`: substituir a frase atual por uma alinhada ao novo posicionamento (mantendo os motores i6 citados)
 
-- `src/components/kiosk/demos/PriceToMarginDemo.tsx` — envolver o bloco do insight (linhas 271–276) em wrapper com as classes/estilos da animação; adicionar ícone `Sparkles` e badge "INSIGHT" (com `content.rationaleLabel` reaproveitado como texto principal). Injetar `@keyframes kiosk-insight-glow` e `kiosk-insight-in` no bloco `<style>` já existente (linhas 283–288).
-- Nenhum arquivo de i18n muda — o texto continua vindo de `content.rationaleLabel` e `selected.insight`.
+### llms.txt (GEO)
+- Substituir "Our positioning category is **Predictive Intelligence for Business / Decision Intelligence**…" por texto centrado em **"The Platform for Decision Advantage"** (mantendo a explicação de categoria: decisão vs. IA generativa).
+- Substituir "Home (EN): Predictive Intelligence for Business — overview…" por "Home (EN): The Platform for Decision Advantage — overview…"
+- Mesma troca no link da Home PT, se aplicável.
 
-## Detalhes técnicos
+### Não mexer
+- `src/data/solutionsV2/content.ts` (é copy da página Solutions, não é metadado de busca)
+- `FAQSection.tsx` (é uma resposta longa de FAQ, não SEO)
+- Hero/Kiosk/Footer que já usam "The Platform for Decision Advantage" — permanecem.
+- Demais entradas de `seoData.ts` (Solutions, Success Stories, Contact, etc.) — o pedido é sobre o slogan da marca que aparece no card de preview da home; essas outras rotas têm títulos próprios e ficam como estão. Se quiser padronizar também, digo e incluo.
 
-```css
-@keyframes kiosk-insight-in {
-  0%   { opacity: 0; transform: translateY(12px) scale(.94); }
-  100% { opacity: 1; transform: translateY(0)    scale(1);   }
-}
-@keyframes kiosk-insight-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25); }
-  50%      { box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.55); }
-}
-```
+## Nota sobre cache de preview
+Após publicar, os previews em Slack/LinkedIn/WhatsApp continuarão mostrando o texto antigo até esses serviços re-buscarem a página. É preciso forçar refresh nos debuggers (LinkedIn Post Inspector, Facebook Sharing Debugger, WhatsApp: reenviar após ~7 dias ou com query string nova).
 
-Card recebe:
-- `animation: kiosk-insight-in .5s ease-out .6s both, kiosk-insight-glow 2.4s ease-in-out .6s infinite`
-- Borda coral aumentada de `border` para `border-2`
-- Badge absoluto no topo direito com `Sparkles` + label ("INSIGHT" / "INSIGHT")
-
-Sem impacto em desktop `/solutions` — a mudança é isolada no componente do kiosk.
-
-## Perguntas antes de implementar
-
-1. Incluir o `scrollIntoView` automático (garante visibilidade em telas menores do totem em portrait)?
-2. Manter o glow **infinito** ou parar após ~6 s (3 pulsos) para não competir depois que o usuário já leu?
+## Confirmação necessária
+1. Ok manter o título como `infinity6 – The Platform for Decision Advantage` nos dois idiomas (em vez de traduzir)?
+2. As meta descriptions propostas acima estão boas, ou prefere que eu apenas troque o slogan mantendo o resto do texto atual?
