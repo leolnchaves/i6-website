@@ -7,8 +7,8 @@ export const successStoriesData = {
         'See how companies turn anticipation into competitive advantage.',
     },
     testimonials: {
-      title: 'What Our Clients Say',
-      subtitle: 'Direct words from the leaders driving change with infinity6.',
+      title: 'In their words: those already deciding first.',
+      subtitle: 'Leaders share how anticipated decisions are driving real business impact.',
     },
   },
   pt: {
@@ -19,8 +19,8 @@ export const successStoriesData = {
         'Veja como empresas transformam antecipação em vantagem competitiva.',
     },
     testimonials: {
-      title: 'O Que Nossos Clientes Dizem',
-      subtitle: 'Palavras diretas dos líderes que conduzem a mudança com a infinity6.',
+      title: 'Com a palavra: quem já está decidindo antes.',
+      subtitle: 'Líderes compartilham como decisões antecipadas estão gerando impacto real nos negócios.',
     },
   },
 } as const;
