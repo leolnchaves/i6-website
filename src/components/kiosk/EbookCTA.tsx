@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -7,6 +7,7 @@ import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFo
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 import type { KioskLang, QuizContent } from '@/data/kiosk/config';
+import KioskOnScreenKeyboard, { type KeyboardLayout } from './KioskOnScreenKeyboard';
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -23,18 +24,73 @@ interface Props {
   ebookTitle: string;
 }
 
+const EMAIL_DOMAINS = [
+  'gmail.com',
+  'hotmail.com',
+  'outlook.com',
+  'yahoo.com',
+  'icloud.com',
+  'uol.com.br',
+  'bol.com.br',
+];
+
+type ActiveField = 'name' | 'email' | null;
+
 const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [activeField, setActiveField] = useState<ActiveField>(null);
+  const [nameValue, setNameValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const t = content.ebook;
+
+  const emailSuggestions = useMemo(() => {
+    if (activeField !== 'email') return [];
+    const raw = emailValue.trim();
+    if (!raw) return [];
+    const atIdx = raw.indexOf('@');
+    if (atIdx === -1) {
+      if (raw.length < 2) return [];
+      return EMAIL_DOMAINS.slice(0, 4).map((d) => `${raw}@${d}`);
+    }
+    const local = raw.slice(0, atIdx);
+    const domainTyped = raw.slice(atIdx + 1).toLowerCase();
+    if (!local) return [];
+    const matches = EMAIL_DOMAINS.filter((d) => d.startsWith(domainTyped));
+    return (matches.length > 0 ? matches : EMAIL_DOMAINS).slice(0, 4).map((d) => `${local}@${d}`);
+  }, [activeField, emailValue]);
+
+  const handleKeyboardChange = useCallback(
+    (next: string) => {
+      if (activeField === 'name') {
+        setNameValue(next);
+        setValue('name', next, { shouldValidate: false });
+      } else if (activeField === 'email') {
+        setEmailValue(next);
+        setValue('email', next, { shouldValidate: false });
+      }
+    },
+    [activeField, setValue],
+  );
+
+  const handleSuggestionPick = useCallback(
+    (sug: string) => {
+      setEmailValue(sug);
+      setValue('email', sug, { shouldValidate: false });
+    },
+    [setValue],
+  );
+
+  const closeKeyboard = useCallback(() => setActiveField(null), []);
 
   const onSubmit = useCallback(
     async (data: FormData) => {
@@ -83,96 +139,125 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
     [ebookTitle, lang, solutionId, solutionTitle],
   );
 
-  return (
-    <div className="w-full rounded-3xl border-2 border-[#F4845F] bg-gradient-to-br from-[#F4845F]/20 to-[#F4845F]/5 p-[4vmin] shadow-[0_0_40px_rgba(244,132,95,0.25)]">
-      <div className="flex flex-col gap-[3vmin]">
-        {/* Top: copy */}
-        <div className="min-w-0">
-          <p className="text-[1.7vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
-            {t.eyebrow}
-          </p>
-          <h3 className="text-[3vmin] font-bold text-white leading-tight mb-[0.8vmin]">
-            {t.title(ebookTitle)}
-          </h3>
-          <p className="text-[2vmin] text-white/75">{t.subtitle}</p>
-        </div>
+  const activeLayout: KeyboardLayout = activeField === 'email' ? 'email' : 'text';
+  const activeValue = activeField === 'email' ? emailValue : nameValue;
 
-        {/* Bottom: inline form or success */}
-        {!submitted ? (
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex items-start gap-[1.5vmin] w-full"
-          >
-            <div className="flex flex-col flex-1 min-w-0">
+  return (
+    <>
+      <div className="w-full rounded-3xl border-2 border-[#F4845F] bg-gradient-to-br from-[#F4845F]/20 to-[#F4845F]/5 p-[4vmin] shadow-[0_0_40px_rgba(244,132,95,0.25)]">
+        <div className="flex flex-col gap-[3vmin]">
+          {/* Top: copy */}
+          <div className="min-w-0">
+            <p className="text-[1.7vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
+              {t.eyebrow}
+            </p>
+            <h3 className="text-[3vmin] font-bold text-white leading-tight mb-[0.8vmin]">
+              {t.title(ebookTitle)}
+            </h3>
+            <p className="text-[2vmin] text-white/75">{t.subtitle}</p>
+          </div>
+
+          {/* Bottom: inline form or success */}
+          {!submitted ? (
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex items-start gap-[1.5vmin] w-full"
+            >
+              <div className="flex flex-col flex-1 min-w-0">
+                <input
+                  type="text"
+                  placeholder={t.nameLabel}
+                  autoComplete="off"
+                  readOnly
+                  aria-label={t.nameLabel}
+                  value={nameValue}
+                  onFocus={() => setActiveField('name')}
+                  onClick={() => setActiveField('name')}
+                  {...register('name')}
+                  className={`w-full rounded-2xl bg-white/5 border-2 ${
+                    activeField === 'name' ? 'border-[#F4845F]' : 'border-white/10'
+                  } text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40 cursor-pointer`}
+                />
+                {errors.name && (
+                  <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidName}</span>
+                )}
+              </div>
+              <div className="flex flex-col flex-1 min-w-0">
+                <input
+                  type="email"
+                  placeholder={t.emailLabel}
+                  autoComplete="off"
+                  readOnly
+                  aria-label={t.emailLabel}
+                  value={emailValue}
+                  onFocus={() => setActiveField('email')}
+                  onClick={() => setActiveField('email')}
+                  {...register('email')}
+                  className={`w-full rounded-2xl bg-white/5 border-2 ${
+                    activeField === 'email' ? 'border-[#F4845F]' : 'border-white/10'
+                  } text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40 cursor-pointer`}
+                />
+                {errors.email && (
+                  <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidEmail}</span>
+                )}
+              </div>
+
+              {/* Honeypot */}
               <input
                 type="text"
-                placeholder={t.nameLabel}
+                tabIndex={-1}
                 autoComplete="off"
-                inputMode="text"
-                aria-label={t.nameLabel}
-                {...register('name')}
-                className="w-full rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
+                {...register(HONEYPOT_FIELD)}
+                className="hidden"
+                aria-hidden="true"
               />
-              {errors.name && (
-                <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidName}</span>
-              )}
-            </div>
-            <div className="flex flex-col flex-1 min-w-0">
-              <input
-                type="email"
-                placeholder={t.emailLabel}
-                autoComplete="off"
-                inputMode="email"
-                aria-label={t.emailLabel}
-                {...register('email')}
-                className="w-full rounded-2xl bg-white/5 border-2 border-white/10 text-white text-[2vmin] px-[2.5vmin] py-[2.2vmin] focus:border-[#F4845F] focus:outline-none placeholder:text-white/40"
-              />
-              {errors.email && (
-                <span className="mt-[0.5vmin] text-[1.4vmin] text-[#F4845F]">{t.invalidEmail}</span>
-              )}
-            </div>
 
-            {/* Honeypot */}
-            <input
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              {...register(HONEYPOT_FIELD)}
-              className="hidden"
-              aria-hidden="true"
-            />
-
-            <button
-              type="submit"
-              disabled={submitting}
-              aria-label={t.submit}
-              className="flex-shrink-0 h-[8vmin] px-[4vmin] rounded-full text-[2.2vmin] font-bold bg-[#F4845F] text-white shadow-[0_0_30px_rgba(244,132,95,0.5)] disabled:opacity-60 flex items-center justify-center gap-[1.5vmin]"
-            >
-              {submitting ? (
-                <Loader2 className="w-[3vmin] h-[3vmin] animate-spin" />
-              ) : (
-                <>
-                  <Send className="w-[2.6vmin] h-[2.6vmin]" strokeWidth={2.5} />
-                  <span>{t.submit}</span>
-                </>
-              )}
-            </button>
-          </form>
-        ) : (
-          <div className="flex-shrink-0 flex items-center gap-[2vmin] rounded-2xl bg-[#F4845F]/10 border-2 border-[#F4845F]/50 px-[3vmin] py-[2.5vmin]">
-            <CheckCircle2 className="w-[5vmin] h-[5vmin] text-[#F4845F] flex-shrink-0" />
-            <div>
-              <p className="text-[2.2vmin] font-bold text-white leading-tight">{t.successTitle}</p>
-              <p className="text-[1.6vmin] text-white/70 leading-tight mt-[0.4vmin]">{t.successBody}</p>
+              <button
+                type="submit"
+                disabled={submitting}
+                aria-label={t.submit}
+                className="flex-shrink-0 h-[8vmin] px-[4vmin] rounded-full text-[2.2vmin] font-bold bg-[#F4845F] text-white shadow-[0_0_30px_rgba(244,132,95,0.5)] disabled:opacity-60 flex items-center justify-center gap-[1.5vmin]"
+              >
+                {submitting ? (
+                  <Loader2 className="w-[3vmin] h-[3vmin] animate-spin" />
+                ) : (
+                  <>
+                    <Send className="w-[2.6vmin] h-[2.6vmin]" strokeWidth={2.5} />
+                    <span>{t.submit}</span>
+                  </>
+                )}
+              </button>
+            </form>
+          ) : (
+            <div className="flex-shrink-0 flex items-center gap-[2vmin] rounded-2xl bg-[#F4845F]/10 border-2 border-[#F4845F]/50 px-[3vmin] py-[2.5vmin]">
+              <CheckCircle2 className="w-[5vmin] h-[5vmin] text-[#F4845F] flex-shrink-0" />
+              <div>
+                <p className="text-[2.2vmin] font-bold text-white leading-tight">{t.successTitle}</p>
+                <p className="text-[1.6vmin] text-white/70 leading-tight mt-[0.4vmin]">{t.successBody}</p>
+              </div>
             </div>
-          </div>
+          )}
+        </div>
+
+        {error && (
+          <p className="mt-[2vmin] text-[1.7vmin] text-[#F4845F] text-right">{t.error}</p>
         )}
       </div>
 
-      {error && (
-        <p className="mt-[2vmin] text-[1.7vmin] text-[#F4845F] text-right">{t.error}</p>
+      {activeField && !submitted && (
+        <KioskOnScreenKeyboard
+          value={activeValue}
+          layout={activeLayout}
+          onChange={handleKeyboardChange}
+          onClose={closeKeyboard}
+          doneLabel={t.keyboardDone}
+          spaceLabel={t.keyboardSpace}
+          suggestions={emailSuggestions}
+          suggestionsLabel={emailSuggestions.length > 0 ? t.emailSuggestionsLabel : undefined}
+          onSuggestionPick={handleSuggestionPick}
+        />
       )}
-    </div>
+    </>
   );
 };
 
