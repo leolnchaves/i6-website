@@ -29,7 +29,7 @@ const CTAFinal = () => {
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
         <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug">
           {copy.line1}<br />
-          <span className="whitespace-nowrap">
+          <span className="md:whitespace-nowrap">
             {copy.line2Start}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
           </span>
         </p>

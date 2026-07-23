@@ -4,7 +4,7 @@ import FooterNovo from '@/components/hometeste/FooterNovo';
 import CookieConsentManager from '@/components/cookies/CookieConsentManager';
 
 const DarkLayout = () => (
-  <div className="min-h-screen bg-[#0B1224] relative">
+  <div className="min-h-screen bg-[#0B1224] relative overflow-x-hidden">
     <div className="relative">
       <div className="relative z-[20]">
         <HeaderNovo />
