@@ -1,54 +1,39 @@
-## Objetivo
+## Contexto
 
-Nos detalhes de Success Story, cada "chip" da seção **ALAVANCAS DE VALOR / VALUE LEVERS** deve virar um link clicável para a respectiva landing em `/{lang}/solutions/<slug>`, mantendo compatibilidade retro com cases que ainda mandam só o texto.
+Na iteração anterior, os chips de "ALAVANCAS DE VALOR" (detalhe da success story) foram configurados para linkar para as 4 landings de transformação (ex: `/solutions/demand-supply-efficiency`). O correto é linkar para as **3 alavancas preditivas de valor** dentro da própria página `/solutions`, na seção detalhada de cada alavanca (não no hero, e não nas landings de transformação).
 
-## Contrato com o i6 HUB (frontmatter MD)
+## Novo contrato de slugs
 
-Hoje `solutions:` é uma lista de strings. Vamos aceitar **dois formatos** no mesmo campo, para o HUB migrar gradualmente:
+O i6 HUB continua enviando `solutions` como array de strings no formato `"Rótulo|slug"`. A whitelist passa a aceitar apenas 3 slugs, correspondentes aos IDs das alavancas em `src/data/solutionsV2/content.ts`:
 
-1. **Texto puro** (comportamento atual, sem link):
-   ```yaml
-   solutions:
-     - "Inteligência de Recomendação Industrial"
-   ```
+| Slug       | Alavanca                                         |
+| ---------- | ------------------------------------------------ |
+| `growth`   | Crescimento & Inteligência de Consumidor         |
+| `planning` | Demanda, Distribuição e Planejamento Comercial   |
+| `pricing`  | Precificação e Inteligência de Margem            |
 
-2. **Texto + slug de landing** usando `|` como separador (o HUB imprime o rótulo como quiser e anexa o slug depois da barra):
-   ```yaml
-   solutions:
-     - "Descoberta Inteligente para Visitantes Anônimos|behavior-conversion"
-     - "Personalização Preditiva para Usuários Identificados|behavior-conversion"
-     - "Previsão de Demanda|demand-supply-efficiency"
-   ```
+Destino do link: `/{lang}/solutions#territory-{slug}` (ex: `/pt/solutions#territory-pricing`). A âncora `territory-{id}` já existe em `TerritorySection.tsx`, então basta scroll nativo. Se o usuário estiver em `/en`, o link respeita o idioma.
 
-Slugs válidos hoje (as 4 landings ativas):
-`behavior-conversion`, `data-monetization`, `demand-supply-efficiency`, `predictive-operations`.
+## Alterações
 
-Regras de renderização:
-- Sem `|` ou slug inválido → renderiza o chip como hoje (texto, não clicável).
-- Com slug válido → chip vira `<Link>` para `/{lang}/solutions/<slug>` com hover coral (borda + leve preenchimento), mantendo o mesmo desenho de pill.
-- O texto exibido é **exatamente** o que o HUB mandou antes do `|` — nada de derivar do slug.
+1. **`src/hooks/useSuccessStoriesMarkdown.ts`**
+   - Substituir a whitelist antiga (`demand-supply-efficiency`, `dynamic-pricing`, `predictive-personalization`, `data-monetization`) pela nova: `growth`, `planning`, `pricing`.
+   - Slugs fora da whitelist continuam virando texto puro (sem link), preservando retrocompatibilidade.
 
-Alternativa considerada e descartada: aceitar objetos `{label, slug}` no YAML. Piora a serialização no HUB e quebra os MDs existentes. O separador `|` é mais simples e 100% retrocompatível.
+2. **`src/pages/SuccessStoryArticle.tsx`**
+   - Trocar o destino do `<Link>` de `/{lang}/solutions/{slug}` para `/{lang}/solutions#territory-{slug}`.
+   - Manter estilos de hover (borda coral, fundo semi-transparente) já aplicados.
+   - Como o link é uma âncora na mesma rota quando já se está em `/solutions`, garantir `scroll` para a âncora ao clicar (o browser já resolve `#territory-x` nativamente; se o usuário estiver em outra rota, o React Router navega e a âncora é aplicada — se necessário, adicionar um pequeno `useEffect` de fallback com `scrollIntoView`, mas provavelmente não será preciso).
 
-## Mudanças de código
+3. **`src/content/stories/README.md`**
+   - Atualizar a tabela de slugs válidos para as 3 alavancas, com exemplos:
+     - `"Precificação Dinâmica|pricing"`
+     - `"Previsão de Demanda|planning"`
+     - `"Descoberta e Personalização|growth"`
+   - Explicar que o link aterrissa na seção detalhada da alavanca dentro de `/solutions`.
 
-1. `src/hooks/useSuccessStoriesMarkdown.ts`
-   - Trocar o tipo `solutions: string[]` por `solutions: { label: string; slug?: string }[]`.
-   - No parse do frontmatter, dividir cada item por `|`; validar o slug contra a whitelist das 4 landings ativas (`isLandingSlug` já existe em `useLandings.ts`); se inválido, cair para `label` only.
+## Fora do escopo
 
-2. `src/pages/SuccessStoryArticle.tsx`
-   - Na seção `story.solutions.map(...)`, renderizar `<Link>` (com `useLocalizedPath`) quando `slug` existir, senão um `<span>` idêntico ao atual. Estilo do link: mesma pill, hover borda `#F4845F` mais forte + `bg-[#F4845F]/20`.
-
-3. `src/content/stories/README.md`
-   - Documentar o novo formato `Label|slug` no bloco de frontmatter e listar os slugs de landing válidos, para o time do HUB seguir.
-
-4. `scripts/sync-content-from-i6hub.mjs`
-   - Passar `solutions` adiante sem transformação (já é uma lista de strings; o novo formato viaja como string com `|`). Só confirmar que não há sanitização que remova o `|`.
-
-Sem mudanças em `ModernStoriesGrid.tsx` — cards da grid não exibem `solutions`.
-
-## Verificação
-
-- Case atual (sem `|`) continua igual: chips não clicáveis.
-- Case editado no HUB com `Label|behavior-conversion` vira link para `/pt/solutions/behavior-conversion` (e `/en/...`).
-- Slug inválido não quebra a página: cai para texto.
+- Nenhuma mudança visual nos chips além do destino do link.
+- Nenhuma alteração em `/solutions` (IDs `growth`/`planning`/`pricing` já existem).
+- Nenhum bump de versão nesta etapa (publicação será solicitada depois).
