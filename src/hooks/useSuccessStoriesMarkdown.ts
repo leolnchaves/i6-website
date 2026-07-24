@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
+import { isLandingSlug } from '@/hooks/useLandings';
+
+export interface SolutionLever {
+  label: string;
+  slug?: string;
+}
+
 
 export interface SuccessStoryItem {
   id: string;
@@ -18,7 +25,7 @@ export interface SuccessStoryItem {
   metric1: string;
   metric2: string;
   metric3: string;
-  solutions: string[];
+  solutions: SolutionLever[];
   quote: string;
   customerName: string;
   customerTitle: string;
@@ -110,7 +117,15 @@ const ALL: SuccessStoryItem[] = Object.entries(modules)
       metric1: asStr(fm.metric1),
       metric2: asStr(fm.metric2),
       metric3: asStr(fm.metric3),
-      solutions: Array.isArray(fm.solutions) ? (fm.solutions as string[]) : [],
+      solutions: Array.isArray(fm.solutions)
+        ? (fm.solutions as string[]).map((raw) => {
+            const [labelRaw, slugRaw] = String(raw).split('|');
+            const label = (labelRaw ?? '').trim();
+            const slug = (slugRaw ?? '').trim();
+            return slug && isLandingSlug(slug) ? { label, slug } : { label };
+          }).filter((x) => x.label)
+        : [],
+
       quote: asStr(fm.quote),
       customerName: asStr(fm.customer_name),
       customerTitle: asStr(fm.customer_title),

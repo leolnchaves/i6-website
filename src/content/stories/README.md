@@ -35,7 +35,7 @@ solution: "Texto da solução aplicada."            # exibido como "A SOLUÇÃO"
 metric1: "+23% de ticket médio por PDV"   # string única (valor + label)
 metric2: "+36% de conversão de novos SKUs"
 metric3: ""                                # vazio = não exibe
-solutions: ["Inteligência de Recomendação Industrial"]
+solutions: ["Inteligência de Recomendação Industrial|behavior-conversion"]
 quote: "Antecipação Comercial Aplicada..."
 customer_name: "Paulo Lima"               # "" se anônimo
 customer_title: "New Channel Manager"     # "" se anônimo
@@ -48,6 +48,24 @@ sort_order: 1                              # ordem na grid
 ```
 
 Corpo do MD: opcional. Hoje toda a exibição vem do frontmatter.
+
+## Campo `solutions` — link para landing
+
+Cada item de `solutions` (renderizado como chip em "ALAVANCAS DE VALOR") pode ser:
+
+- **Texto puro** (chip não clicável): `"Nome da Alavanca"`
+- **Texto + slug de landing** separado por `|`: `"Nome da Alavanca|behavior-conversion"`
+
+Slugs válidos hoje (landings ativas em `/{lang}/solutions/<slug>`):
+
+- `behavior-conversion`
+- `data-monetization`
+- `demand-supply-efficiency`
+- `predictive-operations`
+
+Se o slug for inválido ou ausente, o chip cai automaticamente para texto puro
+(sem link). O rótulo exibido é sempre exatamente o texto antes do `|`.
+
 
 ## Loaders
 
