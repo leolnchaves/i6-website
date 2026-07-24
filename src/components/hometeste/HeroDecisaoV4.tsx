@@ -4,8 +4,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
 import heroPanoramaPt from '@/assets/hero-decisao-panorama-v3-transparent.png.asset.json';
 import heroMobilePt from '@/assets/hero-decisao-mobile-v2-transparent.png.asset.json';
-import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-transparent.png.asset.json';
-import heroMobileEn from '@/assets/hero-decisao-mobile-en-transparent.png.asset.json';
+import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v2-transparent.png.asset.json';
+import heroMobileEn from '@/assets/hero-decisao-mobile-en-v2-transparent.png.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
