@@ -1,27 +1,34 @@
-## Diagnóstico
+## Objetivo
+Trocar apenas a imagem do hero da Home no site em **inglês** pela nova arte enviada (infográfico "Anticipated Decision"), mantendo proporções, posicionamento e comportamento responsivo atuais. A versão PT permanece intacta.
 
-O código da tela (`SuccessStoryArticle.tsx`) e o loader (`useSuccessStoriesMarkdown.ts`) já lêem `what_to_anticipate` e `prediction` e renderizam condicionalmente as seções "O QUE PRECISAVA SER ANTECIPADO" e "A PREDIÇÃO". Só aparecem se o campo vier preenchido no frontmatter.
+## Passos
 
-Verifiquei os 12 MDs em `src/content/stories/` — nenhum contém esses campos. A causa está no script de sync com o i6HUB:
+1. **Preparar a imagem em alta resolução com fundo transparente**
+   - Fonte: `user-uploads://ChatGPT_Image_23_de_jul._de_2026_23_12_30.png` (~1700px de largura).
+   - Processar com Python/PIL aplicando chroma-key sobre o fundo azul-escuro (`#0B1224` e tons próximos), com tolerância suave nas bordas para preservar o glow coral e as partículas — mesma técnica usada nas versões PT/EN anteriores.
+   - Gerar duas variantes preservando resolução máxima do original:
+     - **Panorâmica (desktop/tablet)** — usa o próprio arquivo enviado (formato landscape).
+     - **Mobile (vertical)** — recorte/recomposição vertical do mesmo asset para caber no `<picture>` mobile atual. Como a nova arte é landscape, faremos um crop centralizado ampliando o núcleo (círculo "Anticipated Decision" + setas principais) para manter legibilidade em telas estreitas, sem esticar.
+   - Salvar como PNG transparente e subir via `lovable-assets` gerando dois novos `.asset.json`:
+     - `src/assets/hero-decisao-panorama-en-v2-transparent.png.asset.json`
+     - `src/assets/hero-decisao-mobile-en-v2-transparent.png.asset.json`
 
-`scripts/sync-content-from-i6hub.mjs`, função `fmStories` (linha 377) — monta o frontmatter escrevendo `challenge` e `solution`, mas **não escreve** `what_to_anticipate` nem `prediction`. Mesmo que o HUB envie esses campos no JSON do feed, eles são descartados na geração do `.md`.
+2. **Trocar apenas as referências do idioma EN**
+   - Em `src/components/hometeste/HeroDecisaoV4.tsx`, substituir os imports:
+     - `heroPanoramaEn` → novo asset panorâmico EN
+     - `heroMobileEn` → novo asset mobile EN
+   - Manter inalterados `heroPanoramaPt` e `heroMobilePt`.
+   - Manter todo o layout: container `container mx-auto px-6`, `w-[90%]`, `clip-path: inset(0 0.5% 2.5% 0.5%)`, paddings do hero, `<picture>` com breakpoint em 768px.
 
-## Correção
-
-Em `scripts/sync-content-from-i6hub.mjs`, dentro de `fmStories`, inserir logo após `challenge` (linha 394) e antes de `solution`:
-
-```js
-`what_to_anticipate: ${yaml(it.what_to_anticipate ?? '')}`,
-`prediction: ${yaml(it.prediction ?? '')}`,
-```
-
-Isso passa os campos do feed do HUB para o frontmatter. Se o HUB mandar string vazia, o campo fica `""` e a seção continua oculta (o `SuccessStoryArticle.tsx` já testa `story.whatToAnticipate && ...`).
-
-## Após o merge
-
-O sync roda no GitHub Actions no próximo deploy. Se algum case já estiver com os campos preenchidos no HUB, aparecerá automaticamente. Se o HUB ainda não expõe esses campos no feed JSON, será preciso ajustar o HUB — mas primeiro publicamos esta correção para validar.
+3. **Validação visual**
+   - Trocar o preview para inglês (`/en`) e conferir desktop + mobile: bordas sem faixa branca, fundo 100% integrado ao `#0B1224`, sem perda de nitidez.
+   - Conferir que `/pt` continua com a arte antiga.
 
 ## Fora do escopo
+- Nenhuma alteração em copy, CTA, layout, PT, ou em outras seções.
+- Sem republicação/tag no GitHub nesta rodada (aguardo seu "publique o patch" após aprovar visualmente).
 
-- Não altero `SuccessStoryArticle.tsx`, o hook, nem MDs individuais.
-- Sem release nesta etapa — publico patch depois que você confirmar.
+## Detalhes técnicos
+- Chroma-key: converter para RGBA, calcular distância de cada pixel ao fundo alvo em espaço Lab; alpha = 0 quando distância < limiar interno, alpha = 255 quando > limiar externo, transição linear entre eles. Preserva glow laranja e detalhes de partículas.
+- Não redimensionar para baixo: manter dimensão nativa do upload (~1700×950) no panorâmico; mobile recebe crop, não downscale.
+- Assets antigos (`hero-decisao-panorama-en-transparent`, `hero-decisao-mobile-en-transparent`) permanecem no repo por ora — posso limpar depois com `lovable-assets delete` se aprovar.
