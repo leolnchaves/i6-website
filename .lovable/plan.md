@@ -1,28 +1,37 @@
-## Contexto
+## Diagnóstico
 
-Hoje o parser YAML minimalista em `src/hooks/useSuccessStoriesMarkdown.ts` divide o array inline `solutions: [...]` por vírgula. Isso quebra quando o rótulo da alavanca contém vírgula (ex.: `"Crescimento, Personalização|growth"`).
+O parser do site já separa por `;` (mudança anterior). Mas o **script de sync do i6 HUB** (`scripts/sync-content-from-i6hub.mjs`) continua gerando o array com vírgulas ao materializar os MDs em `src/content/stories/`:
 
-## Mudanças
-
-### 1. `src/hooks/useSuccessStoriesMarkdown.ts`
-Ajustar o parser de array inline para separar por `;` ao invés de `,`:
-- Trocar o regex `/("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|[^,]+)/g` por versão baseada em `;`.
-- Manter suporte a strings entre aspas e trim dos itens.
-
-Formato aceito no frontmatter passa a ser:
-
-```yaml
-solutions: ["Descoberta, Recomendação e Personalização|growth"; "Previsão de Demanda|planning"]
+```js
+const yamlList = (arr) => `[${arr.map((v) => JSON.stringify(v)).join(', ')}]`;
+...
+: it.solutions.split(',').map(...)   // fallback quando vem string
 ```
 
-Observação: fica um YAML "não-padrão" (arrays YAML são separados por vírgula), mas como usamos parser próprio, funciona. Arquivos existentes sem vírgula no rótulo continuam funcionando desde que sejam migrados para `;` — precisamos atualizar os 6 MDs de stories.
+Resultado no MD gerado pelo deploy (site em produção):
 
-### 2. Migrar arquivos existentes
-Atualizar os arrays `solutions:` nos 6 arquivos em `src/content/stories/*.md` trocando `,` por `;` entre itens (só onde houver múltiplos itens).
+```yaml
+solutions: ["Personalização Preditiva|growth", "Preço Orientado ao Giro|pricing"]
+```
 
-### 3. `src/content/stories/README.md`
-Atualizar a documentação (exemplo e descrição do campo `solutions`) para o time do i6 HUB indicando que o separador é `;`.
+O parser do site (`useSuccessStoriesMarkdown.ts`) agora só quebra em `;`, então trata tudo depois do primeiro item como um único chip — exatamente o que aparece no print: `, "Preço Orientado ao Giro`.
+
+O HUB está mandando certo (array com slugs). O bug está no **serializador do sync**.
+
+## Mudança
+
+### `scripts/sync-content-from-i6hub.mjs`
+1. No `fmStories`, serializar `solutions` com `;` como separador — não usar o `yamlList` global (que serve os demais tipos e usa `,`).
+   - Substituir a linha `` `solutions: ${yamlList(solutions)}` `` por uma serialização local:
+     ```js
+     `solutions: [${solutions.map((v) => JSON.stringify(v)).join('; ')}]`
+     ```
+2. Ajustar o fallback de string para também aceitar `;` (defensivo, caso o HUB algum dia mande string):
+   ```js
+   it.solutions.split(/[;,]/).map((s) => s.trim()).filter(Boolean)
+   ```
 
 ## Fora de escopo
-- Não altero outros campos nem o parser de escalares.
-- Não mexo no i6 HUB — só documento o novo contrato aqui.
+- Não altero o `yamlList` global (outros tipos continuam com vírgula, que é YAML padrão).
+- Não mexo no parser do frontend — já está correto.
+- Não altero os MDs atuais em `src/content/stories/` (todos já usam `;` desde a migração anterior). O próximo `sync` do HUB vai regenerá-los no formato correto automaticamente.
