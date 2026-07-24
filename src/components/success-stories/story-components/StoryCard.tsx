@@ -67,9 +67,12 @@ const StoryCard: React.FC<StoryCardProps> = memo(({ story, language }) => {
         </h3>
 
         {/* Description */}
-        <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">
-          {story.challenge.length > 100 ? `${story.challenge.substring(0, 100)}...` : story.challenge}
-        </p>
+        {/* Description */}
+        {story.description && (
+          <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">
+            {story.description}
+          </p>
+        )}
 
         {/* Key metrics */}
         <div className="grid grid-cols-2 gap-3 mb-5">
