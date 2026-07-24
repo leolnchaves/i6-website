@@ -380,7 +380,7 @@ function fmStories(it, { coverLocal, logoLocal }) {
   const solutions = Array.isArray(it.solutions)
     ? it.solutions
     : (typeof it.solutions === 'string' && it.solutions.trim()
-        ? it.solutions.split(',').map((s) => s.trim()).filter(Boolean)
+        ? it.solutions.split(/[;,]/).map((s) => s.trim()).filter(Boolean)
         : []);
   return [
     '---',
