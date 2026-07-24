@@ -66,10 +66,6 @@ const HeroDecisaoV4 = () => {
                 maskImage:
                   'radial-gradient(ellipse at center, black 72%, transparent 100%)',
               }}
-                  'radial-gradient(ellipse at center, black 68%, transparent 100%)',
-                maskImage:
-                  'radial-gradient(ellipse at center, black 68%, transparent 100%)',
-              }}
             />
           )}
         </div>
