@@ -4,8 +4,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
 import heroPanoramaPt from '@/assets/hero-decisao-panorama-v3-transparent.png.asset.json';
 import heroMobilePt from '@/assets/hero-decisao-mobile-v2-transparent.png.asset.json';
-import heroPanoramaEn from '@/assets/hero-decisao-en-v3-integrated-full.png.asset.json';
-import heroMobileEn from '@/assets/hero-decisao-mobile-en-v3-integrated-full.png.asset.json';
+import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-transparent.png.asset.json';
+import heroMobileEn from '@/assets/hero-decisao-mobile-en-transparent.png.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
@@ -35,14 +35,14 @@ const HeroDecisaoV4 = () => {
       {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
         <div className="container mx-auto px-6 h-full flex items-center justify-center">
-          <picture className={`${isPt ? 'w-[90%] h-full' : 'w-[82%] h-auto max-h-[30vh] md:max-h-[36vh] lg:max-h-[38vh]'} flex items-center justify-center`}>
+          <picture className="w-[90%] h-full flex items-center justify-center">
             <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
             <img
               src={isPt ? heroMobilePt.url : heroMobileEn.url}
               alt=""
               aria-hidden
-              className={`${isPt ? 'max-w-full max-h-full' : 'max-w-full max-h-[30vh] md:max-h-[36vh] lg:max-h-[38vh]'} w-auto h-auto object-contain select-none`}
-              style={isPt ? { clipPath: 'inset(0 0.5% 2.5% 0.5%)' } : undefined}
+              className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+              style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
             />
           </picture>
         </div>
