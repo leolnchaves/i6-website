@@ -1,14 +1,16 @@
-## Diagnóstico
-A altura da imagem hoje é **limitada pela largura**, não pelo `max-h`. A imagem tem aspecto ~2.8:1 (1400×500) e usa `object-contain`. Com `w-[90%]` em um container ~900px, a largura efetiva (~810px) força uma altura de ~290px — já **abaixo** do `max-h-[45vh]` (~335px em 745px de viewport). Ou seja: mudar `max-h` de 50vh→45vh não teve efeito visível porque o teto já não estava ativo.
-
-## Solução
-Reduzir a **largura** da imagem para efetivamente reduzir sua altura em ~10% (aspecto travado): `w-[90%]` → `w-[81%]`. Isso corta ~10% em ambas as dimensões, mantendo proporção e nitidez.
+## Objetivo
+Nos cards de Success Stories, substituir o texto abaixo do título (hoje = `challenge` truncado, o que expõe Markdown cru como `###`) pelo campo `description` do frontmatter — o mesmo texto curto exibido logo após o nome do cliente na página de detalhes.
 
 ## Passos
-1. Em `src/components/hometeste/HeroDecisaoV4.tsx`, alterar `heroImageWidth = 'w-[90%]'` para `'w-[81%]'`.
-2. Manter `max-h` como está (não é o gargalo).
-3. Mobile intocado.
+1. **`src/components/success-stories/story-components/StoryCard.tsx`**
+   - Adicionar `description: string` ao tipo `StoryCardData`.
+   - Trocar o parágrafo abaixo do título: usar `story.description` em vez do `story.challenge` truncado. Manter `line-clamp-2` para consistência visual.
+2. **`src/components/success-stories/ModernStoriesGrid.tsx`**
+   - Passar `description: story.description` no objeto `story` do `LazyStoryCard`.
+3. **`src/components/landings/RelatedStoryMiniCard.tsx`** — verificar se usa o mesmo padrão; se sim, aplicar a mesma troca para consistência. (Verifico no build.)
 
-## Detalhes técnicos
-- Sem reprocessar assets.
-- Se o usuário quiser mais/menos, ajustamos apenas esse valor.
+Sem release/tag.
+
+## Notas
+- `useSuccessStoriesMarkdown` já expõe `description`.
+- Fallback: se `description` estiver vazio no MD, o parágrafo simplesmente não aparece (não cai de volta em `challenge`, conforme regra prévia de não "vazar" para outros campos).

@@ -63,6 +63,7 @@ const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegm
                 slug: story.slug,
                 industry: story.segment,
                 company_name: story.client,
+                description: story.description,
                 challenge: story.challenge,
                 solution: story.solution,
                 metric1_value: story.metric1.split(' ')[0],
