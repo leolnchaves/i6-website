@@ -1,39 +1,28 @@
 ## Contexto
 
-Na iteração anterior, os chips de "ALAVANCAS DE VALOR" (detalhe da success story) foram configurados para linkar para as 4 landings de transformação (ex: `/solutions/demand-supply-efficiency`). O correto é linkar para as **3 alavancas preditivas de valor** dentro da própria página `/solutions`, na seção detalhada de cada alavanca (não no hero, e não nas landings de transformação).
+Hoje o parser YAML minimalista em `src/hooks/useSuccessStoriesMarkdown.ts` divide o array inline `solutions: [...]` por vírgula. Isso quebra quando o rótulo da alavanca contém vírgula (ex.: `"Crescimento, Personalização|growth"`).
 
-## Novo contrato de slugs
+## Mudanças
 
-O i6 HUB continua enviando `solutions` como array de strings no formato `"Rótulo|slug"`. A whitelist passa a aceitar apenas 3 slugs, correspondentes aos IDs das alavancas em `src/data/solutionsV2/content.ts`:
+### 1. `src/hooks/useSuccessStoriesMarkdown.ts`
+Ajustar o parser de array inline para separar por `;` ao invés de `,`:
+- Trocar o regex `/("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|[^,]+)/g` por versão baseada em `;`.
+- Manter suporte a strings entre aspas e trim dos itens.
 
-| Slug       | Alavanca                                         |
-| ---------- | ------------------------------------------------ |
-| `growth`   | Crescimento & Inteligência de Consumidor         |
-| `planning` | Demanda, Distribuição e Planejamento Comercial   |
-| `pricing`  | Precificação e Inteligência de Margem            |
+Formato aceito no frontmatter passa a ser:
 
-Destino do link: `/{lang}/solutions#territory-{slug}` (ex: `/pt/solutions#territory-pricing`). A âncora `territory-{id}` já existe em `TerritorySection.tsx`, então basta scroll nativo. Se o usuário estiver em `/en`, o link respeita o idioma.
+```yaml
+solutions: ["Descoberta, Recomendação e Personalização|growth"; "Previsão de Demanda|planning"]
+```
 
-## Alterações
+Observação: fica um YAML "não-padrão" (arrays YAML são separados por vírgula), mas como usamos parser próprio, funciona. Arquivos existentes sem vírgula no rótulo continuam funcionando desde que sejam migrados para `;` — precisamos atualizar os 6 MDs de stories.
 
-1. **`src/hooks/useSuccessStoriesMarkdown.ts`**
-   - Substituir a whitelist antiga (`demand-supply-efficiency`, `dynamic-pricing`, `predictive-personalization`, `data-monetization`) pela nova: `growth`, `planning`, `pricing`.
-   - Slugs fora da whitelist continuam virando texto puro (sem link), preservando retrocompatibilidade.
+### 2. Migrar arquivos existentes
+Atualizar os arrays `solutions:` nos 6 arquivos em `src/content/stories/*.md` trocando `,` por `;` entre itens (só onde houver múltiplos itens).
 
-2. **`src/pages/SuccessStoryArticle.tsx`**
-   - Trocar o destino do `<Link>` de `/{lang}/solutions/{slug}` para `/{lang}/solutions#territory-{slug}`.
-   - Manter estilos de hover (borda coral, fundo semi-transparente) já aplicados.
-   - Como o link é uma âncora na mesma rota quando já se está em `/solutions`, garantir `scroll` para a âncora ao clicar (o browser já resolve `#territory-x` nativamente; se o usuário estiver em outra rota, o React Router navega e a âncora é aplicada — se necessário, adicionar um pequeno `useEffect` de fallback com `scrollIntoView`, mas provavelmente não será preciso).
+### 3. `src/content/stories/README.md`
+Atualizar a documentação (exemplo e descrição do campo `solutions`) para o time do i6 HUB indicando que o separador é `;`.
 
-3. **`src/content/stories/README.md`**
-   - Atualizar a tabela de slugs válidos para as 3 alavancas, com exemplos:
-     - `"Precificação Dinâmica|pricing"`
-     - `"Previsão de Demanda|planning"`
-     - `"Descoberta e Personalização|growth"`
-   - Explicar que o link aterrissa na seção detalhada da alavanca dentro de `/solutions`.
-
-## Fora do escopo
-
-- Nenhuma mudança visual nos chips além do destino do link.
-- Nenhuma alteração em `/solutions` (IDs `growth`/`planning`/`pricing` já existem).
-- Nenhum bump de versão nesta etapa (publicação será solicitada depois).
+## Fora de escopo
+- Não altero outros campos nem o parser de escalares.
+- Não mexo no i6 HUB — só documento o novo contrato aqui.
