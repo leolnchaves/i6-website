@@ -1,14 +1,26 @@
-## Trocar imagem do Hero (apenas EN)
+## Objetivo
+Reordenar a Hero **apenas em ENG** para testar: título um pouco mais abaixo, descrição logo abaixo do título, e a imagem descendo até ficar próxima do botão CTA.
 
-Substituir a imagem panorâmica em inglês da hero da Home pela nova imagem enviada, mantendo tudo o resto igual (dimensões do container, `w-[90%]`, `clip-path`, alinhamento, versão PT intocada).
+## Layout atual (ambos idiomas)
+1. Título
+2. Imagem (ocupa o meio, `flex-1`)
+3. Descrição + CTA
 
-### Passos
-1. Fazer upload da imagem enviada (`user-uploads://ChatGPT_Image_23_de_jul._de_2026_23_27_55.png`) via `lovable-assets` como `hero-decisao-panorama-en-v2.png`, gerando `src/assets/hero-decisao-panorama-en-v2.png.asset.json`.
-2. Em `src/components/hometeste/HeroDecisaoV4.tsx`:
-   - Trocar o import `hero-decisao-panorama-en-transparent.png.asset.json` por `hero-decisao-panorama-en-v2.png.asset.json`.
-   - Manter `heroMobileEn` (mobile EN) como está.
-3. Não mexer em PT, layout, classes ou clip-path.
+## Layout proposto (apenas EN)
+1. Título (com `pt` maior para descer um pouco)
+2. Descrição (movida para logo abaixo do título)
+3. Imagem (mesma proporção/tamanho `w-[90%]` e `max-h-[50vh]/[48vh]`, mas colada ao CTA)
+4. CTA (sozinho no bloco inferior)
 
-### Observações
-- A imagem nova já tem fundo dark navy compatível com `#0B1224`, então mantemos o mesmo `clip-path` atual — se aparecer faixa residual na borda inferior, ajusto o inset num segundo passo.
-- Sem publicação de release; só fazemos o teste no preview.
+PT continua exatamente como está hoje.
+
+## Mudanças em `src/components/hometeste/HeroDecisaoV4.tsx`
+- Renderização condicional por `isPt`:
+  - **EN**: novo JSX com a ordem Título → Descrição → Imagem (`flex-1`) → CTA. Aumentar `pt` do título (ex.: `pt-[12vh] md:pt-[15vh]`) para descê-lo. Descrição colocada em um bloco logo abaixo do título com `mt-6`. Imagem mantém `w-[90%]`, `max-h-[50vh] md:max-h-[48vh]`, `object-contain` e o `clipPath` atual — só muda a posição no fluxo (fica próxima do CTA porque a descrição saiu de perto do botão). CTA fica sozinho no bloco final com `pb-[2vh] md:pb-[3vh]`.
+  - **PT**: mantém o JSX atual sem alterações.
+
+Sem mudanças em assets, estilos globais, i18n ou em outros componentes.
+
+## Validação
+- Abrir `/en` e confirmar: título um pouco mais baixo, descrição logo abaixo, imagem descendo próxima do CTA, botão visível acima da dobra, imagem sem deformação.
+- Abrir `/` (PT) e confirmar que nada mudou.
