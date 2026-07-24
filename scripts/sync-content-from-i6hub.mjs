@@ -380,7 +380,7 @@ function fmStories(it, { coverLocal, logoLocal }) {
   const solutions = Array.isArray(it.solutions)
     ? it.solutions
     : (typeof it.solutions === 'string' && it.solutions.trim()
-        ? it.solutions.split(',').map((s) => s.trim()).filter(Boolean)
+        ? it.solutions.split(/[;,]/).map((s) => s.trim()).filter(Boolean)
         : []);
   return [
     '---',
@@ -398,7 +398,7 @@ function fmStories(it, { coverLocal, logoLocal }) {
     `metric1: ${yaml(it.metric1 ?? '')}`,
     `metric2: ${yaml(it.metric2 ?? '')}`,
     `metric3: ${yaml(it.metric3 ?? '')}`,
-    `solutions: ${yamlList(solutions)}`,
+    `solutions: [${solutions.map((v) => JSON.stringify(v)).join('; ')}]`,
     `quote: ${yaml(it.quote ?? '')}`,
     `customer_name: ${yaml(it.customer_name ?? '')}`,
     `customer_title: ${yaml(it.customer_title ?? '')}`,
