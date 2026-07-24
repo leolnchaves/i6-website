@@ -329,7 +329,7 @@ const en: SolutionsV2Content = {
       description:
         'Companies lose revenue when they plan demand, targets, assortment and orders based only on history, averages or commercial pressure. We turn market, behavior, inventory, sell-out and channel signals into predictive decisions to orient operations with extreme efficiency.',
       chips: [
-        'Demand Forecasting',
+        'Predictive Forecasting',
         'Predictive Commercial Goals',
         'Predictive Assortment & Order Recommendation',
       ],
@@ -375,7 +375,7 @@ const en: SolutionsV2Content = {
     {
       id: 'demand-forecasting',
       territory: 'planning',
-      title: 'Demand Forecasting',
+      title: 'Predictive Forecasting',
       tagline: 'Anticipate demand before stockout, excess or lost sales.',
       resolve: 'Forecast too coarse for a granular operation.',
       entrega: 'Demand forecast by SKU, store, POS, channel, region or customer.',
