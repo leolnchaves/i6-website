@@ -19,6 +19,7 @@ const HeroDecisaoV4 = () => {
   const ctaBefore = isPt ? 'antes' : 'before';
   const ctaPrefix = isPt ? 'Decida ' : 'Decide ';
   const ctaSuffix = isPt ? ' do mercado.' : ' the market.';
+  const heroImageWidth = isPt ? 'w-[87%] md:w-[80%]' : 'w-[90%]';
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
@@ -35,7 +36,7 @@ const HeroDecisaoV4 = () => {
       {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
         <div className="container mx-auto px-6 h-full flex items-center justify-center">
-          <picture className="w-[90%] h-full max-h-[50vh] md:max-h-[48vh] flex items-center justify-center">
+          <picture className={`${heroImageWidth} h-full max-h-[50vh] md:max-h-[48vh] flex items-center justify-center`}>
             <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
             <img
               src={isPt ? heroMobilePt.url : heroMobileEn.url}
