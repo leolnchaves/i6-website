@@ -72,6 +72,7 @@ const SuccessStoryArticle = () => {
     prediction: language === 'pt' ? 'A PREDIÇÃO' : 'THE PREDICTION',
     solution: language === 'pt' ? 'A SOLUÇÃO' : 'THE SOLUTION',
     appliedSolutions: language === 'pt' ? 'ALAVANCAS DE VALOR' : 'VALUE LEVERS',
+    appliedSolutionsHint: language === 'pt' ? 'Clique para conhecer as soluções aplicadas' : 'Click to explore the applied solutions',
     results: language === 'pt' ? 'IMPACTO COMPROVADO' : 'PROVEN IMPACT',
     about: language === 'pt' ? 'Sobre o Cliente' : 'About the Client',
     related: language === 'pt' ? 'Outras Histórias' : 'Other Stories',
