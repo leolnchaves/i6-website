@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
+import { isLandingSlug } from '@/hooks/useLandings';
+
+export interface SolutionLever {
+  label: string;
+  slug?: string;
+}
+
 
 export interface SuccessStoryItem {
   id: string;
