@@ -60,7 +60,12 @@ const HeroDecisaoV4 = () => {
               className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] w-auto object-contain select-none pointer-events-none`}
               style={{
                 clipPath: 'inset(0 0.5% 2.5% 0.5%)',
+                mixBlendMode: 'screen',
                 WebkitMaskImage:
+                  'radial-gradient(ellipse at center, black 72%, transparent 100%)',
+                maskImage:
+                  'radial-gradient(ellipse at center, black 72%, transparent 100%)',
+              }}
                   'radial-gradient(ellipse at center, black 68%, transparent 100%)',
                 maskImage:
                   'radial-gradient(ellipse at center, black 68%, transparent 100%)',
