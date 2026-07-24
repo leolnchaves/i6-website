@@ -375,7 +375,7 @@ const en: SolutionsV2Content = {
     {
       id: 'demand-forecasting',
       territory: 'planning',
-      title: 'Demand Forecasting',
+      title: 'Predictive Forecasting',
       tagline: 'Anticipate demand before stockout, excess or lost sales.',
       resolve: 'Forecast too coarse for a granular operation.',
       entrega: 'Demand forecast by SKU, store, POS, channel, region or customer.',
