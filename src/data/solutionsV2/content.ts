@@ -329,7 +329,7 @@ const en: SolutionsV2Content = {
       description:
         'Companies lose revenue when they plan demand, targets, assortment and orders based only on history, averages or commercial pressure. We turn market, behavior, inventory, sell-out and channel signals into predictive decisions to orient operations with extreme efficiency.',
       chips: [
-        'Demand Forecasting',
+        'Predictive Forecasting',
         'Predictive Commercial Goals',
         'Predictive Assortment & Order Recommendation',
       ],
