@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroPanoramaPt from '@/assets/hero-decisao-panorama-pt-v4-transparent.png.asset.json';
+import heroPanoramaPt from '@/assets/hero-decisao-panorama-pt-v5-transparent.png.asset.json';
 import heroMobilePt from '@/assets/hero-decisao-mobile-pt-v4-transparent.png.asset.json';
-import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v3-transparent.png.asset.json';
+import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v4-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v3-transparent.png.asset.json';
 
 const HeroDecisaoV4 = () => {
@@ -19,7 +19,7 @@ const HeroDecisaoV4 = () => {
   const ctaBefore = isPt ? 'antes' : 'before';
   const ctaPrefix = isPt ? 'Decida ' : 'Decide ';
   const ctaSuffix = isPt ? ' do mercado.' : ' the market.';
-  const heroImageWidth = isPt ? 'w-[87%] md:w-[80%]' : 'w-[90%]';
+  const heroImageWidth = 'w-[90%]';
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
