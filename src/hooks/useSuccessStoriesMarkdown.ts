@@ -25,7 +25,7 @@ export interface SuccessStoryItem {
   metric1: string;
   metric2: string;
   metric3: string;
-  solutions: string[];
+  solutions: SolutionLever[];
   quote: string;
   customerName: string;
   customerTitle: string;
