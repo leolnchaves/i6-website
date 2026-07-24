@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import heroPanoramaPt from '@/assets/hero-decisao-panorama-pt-v8-transparent.png.asset.json';
 import heroMobilePt from '@/assets/hero-decisao-mobile-pt-v6-transparent.png.asset.json';
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
-import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
+import heroVideoEn from '@/assets/hero-decisao-en.mp4.asset.json';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
@@ -36,16 +36,37 @@ const HeroDecisaoV4 = () => {
       {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
         <div className="container mx-auto px-6 h-full flex items-center justify-center">
-          <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
-            <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
-            <img
-              src={isPt ? heroMobilePt.url : heroMobileEn.url}
-              alt=""
+          {isPt ? (
+            <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
+              <source media="(min-width: 768px)" srcSet={heroPanoramaPt.url} />
+              <img
+                src={heroMobilePt.url}
+                alt=""
+                aria-hidden
+                className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+                style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
+              />
+            </picture>
+          ) : (
+            <video
+              src={heroVideoEn.url}
+              poster={heroPanoramaEn.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
               aria-hidden
-              className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-              style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
+              className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] w-auto object-contain select-none pointer-events-none`}
+              style={{
+                clipPath: 'inset(0 0.5% 2.5% 0.5%)',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse at center, black 68%, transparent 100%)',
+                maskImage:
+                  'radial-gradient(ellipse at center, black 68%, transparent 100%)',
+              }}
             />
-          </picture>
+          )}
         </div>
 
       </div>
