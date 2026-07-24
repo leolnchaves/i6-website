@@ -125,7 +125,7 @@ const ALL: SuccessStoryItem[] = Object.entries(modules)
             const [labelRaw, slugRaw] = String(raw).split('|');
             const label = (labelRaw ?? '').trim();
             const slug = (slugRaw ?? '').trim();
-            return slug && isLandingSlug(slug) ? { label, slug } : { label };
+            return slug && isLeverSlug(slug) ? { label, slug } : { label };
           }).filter((x) => x.label)
         : [],
 
