@@ -117,7 +117,15 @@ const ALL: SuccessStoryItem[] = Object.entries(modules)
       metric1: asStr(fm.metric1),
       metric2: asStr(fm.metric2),
       metric3: asStr(fm.metric3),
-      solutions: Array.isArray(fm.solutions) ? (fm.solutions as string[]) : [],
+      solutions: Array.isArray(fm.solutions)
+        ? (fm.solutions as string[]).map((raw) => {
+            const [labelRaw, slugRaw] = String(raw).split('|');
+            const label = (labelRaw ?? '').trim();
+            const slug = (slugRaw ?? '').trim();
+            return slug && isLandingSlug(slug) ? { label, slug } : { label };
+          }).filter((x) => x.label)
+        : [],
+
       quote: asStr(fm.quote),
       customerName: asStr(fm.customer_name),
       customerTitle: asStr(fm.customer_title),
