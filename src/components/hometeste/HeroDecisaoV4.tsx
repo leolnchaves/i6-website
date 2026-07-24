@@ -19,7 +19,7 @@ const HeroDecisaoV4 = () => {
   const ctaBefore = isPt ? 'antes' : 'before';
   const ctaPrefix = isPt ? 'Decida ' : 'Decide ';
   const ctaSuffix = isPt ? ' do mercado.' : ' the market.';
-  const heroImageWidth = isPt ? 'w-[87%] md:w-[80%]' : 'w-[90%]';
+  const heroImageWidth = 'w-[90%]';
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
