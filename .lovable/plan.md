@@ -1,19 +1,9 @@
-# Fundir vídeo com o fundo (EN)
+O halo residual visível é uma "franja" de pixels perto do fundo `#0B1224` que ainda ficaram com alpha parcial. Vou aplicar um chroma-key mais firme + descontaminação de spill, mantendo os traços laranja intactos:
 
-O halo visível é o fundo escuro do vídeo (quase preto) sobre o `#0B1224` do site — tons próximos, mas não idênticos, criando um retângulo perceptível.
+1. Reprocessar as 4 imagens da hero a partir dos PNGs baixados no /tmp/hero (fontes já disponíveis).
+2. Parâmetros: `bg=#0B1224`, `lo=16`, `hi=34` (janela um pouco mais larga e deslocada; corta mais halo sem tocar nos traços laranja, que estão >80 de distância do fundo).
+3. Adicionar spill suppression: onde alpha < 255, remover a contribuição do fundo dos canais RGB (unpremultiply → subtrair projeção sobre BG → clamp). Isso elimina o tom navy que "vaza" nas bordas.
+4. Salvar em resolução original (1400×500 desktop, 700×500 mobile) sem compressão com perdas.
+5. Upload via `lovable-assets` com novos nomes (`-v8-transparent` PT desktop, `-v7-transparent` EN desktop, `-v6-transparent` PT mobile, `-v5-transparent` EN mobile) e atualizar imports em `HeroDecisaoV4.tsx`.
 
-## Solução
-
-Aplicar **`mix-blend-mode: screen`** no `<video>` em `src/components/hometeste/HeroDecisaoV4.tsx`.
-
-Como o vídeo tem fundo escuro com traços claros (laranja, azul, branco), o modo *screen* faz os pixels escuros "desaparecerem" (preto → transparente) enquanto preserva integralmente os traços claros — resultado equivalente a um chroma-key de preto, sem reprocessar o arquivo.
-
-## Ajustes complementares
-
-- Manter a máscara radial atual como fallback suave nas bordas.
-- Definir `bg-transparent` explicitamente no container do vídeo (herda `#0B1224`).
-- Não mexer no PT nem no restante da hero.
-
-## Se `screen` clarear demais os traços
-
-Alternativa: trocar por `mix-blend-mode: lighten` (mais conservador — só substitui pixels mais escuros que o fundo, preservando cor dos traços). Se você notar shift de cor após aplicar screen, ajusto para lighten no follow-up.
+Sem mudanças em layout, tamanho ou clip-path — só troca de assets.
