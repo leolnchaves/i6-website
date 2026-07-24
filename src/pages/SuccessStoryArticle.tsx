@@ -220,7 +220,7 @@ const SuccessStoryArticle = () => {
                 s.slug ? (
                   <Link
                     key={i}
-                    to={localized(`/solutions/${s.slug}`)}
+                    to={localized(`/solutions#territory-${s.slug}`)}
                     className="px-4 py-2 rounded-full bg-[#F4845F]/10 border border-[#F4845F]/30 text-sm text-white/80 hover:bg-[#F4845F]/20 hover:border-[#F4845F]/60 hover:text-white transition-colors"
                   >
                     {s.label}

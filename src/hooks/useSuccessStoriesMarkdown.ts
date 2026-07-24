@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
-import { isLandingSlug } from '@/hooks/useLandings';
+// Whitelist of value-lever slugs that map to sections in /solutions
+// (IDs from src/data/solutionsV2/content.ts territories).
+const LEVER_SLUGS = new Set(['growth', 'planning', 'pricing']);
+const isLeverSlug = (s: string) => LEVER_SLUGS.has(s);
 
 export interface SolutionLever {
   label: string;
@@ -122,7 +125,7 @@ const ALL: SuccessStoryItem[] = Object.entries(modules)
             const [labelRaw, slugRaw] = String(raw).split('|');
             const label = (labelRaw ?? '').trim();
             const slug = (slugRaw ?? '').trim();
-            return slug && isLandingSlug(slug) ? { label, slug } : { label };
+            return slug && isLeverSlug(slug) ? { label, slug } : { label };
           }).filter((x) => x.label)
         : [],
 

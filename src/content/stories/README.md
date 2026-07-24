@@ -35,7 +35,7 @@ solution: "Texto da solução aplicada."            # exibido como "A SOLUÇÃO"
 metric1: "+23% de ticket médio por PDV"   # string única (valor + label)
 metric2: "+36% de conversão de novos SKUs"
 metric3: ""                                # vazio = não exibe
-solutions: ["Inteligência de Recomendação Industrial|behavior-conversion"]
+solutions: ["Precificação Dinâmica|pricing"]
 quote: "Antecipação Comercial Aplicada..."
 customer_name: "Paulo Lima"               # "" se anônimo
 customer_title: "New Channel Manager"     # "" se anônimo
@@ -49,22 +49,34 @@ sort_order: 1                              # ordem na grid
 
 Corpo do MD: opcional. Hoje toda a exibição vem do frontmatter.
 
-## Campo `solutions` — link para landing
+## Campo `solutions` — link para alavanca em `/solutions`
 
 Cada item de `solutions` (renderizado como chip em "ALAVANCAS DE VALOR") pode ser:
 
 - **Texto puro** (chip não clicável): `"Nome da Alavanca"`
-- **Texto + slug de landing** separado por `|`: `"Nome da Alavanca|behavior-conversion"`
+- **Texto + slug da alavanca** separado por `|`: `"Nome da Alavanca|pricing"`
 
-Slugs válidos hoje (landings ativas em `/{lang}/solutions/<slug>`):
+Quando o slug é válido, o chip vira um link que aterrissa na seção detalhada
+da alavanca dentro de `/{lang}/solutions` (âncora `#territory-<slug>`), e não em
+uma landing separada.
 
-- `behavior-conversion`
-- `data-monetization`
-- `demand-supply-efficiency`
-- `predictive-operations`
+Slugs válidos (IDs das 3 Alavancas Preditivas de Valor em `/solutions`):
+
+| Slug       | Alavanca                                          |
+| ---------- | ------------------------------------------------- |
+| `growth`   | Crescimento & Inteligência de Consumidor          |
+| `planning` | Demanda, Distribuição e Planejamento Comercial    |
+| `pricing`  | Precificação e Inteligência de Margem             |
+
+Exemplos:
+
+- `"Descoberta e Personalização|growth"`
+- `"Previsão de Demanda|planning"`
+- `"Precificação Dinâmica|pricing"`
 
 Se o slug for inválido ou ausente, o chip cai automaticamente para texto puro
 (sem link). O rótulo exibido é sempre exatamente o texto antes do `|`.
+
 
 
 ## Loaders
