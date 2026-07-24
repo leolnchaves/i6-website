@@ -65,7 +65,7 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
     if (value.startsWith('[') && value.endsWith(']')) {
       const inner = value.slice(1, -1).trim();
       if (!inner) { data[key] = []; continue; }
-      const items = inner.match(/("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|[^,]+)/g) || [];
+      const items = inner.match(/("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|[^;]+)/g) || [];
       data[key] = items
         .map(it => {
           let s = it.trim();
