@@ -9,6 +9,7 @@ interface StoryCardData {
   slug: string;
   industry: string;
   company_name: string;
+  description?: string;
   challenge: string;
   solution: string;
   metric1_value: string;
