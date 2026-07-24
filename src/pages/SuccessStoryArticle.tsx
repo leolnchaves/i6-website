@@ -215,28 +215,43 @@ const SuccessStoryArticle = () => {
 
         {story.solutions && story.solutions.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-4 font-semibold">{t.appliedSolutions}</h2>
-            <div className="flex flex-wrap gap-2">
-              {story.solutions.map((s, i) =>
-                s.slug ? (
-                  <Link
-                    key={i}
-                    to={localized(`/solutions#territory-${s.slug}`)}
-                    className="px-4 py-2 rounded-full bg-[#F4845F]/10 border border-[#F4845F]/30 text-sm text-white/80 hover:bg-[#F4845F]/20 hover:border-[#F4845F]/60 hover:text-white transition-colors"
-                  >
-                    {s.label}
-                  </Link>
-                ) : (
-                  <span
-                    key={i}
-                    className="px-4 py-2 rounded-full bg-[#F4845F]/10 border border-[#F4845F]/30 text-sm text-white/80"
-                  >
-                    {s.label}
-                  </span>
-                )
-              )}
+            <div className="rounded-xl border border-white/10 bg-white/5 p-6">
+              <h2 className="text-xs uppercase tracking-[0.25em] text-[#F4845F] mb-2 font-semibold">{t.appliedSolutions}</h2>
+              <p className="text-sm text-white/60 mb-5">{t.appliedSolutionsHint}</p>
+              {(() => {
+                const count = story.solutions.length;
+                const gridColsFor = (n: number) => {
+                  if (n === 1) return 'grid-cols-1';
+                  if (n === 2) return 'grid-cols-1 sm:grid-cols-2';
+                  if (n === 4) return 'grid-cols-1 sm:grid-cols-2';
+                  if (n >= 8) return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4';
+                  return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
+                };
+                const chipBase = 'w-full min-h-[44px] px-4 py-2 rounded-full border text-sm flex items-center justify-center text-center transition-colors';
+                return (
+                  <div className={`grid gap-3 ${gridColsFor(count)} ${count === 1 ? 'max-w-sm mx-auto' : ''} justify-items-center`}>
+                    {story.solutions.map((s, i) =>
+                      s.slug ? (
+                        <Link
+                          key={i}
+                          to={localized(`/solutions#territory-${s.slug}`)}
+                          className={`${chipBase} bg-[#F4845F]/10 border-[#F4845F]/30 text-white/80 hover:bg-[#F4845F]/20 hover:border-[#F4845F]/60 hover:text-white`}
+                        >
+                          {s.label}
+                        </Link>
+                      ) : (
+                        <span
+                          key={i}
+                          className={`${chipBase} bg-[#F4845F]/10 border-[#F4845F]/30 text-white/80`}
+                        >
+                          {s.label}
+                        </span>
+                      )
+                    )}
+                  </div>
+                );
+              })()}
             </div>
-
           </section>
         )}
 
