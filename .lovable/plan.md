@@ -1,22 +1,14 @@
 ## Diagnóstico
-Os fundos das imagens não são exatamente `#0B1224` do site (tem gradiente/ruído sutil), então precisam de chroma-key. A versão anterior (v3/v4-transparent) funcionava bem — o problema desta rodada foi o feather largo (lo=18, hi=55) que suavizou demais as bordas dos traços laranja e reduziu a percepção de nitidez.
+A altura da imagem hoje é **limitada pela largura**, não pelo `max-h`. A imagem tem aspecto ~2.8:1 (1400×500) e usa `object-contain`. Com `w-[90%]` em um container ~900px, a largura efetiva (~810px) força uma altura de ~290px — já **abaixo** do `max-h-[45vh]` (~335px em 745px de viewport). Ou seja: mudar `max-h` de 50vh→45vh não teve efeito visível porque o teto já não estava ativo.
 
 ## Solução
-Refazer o chroma-key das duas imagens novas com parâmetros mais conservadores, replicando o comportamento das versões anteriores que o usuário aprovou:
-- Threshold tight: só pixels **muito próximos** do fundo viram transparentes.
-- Feather curto (poucos pixels) para não invadir os traços/glow laranja.
-- Sem redimensionar/reamostrar — resolução original preservada (1400×500).
-
-Parâmetros: distância euclidiana ao fundo `#0B1224`, `lo=8`, `hi=22` (antes: 18/55). Isso mantém o glow laranja e o halo intacto e só apaga o fundo neutro.
+Reduzir a **largura** da imagem para efetivamente reduzir sua altura em ~10% (aspecto travado): `w-[90%]` → `w-[81%]`. Isso corta ~10% em ambas as dimensões, mantendo proporção e nitidez.
 
 ## Passos
-1. Reprocessar `user-uploads://1.png` → `hero-decisao-panorama-en-v5-transparent.png`
-2. Reprocessar `user-uploads://2-2.png` → `hero-decisao-panorama-pt-v6-transparent.png`
-3. Publicar como assets CDN (`lovable-assets create`).
-4. Atualizar os dois imports em `src/components/hometeste/HeroDecisaoV4.tsx`. Manter `clipPath` (protege borda inferior residual), largura `w-[90%]`, container e mobile intactos.
-5. Validar visualmente em `/en` e `/pt` desktop.
+1. Em `src/components/hometeste/HeroDecisaoV4.tsx`, alterar `heroImageWidth = 'w-[90%]'` para `'w-[81%]'`.
+2. Manter `max-h` como está (não é o gargalo).
+3. Mobile intocado.
 
 ## Detalhes técnicos
-- PIL + numpy, sem reamostragem.
-- Mobile permanece inalterado.
-- Sem release/tag.
+- Sem reprocessar assets.
+- Se o usuário quiser mais/menos, ajustamos apenas esse valor.
