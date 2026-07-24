@@ -35,7 +35,7 @@ solution: "Texto da solução aplicada."            # exibido como "A SOLUÇÃO"
 metric1: "+23% de ticket médio por PDV"   # string única (valor + label)
 metric2: "+36% de conversão de novos SKUs"
 metric3: ""                                # vazio = não exibe
-solutions: ["Inteligência de Recomendação Industrial|behavior-conversion"]
+solutions: ["Precificação Dinâmica|pricing"]
 quote: "Antecipação Comercial Aplicada..."
 customer_name: "Paulo Lima"               # "" se anônimo
 customer_title: "New Channel Manager"     # "" se anônimo
