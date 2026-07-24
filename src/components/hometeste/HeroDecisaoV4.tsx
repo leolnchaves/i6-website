@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroPanoramaPt from '@/assets/hero-decisao-panorama-pt-v5-transparent.png.asset.json';
+import heroPanoramaPt from '@/assets/hero-decisao-panorama-pt-v6-transparent.png.asset.json';
 import heroMobilePt from '@/assets/hero-decisao-mobile-pt-v4-transparent.png.asset.json';
-import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v4-transparent.png.asset.json';
+import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v5-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v3-transparent.png.asset.json';
 
 const HeroDecisaoV4 = () => {
