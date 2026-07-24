@@ -1,21 +1,19 @@
-## Ajustes finais das imagens da Hero
+Plano para corrigir a imagem PT maior que ENG:
 
-Dois problemas a resolver, mantendo total resolução das imagens:
+1. Medir as imagens atuais
+   - Comparar PT e ENG em desktop/tablet e mobile.
+   - Verificar dimensões naturais, proporção e área visível real do PNG transparente.
 
-### 1. Fundo visível dos PNGs (todos os idiomas + mobile)
-As 4 novas imagens (PT desktop, PT mobile, EN desktop, EN mobile) têm um dark navy ligeiramente diferente do `#0B1224` do site, então aparece um retângulo de fundo em volta.
+2. Corrigir a causa sem deformar
+   - Manter o mesmo container, posicionamento, `object-contain`, `clip-path` e limites de altura já aprovados na versão ENG.
+   - Ajustar apenas os assets PT para que tenham a mesma escala visual da ENG, preservando resolução e transparência.
+   - Se o problema for margem/canvas diferente, reprocessar o PNG PT para casar a área visível com a ENG em vez de reduzir via CSS global.
 
-**Correção**: reprocessar os 4 PNGs em Python (mesma técnica usada nas versões anteriores) — chroma-key nos pixels de fundo escuro (tolerância baixa) → alpha 0, preservando os traços laranja e brancos em resolução original. Fazer upload das versões `-transparent` via `lovable-assets` e trocar os 4 imports em `HeroDecisaoV4.tsx`.
+3. Atualizar referências
+   - Substituir somente os assets PT usados por `HeroDecisaoV4.tsx`.
+   - Não alterar a imagem ENG nem o layout geral da hero.
 
-### 2. Imagem PT desktop maior que EN
-A imagem PT (Anexo 1 anterior) tem proporção mais larga, então ocupa mais altura no container `max-h-[50vh] md:max-h-[48vh]` do que a EN.
-
-**Correção**: aplicar `max-h` ligeiramente menor apenas para a variante PT desktop (via classe condicional por idioma), para bater com o tamanho visual da EN. Não mexer em EN nem em mobile.
-
-### Arquivos afetados
-- `src/components/hometeste/HeroDecisaoV4.tsx` — imports novos + classe condicional PT/EN no `<picture>`.
-- 4 novos `.asset.json` em `src/assets/`.
-
-### Não muda
-- Container `w-[90%]`, `container mx-auto px-6`, alinhamento, `clip-path`, título e CTA.
-- Imagens em resolução nativa (só canal alpha adicionado, sem resize).
+4. Validar visualmente
+   - Conferir `/pt` e `/en` em desktop/tablet.
+   - Conferir PT e ENG no mobile.
+   - Garantir que o fundo continue integrado, sem faixa aparente, e que o CTA não volte para baixo da dobra.
