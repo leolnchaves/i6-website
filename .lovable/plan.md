@@ -1,8 +1,9 @@
-Reprocessar as 4 imagens da hero (PT/EN desktop + mobile) com o mesmo chroma-key apertado que ficou perfeito da última vez (`bg=#0B1224`, `lo=8`, `hi=22`), preservando resolução original.
+O halo residual visível é uma "franja" de pixels perto do fundo `#0B1224` que ainda ficaram com alpha parcial. Vou aplicar um chroma-key mais firme + descontaminação de spill, mantendo os traços laranja intactos:
 
-Passos:
-1. Baixar os PNGs atuais via URL do `.asset.json` de cada uma das 4 imagens.
-2. Rodar script Python (PIL/numpy) com distância ao fundo `#0B1224` e limiar `lo=8` / `hi=22` — sem feathering agressivo — gerando novos PNGs transparentes na mesma resolução.
-3. Fazer upload via `lovable-assets` com novos nomes versionados (`-v7-transparent` para PT desktop, `-v6-transparent` para EN desktop, `-v5-transparent` mobile PT, `-v4-transparent` mobile EN).
-4. Atualizar os 4 imports em `src/components/hometeste/HeroDecisaoV4.tsx`.
-5. Não mexer em tamanhos, posicionamento ou clip-path — apenas trocar os assets.
+1. Reprocessar as 4 imagens da hero a partir dos PNGs baixados no /tmp/hero (fontes já disponíveis).
+2. Parâmetros: `bg=#0B1224`, `lo=16`, `hi=34` (janela um pouco mais larga e deslocada; corta mais halo sem tocar nos traços laranja, que estão >80 de distância do fundo).
+3. Adicionar spill suppression: onde alpha < 255, remover a contribuição do fundo dos canais RGB (unpremultiply → subtrair projeção sobre BG → clamp). Isso elimina o tom navy que "vaza" nas bordas.
+4. Salvar em resolução original (1400×500 desktop, 700×500 mobile) sem compressão com perdas.
+5. Upload via `lovable-assets` com novos nomes (`-v8-transparent` PT desktop, `-v7-transparent` EN desktop, `-v6-transparent` PT mobile, `-v5-transparent` EN mobile) e atualizar imports em `HeroDecisaoV4.tsx`.
+
+Sem mudanças em layout, tamanho ou clip-path — só troca de assets.
