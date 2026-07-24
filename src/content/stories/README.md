@@ -56,6 +56,9 @@ Cada item de `solutions` (renderizado como chip em "ALAVANCAS DE VALOR") pode se
 - **Texto puro** (chip não clicável): `"Nome da Alavanca"`
 - **Texto + slug da alavanca** separado por `|`: `"Nome da Alavanca|pricing"`
 
+> **Separador de itens do array: `;` (ponto-e-vírgula)**, não vírgula.
+> Isso permite usar vírgulas dentro do rótulo (ex.: `"Descoberta, Recomendação e Personalização|growth"`).
+
 Quando o slug é válido, o chip vira um link que aterrissa na seção detalhada
 da alavanca dentro de `/{lang}/solutions` (âncora `#territory-<slug>`), e não em
 uma landing separada.
@@ -70,9 +73,11 @@ Slugs válidos (IDs das 3 Alavancas Preditivas de Valor em `/solutions`):
 
 Exemplos:
 
-- `"Descoberta e Personalização|growth"`
-- `"Previsão de Demanda|planning"`
-- `"Precificação Dinâmica|pricing"`
+```yaml
+solutions: ["Descoberta e Personalização|growth"]
+solutions: ["Previsão de Demanda|planning"; "Precificação Dinâmica|pricing"]
+solutions: ["Crescimento, Personalização e Recomendação|growth"; "Precificação Dinâmica|pricing"]
+```
 
 Se o slug for inválido ou ausente, o chip cai automaticamente para texto puro
 (sem link). O rótulo exibido é sempre exatamente o texto antes do `|`.
