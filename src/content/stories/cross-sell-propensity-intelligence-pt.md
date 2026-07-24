@@ -11,7 +11,7 @@ solution: "Aplicamos modelagem de propensão por cliente, produto e canal, conso
 metric1: "+12x de aumento de conversão nas campanhas"
 metric2: "57% de redução nos custos de mensageria (CRM)"
 metric3: ""
-solutions: ["Segmentação Preditiva de Campanha", "Personalização Preditiva para Usuários Identificados"]
+solutions: ["Segmentação Preditiva de Campanha"; "Personalização Preditiva para Usuários Identificados"]
 quote: "Propensão Preditiva Aplicada à Ativação Multicanal"
 customer_name: ""
 customer_title: ""

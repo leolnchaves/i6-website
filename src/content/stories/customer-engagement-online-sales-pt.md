@@ -11,7 +11,7 @@ solution: "Transformamos sinais de navegação e interação em intenção predi
 metric1: "+2,6% vendas que o look tradicional (com apenas 5% do tráfego)"
 metric2: "40% de toda a receita adicional gerada vieram dos modelos"
 metric3: ""
-solutions: ["Descoberta Inteligente para Visitantes Anônimos", "Personalização Preditiva para Usuários Identificados"]
+solutions: ["Descoberta Inteligente para Visitantes Anônimos"; "Personalização Preditiva para Usuários Identificados"]
 quote: "Curadoria Escalável Orientada por Intenção e Margem"
 customer_name: ""
 customer_title: ""

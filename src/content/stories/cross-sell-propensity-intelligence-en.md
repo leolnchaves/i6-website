@@ -11,7 +11,7 @@ solution: "We applied predictive propensity modeling across customers, products 
 metric1: "12x Increase In Campaign Conversion"
 metric2: "57% Reduction In CRM Messaging Costs"
 metric3: ""
-solutions: ["Predictive Campaign Targeting", "Predictive Personalization For Identified Users"]
+solutions: ["Predictive Campaign Targeting"; "Predictive Personalization For Identified Users"]
 quote: "Predictive Propensity Applied To Multichannel Activation"
 customer_name: ""
 customer_title: ""
