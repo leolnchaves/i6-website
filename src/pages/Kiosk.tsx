@@ -81,6 +81,7 @@ const Kiosk = () => {
 
   const handleStart = () => {
     trackEvent(TRACKER_EVENTS.KIOSK_SESSION_STARTED, { language: lang });
+    trackKioskEvent('kiosk:start');
     setStage('quiz');
     setRoute(null);
     setRecommendedIds(null);
@@ -98,6 +99,7 @@ const Kiosk = () => {
         option_id: optionId,
         route: opt.route,
       });
+      trackKioskEvent(`q1:${optionId}`);
       setRoute(opt.route);
       return;
     }
@@ -111,11 +113,13 @@ const Kiosk = () => {
       option_id: optionId,
       route,
     });
+    trackKioskEvent(`q2:${optionId}`);
     trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_COMPLETED, {
       language: lang,
       route,
       solutions: opt.solutionIds.join(','),
     });
+    opt.solutionIds.forEach((sid) => trackKioskEvent(`results:${sid}`));
     setRecommendedIds(opt.solutionIds);
     setStage('results');
   };
@@ -129,9 +133,7 @@ const Kiosk = () => {
     });
   };
 
-  const ebookTitle = selectedSolution
-    ? solutionEbook[selectedSolution.id]?.[lang] ?? selectedSolution.title
-    : '';
+  const ebookTitle = route ? territoryEbook[route][lang] : '';
 
   const currentQuestion =
     route === null ? kContent.routing : kContent.branches[route];
