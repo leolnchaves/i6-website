@@ -283,8 +283,46 @@ const KioskMetrics = () => {
                 </option>
               ))}
             </select>
+            <button
+              onClick={() => setResetOpen(true)}
+              className="border border-red-500/40 text-red-300 hover:bg-red-500/10 rounded-lg px-3 py-2 text-sm transition-colors"
+            >
+              Zerar métricas
+            </button>
           </div>
         </header>
+
+        <AlertDialog open={resetOpen} onOpenChange={(o) => { setResetOpen(o); if (!o) setResetConfirm(''); }}>
+          <AlertDialogContent className="bg-[#0B1224] border-white/10 text-white">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Zerar todas as métricas?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white/70">
+                Esta ação apaga <strong>todos</strong> os eventos registrados e não pode ser desfeita.
+                Digite <strong>ZERAR</strong> abaixo para confirmar.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <Input
+              value={resetConfirm}
+              onChange={(e) => setResetConfirm(e.target.value)}
+              placeholder="ZERAR"
+              className="bg-white/5 border-white/10 text-white"
+              autoFocus
+            />
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-transparent border-white/20 text-white hover:bg-white/5">
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction
+                disabled={resetConfirm !== 'ZERAR' || resetting}
+                onClick={handleReset}
+                className="bg-red-500 hover:bg-red-600 text-white disabled:opacity-40"
+              >
+                {resetting ? 'Zerando…' : 'Confirmar zeragem'}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
