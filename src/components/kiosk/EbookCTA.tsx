@@ -64,7 +64,7 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
         formData.append('email', data.email);
         formData.append('company', ebookTitle);
         formData.append('message', message);
-        formData.append('subscription', `i6-kiosk:${solutionId}`);
+        formData.append('subscription', 'i6-website');
         formData.append('token', SHARED_FORM_TOKEN);
         Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
 
@@ -74,6 +74,7 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
           solution_id: solutionId,
           language: lang,
         });
+        if (route) trackKioskEvent(`ebook:${route}`);
 
         setSubmitted(true);
       } catch (e) {
@@ -82,7 +83,7 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
         setSubmitting(false);
       }
     },
-    [ebookTitle, lang, solutionId, solutionTitle],
+    [ebookTitle, lang, route, solutionId, solutionTitle],
   );
 
   return (
