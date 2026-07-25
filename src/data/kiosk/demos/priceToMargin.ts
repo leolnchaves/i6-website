@@ -174,7 +174,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 4.2,
     deltaMarginPct: 1.5,
     deltaConversionPct: 9.4,
-    insight: 'Returning customers (61% of volume) show low price sensitivity and fast checkout (< 90s). Conversion elasticity of just −0.3 supports a small raise. New buyers still convert because the cluster benchmark is the category, not this SKU.',
+    insight: 'Returning buyers (61% of volume) show low price sensitivity and <90s checkout. Elasticity of −0.3 supports the raise without losing new buyers.',
   },
   {
     id: 'sku-4',
