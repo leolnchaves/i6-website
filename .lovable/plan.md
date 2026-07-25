@@ -1,99 +1,57 @@
-## Hardening `kiosk_events` — sem DELETE + whitelist + rate-limit no banco
 
-Tudo continua 100% estático. As três defesas ficam no Postgres.
+## Objetivo
 
-### 1) Revogar DELETE do cliente
+1. Mover a demo interativa (e-commerce simulado + "Como o modelo está pensando") da solução **Preço Orientado à Margem** para **Preço Orientado à Conversão**, com o pipeline do modelo refletindo **comportamento do cliente**.
+2. No totem (`/kiosk`), forçar os dois quadros (Cenário e Raciocínio) a ficarem **lado a lado** e com **a mesma altura**, mesmo quando o painel "Por que este preço" aparece.
 
-```sql
-DROP POLICY IF EXISTS "Anyone can delete kiosk events" ON public.kiosk_events;
-REVOKE DELETE ON public.kiosk_events FROM anon, authenticated;
-```
+## Escopo das mudanças
 
-Reset passa a ser feito por você direto no backend do Lovable Cloud.
+### 1. Trocar solução alvo da demo interativa
 
-### 2) Whitelist de `event_key` (CHECK constraint)
+**`src/components/kiosk/SolutionDemoBlock.tsx`**
+- Alterar a condição `solution.id === 'price-to-margin'` para `solution.id === 'price-to-conversion'`, para que a demo interativa apareça apenas na solução de Conversão. A solução `price-to-margin` volta a usar o card estático padrão.
 
-```sql
-ALTER TABLE public.kiosk_events
-  ADD CONSTRAINT kiosk_events_event_key_format
-  CHECK (
-    length(event_key) BETWEEN 1 AND 80
-    AND event_key ~ '^(kiosk:start|q1:[a-z0-9\-]{1,40}|q2:[a-z0-9\-]{1,40}|results:[a-z0-9\-]{1,40}|ebook:(growth|planning|pricing)|signal:[a-z0-9\-]{1,40})$'
-  );
-```
+### 2. Reescrever o pipeline "Como o modelo está pensando" com foco em comportamento do cliente
 
-Bloqueia qualquer chave fora do padrão que hoje já emitimos.
+**`src/data/kiosk/demos/priceToMargin.ts`** (mantém o nome do arquivo por enquanto para minimizar churn; conteúdo passa a ser orientado a conversão)
+- `scenarioTitle` / `scenarioSubtitle`: ajustar para "Precificação orientada a conversão" (PT) / "Conversion-driven pricing" (EN).
+- `objectiveLabel`: PT "Objetivo: conversão" · EN "Objective: conversion".
+- `reasoningSubtitle`: manter `i6ElasticPrice` como engine.
+- Substituir os 5 steps do `pipeline` (PT/EN) por passos ancorados em **sinais comportamentais do cliente**:
+  1. Lendo sessões, cliques e carrinhos abandonados do SKU
+  2. Segmentando clusters de intenção e sensibilidade a preço
+  3. Simulando resposta de conversão em 10.000 cenários de preço
+  4. Otimizando para maximizar conversão (com piso de margem)
+  5. Recomendando preço ideal para converter
+- `productLabels`: renomear/duplicar `deltaMargin` para incluir também `deltaConversion` (Δ Conversão / Δ Conversion). O painel conclusivo passará a exibir Δ Conversão em vez de Δ Margem como métrica principal (Δ Margem some, já que o objetivo agora é conversão).
+- Em cada `DemoProduct`, adicionar `deltaConversionPct` (números "quebrados", ex.: 18.3, 11.7, 9.4, 22.1) e reescrever o `insight` para justificar o preço pela **elasticidade de conversão** e comportamento observado (recência, cliques em concorrentes, abandono de carrinho, ciclo de recompra), não por margem.
+- `recommendedPrice` de cada SKU passa a ser **menor ou igual** ao `currentPrice` em pelo menos 2 dos 4 SKUs, coerente com "orientado à conversão" (aceita ceder ticket para ganhar volume/conversão). Os outros 2 podem manter leve headroom onde o comportamento comporta.
 
-### 3) Rate-limit via trigger BEFORE INSERT
+### 3. Layout do totem: quadros lado a lado com mesma altura
 
-Duas camadas, cada uma calibrada acima do uso legítimo (uma sessão real gera ~8-15 eventos em 1-2 min; múltiplos kiosks em paralelo somam pouco).
+**`src/components/kiosk/demos/PriceToMarginDemo.tsx`**
+- Trocar o grid externo de `grid-cols-1 lg:grid-cols-2` por `grid-cols-2` (o kiosk é sempre wide) e adicionar `items-stretch` para que ambos os quadros esticarem à altura do mais alto.
+- Adicionar `h-full` nas duas colunas (`<div>` LEFT e RIGHT) para ocuparem toda a altura da linha.
+- Reduzir a densidade visual do painel direito para caber junto com o painel conclusivo sem exceder a altura do painel esquerdo:
+  - `pipeline` cards: reduzir `p-[1.8vmin]` → `p-[1.2vmin]`, `mb-[0.8vmin]` → `mb-[0.5vmin]`, gap entre steps `gap-[1.4vmin]` → `gap-[0.9vmin]`.
+  - Fontes: label `text-[1.8vmin]` → `text-[1.6vmin]`; microMetric `text-[1.4vmin]` → `text-[1.25vmin]`.
+  - Ícone/numero do step: `w-/h-[2.8vmin]` → `[2.2vmin]`.
+  - Header do painel: reduzir ícone e margens (`mb-[2vmin]` → `mb-[1.2vmin]`).
+- Painel conclusivo ("Por que este preço"): reduzir paddings (`p-[2vmin]` → `p-[1.5vmin]`), gap do grid de métricas (`gap-[1.5vmin]` → `gap-[1vmin]`), e o card do insight (`p-[2.2vmin]` → `p-[1.6vmin]`, `text-[1.9vmin]` → `text-[1.6vmin]`).
+- Garantir que a coluna esquerda (catálogo → zoom) também estica: envolver conteúdo interno com `flex-1` já existente; verificar que o zoom-view use `flex-1` para preencher altura quando o painel direito ficar maior.
 
-**Limite global (anti-flood absoluto):**
-- Máx **60 inserts em 10 segundos** na tabela inteira.
-- Um bot spamando ~6 rps já é barrado; um kiosk humano nem chega perto.
+### 4. Localização
 
-**Limite por chave (anti-inflação dirigida):**
-- Máx **20 inserts do mesmo `event_key` em 10 segundos**.
-- Impede alguém inflar artificialmente uma solução/eBook específico batendo repetidamente.
+- Textos novos (pipeline, labels, insights) atualizados em PT e EN dentro do mesmo arquivo `priceToMargin.ts`.
+- Não há mudanças em `config.ts` do kiosk — o roteamento Q2 já mapeia para `price-to-conversion` quando a resposta é "Conversão", então a demo interativa aparecerá naturalmente nesse fluxo.
 
-```sql
-CREATE OR REPLACE FUNCTION public.kiosk_events_rate_limit()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-SECURITY DEFINER
-SET search_path = public
-AS $$
-DECLARE
-  global_count int;
-  key_count int;
-BEGIN
-  SELECT count(*) INTO global_count
-  FROM public.kiosk_events
-  WHERE created_at > now() - interval '10 seconds';
+## Fora do escopo
 
-  IF global_count >= 60 THEN
-    RAISE EXCEPTION 'kiosk_events: global rate limit exceeded'
-      USING ERRCODE = 'check_violation';
-  END IF;
+- Não renomear o arquivo `priceToMargin.ts` nem o componente `PriceToMarginDemo` (evita churn de imports; conteúdo passa a servir conversão).
+- Não mexer no CTA de eBook, no Signal Intelliboard, nem no dashboard de métricas.
+- Não alterar a solução `price-to-margin` além de remover a demo interativa dela (volta ao card estático padrão).
 
-  SELECT count(*) INTO key_count
-  FROM public.kiosk_events
-  WHERE event_key = NEW.event_key
-    AND created_at > now() - interval '10 seconds';
+## Validação
 
-  IF key_count >= 20 THEN
-    RAISE EXCEPTION 'kiosk_events: per-key rate limit exceeded'
-      USING ERRCODE = 'check_violation';
-  END IF;
-
-  RETURN NEW;
-END;
-$$;
-
-CREATE TRIGGER kiosk_events_rate_limit_trg
-BEFORE INSERT ON public.kiosk_events
-FOR EACH ROW EXECUTE FUNCTION public.kiosk_events_rate_limit();
-
-CREATE INDEX IF NOT EXISTS idx_kiosk_events_created_at ON public.kiosk_events (created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_kiosk_events_key_created ON public.kiosk_events (event_key, created_at DESC);
-```
-
-Trade-offs conscientes:
-- Não é atômico contra concorrência extrema (dois inserts no mesmo ms podem contar o mesmo total). Isso é aceitável — o objetivo é conter abuso volumétrico, não milissegundos.
-- Um atacante muito paciente ainda pode inserir <60 eventos/10s por horas. Sem servidor, esse é o teto — mas com o CHECK anterior tudo que ele conseguir gravar continua sendo chave válida (não afeta integridade nem gera ruído gigante).
-- Os índices criados também aceleram o dashboard.
-
-### 4) Frontend — `src/pages/KioskMetrics.tsx`
-
-Remover tudo relacionado ao delete:
-- Imports: `AlertDialog*`, `Input`, `toast`.
-- States: `resetOpen`, `resetConfirm`, `resetting`.
-- Função `handleReset`.
-- Botão "Zerar métricas" e o bloco `<AlertDialog>` inteiro.
-
-`kioskTracker.ts` e call-sites não mudam — as chaves já casam com o whitelist e o volume real fica muito abaixo dos limites.
-
-### Arquivos afetados
-
-- **Migração única** com passos 1, 2 e 3.
-- `src/pages/KioskMetrics.tsx` — remoção do UI de reset.
+- Rodar o quiz no kiosk: rota Pricing → "Conversão" deve mostrar a demo interativa; rota Pricing → "Margem" deve mostrar apenas o card estático.
+- Screenshot do totem confirmando ambos os quadros lado a lado, mesma altura, antes e depois do painel conclusivo aparecer.
