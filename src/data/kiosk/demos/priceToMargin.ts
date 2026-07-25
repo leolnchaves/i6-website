@@ -123,7 +123,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 13.6,
     deltaMarginPct: -5.7,
     deltaConversionPct: 22.1,
-    insight: 'Pico sazonal com buscas +38% e comparação intensa: 3,2 abas paralelas em média por sessão. Abandono de carrinho salta para 71% acima de R$ 52. Reduzir o ticket agora captura o comprador indeciso na janela de decisão de 48h, quando a concorrência ainda não reagiu.',
+    insight: 'Buscas +38% e 3,2 abas por sessão indicam comprador indeciso. Reduzir o ticket agora captura a conversão na janela de 48h, antes da concorrência reagir.',
   },
 ];
 
