@@ -386,6 +386,23 @@ const PriceToMarginDemo = ({ lang }: Props) => {
         .kiosk-insight-sparkle {
           animation: kiosk-insight-sparkle 1.8s ease-in-out infinite;
         }
+        @keyframes kiosk-connector-flow {
+          from { stroke-dashoffset: 24; }
+          to   { stroke-dashoffset: 0; }
+        }
+        @keyframes kiosk-connector-in {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        .kiosk-connector-path {
+          animation:
+            kiosk-connector-in .5s ease-out both,
+            kiosk-connector-flow 1.2s linear infinite;
+        }
+        .kiosk-connector-dot {
+          animation: kiosk-connector-in .5s ease-out both;
+          filter: drop-shadow(0 0 6px rgba(244,132,95,0.9));
+        }
       `}</style>
     </div>
   );
