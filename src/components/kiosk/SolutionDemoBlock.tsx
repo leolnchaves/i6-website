@@ -10,8 +10,8 @@ interface Props {
 }
 
 const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
-  // Interactive pilot demo for Price-to-Margin
-  if (solution.id === 'price-to-margin') {
+  // Interactive pilot demo for Price-to-Conversion
+  if (solution.id === 'price-to-conversion') {
     return <PriceToMarginDemo lang={lang} />;
   }
 
