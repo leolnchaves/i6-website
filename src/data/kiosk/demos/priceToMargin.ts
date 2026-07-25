@@ -91,7 +91,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 6.1,
     deltaMarginPct: -3.2,
     deltaConversionPct: 11.7,
-    insight: 'Primeira compra do ciclo de assinatura concentra 71% do drop-off. Comportamento observado: 3+ visitas antes de converter, cliques em concorrentes crescendo 24% no mês. O ajuste destrava a entrada no funil recorrente, onde o LTV compensa o giveback de ticket já no 2º pedido.',
+    insight: '71% do drop-off está na 1ª compra da assinatura, com 3+ visitas antes de converter. O ajuste destrava o funil recorrente — LTV compensa já no 2º pedido.',
   },
   {
     id: 'sku-3',
