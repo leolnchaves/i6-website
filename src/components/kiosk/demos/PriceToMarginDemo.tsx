@@ -53,9 +53,9 @@ const PriceToMarginDemo = ({ lang }: Props) => {
 
   return (
     <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[3vmin] items-start">
+      <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
         {/* LEFT — scenario */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col">
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
           {/* Fake browser bar */}
           <div className="flex items-center gap-[1vmin] px-[2vmin] py-[1.5vmin] bg-white/[0.04] border-b border-white/10">
             <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ff5f56]" />
