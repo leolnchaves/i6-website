@@ -142,7 +142,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 8.3,
     deltaMarginPct: -5.7,
     deltaConversionPct: 18.3,
-    insight: 'Repeat PDP sessions with cart-abandon above 62% show hesitation at the current ticket. The dominant behavioral cluster (weekend browsers) reacts strongly to small cuts: conversion elasticity of −1.8. The new price unlocks latent conversion without cannibalizing the premium cluster.',
+    insight: 'Cart abandonment >62% and repeat sessions signal hesitation. A small cut unlocks weekend-cluster conversion without cannibalizing premium.',
   },
   {
     id: 'sku-2',
