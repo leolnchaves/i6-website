@@ -107,7 +107,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 4.2,
     deltaMarginPct: 1.5,
     deltaConversionPct: 9.4,
-    insight: 'Clientes recorrentes (61% do volume) mostram baixa sensibilidade a preço e alta velocidade de checkout (< 90s). Elasticidade de conversão de apenas −0,3 abre espaço para pequeno reajuste. Novos compradores continuam convertendo porque o benchmark comportamental do cluster é a categoria, não o SKU.',
+    insight: 'Recorrentes (61% do volume) têm baixa sensibilidade a preço e checkout <90s. Elasticidade de −0,3 sustenta o reajuste sem afastar novos compradores.',
   },
   {
     id: 'sku-4',
