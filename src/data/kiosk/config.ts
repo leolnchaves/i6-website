@@ -2,13 +2,16 @@ import type { TerritoryId } from '@/data/solutionsV2/content';
 
 export type KioskLang = 'pt' | 'en';
 
-export type PricingBucket = 'margin' | 'turnover' | 'conversion';
+export type RouteId = 'growth' | 'planning' | 'pricing';
 
 export interface QuizOption {
   id: string;
   label: string;
-  /** Peso somado a cada bucket de pricing. Ausência = 0. */
-  weights: Partial<Record<PricingBucket, number>>;
+  helper?: string;
+  /** Q1: rota para escolher a Q2. */
+  route?: RouteId;
+  /** Q2: soluções recomendadas (1 ou mais). */
+  solutionIds?: string[];
 }
 
 export interface QuizQuestion {
@@ -26,10 +29,10 @@ export interface QuizContent {
     subtitle: string;
     startCta: string;
   };
-  /** As três perguntas base (Q1..Q3). */
-  questions: QuizQuestion[];
-  /** Q4 — só exibida em caso de empate entre os dois maiores buckets. */
-  tiebreaker: QuizQuestion;
+  /** Q1 — roteamento por território. */
+  routing: QuizQuestion;
+  /** Q2 — uma por rota. */
+  branches: Record<RouteId, QuizQuestion>;
   progressLabel: string; // ex.: "Passo {current} de {total}"
   continueCta: string;
   results: {
@@ -75,106 +78,133 @@ export interface QuizContent {
   };
 }
 
-/** Bucket vencedor → solutionId correspondente. */
-export const bucketToSolutionId: Record<PricingBucket, string> = {
-  margin: 'price-to-margin',
-  turnover: 'price-to-turnover',
-  conversion: 'price-to-conversion',
-};
-
-/** IDs das 3 soluções de pricing (usadas no fallback de empate). */
-export const PRICING_SOLUTION_IDS = [
-  'price-to-margin',
-  'price-to-turnover',
-  'price-to-conversion',
-] as const;
-
-// Territory kept exported for legacy imports elsewhere (unused here now).
+// Territory kept exported for legacy imports elsewhere.
 export type { TerritoryId };
 
 export const kioskContent: Record<KioskLang, QuizContent> = {
   pt: {
     intro: {
       eyebrow: 'infinity6 · Experiência Interativa',
-      title: 'Descubra em 30 segundos qual estratégia de preço faz mais sentido para o seu negócio.',
+      title: 'Descubra em 30 segundos qual solução da infinity6 faz mais sentido para o seu negócio.',
       subtitle:
-        'Responda três perguntas rápidas e veja qual das soluções de pricing preditivo da infinity6 se encaixa no seu contexto.',
+        'Responda duas perguntas rápidas e veja qual solução preditiva se encaixa no seu contexto.',
       startCta: 'Começar',
     },
-    questions: [
-      {
-        id: 'q1-roteamento',
-        eyebrow: 'Pergunta 1',
-        text: 'Com que frequência o seu preço precisa mudar para acompanhar o mercado?',
-        helper: 'Escolha a opção que mais se aproxima da sua realidade.',
-        options: [
-          { id: 'q1-mensal', label: 'Uma vez por mês, ou por semana', weights: { margin: 2 } },
-          {
-            id: 'q1-encalhe',
-            label: 'Toda semana, e muda de novo quando o produto encalha',
-            weights: { turnover: 2 },
-          },
-          { id: 'q1-sessao', label: 'A cada visita do cliente ao site', weights: { conversion: 2 } },
-          { id: 'q1-fixo', label: 'Nunca mudou. É tabela fixa', weights: {} },
-        ],
-      },
-      {
-        id: 'q2-granularidade',
-        eyebrow: 'Pergunta 2',
-        text: 'Qual é a menor unidade em que o preço é decidido hoje?',
-        helper: 'Nível em que o preço realmente varia na sua operação.',
-        options: [
-          { id: 'q2-sku', label: 'O SKU. Mesmo preço em todo canal', weights: { margin: 2 } },
-          { id: 'q2-sku-loja', label: 'O SKU em cada loja ou região', weights: { turnover: 2 } },
-          {
-            id: 'q2-cliente',
-            label: 'O produto, para cada cliente que entra',
-            weights: { conversion: 2 },
-          },
-        ],
-      },
-      {
-        id: 'q3-dor',
-        eyebrow: 'Pergunta 3',
-        text: 'O que mais te incomoda no preço atual?',
-        helper: 'A dor que você mais gostaria de resolver primeiro.',
-        options: [
-          {
-            id: 'q3-margem',
-            label: 'Margem que ficou na mesa em SKUs que aguentavam mais',
-            weights: { margin: 2 },
-          },
-          {
-            id: 'q3-estoque',
-            label: 'Estoque parado e desconto dado no momento errado',
-            weights: { turnover: 2 },
-          },
-          {
-            id: 'q3-conversao',
-            label: 'Visita que entrou, olhou e não converteu',
-            weights: { conversion: 2 },
-          },
-        ],
-      },
-    ],
-    tiebreaker: {
-      id: 'q4-desempate',
-      eyebrow: 'Última pergunta',
-      text: 'O produto tem prazo para sair (coleção, validade, temporada)?',
-      helper: 'Ajuda a definir a estratégia final.',
+    routing: {
+      id: 'q1-route',
+      eyebrow: 'Pergunta 1',
+      text: 'Qual resultado você precisa priorizar agora?',
+      helper: 'Escolha a frente mais relevante para o seu momento.',
       options: [
-        { id: 'q4-sim', label: 'Sim', weights: { turnover: 1 } },
-        { id: 'q4-nao', label: 'Não, o giro é estável', weights: { margin: 1 } },
-        { id: 'q4-sessao', label: 'O prazo é a própria sessão', weights: { conversion: 1 } },
+        {
+          id: 'r-growth',
+          label: 'Aumentar conversão e receita',
+          helper:
+            'Vender mais por cliente, visitante ou canal, com ofertas e abordagens mais relevantes.',
+          route: 'growth',
+        },
+        {
+          id: 'r-planning',
+          label: 'Planejar demanda e operação com mais precisão',
+          helper:
+            'Melhorar previsões, metas, mix e pedidos para reduzir ruptura, excesso e desperdício.',
+          route: 'planning',
+        },
+        {
+          id: 'r-pricing',
+          label: 'Tomar melhores decisões de preço',
+          helper:
+            'Proteger margem, acelerar o giro ou aumentar a conversão por meio do preço.',
+          route: 'pricing',
+        },
       ],
+    },
+    branches: {
+      growth: {
+        id: 'q2-growth',
+        eyebrow: 'Pergunta 2',
+        text: 'Onde está a maior oportunidade de crescimento?',
+        options: [
+          {
+            id: 'g-personalization',
+            label: 'Melhorar o que cada cliente ou visitante encontra e recebe',
+            helper:
+              'Quero recomendar a melhor oferta, produto ou próxima ação para cada pessoa, inclusive visitantes ainda não identificados.',
+            solutionIds: ['predictive-personalization', 'smart-discovery'],
+          },
+          {
+            id: 'g-campaign',
+            label: 'Identificar quem deve ser abordado em cada campanha',
+            helper:
+              'Quero priorizar os clientes com maior potencial de resposta, definir audiências e tornar campanhas e ações comerciais mais eficientes.',
+            solutionIds: ['predictive-campaign-targeting'],
+          },
+        ],
+      },
+      planning: {
+        id: 'q2-planning',
+        eyebrow: 'Pergunta 2',
+        text: 'Qual decisão precisa de mais precisão?',
+        options: [
+          {
+            id: 'p-forecast',
+            label: 'Antecipar quanto será demandado, onde e quando',
+            helper:
+              'Quero prever a demanda por SKU, loja, PDV, canal, região ou cliente.',
+            solutionIds: ['demand-forecasting'],
+          },
+          {
+            id: 'p-goals',
+            label: 'Definir metas de acordo com o potencial real de mercado',
+            helper:
+              'Quero estabelecer metas mais precisas por território, carteira, canal, produto, vendedor ou PDV.',
+            solutionIds: ['predictive-commercial-targets'],
+          },
+          {
+            id: 'p-mix',
+            label: 'Definir o melhor mix, volume ou pedido',
+            helper:
+              'Quero recomendar quais produtos oferecer, em qual quantidade e para cada loja, PDV ou cliente.',
+            solutionIds: ['mix-assortment-order'],
+          },
+        ],
+      },
+      pricing: {
+        id: 'q2-pricing',
+        eyebrow: 'Pergunta 2',
+        text: 'O que sua decisão de preço precisa otimizar prioritariamente?',
+        options: [
+          {
+            id: 'pr-margin',
+            label: 'Capturar mais margem',
+            helper:
+              'Quero encontrar o melhor preço por SKU, considerando elasticidade, estoque, concorrência e demanda.',
+            solutionIds: ['price-to-margin'],
+          },
+          {
+            id: 'pr-turnover',
+            label: 'Acelerar o giro de estoque',
+            helper:
+              'Quero otimizar markdowns e promoções para vender estoques parados ou envelhecidos, preservando a maior margem possível.',
+            solutionIds: ['price-to-turnover'],
+          },
+          {
+            id: 'pr-conversion',
+            label: 'Aumentar a conversão',
+            helper:
+              'Quero ajustar o preço ao contexto, perfil ou intenção de compra imediata para aumentar vendas e receita.',
+            solutionIds: ['price-to-conversion'],
+          },
+        ],
+      },
     },
     progressLabel: 'Passo {current} de {total}',
     continueCta: 'Continuar',
     results: {
-      eyebrow: 'Sua estratégia de preço recomendada',
-      title: 'Esta é a solução de pricing mais aderente ao seu contexto.',
+      eyebrow: 'Sua solução recomendada',
+      title: 'Esta é a solução mais aderente ao seu contexto.',
       subtitle: 'Explore o exemplo de aplicação abaixo.',
-      tieTitle: 'Seu perfil combina mais de uma frente de pricing.',
+      tieTitle: 'Seu contexto combina duas soluções complementares.',
       tieSubtitle: 'Toque em uma solução para ver o exemplo de aplicação.',
       selectSolutionHint: 'Toque em uma solução acima',
       signalEyebrow: 'i6 Signal',
@@ -213,88 +243,129 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tagline: 'infinity6 - the platform for decision advantage',
     },
   },
-  // NOTE: EN mirrors the PT structure so nothing quebra type-wise, mas o toggle
-  // de idioma está temporariamente oculto no AttractScreen — traduzimos na
-  // próxima rodada.
   en: {
     intro: {
       eyebrow: 'infinity6 · Interactive Experience',
-      title: 'Discover in 30 seconds which pricing strategy fits your business.',
+      title: 'Discover in 30 seconds which infinity6 solution fits your business.',
       subtitle:
-        'Answer three quick questions and see which infinity6 predictive pricing solution matches your context.',
+        'Answer two quick questions and see which predictive solution matches your context.',
       startCta: 'Start',
     },
-    questions: [
-      {
-        id: 'q1-routing',
-        eyebrow: 'Question 1',
-        text: 'How often does your price need to change to follow the market?',
-        helper: 'Pick the option closest to your reality.',
-        options: [
-          { id: 'q1-monthly', label: 'Once a month, or once a week', weights: { margin: 2 } },
-          {
-            id: 'q1-stuck',
-            label: 'Weekly, and again when a product gets stuck',
-            weights: { turnover: 2 },
-          },
-          { id: 'q1-session', label: 'On every customer visit', weights: { conversion: 2 } },
-          { id: 'q1-fixed', label: 'Never. It is a fixed price list', weights: {} },
-        ],
-      },
-      {
-        id: 'q2-granularity',
-        eyebrow: 'Question 2',
-        text: 'What is the smallest unit at which price is decided today?',
-        options: [
-          { id: 'q2-sku', label: 'The SKU. Same price across channels', weights: { margin: 2 } },
-          { id: 'q2-sku-store', label: 'The SKU per store or region', weights: { turnover: 2 } },
-          {
-            id: 'q2-customer',
-            label: 'The product, per customer visiting',
-            weights: { conversion: 2 },
-          },
-        ],
-      },
-      {
-        id: 'q3-pain',
-        eyebrow: 'Question 3',
-        text: 'What bothers you the most about pricing today?',
-        options: [
-          {
-            id: 'q3-margin',
-            label: 'Margin left on the table on SKUs that could hold more',
-            weights: { margin: 2 },
-          },
-          {
-            id: 'q3-stock',
-            label: 'Stuck inventory and discounts given at the wrong moment',
-            weights: { turnover: 2 },
-          },
-          {
-            id: 'q3-conversion',
-            label: 'Visits that came, looked and did not convert',
-            weights: { conversion: 2 },
-          },
-        ],
-      },
-    ],
-    tiebreaker: {
-      id: 'q4-tiebreak',
-      eyebrow: 'Last question',
-      text: 'Does the product have a deadline to leave (collection, expiry, season)?',
+    routing: {
+      id: 'q1-route',
+      eyebrow: 'Question 1',
+      text: 'Which outcome do you need to prioritize right now?',
+      helper: 'Pick the front that matters most for your moment.',
       options: [
-        { id: 'q4-yes', label: 'Yes', weights: { turnover: 1 } },
-        { id: 'q4-no', label: 'No, turnover is steady', weights: { margin: 1 } },
-        { id: 'q4-session', label: 'The deadline is the session itself', weights: { conversion: 1 } },
+        {
+          id: 'r-growth',
+          label: 'Increase conversion and revenue',
+          helper:
+            'Sell more per customer, visitor or channel, with more relevant offers and approaches.',
+          route: 'growth',
+        },
+        {
+          id: 'r-planning',
+          label: 'Plan demand and operations with more precision',
+          helper:
+            'Improve forecasts, targets, mix and orders to reduce stockouts, excess and waste.',
+          route: 'planning',
+        },
+        {
+          id: 'r-pricing',
+          label: 'Make better pricing decisions',
+          helper:
+            'Protect margin, accelerate turnover or boost conversion through price.',
+          route: 'pricing',
+        },
       ],
+    },
+    branches: {
+      growth: {
+        id: 'q2-growth',
+        eyebrow: 'Question 2',
+        text: 'Where is the biggest growth opportunity?',
+        options: [
+          {
+            id: 'g-personalization',
+            label: 'Improve what each customer or visitor finds and receives',
+            helper:
+              'I want to recommend the best offer, product or next action for each person, including anonymous visitors.',
+            solutionIds: ['predictive-personalization', 'smart-discovery'],
+          },
+          {
+            id: 'g-campaign',
+            label: 'Identify who should be approached in each campaign',
+            helper:
+              'I want to prioritize customers with the highest response potential and make campaigns more efficient.',
+            solutionIds: ['predictive-campaign-targeting'],
+          },
+        ],
+      },
+      planning: {
+        id: 'q2-planning',
+        eyebrow: 'Question 2',
+        text: 'Which decision needs more precision?',
+        options: [
+          {
+            id: 'p-forecast',
+            label: 'Anticipate how much will be demanded, where and when',
+            helper:
+              'I want to forecast demand by SKU, store, POS, channel, region or customer.',
+            solutionIds: ['demand-forecasting'],
+          },
+          {
+            id: 'p-goals',
+            label: 'Set targets aligned with real market potential',
+            helper:
+              'I want to set more precise targets by territory, portfolio, channel, product, rep or POS.',
+            solutionIds: ['predictive-commercial-targets'],
+          },
+          {
+            id: 'p-mix',
+            label: 'Define the best mix, volume or order',
+            helper:
+              'I want to recommend which products to offer, in which quantity and for each store, POS or customer.',
+            solutionIds: ['mix-assortment-order'],
+          },
+        ],
+      },
+      pricing: {
+        id: 'q2-pricing',
+        eyebrow: 'Question 2',
+        text: 'What should your pricing decision optimize first?',
+        options: [
+          {
+            id: 'pr-margin',
+            label: 'Capture more margin',
+            helper:
+              'I want to find the best price per SKU, considering elasticity, stock, competition and demand.',
+            solutionIds: ['price-to-margin'],
+          },
+          {
+            id: 'pr-turnover',
+            label: 'Accelerate inventory turnover',
+            helper:
+              'I want to optimize markdowns and promotions to sell aged or stuck stock while preserving the highest possible margin.',
+            solutionIds: ['price-to-turnover'],
+          },
+          {
+            id: 'pr-conversion',
+            label: 'Boost conversion',
+            helper:
+              'I want to adjust price to context, profile or immediate purchase intent to grow sales and revenue.',
+            solutionIds: ['price-to-conversion'],
+          },
+        ],
+      },
     },
     progressLabel: 'Step {current} of {total}',
     continueCta: 'Continue',
     results: {
-      eyebrow: 'Your recommended pricing strategy',
-      title: 'This is the pricing solution that best fits your context.',
+      eyebrow: 'Your recommended solution',
+      title: 'This is the solution that best fits your context.',
       subtitle: 'Explore the example below.',
-      tieTitle: 'Your profile combines more than one pricing angle.',
+      tieTitle: 'Your context combines two complementary solutions.',
       tieSubtitle: 'Tap a solution to see the example.',
       selectSolutionHint: 'Tap a solution above',
       signalEyebrow: 'i6 Signal',
