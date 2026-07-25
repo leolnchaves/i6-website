@@ -12,19 +12,16 @@ import {
   kioskContent,
   KIOSK_INACTIVITY_MS,
   solutionEbook,
-  bucketToSolutionId,
-  PRICING_SOLUTION_IDS,
   type KioskLang,
-  type PricingBucket,
+  type RouteId,
 } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 import { trackEvent } from '@/lib/tracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 type Stage = 'attract' | 'quiz' | 'results';
-type Scores = Record<PricingBucket, number>;
 
-const zeroScores = (): Scores => ({ margin: 0, turnover: 0, conversion: 0 });
+const TOTAL_STEPS = 2;
 
 const getInitialLang = (): KioskLang => {
   if (typeof window === 'undefined') return 'pt';
@@ -35,53 +32,26 @@ const getInitialLang = (): KioskLang => {
 };
 
 /**
- * Retorna o bucket vencedor único (max estritamente maior que os demais)
- * ou null se houver empate no topo / tudo zerado.
- */
-const resolveWinner = (scores: Scores): PricingBucket | null => {
-  const entries = Object.entries(scores) as [PricingBucket, number][];
-  entries.sort((a, b) => b[1] - a[1]);
-  if (entries[0][1] <= 0) return null;
-  if (entries[0][1] === entries[1][1]) return null;
-  return entries[0][0];
-};
-
-/** Há empate entre os dois maiores (com valor > 0)? */
-const hasTopTie = (scores: Scores): boolean => {
-  const values = Object.values(scores).sort((a, b) => b - a);
-  return values[0] > 0 && values[0] === values[1];
-};
-
-/**
  * Kiosk / totem experience:
- * Attract → Q1 → Q2 → Q3 → [Q4 desempate] → Results
- * Fluxo dedicado a pricing: pontua Margin / Turnover / Conversion
- * e abre direto o demo da solução vencedora (ou 3 cards se empatar).
+ * Attract → Q1 (território) → Q2 (solução da branch) → Results
  */
 const Kiosk = () => {
   const [lang, setLang] = useState<KioskLang>(getInitialLang);
   const [stage, setStage] = useState<Stage>('attract');
-  const [quizStep, setQuizStep] = useState<number>(0);
-  const [showTiebreaker, setShowTiebreaker] = useState<boolean>(false);
-  const [scores, setScores] = useState<Scores>(zeroScores);
+  const [route, setRoute] = useState<RouteId | null>(null);
+  const [recommendedIds, setRecommendedIds] = useState<string[] | null>(null);
   const [selectedSolutionId, setSelectedSolutionId] = useState<string | null>(null);
 
   const kContent = kioskContent[lang];
   const sContent = solutionsContent[lang];
 
-  const winner = useMemo(() => resolveWinner(scores), [scores]);
-  const showTieFallback = stage === 'results' && winner === null;
-
   const solutionsForResults = useMemo(() => {
-    if (winner) {
-      const id = bucketToSolutionId[winner];
-      return sContent.solutions.filter((s) => s.id === id);
-    }
-    // Empate ou zerado: mostrar as 3 de pricing.
-    return sContent.solutions.filter((s) =>
-      (PRICING_SOLUTION_IDS as readonly string[]).includes(s.id),
-    );
-  }, [winner, sContent.solutions]);
+    if (!recommendedIds || recommendedIds.length === 0) return [];
+    const byId = new Map(sContent.solutions.map((s) => [s.id, s]));
+    return recommendedIds.map((id) => byId.get(id)).filter(Boolean) as typeof sContent.solutions;
+  }, [recommendedIds, sContent.solutions]);
+
+  const isCombo = solutionsForResults.length > 1;
 
   const selectedSolution = useMemo(
     () => solutionsForResults.find((s) => s.id === selectedSolutionId) ?? null,
@@ -90,80 +60,62 @@ const Kiosk = () => {
 
   const reset = () => {
     setStage('attract');
-    setQuizStep(0);
-    setShowTiebreaker(false);
-    setScores(zeroScores());
+    setRoute(null);
+    setRecommendedIds(null);
     setSelectedSolutionId(null);
   };
 
-  // Ao entrar em results com vencedor único, auto-seleciona a solução
+  // Ao entrar em results, auto-seleciona a primeira solução recomendada
   // e scrolla até o demo.
   useEffect(() => {
     if (stage !== 'results') return;
-    if (winner) {
-      const id = bucketToSolutionId[winner];
-      setSelectedSolutionId(id);
+    if (solutionsForResults.length > 0) {
+      setSelectedSolutionId(solutionsForResults[0].id);
       requestAnimationFrame(() => {
         const el = document.getElementById('kiosk-solution-demo');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-    } else {
-      setSelectedSolutionId(null);
     }
-  }, [stage, winner]);
+  }, [stage, solutionsForResults]);
 
   const handleStart = () => {
     trackEvent(TRACKER_EVENTS.KIOSK_SESSION_STARTED, { language: lang });
     setStage('quiz');
-    setQuizStep(0);
-    setShowTiebreaker(false);
-    setScores(zeroScores());
+    setRoute(null);
+    setRecommendedIds(null);
+    setSelectedSolutionId(null);
   };
 
-  const handleAnswer = (
-    weights: Partial<Record<PricingBucket, number>>,
-    optionId: string,
-  ) => {
-    const nextScores: Scores = {
-      margin: scores.margin + (weights.margin ?? 0),
-      turnover: scores.turnover + (weights.turnover ?? 0),
-      conversion: scores.conversion + (weights.conversion ?? 0),
-    };
-    setScores(nextScores);
+  const handleAnswer = (optionId: string) => {
+    if (route === null) {
+      // Q1: escolher rota.
+      const opt = kContent.routing.options.find((o) => o.id === optionId);
+      if (!opt?.route) return;
+      trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_ANSWERED, {
+        language: lang,
+        step: 'q1',
+        option_id: optionId,
+        route: opt.route,
+      });
+      setRoute(opt.route);
+      return;
+    }
+    // Q2: escolher soluções.
+    const branch = kContent.branches[route];
+    const opt = branch.options.find((o) => o.id === optionId);
+    if (!opt?.solutionIds) return;
     trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_ANSWERED, {
       language: lang,
-      step: showTiebreaker ? 'tiebreaker' : `q${quizStep + 1}`,
+      step: 'q2',
       option_id: optionId,
+      route,
     });
-
-    if (showTiebreaker) {
-      // Depois do desempate, sempre vai para results.
-      const w = resolveWinner(nextScores);
-      trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_COMPLETED, {
-        language: lang,
-        winner: w ?? 'tie',
-      });
-      setStage('results');
-      return;
-    }
-
-    const isLastBase = quizStep >= kContent.questions.length - 1;
-    if (!isLastBase) {
-      setQuizStep(quizStep + 1);
-      return;
-    }
-
-    // Após Q3: tem empate no topo? → desempate.
-    if (hasTopTie(nextScores)) {
-      setShowTiebreaker(true);
-      return;
-    }
-
-    const w = resolveWinner(nextScores);
     trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_COMPLETED, {
       language: lang,
-      winner: w ?? 'tie',
+      route,
+      solutions: opt.solutionIds.join(','),
     });
+    setRecommendedIds(opt.solutionIds);
     setStage('results');
   };
 
@@ -180,9 +132,9 @@ const Kiosk = () => {
     ? solutionEbook[selectedSolution.id]?.[lang] ?? selectedSolution.title
     : '';
 
-  const currentQuestion = showTiebreaker
-    ? kContent.tiebreaker
-    : kContent.questions[quizStep];
+  const currentQuestion =
+    route === null ? kContent.routing : kContent.branches[route];
+  const currentStepIndex = route === null ? 0 : 1;
 
   return (
     <>
@@ -200,8 +152,6 @@ const Kiosk = () => {
         onInactive={reset}
         active={stage !== 'attract'}
       >
-        {/* Language toggle temporariamente oculto — só PT nesta rodada.
-            Para reativar: desmascarar o bloco abaixo. */}
         {false && stage === 'attract' && (
           <div className="absolute top-[3vmin] right-[3vmin] z-20 flex gap-[1vmin]">
             {(['pt', 'en'] as const).map((l) => (
@@ -234,15 +184,14 @@ const Kiosk = () => {
 
         {stage === 'attract' && <AttractScreen content={kContent} onStart={handleStart} />}
 
-        {stage === 'quiz' && currentQuestion && (
+        {stage === 'quiz' && (
           <QuizScreen
-            key={showTiebreaker ? 'tb' : `q${quizStep}`}
+            key={route === null ? 'q1' : `q2-${route}`}
             question={currentQuestion}
-            stepIndex={quizStep}
-            totalSteps={kContent.questions.length}
+            stepIndex={currentStepIndex}
+            totalSteps={TOTAL_STEPS}
             progressLabel={kContent.progressLabel}
             continueCta={kContent.continueCta}
-            isTiebreaker={showTiebreaker}
             onAnswer={handleAnswer}
           />
         )}
@@ -254,10 +203,10 @@ const Kiosk = () => {
                 {kContent.results.eyebrow}
               </p>
               <h2 className="text-[4vmin] font-bold leading-tight mb-[1vmin]">
-                {showTieFallback ? kContent.results.tieTitle : kContent.results.title}
+                {isCombo ? kContent.results.tieTitle : kContent.results.title}
               </h2>
               <p className="text-[2.2vmin] text-white/65">
-                {showTieFallback ? kContent.results.tieSubtitle : kContent.results.subtitle}
+                {isCombo ? kContent.results.tieSubtitle : kContent.results.subtitle}
               </p>
             </div>
 
