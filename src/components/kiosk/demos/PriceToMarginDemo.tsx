@@ -328,6 +328,33 @@ const PriceToMarginDemo = ({ lang }: Props) => {
         </div>
       </div>
 
+      {/* Connector line: price → insight */}
+      {line && (
+        <svg
+          className="pointer-events-none absolute inset-0 w-full h-full"
+          style={{ overflow: 'visible' }}
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="kiosk-connector-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#F4845F" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#F4845F" stopOpacity="0.9" />
+            </linearGradient>
+          </defs>
+          <path
+            d={`M ${line.x1} ${line.y1} C ${line.x1 + 60} ${line.y1}, ${line.x2 - 60} ${line.y2}, ${line.x2} ${line.y2}`}
+            fill="none"
+            stroke="url(#kiosk-connector-grad)"
+            strokeWidth={1.5}
+            strokeDasharray="6 6"
+            style={{ filter: 'drop-shadow(0 0 6px rgba(244,132,95,0.7))' }}
+            className="kiosk-connector-path"
+          />
+          <circle cx={line.x1} cy={line.y1} r={4} fill="#F4845F" className="kiosk-connector-dot" />
+          <circle cx={line.x2} cy={line.y2} r={4} fill="#F4845F" className="kiosk-connector-dot" />
+        </svg>
+      )}
+
       <style>{`
         @keyframes kiosk-progress {
           from { width: 0% }
