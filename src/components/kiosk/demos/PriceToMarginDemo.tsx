@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import { priceToMarginDemo, type DemoProduct } from '@/data/kiosk/demos/priceToMargin';
@@ -16,6 +16,11 @@ const PriceToMarginDemo = ({ lang }: Props) => {
   const content = priceToMarginDemo[lang];
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [progress, setProgress] = useState(0); // 0..pipeline.length
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const priceRef = useRef<HTMLDivElement>(null);
+  const insightRef = useRef<HTMLDivElement>(null);
+  const [line, setLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
 
   const selected = useMemo<DemoProduct | null>(
     () => content.products.find((p) => p.id === selectedId) ?? null,
@@ -51,8 +56,44 @@ const PriceToMarginDemo = ({ lang }: Props) => {
     setProgress(0);
   };
 
+  // Measure connector line between price reveal and insight card
+  useLayoutEffect(() => {
+    if (!done) {
+      setLine(null);
+      return;
+    }
+    const measure = () => {
+      const container = containerRef.current;
+      const price = priceRef.current;
+      const insight = insightRef.current;
+      if (!container || !price || !insight) return;
+      const c = container.getBoundingClientRect();
+      const p = price.getBoundingClientRect();
+      const i = insight.getBoundingClientRect();
+      setLine({
+        x1: p.right - c.left,
+        y1: p.top + p.height / 2 - c.top,
+        x2: i.left - c.left,
+        y2: i.top + i.height / 2 - c.top,
+      });
+    };
+    // Wait for the insight fade-in/animation to settle
+    const t = setTimeout(measure, 700);
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (containerRef.current) ro.observe(containerRef.current);
+    if (insightRef.current) ro.observe(insightRef.current);
+    if (priceRef.current) ro.observe(priceRef.current);
+    window.addEventListener('resize', measure);
+    return () => {
+      clearTimeout(t);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [done, selectedId]);
+
   return (
-    <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
+    <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
       <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
         {/* LEFT — scenario */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
@@ -137,7 +178,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                   </h5>
 
                   {/* Price reveal zone */}
-                  <div className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-[2vmin] min-h-[10vmin] flex items-center justify-center">
+                  <div ref={priceRef} className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-[2vmin] min-h-[10vmin] flex items-center justify-center">
                     {!done ? (
                       <div className="flex items-center gap-[1.5vmin] text-white/60">
                         <span className="w-[2vmin] h-[2vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
@@ -269,6 +310,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
               </div>
 
               <div
+                ref={insightRef}
                 className="kiosk-insight-card relative mt-[1.2vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.6vmin] text-white/95 leading-relaxed"
               >
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
@@ -285,6 +327,33 @@ const PriceToMarginDemo = ({ lang }: Props) => {
           )}
         </div>
       </div>
+
+      {/* Connector line: price → insight */}
+      {line && (
+        <svg
+          className="pointer-events-none absolute inset-0 w-full h-full"
+          style={{ overflow: 'visible' }}
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="kiosk-connector-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#F4845F" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#F4845F" stopOpacity="0.9" />
+            </linearGradient>
+          </defs>
+          <path
+            d={`M ${line.x1} ${line.y1} C ${line.x1 + 60} ${line.y1}, ${line.x2 - 60} ${line.y2}, ${line.x2} ${line.y2}`}
+            fill="none"
+            stroke="url(#kiosk-connector-grad)"
+            strokeWidth={1.5}
+            strokeDasharray="6 6"
+            style={{ filter: 'drop-shadow(0 0 6px rgba(244,132,95,0.7))' }}
+            className="kiosk-connector-path"
+          />
+          <circle cx={line.x1} cy={line.y1} r={4} fill="#F4845F" className="kiosk-connector-dot" />
+          <circle cx={line.x2} cy={line.y2} r={4} fill="#F4845F" className="kiosk-connector-dot" />
+        </svg>
+      )}
 
       <style>{`
         @keyframes kiosk-progress {
@@ -316,6 +385,23 @@ const PriceToMarginDemo = ({ lang }: Props) => {
         }
         .kiosk-insight-sparkle {
           animation: kiosk-insight-sparkle 1.8s ease-in-out infinite;
+        }
+        @keyframes kiosk-connector-flow {
+          from { stroke-dashoffset: 24; }
+          to   { stroke-dashoffset: 0; }
+        }
+        @keyframes kiosk-connector-in {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        .kiosk-connector-path {
+          animation:
+            kiosk-connector-in .5s ease-out both,
+            kiosk-connector-flow 1.2s linear infinite;
+        }
+        .kiosk-connector-dot {
+          animation: kiosk-connector-in .5s ease-out both;
+          filter: drop-shadow(0 0 6px rgba(244,132,95,0.9));
         }
       `}</style>
     </div>

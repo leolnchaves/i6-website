@@ -75,7 +75,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 8.3,
     deltaMarginPct: -5.7,
     deltaConversionPct: 18.3,
-    insight: 'Sessões repetidas no PDP com abandono de carrinho acima de 62% indicam hesitação no ticket atual. O cluster comportamental dominante (browsers de fim de semana) reage forte a reduções pequenas: elasticidade de conversão de −1,8. O novo preço aciona conversão latente sem canibalizar o cluster premium.',
+    insight: 'Abandono de carrinho >62% e sessões repetidas mostram hesitação. Pequeno corte destrava a conversão do cluster de fim de semana sem canibalizar o premium.',
   },
   {
     id: 'sku-2',
@@ -91,7 +91,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 6.1,
     deltaMarginPct: -3.2,
     deltaConversionPct: 11.7,
-    insight: 'Primeira compra do ciclo de assinatura concentra 71% do drop-off. Comportamento observado: 3+ visitas antes de converter, cliques em concorrentes crescendo 24% no mês. O ajuste destrava a entrada no funil recorrente, onde o LTV compensa o giveback de ticket já no 2º pedido.',
+    insight: '71% do drop-off está na 1ª compra da assinatura, com 3+ visitas antes de converter. O ajuste destrava o funil recorrente — LTV compensa já no 2º pedido.',
   },
   {
     id: 'sku-3',
@@ -107,7 +107,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 4.2,
     deltaMarginPct: 1.5,
     deltaConversionPct: 9.4,
-    insight: 'Clientes recorrentes (61% do volume) mostram baixa sensibilidade a preço e alta velocidade de checkout (< 90s). Elasticidade de conversão de apenas −0,3 abre espaço para pequeno reajuste. Novos compradores continuam convertendo porque o benchmark comportamental do cluster é a categoria, não o SKU.',
+    insight: 'Recorrentes (61% do volume) têm baixa sensibilidade a preço e checkout <90s. Elasticidade de −0,3 sustenta o reajuste sem afastar novos compradores.',
   },
   {
     id: 'sku-4',
@@ -123,7 +123,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 13.6,
     deltaMarginPct: -5.7,
     deltaConversionPct: 22.1,
-    insight: 'Pico sazonal com buscas +38% e comparação intensa: 3,2 abas paralelas em média por sessão. Abandono de carrinho salta para 71% acima de R$ 52. Reduzir o ticket agora captura o comprador indeciso na janela de decisão de 48h, quando a concorrência ainda não reagiu.',
+    insight: 'Buscas +38% e 3,2 abas por sessão indicam comprador indeciso. Reduzir o ticket agora captura a conversão na janela de 48h, antes da concorrência reagir.',
   },
 ];
 
@@ -142,7 +142,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 8.3,
     deltaMarginPct: -5.7,
     deltaConversionPct: 18.3,
-    insight: 'Repeat PDP sessions with cart-abandon above 62% show hesitation at the current ticket. The dominant behavioral cluster (weekend browsers) reacts strongly to small cuts: conversion elasticity of −1.8. The new price unlocks latent conversion without cannibalizing the premium cluster.',
+    insight: 'Cart abandonment >62% and repeat sessions signal hesitation. A small cut unlocks weekend-cluster conversion without cannibalizing premium.',
   },
   {
     id: 'sku-2',
@@ -158,7 +158,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 6.1,
     deltaMarginPct: -3.2,
     deltaConversionPct: 11.7,
-    insight: 'First order of the subscription cycle concentrates 71% of drop-off. Behavior observed: 3+ visits before converting, competitor clicks growing 24% MoM. The move unlocks entry into the recurring funnel, where LTV offsets the ticket giveback from the 2nd order onward.',
+    insight: '71% of drop-off sits on the first subscription order, with 3+ visits before converting. The move opens the recurring funnel — LTV offsets it from the 2nd order onward.',
   },
   {
     id: 'sku-3',
@@ -174,7 +174,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 4.2,
     deltaMarginPct: 1.5,
     deltaConversionPct: 9.4,
-    insight: 'Returning customers (61% of volume) show low price sensitivity and fast checkout (< 90s). Conversion elasticity of just −0.3 supports a small raise. New buyers still convert because the cluster benchmark is the category, not this SKU.',
+    insight: 'Returning buyers (61% of volume) show low price sensitivity and <90s checkout. Elasticity of −0.3 supports the raise without losing new buyers.',
   },
   {
     id: 'sku-4',
@@ -190,7 +190,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 13.6,
     deltaMarginPct: -5.7,
     deltaConversionPct: 22.1,
-    insight: 'Seasonal peak with searches +38% and intense comparison: 3.2 parallel tabs per session on average. Cart abandonment jumps to 71% above $52. Cutting the ticket now captures the undecided buyer in the 48h decision window, before competitors react.',
+    insight: 'Searches +38% and 3.2 parallel tabs per session signal an undecided buyer. Cutting the ticket now captures conversion in the 48h window, before competitors react.',
   },
 ];
 
