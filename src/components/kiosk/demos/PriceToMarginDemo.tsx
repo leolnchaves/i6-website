@@ -56,8 +56,44 @@ const PriceToMarginDemo = ({ lang }: Props) => {
     setProgress(0);
   };
 
+  // Measure connector line between price reveal and insight card
+  useLayoutEffect(() => {
+    if (!done) {
+      setLine(null);
+      return;
+    }
+    const measure = () => {
+      const container = containerRef.current;
+      const price = priceRef.current;
+      const insight = insightRef.current;
+      if (!container || !price || !insight) return;
+      const c = container.getBoundingClientRect();
+      const p = price.getBoundingClientRect();
+      const i = insight.getBoundingClientRect();
+      setLine({
+        x1: p.right - c.left,
+        y1: p.top + p.height / 2 - c.top,
+        x2: i.left - c.left,
+        y2: i.top + i.height / 2 - c.top,
+      });
+    };
+    // Wait for the insight fade-in/animation to settle
+    const t = setTimeout(measure, 700);
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (containerRef.current) ro.observe(containerRef.current);
+    if (insightRef.current) ro.observe(insightRef.current);
+    if (priceRef.current) ro.observe(priceRef.current);
+    window.addEventListener('resize', measure);
+    return () => {
+      clearTimeout(t);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [done, selectedId]);
+
   return (
-    <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
+    <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
       <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
         {/* LEFT — scenario */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
