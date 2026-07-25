@@ -1,62 +1,78 @@
 ## Objetivo
 
-Harmonizar o bloco **ALAVANCAS DE VALOR** na página de detalhe de success story para que fique equilibrado independentemente da quantidade de alavancas selecionadas no i6 HUB, e adicionar um subtítulo indicando que os chips são clicáveis.
+Refatorar o quiz do /kiosk de "3 perguntas base + desempate de pricing" para um fluxo em **2 passos com roteamento por território**: a primeira pergunta escolhe o território (Growth / Planning / Pricing) e a segunda escolhe a solução dentro daquele território, indo direto para a tela de resultado (mesma tela padrão que existe hoje).
 
-## Diagnóstico
+## Novo fluxo
 
-Em `src/pages/SuccessStoryArticle.tsx` (linhas 215–240) o container hoje é apenas `flex flex-wrap gap-2`. Isso gera linhas desiguais (ex.: 3 chips na primeira linha + 1 chip solto na segunda, como no screenshot enviado) e passa sensação de layout quebrado. Também não há indicação visual de que os chips são links.
+```text
+Q1 (território)
+├─ Growth & Customer Intelligence ──► Q2A ─┬─ Personalization + Smart Discovery
+│                                           └─ Predictive Campaign Targeting
+├─ Demand, Supply & Commercial Planning ──► Q2B ─┬─ Predictive Forecasting
+│                                                 ├─ Predictive Commercial Goals
+│                                                 └─ Predictive Assortment & Order
+└─ Pricing & Margin Intelligence ──► Q2C ─┬─ Price-to-Margin
+                                           ├─ Price-to-Turnover
+                                           └─ Price-to-Conversion
+```
+
+Total: sempre 2 perguntas. Sem desempate. Ao responder Q2, vai direto para `results` com a solução recomendada já selecionada, e a mesma tela padrão de hoje é reutilizada (SolutionsGrid + SolutionDemoBlock + KioskSignalIntelliboard + EbookCTA).
+
+Caso especial: quando a resposta indica **Personalization + Smart Discovery** (dois IDs combinados), a tela de resultados exibe as duas soluções lado a lado (grid com 2 cards, primeira pré-selecionada), reaproveitando o layout já usado no fallback de empate.
 
 ## Mudanças
 
-### 1. Subtítulo abaixo do título
+### 1. `src/data/kiosk/config.ts`
+- Trocar o modelo de dados: em vez de `PricingBucket` + `weights`, cada opção passa a carregar diretamente um `next` (id da próxima pergunta) na Q1, e um `solutionIds: string[]` na Q2.
+- Substituir `questions: QuizQuestion[]` + `tiebreaker` por:
+  - `routing: QuizQuestion` (Q1 com 3 opções → `growth` | `planning` | `pricing`)
+  - `branches: Record<'growth'|'planning'|'pricing', QuizQuestion>` (as três Q2)
+- Remover `bucketToSolutionId`, `PRICING_SOLUTION_IDS`, `PricingBucket` e o conceito de desempate.
+- Reescrever textos PT/EN conforme copy fornecida (rótulos curtos + helper com a explicação longa "Quero..."). Manter `intro`, `results`, `ebook`, `attract`, `footer`, `solutionEbook`, `solutionSignalMap` como estão.
+- Ajustar `progressLabel` para 2 passos.
 
-- PT: "Clique para conhecer as soluções aplicadas"
-- EN: "Click to explore the applied solutions"
+### 2. `src/pages/Kiosk.tsx`
+- Remover estados `scores`, `showTiebreaker`, `quizStep` numérico e a lógica `resolveWinner` / `hasTopTie`.
+- Novos estados: `route: 'growth'|'planning'|'pricing'|null` e `recommendedIds: string[] | null`.
+- Handler da Q1 seta `route` e avança para Q2 da branch correspondente.
+- Handler da Q2 seta `recommendedIds` (1 ou 2 ids), muda stage para `results`, dispara `KIOSK_QUIZ_COMPLETED` com `{ route, solutions }`.
+- `solutionsForResults` = filtra `sContent.solutions` por `recommendedIds`. Auto-seleciona o primeiro id (mesma UX de hoje). Sem "tie fallback".
+- Ajustar `results.title/subtitle`: usar o mesmo copy padrão de hoje (a tela de resultados não muda visualmente). Se `recommendedIds.length > 1`, usar `tieTitle/tieSubtitle` já existentes como copy de "combinação".
+- Ajustar `reset()` para os novos estados.
 
-Adicionar chave `appliedSolutionsHint` no objeto `t` (por volta da linha 74) e renderizar um `<p className="text-sm text-white/60 mb-4">` logo após o `<h2>` do título.
+### 3. `src/components/kiosk/QuizScreen.tsx`
+- Remover a prop `isTiebreaker` e o parâmetro `weights`. `onAnswer` passa a receber apenas o `optionId` (o pai decide o que fazer).
+- `stepIndex`/`totalSteps` continuam funcionando (agora 1 de 2 e 2 de 2).
 
-### 2. Container visual da seção
+### 4. Copy (PT — espelhar em EN)
 
-Envolver os chips num card com a mesma linguagem visual das outras seções:
-`rounded-xl border border-white/10 bg-white/5 p-6`.
+**Q1** — "Qual resultado você precisa priorizar agora?"
+- Aumentar conversão e receita — helper: "Vender mais por cliente, visitante ou canal, com ofertas e abordagens mais relevantes." → `growth`
+- Planejar demanda e operação com mais precisão — helper: "Melhorar previsões, metas, mix e pedidos para reduzir ruptura, excesso e desperdício." → `planning`
+- Tomar melhores decisões de preço — helper: "Proteger margem, acelerar o giro ou aumentar a conversão por meio do preço." → `pricing`
 
-Título e subtítulo ficam dentro do card.
+**Q2 growth** — "Onde está a maior oportunidade de crescimento?"
+- Melhorar o que cada cliente ou visitante encontra e recebe → `['predictive-personalization','smart-discovery']`
+- Identificar quem deve ser abordado em cada campanha → `['predictive-campaign-targeting']`
 
-### 3. Grid responsivo por quantidade
+**Q2 planning** — "Qual decisão precisa de mais precisão?"
+- Antecipar quanto será demandado, onde e quando → `['demand-forecasting']`
+- Definir metas de acordo com o potencial real de mercado → `['predictive-commercial-targets']`
+- Definir o melhor mix, volume ou pedido → `['mix-assortment-order']`
 
-Trocar `flex flex-wrap gap-2` por um **grid** cuja quantidade de colunas se adapta ao total de alavancas, garantindo linhas balanceadas.
-
-Regra desktop (≥ md):
-
-| Nº de alavancas | Colunas | Comportamento |
-|---|---|---|
-| 1 | 1 | chip único centralizado com `max-w-sm mx-auto` |
-| 2 | 2 | dois chips lado a lado, mesma largura |
-| 3 | 3 | três colunas iguais |
-| 4 | 2 | grade 2×2 equilibrada (evita 3+1) |
-| 5 | 3 | 3 em cima, 2 embaixo centralizadas |
-| 6 | 3 | 3×2 perfeito |
-| 7+ | 3 (ou 4 se ≥ 8) | grid uniforme |
-
-Mobile: 1 coluna. Tablet (sm–md): 2 colunas.
-
-Implementado via função utilitária local `gridColsFor(count)` que devolve as classes Tailwind do grid.
-
-### 4. Padronização dos chips
-
-- `w-full text-center justify-center min-h-[44px] flex items-center`
-- Mantém cores/hover atuais (`#F4845F` translúcido, borda coral)
-- Comportamento de link e whitelist inalterados
-
-## Arquivos afetados
-
-- `src/pages/SuccessStoryArticle.tsx` — apenas o bloco entre as linhas 215–240 e o objeto `t`.
+**Q2 pricing** — "O que sua decisão de preço precisa otimizar prioritariamente?"
+- Capturar mais margem → `['price-to-margin']`
+- Acelerar o giro de estoque → `['price-to-turnover']`
+- Aumentar a conversão → `['price-to-conversion']`
 
 ## Fora do escopo
-
-- Não altera parser, MD, hooks, contrato `Rótulo|slug` do HUB, nem outras páginas.
-- Não muda cores globais nem tipografia da seção.
+- Tela de resultados permanece igual (mesmo layout, mesma demo, mesmo Intelliboard, mesmo EbookCTA). Telas dedicadas por solução ficam para a próxima rodada.
+- Não mexe em `SolutionsGrid`, `SolutionDemoBlock`, `KioskSignalIntelliboard`, `EbookCTA`, `AttractScreen`.
+- Não altera i18n do resto do site.
 
 ## Verificação
-
-Conferir visualmente com 1, 2, 3, 4, 5 e 6 alavancas (o caso atual com 4 chips deve virar grade 2×2). Testar mobile e desktop em PT e EN.
+- Q1 → cada uma das 3 opções leva à Q2 correta.
+- Growth R1 abre results com 2 cards (Personalization + Smart Discovery), primeiro pré-selecionado.
+- Todas as outras respostas abrem results com 1 card já pré-selecionado e scroll para o demo.
+- Botão Recomeçar volta para attract e zera route/recomendação.
+- PT e EN.

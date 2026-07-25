@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
-import type { PricingBucket, QuizQuestion } from '@/data/kiosk/config';
+import type { QuizQuestion } from '@/data/kiosk/config';
 
 interface Props {
   question: QuizQuestion;
-  stepIndex: number; // 0-based (base questions)
-  totalSteps: number; // number of base questions (used for progress text)
+  stepIndex: number; // 0-based
+  totalSteps: number;
   progressLabel: string; // "Passo {current} de {total}"
   continueCta: string;
-  isTiebreaker?: boolean;
-  onAnswer: (weights: Partial<Record<PricingBucket, number>>, optionId: string) => void;
+  onAnswer: (optionId: string) => void;
 }
 
 const QuizScreen = ({
@@ -18,22 +17,19 @@ const QuizScreen = ({
   totalSteps,
   progressLabel,
   continueCta,
-  isTiebreaker,
   onAnswer,
 }: Props) => {
   const [selected, setSelected] = useState<string | null>(null);
 
-  const progress = isTiebreaker
-    ? question.eyebrow
-    : progressLabel
-        .replace('{current}', String(stepIndex + 1))
-        .replace('{total}', String(totalSteps));
+  const progress = progressLabel
+    .replace('{current}', String(stepIndex + 1))
+    .replace('{total}', String(totalSteps));
 
   const submit = () => {
     if (!selected) return;
     const opt = question.options.find((o) => o.id === selected);
     if (!opt) return;
-    onAnswer(opt.weights, opt.id);
+    onAnswer(opt.id);
   };
 
   return (
@@ -55,20 +51,27 @@ const QuizScreen = ({
                 key={opt.id}
                 type="button"
                 onClick={() => setSelected(opt.id)}
-                className={`w-full flex items-center gap-[3vmin] rounded-2xl px-[4vmin] py-[3.5vmin] text-left transition-all border-2 min-h-[10vmin] ${
+                className={`w-full flex items-start gap-[3vmin] rounded-2xl px-[4vmin] py-[3.5vmin] text-left transition-all border-2 min-h-[10vmin] ${
                   isSel
                     ? 'bg-[#F4845F]/15 border-[#F4845F] shadow-[0_0_30px_rgba(244,132,95,0.3)]'
                     : 'bg-white/5 border-white/10'
                 }`}
               >
                 <span
-                  className={`flex-shrink-0 w-[7vmin] h-[7vmin] rounded-xl flex items-center justify-center border-2 ${
+                  className={`flex-shrink-0 mt-[0.5vmin] w-[7vmin] h-[7vmin] rounded-xl flex items-center justify-center border-2 ${
                     isSel ? 'bg-[#F4845F] border-[#F4845F]' : 'bg-white/5 border-white/20'
                   }`}
                 >
                   {isSel && <Check className="w-[4vmin] h-[4vmin] text-white" strokeWidth={3} />}
                 </span>
-                <span className="text-[2.8vmin] font-semibold leading-snug">{opt.label}</span>
+                <span className="flex flex-col gap-[1vmin] flex-1">
+                  <span className="text-[2.8vmin] font-semibold leading-snug">{opt.label}</span>
+                  {opt.helper && (
+                    <span className="text-[2vmin] font-normal text-white/60 leading-snug">
+                      {opt.helper}
+                    </span>
+                  )}
+                </span>
               </button>
             );
           })}
