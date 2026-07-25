@@ -28,6 +28,7 @@ import Blog from "./pages/Blog";
 import OurAI from "./pages/OurAI";
 import TransformationLanding from "./pages/TransformationLanding";
 import Kiosk from "./pages/Kiosk";
+import KioskMetrics from "./pages/KioskMetrics";
 
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import DebugPanel from "./components/debug/DebugPanel";
