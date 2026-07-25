@@ -190,7 +190,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 13.6,
     deltaMarginPct: -5.7,
     deltaConversionPct: 22.1,
-    insight: 'Seasonal peak with searches +38% and intense comparison: 3.2 parallel tabs per session on average. Cart abandonment jumps to 71% above $52. Cutting the ticket now captures the undecided buyer in the 48h decision window, before competitors react.',
+    insight: 'Searches +38% and 3.2 parallel tabs per session signal an undecided buyer. Cutting the ticket now captures conversion in the 48h window, before competitors react.',
   },
 ];
 
