@@ -342,7 +342,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
             </linearGradient>
           </defs>
           <path
-            d={`M ${line.x1} ${line.y1} C ${line.x1 + 60} ${line.y1}, ${line.x2 - 60} ${line.y2}, ${line.x2} ${line.y2}`}
+            d={`M ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`}
             fill="none"
             stroke="url(#kiosk-connector-grad)"
             strokeWidth={1.5}
