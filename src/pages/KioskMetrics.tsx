@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
-import { toast } from 'sonner';
 import {
   ResponsiveContainer,
   BarChart,
@@ -16,17 +15,6 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { kioskContent, type RouteId } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { Input } from '@/components/ui/input';
 
 const DASHBOARD_TOKEN = 'i6k-x3f8n2vqp7wm4jt-metrics';
 
@@ -100,26 +88,8 @@ const KioskMetrics = () => {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<Period>('all');
   const [bucket, setBucket] = useState<Bucket>('day');
-  const [resetOpen, setResetOpen] = useState(false);
-  const [resetConfirm, setResetConfirm] = useState('');
-  const [resetting, setResetting] = useState(false);
 
-  const handleReset = async () => {
-    setResetting(true);
-    const { error } = await supabase
-      .from('kiosk_events')
-      .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000');
-    setResetting(false);
-    if (error) {
-      toast.error('Erro ao zerar métricas', { description: error.message });
-      return;
-    }
-    setRows([]);
-    setResetOpen(false);
-    setResetConfirm('');
-    toast.success('Métricas zeradas');
-  };
+
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
@@ -283,45 +253,10 @@ const KioskMetrics = () => {
                 </option>
               ))}
             </select>
-            <button
-              onClick={() => setResetOpen(true)}
-              className="border border-red-500/40 text-red-300 hover:bg-red-500/10 rounded-lg px-3 py-2 text-sm transition-colors"
-            >
-              Zerar métricas
-            </button>
           </div>
         </header>
 
-        <AlertDialog open={resetOpen} onOpenChange={(o) => { setResetOpen(o); if (!o) setResetConfirm(''); }}>
-          <AlertDialogContent className="bg-[#0B1224] border-white/10 text-white">
-            <AlertDialogHeader>
-              <AlertDialogTitle>Zerar todas as métricas?</AlertDialogTitle>
-              <AlertDialogDescription className="text-white/70">
-                Esta ação apaga <strong>todos</strong> os eventos registrados e não pode ser desfeita.
-                Digite <strong>ZERAR</strong> abaixo para confirmar.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <Input
-              value={resetConfirm}
-              onChange={(e) => setResetConfirm(e.target.value)}
-              placeholder="ZERAR"
-              className="bg-white/5 border-white/10 text-white"
-              autoFocus
-            />
-            <AlertDialogFooter>
-              <AlertDialogCancel className="bg-transparent border-white/20 text-white hover:bg-white/5">
-                Cancelar
-              </AlertDialogCancel>
-              <AlertDialogAction
-                disabled={resetConfirm !== 'ZERAR' || resetting}
-                onClick={handleReset}
-                className="bg-red-500 hover:bg-red-600 text-white disabled:opacity-40"
-              >
-                {resetting ? 'Zerando…' : 'Confirmar zeragem'}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+
 
 
         {/* Summary cards */}
