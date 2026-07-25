@@ -88,26 +88,8 @@ const KioskMetrics = () => {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<Period>('all');
   const [bucket, setBucket] = useState<Bucket>('day');
-  const [resetOpen, setResetOpen] = useState(false);
-  const [resetConfirm, setResetConfirm] = useState('');
-  const [resetting, setResetting] = useState(false);
 
-  const handleReset = async () => {
-    setResetting(true);
-    const { error } = await supabase
-      .from('kiosk_events')
-      .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000');
-    setResetting(false);
-    if (error) {
-      toast.error('Erro ao zerar métricas', { description: error.message });
-      return;
-    }
-    setRows([]);
-    setResetOpen(false);
-    setResetConfirm('');
-    toast.success('Métricas zeradas');
-  };
+
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
