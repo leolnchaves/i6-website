@@ -5,8 +5,9 @@ import { z } from 'zod';
 import { Loader2, CheckCircle2, Send } from 'lucide-react';
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
+import { trackKioskEvent } from '@/lib/kioskTracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
-import type { KioskLang, QuizContent } from '@/data/kiosk/config';
+import type { KioskLang, QuizContent, RouteId } from '@/data/kiosk/config';
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -18,12 +19,13 @@ type FormData = z.infer<typeof schema>;
 interface Props {
   lang: KioskLang;
   content: QuizContent;
+  route: RouteId | null;
   solutionId: string;
   solutionTitle: string;
   ebookTitle: string;
 }
 
-const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Props) => {
+const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
@@ -62,7 +64,7 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
         formData.append('email', data.email);
         formData.append('company', ebookTitle);
         formData.append('message', message);
-        formData.append('subscription', `i6-kiosk:${solutionId}`);
+        formData.append('subscription', 'i6-website');
         formData.append('token', SHARED_FORM_TOKEN);
         Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
 
@@ -72,6 +74,7 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
           solution_id: solutionId,
           language: lang,
         });
+        if (route) trackKioskEvent(`ebook:${route}`);
 
         setSubmitted(true);
       } catch (e) {
@@ -80,7 +83,7 @@ const EbookCTA = ({ lang, content, solutionId, solutionTitle, ebookTitle }: Prop
         setSubmitting(false);
       }
     },
-    [ebookTitle, lang, solutionId, solutionTitle],
+    [ebookTitle, lang, route, solutionId, solutionTitle],
   );
 
   return (

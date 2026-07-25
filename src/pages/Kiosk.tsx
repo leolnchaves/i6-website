@@ -11,12 +11,13 @@ import EbookCTA from '@/components/kiosk/EbookCTA';
 import {
   kioskContent,
   KIOSK_INACTIVITY_MS,
-  solutionEbook,
+  territoryEbook,
   type KioskLang,
   type RouteId,
 } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 import { trackEvent } from '@/lib/tracker';
+import { trackKioskEvent } from '@/lib/kioskTracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 type Stage = 'attract' | 'quiz' | 'results';
@@ -80,6 +81,7 @@ const Kiosk = () => {
 
   const handleStart = () => {
     trackEvent(TRACKER_EVENTS.KIOSK_SESSION_STARTED, { language: lang });
+    trackKioskEvent('kiosk:start');
     setStage('quiz');
     setRoute(null);
     setRecommendedIds(null);
@@ -97,6 +99,7 @@ const Kiosk = () => {
         option_id: optionId,
         route: opt.route,
       });
+      trackKioskEvent(`q1:${optionId}`);
       setRoute(opt.route);
       return;
     }
@@ -110,11 +113,13 @@ const Kiosk = () => {
       option_id: optionId,
       route,
     });
+    trackKioskEvent(`q2:${optionId}`);
     trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_COMPLETED, {
       language: lang,
       route,
       solutions: opt.solutionIds.join(','),
     });
+    opt.solutionIds.forEach((sid) => trackKioskEvent(`results:${sid}`));
     setRecommendedIds(opt.solutionIds);
     setStage('results');
   };
@@ -128,9 +133,7 @@ const Kiosk = () => {
     });
   };
 
-  const ebookTitle = selectedSolution
-    ? solutionEbook[selectedSolution.id]?.[lang] ?? selectedSolution.title
-    : '';
+  const ebookTitle = route ? territoryEbook[route][lang] : '';
 
   const currentQuestion =
     route === null ? kContent.routing : kContent.branches[route];
@@ -236,6 +239,7 @@ const Kiosk = () => {
                   <EbookCTA
                     lang={lang}
                     content={kContent}
+                    route={route}
                     solutionId={selectedSolution.id}
                     solutionTitle={selectedSolution.title}
                     ebookTitle={ebookTitle}
