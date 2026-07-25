@@ -17,6 +17,11 @@ const PriceToMarginDemo = ({ lang }: Props) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [progress, setProgress] = useState(0); // 0..pipeline.length
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const priceRef = useRef<HTMLDivElement>(null);
+  const insightRef = useRef<HTMLDivElement>(null);
+  const [line, setLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
+
   const selected = useMemo<DemoProduct | null>(
     () => content.products.find((p) => p.id === selectedId) ?? null,
     [content.products, selectedId],
