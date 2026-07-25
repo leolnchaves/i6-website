@@ -239,6 +239,7 @@ const Kiosk = () => {
                   <EbookCTA
                     lang={lang}
                     content={kContent}
+                    route={route}
                     solutionId={selectedSolution.id}
                     solutionTitle={selectedSolution.title}
                     ebookTitle={ebookTitle}
