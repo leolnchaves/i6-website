@@ -420,42 +420,22 @@ export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing
   'price-to-conversion': ['pricing', 'comercial'],
 };
 
-export const solutionEbook: Record<string, { pt: string; en: string }> = {
-  'predictive-personalization': {
-    pt: 'Personalização Preditiva na prática',
-    en: 'Predictive Personalization in practice',
+/**
+ * One eBook per territory (route). Any solution inside a route yields the
+ * same eBook on the results screen.
+ */
+export const territoryEbook: Record<RouteId, { pt: string; en: string }> = {
+  growth: {
+    pt: 'eBook Inteligência Preditiva do Consumidor',
+    en: 'eBook Predictive Customer Intelligence',
   },
-  'smart-discovery': {
-    pt: 'Descoberta Preditiva: convertendo tráfego anônimo',
-    en: 'Smart Discovery: converting anonymous traffic',
+  planning: {
+    pt: 'eBook Supply Preditivo',
+    en: 'eBook Predictive Supply',
   },
-  'predictive-campaign-targeting': {
-    pt: 'Campanhas por Propensão: mais conversão, menos CAC',
-    en: 'Predictive Campaign Targeting: more conversion, less CAC',
-  },
-  'demand-forecasting': {
-    pt: 'Forecast Preditivo de Demanda por SKU e PDV',
-    en: 'Predictive Demand Forecast by SKU and POS',
-  },
-  'predictive-commercial-targets': {
-    pt: 'Metas Comerciais Preditivas',
-    en: 'Predictive Commercial Goals',
-  },
-  'mix-assortment-order': {
-    pt: 'Mix, Sortimento e Pedido Ideal',
-    en: 'Predictive Assortment & Order Recommendation',
-  },
-  'price-to-margin': {
-    pt: 'Preço Orientado à Margem',
-    en: 'Price-to-Margin playbook',
-  },
-  'price-to-turnover': {
-    pt: 'Preço Orientado ao Giro',
-    en: 'Price-to-Turnover playbook',
-  },
-  'price-to-conversion': {
-    pt: 'Preço Orientado à Conversão',
-    en: 'Price-to-Conversion playbook',
+  pricing: {
+    pt: 'eBook Pricing Orientado a Resultados',
+    en: 'Results-Driven Pricing eBook',
   },
 };
 
