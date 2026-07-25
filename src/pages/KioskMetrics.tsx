@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 import {
   ResponsiveContainer,
   BarChart,
@@ -15,6 +16,17 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { kioskContent, type RouteId } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
 
 const DASHBOARD_TOKEN = 'i6k-x3f8n2vqp7wm4jt-metrics';
 
