@@ -310,6 +310,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
               </div>
 
               <div
+                ref={insightRef}
                 className="kiosk-insight-card relative mt-[1.2vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.6vmin] text-white/95 leading-relaxed"
               >
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
