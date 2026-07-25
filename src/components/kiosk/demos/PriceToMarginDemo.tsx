@@ -178,7 +178,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                   </h5>
 
                   {/* Price reveal zone */}
-                  <div className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-[2vmin] min-h-[10vmin] flex items-center justify-center">
+                  <div ref={priceRef} className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-[2vmin] min-h-[10vmin] flex items-center justify-center">
                     {!done ? (
                       <div className="flex items-center gap-[1.5vmin] text-white/60">
                         <span className="w-[2vmin] h-[2vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
