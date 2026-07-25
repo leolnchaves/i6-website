@@ -1,78 +1,88 @@
-## Objetivo
+## 1. eBooks por território (3, não mais por solução)
 
-Refatorar o quiz do /kiosk de "3 perguntas base + desempate de pricing" para um fluxo em **2 passos com roteamento por território**: a primeira pergunta escolhe o território (Growth / Planning / Pricing) e a segunda escolhe a solução dentro daquele território, indo direto para a tela de resultado (mesma tela padrão que existe hoje).
+Em `src/data/kiosk/config.ts`:
 
-## Novo fluxo
+- Adicionar `territoryEbook: Record<RouteId, { pt: string; en: string }>` com:
+  - `growth` → "eBook Inteligência Preditiva do Consumidor" / "eBook Predictive Customer Intelligence"
+  - `planning` → "eBook Supply Preditivo" / "eBook Predictive Supply"
+  - `pricing` → "eBook Pricing Orientado a Resultados" / "Results-Driven Pricing eBook"
+- Manter `solutionEbook` por enquanto (não referenciado após a troca), removê-lo depois.
 
-```text
-Q1 (território)
-├─ Growth & Customer Intelligence ──► Q2A ─┬─ Personalization + Smart Discovery
-│                                           └─ Predictive Campaign Targeting
-├─ Demand, Supply & Commercial Planning ──► Q2B ─┬─ Predictive Forecasting
-│                                                 ├─ Predictive Commercial Goals
-│                                                 └─ Predictive Assortment & Order
-└─ Pricing & Margin Intelligence ──► Q2C ─┬─ Price-to-Margin
-                                           ├─ Price-to-Turnover
-                                           └─ Price-to-Conversion
-```
+Em `src/pages/Kiosk.tsx` / `EbookCTA.tsx`:
 
-Total: sempre 2 perguntas. Sem desempate. Ao responder Q2, vai direto para `results` com a solução recomendada já selecionada, e a mesma tela padrão de hoje é reutilizada (SolutionsGrid + SolutionDemoBlock + KioskSignalIntelliboard + EbookCTA).
+- Passar o `route` (growth/planning/pricing) para o CTA, não o `solutionId`.
+- O título do eBook passa a vir de `territoryEbook[route][lang]`.
+- Envio ao i6HUB continua idêntico ao fluxo atual (mesmo endpoint/Apps Script usado em artigo/research gated), com `subscription: 'i6-website'` e o título do eBook como identificador do material — nada gravado no Lovable Cloud.
 
-Caso especial: quando a resposta indica **Personalization + Smart Discovery** (dois IDs combinados), a tela de resultados exibe as duas soluções lado a lado (grid com 2 cards, primeira pré-selecionada), reaproveitando o layout já usado no fallback de empate.
+## 2. Tracking agregado (opção A: 1 linha por clique)
 
-## Mudanças
+### Backend (Lovable Cloud)
 
-### 1. `src/data/kiosk/config.ts`
-- Trocar o modelo de dados: em vez de `PricingBucket` + `weights`, cada opção passa a carregar diretamente um `next` (id da próxima pergunta) na Q1, e um `solutionIds: string[]` na Q2.
-- Substituir `questions: QuizQuestion[]` + `tiebreaker` por:
-  - `routing: QuizQuestion` (Q1 com 3 opções → `growth` | `planning` | `pricing`)
-  - `branches: Record<'growth'|'planning'|'pricing', QuizQuestion>` (as três Q2)
-- Remover `bucketToSolutionId`, `PRICING_SOLUTION_IDS`, `PricingBucket` e o conceito de desempate.
-- Reescrever textos PT/EN conforme copy fornecida (rótulos curtos + helper com a explicação longa "Quero..."). Manter `intro`, `results`, `ebook`, `attract`, `footer`, `solutionEbook`, `solutionSignalMap` como estão.
-- Ajustar `progressLabel` para 2 passos.
+Nova tabela `public.kiosk_events`:
 
-### 2. `src/pages/Kiosk.tsx`
-- Remover estados `scores`, `showTiebreaker`, `quizStep` numérico e a lógica `resolveWinner` / `hasTopTie`.
-- Novos estados: `route: 'growth'|'planning'|'pricing'|null` e `recommendedIds: string[] | null`.
-- Handler da Q1 seta `route` e avança para Q2 da branch correspondente.
-- Handler da Q2 seta `recommendedIds` (1 ou 2 ids), muda stage para `results`, dispara `KIOSK_QUIZ_COMPLETED` com `{ route, solutions }`.
-- `solutionsForResults` = filtra `sContent.solutions` por `recommendedIds`. Auto-seleciona o primeiro id (mesma UX de hoje). Sem "tie fallback".
-- Ajustar `results.title/subtitle`: usar o mesmo copy padrão de hoje (a tela de resultados não muda visualmente). Se `recommendedIds.length > 1`, usar `tieTitle/tieSubtitle` já existentes como copy de "combinação".
-- Ajustar `reset()` para os novos estados.
+- `id uuid pk default gen_random_uuid()`
+- `event_key text not null` — string curta e estável
+- `created_at timestamptz not null default now()`
+- Index em `(event_key, created_at)` e em `created_at`.
 
-### 3. `src/components/kiosk/QuizScreen.tsx`
-- Remover a prop `isTiebreaker` e o parâmetro `weights`. `onAnswer` passa a receber apenas o `optionId` (o pai decide o que fazer).
-- `stepIndex`/`totalSteps` continuam funcionando (agora 1 de 2 e 2 de 2).
+RLS:
 
-### 4. Copy (PT — espelhar em EN)
+- `insert` liberado para `anon` e `authenticated` (site estático, sem login).
+- `select` liberado para `anon` também — o dashboard é público mas fica atrás de um hash "obscuro"; sem PII na tabela, o trade-off é aceitável.
+- GRANTs correspondentes.
 
-**Q1** — "Qual resultado você precisa priorizar agora?"
-- Aumentar conversão e receita — helper: "Vender mais por cliente, visitante ou canal, com ofertas e abordagens mais relevantes." → `growth`
-- Planejar demanda e operação com mais precisão — helper: "Melhorar previsões, metas, mix e pedidos para reduzir ruptura, excesso e desperdício." → `planning`
-- Tomar melhores decisões de preço — helper: "Proteger margem, acelerar o giro ou aumentar a conversão por meio do preço." → `pricing`
+### Chaves de evento (namespaced, curtas)
 
-**Q2 growth** — "Onde está a maior oportunidade de crescimento?"
-- Melhorar o que cada cliente ou visitante encontra e recebe → `['predictive-personalization','smart-discovery']`
-- Identificar quem deve ser abordado em cada campanha → `['predictive-campaign-targeting']`
+- `kiosk:start` — usuário toca em "Começar"
+- `q1:<optionId>` — resposta da Q1 (ex.: `q1:r-growth`)
+- `q2:<optionId>` — resposta da Q2 (ex.: `q2:g-personalization`)
+- `results:<solutionId>` — solução selecionada na tela de resultados
+- `ebook:<route>` — pedido de eBook submetido com sucesso (`growth`/`planning`/`pricing`)
+- `signal:<scenarioKey>` — pergunta clicada no i6 Signal
 
-**Q2 planning** — "Qual decisão precisa de mais precisão?"
-- Antecipar quanto será demandado, onde e quando → `['demand-forecasting']`
-- Definir metas de acordo com o potencial real de mercado → `['predictive-commercial-targets']`
-- Definir o melhor mix, volume ou pedido → `['mix-assortment-order']`
+### Frontend
 
-**Q2 pricing** — "O que sua decisão de preço precisa otimizar prioritariamente?"
-- Capturar mais margem → `['price-to-margin']`
-- Acelerar o giro de estoque → `['price-to-turnover']`
-- Aumentar a conversão → `['price-to-conversion']`
+Novo helper `src/lib/kioskTracker.ts`:
 
-## Fora do escopo
-- Tela de resultados permanece igual (mesmo layout, mesma demo, mesmo Intelliboard, mesmo EbookCTA). Telas dedicadas por solução ficam para a próxima rodada.
-- Não mexe em `SolutionsGrid`, `SolutionDemoBlock`, `KioskSignalIntelliboard`, `EbookCTA`, `AttractScreen`.
-- Não altera i18n do resto do site.
+- `trackKioskEvent(eventKey: string)` → `supabase.from('kiosk_events').insert({ event_key })`, fire-and-forget, try/catch silencioso.
+- Chamado nos pontos acima em `Kiosk.tsx`, `QuizScreen.tsx`, `SolutionsGrid.tsx`, `EbookCTA.tsx`, `KioskSignalIntelliboard.tsx`.
+- Não substitui o `useTracker` do GA4 no site geral — é adicional, dedicado ao kiosk.
 
-## Verificação
-- Q1 → cada uma das 3 opções leva à Q2 correta.
-- Growth R1 abre results com 2 cards (Personalization + Smart Discovery), primeiro pré-selecionado.
-- Todas as outras respostas abrem results com 1 card já pré-selecionado e scroll para o demo.
-- Botão Recomeçar volta para attract e zera route/recomendação.
-- PT e EN.
+## 3. Dashboard oculto
+
+Rota: `/kiosk-metrics/:token` (fora do prefixo de idioma, como `/kiosk`).
+
+- Token hardcoded no código (string opaca ~24 chars). Trocar = redeploy. Documentado que é temporário.
+- Se `token` não bater, `<Navigate to="/" />`.
+
+Página `src/pages/KioskMetrics.tsx`:
+
+- Carrega tudo de `kiosk_events` (com paginação se passar de 1000).
+- Filtro de período no topo: "Desde o início" (default), "Últimas 24h", "Últimos 7 dias", "Últimos 30 dias", "Hoje", "Última hora".
+- Filtro de granularidade de agrupamento visual: hora / dia / semana (para o gráfico temporal).
+- Assinatura realtime em `kiosk_events` (Postgres Changes → append no estado local) para atualização ao vivo.
+- Seções:
+  1. **Cards de resumo**: total de sessões (`kiosk:start`), quizzes completos (soma de `q2:*`), soluções selecionadas (`results:*`), eBooks enviados (`ebook:*`), taxa de conversão sessão→eBook.
+  2. **Q1 – Roteamento**: barra horizontal com contagens por opção (Growth / Planning / Pricing).
+  3. **Q2 por rota**: 3 blocos (Growth, Planning, Pricing), cada um com barras por opção.
+  4. **Soluções selecionadas**: ranking por solutionId (com label legível via lookup em `solutionsV2/content.ts`).
+  5. **eBooks solicitados**: 3 barras (growth/planning/pricing).
+  6. **i6 Signal**: contagem por cenário clicado.
+  7. **Timeline**: linha temporal agrupada pelo bucket escolhido (total de eventos por bucket).
+- Sem gráficos pesados: usar `recharts` (já disponível via shadcn) para timeline e barras.
+- Sem cabeçalho/rodapé do site (renderizada fora do `DarkLayout`, como `/kiosk`).
+
+Rota adicionada em `src/App.tsx` ao lado de `/kiosk`.
+
+## 4. Fora de escopo
+
+- Nada de PII na tabela (nome/email do eBook continuam só no fluxo i6HUB).
+- Sem autenticação real no dashboard — só o token opaco na URL.
+- Sem alteração no fluxo de leads de artigo/research.
+
+## Detalhes técnicos
+
+- Migration única: `CREATE TABLE` → `GRANT` (`anon` + `authenticated` insert/select; `service_role` all) → `ENABLE RLS` → policies `insert to anon,authenticated using (true)` e `select to anon,authenticated using (true)`.
+- Realtime: `ALTER PUBLICATION supabase_realtime ADD TABLE public.kiosk_events;` na mesma migration.
+- Subscribe no dashboard dentro de `useEffect` com `removeChannel` no cleanup (evita loop de conexão).
+- Contagens no dashboard são computadas no cliente por filtragem/redução do array de eventos — simples e suficiente para o volume esperado; se crescer, migrar para uma RPC de agregação.
