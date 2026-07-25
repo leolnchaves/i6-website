@@ -75,7 +75,7 @@ const productsPt: DemoProduct[] = [
     deltaRevenuePct: 8.3,
     deltaMarginPct: -5.7,
     deltaConversionPct: 18.3,
-    insight: 'Sessões repetidas no PDP com abandono de carrinho acima de 62% indicam hesitação no ticket atual. O cluster comportamental dominante (browsers de fim de semana) reage forte a reduções pequenas: elasticidade de conversão de −1,8. O novo preço aciona conversão latente sem canibalizar o cluster premium.',
+    insight: 'Abandono de carrinho >62% e sessões repetidas mostram hesitação. Pequeno corte destrava a conversão do cluster de fim de semana sem canibalizar o premium.',
   },
   {
     id: 'sku-2',
