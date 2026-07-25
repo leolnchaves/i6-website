@@ -158,7 +158,7 @@ const productsEn: DemoProduct[] = [
     deltaRevenuePct: 6.1,
     deltaMarginPct: -3.2,
     deltaConversionPct: 11.7,
-    insight: 'First order of the subscription cycle concentrates 71% of drop-off. Behavior observed: 3+ visits before converting, competitor clicks growing 24% MoM. The move unlocks entry into the recurring funnel, where LTV offsets the ticket giveback from the 2nd order onward.',
+    insight: '71% of drop-off sits on the first subscription order, with 3+ visits before converting. The move opens the recurring funnel — LTV offsets it from the 2nd order onward.',
   },
   {
     id: 'sku-3',
