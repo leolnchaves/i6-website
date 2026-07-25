@@ -215,6 +215,7 @@ const Kiosk = () => {
               labels={sContent.labels}
               activeId={selectedSolutionId}
               onSelect={handleSelectSolution}
+              highlightAll={isCombo}
             />
 
             <div id="kiosk-solution-demo" className="mt-[6vmin] flex flex-col gap-[4vmin]">

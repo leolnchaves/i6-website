@@ -5,13 +5,14 @@ interface Props {
   labels: SolutionsV2Content['labels'];
   activeId: string | null;
   onSelect: (id: string) => void;
+  highlightAll?: boolean;
 }
 
-const SolutionsGrid = ({ solutions, labels, activeId, onSelect }: Props) => {
+const SolutionsGrid = ({ solutions, labels, activeId, onSelect, highlightAll = false }: Props) => {
   return (
     <div className="flex flex-nowrap gap-[2vmin]">
       {solutions.map((s) => {
-        const isActive = activeId === s.id;
+        const isActive = highlightAll || activeId === s.id;
         return (
           <button
             type="button"
