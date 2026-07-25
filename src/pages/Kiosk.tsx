@@ -11,12 +11,13 @@ import EbookCTA from '@/components/kiosk/EbookCTA';
 import {
   kioskContent,
   KIOSK_INACTIVITY_MS,
-  solutionEbook,
+  territoryEbook,
   type KioskLang,
   type RouteId,
 } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 import { trackEvent } from '@/lib/tracker';
+import { trackKioskEvent } from '@/lib/kioskTracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 type Stage = 'attract' | 'quiz' | 'results';
