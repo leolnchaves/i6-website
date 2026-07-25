@@ -96,6 +96,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
 
   const handleQuestionClick = (sc: Scenario) => {
     if (isFillingInput || (sc === activeScenario && phase === 'responding')) return;
+    trackKioskEvent(`signal:${sc}`);
     setActiveScenario(sc);
     setPhase('idle');
     setShowResponse(false);
