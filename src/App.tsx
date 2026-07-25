@@ -116,6 +116,7 @@ const App = () => {
 
                   {/* Standalone kiosk / totem experience (no header/footer, no lang prefix) */}
                   <Route path="/kiosk" element={<Kiosk />} />
+                  <Route path="/kiosk-metrics/:token" element={<KioskMetrics />} />
 
                   {/* Localized site */}
                   <Route path="/:lang/*" element={<LocalizedRoutes />} />
