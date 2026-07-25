@@ -169,18 +169,18 @@ const PriceToMarginDemo = ({ lang }: Props) => {
         </div>
 
         {/* RIGHT — reasoning + conclusion */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2.5vmin] flex flex-col">
-          <div className="flex items-center gap-[1.5vmin] mb-[2vmin]">
-            <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-              <Sparkles className="w-[2.6vmin] h-[2.6vmin] text-[#F4845F]" />
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
+          <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
+            <span className="w-[4.2vmin] h-[4.2vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+              <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />
             </span>
             <div>
-              <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{content.reasoningTitle}</h4>
-              <p className="text-[1.5vmin] text-white/60">{content.reasoningSubtitle}</p>
+              <h4 className="text-[2vmin] font-bold text-white leading-tight">{content.reasoningTitle}</h4>
+              <p className="text-[1.4vmin] text-white/60">{content.reasoningSubtitle}</p>
             </div>
           </div>
 
-          <div className="flex flex-col gap-[1.4vmin]">
+          <div className="flex flex-col gap-[0.9vmin]">
             {content.pipeline.map((step, i) => {
               const state = !selected
                 ? 'idle'
@@ -192,7 +192,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
               return (
                 <div
                   key={i}
-                  className={`rounded-xl border p-[1.8vmin] transition-all ${
+                  className={`rounded-xl border p-[1.2vmin] transition-all ${
                     state === 'active'
                       ? 'border-[#F4845F] bg-[#F4845F]/10'
                       : state === 'done'
@@ -200,9 +200,9 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                       : 'border-white/10 bg-white/[0.02] opacity-60'
                   }`}
                 >
-                  <div className="flex items-center gap-[1.5vmin] mb-[0.8vmin]">
+                  <div className="flex items-center gap-[1.2vmin] mb-[0.5vmin]">
                     <span
-                      className={`flex-shrink-0 w-[2.8vmin] h-[2.8vmin] rounded-full flex items-center justify-center text-[1.4vmin] font-bold border-2 ${
+                      className={`flex-shrink-0 w-[2.2vmin] h-[2.2vmin] rounded-full flex items-center justify-center text-[1.2vmin] font-bold border-2 ${
                         state === 'done'
                           ? 'bg-[#F4845F] border-[#F4845F] text-white'
                           : state === 'active'
@@ -210,18 +210,18 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                           : 'border-white/30 text-white/50'
                       }`}
                     >
-                      {state === 'done' ? <Check className="w-[1.6vmin] h-[1.6vmin]" /> : i + 1}
+                      {state === 'done' ? <Check className="w-[1.3vmin] h-[1.3vmin]" /> : i + 1}
                     </span>
-                    <span className="text-[1.8vmin] leading-tight text-white/90 font-semibold">
+                    <span className="text-[1.6vmin] leading-tight text-white/90 font-semibold">
                       {step.label}
                     </span>
                   </div>
-                  <div className="pl-[4.3vmin]">
-                    <p className="text-[1.4vmin] text-white/60 font-mono mb-[0.6vmin]">
+                  <div className="pl-[3.4vmin]">
+                    <p className="text-[1.25vmin] text-white/60 font-mono mb-[0.4vmin]">
                       {step.microMetric}
                     </p>
                     {state === 'active' && (
-                      <div className="h-[0.4vmin] rounded-full bg-white/10 overflow-hidden">
+                      <div className="h-[0.35vmin] rounded-full bg-white/10 overflow-hidden">
                         <div
                           className="h-full bg-[#F4845F] animate-[kiosk-progress_var(--dur)_linear_forwards]"
                           style={{ ['--dur' as string]: `${step.durationMs}ms` }}
@@ -236,23 +236,23 @@ const PriceToMarginDemo = ({ lang }: Props) => {
 
           {/* Conclusive panel — appears after pipeline is done */}
           {done && selected && (
-            <div className="mt-[2vmin] rounded-2xl border border-[#F4845F]/50 bg-[#F4845F]/[0.08] p-[2vmin] animate-fade-in">
-              <div className="flex items-center justify-between mb-[1.5vmin]">
-                <span className="text-[1.6vmin] font-semibold text-white/90">{selected.name}</span>
-                <span className="flex items-center gap-[0.6vmin] text-[1.4vmin] font-semibold text-[#F4845F]">
-                  <Check className="w-[1.8vmin] h-[1.8vmin]" />
+            <div className="mt-[1.4vmin] rounded-2xl border border-[#F4845F]/50 bg-[#F4845F]/[0.08] p-[1.5vmin] animate-fade-in">
+              <div className="flex items-center justify-between mb-[1vmin]">
+                <span className="text-[1.5vmin] font-semibold text-white/90">{selected.name}</span>
+                <span className="flex items-center gap-[0.6vmin] text-[1.3vmin] font-semibold text-[#F4845F]">
+                  <Check className="w-[1.6vmin] h-[1.6vmin]" />
                   {content.doneLabel}
                 </span>
               </div>
-              <div className="grid grid-cols-2 gap-[1.5vmin]">
+              <div className="grid grid-cols-2 gap-[1vmin]">
                 <MetricPill
                   label={content.productLabels.recommended}
                   value={currency(selected.recommendedPrice, lang)}
                   highlight
                 />
                 <MetricPill
-                  label={content.productLabels.margin}
-                  value={`${selected.recommendedMargin.toFixed(1)}% · +${selected.deltaMarginPct.toFixed(1)} pp`}
+                  label={content.productLabels.deltaConversion}
+                  value={`+${selected.deltaConversionPct.toFixed(1)}%`}
                   highlight
                 />
                 <MetricPill
@@ -269,13 +269,13 @@ const PriceToMarginDemo = ({ lang }: Props) => {
               </div>
 
               <div
-                className="kiosk-insight-card relative mt-[1.5vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[2.2vmin] pr-[10vmin] text-[1.9vmin] text-white/95 leading-relaxed"
+                className="kiosk-insight-card relative mt-[1.2vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.6vmin] text-white/95 leading-relaxed"
               >
-                <div className="absolute top-[1.4vmin] right-[1.4vmin] flex items-center gap-[0.6vmin] px-[1.2vmin] py-[0.5vmin] rounded-full bg-[#F4845F] text-white text-[1.2vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
-                  <Sparkles className="w-[1.6vmin] h-[1.6vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
+                <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
+                  <Sparkles className="w-[1.4vmin] h-[1.4vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
                   <span>Insight</span>
                 </div>
-                <span className="block text-[1.5vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
+                <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
                   {content.rationaleLabel}
                 </span>
                 {selected.insight}
