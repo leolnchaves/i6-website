@@ -5,6 +5,7 @@ import {
   fmtBR,
   fmtBRL,
   fmtCAC,
+  getAllocation,
   getDimRows,
   labels as L,
   pipeline,
@@ -12,6 +13,7 @@ import {
   type AggregatedRow,
   type DimensionId,
 } from '@/data/kiosk/demos/commercialTargets';
+
 
 type Phase = 'setup' | 'running' | 'result';
 
