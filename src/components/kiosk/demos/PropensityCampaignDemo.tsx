@@ -342,17 +342,6 @@ const PropensityCampaignDemo = () => {
 
           {phase === 'result' && (
             <div className="mt-[1.4vmin] flex flex-col gap-[1vmin]">
-              <div className="rounded-xl border border-white/15 bg-white/[0.04] px-[1.4vmin] py-[1vmin] flex items-baseline justify-between">
-                <span className="text-[1.2vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
-                  {L.latency}
-                </span>
-                <span className="text-[1.6vmin] font-mono text-white">
-                  {latencyMs} ms
-                  <span className="text-[1.15vmin] text-white/55 ml-[0.6vmin]">
-                    {L.latencyHint}
-                  </span>
-                </span>
-              </div>
 
               <div className="relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.5vmin] text-white/95 leading-relaxed">
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
