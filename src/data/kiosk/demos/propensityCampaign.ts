@@ -158,11 +158,16 @@ export const pipeline: { label: string; micro: string; durationMs: number }[] = 
   },
 ];
 
+export interface AudienceTierSplit {
+  channel: ChannelId;
+  clients: number;
+}
+
 export interface AudienceTier {
   tier: 'Prioridade alta' | 'Prioridade média' | 'Oportunidade futura';
   clients: number;
   propensityPct: number;
-  channel: ChannelId;
+  channels: AudienceTierSplit[];
 }
 
 export interface ComputedResult {
@@ -197,16 +202,18 @@ const periodMultiplier: Record<PeriodId, number> = {
   '30d': 1.15,
 };
 
-const pickChannel = (product: ProductDef, allowed: ChannelId[]): ChannelId => {
-  if (allowed.includes(product.bestChannel)) return product.bestChannel;
-  return allowed[0] ?? product.bestChannel;
+const buildPriority = (product: ProductDef, allowed: ChannelId[]): ChannelId[] => {
+  const list: ChannelId[] = [];
+  const push = (c: ChannelId) => {
+    if (!list.includes(c)) list.push(c);
+  };
+  if (allowed.includes(product.bestChannel)) push(product.bestChannel);
+  allowed.forEach(push);
+  if (!list.length) push(product.bestChannel);
+  return list;
 };
 
-const secondChannel = (primary: ChannelId, allowed: ChannelId[]): ChannelId => {
-  const others = allowed.filter((c) => c !== primary);
-  if (others.length) return others[0];
-  return primary;
-};
+const pick = (arr: ChannelId[], i: number): ChannelId => arr[Math.min(i, arr.length - 1)];
 
 export const computeResult = (
   product: ProductDef,
@@ -223,28 +230,35 @@ export const computeResult = (
   const midShare = 0.28;
   const futureShare = 0.34;
 
-  const primary = pickChannel(product, allowedChannels);
-  const secondary = secondChannel(primary, allowedChannels);
-  const tertiary = secondChannel(secondary, allowedChannels.filter((c) => c !== primary));
+  const priority = buildPriority(product, allowedChannels);
+
+  const highTotal = Math.round(totalEligible * highShare);
+  const highSplits: AudienceTierSplit[] =
+    priority.length >= 2
+      ? [
+          { channel: priority[0], clients: Math.round(highTotal * 0.6) },
+          { channel: priority[1], clients: highTotal - Math.round(highTotal * 0.6) },
+        ]
+      : [{ channel: priority[0], clients: highTotal }];
 
   const tiers: AudienceTier[] = [
     {
       tier: 'Prioridade alta',
-      clients: Math.round(totalEligible * highShare),
+      clients: highTotal,
       propensityPct: 82,
-      channel: primary,
+      channels: highSplits,
     },
     {
       tier: 'Prioridade média',
       clients: Math.round(totalEligible * midShare),
       propensityPct: 61,
-      channel: secondary,
+      channels: [{ channel: pick(priority, 1), clients: Math.round(totalEligible * midShare) }],
     },
     {
       tier: 'Oportunidade futura',
       clients: Math.round(totalEligible * futureShare),
       propensityPct: 34,
-      channel: tertiary,
+      channels: [{ channel: pick(priority, 2), clients: Math.round(totalEligible * futureShare) }],
     },
   ];
 
@@ -252,6 +266,8 @@ export const computeResult = (
   const conversionPct = Number(
     (product.baseConversion + (allowedChannels.length >= 3 ? 0.6 : 0)).toFixed(1),
   );
+
+  const primary = priority[0];
 
   const drill: DrillCustomer = {
     id: 'CLI-' + (100000 + Math.floor(argIndex * 137 + product.baseConversion * 11)),
