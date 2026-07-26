@@ -246,23 +246,29 @@ export const computeResult = (
   const midTotal = Math.round(totalEligible * midShare);
   const futureTotal = Math.round(totalEligible * futureShare);
 
+  const seed = (argIndex * 31 + product.baseConversion * 17 + allowedChannels.length * 7) % 1000;
+  const rand = (min: number, max: number, offset: number) => {
+    const v = ((seed * 9301 + offset * 49297) % 233280) / 233280;
+    return Math.round((min + v * (max - min)) * 10) / 10;
+  };
+
   const tiers: AudienceTier[] = [
     {
       tier: 'Prioridade alta',
       clients: highTotal,
-      propensityPct: 82,
+      propensityPct: rand(83, 92, 11),
       channels: splitAcross(highTotal, priority),
     },
     {
       tier: 'Prioridade média',
       clients: midTotal,
-      propensityPct: 61,
+      propensityPct: rand(55, 68, 23),
       channels: splitAcross(midTotal, priority),
     },
     {
       tier: 'Oportunidade futura',
       clients: futureTotal,
-      propensityPct: 34,
+      propensityPct: rand(28, 40, 37),
       channels: splitAcross(futureTotal, priority),
     },
   ];
