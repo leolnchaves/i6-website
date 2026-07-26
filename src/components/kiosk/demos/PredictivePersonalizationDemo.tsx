@@ -197,12 +197,8 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     ? buildArgument(`${userMode}-${vertical}` as `${UserMode}-${Vertical}`, selected, recSkus, lang)
     : '';
 
-  const modeIcon =
-    userMode === 'logged' ? (
-      <User className="w-[2vmin] h-[2vmin]" />
-    ) : (
-      <UserX className="w-[2vmin] h-[2vmin]" />
-    );
+
+
 
   return (
     <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
