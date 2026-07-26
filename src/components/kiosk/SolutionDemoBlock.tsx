@@ -4,6 +4,7 @@ import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
 import DemandForecastDemo from './demos/DemandForecastDemo';
+import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
 
 interface Props {
   solution: LeanSolution;
