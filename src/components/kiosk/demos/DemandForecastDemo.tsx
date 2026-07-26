@@ -749,8 +749,18 @@ const CompositionChart = ({
 
         {/* Trend line */}
         <path d={trendPath} fill="none" stroke={colors.trend} strokeWidth={2.2} strokeLinejoin="round" strokeLinecap="round" style={{ filter: 'drop-shadow(0 1px 3px rgba(244,132,95,0.35))' }} />
-        {/* Season line (signed) */}
-        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.8} strokeDasharray="4 3" strokeLinejoin="round" />
+        {/* Season line (signed) with monthly markers to emphasize specific peaks/valleys */}
+        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.8} strokeLinejoin="round" strokeLinecap="round" />
+        {seasonSigned.map((v, i) => (
+          <circle
+            key={`season-mk-${i}`}
+            cx={xAt(i)}
+            cy={y(v)}
+            r={2.4}
+            fill={colors.season}
+            style={{ pointerEvents: 'none' }}
+          />
+        ))}
 
         {/* Promo markers */}
         {points.map((p, i) => {
