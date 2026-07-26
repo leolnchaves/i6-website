@@ -206,35 +206,34 @@ const DemandForecastDemo = ({ lang }: Props) => {
 
             {phase === 'result' && (
               <>
-                {!clickedPoint ? (
-                  <div className="grid grid-cols-4 gap-[1vmin]">
-                    <KpiCompare
-                      label={L.kpi.accuracy}
-                      oldValue={sku.historicalAccuracyPct}
-                      newValue={sku.i6AccuracyPct}
-                      higherIsBetter
-                      L={L}
-                    />
-                    <KpiCompare
-                      label={L.kpi.meanError}
-                      oldValue={sku.meanErrorPct}
-                      newValue={sku.i6MeanErrorPct}
-                      L={L}
-                    />
-                    <KpiCompare
-                      label={L.kpi.stockout}
-                      oldValue={sku.stockoutPct}
-                      newValue={sku.i6StockoutPct}
-                      L={L}
-                    />
-                    <KpiCompare
-                      label={L.kpi.excess}
-                      oldValue={sku.excessPct}
-                      newValue={sku.i6ExcessPct}
-                      L={L}
-                    />
-                  </div>
-                ) : (
+                <div className="grid grid-cols-4 gap-[1vmin]">
+                  <KpiCompare
+                    label={L.kpi.accuracy}
+                    oldValue={sku.historicalAccuracyPct}
+                    newValue={sku.i6AccuracyPct}
+                    higherIsBetter
+                    L={L}
+                  />
+                  <KpiCompare
+                    label={L.kpi.meanError}
+                    oldValue={sku.meanErrorPct}
+                    newValue={sku.i6MeanErrorPct}
+                    L={L}
+                  />
+                  <KpiCompare
+                    label={L.kpi.stockout}
+                    oldValue={sku.stockoutPct}
+                    newValue={sku.i6StockoutPct}
+                    L={L}
+                  />
+                  <KpiCompare
+                    label={L.kpi.excess}
+                    oldValue={sku.excessPct}
+                    newValue={sku.i6ExcessPct}
+                    L={L}
+                  />
+                </div>
+                {clickedPoint && (
                   <BreakdownCard point={clickedPoint} sku={sku} L={L} lang={lang} onClose={() => setSelectedMonth(null)} />
                 )}
                 <div>

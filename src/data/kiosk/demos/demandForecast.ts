@@ -242,8 +242,9 @@ export const buildSeries = (
   const regionMult =
     region === 'sudeste' ? 0.58 : region === 'sul' ? 0.19 : region === 'nordeste' ? 0.14 : 1;
 
-  const nowYear = 2025;
-  const nowMonth = 10;
+  const now = new Date();
+  const nowYear = now.getFullYear();
+  const nowMonth = now.getMonth(); // 0-11, real current month
 
   const totalMonths = HISTORY_MONTHS + FORECAST_MAX;
   const points: MonthPoint[] = [];
