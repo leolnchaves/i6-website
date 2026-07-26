@@ -269,6 +269,20 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                   lang={lang}
                 />
               )}
+              {activeScenario === 'propensity' && 'productChart' in scenario && (
+                <PropensityByProductChart
+                  data={(scenario as typeof t.scenarios.propensity).productChart}
+                  note={(scenario as typeof t.scenarios.propensity).productChartNote}
+                  lang={lang}
+                />
+              )}
+              {activeScenario === 'clusters' && 'clustersTable' in scenario && (
+                <BehaviorClustersTable
+                  table={(scenario as typeof t.scenarios.clusters).clustersTable}
+                  detail={(scenario as typeof t.scenarios.clusters).clustersDetail}
+                  lang={lang}
+                />
+              )}
 
               <h4 className="text-orange-500 font-semibold text-[1.6vmin] mt-[2.5vmin] mb-[1vmin] uppercase tracking-wider">
                 {t.recommendedActions}
