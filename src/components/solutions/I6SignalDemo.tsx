@@ -370,6 +370,21 @@ const I6SignalDemo = memo(() => {
                             lang={lang}
                           />
                         )}
+                        {activeScenario === 'propensity' && 'productChart' in scenario && (
+                          <PropensityByProductChart
+                            data={(scenario as typeof t.scenarios.propensity).productChart}
+                            note={(scenario as typeof t.scenarios.propensity).productChartNote}
+                            lang={lang}
+                          />
+                        )}
+                        {activeScenario === 'clusters' && 'clustersTable' in scenario && (
+                          <BehaviorClustersTable
+                            table={(scenario as typeof t.scenarios.clusters).clustersTable}
+                            detail={(scenario as typeof t.scenarios.clusters).clustersDetail}
+                            lang={lang}
+                          />
+                        )}
+
 
                         {/* Recommended Actions */}
                         <h4 className="text-orange-500 font-semibold text-sm mt-4 mb-2">{t.recommendedActions}</h4>
