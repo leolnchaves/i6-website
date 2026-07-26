@@ -313,18 +313,19 @@ export const computeResult = (args: Args): CommercialResult => {
   const enriched = rows.map((r) => ({ r, m: computeRowMetrics(r, seed, pMult, budgetVal) }));
 
   // Aggregate by region (fixed dimension for the main table view)
-  const byRegion = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number }>();
-  const byRep = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number }>();
-  const byClient = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; region: string; rep: string }>();
-  const bySku = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; category: string }>();
+  const byRegion = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number }>();
+  const byRep = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number }>();
+  const byClient = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number; region: string; rep: string }>();
+  const bySku = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number; category: string }>();
 
   enriched.forEach(({ r, m }) => {
     const add = (map: Map<string, any>, key: string, extra: Record<string, any> = {}) => {
-      const cur = map.get(key) ?? { rows: [], current: 0, suggested: 0, potential: 0, ...extra };
+      const cur = map.get(key) ?? { rows: [], current: 0, suggested: 0, potential: 0, currentInvestment: 0, ...extra };
       cur.rows.push(r);
       cur.current += m.currentScaled;
       cur.suggested += m.suggested;
       cur.potential += m.potential;
+      cur.currentInvestment += r.currentInvestment;
       map.set(key, cur);
     };
     add(byRegion, r.region);
@@ -364,35 +365,75 @@ export const computeResult = (args: Args): CommercialResult => {
     sku: toRows(bySku, 'sku'),
   };
 
-  // Region allocation
-  const totalInvestmentBase = budgetVal; // total budget available for the period (in thousands)
-  const regionAgg = Array.from(byRegion.entries()).map(([label, v]) => {
-    const regionId = (v.rows[0] as Row).regionId;
-    const currentInvestmentSum = v.rows.reduce((acc: number, r: Row) => acc + r.currentInvestment, 0);
-    const growthPct = rand(`${seed}|growth|${regionId}`, 6, 22, 0); // 6–22%
-    const cac = rand(`${seed}|cac|${regionId}`, 10, 25, 1);
-    return { label, regionId, currentInvestmentSum, growthPct, cac, potential: v.potential };
-  });
+  // ---- Allocation (generic across dimensions) ----
+  const totalInvestmentBase = budgetVal; // total budget available for the period (in thousands of BRL)
 
-  // Score = growth / cac (higher = better)
-  const scored = regionAgg.map((r) => ({ ...r, score: r.growthPct / r.cac }));
-  const totalScore = scored.reduce((a, b) => a + b.score, 0) || 1;
-  const allocation: RegionAllocation[] = scored.map((r) => {
-    const suggested = Math.round((r.score / totalScore) * totalInvestmentBase);
-    const diff = suggested - r.currentInvestmentSum;
-    const relDiff = r.currentInvestmentSum === 0 ? 0 : diff / r.currentInvestmentSum;
-    const action: 'up' | 'down' | 'redistribute' =
-      relDiff > 0.1 ? 'up' : relDiff < -0.1 ? 'down' : 'redistribute';
+  const buildAllocation = (
+    map: Map<string, any>,
+    kind: 'region' | 'rep' | 'client' | 'sku',
+  ): AllocationRow[] => {
+    // Aggregates + growth per key (stable via seed)
+    const agg = Array.from(map.entries()).map(([label, v]) => {
+      const growthPct = rand(`${seed}|growth|${kind}|${label}`, 6, 22, 0);
+      const incremental = Math.max(0, v.suggested - v.current);
+      // Score prioritizes keys with higher growth potential and larger incremental capture
+      const score = growthPct * Math.max(1, incremental);
+      return {
+        key: `${kind}:${label}`,
+        label,
+        sublabel:
+          kind === 'client' ? `${v.region} · ${v.rep}` :
+          kind === 'sku' ? categoryLabelStatic(v.category) :
+          undefined,
+        growthPct,
+        incremental,
+        currentInvestment: v.currentInvestment,
+        score,
+      };
+    });
+    const totalScore = agg.reduce((a, b) => a + b.score, 0) || 1;
+    return agg
+      .map((r) => {
+        const suggestedInvestment = Math.round((r.score / totalScore) * totalInvestmentBase);
+        // CAC in R$ per incremental unit: investment (in thousands) × 1000 / incremental
+        const cac = r.incremental > 0
+          ? (suggestedInvestment * 1000) / r.incremental
+          : 0;
+        const diff = suggestedInvestment - r.currentInvestment;
+        const relDiff = r.currentInvestment === 0 ? 0 : diff / r.currentInvestment;
+        const action: 'up' | 'down' | 'redistribute' =
+          relDiff > 0.1 ? 'up' : relDiff < -0.1 ? 'down' : 'redistribute';
+        return {
+          key: r.key,
+          label: r.label,
+          sublabel: r.sublabel,
+          growthPct: r.growthPct,
+          currentInvestment: r.currentInvestment,
+          suggestedInvestment,
+          incrementalVolume: r.incremental,
+          cac,
+          action,
+        };
+      })
+      .sort((a, b) => b.growthPct - a.growthPct);
+  };
+
+  const allocationsByDim = {
+    region: buildAllocation(byRegion, 'region'),
+    rep: buildAllocation(byRep, 'rep'),
+    client: buildAllocation(byClient, 'client'),
+    sku: buildAllocation(bySku, 'sku'),
+  };
+
+  // Region allocation is the canonical one (keeps regionId for legacy consumers)
+  const allocation: RegionAllocation[] = allocationsByDim.region.map((a) => {
+    const rowSample = byRegion.get(a.label)?.rows[0] as Row | undefined;
     return {
-      region: r.label,
-      regionId: r.regionId,
-      growthPct: r.growthPct,
-      currentInvestment: r.currentInvestmentSum,
-      suggestedInvestment: suggested,
-      cac: r.cac,
-      action,
+      ...a,
+      region: a.label,
+      regionId: (rowSample?.regionId ?? 'sp-interior') as Exclude<RegionId, 'all'>,
     };
-  }).sort((a, b) => b.growthPct - a.growthPct);
+  });
 
   // KPIs
   const totalCurrent = enriched.reduce((a, { m }) => a + m.currentScaled, 0);
@@ -400,10 +441,11 @@ export const computeResult = (args: Args): CommercialResult => {
   const totalPotential = enriched.reduce((a, { m }) => a + m.potential, 0);
   const incrementalVolume = Math.max(0, totalSuggested - totalCurrent);
   const suggestedInvestment = allocation.reduce((a, r) => a + r.suggestedInvestment, 0);
-  const projectedCac =
-    allocation.length === 0
-      ? 0
-      : allocation.reduce((a, r) => a + r.cac, 0) / allocation.length;
+  // Weighted CAC: total investment (R$) / total incremental units
+  const projectedCac = incrementalVolume > 0
+    ? (suggestedInvestment * 1000) / incrementalVolume
+    : 0;
+
 
   // Highlights
   const upRegions = allocation.filter((r) => r.action === 'up').map((r) => r.region);
