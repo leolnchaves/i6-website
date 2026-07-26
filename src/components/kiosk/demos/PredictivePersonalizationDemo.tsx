@@ -290,59 +290,107 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                   {t.backToCatalog}
                 </button>
 
-                {/* Selected product hero */}
-                <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
-                  <div className="flex gap-[1.5vmin] items-center">
-                    <div className="w-[14vmin] h-[14vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
-                      <img src={selected.image} alt="" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="block text-[1.2vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
-                        {selected.category[lang]}
-                      </span>
-                      <h5 className="text-[2vmin] leading-tight text-white font-bold mb-[0.4vmin]">
-                        {selected.name[lang]}
-                      </h5>
-                      <span
-                        className="block text-[2.4vmin] font-bold text-white leading-none"
-                        style={{ textShadow: '0 0 20px rgba(244,132,95,0.4)' }}
-                      >
-                        {currency(selected.price, lang)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                {vertical === 'fashion' && phase === 'pdp' ? (
+                  <>
+                    {/* Fashion: âncora + look complementar unificado lado a lado */}
+                    <div ref={pdpRef} className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)] gap-[1.2vmin] items-stretch animate-fade-in">
+                      {/* Anchor product — vertical, mais estreito e mais alto */}
+                      <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.4vmin] flex flex-col">
+                        <div className="w-full aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[1vmin]">
+                          <img src={selected.image} alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <span className="block text-[1.15vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
+                          {selected.category[lang]}
+                        </span>
+                        <h5 className="text-[1.7vmin] leading-tight text-white font-bold mb-[0.4vmin]">
+                          {selected.name[lang]}
+                        </h5>
+                        <span
+                          className="block text-[2vmin] font-bold text-white leading-none mt-auto"
+                          style={{ textShadow: '0 0 20px rgba(244,132,95,0.4)' }}
+                        >
+                          {currency(selected.price, lang)}
+                        </span>
+                      </div>
 
-                {/* Recs / Look — only after training */}
-                {phase === 'pdp' && (
-                  <div ref={pdpRef} className="mt-[1.5vmin] animate-fade-in">
-                    <div className="flex items-center justify-between mb-[0.8vmin]">
-                      <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
-                        {vertical === 'fashion' ? t.lookTitle : t.recsTitle}
-                      </span>
-                      <span className="text-[1.2vmin] text-white/50">{t.tapToExplore}</span>
-                    </div>
-
-                    {vertical === 'fashion' ? (
-                      <>
-                        <div className="grid grid-cols-3 gap-[1vmin]">
+                      {/* Unified look card — 3 itens em linha, sem cards individuais */}
+                      <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-[#F4845F]/[0.06] p-[1.4vmin] flex flex-col">
+                        <div className="flex items-center justify-between mb-[1vmin]">
+                          <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
+                            {t.lookTitle}
+                          </span>
+                          <span className="text-[1.2vmin] text-white/50">{t.tapToExplore}</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-[0.6vmin] flex-1">
                           {recSkus.slice(0, 3).map((s) => (
+                            <button
+                              key={s.id}
+                              type="button"
+                              onClick={() => pickProduct(s.id)}
+                              className="text-left rounded-lg p-[0.8vmin] transition-all hover:bg-white/[0.05] active:scale-[0.98] flex flex-col"
+                            >
+                              <div className="w-full aspect-[3/4] rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[0.6vmin]">
+                                <img src={s.image} alt="" className="w-full h-full object-cover" />
+                              </div>
+                              <span className="block text-[1.35vmin] leading-tight text-white/90 font-semibold min-h-[3vmin]">
+                                {s.name[lang]}
+                              </span>
+                              <span className="block text-[1.4vmin] text-white font-bold mt-[0.3vmin]">
+                                {currency(s.price, lang)}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Total do look — abaixo dos dois quadros */}
+                    <div className="mt-[1vmin] rounded-xl bg-[#F4845F]/10 border border-[#F4845F]/40 px-[1.4vmin] py-[1vmin] flex items-center justify-between">
+                      <span className="text-[1.4vmin] text-white/80">{t.lookTotal}</span>
+                      <span className="text-[1.9vmin] font-bold text-white">{currency(lookTotal, lang)}</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Selected product hero (não-fashion, ou fashion durante training) */}
+                    <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
+                      <div className="flex gap-[1.5vmin] items-center">
+                        <div className="w-[14vmin] h-[14vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                          <img src={selected.image} alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="block text-[1.2vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
+                            {selected.category[lang]}
+                          </span>
+                          <h5 className="text-[2vmin] leading-tight text-white font-bold mb-[0.4vmin]">
+                            {selected.name[lang]}
+                          </h5>
+                          <span
+                            className="block text-[2.4vmin] font-bold text-white leading-none"
+                            style={{ textShadow: '0 0 20px rgba(244,132,95,0.4)' }}
+                          >
+                            {currency(selected.price, lang)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {phase === 'pdp' && (
+                      <div ref={pdpRef} className="mt-[1.5vmin] animate-fade-in">
+                        <div className="flex items-center justify-between mb-[0.8vmin]">
+                          <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
+                            {t.recsTitle}
+                          </span>
+                          <span className="text-[1.2vmin] text-white/50">{t.tapToExplore}</span>
+                        </div>
+                        <div className="grid grid-cols-4 gap-[1vmin]">
+                          {recSkus.slice(0, 4).map((s) => (
                             <SkuTile key={s.id} sku={s} lang={lang} onClick={() => pickProduct(s.id)} small />
                           ))}
                         </div>
-                        <div className="mt-[1vmin] rounded-xl bg-[#F4845F]/10 border border-[#F4845F]/40 px-[1.4vmin] py-[1vmin] flex items-center justify-between">
-                          <span className="text-[1.4vmin] text-white/80">{t.lookTotal}</span>
-                          <span className="text-[1.9vmin] font-bold text-white">{currency(lookTotal, lang)}</span>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="grid grid-cols-4 gap-[1vmin]">
-                        {recSkus.slice(0, 4).map((s) => (
-                          <SkuTile key={s.id} sku={s} lang={lang} onClick={() => pickProduct(s.id)} small />
-                        ))}
                       </div>
                     )}
-                  </div>
+                  </>
                 )}
               </div>
             )}
