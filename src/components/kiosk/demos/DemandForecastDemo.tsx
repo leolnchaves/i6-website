@@ -635,119 +635,180 @@ const CompositionChart = ({
 }) => {
   const points = series.filter((p) => p.trend !== null);
   const W = 620;
-  const H = 170;
-  const PAD_L = 38;
-  const PAD_R = 12;
-  const PAD_T = 14;
-  const PAD_B = 26;
+  const H = 220;
+  const PAD_L = 44;
+  const PAD_R = 14;
+  const PAD_T = 18;
+  const PAD_B = 34;
 
-  const trendVals = points.map((p) => p.trend ?? 0);
-  const seasonVals = points.map((p) => Math.abs(p.season ?? 0));
+  const chartH = H - PAD_T - PAD_B;
+
+  // Deterministic wiggle for organic feel
+  const wiggle = (seed: number) => {
+    const x = Math.sin(seed * 78.233 + 3.14) * 43758.5453;
+    return (x - Math.floor(x)) * 2 - 1;
+  };
+
+  // Trend: baseline (median) + small organic delta relative to baseline
+  const trendRaw = points.map((p) => p.trend ?? 0);
+  const trendMedian = trendRaw.length ? trendRaw[Math.floor(trendRaw.length / 2)] : 0;
+  const trendDisplay = trendRaw.map((v, i) => v * (1 + wiggle(i * 1.7) * 0.025));
+
+  // Season: signed (can be negative)
+  const seasonSigned = points.map((p) => p.season ?? 0);
   const sparsityVals = points.map((p) => Math.max(0, p.sparsityFix ?? 0));
 
-  const maxLine = Math.max(...trendVals, ...seasonVals, ...sparsityVals) * 1.15;
-  const maxY = Math.max(1, maxLine);
+  const posMax = Math.max(
+    ...trendDisplay,
+    ...seasonSigned.map((v) => Math.max(0, v)),
+    ...sparsityVals,
+    1,
+  );
+  const negMin = Math.min(
+    0,
+    ...seasonSigned.map((v) => Math.min(0, v)),
+  );
+
+  // Symmetric-ish range: keep zero visible, favor positive side
+  const rangeMax = posMax * 1.15;
+  const rangeMin = negMin * 1.2;
+  const totalRange = rangeMax - rangeMin;
 
   const bandW = (W - PAD_L - PAD_R) / points.length;
-  const barW = Math.max(8, bandW * 0.42);
+  const barW = Math.max(10, bandW * 0.5);
 
   const colors = {
     trend: '#F4845F',
     season: 'rgba(255,255,255,0.85)',
     sparsityFix: 'rgba(244,132,95,0.45)',
     promo: '#F4845F',
+    zero: 'rgba(255,255,255,0.25)',
   };
 
-  const y = (v: number) => PAD_T + (1 - v / maxY) * (H - PAD_T - PAD_B);
-  const yBar = (v: number) => (v / maxY) * (H - PAD_T - PAD_B);
+  const y = (v: number) => PAD_T + (1 - (v - rangeMin) / totalRange) * chartH;
+  const yZero = y(0);
 
   const xAt = (i: number) => PAD_L + bandW * i + bandW / 2;
 
-  const trendPath = points
-    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(p.trend ?? 0)}`)
+  const trendPath = trendDisplay
+    .map((v, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(v)}`)
     .join(' ');
-  const seasonPath = points
-    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(Math.abs(p.season ?? 0))}`)
+  const seasonPath = seasonSigned
+    .map((v, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(v)}`)
     .join(' ');
 
+  // Y-axis ticks including 0
+  const yTicks = [rangeMax, rangeMax * 0.5, 0, rangeMin * 0.5, rangeMin].filter(
+    (t, i, arr) => arr.indexOf(t) === i && t >= rangeMin && t <= rangeMax,
+  );
+
   return (
-    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 200 }}>
-        {[0.25, 0.5, 0.75, 1].map((t, i) => (
-          <line
-            key={i}
-            x1={PAD_L}
-            x2={W - PAD_R}
-            y1={y(maxY * t)}
-            y2={y(maxY * t)}
-            stroke="rgba(255,255,255,0.06)"
-            strokeDasharray="2 3"
-          />
+    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.4vmin]">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 300 }}>
+        {yTicks.map((t, i) => (
+          <g key={i}>
+            <line
+              x1={PAD_L}
+              x2={W - PAD_R}
+              y1={y(t)}
+              y2={y(t)}
+              stroke={t === 0 ? colors.zero : 'rgba(255,255,255,0.06)'}
+              strokeDasharray={t === 0 ? undefined : '2 3'}
+              strokeWidth={t === 0 ? 1 : 1}
+            />
+            <text x={PAD_L - 6} y={y(t) + 3} textAnchor="end" fontSize="8" fill="rgba(255,255,255,0.45)">
+              {t === 0 ? '0' : `${t > 0 ? '+' : ''}${Math.abs(t) >= 1000 ? `${(t / 1000).toFixed(0)}k` : t.toFixed(0)}`}
+            </text>
+          </g>
         ))}
-        {/* Sparsity bars */}
+
+        {/* Sparsity bars — always above zero line */}
         {points.map((p, i) => {
           const sp = Math.max(0, p.sparsityFix ?? 0);
-          const h = yBar(sp);
+          const barTop = y(sp);
+          const barH = yZero - barTop;
           const cx = xAt(i);
           const selected = selectedKey === p.key;
           return (
-            <g
-              key={p.key}
-              className="cursor-pointer"
-              onClick={() => onSelect(p.key)}
-              style={{ opacity: selectedKey && !selected ? 0.4 : 1 }}
-            >
-              <rect
-                x={cx - barW / 2}
-                y={H - PAD_B - h}
-                width={barW}
-                height={h}
-                fill={colors.sparsityFix}
-                rx={2}
-              />
+            <rect
+              key={`bar-${p.key}`}
+              x={cx - barW / 2}
+              y={barTop}
+              width={barW}
+              height={Math.max(0, barH)}
+              fill={colors.sparsityFix}
+              rx={2}
+              style={{
+                opacity: selectedKey && !selected ? 0.35 : 1,
+                pointerEvents: 'none',
+              }}
+            />
+          );
+        })}
+
+        {/* Zero baseline redraw over bars */}
+        <line x1={PAD_L} x2={W - PAD_R} y1={yZero} y2={yZero} stroke={colors.zero} strokeWidth={1} />
+
+        {/* Trend line */}
+        <path d={trendPath} fill="none" stroke={colors.trend} strokeWidth={2.2} strokeLinejoin="round" strokeLinecap="round" style={{ filter: 'drop-shadow(0 1px 3px rgba(244,132,95,0.35))' }} />
+        {/* Season line (signed) */}
+        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.8} strokeDasharray="4 3" strokeLinejoin="round" />
+
+        {/* Promo markers */}
+        {points.map((p, i) => {
+          if (!p.hasPromo) return null;
+          const cx = xAt(i);
+          const cy = y(trendDisplay[i]) - 10;
+          return (
+            <g key={`promo-${p.key}`} style={{ pointerEvents: 'none' }}>
+              <circle cx={cx} cy={cy} r={5} fill={colors.promo} stroke="#0B1224" strokeWidth={1.4} />
+              <circle cx={cx} cy={cy} r={2.2} fill="#fff" />
+            </g>
+          );
+        })}
+
+        {/* Month labels + selected highlight + hitbox (large touch target) */}
+        {points.map((p, i) => {
+          const cx = xAt(i);
+          const selected = selectedKey === p.key;
+          return (
+            <g key={`hit-${p.key}`} className="cursor-pointer" onClick={() => onSelect(p.key)}>
               {selected && (
                 <rect
                   x={cx - bandW / 2 + 2}
                   y={PAD_T}
                   width={bandW - 4}
-                  height={H - PAD_T - PAD_B}
-                  fill="rgba(244,132,95,0.08)"
+                  height={chartH}
+                  fill="rgba(244,132,95,0.10)"
                   stroke="#F4845F"
-                  strokeWidth={1}
-                  rx={3}
+                  strokeWidth={1.6}
+                  rx={4}
                 />
               )}
+              {/* Full-band invisible hitbox for touch */}
+              <rect
+                x={cx - bandW / 2}
+                y={PAD_T}
+                width={bandW}
+                height={chartH + PAD_B - 6}
+                fill="transparent"
+              />
               <text
                 x={cx}
-                y={H - 8}
+                y={H - 10}
                 textAnchor="middle"
-                fontSize="8"
-                fill={selected ? '#F4845F' : 'rgba(255,255,255,0.55)'}
+                fontSize={selected ? 10.5 : 9}
+                fill={selected ? '#F4845F' : 'rgba(255,255,255,0.6)'}
                 fontWeight={selected ? 'bold' : 'normal'}
+                style={{ pointerEvents: 'none' }}
               >
                 {(lang === 'pt' ? p.labelPt : p.labelEn).split('/')[0]}
               </text>
             </g>
           );
         })}
-        {/* Trend line */}
-        <path d={trendPath} fill="none" stroke={colors.trend} strokeWidth={2} />
-        {/* Season line */}
-        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.6} strokeDasharray="4 3" />
-        {/* Promo markers — star-like dots above bar */}
-        {points.map((p, i) => {
-          if (!p.hasPromo) return null;
-          const cx = xAt(i);
-          const cy = Math.min(y(p.trend ?? 0), y(Math.abs(p.season ?? 0))) - 8;
-          return (
-            <g key={`promo-${p.key}`} style={{ pointerEvents: 'none' }}>
-              <circle cx={cx} cy={cy} r={4.5} fill={colors.promo} stroke="#0B1224" strokeWidth={1.2} />
-              <circle cx={cx} cy={cy} r={2} fill="#fff" />
-            </g>
-          );
-        })}
       </svg>
-      <div className="flex flex-wrap gap-[1.4vmin] mt-[0.6vmin] text-[1.15vmin] text-white/70">
+      <div className="flex flex-wrap gap-[1.4vmin] mt-[0.8vmin] text-[1.2vmin] text-white/75">
         <LegendDot color={colors.trend} label={L.result.trend} />
         <LegendDot color={colors.season} dashed label={L.result.season} />
         <LegendDot square color={colors.sparsityFix} label={L.result.sparsityFix} />
