@@ -354,7 +354,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                 {/* Selected product hero */}
                 <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
                   <div className="flex gap-[1.5vmin] items-center">
-                    <div className="w-[9vmin] h-[9vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                    <div className="w-[14vmin] h-[14vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
                       <img src={selected.image} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
