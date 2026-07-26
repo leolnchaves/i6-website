@@ -491,6 +491,8 @@ export const computeResult = (args: Args): CommercialResult => {
     rationale,
     // @ts-expect-error attach for the dimension switcher
     _allDims: dimRows,
+    // @ts-expect-error attach per-dim allocations
+    _allAllocations: allocationsByDim,
   };
 };
 
@@ -498,6 +500,12 @@ export const computeResult = (args: Args): CommercialResult => {
 export const getDimRows = (r: CommercialResult): Record<DimensionId, AggregatedRow[]> =>
   // @ts-expect-error _allDims attached by computeResult
   r._allDims as Record<DimensionId, AggregatedRow[]>;
+
+// Utility for consumers to fetch the allocation of a given dimension
+export const getAllocation = (r: CommercialResult, dim: DimensionId): AllocationRow[] =>
+  // @ts-expect-error _allAllocations attached by computeResult
+  (r._allAllocations as Record<DimensionId, AllocationRow[]>)[dim];
+
 
 function categoryLabelStatic(id: string) {
   return categories.find((c) => c.id === id)?.label ?? id;
