@@ -39,6 +39,21 @@ const DemandForecastDemo = ({ lang }: Props) => {
     [sku, channel, region, horizon],
   );
 
+  // Fixed y-scale based on Total×Total so channel/region filters visibly shrink the chart
+  const scaleReference = useMemo(
+    () => buildSeries(sku, 'total', 'total', horizon),
+    [sku, horizon],
+  );
+  const fixedMaxY = useMemo(() => {
+    const all: number[] = [];
+    scaleReference.forEach((p) => {
+      if (p.history !== null) all.push(p.history);
+      if (p.currentFcst !== null) all.push(p.currentFcst);
+      if (p.i6Fcst !== null) all.push(p.i6Fcst);
+    });
+    return Math.max(...all) * 1.08;
+  }, [scaleReference]);
+
   // Volume avg to visibly react to channel/region filters
   const avgVolume = useMemo(() => {
     const hist = series.map((p) => p.history).filter((v): v is number => v !== null);
@@ -161,6 +176,7 @@ const DemandForecastDemo = ({ lang }: Props) => {
                 series={series}
                 phase={phase}
                 lang={lang}
+                fixedMaxY={fixedMaxY}
               />
             </div>
 
@@ -419,40 +435,30 @@ const FilterChips = ({
   disabled?: boolean;
 }) => {
   return (
-    <div className="flex flex-wrap gap-[0.8vmin]">
-      <ChipSelect
+    <div className="flex flex-col gap-[0.9vmin]">
+      <SegmentedRow
         label={L.filters.sku}
-        value={lang === 'pt' ? sku.namePt : sku.nameEn}
         options={skus.map((s) => ({ id: s.id, label: lang === 'pt' ? s.namePt : s.nameEn }))}
         selectedId={sku.id}
         onSelect={onSku}
         disabled={disabled}
       />
-      <ChipSelect
+      <SegmentedRow
         label={L.filters.channel}
-        value={L.channelOptions[channel]}
         options={(['total', 'digital', 'physical'] as Channel[]).map((c) => ({ id: c, label: L.channelOptions[c] }))}
         selectedId={channel}
         onSelect={(v) => onChannel(v as Channel)}
         disabled={disabled}
       />
-      <ChipSelect
+      <SegmentedRow
         label={L.filters.region}
-        value={L.regionOptions[region]}
         options={(['total', 'sudeste', 'sul', 'nordeste'] as Region[]).map((r) => ({ id: r, label: L.regionOptions[r] }))}
         selectedId={region}
         onSelect={(v) => onRegion(v as Region)}
         disabled={disabled}
       />
-      <div className="inline-flex items-center gap-[0.6vmin] rounded-full border border-white/15 bg-white/[0.02] px-[1.2vmin] py-[0.6vmin] opacity-70">
-        <span className="text-[1.1vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F]/80">
-          {L.filters.store}
-        </span>
-        <span className="text-[1.35vmin] text-white/80 font-semibold">{L.filters.allStores}</span>
-      </div>
-      <ChipSelect
+      <SegmentedRow
         label={L.filters.horizon}
-        value={L.horizonOptions[horizon]}
         options={([6, 12] as Horizon[]).map((h) => ({ id: String(h), label: L.horizonOptions[h] }))}
         selectedId={String(horizon)}
         onSelect={(v) => onHorizon(Number(v) as Horizon)}
@@ -462,95 +468,65 @@ const FilterChips = ({
   );
 };
 
-const ChipSelect = ({
-  label, value, options, selectedId, onSelect, disabled,
+const SegmentedRow = ({
+  label, options, selectedId, onSelect, disabled,
 }: {
   label: string;
-  value: string;
   options: { id: string; label: string }[];
   selectedId: string;
   onSelect: (id: string) => void;
   disabled?: boolean;
 }) => {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
   return (
-    <div className="relative" ref={ref}>
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => setOpen((o) => !o)}
-        className={`inline-flex items-center gap-[0.6vmin] rounded-full border px-[1.2vmin] py-[0.6vmin] transition ${
-          open
-            ? 'border-[#F4845F] bg-[#F4845F]/10'
-            : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-      >
-        <span className="text-[1.1vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F]">
-          {label}
-        </span>
-        <span className="text-[1.35vmin] text-white font-semibold">{value}</span>
-        <span className="text-[1.1vmin] text-white/60">▾</span>
-      </button>
-      {open && (
-        <div className="absolute z-30 mt-[0.6vmin] left-0 min-w-[24vmin] rounded-xl border border-white/15 bg-[#0B1224] shadow-2xl overflow-hidden">
-          {options.map((o) => (
+    <div className="flex items-center gap-[1vmin]">
+      <span className="text-[1.15vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F] min-w-[8vmin]">
+        {label}
+      </span>
+      <div className="flex flex-wrap gap-[0.6vmin] flex-1">
+        {options.map((o) => {
+          const active = o.id === selectedId;
+          return (
             <button
               key={o.id}
               type="button"
-              onClick={() => {
-                onSelect(o.id);
-                setOpen(false);
-              }}
-              className={`block w-full text-left px-[1.4vmin] py-[1vmin] text-[1.4vmin] transition ${
-                o.id === selectedId
-                  ? 'bg-[#F4845F]/15 text-white font-semibold'
-                  : 'text-white/80 hover:bg-white/[0.06]'
-              }`}
+              disabled={disabled}
+              onClick={() => onSelect(o.id)}
+              className={`min-h-[4.6vmin] px-[1.6vmin] py-[0.9vmin] rounded-xl border-2 text-[1.35vmin] font-semibold transition active:scale-[0.97] ${
+                active
+                  ? 'border-[#F4845F] bg-[#F4845F]/15 text-white shadow-[0_0_12px_rgba(244,132,95,0.25)]'
+                  : 'border-white/15 bg-white/[0.03] text-white/80 hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+              } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {o.label}
             </button>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 };
+
 
 // ============================================================================
 // Main chart — continuous history+forecast, no year separator
 // ============================================================================
 
 const MainChart = ({
-  series, phase, lang,
+  series, phase, lang, fixedMaxY,
 }: {
   series: MonthPoint[];
   phase: Phase;
   lang: KioskLang;
+  fixedMaxY: number;
 }) => {
   const W = 560;
-  const H = 190;
-  const PAD_L = 32;
-  const PAD_R = 8;
-  const PAD_T = 12;
-  const PAD_B = 24;
+  const H = 240;
+  const PAD_L = 34;
+  const PAD_R = 10;
+  const PAD_T = 14;
+  const PAD_B = 28;
 
-  const all: number[] = [];
-  series.forEach((p) => {
-    if (p.history !== null) all.push(p.history);
-    if (p.currentFcst !== null) all.push(p.currentFcst);
-    if (phase === 'result' && p.i6Fcst !== null) all.push(p.i6Fcst);
-    if (phase === 'result' && p.ciHigh !== null) all.push(p.ciHigh);
-  });
-  const maxY = Math.max(...all) * 1.08;
+  const maxY = fixedMaxY;
   const minY = 0;
   const n = series.length;
 
@@ -576,30 +552,14 @@ const MainChart = ({
   const currentPath = buildPath((p) => p.currentFcst);
   const i6Path = phase === 'result' ? buildPath((p) => p.i6Fcst) : '';
 
-  // CI band as polygon (forecast months only)
-  let ciPath = '';
-  if (phase === 'result') {
-    const top: string[] = [];
-    const bot: string[] = [];
-    series.forEach((p, i) => {
-      if (p.ciHigh !== null && p.ciLow !== null) {
-        top.push(`${x(i)},${y(p.ciHigh)}`);
-        bot.push(`${x(i)},${y(p.ciLow)}`);
-      }
-    });
-    if (top.length) {
-      ciPath = `M ${top.join(' L ')} L ${bot.reverse().join(' L ')} Z`;
-    }
-  }
-
-  const ticks = [0, 0.5, 1].map((t) => minY + (maxY - minY) * t);
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => minY + (maxY - minY) * t);
   const xLabels = series
     .map((p, i) => ({ i, label: lang === 'pt' ? p.labelPt : p.labelEn }))
     .filter((_, i) => i % 3 === 0);
 
   return (
-    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 240 }}>
+    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.4vmin]">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 320 }}>
         {ticks.map((t, i) => (
           <g key={i}>
             <line
@@ -615,7 +575,6 @@ const MainChart = ({
             </text>
           </g>
         ))}
-        {ciPath && <path d={ciPath} fill="rgba(244,132,95,0.16)" stroke="none" />}
         <path d={historyPath} fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.6" />
         <path d={currentPath} fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.4" strokeDasharray="4 3" />
         {i6Path && <path d={i6Path} fill="none" stroke="#F4845F" strokeWidth="2" />}
@@ -636,7 +595,6 @@ const MainChart = ({
         <LegendDot color="rgba(255,255,255,0.85)" label={demoLabels[lang].legend.history} />
         <LegendDot color="rgba(255,255,255,0.5)" dashed label={demoLabels[lang].legend.currentFcst} />
         {phase === 'result' && <LegendDot color="#F4845F" label={demoLabels[lang].legend.i6Fcst} />}
-        {phase === 'result' && <LegendDot color="rgba(244,132,95,0.35)" square label={demoLabels[lang].legend.ci} />}
       </div>
     </div>
   );
@@ -677,119 +635,180 @@ const CompositionChart = ({
 }) => {
   const points = series.filter((p) => p.trend !== null);
   const W = 620;
-  const H = 170;
-  const PAD_L = 38;
-  const PAD_R = 12;
-  const PAD_T = 14;
-  const PAD_B = 26;
+  const H = 220;
+  const PAD_L = 44;
+  const PAD_R = 14;
+  const PAD_T = 18;
+  const PAD_B = 34;
 
-  const trendVals = points.map((p) => p.trend ?? 0);
-  const seasonVals = points.map((p) => Math.abs(p.season ?? 0));
+  const chartH = H - PAD_T - PAD_B;
+
+  // Deterministic wiggle for organic feel
+  const wiggle = (seed: number) => {
+    const x = Math.sin(seed * 78.233 + 3.14) * 43758.5453;
+    return (x - Math.floor(x)) * 2 - 1;
+  };
+
+  // Trend: baseline (median) + small organic delta relative to baseline
+  const trendRaw = points.map((p) => p.trend ?? 0);
+  const trendMedian = trendRaw.length ? trendRaw[Math.floor(trendRaw.length / 2)] : 0;
+  const trendDisplay = trendRaw.map((v, i) => v * (1 + wiggle(i * 1.7) * 0.025));
+
+  // Season: signed (can be negative)
+  const seasonSigned = points.map((p) => p.season ?? 0);
   const sparsityVals = points.map((p) => Math.max(0, p.sparsityFix ?? 0));
 
-  const maxLine = Math.max(...trendVals, ...seasonVals, ...sparsityVals) * 1.15;
-  const maxY = Math.max(1, maxLine);
+  const posMax = Math.max(
+    ...trendDisplay,
+    ...seasonSigned.map((v) => Math.max(0, v)),
+    ...sparsityVals,
+    1,
+  );
+  const negMin = Math.min(
+    0,
+    ...seasonSigned.map((v) => Math.min(0, v)),
+  );
+
+  // Symmetric-ish range: keep zero visible, favor positive side
+  const rangeMax = posMax * 1.15;
+  const rangeMin = negMin * 1.2;
+  const totalRange = rangeMax - rangeMin;
 
   const bandW = (W - PAD_L - PAD_R) / points.length;
-  const barW = Math.max(8, bandW * 0.42);
+  const barW = Math.max(10, bandW * 0.5);
 
   const colors = {
     trend: '#F4845F',
     season: 'rgba(255,255,255,0.85)',
     sparsityFix: 'rgba(244,132,95,0.45)',
     promo: '#F4845F',
+    zero: 'rgba(255,255,255,0.25)',
   };
 
-  const y = (v: number) => PAD_T + (1 - v / maxY) * (H - PAD_T - PAD_B);
-  const yBar = (v: number) => (v / maxY) * (H - PAD_T - PAD_B);
+  const y = (v: number) => PAD_T + (1 - (v - rangeMin) / totalRange) * chartH;
+  const yZero = y(0);
 
   const xAt = (i: number) => PAD_L + bandW * i + bandW / 2;
 
-  const trendPath = points
-    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(p.trend ?? 0)}`)
+  const trendPath = trendDisplay
+    .map((v, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(v)}`)
     .join(' ');
-  const seasonPath = points
-    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(Math.abs(p.season ?? 0))}`)
+  const seasonPath = seasonSigned
+    .map((v, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(v)}`)
     .join(' ');
 
+  // Y-axis ticks including 0
+  const yTicks = [rangeMax, rangeMax * 0.5, 0, rangeMin * 0.5, rangeMin].filter(
+    (t, i, arr) => arr.indexOf(t) === i && t >= rangeMin && t <= rangeMax,
+  );
+
   return (
-    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 200 }}>
-        {[0.25, 0.5, 0.75, 1].map((t, i) => (
-          <line
-            key={i}
-            x1={PAD_L}
-            x2={W - PAD_R}
-            y1={y(maxY * t)}
-            y2={y(maxY * t)}
-            stroke="rgba(255,255,255,0.06)"
-            strokeDasharray="2 3"
-          />
+    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.4vmin]">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 300 }}>
+        {yTicks.map((t, i) => (
+          <g key={i}>
+            <line
+              x1={PAD_L}
+              x2={W - PAD_R}
+              y1={y(t)}
+              y2={y(t)}
+              stroke={t === 0 ? colors.zero : 'rgba(255,255,255,0.06)'}
+              strokeDasharray={t === 0 ? undefined : '2 3'}
+              strokeWidth={t === 0 ? 1 : 1}
+            />
+            <text x={PAD_L - 6} y={y(t) + 3} textAnchor="end" fontSize="8" fill="rgba(255,255,255,0.45)">
+              {t === 0 ? '0' : `${t > 0 ? '+' : ''}${Math.abs(t) >= 1000 ? `${(t / 1000).toFixed(0)}k` : t.toFixed(0)}`}
+            </text>
+          </g>
         ))}
-        {/* Sparsity bars */}
+
+        {/* Sparsity bars — always above zero line */}
         {points.map((p, i) => {
           const sp = Math.max(0, p.sparsityFix ?? 0);
-          const h = yBar(sp);
+          const barTop = y(sp);
+          const barH = yZero - barTop;
           const cx = xAt(i);
           const selected = selectedKey === p.key;
           return (
-            <g
-              key={p.key}
-              className="cursor-pointer"
-              onClick={() => onSelect(p.key)}
-              style={{ opacity: selectedKey && !selected ? 0.4 : 1 }}
-            >
-              <rect
-                x={cx - barW / 2}
-                y={H - PAD_B - h}
-                width={barW}
-                height={h}
-                fill={colors.sparsityFix}
-                rx={2}
-              />
+            <rect
+              key={`bar-${p.key}`}
+              x={cx - barW / 2}
+              y={barTop}
+              width={barW}
+              height={Math.max(0, barH)}
+              fill={colors.sparsityFix}
+              rx={2}
+              style={{
+                opacity: selectedKey && !selected ? 0.35 : 1,
+                pointerEvents: 'none',
+              }}
+            />
+          );
+        })}
+
+        {/* Zero baseline redraw over bars */}
+        <line x1={PAD_L} x2={W - PAD_R} y1={yZero} y2={yZero} stroke={colors.zero} strokeWidth={1} />
+
+        {/* Trend line */}
+        <path d={trendPath} fill="none" stroke={colors.trend} strokeWidth={2.2} strokeLinejoin="round" strokeLinecap="round" style={{ filter: 'drop-shadow(0 1px 3px rgba(244,132,95,0.35))' }} />
+        {/* Season line (signed) */}
+        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.8} strokeDasharray="4 3" strokeLinejoin="round" />
+
+        {/* Promo markers */}
+        {points.map((p, i) => {
+          if (!p.hasPromo) return null;
+          const cx = xAt(i);
+          const cy = y(trendDisplay[i]) - 10;
+          return (
+            <g key={`promo-${p.key}`} style={{ pointerEvents: 'none' }}>
+              <circle cx={cx} cy={cy} r={5} fill={colors.promo} stroke="#0B1224" strokeWidth={1.4} />
+              <circle cx={cx} cy={cy} r={2.2} fill="#fff" />
+            </g>
+          );
+        })}
+
+        {/* Month labels + selected highlight + hitbox (large touch target) */}
+        {points.map((p, i) => {
+          const cx = xAt(i);
+          const selected = selectedKey === p.key;
+          return (
+            <g key={`hit-${p.key}`} className="cursor-pointer" onClick={() => onSelect(p.key)}>
               {selected && (
                 <rect
                   x={cx - bandW / 2 + 2}
                   y={PAD_T}
                   width={bandW - 4}
-                  height={H - PAD_T - PAD_B}
-                  fill="rgba(244,132,95,0.08)"
+                  height={chartH}
+                  fill="rgba(244,132,95,0.10)"
                   stroke="#F4845F"
-                  strokeWidth={1}
-                  rx={3}
+                  strokeWidth={1.6}
+                  rx={4}
                 />
               )}
+              {/* Full-band invisible hitbox for touch */}
+              <rect
+                x={cx - bandW / 2}
+                y={PAD_T}
+                width={bandW}
+                height={chartH + PAD_B - 6}
+                fill="transparent"
+              />
               <text
                 x={cx}
-                y={H - 8}
+                y={H - 10}
                 textAnchor="middle"
-                fontSize="8"
-                fill={selected ? '#F4845F' : 'rgba(255,255,255,0.55)'}
+                fontSize={selected ? 10.5 : 9}
+                fill={selected ? '#F4845F' : 'rgba(255,255,255,0.6)'}
                 fontWeight={selected ? 'bold' : 'normal'}
+                style={{ pointerEvents: 'none' }}
               >
                 {(lang === 'pt' ? p.labelPt : p.labelEn).split('/')[0]}
               </text>
             </g>
           );
         })}
-        {/* Trend line */}
-        <path d={trendPath} fill="none" stroke={colors.trend} strokeWidth={2} />
-        {/* Season line */}
-        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.6} strokeDasharray="4 3" />
-        {/* Promo markers — star-like dots above bar */}
-        {points.map((p, i) => {
-          if (!p.hasPromo) return null;
-          const cx = xAt(i);
-          const cy = Math.min(y(p.trend ?? 0), y(Math.abs(p.season ?? 0))) - 8;
-          return (
-            <g key={`promo-${p.key}`} style={{ pointerEvents: 'none' }}>
-              <circle cx={cx} cy={cy} r={4.5} fill={colors.promo} stroke="#0B1224" strokeWidth={1.2} />
-              <circle cx={cx} cy={cy} r={2} fill="#fff" />
-            </g>
-          );
-        })}
       </svg>
-      <div className="flex flex-wrap gap-[1.4vmin] mt-[0.6vmin] text-[1.15vmin] text-white/70">
+      <div className="flex flex-wrap gap-[1.4vmin] mt-[0.8vmin] text-[1.2vmin] text-white/75">
         <LegendDot color={colors.trend} label={L.result.trend} />
         <LegendDot color={colors.season} dashed label={L.result.season} />
         <LegendDot square color={colors.sparsityFix} label={L.result.sparsityFix} />

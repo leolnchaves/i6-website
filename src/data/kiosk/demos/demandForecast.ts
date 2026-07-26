@@ -308,7 +308,10 @@ export const buildSeries = (
       point.ciHigh = Math.round(i6Value * (1 + ciBandPct));
 
       const trendComp = sku.base * trendFactor * channelMult * regionMult;
-      const seasonComp = trendComp * (seasonFactor - 1);
+      // Amplify seasonal contrast so recurring SKUs still show a visible signed wave
+      const effectiveSeasonAmp = Math.max(sku.seasonAmp, 0.14);
+      const effectiveSeasonFactor = 1 + effectiveSeasonAmp * Math.cos(seasonPhase);
+      const seasonComp = trendComp * (effectiveSeasonFactor - 1);
       const promoComp = trendComp * promoBoost;
       const sparsityComp = sku.rupturedMonths.length > 0 ? trendComp * 0.04 : 0;
 
