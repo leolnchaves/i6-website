@@ -163,14 +163,6 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     setPhase('list');
   };
 
-  const changeScenario = () => {
-    setUserMode(null);
-    setVertical(null);
-    setSelectedId(null);
-    setProgress(0);
-    setPhase('pick');
-  };
-
   const startScenario = (u: UserMode, v: Vertical) => {
     setUserMode(u);
     setVertical(v);
@@ -179,78 +171,15 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     setPhase('list');
   };
 
-  // ---------- Render: scenario picker ----------
-  if (phase === 'pick' || !scenario || !catalog) {
-    const scenarios2x2: Array<{ u: UserMode; v: Vertical; icon: JSX.Element; title: string; sub: string }> = [
-      {
-        u: 'logged',
-        v: 'products',
-        icon: <User className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userLogged,
-        sub: t.verticalProducts,
-      },
-      {
-        u: 'logged',
-        v: 'fashion',
-        icon: <User className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userLogged,
-        sub: t.verticalFashion,
-      },
-      {
-        u: 'anon',
-        v: 'products',
-        icon: <UserX className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userAnon,
-        sub: t.verticalProducts,
-      },
-      {
-        u: 'anon',
-        v: 'fashion',
-        icon: <UserX className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userAnon,
-        sub: t.verticalFashion,
-      },
-    ];
-    return (
-      <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-        <div className="flex items-center gap-[1.5vmin] mb-[2.5vmin]">
-          <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-            <Sparkles className="w-[2.6vmin] h-[2.6vmin] text-[#F4845F]" />
-          </span>
-          <div>
-            <h4 className="text-[2.4vmin] font-bold text-white leading-tight">{t.header}</h4>
-            <p className="text-[1.6vmin] text-white/60">{t.headerSubtitle}</p>
-          </div>
-        </div>
+  const scenarioTabs: Array<{ u: UserMode; v: Vertical; icon: JSX.Element; title: string; sub: string }> = [
+    { u: 'logged', v: 'products', icon: <User className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userLogged, sub: t.verticalProducts },
+    { u: 'logged', v: 'fashion',  icon: <User className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userLogged, sub: t.verticalFashion },
+    { u: 'anon',   v: 'products', icon: <UserX className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userAnon,   sub: t.verticalProducts },
+    { u: 'anon',   v: 'fashion',  icon: <UserX className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userAnon,   sub: t.verticalFashion },
+  ];
 
-        <p className="text-[1.4vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
-          {t.pickScenarioTitle}
-        </p>
-        <p className="text-[1.7vmin] text-white/70 mb-[2vmin]">{t.pickScenarioHint}</p>
+  if (!scenario || !catalog) return null;
 
-        <div className="grid grid-cols-2 gap-[2vmin]">
-          {scenarios2x2.map(({ u, v, icon, title, sub }) => (
-            <button
-              key={`${u}-${v}`}
-              type="button"
-              onClick={() => startScenario(u, v)}
-              className="text-left rounded-2xl border-2 border-white/15 bg-white/[0.03] p-[2.5vmin] min-h-[14vmin] transition-all hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98]"
-            >
-              <div className="flex items-center gap-[1.5vmin] mb-[1.5vmin]">
-                <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-                  {icon}
-                </span>
-                <div>
-                  <span className="block text-[2vmin] font-bold text-white leading-tight">{title}</span>
-                  <span className="block text-[1.6vmin] text-white/60">{sub}</span>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   // Recommendations: use recIds from selected; for fashion PDP use lookIds
   const recSkus =
