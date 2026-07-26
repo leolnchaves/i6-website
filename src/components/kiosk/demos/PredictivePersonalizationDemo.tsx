@@ -36,12 +36,12 @@ const SkuTile = ({
       onClick={onClick}
       className={`text-left rounded-xl border-2 transition-all bg-white/[0.03] border-white/10 ${
         onClick ? 'hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06] active:scale-[0.98]' : ''
-      } ${small ? 'p-[1.1vmin]' : 'p-[1.5vmin]'}`}
+      } ${small ? 'p-[1.3vmin]' : 'p-[1.6vmin]'}`}
     >
       <div
         className={`${
-          small ? 'aspect-square' : 'aspect-square'
-        } rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[0.8vmin] flex items-center justify-center`}
+          small ? 'aspect-[4/5]' : 'aspect-[4/5]'
+        } rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[1vmin] flex items-center justify-center`}
       >
         <img
           src={sku.image}
@@ -52,25 +52,26 @@ const SkuTile = ({
       </div>
       <span
         className={`block ${
-          small ? 'text-[1.05vmin]' : 'text-[1.3vmin]'
-        } uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]`}
+          small ? 'text-[1.15vmin]' : 'text-[1.3vmin]'
+        } uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]`}
       >
         {sku.category[lang]}
       </span>
       <span
         className={`block ${
-          small ? 'text-[1.35vmin]' : 'text-[1.55vmin]'
-        } leading-tight text-white/90 font-semibold ${small ? 'min-h-[3vmin]' : 'min-h-[3.6vmin]'}`}
+          small ? 'text-[1.5vmin]' : 'text-[1.65vmin]'
+        } leading-tight text-white/90 font-semibold ${small ? 'min-h-[3.4vmin]' : 'min-h-[3.8vmin]'}`}
       >
         {sku.name[lang]}
       </span>
       <span
         className={`block ${
-          small ? 'text-[1.3vmin]' : 'text-[1.5vmin]'
-        } text-white font-bold mt-[0.4vmin]`}
+          small ? 'text-[1.5vmin]' : 'text-[1.65vmin]'
+        } text-white font-bold mt-[0.5vmin]`}
       >
         {currency(sku.price, lang)}
       </span>
+
     </Comp>
   );
 };
@@ -353,7 +354,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                 {/* Selected product hero */}
                 <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
                   <div className="flex gap-[1.5vmin] items-center">
-                    <div className="w-[9vmin] h-[9vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                    <div className="w-[14vmin] h-[14vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
                       <img src={selected.image} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
