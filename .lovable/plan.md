@@ -1,81 +1,37 @@
-# Demo interativa — Metas Comerciais Preditivas
+## Ajustes na demo "Metas Comerciais Preditivas" (`/kiosk`)
 
-Nova demo para a solução `predictive-commercial-targets`, seguindo o padrão das demos existentes (`PropensityCampaignDemo`, `DemandForecastDemo`): PT-only, 100% estática, com setup à esquerda, pipeline "como o modelo está pensando" e bloco de resultado com tabela hierárquica, alocação de investimento, KPIs e explicações.
+Alinhar a demo ao padrão das demais conclusões do kiosk.
 
-## Objetivo exibido
-`OBJETIVO: CRESCIMENTO E EFICIÊNCIA DE INVESTIMENTO COMERCIAL`
+### 1. Estado inicial do painel esquerdo (setup)
+- Remover completamente os filtros do setup (período, região, vendedor, portfólio, categoria, orçamento).
+- Mostrar de cara o mesmo layout do resultado, com **apenas** as colunas "Meta atual" e "Investimento atual" preenchidas nas tabelas de metas e alocação. As colunas "Meta sugerida", "Potencial", "Δ vs. atual", "CAC incremental" e a badge de ação ficam vazias / com placeholder (`—`).
+- O switcher de dimensão (Região/Vendedor/Cliente/SKU) fica oculto nesse momento.
+- O CTA principal muda para "Calcular metas e investimento ideal" (mantém o texto atual) e dispara o `phase = 'running'`.
 
-## Arquitetura de arquivos
+### 2. Fase "running" (treinamento)
+- Painel esquerdo: continua mostrando as mesmas tabelas parcialmente preenchidas + o estado de "calculando" já existente.
+- Painel direito: exibe os passos do pipeline (mesma implementação atual).
 
-- `src/data/kiosk/demos/commercialTargets.ts` — dataset + funções puras (base histórica, cálculo de meta preditiva, potencial, CAC e alocação regional). Determinístico via seed a partir dos argumentos.
-- `src/components/kiosk/demos/CommercialTargetsDemo.tsx` — componente da demo (setup, thinking, resultado).
-- `src/components/kiosk/SolutionDemoBlock.tsx` — registrar branch `solution.id === 'predictive-commercial-targets'`.
+### 3. Fase "result"
+**Painel esquerdo — passa a conter, na ordem:**
+1. Switcher de dimensão (Região, Vendedor, Cliente, SKU).
+2. Tabela "Meta atual × Meta preditiva" completa.
+3. Tabela "Alocação recomendada de investimento comercial" completa.
+4. Bloco de KPIs (grade 2×2) — os 4 `ConclusionCard` que hoje estão à direita: Volume incremental, Meta total, Investimento sugerido, CAC.
+5. Bloco de highlights "Onde a IA aponta oportunidade" (movido do lado direito).
 
-## Fluxo de tela
+**Painel direito — passa a conter, na ordem:**
+1. Passos do pipeline de treinamento (permanecem visíveis após o cálculo, com todos os passos marcados como `done`, como nas demais demos).
+2. Um único bloco de rationale: "**POR QUE ESSE MIX / SORTIMENTO**" (mantém o visual "Insight" com badge coral e texto do `rationale.increase`).
+3. Botão **"Nova simulação"** logo abaixo do bloco POR QUE (estilo pill outline, mesmo componente do reset atual).
 
-1. **Tela inicial (setup à esquerda)** — dashboard base fixo mostrando linhas por Região → Vendedor → Cliente/PDV → SKU com colunas: Volume vendido, Meta atual, Investimento comercial atual, CAC por unidade incremental.
-   
-   Argumentos que o usuário escolhe (chips/selects, seguindo o padrão de `PropensityCampaignDemo`):
-   - Período da meta (Mês / Trimestre / Semestre)
-   - Região ou território (Interior de SP / Minas Gerais / Sul / Todas)
-   - Equipe ou vendedor (Todos / Carlos / Marina / Rafael)
-   - Cliente ou carteira (Todos / Chave / Cauda longa)
-   - SKU ou categoria (Todos / Categoria A / B / C)
-   - Orçamento comercial disponível (slider em faixas: R$ 300 mil / R$ 500 mil / R$ 700 mil)
-   
-   Botão coral: **Calcular metas e investimento ideal**.
+**Removidos do painel direito:** os blocos "Por que redistribuir" e "Por que reduzir a meta" (permanecem apenas no drill-down modal, que continua funcionando como hoje).
 
-2. **Thinking pipeline** (6 passos, animação sequencial com ícone e barra, mesmo padrão do `PropensityCampaignDemo`):
-   1. Lendo vendas e execução comercial
-   2. Projetando o potencial de crescimento
-   3. Identificando onde existe capacidade incremental
-   4. Simulando esforço comercial e CAC
-   5. Equilibrando crescimento e eficiência comercial
-   6. Distribuindo metas granulares
+**Removido do painel esquerdo:** o botão "Explorar outra solução" (foi movido para o direito como "Nova simulação").
 
-3. **Resultado** (grid 2 colunas em desktop, empilhado em mobile):
-
-   **A. Meta atual × Meta preditiva** — tabela navegável por dimensão (chips no topo: Região · Vendedor · Cliente · SKU). Colunas: Meta atual, Meta sugerida, Potencial, Δ vs. atual. Clique na linha abre um painel de composição (fatores + copy "Por que sugerimos esta meta / reduzir / aumentar").
-   
-   **B. Alocação recomendada de investimento comercial** — tabela por região: Crescimento potencial, Investimento atual, Investimento sugerido, CAC incremental, badge de ação (Aumentar / Reduzir / Redistribuir).
-   
-   **C. Cards de conclusão** (grid 4 colunas, mesma linha):
-   - Volume incremental potencial
-   - Meta total recomendada
-   - Investimento comercial sugerido
-   - CAC incremental projetado
-   
-   **D. Destaques secundários** (chips/pills abaixo dos cards):
-   - Regiões com potencial subexplorado
-   - Clientes com pressão excessiva
-   - SKUs com maior oportunidade
-   - Vendedores com capacidade adicional
-   
-   **E. Painel "Por que sugerimos"** — 4 blocos de copy fixa (com valores dinâmicos interpolados) conforme especificado: sugerir meta, aumentar investimento, reduzir meta, redistribuir investimento.
-
-## Regras de dados (determinísticas)
-
-- Catálogo base: 3 regiões × 2–3 vendedores × 3–4 clientes × 2 SKUs (~24 linhas) com volumes plausíveis (400–1.600 un.), meta atual próxima ao histórico e investimento por região.
-- Meta preditiva = potencial × fator de captura (0,85–0,95) modulado pelo período e orçamento.
-- Potencial > meta sugerida (folga estrutural).
-- CAC incremental por região dentro da faixa R$ 10–25 (random determinístico via seed baseado nos argumentos, seguindo o helper `rand` já usado em `propensityCampaign.ts`).
-- Alocação regional: quando a região tem crescimento potencial alto E CAC baixo → "Aumentar"; potencial baixo → "Reduzir"; potencial médio com CAC melhor que outra região → "Redistribuir".
-- KPI "Meta total recomendada" e "Investimento sugerido" derivam da soma das linhas filtradas.
-
-## Detalhes de UI
-
-- Tokens visuais: mesma paleta dark navy + coral já utilizada; `bg-white/5`, `border-white/10`, coral `#F4845F` para destaques e ícones.
-- Não exibir KPI de latência (segue diretriz aplicada em Campanhas).
-- Sem i18n — copy 100% em PT (idem `PropensityCampaignDemo`).
-- Reset volta ao estado de setup preservando os argumentos selecionados.
-
-## Integração
-
-- `SolutionDemoBlock.tsx`: adicionar `if (solution.id === 'predictive-commercial-targets') return <CommercialTargetsDemo />;` acima do fallback.
-- Nenhuma alteração no `signalDemo` (as perguntas do i6 Signal para essa solução já apontam para os cenários `comercial` + `forecast`).
-
-## Fora de escopo
-
-- Alterações em outras demos.
-- Exportação de dados / integração real com backend.
-- Versão ENG (pode ser feita depois, mediante pedido).
+### Detalhes técnicos
+- Edições concentradas em `src/components/kiosk/demos/CommercialTargetsDemo.tsx`.
+- Nenhuma mudança na lógica de `computeResult` — apenas reorganização de UI e rendering condicional.
+- Nos estados `setup`/`running`, renderizar as tabelas com um helper que exibe `—` nas células projetadas; nas linhas de alocação, ocultar a badge de ação.
+- Adicionar em `src/data/kiosk/demos/commercialTargets.ts` os labels: `result.mixTitle = 'Por que esse mix / sortimento'` e `result.newSimulation = 'Nova simulação'` (substituindo/complementando `reset`).
+- Layout do painel esquerdo em `phase === 'result'` deve empilhar tabelas + KPIs + highlights com `gap` adequado; garantir que o painel direito com pipeline + POR QUE + botão fique alinhado em altura via `flex-col` + `mt-auto` no botão.

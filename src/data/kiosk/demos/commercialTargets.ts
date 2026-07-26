@@ -116,7 +116,9 @@ export const labels = {
     allocationCurrent: 'Investimento atual',
     allocationSuggested: 'Investimento sugerido',
     allocationCac: 'CAC incremental',
-    reset: 'Explorar outra solução',
+    reset: 'Nova simulação',
+    newSimulation: 'Nova simulação',
+    mixTitle: 'Por que esse mix / sortimento',
     kpiVolume: 'Volume incremental potencial',
     kpiTotalTarget: 'Meta total recomendada',
     kpiInvestment: 'Investimento comercial sugerido',
@@ -130,6 +132,7 @@ export const labels = {
     drillClose: 'Fechar',
     drillFactors: 'Fatores que sustentam a recomendação',
     rationaleLabel: 'Insight da IA',
+    ctaCalculate: 'Calcular metas e investimento ideal',
   },
 } as const;
 
