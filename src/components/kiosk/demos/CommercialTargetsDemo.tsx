@@ -62,7 +62,8 @@ const CommercialTargetsDemo = () => {
   };
 
   const showProjected = phase === 'result';
-  const rowsToShow = showProjected ? activeRows.slice(0, 6) : (dimRows.region ?? []).slice(0, 6);
+  const rowsToShow = activeRows.slice(0, 6);
+
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
