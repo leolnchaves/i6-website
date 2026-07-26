@@ -233,7 +233,7 @@ const PropensityCampaignDemo = () => {
                 </div>
 
                 {/* Conclusion cards */}
-                <div className="grid grid-cols-2 gap-[1vmin]">
+                <div className="grid grid-cols-3 gap-[1vmin]">
                   <ConclusionCard
                     label={L.result.audience}
                     value={fmt(result.recommendedAudience)}
@@ -248,7 +248,6 @@ const PropensityCampaignDemo = () => {
                     label={L.result.channel}
                     value={channelLabel(result.primaryChannel)}
                   />
-                  <ConclusionCard label={L.result.pressure} value={result.pressure} />
                 </div>
 
                 <div className="grid grid-cols-2 gap-[1vmin] mt-auto">
