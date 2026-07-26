@@ -239,7 +239,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tapHint: 'Toque para começar',
     },
     footer: {
-      resetLabel: 'Recomeçar',
+      resetLabel: 'Explorar outra solução',
       tagline: 'infinity6 - the platform for decision advantage',
     },
   },
@@ -399,7 +399,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tapHint: 'Tap to begin',
     },
     footer: {
-      resetLabel: 'Restart',
+      resetLabel: 'Explore another solution',
       tagline: 'infinity6 - the platform for decision advantage',
     },
   },
