@@ -388,6 +388,78 @@ export const signalDemoContent = {
           'Which POS show the highest risk of losing patients to competing generics?',
         ],
       },
+      propensity: {
+        label: 'Product Propensity',
+        question: 'Right now, which products have the highest sales propensity?',
+        title: 'Products with Highest Sales Propensity — Current Window',
+        analysis: 'The model combined intent signals (browsing, cart, recurrence), lifecycle stage and external context (weather, promo calendar) to identify 6 products with an open conversion window right now. Bars represent the volume of propense customers; the line represents the average propensity per product. The top of the ranking concentrates 58% of the window\'s conversion potential, led by Running Shoes and Wireless Earbuds, combining high propense volume with average propensity above 60%.',
+        productChart: [
+          { product: 'Running Shoes', customers: 6420, propensity: 71 },
+          { product: 'Wireless Earbuds', customers: 5180, propensity: 64 },
+          { product: 'Espresso Machine', customers: 3940, propensity: 58 },
+          { product: 'Dry-Fit T-Shirt', customers: 3210, propensity: 49 },
+          { product: 'Portable AC Unit', customers: 2470, propensity: 42 },
+          { product: 'Premium Streaming', customers: 1830, propensity: 34 },
+        ],
+        productChartNote: 'Bars = propense customers in the current 7-day window. Line = average propensity (%). Cut-off >55% concentrates 71% of the window revenue potential.',
+        actions: [
+          { bold: 'Activate campaign now', text: 'for the top 3 products — the conversion window closes in 5–7 days per the model.' },
+          { bold: 'Reserve predictive stock', text: 'in regional DCs for Running Shoes and Wireless Earbuds, avoiding stockout at the conversion peak.' },
+          { bold: 'Orchestrated cross-sell', text: 'pairing Shoes + Dry-Fit T-Shirt and Espresso Machine + Premium Streaming with progressive discount.' },
+        ],
+        questions: [
+          'What is the expected average ticket per product in the current window?',
+          'How does propensity vary between new and returning customers?',
+          'Which products carry the highest basket cannibalization risk?',
+        ],
+      },
+      clusters: {
+        label: 'Behavior Clusters',
+        question: 'Define the best purchase-behavior cluster so I can build a campaign cadence.',
+        title: 'Behavioral Clusters — Active Base for Campaign Cadence',
+        analysis: 'The active base was segmented into 4 behavioral clusters using predictive signals: recency, frequency, ticket, price sensitivity and channel response. Each cluster has its own campaign cadence — rhythm, channel and offer — to maximize engagement and conversion without contact overlap.',
+        clustersTable: {
+          headers: ['Cluster', '% Base', 'Avg. Ticket', 'Frequency', 'Preferred Channel', 'Propensity'],
+          rows: [
+            ['High-Value Recurring', '12%', '$96', 'High (2x/mo)', 'WhatsApp', '84%'],
+            ['Seasonal Explorer', '28%', '$42', 'Medium (1x/mo)', 'Email', '58%'],
+            ['Price Sensitive', '34%', '$19', 'Medium (1x/mo)', 'Push', '43%'],
+            ['Dormant w/ Potential', '26%', '$34', 'Low (>90 days)', 'Email + SMS', '27%'],
+          ],
+        },
+        clustersDetail: [
+          {
+            name: 'High-Value Recurring',
+            description: 'Loyal, high-ticket, high-frequency customers. Purchased in the last 30 days and respond well to exclusivity.',
+            approach: 'Premium cadence: pre-sale drops, subscription perks and 1:1 curated recommendations via WhatsApp. Avoid generic discounts — protect margin.',
+          },
+          {
+            name: 'Seasonal Explorer',
+            description: 'Purchases concentrate on key moments (holidays, collections, launches). High email open rate and editorial engagement.',
+            approach: 'Thematic cadence: event/collection campaigns with storytelling, themed bundles and predictive next-product recommendation by affinity.',
+          },
+          {
+            name: 'Price Sensitive',
+            description: 'Reacts strongly to discounts and free shipping. Smaller ticket, but high reactivity to push in short offer windows.',
+            approach: 'Fast-conversion cadence: push with urgency countdown, tiered coupon by basket value and free shipping above optimized threshold.',
+          },
+          {
+            name: 'Dormant with Potential',
+            description: 'Relevant purchase history but no recent activity. Model detects return signal (search, email open, repeat visit).',
+            approach: 'Reactivation cadence: email with social proof + SMS with personalized comeback offer. Staggered cadence (D+0, D+3, D+7) before demoting to nurture.',
+          },
+        ],
+        actions: [
+          { bold: 'Prioritize High-Value Recurring', text: 'with premium cadence — protects margin and sustains base LTV.' },
+          { bold: 'Scale Seasonal Explorer', text: 'in the next commercial event — highest marginal revenue gain per contact.' },
+          { bold: 'Reactivate Dormants now', text: '— return window detected; delaying drops reactivation rate ~40%.' },
+        ],
+        questions: [
+          'What is the projected LTV per cluster over the next 12 months?',
+          'How to avoid contact overlap across cadences?',
+          'Which cluster shows the highest positive migration (value upgrade)?',
+        ],
+      },
     },
   },
 };
