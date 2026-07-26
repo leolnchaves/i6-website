@@ -7,7 +7,7 @@ import {
   Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
 } from 'lucide-react';
 import { signalDemoContent as content, TYPING_SPEED, RESPONSE_DELAY, type Scenario, type Phase } from '@/data/signalDemo/content';
-import { SupplyTable, ForecastChart, ComercialChart, MixComparison, PdvBarChart } from '@/components/signalDemo/visualizations';
+import { SupplyTable, ForecastChart, ComercialChart, MixComparison, PdvBarChart, PropensityByProductChart, BehaviorClustersTable } from '@/components/signalDemo/visualizations';
 
 // Bilingual content moved to @/data/signalDemo/content
 
@@ -370,6 +370,21 @@ const I6SignalDemo = memo(() => {
                             lang={lang}
                           />
                         )}
+                        {activeScenario === 'propensity' && 'productChart' in scenario && (
+                          <PropensityByProductChart
+                            data={(scenario as typeof t.scenarios.propensity).productChart}
+                            note={(scenario as typeof t.scenarios.propensity).productChartNote}
+                            lang={lang}
+                          />
+                        )}
+                        {activeScenario === 'clusters' && 'clustersTable' in scenario && (
+                          <BehaviorClustersTable
+                            table={(scenario as typeof t.scenarios.clusters).clustersTable}
+                            detail={(scenario as typeof t.scenarios.clusters).clustersDetail}
+                            lang={lang}
+                          />
+                        )}
+
 
                         {/* Recommended Actions */}
                         <h4 className="text-orange-500 font-semibold text-sm mt-4 mb-2">{t.recommendedActions}</h4>

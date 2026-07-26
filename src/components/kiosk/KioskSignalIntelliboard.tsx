@@ -14,6 +14,8 @@ import {
   ComercialChart,
   MixComparison,
   PdvBarChart,
+  PropensityByProductChart,
+  BehaviorClustersTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
@@ -264,6 +266,20 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                 <PdvBarChart
                   data={(scenario as typeof t.scenarios.pdv).barChartData}
                   note={(scenario as typeof t.scenarios.pdv).barChartNote}
+                  lang={lang}
+                />
+              )}
+              {activeScenario === 'propensity' && 'productChart' in scenario && (
+                <PropensityByProductChart
+                  data={(scenario as typeof t.scenarios.propensity).productChart}
+                  note={(scenario as typeof t.scenarios.propensity).productChartNote}
+                  lang={lang}
+                />
+              )}
+              {activeScenario === 'clusters' && 'clustersTable' in scenario && (
+                <BehaviorClustersTable
+                  table={(scenario as typeof t.scenarios.clusters).clustersTable}
+                  detail={(scenario as typeof t.scenarios.clusters).clustersDetail}
                   lang={lang}
                 />
               )}
