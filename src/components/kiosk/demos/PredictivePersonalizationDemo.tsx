@@ -79,11 +79,11 @@ const SkuTile = ({
 const PredictivePersonalizationDemo = ({ lang }: Props) => {
   const t = uiLabels[lang];
 
-  const [userMode, setUserMode] = useState<UserMode | null>(null);
-  const [vertical, setVertical] = useState<Vertical | null>(null);
+  const [userMode, setUserMode] = useState<UserMode>('logged');
+  const [vertical, setVertical] = useState<Vertical>('products');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<Phase>('pick');
+  const [phase, setPhase] = useState<Phase>('list');
 
   const scenarioKey =
     userMode && vertical ? (`${userMode}-${vertical}` as const) : null;
