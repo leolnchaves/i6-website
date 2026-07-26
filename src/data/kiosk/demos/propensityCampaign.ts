@@ -263,7 +263,7 @@ export const computeResult = (
       tier: 'Oportunidade futura',
       clients: futureTotal,
       propensityPct: 34,
-      channels: [{ channel: pick(priority, 2), clients: Math.round(totalEligible * futureShare) }],
+      channels: splitAcross(futureTotal, priority),
     },
   ];
 
