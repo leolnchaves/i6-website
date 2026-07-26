@@ -3,6 +3,7 @@ import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/conten
 import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
+import DemandForecastDemo from './demos/DemandForecastDemo';
 
 interface Props {
   solution: LeanSolution;
@@ -19,6 +20,11 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
   // Interactive demo for Predictive Personalization + Smart Discovery combo
   if (solution.id === 'predictive-personalization' || solution.id === 'smart-discovery') {
     return <PredictivePersonalizationDemo lang={lang} />;
+  }
+
+  // Interactive demo for Demand Forecasting
+  if (solution.id === 'demand-forecasting') {
+    return <DemandForecastDemo lang={lang} />;
   }
 
   return (
