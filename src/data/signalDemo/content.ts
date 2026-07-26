@@ -161,6 +161,78 @@ export const signalDemoContent = {
           'Quais PDVs apresentam maior risco de perda de pacientes para genéricos concorrentes?',
         ],
       },
+      propensity: {
+        label: 'Propensão por Produto',
+        question: 'Nesse momento, quais produtos teriam mais propensão de venda?',
+        title: 'Produtos com Maior Propensão de Venda — Janela Atual',
+        analysis: 'O modelo cruzou sinais de intenção (navegação, carrinho, recorrência), momento do ciclo de vida e contexto externo (clima, calendário promocional) para identificar 6 produtos com janela de conversão aberta agora. As barras representam o volume de clientes propensos e a linha representa a propensão média por produto. O topo do ranking concentra 58% do potencial de conversão da janela, com destaque para Tênis de Corrida e Fone Bluetooth TWS, que combinam alto volume propenso com propensão média acima de 60%.',
+        productChart: [
+          { product: 'Tênis de Corrida', customers: 6420, propensity: 71 },
+          { product: 'Fone Bluetooth TWS', customers: 5180, propensity: 64 },
+          { product: 'Cafeteira Espresso', customers: 3940, propensity: 58 },
+          { product: 'Camiseta Dry-Fit', customers: 3210, propensity: 49 },
+          { product: 'Ar-Cond. Portátil', customers: 2470, propensity: 42 },
+          { product: 'Streaming Premium', customers: 1830, propensity: 34 },
+        ],
+        productChartNote: 'Barras = clientes propensos na janela atual (7 dias). Linha = propensão média (%). O corte de propensão >55% concentra 71% do potencial de receita da janela.',
+        actions: [
+          { bold: 'Ativar campanha agora', text: 'para os 3 produtos do topo — a janela de conversão fecha em 5–7 dias segundo o modelo.' },
+          { bold: 'Reservar estoque preditivo', text: 'nos CDs regionais para Tênis de Corrida e Fone Bluetooth, evitando ruptura no pico de conversão.' },
+          { bold: 'Cross-sell orquestrado', text: 'combinando Tênis + Camiseta Dry-Fit e Cafeteira + Streaming Premium com desconto progressivo.' },
+        ],
+        questions: [
+          'Qual o ticket médio esperado por produto na janela atual?',
+          'Como varia a propensão entre novos clientes e recorrentes?',
+          'Quais produtos têm maior risco de canibalização na cesta?',
+        ],
+      },
+      clusters: {
+        label: 'Clusters de Comportamento',
+        question: 'Defina o melhor cluster de comportamento de compra para que eu crie uma régua de campanha.',
+        title: 'Clusters Comportamentais — Base Ativa para Régua de Campanha',
+        analysis: 'A base ativa foi segmentada em 4 clusters comportamentais a partir de sinais preditivos de recência, frequência, ticket, sensibilidade a preço e resposta a canais. Cada cluster tem uma régua de campanha própria — ritmo, canal e oferta — para maximizar engajamento e conversão sem sobreposição de contato.',
+        clustersTable: {
+          headers: ['Cluster', '% Base', 'Ticket Médio', 'Frequência', 'Canal Preferido', 'Propensão'],
+          rows: [
+            ['Alto Valor Recorrente', '12%', 'R$ 480', 'Alta (2x/mês)', 'WhatsApp', '84%'],
+            ['Explorador Sazonal', '28%', 'R$ 210', 'Média (1x/mês)', 'E-mail', '58%'],
+            ['Sensível a Preço', '34%', 'R$ 95', 'Média (1x/mês)', 'Push', '43%'],
+            ['Dormente c/ Potencial', '26%', 'R$ 170', 'Baixa (>90 dias)', 'E-mail + SMS', '27%'],
+          ],
+        },
+        clustersDetail: [
+          {
+            name: 'Alto Valor Recorrente',
+            description: 'Clientes fiéis, ticket alto e frequência elevada. Já compraram nos últimos 30 dias e respondem bem a exclusividade.',
+            approach: 'Régua premium: novidades em pré-venda, benefícios de assinatura e curadoria personalizada via WhatsApp 1:1. Evitar descontos genéricos — proteger margem.',
+          },
+          {
+            name: 'Explorador Sazonal',
+            description: 'Compra concentrada em momentos-chave (datas, coleções, lançamentos). Alta abertura de e-mail e engajamento em conteúdo editorial.',
+            approach: 'Régua temática: campanhas por evento/coleção com storytelling, bundles temáticos e recomendação preditiva de próximo produto por afinidade.',
+          },
+          {
+            name: 'Sensível a Preço',
+            description: 'Reage fortemente a descontos e frete grátis. Ticket menor, mas alta reação a push em janelas curtas de oferta.',
+            approach: 'Régua de conversão rápida: push com contador de urgência, cupom escalonado por valor de cesta e frete grátis a partir de threshold otimizado.',
+          },
+          {
+            name: 'Dormente com Potencial',
+            description: 'Histórico relevante de compra, mas sem atividade recente. Modelo identifica sinal de retorno (busca, e-mail aberto, visita reincidente).',
+            approach: 'Régua de reativação: e-mail com prova social + SMS com oferta de retorno personalizada. Cadência escalonada (D+0, D+3, D+7) antes de rebaixar para nutrição.',
+          },
+        ],
+        actions: [
+          { bold: 'Priorizar Alto Valor Recorrente', text: 'com régua premium — protege margem e sustenta LTV da base.' },
+          { bold: 'Escalar Explorador Sazonal', text: 'no próximo evento comercial — maior ganho marginal de receita por contato.' },
+          { bold: 'Reativar Dormentes agora', text: '— janela de retorno detectada; postergar reduz taxa de reativação em ~40%.' },
+        ],
+        questions: [
+          'Qual o LTV projetado por cluster nos próximos 12 meses?',
+          'Como evitar sobreposição de contato entre réguas?',
+          'Qual cluster tem maior migração positiva (upgrade de valor)?',
+        ],
+      },
     },
   },
   en: {
