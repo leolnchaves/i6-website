@@ -34,6 +34,7 @@ export type CategoryKey =
 export interface Sku {
   id: string;
   emoji: string;
+  image: string;
   name: { pt: string; en: string };
   category: { pt: string; en: string };
   categoryKey: CategoryKey;
