@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import TouchSelect from '@/components/kiosk/ui/TouchSelect';
+
 import { ArrowDown, ArrowUp, Check, Minus, Plus, Repeat, Sparkles, X } from 'lucide-react';
 import {
   actionMeta,
