@@ -345,7 +345,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                 </button>
 
                 {/* Selected product hero */}
-                <div ref={pdpRef} className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
+                <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
                   <div className="flex gap-[1.5vmin] items-center">
                     <div className="w-[9vmin] h-[9vmin] flex-shrink-0 rounded-xl bg-gradient-to-br from-white/10 to-white/[0.02] flex items-center justify-center text-[5vmin]">
                       {selected.emoji}
@@ -369,7 +369,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
                 {/* Recs / Look — only after training */}
                 {phase === 'pdp' && (
-                  <div className="mt-[1.5vmin] animate-fade-in">
+                  <div ref={pdpRef} className="mt-[1.5vmin] animate-fade-in">
                     <div className="flex items-center justify-between mb-[0.8vmin]">
                       <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
                         {vertical === 'fashion' ? t.lookTitle : t.recsTitle}
