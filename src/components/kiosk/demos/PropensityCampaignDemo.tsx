@@ -248,22 +248,13 @@ const PropensityCampaignDemo = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-[1vmin] mt-auto">
-                  <button
-                    type="button"
-                    onClick={() => setDrillOpen(true)}
-                    className="min-h-[6vmin] rounded-full border border-[#F4845F]/60 bg-[#F4845F]/[0.08] text-[1.55vmin] text-white font-semibold hover:bg-[#F4845F]/[0.16] active:scale-[0.98] transition"
-                  >
-                    {L.result.drillCta}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={reset}
-                    className="min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.55vmin] text-white/85 hover:text-white hover:border-white/50 active:scale-[0.98] transition"
-                  >
-                    {L.result.reset}
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setDrillOpen(true)}
+                  className="mt-auto w-full min-h-[6vmin] rounded-full border border-[#F4845F]/60 bg-[#F4845F]/[0.08] text-[1.55vmin] text-white font-semibold hover:bg-[#F4845F]/[0.16] active:scale-[0.98] transition"
+                >
+                  {L.result.drillCta}
+                </button>
               </>
             )}
           </div>
