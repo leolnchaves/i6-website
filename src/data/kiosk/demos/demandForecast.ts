@@ -442,6 +442,6 @@ export const demoLabels = {
     latencyHint: 'below market average (~180 ms)',
     reset: 'Explore another solution',
   },
-} as const;
+};
 
 export type DemoLang = KioskLang;
