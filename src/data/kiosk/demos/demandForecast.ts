@@ -384,7 +384,7 @@ export const pipeline: PipelineStep[] = [
 
 export const demoLabels = {
   pt: {
-    objective: 'OBJETIVO: PREVISIBILIDADE',
+    objective: 'OBJETIVO: EFICIÊNCIA DO SUPPLY',
     scenarioTitle: 'Dashboard de planejamento',
     scenarioSubtitle: 'Forecast atual · próximos 12 meses',
     reasoningTitle: 'Como o modelo está pensando',
@@ -441,7 +441,7 @@ export const demoLabels = {
     reset: 'Explorar outra solução',
   },
   en: {
-    objective: 'OBJECTIVE: PREDICTABILITY',
+    objective: 'OBJECTIVE: SUPPLY EFFICIENCY',
     scenarioTitle: 'Planning dashboard',
     scenarioSubtitle: 'Current forecast · next 12 months',
     reasoningTitle: 'How the model is thinking',
