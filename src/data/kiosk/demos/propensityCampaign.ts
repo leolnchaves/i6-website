@@ -232,31 +232,36 @@ export const computeResult = (
 
   const priority = buildPriority(product, allowedChannels);
 
+  const splitAcross = (total: number, channels: ChannelId[]): AudienceTierSplit[] => {
+    const n = Math.min(channels.length, 3);
+    if (n <= 1) return [{ channel: channels[0], clients: total }];
+    const weights = n === 2 ? [0.6, 0.4] : [0.5, 0.3, 0.2];
+    const parts = weights.slice(0, n).map((w) => Math.round(total * w));
+    const diff = total - parts.reduce((a, b) => a + b, 0);
+    parts[0] += diff;
+    return parts.map((clients, idx) => ({ channel: channels[idx], clients }));
+  };
+
   const highTotal = Math.round(totalEligible * highShare);
-  const highSplits: AudienceTierSplit[] =
-    priority.length >= 2
-      ? [
-          { channel: priority[0], clients: Math.round(highTotal * 0.6) },
-          { channel: priority[1], clients: highTotal - Math.round(highTotal * 0.6) },
-        ]
-      : [{ channel: priority[0], clients: highTotal }];
+  const midTotal = Math.round(totalEligible * midShare);
+  const futureTotal = Math.round(totalEligible * futureShare);
 
   const tiers: AudienceTier[] = [
     {
       tier: 'Prioridade alta',
       clients: highTotal,
       propensityPct: 82,
-      channels: highSplits,
+      channels: splitAcross(highTotal, priority),
     },
     {
       tier: 'Prioridade média',
-      clients: Math.round(totalEligible * midShare),
+      clients: midTotal,
       propensityPct: 61,
-      channels: [{ channel: pick(priority, 1), clients: Math.round(totalEligible * midShare) }],
+      channels: splitAcross(midTotal, priority),
     },
     {
       tier: 'Oportunidade futura',
-      clients: Math.round(totalEligible * futureShare),
+      clients: futureTotal,
       propensityPct: 34,
       channels: [{ channel: pick(priority, 2), clients: Math.round(totalEligible * futureShare) }],
     },
