@@ -327,10 +327,6 @@ const DemandForecastDemo = ({ lang }: Props) => {
 
           {phase === 'result' && (
             <div className="mt-[1.4vmin] flex flex-col gap-[1vmin]">
-              <div className="grid grid-cols-2 gap-[0.8vmin]">
-                <MetricPill label={L.result.i6Error} value={`${sku.i6ErrorPct.toFixed(1)}%`} />
-                <MetricPill label={L.latency} value={`${latencyMs} ms`} hint={L.latencyHint} />
-              </div>
 
               <div
                 ref={insightRef}
