@@ -332,10 +332,28 @@ const PropensityCampaignDemo = () => {
           </div>
 
           {phase === 'result' && (
-            <div className="mt-[1.4vmin] flex flex-col gap-[1vmin]">
+            <div className="mt-[1.4vmin] flex flex-col gap-[1vmin] flex-1">
 
               <div className="relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.5vmin] text-white/95 leading-relaxed">
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
+                  <Sparkles className="w-[1.4vmin] h-[1.4vmin]" strokeWidth={2.5} />
+                  <span>Insight</span>
+                </div>
+                <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
+                  {L.rationaleLabel}
+                </span>
+                {result.argument}
+              </div>
+
+              <button
+                type="button"
+                onClick={reset}
+                className="mt-auto w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.55vmin] text-white/85 hover:text-white hover:border-white/50 active:scale-[0.98] transition"
+              >
+                {L.result.reset}
+              </button>
+            </div>
+          )}
                   <Sparkles className="w-[1.4vmin] h-[1.4vmin]" strokeWidth={2.5} />
                   <span>Insight</span>
                 </div>
