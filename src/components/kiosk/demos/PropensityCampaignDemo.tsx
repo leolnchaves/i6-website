@@ -121,25 +121,8 @@ const PropensityCampaignDemo = () => {
                   </div>
                 </Section>
 
-                {/* Audience */}
-                <Section title={L.crm.audience}>
-                  <PillRow
-                    options={segments.map((s) => ({ id: s.id, label: s.label }))}
-                    value={segment}
-                    onChange={(v) => setSegment(v as SegmentId)}
-                    disabled={phase === 'running'}
-                  />
-                </Section>
 
-                {/* Period */}
-                <Section title={L.crm.period}>
-                  <PillRow
-                    options={periods.map((p) => ({ id: p.id, label: p.label }))}
-                    value={period}
-                    onChange={(v) => setPeriod(v as PeriodId)}
-                    disabled={phase === 'running'}
-                  />
-                </Section>
+
 
                 {/* Channels */}
                 <Section title={L.crm.channels} hint={L.crm.channelsHint}>
