@@ -313,7 +313,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                         </span>
                       </div>
 
-                      {/* Unified look card — 3 itens em linha, sem cards individuais */}
+                      {/* Unified look card — itens em linha (thumb • descrição • preço) */}
                       <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-[#F4845F]/[0.06] p-[1.4vmin] flex flex-col">
                         <div className="flex items-center justify-between mb-[1vmin]">
                           <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
@@ -321,35 +321,36 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                           </span>
                           <span className="text-[1.2vmin] text-white/50">{t.tapToExplore}</span>
                         </div>
-                        <div className="grid grid-cols-3 gap-[0.6vmin] flex-1">
+                        <div className="flex flex-col gap-[0.6vmin] flex-1">
                           {recSkus.slice(0, 3).map((s) => (
                             <button
                               key={s.id}
                               type="button"
                               onClick={() => pickProduct(s.id)}
-                              className="text-left rounded-lg p-[0.8vmin] transition-all hover:bg-white/[0.05] active:scale-[0.98] flex flex-col"
+                              className="w-full flex items-center gap-[1.2vmin] rounded-lg p-[0.8vmin] transition-all hover:bg-white/[0.05] active:scale-[0.99] text-left"
                             >
-                              <div className="w-full aspect-[3/4] rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[0.6vmin]">
+                              <div className="w-[7vmin] h-[7vmin] flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
                                 <img src={s.image} alt="" className="w-full h-full object-cover" />
                               </div>
-                              <span className="block text-[1.35vmin] leading-tight text-white/90 font-semibold min-h-[3vmin]">
+                              <span className="flex-1 min-w-0 text-[1.5vmin] leading-tight text-white/90 font-semibold truncate">
                                 {s.name[lang]}
                               </span>
-                              <span className="block text-[1.4vmin] text-white font-bold mt-[0.3vmin]">
+                              <span className="flex-shrink-0 text-[1.6vmin] text-white font-bold tabular-nums">
                                 {currency(s.price, lang)}
                               </span>
                             </button>
                           ))}
                         </div>
+
+                        {/* Total dentro do quadro */}
+                        <div className="mt-[1vmin] pt-[1vmin] border-t border-white/10 flex items-center justify-between">
+                          <span className="text-[1.4vmin] text-white/80">{t.lookTotal}</span>
+                          <span className="text-[1.9vmin] font-bold text-white tabular-nums">{currency(lookTotal, lang)}</span>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Total do look — abaixo dos dois quadros */}
-                    <div className="mt-[1vmin] rounded-xl bg-[#F4845F]/10 border border-[#F4845F]/40 px-[1.4vmin] py-[1vmin] flex items-center justify-between">
-                      <span className="text-[1.4vmin] text-white/80">{t.lookTotal}</span>
-                      <span className="text-[1.9vmin] font-bold text-white">{currency(lookTotal, lang)}</span>
-                    </div>
                   </>
+
                 ) : (
                   <>
                     {/* Selected product hero (não-fashion, ou fashion durante training) */}
