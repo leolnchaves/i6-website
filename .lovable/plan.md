@@ -1,48 +1,81 @@
-## Objetivo
+# Demo interativa — Metas Comerciais Preditivas
 
-Substituir as 2 perguntas atuais do i6 Signal na solução **Campanhas por Propensão** (`predictive-campaign-targeting`) por duas novas, específicas do contexto de campanhas — sem alterar o comportamento das outras soluções.
+Nova demo para a solução `predictive-commercial-targets`, seguindo o padrão das demos existentes (`PropensityCampaignDemo`, `DemandForecastDemo`): PT-only, 100% estática, com setup à esquerda, pipeline "como o modelo está pensando" e bloco de resultado com tabela hierárquica, alocação de investimento, KPIs e explicações.
 
-## Perguntas novas
+## Objetivo exibido
+`OBJETIVO: CRESCIMENTO E EFICIÊNCIA DE INVESTIMENTO COMERCIAL`
 
-1. **Propensão por produto agora**
-   - Pergunta: *"Nesse momento, quais produtos teriam mais propensão de venda?"*
-   - Resposta i6 Signal: análise executiva + **gráfico combinado** (barras = volume de clientes propensos; linha = % propensão média) para 5–6 produtos genéricos de varejo/serviços (diferentes dos usados na demo interativa da tela) + ações recomendadas.
+## Arquitetura de arquivos
 
-2. **Clusters comportamentais para régua de campanha**
-   - Pergunta: *"Defina o melhor cluster de comportamento de compra para que eu crie uma régua de campanha."*
-   - Resposta i6 Signal: análise executiva + **tabela com 4 clusters** (nome, % da base, ticket médio, frequência, canal preferido, propensão) + **explicação de cada cluster** logo abaixo, com abordagem sugerida em produtos/campanhas + ações recomendadas.
+- `src/data/kiosk/demos/commercialTargets.ts` — dataset + funções puras (base histórica, cálculo de meta preditiva, potencial, CAC e alocação regional). Determinístico via seed a partir dos argumentos.
+- `src/components/kiosk/demos/CommercialTargetsDemo.tsx` — componente da demo (setup, thinking, resultado).
+- `src/components/kiosk/SolutionDemoBlock.tsx` — registrar branch `solution.id === 'predictive-commercial-targets'`.
 
-## Escopo técnico
+## Fluxo de tela
 
-1. `src/data/signalDemo/content.ts`
-   - Estender `Scenario` com `'propensity' | 'clusters'`.
-   - Adicionar os dois blocos em `scenarios` para PT e EN (mesma estrutura de `label`, `question`, `title`, `analysis`, `actions`, e payload específico da visualização).
-   - Produtos e clusters plausíveis, com dados fixos (determinísticos), estilo dos demais cenários. Sem sobreposição com o catálogo da demo interativa (`PropensityCampaignDemo`).
+1. **Tela inicial (setup à esquerda)** — dashboard base fixo mostrando linhas por Região → Vendedor → Cliente/PDV → SKU com colunas: Volume vendido, Meta atual, Investimento comercial atual, CAC por unidade incremental.
+   
+   Argumentos que o usuário escolhe (chips/selects, seguindo o padrão de `PropensityCampaignDemo`):
+   - Período da meta (Mês / Trimestre / Semestre)
+   - Região ou território (Interior de SP / Minas Gerais / Sul / Todas)
+   - Equipe ou vendedor (Todos / Carlos / Marina / Rafael)
+   - Cliente ou carteira (Todos / Chave / Cauda longa)
+   - SKU ou categoria (Todos / Categoria A / B / C)
+   - Orçamento comercial disponível (slider em faixas: R$ 300 mil / R$ 500 mil / R$ 700 mil)
+   
+   Botão coral: **Calcular metas e investimento ideal**.
 
-2. `src/data/kiosk/config.ts`
-   - Atualizar `solutionSignalMap['predictive-campaign-targeting']` de `['comercial','pdv']` para `['propensity','clusters']`.
-   - Atualizar o tipo do map para incluir os dois novos cenários.
+2. **Thinking pipeline** (6 passos, animação sequencial com ícone e barra, mesmo padrão do `PropensityCampaignDemo`):
+   1. Lendo vendas e execução comercial
+   2. Projetando o potencial de crescimento
+   3. Identificando onde existe capacidade incremental
+   4. Simulando esforço comercial e CAC
+   5. Equilibrando crescimento e eficiência comercial
+   6. Distribuindo metas granulares
 
-3. `src/components/signalDemo/visualizations.tsx` (ou arquivo equivalente)
-   - Novo `PropensityByProductChart`: recharts `ComposedChart` com `Bar` (clientes propensos) + `Line` (% propensão), eixos duplos, tooltip, legenda; segue paleta coral/navy do site.
-   - Novo `BehaviorClustersTable`: tabela com colunas (Cluster, % base, ticket médio, frequência, canal, propensão) + bloco de descrição por cluster abaixo (título + parágrafo + "Como abordar").
+3. **Resultado** (grid 2 colunas em desktop, empilhado em mobile):
 
-4. `src/components/kiosk/KioskSignalIntelliboard.tsx` e `src/components/solutions/I6SignalDemo.tsx`
-   - Adicionar branches de render para `activeScenario === 'propensity'` e `activeScenario === 'clusters'` usando os novos componentes. Nenhuma mudança de layout/espacamento — mesmo padrão dos cenários atuais.
+   **A. Meta atual × Meta preditiva** — tabela navegável por dimensão (chips no topo: Região · Vendedor · Cliente · SKU). Colunas: Meta atual, Meta sugerida, Potencial, Δ vs. atual. Clique na linha abre um painel de composição (fatores + copy "Por que sugerimos esta meta / reduzir / aumentar").
+   
+   **B. Alocação recomendada de investimento comercial** — tabela por região: Crescimento potencial, Investimento atual, Investimento sugerido, CAC incremental, badge de ação (Aumentar / Reduzir / Redistribuir).
+   
+   **C. Cards de conclusão** (grid 4 colunas, mesma linha):
+   - Volume incremental potencial
+   - Meta total recomendada
+   - Investimento comercial sugerido
+   - CAC incremental projetado
+   
+   **D. Destaques secundários** (chips/pills abaixo dos cards):
+   - Regiões com potencial subexplorado
+   - Clientes com pressão excessiva
+   - SKUs com maior oportunidade
+   - Vendedores com capacidade adicional
+   
+   **E. Painel "Por que sugerimos"** — 4 blocos de copy fixa (com valores dinâmicos interpolados) conforme especificado: sugerir meta, aumentar investimento, reduzir meta, redistribuir investimento.
+
+## Regras de dados (determinísticas)
+
+- Catálogo base: 3 regiões × 2–3 vendedores × 3–4 clientes × 2 SKUs (~24 linhas) com volumes plausíveis (400–1.600 un.), meta atual próxima ao histórico e investimento por região.
+- Meta preditiva = potencial × fator de captura (0,85–0,95) modulado pelo período e orçamento.
+- Potencial > meta sugerida (folga estrutural).
+- CAC incremental por região dentro da faixa R$ 10–25 (random determinístico via seed baseado nos argumentos, seguindo o helper `rand` já usado em `propensityCampaign.ts`).
+- Alocação regional: quando a região tem crescimento potencial alto E CAC baixo → "Aumentar"; potencial baixo → "Reduzir"; potencial médio com CAC melhor que outra região → "Redistribuir".
+- KPI "Meta total recomendada" e "Investimento sugerido" derivam da soma das linhas filtradas.
+
+## Detalhes de UI
+
+- Tokens visuais: mesma paleta dark navy + coral já utilizada; `bg-white/5`, `border-white/10`, coral `#F4845F` para destaques e ícones.
+- Não exibir KPI de latência (segue diretriz aplicada em Campanhas).
+- Sem i18n — copy 100% em PT (idem `PropensityCampaignDemo`).
+- Reset volta ao estado de setup preservando os argumentos selecionados.
+
+## Integração
+
+- `SolutionDemoBlock.tsx`: adicionar `if (solution.id === 'predictive-commercial-targets') return <CommercialTargetsDemo />;` acima do fallback.
+- Nenhuma alteração no `signalDemo` (as perguntas do i6 Signal para essa solução já apontam para os cenários `comercial` + `forecast`).
 
 ## Fora de escopo
 
-- Nenhuma alteração em outras soluções, na demo interativa `PropensityCampaignDemo`, em i18n do Kiosk ou em outras páginas.
-- Sem novas dependências (recharts já está no projeto).
-
-## Dados sugeridos (para revisão antes do build)
-
-**Produtos (Q1)** — 6 itens: Tênis de Corrida, Cafeteira Espresso, Fone Bluetooth, Camiseta Dry-Fit, Ar-Condicionado Portátil, Assinatura Streaming Premium. Volumes 1.8k–6.4k; propensão 34–71%.
-
-**Clusters (Q2)** — 4 grupos:
-- *Compradores Frequentes de Alto Valor* (~12% da base, ticket alto, freq. alta, canal WhatsApp, propensão 78–88%).
-- *Exploradores Sazonais* (~28%, ticket médio, freq. média, e-mail, 52–63%).
-- *Sensíveis a Preço* (~34%, ticket baixo/médio, freq. média, push, 38–48%).
-- *Dormentes com Potencial* (~26%, histórico relevante mas sem compra recente, e-mail + SMS reativação, 22–31%).
-
-Se preferir outros produtos/nomes de cluster, ajuste antes de aprovar o plano.
+- Alterações em outras demos.
+- Exportação de dados / integração real com backend.
+- Versão ENG (pode ser feita depois, mediante pedido).

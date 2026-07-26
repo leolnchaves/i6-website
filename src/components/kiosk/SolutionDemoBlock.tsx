@@ -5,6 +5,7 @@ import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
 import DemandForecastDemo from './demos/DemandForecastDemo';
 import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
+import CommercialTargetsDemo from './demos/CommercialTargetsDemo';
 
 interface Props {
   solution: LeanSolution;
@@ -30,6 +31,10 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
 
   if (solution.id === 'predictive-campaign-targeting') {
     return <PropensityCampaignDemo />;
+  }
+
+  if (solution.id === 'predictive-commercial-targets') {
+    return <CommercialTargetsDemo />;
   }
 
   return (
