@@ -354,16 +354,6 @@ const PropensityCampaignDemo = () => {
               </button>
             </div>
           )}
-                  <Sparkles className="w-[1.4vmin] h-[1.4vmin]" strokeWidth={2.5} />
-                  <span>Insight</span>
-                </div>
-                <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
-                  {L.rationaleLabel}
-                </span>
-                {result.argument}
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
