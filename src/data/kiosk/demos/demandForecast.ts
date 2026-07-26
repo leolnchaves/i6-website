@@ -30,6 +30,8 @@ export interface SkuDef {
   cagr: number;
   seasonAmp: number;
   seasonPeak: number;
+  /** 12 monthly weights [Jan..Dec] in [-1..+1] — realistic peaks/valleys on specific months */
+  seasonProfile: number[];
   promoMonths: number[];
   rupturedMonths: number[];
   accelLast: number;
