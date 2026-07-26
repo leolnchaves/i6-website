@@ -399,63 +399,7 @@ const MixAssortmentOrderDemo = () => {
 
 // --- Subcomponents ---
 
-const SelectField = ({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-}) => (
-  <label className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.2vmin] flex flex-col gap-[0.4vmin]">
-    <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50">
-      {label}
-    </span>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="bg-transparent text-white text-[1.5vmin] font-semibold outline-none cursor-pointer"
-    >
-      {options.map((o) => (
-        <option key={o.value} value={o.value} className="bg-[#0B1224]">
-          {o.label}
-        </option>
-      ))}
-    </select>
-  </label>
-);
 
-const CompactSelect = ({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-}) => (
-  <label className="rounded-lg border border-white/10 bg-white/[0.04] px-[1vmin] py-[0.5vmin] flex items-center gap-[0.6vmin] hover:border-[#F4845F]/40 transition">
-    <span className="text-[0.95vmin] tracking-[0.18em] uppercase font-semibold text-white/50 flex-shrink-0">
-      {label}
-    </span>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="bg-transparent text-white text-[1.25vmin] font-semibold outline-none cursor-pointer flex-1 min-w-0"
-    >
-      {options.map((o) => (
-        <option key={o.value} value={o.value} className="bg-[#0B1224]">
-          {o.label}
-        </option>
-      ))}
-    </select>
-  </label>
-);
 
 const ContextTile = ({
   label,
