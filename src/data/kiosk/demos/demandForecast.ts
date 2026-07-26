@@ -305,7 +305,7 @@ export const buildSeries = (
       let currentBiasFactor = 1;
       if (sku.currentBias === 'under') currentBiasFactor = 0.83;
       else if (sku.currentBias === 'over') currentBiasFactor = 1.13;
-      const dampedSeason = 1 + sku.seasonAmp * 0.55 * Math.cos(seasonPhase);
+      const dampedSeason = 1 + sku.seasonAmp * 0.55 * seasonWeight;
       const currentBaseline =
         sku.base * trendFactor * dampedSeason * channelMult * regionMult * currentBiasFactor;
       point.currentFcst = Math.round(currentBaseline * (1 + promoBoost * 0.4));
@@ -320,8 +320,7 @@ export const buildSeries = (
       const trendComp = sku.base * trendFactor * channelMult * regionMult;
       // Amplify seasonal contrast so recurring SKUs still show a visible signed wave
       const effectiveSeasonAmp = Math.max(sku.seasonAmp, 0.14);
-      const effectiveSeasonFactor = 1 + effectiveSeasonAmp * Math.cos(seasonPhase);
-      const seasonComp = trendComp * (effectiveSeasonFactor - 1);
+      const seasonComp = trendComp * effectiveSeasonAmp * seasonWeight;
       const promoComp = trendComp * promoBoost;
       const sparsityComp = sku.rupturedMonths.length > 0 ? trendComp * 0.04 : 0;
 
