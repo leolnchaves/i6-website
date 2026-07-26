@@ -40,10 +40,15 @@ const SkuTile = ({
     >
       <div
         className={`${
-          small ? 'aspect-square text-[5vmin]' : 'aspect-square text-[7vmin]'
+          small ? 'aspect-square' : 'aspect-square'
         } rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[0.8vmin] flex items-center justify-center`}
       >
-        <span>{sku.emoji}</span>
+        <img
+          src={sku.image}
+          alt=""
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
       </div>
       <span
         className={`block ${
