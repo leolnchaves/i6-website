@@ -1,4 +1,21 @@
 import type { KioskLang } from '../config';
+import imgHeadphones from '@/assets/kiosk/predictive/headphones.jpg';
+import imgEarbuds from '@/assets/kiosk/predictive/earbuds.jpg';
+import imgSpeaker from '@/assets/kiosk/predictive/speaker.jpg';
+import imgMouse from '@/assets/kiosk/predictive/mouse.jpg';
+import imgKeyboard from '@/assets/kiosk/predictive/keyboard.jpg';
+import imgMonitor from '@/assets/kiosk/predictive/monitor.jpg';
+import imgCable from '@/assets/kiosk/predictive/cable.jpg';
+import imgCase from '@/assets/kiosk/predictive/case.jpg';
+import imgShirt from '@/assets/kiosk/predictive/shirt.jpg';
+import imgTee from '@/assets/kiosk/predictive/tee.jpg';
+import imgJacket from '@/assets/kiosk/predictive/jacket.jpg';
+import imgPants from '@/assets/kiosk/predictive/pants.jpg';
+import imgJeans from '@/assets/kiosk/predictive/jeans.jpg';
+import imgSneakers from '@/assets/kiosk/predictive/sneakers.jpg';
+import imgBoots from '@/assets/kiosk/predictive/boots.jpg';
+import imgCap from '@/assets/kiosk/predictive/cap.jpg';
+import imgBackpack from '@/assets/kiosk/predictive/backpack.jpg';
 
 export type Vertical = 'products' | 'fashion';
 export type UserMode = 'logged' | 'anon';
