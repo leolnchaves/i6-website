@@ -274,7 +274,7 @@ export const computeResult = (
     name: 'Cliente exemplo',
     topProduct: product.name,
     channel: primary,
-    moment: period === '7d' ? 'Próximas 48h · 19h–21h' : period === '14d' ? 'Próximos 5 dias · 12h–14h' : 'Próximos 10 dias · 19h–21h',
+    moment: period === '7d' ? 'Próximas 48h' : period === '14d' ? 'Próximos 5 dias' : 'Próximos 10 dias',
     factors: [
       `Recência de compra em ${product.category.toLowerCase()} abaixo de 21 dias`,
       `Engajamento 3× acima da média com ofertas no canal ${channelLabel(primary)}`,
