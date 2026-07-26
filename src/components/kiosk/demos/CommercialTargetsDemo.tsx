@@ -42,6 +42,8 @@ const CommercialTargetsDemo = () => {
 
   const dimRows = useMemo(() => getDimRows(result), [result]);
   const activeRows = dimRows[dim] ?? [];
+  const activeAllocation = useMemo(() => getAllocation(result, dim), [result, dim]);
+
 
   useEffect(() => {
     if (phase !== 'running') return;
