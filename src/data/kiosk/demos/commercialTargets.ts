@@ -493,7 +493,8 @@ export const computeResult = (args: Args): CommercialResult => {
     _allDims: dimRows,
     // @ts-expect-error attach per-dim allocations
     _allAllocations: allocationsByDim,
-  };
+  } as CommercialResult;
+
 };
 
 // Utility for consumers to fetch all dim rows (attached above)
