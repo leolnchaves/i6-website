@@ -189,19 +189,26 @@ const CommercialTargetsDemo = () => {
                 </span>
               </div>
               <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr] px-[1.4vmin] py-[0.8vmin] bg-white/[0.02] text-[1.1vmin] uppercase tracking-[0.18em] font-semibold text-white/55 border-t border-white/10">
-                <span>{L.result.allocationRegion}</span>
+                <span>{dimensions.find((d) => d.id === dim)?.label}</span>
                 <span className="text-right">{L.result.allocationGrowth}</span>
                 <span className="text-right">{L.result.allocationCurrent}</span>
                 <span className="text-right">{L.result.allocationSuggested}</span>
                 <span className="text-right">{L.result.allocationCac}</span>
                 <span className="text-right" />
               </div>
-              {result.allocation.map((a) => (
+              {activeAllocation.map((a) => (
                 <div
-                  key={a.regionId}
+                  key={a.key}
                   className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr] px-[1.4vmin] py-[1vmin] items-center text-[1.35vmin] border-t border-white/10"
                 >
-                  <span className="text-white/90 font-semibold">{a.region}</span>
+                  <span className="text-white/90 font-semibold leading-tight">
+                    {a.label}
+                    {a.sublabel && (
+                      <span className="block text-[1.1vmin] font-normal text-white/50">
+                        {a.sublabel}
+                      </span>
+                    )}
+                  </span>
                   <span className="text-right text-white font-mono">
                     {showProjected ? `+${a.growthPct}%` : DASH}
                   </span>
@@ -218,6 +225,7 @@ const CommercialTargetsDemo = () => {
                     {showProjected ? <ActionBadge action={a.action} /> : <span className="text-white/40 text-[1.2vmin]">{DASH}</span>}
                   </span>
                 </div>
+
               ))}
             </div>
 
