@@ -441,7 +441,7 @@ export const demoLabels = {
     reset: 'Explorar outra solução',
   },
   en: {
-    objective: 'OBJECTIVE: PREDICTABILITY',
+    objective: 'OBJECTIVE: SUPPLY EFFICIENCY',
     scenarioTitle: 'Planning dashboard',
     scenarioSubtitle: 'Current forecast · next 12 months',
     reasoningTitle: 'How the model is thinking',
