@@ -1,0 +1,531 @@
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Check, Sparkles, User, UserX } from 'lucide-react';
+import type { KioskLang } from '@/data/kiosk/config';
+import {
+  catalogs,
+  scenarios,
+  uiLabels,
+  currency,
+  type Sku,
+  type UserMode,
+  type Vertical,
+} from '@/data/kiosk/demos/predictivePersonalization';
+
+interface Props {
+  lang: KioskLang;
+}
+
+type Phase = 'pick' | 'list' | 'training' | 'pdp';
+
+const SkuTile = ({
+  sku,
+  lang,
+  onClick,
+  small,
+}: {
+  sku: Sku;
+  lang: KioskLang;
+  onClick?: () => void;
+  small?: boolean;
+}) => {
+  const Comp = onClick ? 'button' : 'div';
+  return (
+    <Comp
+      type={onClick ? 'button' : undefined}
+      onClick={onClick}
+      className={`text-left rounded-xl border-2 transition-all bg-white/[0.03] border-white/10 ${
+        onClick ? 'hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06] active:scale-[0.98]' : ''
+      } ${small ? 'p-[1.1vmin]' : 'p-[1.5vmin]'}`}
+    >
+      <div
+        className={`${
+          small ? 'aspect-square text-[5vmin]' : 'aspect-square text-[7vmin]'
+        } rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[0.8vmin] flex items-center justify-center`}
+      >
+        <span>{sku.emoji}</span>
+      </div>
+      <span
+        className={`block ${
+          small ? 'text-[1.05vmin]' : 'text-[1.3vmin]'
+        } uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]`}
+      >
+        {sku.category[lang]}
+      </span>
+      <span
+        className={`block ${
+          small ? 'text-[1.35vmin]' : 'text-[1.55vmin]'
+        } leading-tight text-white/90 font-semibold ${small ? 'min-h-[3vmin]' : 'min-h-[3.6vmin]'}`}
+      >
+        {sku.name[lang]}
+      </span>
+      <span
+        className={`block ${
+          small ? 'text-[1.3vmin]' : 'text-[1.5vmin]'
+        } text-white font-bold mt-[0.4vmin]`}
+      >
+        {currency(sku.price, lang)}
+      </span>
+    </Comp>
+  );
+};
+
+const PredictivePersonalizationDemo = ({ lang }: Props) => {
+  const t = uiLabels[lang];
+
+  const [userMode, setUserMode] = useState<UserMode | null>(null);
+  const [vertical, setVertical] = useState<Vertical | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState<Phase>('pick');
+
+  const scenarioKey =
+    userMode && vertical ? (`${userMode}-${vertical}` as const) : null;
+  const scenario = scenarioKey ? scenarios[scenarioKey] : null;
+  const catalog = vertical ? catalogs[vertical] : null;
+  const selected = useMemo<Sku | null>(() => {
+    if (!catalog || !selectedId) return null;
+    return catalog.skus.find((s) => s.id === selectedId) ?? null;
+  }, [catalog, selectedId]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pdpRef = useRef<HTMLDivElement>(null);
+  const argRef = useRef<HTMLDivElement>(null);
+  const [line, setLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
+
+  const latencyMs = useMemo(() => {
+    if (!selected) return '0.00';
+    return (18 + Math.random() * 22).toFixed(2);
+  }, [selectedId]);
+
+  // Pipeline animation
+  useEffect(() => {
+    if (phase !== 'training' || !scenario) return;
+    setProgress(0);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let elapsed = 0;
+    scenario.features.forEach((step, i) => {
+      elapsed += step.durationMs;
+      timers.push(setTimeout(() => setProgress(i + 1), elapsed));
+    });
+    // After pipeline, transition to PDP
+    timers.push(setTimeout(() => setPhase('pdp'), elapsed + 200));
+    return () => timers.forEach(clearTimeout);
+  }, [phase, scenario]);
+
+  // Connector line
+  useLayoutEffect(() => {
+    if (phase !== 'pdp') {
+      setLine(null);
+      return;
+    }
+    const measure = () => {
+      const c = containerRef.current?.getBoundingClientRect();
+      const p = pdpRef.current?.getBoundingClientRect();
+      const a = argRef.current?.getBoundingClientRect();
+      if (!c || !p || !a) return;
+      setLine({
+        x1: p.right - c.left,
+        y1: p.top + p.height / 2 - c.top,
+        x2: a.left - c.left,
+        y2: a.top + a.height / 2 - c.top,
+      });
+    };
+    const t = setTimeout(measure, 500);
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (containerRef.current) ro.observe(containerRef.current);
+    if (pdpRef.current) ro.observe(pdpRef.current);
+    if (argRef.current) ro.observe(argRef.current);
+    window.addEventListener('resize', measure);
+    return () => {
+      clearTimeout(t);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [phase, selectedId]);
+
+  const pickProduct = (id: string) => {
+    setSelectedId(id);
+    setProgress(0);
+    setPhase('training');
+  };
+
+  const backToCatalog = () => {
+    setSelectedId(null);
+    setProgress(0);
+    setPhase('list');
+  };
+
+  const changeScenario = () => {
+    setUserMode(null);
+    setVertical(null);
+    setSelectedId(null);
+    setProgress(0);
+    setPhase('pick');
+  };
+
+  const startScenario = (u: UserMode, v: Vertical) => {
+    setUserMode(u);
+    setVertical(v);
+    setSelectedId(null);
+    setProgress(0);
+    setPhase('list');
+  };
+
+  // ---------- Render: scenario picker ----------
+  if (phase === 'pick' || !scenario || !catalog) {
+    const scenarios2x2: Array<{ u: UserMode; v: Vertical; icon: JSX.Element; title: string; sub: string }> = [
+      {
+        u: 'logged',
+        v: 'products',
+        icon: <User className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
+        title: t.userLogged,
+        sub: t.verticalProducts,
+      },
+      {
+        u: 'logged',
+        v: 'fashion',
+        icon: <User className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
+        title: t.userLogged,
+        sub: t.verticalFashion,
+      },
+      {
+        u: 'anon',
+        v: 'products',
+        icon: <UserX className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
+        title: t.userAnon,
+        sub: t.verticalProducts,
+      },
+      {
+        u: 'anon',
+        v: 'fashion',
+        icon: <UserX className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
+        title: t.userAnon,
+        sub: t.verticalFashion,
+      },
+    ];
+    return (
+      <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
+        <div className="flex items-center gap-[1.5vmin] mb-[2.5vmin]">
+          <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+            <Sparkles className="w-[2.6vmin] h-[2.6vmin] text-[#F4845F]" />
+          </span>
+          <div>
+            <h4 className="text-[2.4vmin] font-bold text-white leading-tight">{t.header}</h4>
+            <p className="text-[1.6vmin] text-white/60">{t.headerSubtitle}</p>
+          </div>
+        </div>
+
+        <p className="text-[1.4vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
+          {t.pickScenarioTitle}
+        </p>
+        <p className="text-[1.7vmin] text-white/70 mb-[2vmin]">{t.pickScenarioHint}</p>
+
+        <div className="grid grid-cols-2 gap-[2vmin]">
+          {scenarios2x2.map(({ u, v, icon, title, sub }) => (
+            <button
+              key={`${u}-${v}`}
+              type="button"
+              onClick={() => startScenario(u, v)}
+              className="text-left rounded-2xl border-2 border-white/15 bg-white/[0.03] p-[2.5vmin] min-h-[14vmin] transition-all hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98]"
+            >
+              <div className="flex items-center gap-[1.5vmin] mb-[1.5vmin]">
+                <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+                  {icon}
+                </span>
+                <div>
+                  <span className="block text-[2vmin] font-bold text-white leading-tight">{title}</span>
+                  <span className="block text-[1.6vmin] text-white/60">{sub}</span>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Recommendations: use recIds from selected; for fashion PDP use lookIds
+  const recSkus =
+    selected && catalog
+      ? (vertical === 'fashion' && selected.lookIds
+          ? selected.lookIds
+          : selected.recIds
+        )
+          .map((id) => catalog.skus.find((s) => s.id === id))
+          .filter(Boolean) as Sku[]
+      : [];
+
+  const lookTotal = recSkus.reduce((acc, s) => acc + s.price, 0) + (selected?.price ?? 0);
+  const argumentText = scenario && selected
+    ? scenario.argument[lang].replace('{name}', selected.name[lang])
+    : '';
+
+  const modeIcon =
+    userMode === 'logged' ? (
+      <User className="w-[2vmin] h-[2vmin]" />
+    ) : (
+      <UserX className="w-[2vmin] h-[2vmin]" />
+    );
+
+  return (
+    <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
+      {/* Header with scenario chip */}
+      <div className="flex items-center justify-between gap-[2vmin] mb-[2vmin]">
+        <div className="flex items-center gap-[1.5vmin]">
+          <span className="w-[4.5vmin] h-[4.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+            <Sparkles className="w-[2.4vmin] h-[2.4vmin] text-[#F4845F]" />
+          </span>
+          <div>
+            <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{t.header}</h4>
+            <p className="text-[1.4vmin] text-white/60">{t.headerSubtitle}</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={changeScenario}
+          className="inline-flex items-center gap-[0.8vmin] px-[2vmin] py-[1.4vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] transition"
+        >
+          {t.changeScenario}
+        </button>
+      </div>
+
+      {/* Scenario chip row */}
+      <div className="flex flex-wrap items-center gap-[1vmin] mb-[2vmin]">
+        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-white/[0.06] border border-white/15 text-[1.4vmin] text-white/85">
+          {modeIcon}
+          {userMode === 'logged' ? t.userLogged : t.userAnon}
+        </span>
+        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-white/[0.06] border border-white/15 text-[1.4vmin] text-white/85">
+          {vertical === 'products' ? t.verticalProducts : t.verticalFashion}
+        </span>
+        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-[#F4845F]/15 border border-[#F4845F]/40 text-[1.4vmin] font-semibold text-[#F4845F]">
+          {t.objectiveLabel}: {scenario.objective[lang]}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
+        {/* LEFT: e-commerce (list OR pdp) */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
+          {/* Fake browser bar */}
+          <div className="flex items-center gap-[1vmin] px-[2vmin] py-[1.5vmin] bg-white/[0.04] border-b border-white/10">
+            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ff5f56]" />
+            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ffbd2e]" />
+            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#27c93f]" />
+            <span className="ml-[1.5vmin] text-[1.4vmin] text-white/50 font-mono">
+              vivashop.io / {vertical}
+            </span>
+          </div>
+
+          <div className="p-[2vmin] flex-1 flex flex-col">
+            {phase === 'list' && (
+              <>
+                <div className="flex items-baseline justify-between mb-[1.5vmin]">
+                  <div>
+                    <h5 className="text-[2vmin] font-bold text-white">{catalog.title[lang]}</h5>
+                    <p className="text-[1.4vmin] text-white/60">{catalog.subtitle[lang]}</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-[1.2vmin]">
+                  {catalog.skus.slice(0, 6).map((sku) => (
+                    <SkuTile key={sku.id} sku={sku} lang={lang} onClick={() => pickProduct(sku.id)} small />
+                  ))}
+                </div>
+              </>
+            )}
+
+            {(phase === 'training' || phase === 'pdp') && selected && (
+              <div className="flex flex-col animate-fade-in">
+                <button
+                  type="button"
+                  onClick={backToCatalog}
+                  className="self-start inline-flex items-center gap-[1vmin] min-h-[7vmin] px-[2.5vmin] py-[1.6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition mb-[1.5vmin]"
+                >
+                  {t.backToCatalog}
+                </button>
+
+                {/* Selected product hero */}
+                <div ref={pdpRef} className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
+                  <div className="flex gap-[1.5vmin] items-center">
+                    <div className="w-[9vmin] h-[9vmin] flex-shrink-0 rounded-xl bg-gradient-to-br from-white/10 to-white/[0.02] flex items-center justify-center text-[5vmin]">
+                      {selected.emoji}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="block text-[1.2vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
+                        {selected.category[lang]}
+                      </span>
+                      <h5 className="text-[2vmin] leading-tight text-white font-bold mb-[0.4vmin]">
+                        {selected.name[lang]}
+                      </h5>
+                      <span
+                        className="block text-[2.4vmin] font-bold text-white leading-none"
+                        style={{ textShadow: '0 0 20px rgba(244,132,95,0.4)' }}
+                      >
+                        {currency(selected.price, lang)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recs / Look — only after training */}
+                {phase === 'pdp' && (
+                  <div className="mt-[1.5vmin] animate-fade-in">
+                    <div className="flex items-center justify-between mb-[0.8vmin]">
+                      <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
+                        {vertical === 'fashion' ? t.lookTitle : t.recsTitle}
+                      </span>
+                      <span className="text-[1.2vmin] text-white/50">{t.tapToExplore}</span>
+                    </div>
+
+                    {vertical === 'fashion' ? (
+                      <>
+                        <div className="grid grid-cols-3 gap-[1vmin]">
+                          {recSkus.slice(0, 3).map((s) => (
+                            <SkuTile key={s.id} sku={s} lang={lang} onClick={() => pickProduct(s.id)} small />
+                          ))}
+                        </div>
+                        <div className="mt-[1vmin] rounded-xl bg-[#F4845F]/10 border border-[#F4845F]/40 px-[1.4vmin] py-[1vmin] flex items-center justify-between">
+                          <span className="text-[1.4vmin] text-white/80">{t.lookTotal}</span>
+                          <span className="text-[1.9vmin] font-bold text-white">{currency(lookTotal, lang)}</span>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="grid grid-cols-4 gap-[1vmin]">
+                        {recSkus.slice(0, 4).map((s) => (
+                          <SkuTile key={s.id} sku={s} lang={lang} onClick={() => pickProduct(s.id)} small />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* RIGHT: reasoning */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
+          <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
+            <span className="w-[4.2vmin] h-[4.2vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+              <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />
+            </span>
+            <div>
+              <h4 className="text-[1.9vmin] font-bold text-white leading-tight">{t.reasoningTitle}</h4>
+              <p className="text-[1.35vmin] text-white/60">{t.reasoningSubtitle}</p>
+            </div>
+          </div>
+
+          {phase === 'list' ? (
+            <div className="flex-1 flex flex-col items-center justify-center text-center py-[3vmin]">
+              <div className="w-[8vmin] h-[8vmin] rounded-full border-2 border-dashed border-[#F4845F]/40 flex items-center justify-center mb-[1.5vmin]">
+                <Sparkles className="w-[3.4vmin] h-[3.4vmin] text-[#F4845F]/60" />
+              </div>
+              <p className="text-[1.8vmin] font-semibold text-white/80 mb-[0.4vmin]">
+                {t.reasoningIdle}
+              </p>
+              <p className="text-[1.4vmin] text-white/50 max-w-[36vmin]">{t.reasoningIdleHint}</p>
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col gap-[0.8vmin]">
+                {scenario.features.map((step, i) => {
+                  const state = i < progress ? 'done' : i === progress ? 'active' : 'idle';
+                  return (
+                    <div
+                      key={i}
+                      className={`rounded-xl border p-[1.1vmin] transition-all ${
+                        state === 'active'
+                          ? 'border-[#F4845F] bg-[#F4845F]/10'
+                          : state === 'done'
+                          ? 'border-white/20 bg-white/[0.04]'
+                          : 'border-white/10 bg-white/[0.02] opacity-60'
+                      }`}
+                    >
+                      <div className="flex items-center gap-[1.2vmin] mb-[0.4vmin]">
+                        <span
+                          className={`flex-shrink-0 w-[2.2vmin] h-[2.2vmin] rounded-full flex items-center justify-center text-[1.2vmin] font-bold border-2 ${
+                            state === 'done'
+                              ? 'bg-[#F4845F] border-[#F4845F] text-white'
+                              : state === 'active'
+                              ? 'border-[#F4845F] text-[#F4845F]'
+                              : 'border-white/30 text-white/50'
+                          }`}
+                        >
+                          {state === 'done' ? <Check className="w-[1.3vmin] h-[1.3vmin]" /> : i + 1}
+                        </span>
+                        <span className="text-[1.5vmin] leading-tight text-white/90 font-semibold">
+                          {step.label[lang]}
+                        </span>
+                      </div>
+                      <div className="pl-[3.4vmin]">
+                        <p className="text-[1.2vmin] text-white/60 font-mono mb-[0.3vmin]">
+                          {step.microMetric[lang]}
+                        </p>
+                        {state === 'active' && (
+                          <div className="h-[0.35vmin] rounded-full bg-white/10 overflow-hidden">
+                            <div
+                              className="h-full bg-[#F4845F] animate-[kiosk-progress_var(--dur)_linear_forwards]"
+                              style={{ ['--dur' as string]: `${step.durationMs}ms` }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {phase === 'pdp' && selected && (
+                <div
+                  ref={argRef}
+                  className="kiosk-insight-card relative mt-[1.4vmin] rounded-2xl border-2 border-[#F4845F]/70 bg-[#F4845F]/[0.10] p-[1.6vmin] pr-[9vmin] animate-fade-in"
+                >
+                  <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
+                    <Sparkles className="w-[1.4vmin] h-[1.4vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
+                    <span>Insight</span>
+                  </div>
+                  <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
+                    {t.rationaleLabel}
+                  </span>
+                  <p className="text-[1.55vmin] leading-relaxed text-white/95 mb-[1vmin]">
+                    {argumentText}
+                  </p>
+                  <div className="flex items-center gap-[1vmin] text-[1.25vmin] text-white/70">
+                    <span className="inline-flex items-center gap-[0.5vmin] px-[1vmin] py-[0.3vmin] rounded-full bg-white/[0.06] border border-white/15 font-mono">
+                      {t.latencyLabel}: {latencyMs} ms
+                    </span>
+                    <span className="text-white/50">· {t.latencyHint}</span>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Connector line: PDP → argument */}
+      {line && (
+        <svg
+          className="pointer-events-none absolute inset-0 w-full h-full"
+          style={{ overflow: 'visible' }}
+          aria-hidden="true"
+        >
+          <path
+            d={`M ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`}
+            fill="none"
+            stroke="#F4845F"
+            strokeOpacity={0.9}
+            strokeWidth={1.5}
+            strokeDasharray="6 6"
+            style={{ filter: 'drop-shadow(0 0 6px rgba(244,132,95,0.7))' }}
+            className="kiosk-connector-path"
+          />
+          <circle cx={line.x1} cy={line.y1} r={4} fill="#F4845F" className="kiosk-connector-dot" />
+          <circle cx={line.x2} cy={line.y2} r={4} fill="#F4845F" className="kiosk-connector-dot" />
+        </svg>
+      )}
+    </div>
+  );
+};
+
+export default PredictivePersonalizationDemo;
