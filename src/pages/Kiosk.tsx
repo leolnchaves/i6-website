@@ -208,9 +208,6 @@ const Kiosk = () => {
               <h2 className="text-[4vmin] font-bold leading-tight mb-[1vmin]">
                 {isCombo ? kContent.results.tieTitle : kContent.results.title}
               </h2>
-              <p className="text-[2.2vmin] text-white/65">
-                {isCombo ? kContent.results.tieSubtitle : kContent.results.subtitle}
-              </p>
             </div>
 
             <SolutionsGrid
