@@ -298,7 +298,7 @@ export const computeResult = (
 };
 
 export const labels = {
-  objective: 'OBJETIVO: ATIVAÇÃO',
+  objective: 'OBJETIVO: ENGAJAMENTO E CONVERSÃO',
   crm: {
     title: 'CRM · Nova campanha',
     subtitle: 'Configure a oferta e o público disponível',
