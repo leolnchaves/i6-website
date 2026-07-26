@@ -1,46 +1,29 @@
 ## Objetivo
 
-Reescrever as justificativas do card **"POR QUE RECOMENDAMOS ESTA AUDIÊNCIA"** (Campanhas por Propensão, `/kiosk`) em linguagem **de negócio, 100% comportamental** — nada de SHAP, embeddings, deciles, Brier, p̂. Quem lê é gestor de marketing/comercial, não cientista de dados.
+Em **Metas Comerciais Preditivas** (`/kiosk`), exibir o mesmo seletor de dimensão **Região / Vendedor / Cliente / SKU** já **antes de calcular metas**, filtrando o conteúdo inicial da tabela pela dimensão escolhida (hoje é fixo em "Região" até o cálculo terminar).
 
-## Padrão de escrita (regra)
+## Diagnóstico
 
-Cada justificativa deve descrever um **sinal comportamental observado** em pelo menos uma destas dimensões:
+Em `src/components/kiosk/demos/CommercialTargetsDemo.tsx`:
 
-- **Cliente**: frequência, recência, ticket, resposta a canal, devoluções, look-alike de conversores.
-- **PDV / loja**: giro, ruptura, cluster de loja, performance da vitrine.
-- **Região**: densidade da base, tráfego local, adesão histórica.
-- **Similares**: comportamento de clientes parecidos que já converteram em campanha anterior.
-- **Clima / calendário / eventos**: chuva, feriado, data comemorativa, sazonalidade, evento local.
+- O botão do switcher de dimensões é renderizado só quando `showProjected` (fase `result`) — linhas 86–109.
+- O cabeçalho da tabela força `'region'` antes do cálculo — linha 114 (`showProjected ? dim : 'region'`).
+- As linhas iniciais usam `dimRows.region` fixo — linha 65 (`(dimRows.region ?? []).slice(0, 6)`).
 
-Formato: **1 frase curta, com um número concreto e um mecanismo comportamental**. Sem "SHAP", "score", "propensão calibrada", "lift" técnico, "decile". "Lift" pode virar "responde X× mais". Pode falar em "clientes parecidos com quem já comprou" em vez de "look-alike".
+Os dados agregados por todas as 4 dimensões já existem em `getDimRows(result)` (`dimRows.region | rep | client | sku`), então não é preciso mexer em `commercialTargets.ts` — só remover as travas de UI.
 
-## Exemplo do padrão (já aprovado pelo usuário)
+## Mudanças
 
-> "Clientes com aumento de 42% na frequência de compra da categoria nos últimos 30 dias e 3× mais engajamento com push segmentado."
+Editar apenas `src/components/kiosk/demos/CommercialTargetsDemo.tsx`:
 
-## Escopo
+1. Remover a condição `showProjected` do switcher de dimensões: exibir sempre.
+2. Cabeçalho da tabela: usar `dim` diretamente (sem `showProjected ? dim : 'region'`).
+3. `rowsToShow`: usar `activeRows.slice(0, 6)` em qualquer fase, ficando as colunas de "Sugerido / Potencial / Δ" com dash (`—`) até o cálculo, como já é hoje.
+4. Durante `phase === 'running'` manter o switcher visível porém desabilitado (mesmo padrão dos outros filtros do demo), para o usuário não trocar dimensão no meio do cálculo.
 
-Editar apenas os 5 `arguments[]` de cada um dos 6 produtos em `src/data/kiosk/demos/propensityCampaign.ts`:
-
-1. Kit Cuidados Premium (WhatsApp)
-2. Linha de Bebidas Sazonais (Push) — usar sinais de clima/sazonalidade e PDV
-3. Eletroportátil de Cozinha (E-mail)
-4. Coleção Moda Nova Temporada (Push) — usar sinais de similares e evento (nova coleção)
-5. Cartão Fidelidade Premium (WhatsApp)
-6. Seguro Extensão de Garantia (Telefone) — usar janela pós-compra
-
-Cada produto ganha 5 justificativas no novo padrão, coerentes com categoria, canal e sazonalidade. Nada além disso muda — nenhum componente, layout, label ou pipeline.
-
-## Direção por produto (amostra de 1 frase cada, para calibrar o tom)
-
-- **Kit Cuidados Premium** — "Base com aumento de 38% em recompra de dermocosméticos nos últimos 45 dias e resposta 2,4× maior a WhatsApp que a média da loja."
-- **Bebidas Sazonais** — "Regiões com previsão de calor acima da média nos próximos 7 dias concentram 61% do consumo histórico da categoria — janela de ativação alinhada ao clima."
-- **Eletroportátil** — "Compradores de utensílios de cozinha nos últimos 60 dias com abertura de e-mail 3,1× acima da média — comportamento típico de quem completa a cozinha."
-- **Coleção Moda** — "Clientes parecidos com quem comprou na última coleção (mesmo estilo, mesma frequência) — 71% deles converteram na campanha anterior."
-- **Cartão Fidelidade** — "Base que já usa o programa de pontos 2× por mês e concentra compras nas lojas com maior tíquete — perfil natural de upgrade."
-- **Seguro Garantia** — "Clientes que compraram eletroportátil ou eletrônico nos últimos 30 dias — janela em que a decisão de proteger o produto é 4× mais aceita."
+Sem alterações em dados, i18n, layout, cores ou pipeline. Nenhum outro demo é tocado.
 
 ## Validação
 
-- Typecheck após a edição.
-- Conferir visualmente no `/kiosk` → Campanhas por Propensão que o card "POR QUE RECOMENDAMOS ESTA AUDIÊNCIA" agora exibe texto de negócio, sempre ancorado em comportamento (cliente / PDV / região / similares / clima / evento).
+- Typecheck.
+- No `/kiosk` → Metas Comerciais Preditivas, verificar que os 4 chips (Região / Vendedor / Cliente / SKU) já aparecem no setup e que a tabela inicial troca de linhas conforme a seleção, com as colunas projetadas mantendo `—` até o cálculo.

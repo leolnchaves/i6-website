@@ -62,7 +62,8 @@ const CommercialTargetsDemo = () => {
   };
 
   const showProjected = phase === 'result';
-  const rowsToShow = showProjected ? activeRows.slice(0, 6) : (dimRows.region ?? []).slice(0, 6);
+  const rowsToShow = activeRows.slice(0, 6);
+
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
@@ -82,36 +83,36 @@ const CommercialTargetsDemo = () => {
           </div>
 
           <div className="p-[2.2vmin] flex-1 flex flex-col gap-[1.4vmin]">
-            {/* Dimension switcher — only after result */}
-            {showProjected && (
-              <div className="flex flex-wrap gap-[0.6vmin]">
-                {dimensions.map((d) => {
-                  const active = d.id === dim;
-                  return (
-                    <button
-                      key={d.id}
-                      type="button"
-                      onClick={() => {
-                        setDim(d.id);
-                        setDrillRow(null);
-                      }}
-                      className={`min-h-[3.8vmin] px-[1.4vmin] rounded-full border text-[1.3vmin] font-semibold transition-all ${
-                        active
-                          ? 'border-[#F4845F] bg-[#F4845F]/15 text-white'
-                          : 'border-white/20 bg-white/[0.03] text-white/70 hover:border-white/40'
-                      }`}
-                    >
-                      {d.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+            {/* Dimension switcher — available in setup and after result */}
+            <div className="flex flex-wrap gap-[0.6vmin]">
+              {dimensions.map((d) => {
+                const active = d.id === dim;
+                return (
+                  <button
+                    key={d.id}
+                    type="button"
+                    disabled={phase === 'running'}
+                    onClick={() => {
+                      setDim(d.id);
+                      setDrillRow(null);
+                    }}
+                    className={`min-h-[3.8vmin] px-[1.4vmin] rounded-full border text-[1.3vmin] font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                      active
+                        ? 'border-[#F4845F] bg-[#F4845F]/15 text-white'
+                        : 'border-white/20 bg-white/[0.03] text-white/70 hover:border-white/40'
+                    }`}
+                  >
+                    {d.label}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* Target table */}
             <div className="rounded-xl border border-white/10 overflow-hidden">
               <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.15vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
-                <span>{dimensions.find((d) => d.id === (showProjected ? dim : 'region'))?.label}</span>
+                <span>{dimensions.find((d) => d.id === dim)?.label}</span>
+
                 <span className="text-right">{L.result.tableCurrent}</span>
                 <span className="text-right">{L.result.tableSuggested}</span>
                 <span className="text-right">{L.result.tablePotential}</span>
