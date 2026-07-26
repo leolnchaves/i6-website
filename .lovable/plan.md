@@ -1,37 +1,29 @@
-## Ajustes na demo "Metas Comerciais Preditivas" (`/kiosk`)
+## Objetivo
+Na conclusão de Personalização + Descoberta Preditiva, alterar a apresentação do resultado APENAS quando o vertical é `fashion` (logado ou anônimo), tratando os 3 itens recomendados como um look completo (não produtos separados).
 
-Alinhar a demo ao padrão das demais conclusões do kiosk.
+## Mudanças (somente em `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`, ramo fashion)
 
-### 1. Estado inicial do painel esquerdo (setup)
-- Remover completamente os filtros do setup (período, região, vendedor, portfólio, categoria, orçamento).
-- Mostrar de cara o mesmo layout do resultado, com **apenas** as colunas "Meta atual" e "Investimento atual" preenchidas nas tabelas de metas e alocação. As colunas "Meta sugerida", "Potencial", "Δ vs. atual", "CAC incremental" e a badge de ação ficam vazias / com placeholder (`—`).
-- O switcher de dimensão (Região/Vendedor/Cliente/SKU) fica oculto nesse momento.
-- O CTA principal muda para "Calcular metas e investimento ideal" (mantém o texto atual) e dispara o `phase = 'running'`.
+1. **Layout do PDP** — quando `vertical === 'fashion'` e `phase === 'pdp'`:
+   - Trocar o layout atual (produto selecionado empilhado em cima + grid de recomendados abaixo) por um layout lado a lado:
+     - Coluna esquerda: quadro do produto clicado (peça-âncora), com largura reduzida e altura maior — imagem maior/vertical, mantendo categoria, nome e preço.
+     - Coluna direita: um único quadro "Look complementar" contendo os 3 produtos recomendados dispostos em linha (grid 3 col dentro do mesmo card, com borda coral única englobando os três, ao invés de 3 cards separados).
+   - O rodapé com "Total do look" continua abaixo dos dois quadros.
 
-### 2. Fase "running" (treinamento)
-- Painel esquerdo: continua mostrando as mesmas tabelas parcialmente preenchidas + o estado de "calculando" já existente.
-- Painel direito: exibe os passos do pipeline (mesma implementação atual).
+2. **Clique em recomendado**:
+   - Cada um dos 3 itens da linha continua clicável (chama `pickProduct(id)`), mas sem borda/card individual — apenas hover sutil no item dentro do card unificado.
 
-### 3. Fase "result"
-**Painel esquerdo — passa a conter, na ordem:**
-1. Switcher de dimensão (Região, Vendedor, Cliente, SKU).
-2. Tabela "Meta atual × Meta preditiva" completa.
-3. Tabela "Alocação recomendada de investimento comercial" completa.
-4. Bloco de KPIs (grade 2×2) — os 4 `ConclusionCard` que hoje estão à direita: Volume incremental, Meta total, Investimento sugerido, CAC.
-5. Bloco de highlights "Onde a IA aponta oportunidade" (movido do lado direito).
+3. **Escopo preservado**:
+   - Ramo `products` (varejo genérico logado/anônimo) permanece inalterado — continua com grid 4 col de recomendados abaixo do hero.
+   - Fase `list`, `training`, pipeline de raciocínio à direita, argumento, header e tabs permanecem inalterados.
+   - Dados (`predictivePersonalization.ts`) não mudam.
 
-**Painel direito — passa a conter, na ordem:**
-1. Passos do pipeline de treinamento (permanecem visíveis após o cálculo, com todos os passos marcados como `done`, como nas demais demos).
-2. Um único bloco de rationale: "**POR QUE ESSE MIX / SORTIMENTO**" (mantém o visual "Insight" com badge coral e texto do `rationale.increase`).
-3. Botão **"Nova simulação"** logo abaixo do bloco POR QUE (estilo pill outline, mesmo componente do reset atual).
+## Detalhes técnicos
+- Substituir, dentro do bloco `phase === 'pdp'` + `vertical === 'fashion'`, o wrapper único por um `grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)]` (aprox.) posicionado logo após o botão "voltar ao catálogo". O card do produto-âncora vira mais estreito e alto (ex.: `aspect-[3/4]` ou `h-full` com imagem `aspect-[3/4]`).
+- O card do look no lado direito: um único `rounded-2xl border-2 border-[#F4845F]/40` com título "LOOK COMPLEMENTAR" e, dentro, `grid grid-cols-3 gap-[1vmin]` de itens simplificados (imagem + nome + preço, sem borda própria; botão apenas com `hover:bg-white/[0.04]`).
+- O bloco de "Total do look" permanece como faixa abaixo, ocupando a largura total dos dois quadros.
+- O produto-âncora deixa de ser o hero horizontal atual (com imagem à esquerda e texto à direita) e passa a ser vertical para casar em altura com o card de look.
 
-**Removidos do painel direito:** os blocos "Por que redistribuir" e "Por que reduzir a meta" (permanecem apenas no drill-down modal, que continua funcionando como hoje).
-
-**Removido do painel esquerdo:** o botão "Explorar outra solução" (foi movido para o direito como "Nova simulação").
-
-### Detalhes técnicos
-- Edições concentradas em `src/components/kiosk/demos/CommercialTargetsDemo.tsx`.
-- Nenhuma mudança na lógica de `computeResult` — apenas reorganização de UI e rendering condicional.
-- Nos estados `setup`/`running`, renderizar as tabelas com um helper que exibe `—` nas células projetadas; nas linhas de alocação, ocultar a badge de ação.
-- Adicionar em `src/data/kiosk/demos/commercialTargets.ts` os labels: `result.mixTitle = 'Por que esse mix / sortimento'` e `result.newSimulation = 'Nova simulação'` (substituindo/complementando `reset`).
-- Layout do painel esquerdo em `phase === 'result'` deve empilhar tabelas + KPIs + highlights com `gap` adequado; garantir que o painel direito com pipeline + POR QUE + botão fique alinhado em altura via `flex-col` + `mt-auto` no botão.
+## Não muda
+- Ramo `products` (logado e anônimo).
+- Lógica de treinamento, argumento, latência, cenários e i18n.
+- Dados em `src/data/kiosk/demos/predictivePersonalization.ts`.
