@@ -268,9 +268,9 @@ export const computeResult = (
   ];
 
   const recommendedAudience = tiers[0].clients + tiers[1].clients;
-  const conversionPct = Number(
-    (product.baseConversion + (allowedChannels.length >= 3 ? 0.6 : 0)).toFixed(1),
-  );
+  // Conversão potencial ~30–40% (audiência já filtrada por propensão)
+  const convSeed = (product.baseConversion * 13 + argIndex * 7) % 100;
+  const conversionPct = Number((30 + (convSeed / 100) * 10 + (allowedChannels.length >= 3 ? 0.8 : 0)).toFixed(1));
 
   const primary = priority[0];
 
