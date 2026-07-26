@@ -39,19 +39,24 @@ const DemandForecastDemo = ({ lang }: Props) => {
     [sku, channel, region, horizon],
   );
 
+  // Volume avg to visibly react to channel/region filters
+  const avgVolume = useMemo(() => {
+    const hist = series.map((p) => p.history).filter((v): v is number => v !== null);
+    if (!hist.length) return 0;
+    return Math.round(hist.reduce((a, b) => a + b, 0) / hist.length);
+  }, [series]);
+
   const latencyMs = useMemo(() => {
     if (phase === 'planning') return '0.00';
     return (28 + Math.random() * 34).toFixed(2);
   }, [phase, sku.id]);
 
-  // Reset when filters change
   useEffect(() => {
     setPhase('planning');
     setProgress(0);
     setSelectedMonth(null);
   }, [skuId, channel, region, horizon]);
 
-  // Pipeline animation
   useEffect(() => {
     if (phase !== 'running') return;
     setProgress(0);
@@ -110,24 +115,15 @@ const DemandForecastDemo = ({ lang }: Props) => {
     setSelectedMonth(null);
   };
 
-  const forecastPoints = series.filter((p) => p.i6Fcst !== null || p.currentFcst !== null);
+  const forecastPoints = series.filter((p) => p.i6Fcst !== null && p.trend !== null);
   const clickedPoint = selectedMonth ? forecastPoints.find((p) => p.key === selectedMonth) ?? null : null;
-
-  const kpiStrip = phase === 'planning' ? (
-    <div className="grid grid-cols-4 gap-[1vmin] mt-[1.5vmin]">
-      <MiniKpi label={L.kpi.accuracy} value={`${sku.historicalAccuracyPct.toFixed(1)}%`} />
-      <MiniKpi label={L.kpi.meanError} value={`${sku.meanErrorPct.toFixed(1)}%`} />
-      <MiniKpi label={L.kpi.stockout} value={`${sku.stockoutPct.toFixed(1)}%`} warn />
-      <MiniKpi label={L.kpi.excess} value={`${sku.excessPct.toFixed(1)}%`} warn />
-    </div>
-  ) : null;
 
   return (
     <div
       ref={containerRef}
       className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]"
     >
-      <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
+      <div className="grid grid-cols-[1.25fr_1fr] gap-[3vmin] items-stretch">
         {/* LEFT — dashboard / result */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
           {/* Header */}
@@ -146,7 +142,6 @@ const DemandForecastDemo = ({ lang }: Props) => {
           </div>
 
           <div className="p-[2.2vmin] flex-1 flex flex-col gap-[1.5vmin]">
-            {/* Filters */}
             <FilterChips
               lang={lang}
               L={L}
@@ -161,20 +156,23 @@ const DemandForecastDemo = ({ lang }: Props) => {
               disabled={phase === 'running'}
             />
 
-            {/* Main chart */}
             <div ref={mainChartRef}>
               <MainChart
                 series={series}
                 phase={phase}
                 lang={lang}
-                horizon={horizon}
               />
             </div>
 
-            {/* KPI strip (planning) or result KPIs / composition */}
             {phase === 'planning' && (
               <>
-                {kpiStrip}
+                <div className="grid grid-cols-5 gap-[1vmin] mt-[0.5vmin]">
+                  <MiniKpi label={L.kpi.accuracy} value={`${sku.historicalAccuracyPct.toFixed(1)}%`} warn />
+                  <MiniKpi label={L.kpi.meanError} value={`${sku.meanErrorPct.toFixed(1)}%`} warn />
+                  <MiniKpi label={L.kpi.stockout} value={`${sku.stockoutPct.toFixed(1)}%`} warn />
+                  <MiniKpi label={L.kpi.excess} value={`${sku.excessPct.toFixed(1)}%`} warn />
+                  <MiniKpi label={L.kpi.volume} value={fmtNum(avgVolume, lang)} />
+                </div>
                 <button
                   type="button"
                   onClick={() => setPhase('running')}
@@ -196,13 +194,34 @@ const DemandForecastDemo = ({ lang }: Props) => {
               <>
                 {!clickedPoint ? (
                   <div className="grid grid-cols-4 gap-[1vmin]">
-                    <MiniKpi label={L.result.currentError} value={`${sku.currentErrorPct.toFixed(1)}%`} warn />
-                    <MiniKpi label={L.result.i6Error} value={`${sku.i6ErrorPct.toFixed(1)}%`} highlight />
-                    <MiniKpi label={L.result.projectedAcc} value={`${(100 - sku.i6ErrorPct).toFixed(1)}%`} highlight />
-                    <MiniKpi label={L.result.horizon} value={`${horizon}m`} />
+                    <KpiCompare
+                      label={L.kpi.accuracy}
+                      oldValue={sku.historicalAccuracyPct}
+                      newValue={sku.i6AccuracyPct}
+                      higherIsBetter
+                      L={L}
+                    />
+                    <KpiCompare
+                      label={L.kpi.meanError}
+                      oldValue={sku.meanErrorPct}
+                      newValue={sku.i6MeanErrorPct}
+                      L={L}
+                    />
+                    <KpiCompare
+                      label={L.kpi.stockout}
+                      oldValue={sku.stockoutPct}
+                      newValue={sku.i6StockoutPct}
+                      L={L}
+                    />
+                    <KpiCompare
+                      label={L.kpi.excess}
+                      oldValue={sku.excessPct}
+                      newValue={sku.i6ExcessPct}
+                      L={L}
+                    />
                   </div>
                 ) : (
-                  <BreakdownCard point={clickedPoint} L={L} lang={lang} onClose={() => setSelectedMonth(null)} />
+                  <BreakdownCard point={clickedPoint} sku={sku} L={L} lang={lang} onClose={() => setSelectedMonth(null)} />
                 )}
                 <div>
                   <div className="flex items-baseline justify-between mb-[0.8vmin]">
@@ -326,7 +345,6 @@ const DemandForecastDemo = ({ lang }: Props) => {
         </div>
       </div>
 
-      {/* Connector */}
       {line && (
         <svg
           className="pointer-events-none absolute inset-0 w-full h-full"
@@ -404,7 +422,7 @@ const FilterChips = ({
     <div className="flex flex-wrap gap-[0.8vmin]">
       <ChipSelect
         label={L.filters.sku}
-        value={skus.find((s) => s.id === sku.id) ? (lang === 'pt' ? sku.namePt : sku.nameEn) : ''}
+        value={lang === 'pt' ? sku.namePt : sku.nameEn}
         options={skus.map((s) => ({ id: s.id, label: lang === 'pt' ? s.namePt : s.nameEn }))}
         selectedId={sku.id}
         onSelect={onSku}
@@ -508,19 +526,18 @@ const ChipSelect = ({
 };
 
 // ============================================================================
-// Main chart — history + current fcst + i6 fcst + CI band
+// Main chart — continuous history+forecast, no year separator
 // ============================================================================
 
 const MainChart = ({
-  series, phase, lang, horizon,
+  series, phase, lang,
 }: {
   series: MonthPoint[];
   phase: Phase;
   lang: KioskLang;
-  horizon: Horizon;
 }) => {
-  const W = 520;
-  const H = 180;
+  const W = 560;
+  const H = 190;
   const PAD_L = 32;
   const PAD_R = 8;
   const PAD_T = 12;
@@ -559,7 +576,7 @@ const MainChart = ({
   const currentPath = buildPath((p) => p.currentFcst);
   const i6Path = phase === 'result' ? buildPath((p) => p.i6Fcst) : '';
 
-  // CI band as polygon
+  // CI band as polygon (forecast months only)
   let ciPath = '';
   if (phase === 'result') {
     const top: string[] = [];
@@ -575,20 +592,14 @@ const MainChart = ({
     }
   }
 
-  // Y ticks (3)
   const ticks = [0, 0.5, 1].map((t) => minY + (maxY - minY) * t);
-
-  // X labels — every 3 months
   const xLabels = series
     .map((p, i) => ({ i, label: lang === 'pt' ? p.labelPt : p.labelEn }))
     .filter((_, i) => i % 3 === 0);
 
-  const historyEndIdx = series.findIndex((p) => p.i6Fcst !== null || p.currentFcst !== null);
-
   return (
     <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 220 }}>
-        {/* grid */}
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 240 }}>
         {ticks.map((t, i) => (
           <g key={i}>
             <line
@@ -604,26 +615,10 @@ const MainChart = ({
             </text>
           </g>
         ))}
-        {/* history / forecast divider */}
-        {historyEndIdx > 0 && (
-          <line
-            x1={x(historyEndIdx - 0.5)}
-            x2={x(historyEndIdx - 0.5)}
-            y1={PAD_T}
-            y2={H - PAD_B}
-            stroke="rgba(244,132,95,0.35)"
-            strokeDasharray="3 3"
-          />
-        )}
-        {/* CI band */}
         {ciPath && <path d={ciPath} fill="rgba(244,132,95,0.16)" stroke="none" />}
-        {/* history line */}
         <path d={historyPath} fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.6" />
-        {/* current fcst */}
         <path d={currentPath} fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.4" strokeDasharray="4 3" />
-        {/* i6 fcst */}
         {i6Path && <path d={i6Path} fill="none" stroke="#F4845F" strokeWidth="2" />}
-        {/* x labels */}
         {xLabels.map((l) => (
           <text
             key={l.i}
@@ -637,7 +632,6 @@ const MainChart = ({
           </text>
         ))}
       </svg>
-      {/* legend */}
       <div className="flex flex-wrap gap-[1.4vmin] mt-[0.8vmin] text-[1.15vmin] text-white/70">
         <LegendDot color="rgba(255,255,255,0.85)" label={demoLabels[lang].legend.history} />
         <LegendDot color="rgba(255,255,255,0.5)" dashed label={demoLabels[lang].legend.currentFcst} />
@@ -669,7 +663,7 @@ const LegendDot = ({
 );
 
 // ============================================================================
-// Composition chart — stacked bars (trend/season/promo/sparsity/accel)
+// Composition chart — bars (sparsity) + lines (trend / season) + promo markers
 // ============================================================================
 
 const CompositionChart = ({
@@ -682,32 +676,45 @@ const CompositionChart = ({
   onSelect: (k: string) => void;
 }) => {
   const points = series.filter((p) => p.trend !== null);
-  const W = 520;
-  const H = 120;
-  const PAD_L = 32;
-  const PAD_R = 8;
-  const PAD_T = 8;
-  const PAD_B = 20;
+  const W = 620;
+  const H = 170;
+  const PAD_L = 38;
+  const PAD_R = 12;
+  const PAD_T = 14;
+  const PAD_B = 26;
 
-  const totals = points.map((p) => (p.trend ?? 0) + Math.max(0, p.season ?? 0) + (p.promo ?? 0) + (p.sparsityFix ?? 0) + (p.accel ?? 0));
-  const maxY = Math.max(...totals) * 1.08;
+  const trendVals = points.map((p) => p.trend ?? 0);
+  const seasonVals = points.map((p) => Math.abs(p.season ?? 0));
+  const sparsityVals = points.map((p) => Math.max(0, p.sparsityFix ?? 0));
+
+  const maxLine = Math.max(...trendVals, ...seasonVals, ...sparsityVals) * 1.15;
+  const maxY = Math.max(1, maxLine);
 
   const bandW = (W - PAD_L - PAD_R) / points.length;
-  const barW = Math.max(6, bandW * 0.62);
+  const barW = Math.max(8, bandW * 0.42);
 
   const colors = {
     trend: '#F4845F',
-    season: 'rgba(244,132,95,0.65)',
-    promo: 'rgba(255,255,255,0.55)',
-    sparsityFix: 'rgba(255,255,255,0.32)',
-    accel: 'rgba(244,132,95,0.35)',
+    season: 'rgba(255,255,255,0.85)',
+    sparsityFix: 'rgba(244,132,95,0.45)',
+    promo: '#F4845F',
   };
+
   const y = (v: number) => PAD_T + (1 - v / maxY) * (H - PAD_T - PAD_B);
   const yBar = (v: number) => (v / maxY) * (H - PAD_T - PAD_B);
 
+  const xAt = (i: number) => PAD_L + bandW * i + bandW / 2;
+
+  const trendPath = points
+    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(p.trend ?? 0)}`)
+    .join(' ');
+  const seasonPath = points
+    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${y(Math.abs(p.season ?? 0))}`)
+    .join(' ');
+
   return (
     <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 150 }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 200 }}>
         {[0.25, 0.5, 0.75, 1].map((t, i) => (
           <line
             key={i}
@@ -719,29 +726,11 @@ const CompositionChart = ({
             strokeDasharray="2 3"
           />
         ))}
+        {/* Sparsity bars */}
         {points.map((p, i) => {
-          const cx = PAD_L + bandW * i + bandW / 2;
-          const trend = Math.max(0, p.trend ?? 0);
-          const season = Math.max(0, p.season ?? 0);
-          const promo = Math.max(0, p.promo ?? 0);
-          const sparsity = Math.max(0, p.sparsityFix ?? 0);
-          const accel = Math.max(0, p.accel ?? 0);
-          let cursor = H - PAD_B;
-          const push = (v: number, color: string, key: string) => {
-            const h = yBar(v);
-            const el = (
-              <rect
-                key={key}
-                x={cx - barW / 2}
-                y={cursor - h}
-                width={barW}
-                height={h}
-                fill={color}
-              />
-            );
-            cursor -= h;
-            return el;
-          };
+          const sp = Math.max(0, p.sparsityFix ?? 0);
+          const h = yBar(sp);
+          const cx = xAt(i);
           const selected = selectedKey === p.key;
           return (
             <g
@@ -750,28 +739,32 @@ const CompositionChart = ({
               onClick={() => onSelect(p.key)}
               style={{ opacity: selectedKey && !selected ? 0.4 : 1 }}
             >
-              {push(trend, colors.trend, 'trend')}
-              {push(season, colors.season, 'season')}
-              {push(promo, colors.promo, 'promo')}
-              {push(sparsity, colors.sparsityFix, 'sparsity')}
-              {push(accel, colors.accel, 'accel')}
+              <rect
+                x={cx - barW / 2}
+                y={H - PAD_B - h}
+                width={barW}
+                height={h}
+                fill={colors.sparsityFix}
+                rx={2}
+              />
               {selected && (
                 <rect
-                  x={cx - barW / 2 - 2}
+                  x={cx - bandW / 2 + 2}
                   y={PAD_T}
-                  width={barW + 4}
+                  width={bandW - 4}
                   height={H - PAD_T - PAD_B}
-                  fill="none"
+                  fill="rgba(244,132,95,0.08)"
                   stroke="#F4845F"
-                  strokeWidth={1.5}
+                  strokeWidth={1}
+                  rx={3}
                 />
               )}
               <text
                 x={cx}
-                y={H - 6}
+                y={H - 8}
                 textAnchor="middle"
-                fontSize="7"
-                fill={selected ? '#F4845F' : 'rgba(255,255,255,0.5)'}
+                fontSize="8"
+                fill={selected ? '#F4845F' : 'rgba(255,255,255,0.55)'}
                 fontWeight={selected ? 'bold' : 'normal'}
               >
                 {(lang === 'pt' ? p.labelPt : p.labelEn).split('/')[0]}
@@ -779,26 +772,45 @@ const CompositionChart = ({
             </g>
           );
         })}
+        {/* Trend line */}
+        <path d={trendPath} fill="none" stroke={colors.trend} strokeWidth={2} />
+        {/* Season line */}
+        <path d={seasonPath} fill="none" stroke={colors.season} strokeWidth={1.6} strokeDasharray="4 3" />
+        {/* Promo markers — star-like dots above bar */}
+        {points.map((p, i) => {
+          if (!p.hasPromo) return null;
+          const cx = xAt(i);
+          const cy = Math.min(y(p.trend ?? 0), y(Math.abs(p.season ?? 0))) - 8;
+          return (
+            <g key={`promo-${p.key}`} style={{ pointerEvents: 'none' }}>
+              <circle cx={cx} cy={cy} r={4.5} fill={colors.promo} stroke="#0B1224" strokeWidth={1.2} />
+              <circle cx={cx} cy={cy} r={2} fill="#fff" />
+            </g>
+          );
+        })}
       </svg>
-      <div className="flex flex-wrap gap-[1.2vmin] mt-[0.6vmin] text-[1.1vmin] text-white/70">
-        <LegendDot square color={colors.trend} label={L.result.trend} />
-        <LegendDot square color={colors.season} label={L.result.season} />
-        <LegendDot square color={colors.promo} label={L.result.promo} />
+      <div className="flex flex-wrap gap-[1.4vmin] mt-[0.6vmin] text-[1.15vmin] text-white/70">
+        <LegendDot color={colors.trend} label={L.result.trend} />
+        <LegendDot color={colors.season} dashed label={L.result.season} />
         <LegendDot square color={colors.sparsityFix} label={L.result.sparsityFix} />
-        <LegendDot square color={colors.accel} label={L.result.accel} />
+        <span className="inline-flex items-center gap-[0.5vmin]">
+          <span className="inline-block w-[1.4vmin] h-[1.4vmin] rounded-full" style={{ background: colors.promo, border: '1.5px solid #0B1224', boxShadow: '0 0 0 1px rgba(255,255,255,0.15)' }} />
+          <span>{L.result.promo}</span>
+        </span>
       </div>
     </div>
   );
 };
 
 // ============================================================================
-// Breakdown card (when a month is clicked)
+// Breakdown card
 // ============================================================================
 
 const BreakdownCard = ({
-  point, L, lang, onClose,
+  point, sku, L, lang, onClose,
 }: {
   point: MonthPoint;
+  sku: SkuDef;
   L: typeof demoLabels['pt'];
   lang: KioskLang;
   onClose: () => void;
@@ -806,11 +818,11 @@ const BreakdownCard = ({
   const parts = [
     { label: L.result.trend, value: point.trend ?? 0 },
     { label: L.result.season, value: point.season ?? 0 },
-    { label: L.result.promo, value: point.promo ?? 0 },
     { label: L.result.sparsityFix, value: point.sparsityFix ?? 0 },
-    { label: L.result.accel, value: point.accel ?? 0 },
   ];
   const positive = parts.reduce((s, p) => s + Math.max(0, p.value), 0);
+  const promoText = point.hasPromo ? (lang === 'pt' ? sku.promoNotePt : sku.promoNoteEn) : null;
+
   return (
     <div className="rounded-xl border border-[#F4845F]/50 bg-[#F4845F]/[0.08] p-[1.4vmin] animate-fade-in">
       <div className="flex items-center justify-between mb-[0.8vmin]">
@@ -828,7 +840,7 @@ const BreakdownCard = ({
           ✕
         </button>
       </div>
-      <div className="grid grid-cols-5 gap-[0.6vmin]">
+      <div className="grid grid-cols-3 gap-[0.6vmin]">
         {parts.map((p) => {
           const pct = positive > 0 ? (Math.max(0, p.value) / positive) * 100 : 0;
           return (
@@ -847,6 +859,14 @@ const BreakdownCard = ({
           );
         })}
       </div>
+      {promoText && (
+        <div className="mt-[0.8vmin] rounded-lg bg-[#F4845F]/[0.15] border border-[#F4845F]/50 p-[0.9vmin]">
+          <span className="block text-[0.95vmin] tracking-[0.18em] uppercase text-[#F4845F] font-bold mb-[0.3vmin]">
+            ★ {L.result.promoNote}
+          </span>
+          <span className="block text-[1.25vmin] text-white/90 leading-snug">{promoText}</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -879,6 +899,44 @@ const MiniKpi = ({
     </span>
   </div>
 );
+
+const KpiCompare = ({
+  label, oldValue, newValue, higherIsBetter, L,
+}: {
+  label: string;
+  oldValue: number;
+  newValue: number;
+  higherIsBetter?: boolean;
+  L: typeof demoLabels['pt'];
+}) => {
+  const delta = higherIsBetter
+    ? ((newValue - oldValue) / Math.max(0.01, oldValue)) * 100
+    : ((oldValue - newValue) / Math.max(0.01, oldValue)) * 100;
+  const improved = delta > 0;
+  return (
+    <div className="rounded-lg p-[1vmin] border bg-white/[0.03] border-[#F4845F]/30">
+      <span className="block text-[1.05vmin] tracking-[0.18em] uppercase font-semibold text-[#F4845F] mb-[0.3vmin] leading-tight">
+        {label}
+      </span>
+      <div className="flex items-baseline gap-[0.5vmin]">
+        <span className="text-[1.35vmin] text-white/40 line-through leading-none">
+          {oldValue.toFixed(1)}%
+        </span>
+        <span className="text-[1.9vmin] font-bold text-[#F4845F] leading-none">
+          {newValue.toFixed(1)}%
+        </span>
+      </div>
+      <span
+        className={`block text-[1.05vmin] font-bold mt-[0.3vmin] ${
+          improved ? 'text-emerald-400' : 'text-red-400'
+        }`}
+      >
+        {L.compare.delta} {improved ? (higherIsBetter ? '+' : '−') : higherIsBetter ? '−' : '+'}
+        {Math.abs(delta).toFixed(0)}%
+      </span>
+    </div>
+  );
+};
 
 const MetricPill = ({
   label, value, hint,
