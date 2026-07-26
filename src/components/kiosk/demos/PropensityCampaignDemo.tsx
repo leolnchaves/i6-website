@@ -188,16 +188,15 @@ const PropensityCampaignDemo = () => {
               <>
                 {/* Priority table */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
-                  <div className="grid grid-cols-[1.4fr_0.9fr_0.8fr_1fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.2vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
+                  <div className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.2vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
                     <span>{L.result.tableTier}</span>
                     <span className="text-right">{L.result.tableClients}</span>
                     <span className="text-right">{L.result.tablePropensity}</span>
-                    <span className="text-right">{L.result.tableChannel}</span>
                   </div>
                   {result.tiers.map((t, i) => (
                     <div key={i}>
                       {/* Parent row */}
-                      <div className="grid grid-cols-[1.4fr_0.9fr_0.8fr_1fr] px-[1.4vmin] py-[1.1vmin] items-center text-[1.55vmin] border-t border-white/10">
+                      <div className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[1.1vmin] items-center text-[1.55vmin] border-t border-white/10">
                         <span className="flex items-center gap-[0.8vmin]">
                           <span
                             className={`w-[1vmin] h-[1vmin] rounded-full ${
@@ -212,20 +211,19 @@ const PropensityCampaignDemo = () => {
                         </span>
                         <span className="text-right text-white font-mono">{fmt(t.clients)}</span>
                         <span className="text-right text-white/90 font-mono">{t.propensityPct}%</span>
-                        <span className="text-right text-white/40">—</span>
                       </div>
                       {/* Split rows */}
                       {t.channels.map((split, j) => (
                         <div
                           key={j}
-                          className="grid grid-cols-[1.4fr_0.9fr_0.8fr_1fr] px-[1.4vmin] py-[0.8vmin] items-center text-[1.4vmin] border-t border-white/5 bg-white/[0.02]"
+                          className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[0.8vmin] items-center text-[1.4vmin] border-t border-white/5 bg-white/[0.02]"
                         >
-                          <span className="pl-[1.8vmin] text-white/50">↳ split</span>
-                          <span className="text-right text-white/80 font-mono">{fmt(split.clients)}</span>
-                          <span className="text-right text-white/50 font-mono">
-                            {Math.round((split.clients / t.clients) * 100)}%
+                          <span className="flex items-center gap-[0.6vmin] pl-[1.8vmin] text-white/70">
+                            <span className="text-white/50">↳</span>
+                            <span>{channelLabel(split.channel)}</span>
                           </span>
-                          <span className="text-right text-white/80">{channelLabel(split.channel)}</span>
+                          <span className="text-right text-white/80 font-mono">{fmt(split.clients)}</span>
+                          <span />
                         </div>
                       ))}
                     </div>
