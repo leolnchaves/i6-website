@@ -3,15 +3,25 @@ import type { KioskLang } from '../config';
 export type Vertical = 'products' | 'fashion';
 export type UserMode = 'logged' | 'anon';
 
+export type CategoryKey =
+  | 'audio'
+  | 'peripherals'
+  | 'video'
+  | 'accessories'
+  | 'tops'
+  | 'bottoms'
+  | 'outerwear'
+  | 'footwear'
+  | 'fashion-accessories';
+
 export interface Sku {
   id: string;
   emoji: string;
   name: { pt: string; en: string };
   category: { pt: string; en: string };
+  categoryKey: CategoryKey;
   price: number;
-  /** ids de outros SKUs deste catálogo — usados como recomendações padrão */
   recIds: string[];
-  /** para fashion: ids que compõem um look completo (top + bottom + calçado + acessório) */
   lookIds?: string[];
 }
 
@@ -24,8 +34,9 @@ export interface Feature {
 export interface ScenarioContent {
   objective: { pt: string; en: string };
   features: Feature[];
-  /** argumento genérico exibido junto à recomendação (substitui {name} pelo produto) */
-  argument: { pt: string; en: string };
+  scenarioIntro: { pt: string; en: string };
+  categoryReading: Partial<Record<CategoryKey, { pt: string; en: string }>>;
+  recsRationale: { pt: string; en: string };
 }
 
 export interface CatalogContent {
@@ -48,6 +59,7 @@ const productsCatalog: CatalogContent = {
       emoji: '🎧',
       name: { pt: 'Fone Bluetooth Pro', en: 'Bluetooth Headphones Pro' },
       category: { pt: 'Áudio', en: 'Audio' },
+      categoryKey: 'audio',
       price: 899.9,
       recIds: ['p-case', 'p-cable', 'p-earbuds', 'p-speaker'],
     },
@@ -56,6 +68,7 @@ const productsCatalog: CatalogContent = {
       emoji: '🎵',
       name: { pt: 'Earbuds Wireless', en: 'Wireless Earbuds' },
       category: { pt: 'Áudio', en: 'Audio' },
+      categoryKey: 'audio',
       price: 449.0,
       recIds: ['p-case', 'p-cable', 'p-headphones', 'p-speaker'],
     },
@@ -64,6 +77,7 @@ const productsCatalog: CatalogContent = {
       emoji: '🔊',
       name: { pt: 'Speaker Portátil', en: 'Portable Speaker' },
       category: { pt: 'Áudio', en: 'Audio' },
+      categoryKey: 'audio',
       price: 599.0,
       recIds: ['p-cable', 'p-headphones', 'p-earbuds', 'p-case'],
     },
@@ -72,6 +86,7 @@ const productsCatalog: CatalogContent = {
       emoji: '🖱️',
       name: { pt: 'Mouse Ergonômico', en: 'Ergonomic Mouse' },
       category: { pt: 'Periféricos', en: 'Peripherals' },
+      categoryKey: 'peripherals',
       price: 289.9,
       recIds: ['p-keyboard', 'p-monitor', 'p-cable', 'p-case'],
     },
@@ -80,6 +95,7 @@ const productsCatalog: CatalogContent = {
       emoji: '⌨️',
       name: { pt: 'Teclado Mecânico', en: 'Mechanical Keyboard' },
       category: { pt: 'Periféricos', en: 'Peripherals' },
+      categoryKey: 'peripherals',
       price: 749.0,
       recIds: ['p-mouse', 'p-monitor', 'p-cable', 'p-headphones'],
     },
@@ -88,6 +104,7 @@ const productsCatalog: CatalogContent = {
       emoji: '🖥️',
       name: { pt: 'Monitor UltraWide', en: 'UltraWide Monitor' },
       category: { pt: 'Vídeo', en: 'Video' },
+      categoryKey: 'video',
       price: 2199.0,
       recIds: ['p-keyboard', 'p-mouse', 'p-cable', 'p-speaker'],
     },
@@ -96,6 +113,7 @@ const productsCatalog: CatalogContent = {
       emoji: '🔌',
       name: { pt: 'Cabo USB-C Trançado', en: 'Braided USB-C Cable' },
       category: { pt: 'Acessórios', en: 'Accessories' },
+      categoryKey: 'accessories',
       price: 89.9,
       recIds: ['p-case', 'p-earbuds', 'p-mouse', 'p-headphones'],
     },
@@ -104,6 +122,7 @@ const productsCatalog: CatalogContent = {
       emoji: '💼',
       name: { pt: 'Case de Proteção', en: 'Protective Case' },
       category: { pt: 'Acessórios', en: 'Accessories' },
+      categoryKey: 'accessories',
       price: 129.9,
       recIds: ['p-headphones', 'p-earbuds', 'p-cable', 'p-mouse'],
     },
@@ -122,6 +141,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '👕',
       name: { pt: 'Camisa Linho Oversize', en: 'Oversize Linen Shirt' },
       category: { pt: 'Tops', en: 'Tops' },
+      categoryKey: 'tops',
       price: 289.0,
       recIds: ['f-pants', 'f-sneakers', 'f-cap', 'f-jacket'],
       lookIds: ['f-pants', 'f-sneakers', 'f-cap'],
@@ -131,6 +151,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '🎽',
       name: { pt: 'T-shirt Premium', en: 'Premium T-shirt' },
       category: { pt: 'Tops', en: 'Tops' },
+      categoryKey: 'tops',
       price: 169.0,
       recIds: ['f-jeans', 'f-sneakers', 'f-backpack', 'f-cap'],
       lookIds: ['f-jeans', 'f-sneakers', 'f-backpack'],
@@ -140,6 +161,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '🧥',
       name: { pt: 'Jaqueta Bomber', en: 'Bomber Jacket' },
       category: { pt: 'Outerwear', en: 'Outerwear' },
+      categoryKey: 'outerwear',
       price: 599.0,
       recIds: ['f-tee', 'f-jeans', 'f-boots', 'f-backpack'],
       lookIds: ['f-tee', 'f-jeans', 'f-boots'],
@@ -149,6 +171,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '👖',
       name: { pt: 'Calça Alfaiataria', en: 'Tailored Trousers' },
       category: { pt: 'Bottoms', en: 'Bottoms' },
+      categoryKey: 'bottoms',
       price: 349.0,
       recIds: ['f-shirt', 'f-sneakers', 'f-jacket', 'f-cap'],
       lookIds: ['f-shirt', 'f-sneakers', 'f-cap'],
@@ -158,6 +181,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '👖',
       name: { pt: 'Jeans Slim', en: 'Slim Jeans' },
       category: { pt: 'Bottoms', en: 'Bottoms' },
+      categoryKey: 'bottoms',
       price: 259.0,
       recIds: ['f-tee', 'f-sneakers', 'f-jacket', 'f-backpack'],
       lookIds: ['f-tee', 'f-sneakers', 'f-backpack'],
@@ -167,6 +191,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '👟',
       name: { pt: 'Tênis Runner', en: 'Runner Sneakers' },
       category: { pt: 'Calçados', en: 'Footwear' },
+      categoryKey: 'footwear',
       price: 549.0,
       recIds: ['f-tee', 'f-jeans', 'f-cap', 'f-backpack'],
       lookIds: ['f-tee', 'f-jeans', 'f-cap'],
@@ -176,6 +201,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '🥾',
       name: { pt: 'Bota Casual', en: 'Casual Boots' },
       category: { pt: 'Calçados', en: 'Footwear' },
+      categoryKey: 'footwear',
       price: 689.0,
       recIds: ['f-jacket', 'f-jeans', 'f-shirt', 'f-backpack'],
       lookIds: ['f-jacket', 'f-jeans', 'f-backpack'],
@@ -185,6 +211,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '🧢',
       name: { pt: 'Boné Trucker', en: 'Trucker Cap' },
       category: { pt: 'Acessórios', en: 'Accessories' },
+      categoryKey: 'fashion-accessories',
       price: 119.0,
       recIds: ['f-tee', 'f-sneakers', 'f-jeans', 'f-backpack'],
       lookIds: ['f-tee', 'f-jeans', 'f-sneakers'],
@@ -194,6 +221,7 @@ const fashionCatalog: CatalogContent = {
       emoji: '🎒',
       name: { pt: 'Mochila Urbana', en: 'Urban Backpack' },
       category: { pt: 'Acessórios', en: 'Accessories' },
+      categoryKey: 'fashion-accessories',
       price: 429.0,
       recIds: ['f-tee', 'f-jeans', 'f-sneakers', 'f-jacket'],
       lookIds: ['f-tee', 'f-jeans', 'f-sneakers'],
@@ -206,7 +234,7 @@ export const catalogs: Record<Vertical, CatalogContent> = {
   fashion: fashionCatalog,
 };
 
-// -------- Cenários (features + argumento) --------
+// -------- Cenários (features + argumento composto) --------
 
 export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
   'logged-products': {
@@ -238,9 +266,31 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
         durationMs: 520,
       },
     ],
-    argument: {
-      pt: 'Sessões recentes indicam afinidade forte em áudio + periféricos. Estes itens co-ocorrem em 3.2× nas compras de {name} nas próximas 48h.',
-      en: 'Recent sessions show strong audio + peripherals affinity. These items co-occur 3.2× in purchases following {name} within 48h.',
+    scenarioIntro: {
+      pt: '30d de histórico e {events} eventos indicam afinidade forte em {anchorCat}.',
+      en: '30d of history and {events} events show strong affinity for {anchorCat}.',
+    },
+    categoryReading: {
+      audio: {
+        pt: '{name} ativa o cluster áudio-mobilidade — usuários com esse perfil compram acessórios de proteção e conectividade em 48h.',
+        en: '{name} activates the audio-mobility cluster — this profile buys protection and connectivity accessories within 48h.',
+      },
+      peripherals: {
+        pt: '{name} sinaliza setup de produtividade — o histórico converte forte em bundles de periféricos + vídeo.',
+        en: '{name} signals a productivity setup — history converts strongly into peripherals + video bundles.',
+      },
+      video: {
+        pt: '{name} é âncora de alto ticket — clientes desse cluster completam setup com periféricos premium.',
+        en: '{name} is a high-ticket anchor — customers in this cluster complete their setup with premium peripherals.',
+      },
+      accessories: {
+        pt: '{name} é acessório de continuidade — perfil recorrente puxa upgrade em categorias-âncora (áudio/periféricos).',
+        en: '{name} is a continuity accessory — recurring profile pulls upgrades in anchor categories (audio/peripherals).',
+      },
+    },
+    recsRationale: {
+      pt: 'Estes itens co-ocorrem em {mult} nas compras seguintes de {name} — topo do ranking: {cats}.',
+      en: 'These items co-occur {mult} in purchases following {name} — top of ranking: {cats}.',
     },
   },
   'logged-fashion': {
@@ -272,9 +322,35 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
         durationMs: 540,
       },
     ],
-    argument: {
-      pt: 'O modelo compõe um look coerente com o estilo urban-minimal do usuário. Combinações com {name} elevam ticket médio em 2.4×.',
-      en: 'The model composes an outfit aligned to the user’s urban-minimal style. Combos featuring {name} lift AOV by 2.4×.',
+    scenarioIntro: {
+      pt: 'Estilo urban-minimal ({events} eventos em 30d) guia a composição do look.',
+      en: 'Urban-minimal style ({events} events over 30d) guides the outfit composition.',
+    },
+    categoryReading: {
+      tops: {
+        pt: '{name} entra como peça-chave superior — o composer prioriza bottoms de caimento reto e calçado clean.',
+        en: '{name} enters as the key top — the composer prioritizes straight-fit bottoms and clean footwear.',
+      },
+      bottoms: {
+        pt: '{name} define a base do look — o composer busca tops de paleta neutra e sobreposição leve.',
+        en: '{name} sets the outfit base — the composer picks neutral-palette tops and light layering.',
+      },
+      outerwear: {
+        pt: '{name} eleva o outfit em camadas — o composer completa com jeans e footwear de contraste.',
+        en: '{name} lifts the outfit in layers — the composer completes with jeans and contrasting footwear.',
+      },
+      footwear: {
+        pt: '{name} ancora o outfit pelos pés — o composer sugere silhueta coerente em tops e bottoms.',
+        en: '{name} anchors the outfit from the feet — the composer suggests a coherent silhouette in tops and bottoms.',
+      },
+      'fashion-accessories': {
+        pt: '{name} fecha o styling — o composer sugere peças-base para consolidar o look em torno do acessório.',
+        en: '{name} closes the styling — the composer suggests base pieces to build the look around the accessory.',
+      },
+    },
+    recsRationale: {
+      pt: 'Combinações com {name} elevam ticket médio em {mult} — look proposto: {cats}.',
+      en: 'Combos featuring {name} lift AOV by {mult} — proposed outfit: {cats}.',
     },
   },
   'anon-products': {
@@ -301,9 +377,31 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
         durationMs: 520,
       },
     ],
-    argument: {
-      pt: 'Sem histórico do usuário, cold start + embeddings de sessão apontam para produtos com alta aderência ao contexto de {name} nesta hora e canal.',
-      en: 'With no user history, cold start + session embeddings surface items with high contextual fit to {name} at this hour and channel.',
+    scenarioIntro: {
+      pt: 'Sem histórico, o modelo lê sinais desta sessão (device, hora, canal) e ancora em {anchorCat}.',
+      en: 'With no history, the model reads this session (device, hour, channel) and anchors on {anchorCat}.',
+    },
+    categoryReading: {
+      audio: {
+        pt: '{name} sugere jornada de consumo pessoal — sessões anônimas parecidas nesta hora convertem em áudio + acessórios de proteção.',
+        en: '{name} suggests a personal-consumption journey — similar anonymous sessions at this hour convert into audio + protection accessories.',
+      },
+      peripherals: {
+        pt: '{name} sinaliza intenção de setup — clusters anônimos semelhantes migram para periféricos complementares e conectividade.',
+        en: '{name} signals a setup intent — similar anonymous clusters migrate to complementary peripherals and connectivity.',
+      },
+      video: {
+        pt: '{name} é sinal forte de intenção de compra alta — sessões anônimas com esse padrão exploram periféricos e alto ticket em paralelo.',
+        en: '{name} is a strong high-intent signal — anonymous sessions with this pattern explore peripherals and high-ticket in parallel.',
+      },
+      accessories: {
+        pt: '{name} é entrada leve — clusters anônimos parecidos revelam interesse latente em categorias-âncora (áudio/periféricos).',
+        en: '{name} is a light entry — similar anonymous clusters reveal latent interest in anchor categories (audio/peripherals).',
+      },
+    },
+    recsRationale: {
+      pt: 'Embeddings de sessão (k={k}) posicionam {cats} no topo do ranking para {name} neste contexto.',
+      en: 'Session embeddings (k={k}) place {cats} at the top of the ranking for {name} in this context.',
     },
   },
   'anon-fashion': {
@@ -330,12 +428,105 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
         durationMs: 540,
       },
     ],
-    argument: {
-      pt: 'Sem perfil, o modelo infere estilo pela sessão e monta um look coerente com {name}, ajustado a clima e geolocalização atuais.',
-      en: 'Without a profile, the model infers style from the session and builds an outfit around {name}, tuned to current weather and geo.',
+    scenarioIntro: {
+      pt: 'Sem perfil, o modelo infere estilo pela sessão (clima, geo, hora) e ancora em {anchorCat}.',
+      en: 'Without a profile, the model infers style from the session (weather, geo, hour) and anchors on {anchorCat}.',
+    },
+    categoryReading: {
+      tops: {
+        pt: '{name} indica intenção casual — estilo inferido sugere paleta neutra e caimento amplo para o restante do look.',
+        en: '{name} indicates a casual intent — inferred style suggests neutral palette and relaxed fit across the outfit.',
+      },
+      bottoms: {
+        pt: '{name} define a silhueta — o composer explora tops leves e footwear versátil, coerentes com clima/geo atuais.',
+        en: '{name} defines the silhouette — the composer explores light tops and versatile footwear aligned to current weather/geo.',
+      },
+      outerwear: {
+        pt: '{name} sinaliza necessidade de camadas — clima atual reforça peças estruturadas por baixo e footwear de contraste.',
+        en: '{name} signals layering intent — current weather reinforces structured base pieces and contrasting footwear.',
+      },
+      footwear: {
+        pt: '{name} ancora o outfit — o composer infere estilo pelo tipo de calçado e propõe silhueta coerente.',
+        en: '{name} anchors the outfit — the composer infers style from footwear type and proposes a coherent silhouette.',
+      },
+      'fashion-accessories': {
+        pt: '{name} inicia o styling — sessão anônima explora peças-base para consolidar o look em torno do acessório.',
+        en: '{name} starts the styling — anonymous session explores base pieces to build the look around the accessory.',
+      },
+    },
+    recsRationale: {
+      pt: 'Similaridade comportamental (k={k}) sugere para {name} um look coerente: {cats}.',
+      en: 'Behavioral similarity (k={k}) suggests a coherent outfit for {name}: {cats}.',
     },
   },
 };
+
+// -------- Helper: monta o argumento composto --------
+
+function stableHash(id: string): number {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return h;
+}
+
+function joinCats(cats: string[], lang: KioskLang): string {
+  if (cats.length === 0) return '';
+  if (cats.length === 1) return cats[0];
+  const sep = lang === 'pt' ? ' e ' : ' and ';
+  return cats.slice(0, -1).join(', ') + sep + cats[cats.length - 1];
+}
+
+function eventsFor(sku: Sku): string {
+  // 260..360 range, determinístico
+  const h = stableHash(sku.id);
+  return String(260 + (h % 100));
+}
+
+function multFor(sku: Sku): string {
+  // 2.4× .. 3.6×
+  const h = stableHash(sku.id);
+  const v = 2.4 + ((h % 13) / 10);
+  return `${v.toFixed(1)}×`;
+}
+
+function kFor(sku: Sku, base: number): string {
+  // base ± 6
+  const h = stableHash(sku.id);
+  return String(base - 6 + (h % 13));
+}
+
+export function buildArgument(
+  scenarioKey: `${UserMode}-${Vertical}`,
+  sku: Sku,
+  recs: Sku[],
+  lang: KioskLang,
+): string {
+  const s = scenarios[scenarioKey];
+  const anchorCat = sku.category[lang];
+
+  // categorias únicas das recs, preservando ordem
+  const catList: string[] = [];
+  for (const r of recs) {
+    const c = r.category[lang];
+    if (!catList.includes(c)) catList.push(c);
+  }
+  const cats = joinCats(catList, lang);
+
+  const intro = s.scenarioIntro[lang]
+    .replace('{anchorCat}', anchorCat)
+    .replace('{events}', eventsFor(sku));
+
+  const catReading = s.categoryReading[sku.categoryKey]?.[lang]?.replace('{name}', sku.name[lang]) ?? '';
+
+  const kBase = scenarioKey === 'anon-fashion' ? 24 : 32;
+  const rec = s.recsRationale[lang]
+    .replace('{name}', sku.name[lang])
+    .replace('{cats}', cats)
+    .replace('{mult}', multFor(sku))
+    .replace('{k}', kFor(sku, kBase));
+
+  return [intro, catReading, rec].filter(Boolean).join(' ');
+}
 
 // -------- Labels UI (i18n) --------
 
