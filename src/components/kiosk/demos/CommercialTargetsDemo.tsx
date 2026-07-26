@@ -239,19 +239,7 @@ const CommercialTargetsDemo = () => {
                   />
                 </div>
 
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.4vmin] flex flex-col gap-[0.8vmin]">
-                  <span className="text-[1.15vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F]">
-                    {L.result.highlightsTitle}
-                  </span>
-                  <HighlightLine label={L.result.hRegions} items={result.highlights.regions} />
-                  <HighlightLine label={L.result.hSkus} items={result.highlights.skus} />
-                  <HighlightLine label={L.result.hReps} items={result.highlights.reps} />
-                  <HighlightLine
-                    label={L.result.hClients}
-                    items={result.highlights.clients}
-                    tone="warn"
-                  />
-                </div>
+
               </>
             )}
 
