@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import TouchSelect from '@/components/kiosk/ui/TouchSelect';
+
 import { ArrowDown, ArrowUp, Check, Minus, Plus, Repeat, Sparkles, X } from 'lucide-react';
 import {
   actionMeta,
@@ -96,19 +98,20 @@ const MixAssortmentOrderDemo = () => {
               <>
                 {/* Filters — apenas Loja/PDV e Região */}
                 <div className="grid grid-cols-2 gap-[1vmin]">
-                  <SelectField
+                  <TouchSelect
                     label={L.setup.pdv}
                     value={pdv}
                     onChange={(v) => setPdv(v as PdvId)}
                     options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
                   />
-                  <SelectField
+                  <TouchSelect
                     label={L.setup.region}
                     value={region}
                     onChange={(v) => setRegion(v as RegionId)}
                     options={regionsOptions.map((r) => ({ value: r.id, label: r.label }))}
                   />
                 </div>
+
 
                 {/* Context cards — reagem aos filtros */}
                 <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.4vmin] flex flex-col gap-[1vmin]">
@@ -134,18 +137,18 @@ const MixAssortmentOrderDemo = () => {
             {showResult && (
               <>
                 {/* Filtros persistentes */}
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1vmin] flex items-center gap-[1vmin]">
-                  <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50 flex-shrink-0">
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.2vmin] flex flex-col gap-[0.8vmin]">
+                  <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50">
                     {L.result.filtersTitle}
                   </span>
-                  <div className="grid grid-cols-2 gap-[0.8vmin] flex-1">
-                    <CompactSelect
+                  <div className="grid grid-cols-2 gap-[1vmin]">
+                    <TouchSelect
                       label={L.setup.pdv}
                       value={pdv}
                       onChange={(v) => setPdv(v as PdvId)}
                       options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
                     />
-                    <CompactSelect
+                    <TouchSelect
                       label={L.setup.region}
                       value={region}
                       onChange={(v) => setRegion(v as RegionId)}
@@ -153,6 +156,7 @@ const MixAssortmentOrderDemo = () => {
                     />
                   </div>
                 </div>
+
 
                 {/* Comparison */}
                 <div className="grid grid-cols-2 gap-[1vmin]">
@@ -395,63 +399,7 @@ const MixAssortmentOrderDemo = () => {
 
 // --- Subcomponents ---
 
-const SelectField = ({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-}) => (
-  <label className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.2vmin] flex flex-col gap-[0.4vmin]">
-    <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50">
-      {label}
-    </span>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="bg-transparent text-white text-[1.5vmin] font-semibold outline-none cursor-pointer"
-    >
-      {options.map((o) => (
-        <option key={o.value} value={o.value} className="bg-[#0B1224]">
-          {o.label}
-        </option>
-      ))}
-    </select>
-  </label>
-);
 
-const CompactSelect = ({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-}) => (
-  <label className="rounded-lg border border-white/10 bg-white/[0.04] px-[1vmin] py-[0.5vmin] flex items-center gap-[0.6vmin] hover:border-[#F4845F]/40 transition">
-    <span className="text-[0.95vmin] tracking-[0.18em] uppercase font-semibold text-white/50 flex-shrink-0">
-      {label}
-    </span>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="bg-transparent text-white text-[1.25vmin] font-semibold outline-none cursor-pointer flex-1 min-w-0"
-    >
-      {options.map((o) => (
-        <option key={o.value} value={o.value} className="bg-[#0B1224]">
-          {o.label}
-        </option>
-      ))}
-    </select>
-  </label>
-);
 
 const ContextTile = ({
   label,
