@@ -196,7 +196,7 @@ const MixAssortmentOrderDemo = () => {
                     <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-semibold text-white/70">
                       {L.result.cartTitle}
                     </span>
-                    <span className="text-[1.1vmin] text-white/50">{L.result.cartHint}</span>
+                    <span className="text-[1.1vmin] font-semibold text-[#F4845F]">{L.result.cartHint}</span>
                   </div>
                   <div className="grid grid-cols-[2fr_1fr_1fr] px-[1.4vmin] py-[0.7vmin] bg-white/[0.02] text-[1.1vmin] uppercase tracking-[0.18em] font-semibold text-white/55">
                     <span>{L.result.colSku}</span>
