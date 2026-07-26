@@ -278,7 +278,6 @@ export const computeResult = (
     factors: [
       `Recência de compra em ${product.category.toLowerCase()} abaixo de 21 dias`,
       `Engajamento 3× acima da média com ofertas no canal ${channelLabel(primary)}`,
-      'Elegibilidade LGPD e pressão comercial dentro do teto (≤ 2 contatos / 7d)',
     ],
   };
 
