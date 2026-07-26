@@ -435,40 +435,30 @@ const FilterChips = ({
   disabled?: boolean;
 }) => {
   return (
-    <div className="flex flex-wrap gap-[0.8vmin]">
-      <ChipSelect
+    <div className="flex flex-col gap-[0.9vmin]">
+      <SegmentedRow
         label={L.filters.sku}
-        value={lang === 'pt' ? sku.namePt : sku.nameEn}
         options={skus.map((s) => ({ id: s.id, label: lang === 'pt' ? s.namePt : s.nameEn }))}
         selectedId={sku.id}
         onSelect={onSku}
         disabled={disabled}
       />
-      <ChipSelect
+      <SegmentedRow
         label={L.filters.channel}
-        value={L.channelOptions[channel]}
         options={(['total', 'digital', 'physical'] as Channel[]).map((c) => ({ id: c, label: L.channelOptions[c] }))}
         selectedId={channel}
         onSelect={(v) => onChannel(v as Channel)}
         disabled={disabled}
       />
-      <ChipSelect
+      <SegmentedRow
         label={L.filters.region}
-        value={L.regionOptions[region]}
         options={(['total', 'sudeste', 'sul', 'nordeste'] as Region[]).map((r) => ({ id: r, label: L.regionOptions[r] }))}
         selectedId={region}
         onSelect={(v) => onRegion(v as Region)}
         disabled={disabled}
       />
-      <div className="inline-flex items-center gap-[0.6vmin] rounded-full border border-white/15 bg-white/[0.02] px-[1.2vmin] py-[0.6vmin] opacity-70">
-        <span className="text-[1.1vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F]/80">
-          {L.filters.store}
-        </span>
-        <span className="text-[1.35vmin] text-white/80 font-semibold">{L.filters.allStores}</span>
-      </div>
-      <ChipSelect
+      <SegmentedRow
         label={L.filters.horizon}
-        value={L.horizonOptions[horizon]}
         options={([6, 12] as Horizon[]).map((h) => ({ id: String(h), label: L.horizonOptions[h] }))}
         selectedId={String(horizon)}
         onSelect={(v) => onHorizon(Number(v) as Horizon)}
@@ -478,68 +468,44 @@ const FilterChips = ({
   );
 };
 
-const ChipSelect = ({
-  label, value, options, selectedId, onSelect, disabled,
+const SegmentedRow = ({
+  label, options, selectedId, onSelect, disabled,
 }: {
   label: string;
-  value: string;
   options: { id: string; label: string }[];
   selectedId: string;
   onSelect: (id: string) => void;
   disabled?: boolean;
 }) => {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
   return (
-    <div className="relative" ref={ref}>
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => setOpen((o) => !o)}
-        className={`inline-flex items-center gap-[0.6vmin] rounded-full border px-[1.2vmin] py-[0.6vmin] transition ${
-          open
-            ? 'border-[#F4845F] bg-[#F4845F]/10'
-            : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-      >
-        <span className="text-[1.1vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F]">
-          {label}
-        </span>
-        <span className="text-[1.35vmin] text-white font-semibold">{value}</span>
-        <span className="text-[1.1vmin] text-white/60">▾</span>
-      </button>
-      {open && (
-        <div className="absolute z-30 mt-[0.6vmin] left-0 min-w-[24vmin] rounded-xl border border-white/15 bg-[#0B1224] shadow-2xl overflow-hidden">
-          {options.map((o) => (
+    <div className="flex items-center gap-[1vmin]">
+      <span className="text-[1.15vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F] min-w-[8vmin]">
+        {label}
+      </span>
+      <div className="flex flex-wrap gap-[0.6vmin] flex-1">
+        {options.map((o) => {
+          const active = o.id === selectedId;
+          return (
             <button
               key={o.id}
               type="button"
-              onClick={() => {
-                onSelect(o.id);
-                setOpen(false);
-              }}
-              className={`block w-full text-left px-[1.4vmin] py-[1vmin] text-[1.4vmin] transition ${
-                o.id === selectedId
-                  ? 'bg-[#F4845F]/15 text-white font-semibold'
-                  : 'text-white/80 hover:bg-white/[0.06]'
-              }`}
+              disabled={disabled}
+              onClick={() => onSelect(o.id)}
+              className={`min-h-[4.6vmin] px-[1.6vmin] py-[0.9vmin] rounded-xl border-2 text-[1.35vmin] font-semibold transition active:scale-[0.97] ${
+                active
+                  ? 'border-[#F4845F] bg-[#F4845F]/15 text-white shadow-[0_0_12px_rgba(244,132,95,0.25)]'
+                  : 'border-white/15 bg-white/[0.03] text-white/80 hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+              } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {o.label}
             </button>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 };
+
 
 // ============================================================================
 // Main chart — continuous history+forecast, no year separator
