@@ -489,11 +489,10 @@ export const computeResult = (args: Args): CommercialResult => {
       reps: topReps,
     },
     rationale,
-    // @ts-expect-error attach for the dimension switcher
     _allDims: dimRows,
-    // @ts-expect-error attach per-dim allocations
     _allAllocations: allocationsByDim,
-  } as CommercialResult;
+  } as unknown as CommercialResult;
+
 
 };
 
