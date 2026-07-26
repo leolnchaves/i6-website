@@ -75,6 +75,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-headphones',
       emoji: '🎧',
+      image: imgHeadphones,
       name: { pt: 'Fone Bluetooth Pro', en: 'Bluetooth Headphones Pro' },
       category: { pt: 'Áudio', en: 'Audio' },
       categoryKey: 'audio',
@@ -84,6 +85,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-earbuds',
       emoji: '🎵',
+      image: imgEarbuds,
       name: { pt: 'Earbuds Wireless', en: 'Wireless Earbuds' },
       category: { pt: 'Áudio', en: 'Audio' },
       categoryKey: 'audio',
@@ -93,6 +95,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-speaker',
       emoji: '🔊',
+      image: imgSpeaker,
       name: { pt: 'Speaker Portátil', en: 'Portable Speaker' },
       category: { pt: 'Áudio', en: 'Audio' },
       categoryKey: 'audio',
@@ -102,6 +105,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-mouse',
       emoji: '🖱️',
+      image: imgMouse,
       name: { pt: 'Mouse Ergonômico', en: 'Ergonomic Mouse' },
       category: { pt: 'Periféricos', en: 'Peripherals' },
       categoryKey: 'peripherals',
@@ -111,6 +115,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-keyboard',
       emoji: '⌨️',
+      image: imgKeyboard,
       name: { pt: 'Teclado Mecânico', en: 'Mechanical Keyboard' },
       category: { pt: 'Periféricos', en: 'Peripherals' },
       categoryKey: 'peripherals',
@@ -120,6 +125,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-monitor',
       emoji: '🖥️',
+      image: imgMonitor,
       name: { pt: 'Monitor UltraWide', en: 'UltraWide Monitor' },
       category: { pt: 'Vídeo', en: 'Video' },
       categoryKey: 'video',
@@ -129,6 +135,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-cable',
       emoji: '🔌',
+      image: imgCable,
       name: { pt: 'Cabo USB-C Trançado', en: 'Braided USB-C Cable' },
       category: { pt: 'Acessórios', en: 'Accessories' },
       categoryKey: 'accessories',
@@ -138,6 +145,7 @@ const productsCatalog: CatalogContent = {
     {
       id: 'p-case',
       emoji: '💼',
+      image: imgCase,
       name: { pt: 'Case de Proteção', en: 'Protective Case' },
       category: { pt: 'Acessórios', en: 'Accessories' },
       categoryKey: 'accessories',
@@ -157,6 +165,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-shirt',
       emoji: '👕',
+      image: imgShirt,
       name: { pt: 'Camisa Linho Oversize', en: 'Oversize Linen Shirt' },
       category: { pt: 'Tops', en: 'Tops' },
       categoryKey: 'tops',
@@ -167,6 +176,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-tee',
       emoji: '🎽',
+      image: imgTee,
       name: { pt: 'T-shirt Premium', en: 'Premium T-shirt' },
       category: { pt: 'Tops', en: 'Tops' },
       categoryKey: 'tops',
@@ -177,6 +187,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-jacket',
       emoji: '🧥',
+      image: imgJacket,
       name: { pt: 'Jaqueta Bomber', en: 'Bomber Jacket' },
       category: { pt: 'Outerwear', en: 'Outerwear' },
       categoryKey: 'outerwear',
@@ -187,6 +198,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-pants',
       emoji: '👖',
+      image: imgPants,
       name: { pt: 'Calça Alfaiataria', en: 'Tailored Trousers' },
       category: { pt: 'Bottoms', en: 'Bottoms' },
       categoryKey: 'bottoms',
@@ -197,6 +209,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-jeans',
       emoji: '👖',
+      image: imgJeans,
       name: { pt: 'Jeans Slim', en: 'Slim Jeans' },
       category: { pt: 'Bottoms', en: 'Bottoms' },
       categoryKey: 'bottoms',
@@ -207,6 +220,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-sneakers',
       emoji: '👟',
+      image: imgSneakers,
       name: { pt: 'Tênis Runner', en: 'Runner Sneakers' },
       category: { pt: 'Calçados', en: 'Footwear' },
       categoryKey: 'footwear',
@@ -217,6 +231,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-boots',
       emoji: '🥾',
+      image: imgBoots,
       name: { pt: 'Bota Casual', en: 'Casual Boots' },
       category: { pt: 'Calçados', en: 'Footwear' },
       categoryKey: 'footwear',
@@ -227,6 +242,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-cap',
       emoji: '🧢',
+      image: imgCap,
       name: { pt: 'Boné Trucker', en: 'Trucker Cap' },
       category: { pt: 'Acessórios', en: 'Accessories' },
       categoryKey: 'fashion-accessories',
@@ -237,6 +253,7 @@ const fashionCatalog: CatalogContent = {
     {
       id: 'f-backpack',
       emoji: '🎒',
+      image: imgBackpack,
       name: { pt: 'Mochila Urbana', en: 'Urban Backpack' },
       category: { pt: 'Acessórios', en: 'Accessories' },
       categoryKey: 'fashion-accessories',
