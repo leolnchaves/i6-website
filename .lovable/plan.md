@@ -1,29 +1,55 @@
-## Objetivo
+## Contexto
 
-Em **Metas Comerciais Preditivas** (`/kiosk`), exibir o mesmo seletor de dimensão **Região / Vendedor / Cliente / SKU** já **antes de calcular metas**, filtrando o conteúdo inicial da tabela pela dimensão escolhida (hoje é fixo em "Região" até o cálculo terminar).
+Os únicos "combos" (dropdowns) no /kiosk são os do demo **Mix, Sortimento e Pedido Ideal** (`src/components/kiosk/demos/MixAssortmentOrderDemo.tsx`):
 
-## Diagnóstico
+- **Setup (2 combos):** Loja/PDV e Região — hoje via `SelectField`
+- **Resultado (2 combos):** Loja/PDV e Região no cabeçalho do carrinho — hoje via `CompactSelect`
 
-Em `src/components/kiosk/demos/CommercialTargetsDemo.tsx`:
+Ambos usam `<select>` nativo. Em telas touch, o `<select>` nativo abre um seletor do sistema operacional (roda/lista pequena), com alvos de toque desconfortáveis e visual fora do design do kiosk. Nenhum outro demo do /kiosk usa combos (os switchers de dimensão em Metas Comerciais e as abas de cenário em Personalização já são chips grandes).
 
-- O botão do switcher de dimensões é renderizado só quando `showProjected` (fase `result`) — linhas 86–109.
-- O cabeçalho da tabela força `'region'` antes do cálculo — linha 114 (`showProjected ? dim : 'region'`).
-- As linhas iniciais usam `dimRows.region` fixo — linha 65 (`(dimRows.region ?? []).slice(0, 6)`).
+## O que muda
 
-Os dados agregados por todas as 4 dimensões já existem em `getDimRows(result)` (`dimRows.region | rep | client | sku`), então não é preciso mexer em `commercialTargets.ts` — só remover as travas de UI.
+Trocar os dois helpers internos (`SelectField` e `CompactSelect`) por um **`TouchSelect`** único — um botão-gatilho com popover controlado por React, dimensionado para dedo.
 
-## Mudanças
+### Especificação do `TouchSelect`
 
-Editar apenas `src/components/kiosk/demos/CommercialTargetsDemo.tsx`:
+Gatilho (botão):
+- Altura mínima ≥ 6vmin (setup) / ≥ 5vmin (resultado) — confortável para o dedo
+- Label acima em uppercase (mantém identidade atual)
+- Valor atual em destaque + chevron
+- Borda coral no estado aberto
 
-1. Remover a condição `showProjected` do switcher de dimensões: exibir sempre.
-2. Cabeçalho da tabela: usar `dim` diretamente (sem `showProjected ? dim : 'region'`).
-3. `rowsToShow`: usar `activeRows.slice(0, 6)` em qualquer fase, ficando as colunas de "Sugerido / Potencial / Δ" com dash (`—`) até o cálculo, como já é hoje.
-4. Durante `phase === 'running'` manter o switcher visível porém desabilitado (mesmo padrão dos outros filtros do demo), para o usuário não trocar dimensão no meio do cálculo.
+Popover de opções (abre no clique):
+- Renderizado em portal ancorado ao gatilho, largura ≥ largura do gatilho (mínimo ~28vmin)
+- Cada opção: linha inteira clicável, altura ≥ 6vmin, padding generoso, texto ~1.6vmin
+- Hover/press coral, opção selecionada com marcador coral à esquerda
+- Fecha ao selecionar, ao clicar fora ou no Esc
+- Backdrop translúcido leve para foco visual
 
-Sem alterações em dados, i18n, layout, cores ou pipeline. Nenhum outro demo é tocado.
+### Onde aplicar
 
-## Validação
+- **Setup** (linhas ~99 e ~105 de `MixAssortmentOrderDemo.tsx`): variante "grande" do `TouchSelect`
+- **Cabeçalho do carrinho no resultado** (linhas ~142 e ~148): mesma variante "grande" — o usuário pediu explicitamente mais espaço, então unificamos com o setup em vez de manter uma versão compacta
 
-- Typecheck.
-- No `/kiosk` → Metas Comerciais Preditivas, verificar que os 4 chips (Região / Vendedor / Cliente / SKU) já aparecem no setup e que a tabela inicial troca de linhas conforme a seleção, com as colunas projetadas mantendo `—` até o cálculo.
+### Escopo
+
+- Apenas frontend/presentation em `MixAssortmentOrderDemo.tsx` (mais eventual novo arquivo `TouchSelect.tsx` colocado em `src/components/kiosk/ui/`)
+- API preservada: `label`, `value`, `onChange`, `options[{value,label}]` — nenhuma alteração em datasets, tradução ou lógica de filtro
+- Fora do escopo: `KioskMetrics.tsx` (dashboard interno, não é tela touch)
+
+## Detalhes técnicos
+
+- Novo componente `src/components/kiosk/ui/TouchSelect.tsx` (React puro + Tailwind, sem dependências novas)
+- Fechamento por: seleção, clique fora (`useEffect` + `mousedown` listener no `document`), tecla `Escape`
+- Posicionamento: `absolute` sob o gatilho com `ref` — sem libs de portal; contêiner do demo já tem `overflow` seguro
+- Cores via classes utilitárias já usadas no arquivo (`#F4845F`, `#0B1224`, `white/`)
+- Remoção de `SelectField` e `CompactSelect` após a migração para evitar código morto
+
+```text
+┌─ LOJA/PDV ───────────────┐        ┌─ Todas as lojas ▾ ─┐
+│  Todas as lojas       ▾  │  →     │ ● Todas as lojas    │
+└──────────────────────────┘        │   PDV 001 — Centro  │
+                                    │   PDV 002 — Sul     │
+                                    │   PDV 003 — Norte   │
+                                    └─────────────────────┘
+```
