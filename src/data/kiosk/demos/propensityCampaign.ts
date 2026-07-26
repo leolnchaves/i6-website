@@ -46,11 +46,11 @@ export const products: ProductDef[] = [
     bestChannel: 'whatsapp',
     arguments: [
       'Clientes com aumento de 42% na frequência de compra da categoria nos últimos 30 dias e 3× mais engajamento com push segmentado.',
-      'Sinais de intenção detectados: buscas recentes por dermocosméticos premium e permanência acima da média nas páginas de produto.',
-      'Público concentra 68% da conversão esperada com apenas 24% do custo de contato — priorização reduz CAC efetivo em 2.8×.',
-      'Match de perfil com compradoras conversoras da última campanha de lançamento (look-alike de 1º grau, cobertura de 74%).',
-      'Ticket médio crescente e afinidade forte com marcas premium da categoria — público qualificado para trade-up.',
-      'Recorte exclui clientes em cool-down pós-campanha e reforça público com resposta positiva histórica ao WhatsApp.',
+      'Base com recompra de dermocosméticos crescendo 38% no último trimestre e resposta 2,4× maior a WhatsApp que a média da loja.',
+      'Clientes parecidos com quem converteu no último lançamento — 74% deles compraram na primeira semana da campanha.',
+      'Público concentrado nas lojas com maior giro da categoria e histórico de resposta rápida a ofertas de trade-up.',
+      'Recorte exclui quem foi impactado nos últimos 14 dias — reforça só quem responde bem a WhatsApp sem saturação.',
+      'Regiões com maior densidade de compradoras da categoria e picos de tráfego em lojas premium nos fins de semana.',
     ],
   },
   {
@@ -61,11 +61,11 @@ export const products: ProductDef[] = [
     baseConversion: 6.1,
     bestChannel: 'push',
     arguments: [
-      'Sazonalidade favorável: categoria em pico de demanda e estoque adequado no CD regional — sem risco de ruptura pós-ativação.',
-      'Clientes com histórico de compra na categoria e frequência semanal em loja física próxima aos pontos de venda participantes.',
-      'Recência de compra abaixo de 14 dias combinada com alto engajamento em ofertas por push — janela ideal de reativação.',
-      'Score calibrado com backtest de 8 campanhas sazonais anteriores; segmento apresenta lift médio de 2.6× vs. base geral.',
-      'Base concentra alta afinidade com combos e ofertas de mix — potencial de aumento de itens por ticket em 1.4×.',
+      'Regiões com previsão de calor acima da média nos próximos 7 dias concentram 61% do consumo histórico da categoria — janela alinhada ao clima.',
+      'PDVs com estoque saudável e giro semanal crescente nas últimas 4 semanas — sem risco de ruptura após a ativação.',
+      'Clientes com compra da categoria em janela inferior a 14 dias respondem 2,6× mais a push que a base geral.',
+      'Base parecida com quem converteu em campanhas sazonais anteriores — mesmo perfil de frequência e ticket em bebidas.',
+      'Feriado prolongado na próxima semana em regiões-chave — histórico mostra aumento de 1,8× nas compras de combos.',
     ],
   },
   {
@@ -76,11 +76,11 @@ export const products: ProductDef[] = [
     baseConversion: 4.7,
     bestChannel: 'email',
     arguments: [
-      'Público com buscas recentes por eletroportáteis e histórico positivo de conversão em campanhas de alto ticket via e-mail.',
-      'Recorrência de compra na categoria "casa & cozinha" acima da média e forte resposta a e-mails com prova social.',
-      'Ticket médio 2.1× superior à base geral — público qualificado para categorias premium com parcelamento estendido.',
-      'Elegibilidade cruzada com política de crédito aprovada e pressão comercial abaixo do teto — aderência garantida.',
-      'Sinais de intenção: comparação de modelos, cliques em vitrine personalizada e adição recente a lista de desejos.',
+      'Compradores de utensílios de cozinha nos últimos 60 dias com abertura de e-mail 3,1× acima da média — comportamento típico de quem está completando a cozinha.',
+      'Clientes com ticket médio 2,1× superior à base geral e histórico de compra de bens duráveis com parcelamento.',
+      'Base parecida com quem comprou eletroportátil na última safra — mesma faixa de renda, mesma resposta a e-mail com prova social.',
+      'Público com visitas recentes à vitrine de "casa & cozinha" e listas de desejos ativas há menos de 30 dias.',
+      'Regiões metropolitanas com maior densidade de mudanças recentes — perfil clássico de reposição de eletroportáteis.',
     ],
   },
   {
@@ -91,11 +91,11 @@ export const products: ProductDef[] = [
     baseConversion: 7.2,
     bestChannel: 'push',
     arguments: [
-      'Público com alta afinidade de estilo pelo cluster da coleção e frequência de compra a cada 45 dias em moda.',
-      'Sinais de intenção detectados: navegação recente em novidades, engajamento com influenciadores parceiros e cliques em push.',
-      'Match de perfil com compradoras conversoras da última coleção (look-alike de 1º grau, cobertura de 71%).',
-      'Ticket médio crescente e ampla adesão a combos completos — potencial de aumento de peças por pedido em 1.6×.',
-      'Recorte exclui clientes com devolução recente e reforça base com resposta positiva ao canal push nos últimos 30 dias.',
+      'Clientes parecidos com quem comprou na última coleção — mesmo estilo, mesma frequência — 71% converteram na campanha anterior.',
+      'Base com compras em moda a cada 45 dias em média e engajamento crescente com conteúdo de novidades no app.',
+      'Mudança de estação nas próximas 2 semanas em regiões-alvo — histórico mostra pico de 2,2× nas compras de coleção nova.',
+      'Público com alta resposta a push nos últimos 30 dias e adesão frequente a combos completos (peças por pedido +1,6×).',
+      'Recorte exclui clientes com devolução recente e reforça lojas com maior conversão em lançamentos anteriores.',
     ],
   },
   {
@@ -106,11 +106,11 @@ export const products: ProductDef[] = [
     baseConversion: 5.3,
     bestChannel: 'whatsapp',
     arguments: [
-      'Base com alto engajamento no programa de pontos e frequência de compra acima de 2× por mês — perfil ideal para upgrade.',
-      'Score de propensão calibrado com backtest de 12 campanhas anteriores; segmento apresenta lift médio de 3.1× vs. base geral.',
-      'Elegibilidade cruzada com consentimento LGPD e política de crédito — aderência regulatória garantida.',
-      'Público concentra 62% da conversão esperada com apenas 21% do custo de contato — priorização reduz CAC efetivo.',
-      'Ticket médio e recência favoráveis; histórico positivo de resposta ao WhatsApp em ofertas de benefícios exclusivos.',
+      'Base que já usa o programa de pontos 2× por mês e concentra compras nas lojas com maior ticket — perfil natural de upgrade.',
+      'Clientes com engajamento crescente em benefícios exclusivos nos últimos 90 dias e alta resposta a WhatsApp que push.',
+      'Público parecido com quem fez upgrade de cartão na safra anterior — mesma frequência de compra e mesma faixa de gasto mensal.',
+      'Regiões com maior densidade de clientes fiéis e histórico positivo de resposta a ofertas de benefícios ancorados.',
+      'Recorte prioriza quem responde a WhatsApp em janela de 48h — comportamento típico de decisão rápida em ofertas de valor.',
     ],
   },
   {
@@ -121,14 +121,15 @@ export const products: ProductDef[] = [
     baseConversion: 9.6,
     bestChannel: 'phone',
     arguments: [
-      'Compradores recentes de eletroportáteis e eletrônicos de alto ticket — janela de 30 dias para oferta de garantia estendida.',
-      'Público com histórico positivo de resposta a abordagens humanas por telefone e alta conversão em produtos financeiros ancorados.',
-      'Match direto com compradores conversores da última safra de cross-sell (look-alike de 1º grau, cobertura de 78%).',
-      'Elegibilidade cruzada com consentimento LGPD e pressão comercial abaixo do teto — sem sobreposição de campanhas.',
-      'Score calibrado com backtest de 10 campanhas de cross-sell; segmento apresenta lift médio de 2.9× vs. base geral.',
+      'Clientes que compraram eletroportátil ou eletrônico nos últimos 30 dias — janela em que a decisão de proteger o produto é 4× mais aceita.',
+      'Base com histórico de atender chamadas comerciais e conversão alta em produtos financeiros ancorados a uma compra recente.',
+      'Público parecido com quem contratou garantia na safra anterior — mesmo perfil de ticket e mesma janela pós-compra.',
+      'Compradores em regiões com maior sinistralidade histórica de eletroportáteis — sensibilidade natural à proteção do produto.',
+      'Recorte prioriza clientes sem contato comercial nos últimos 14 dias — pressão baixa aumenta 1,9× a taxa de atendimento.',
     ],
   },
 ];
+
 
 export const pipeline: { label: string; micro: string; durationMs: number }[] = [
   {
