@@ -38,6 +38,10 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
     return <CommercialTargetsDemo />;
   }
 
+  if (solution.id === 'mix-assortment-order') {
+    return <MixAssortmentOrderDemo />;
+  }
+
   return (
     <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[4vmin]">
       <div className="flex items-center gap-[2vmin] mb-[2.5vmin]">
