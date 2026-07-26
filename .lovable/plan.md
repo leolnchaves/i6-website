@@ -1,39 +1,47 @@
-# Forecast Preditivo — ajustes de UX e realismo
+## Problema 1 — Filtros derrubam o resultado do forecast
 
-## Escopo
-Arquivos: `src/components/kiosk/demos/DemandForecastDemo.tsx` e `src/data/kiosk/demos/demandForecast.ts`.
+Em `src/components/kiosk/demos/DemandForecastDemo.tsx` (linhas 69-73), um `useEffect` chama `setPhase('planning')` sempre que `skuId/channel/region/horizon` mudam. Isso faz o Forecast Preditivo voltar ao estado inicial toda vez que o usuário troca um filtro após rodar.
 
-## 1. Remover intervalo de confiança
-- Excluir a construção do `ciPath`/polígono no `MainChart` e a `LegendDot` de "Intervalo de confiança i6".
-- Manter `ciLow/ciHigh` no tipo (não quebra outros usos), apenas não desenhar nem entrar na legenda.
+### Correção
+Remover o reset de fase; manter só a limpeza do mês selecionado.
 
-## 2. Linhas de sazonalidade e tendência mais reais (chart de composição)
-- **Tendência**: hoje é uma curva suave CAGR quase reta. Passar a plotar o *desvio* da tendência sobre uma média móvel curta (variando visivelmente ao longo dos meses) com leve micro-ruído determinístico via `noise(seed)`, para dar textura orgânica sem virar serrilhado.
-- **Sazonalidade**: hoje o gráfico usa `Math.abs(season)`, o que remove os vales negativos e torna a curva "gêmea" da tendência. Trocar por sazonalidade *raiada com sinal* (pode ficar negativa) desenhada em torno de uma linha zero horizontal — inclui um eixo zero tênue e labels no eixo Y (+/−). Isso mostra "picos" e "vales" reais do ciclo.
-- Ajustar levemente `seasonComp` no `buildSeries` para amplificar contraste onde `seasonAmp` é baixo (evita linha achatada em SKUs recorrentes).
+```tsx
+// antes
+useEffect(() => {
+  setPhase('planning');
+  setProgress(0);
+  setSelectedMonth(null);
+}, [skuId, channel, region, horizon]);
 
-## 3. Filtros — segmented buttons, sem dropdown, sem PDV
-- Substituir todos os `ChipSelect` (dropdown) por um novo componente `SegmentedFilter` renderizando botões visíveis, tamanho touch (min-h ~7vmin, padding generoso).
-- Layout: uma linha por dimensão — `Produto` (4 botões, um por SKU), `Canal` (3 botões: Total/Digital/Físico), `Região` (4 botões: Total/Sudeste/Sul/Nordeste), `Horizonte` (2 botões: 6/12 meses).
-- Remover completamente o pill "Loja/PDV · Todas" (dado e label também podem sair do dicionário).
-- Cada dimensão em sua própria linha (`flex flex-wrap gap-*`), com rótulo prefixo pequeno em coral à esquerda.
+// depois
+useEffect(() => {
+  setSelectedMonth(null);
+}, [skuId, channel, region, horizon]);
+```
 
-## 4. Fazer canal/região impactarem o gráfico visualmente
-- Causa raiz: o eixo Y do `MainChart` é autoescala; quando região reduz o volume, o gráfico é reescalado e o formato fica igual.
-- Correção: fixar `maxY` baseado no cenário `total × total` do SKU atual (`buildSeries(sku, 'total', 'total', horizon)`) e usar essa escala fixa para todas as combinações. Assim, filtrar `Sul` faz as linhas caírem visivelmente para ~19% da altura do total; `Sudeste` ~58%; etc.
-- O `CompositionChart` fica com autoescala (mudança já é evidente pelas barras/linhas).
+Comportamento resultante:
+- `planning`: filtros seguem alterando as séries base (via `useMemo` sobre `series`).
+- `result`: filtros mantêm o modo `result`; linha i6 e KPIs "before → after" recalculam sobre o recorte filtrado.
+- Reset total só acontece via "Explorar outra solução" (`reset()`).
 
-## 5. Cliques mais robustos no chart de composição (touchscreen)
-- Aumentar altura do SVG (ver item 6) e a `bandW` mínima para ~ suficiente para 12 meses caberem com faixas largas.
-- Adicionar em cada mês um `<rect>` de hitbox transparente cobrindo toda a faixa vertical (`x = cx - bandW/2`, altura = área do gráfico) para o `onClick` — assim o dedo acerta clicando em qualquer lugar da coluna, não só na barra pequena.
-- Realçar o mês selecionado com um retângulo coral mais grosso (borda 1.6px) e um rótulo de mês em negrito maior (fontSize 10.5, coral). Estados `hover`/`active` com brilho.
-- Deixar o `cursor-pointer` e `role="button"` explícitos.
+## Problema 2 — Sazonalidade e tendência irreais no gráfico de composição
 
-## 6. Aumentar altura dos dois gráficos (alinhar com painel direito)
-- `MainChart`: aumentar `H` de 190 → ~240 e `maxHeight` inline de 240 → ~320.
-- `CompositionChart`: aumentar `H` de 170 → ~220 e `maxHeight` de 200 → ~280.
-- Padding vertical dos containers dos gráficos aumenta levemente para acompanhar. Objetivo: coluna esquerda ficar ~alinhada em altura à direita (raciocínio do modelo + insight).
+Hoje a sazonalidade é gerada como uma senóide fluida (curva contínua) e a tendência é quase reta. A referência anexa mostra o padrão correto: sazonalidade com **picos e vales concentrados em meses específicos** (não um seno suave) e tendência monotônica clara (crescente ou decrescente) sobre o horizonte.
 
-## Fora de escopo
-- Nada de mudanças em pipeline, KPIs, argumentação, dados dos SKUs (exceto o pequeno tweak de `seasonComp` do item 2) ou conector SVG entre painéis.
-- Sem mudanças em outros demos do kiosk.
+### Correção em `src/data/kiosk/demos/demandForecast.ts`
+- Substituir a sazonalidade contínua por um **perfil mensal fixo por SKU** (12 pesos indexados por `month % 12`), com 2–3 picos e 2–3 vales concentrados (ex.: bebida com picos em dez/jan/fev e vales em jun/jul; higiene mais plano com pico único; eletrônico com pico em nov/dez — Black Friday/Natal — e vale em fev/mar; moda com dois picos: mai (inverno) e nov (verão/fim de ano)).
+- Amplitude por SKU calibrada em relação ao volume médio (mantém a legibilidade em SKUs de baixa sazonalidade sem virar linha reta).
+- Tendência: manter linha monotônica clara ao longo do horizonte total (histórico + futuro), com micro-ruído pequeno apenas para textura — sem reverter direção.
+- Retirar `Math.abs` da série `seasonComp` no gráfico (sazonalidade continua com sinal, mostrando vales negativos como no anexo).
+
+### Correção em `CompositionChart` (dentro de `DemandForecastDemo.tsx`)
+- Renderizar `seasonComp` como **linha poligonal com marcadores nos meses** (ponto visível em cada mês), reforçando a leitura de "picos em meses específicos" em vez de curva suave.
+- Manter `trendComp` como linha monotônica e `sparsityFix` como barra.
+- Manter eixo zero visível e hitboxes de mês já implementados.
+
+## Validação
+
+- Rodar forecast → trocar Canal/Região/Horizonte/SKU: gráfico permanece em `result`, linha i6 e KPIs continuam visíveis e recalculam.
+- Sem rodar: filtros seguem atualizando séries históricas/forecast atual.
+- "Explorar outra solução": reset total continua funcionando.
+- Gráfico de composição: sazonalidade com picos/vales em meses específicos e visíveis por SKU; tendência claramente crescente ou decrescente ao longo de todo o horizonte, como na referência anexa.
