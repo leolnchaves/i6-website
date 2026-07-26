@@ -206,39 +206,53 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
   return (
     <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      {/* Header with scenario chip */}
-      <div className="flex items-center justify-between gap-[2vmin] mb-[2vmin]">
-        <div className="flex items-center gap-[1.5vmin]">
-          <span className="w-[4.5vmin] h-[4.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-            <Sparkles className="w-[2.4vmin] h-[2.4vmin] text-[#F4845F]" />
-          </span>
-          <div>
-            <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{t.header}</h4>
-            <p className="text-[1.4vmin] text-white/60">{t.headerSubtitle}</p>
-          </div>
+      {/* Header */}
+      <div className="flex items-center gap-[1.5vmin] mb-[2vmin]">
+        <span className="w-[4.5vmin] h-[4.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+          <Sparkles className="w-[2.4vmin] h-[2.4vmin] text-[#F4845F]" />
+        </span>
+        <div>
+          <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{t.header}</h4>
+          <p className="text-[1.4vmin] text-white/60">{t.headerSubtitle}</p>
         </div>
-        <button
-          type="button"
-          onClick={changeScenario}
-          className="inline-flex items-center gap-[0.8vmin] px-[2vmin] py-[1.4vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] transition"
-        >
-          {t.changeScenario}
-        </button>
       </div>
 
-      {/* Scenario chip row */}
+      {/* Scenario tabs — trocar cenário com 1 clique */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-[1vmin] mb-[2vmin]">
+        {scenarioTabs.map(({ u, v, icon, title, sub }) => {
+          const active = userMode === u && vertical === v;
+          return (
+            <button
+              key={`${u}-${v}`}
+              type="button"
+              onClick={() => startScenario(u, v)}
+              className={`text-left rounded-2xl border-2 p-[1.4vmin] transition-all active:scale-[0.98] ${
+                active
+                  ? 'border-[#F4845F] bg-[#F4845F]/[0.12]'
+                  : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+              }`}
+            >
+              <div className="flex items-center gap-[1vmin]">
+                <span className="w-[3.6vmin] h-[3.6vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
+                  {icon}
+                </span>
+                <div className="min-w-0">
+                  <span className="block text-[1.55vmin] font-bold text-white leading-tight truncate">{title}</span>
+                  <span className="block text-[1.3vmin] text-white/60 leading-tight truncate">{sub}</span>
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Objetivo do cenário ativo */}
       <div className="flex flex-wrap items-center gap-[1vmin] mb-[2vmin]">
-        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-white/[0.06] border border-white/15 text-[1.4vmin] text-white/85">
-          {modeIcon}
-          {userMode === 'logged' ? t.userLogged : t.userAnon}
-        </span>
-        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-white/[0.06] border border-white/15 text-[1.4vmin] text-white/85">
-          {vertical === 'products' ? t.verticalProducts : t.verticalFashion}
-        </span>
         <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-[#F4845F]/15 border border-[#F4845F]/40 text-[1.4vmin] font-semibold text-[#F4845F]">
           {t.objectiveLabel}: {scenario.objective[lang]}
         </span>
       </div>
+
 
       <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
         {/* LEFT: e-commerce (list OR pdp) */}
