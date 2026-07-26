@@ -5,7 +5,7 @@ import type { KioskLang } from '@/data/kiosk/config';
 // ============================================================================
 
 export interface MonthPoint {
-  key: string; // e.g. 2024-01
+  key: string;
   labelPt: string;
   labelEn: string;
   history: number | null;
@@ -13,12 +13,12 @@ export interface MonthPoint {
   i6Fcst: number | null;
   ciLow: number | null;
   ciHigh: number | null;
-  // Decomposition — only present on forecast months
+  // Decomposition — present on forecast months
   trend: number | null;
   season: number | null;
-  promo: number | null;
+  promo: number | null; // legacy field kept for BreakdownCard use
   sparsityFix: number | null;
-  accel: number | null;
+  hasPromo: boolean; // true when this month has a promo effect
 }
 
 export interface SkuDef {
@@ -27,21 +27,32 @@ export interface SkuDef {
   nameEn: string;
   categoryPt: string;
   categoryEn: string;
-  cagr: number; // annual growth
-  seasonAmp: number; // seasonality amplitude 0-1
-  seasonPeak: number; // month index of peak (0=Jan)
-  promoMonths: number[]; // 0-based month indexes with promo boost
-  rupturedMonths: number[]; // history months to zero-out
-  accelLast: number; // 0-1 acceleration in last 90 days
-  channelMix: { digital: number; physical: number }; // must sum to 1
-  base: number; // baseline units
-  currentBias: 'over' | 'under' | 'flat'; // enterprise forecast bias
-  currentErrorPct: number; // MAPE of current fcst vs actual
-  i6ErrorPct: number; // MAPE i6 backtest
+  cagr: number;
+  seasonAmp: number;
+  seasonPeak: number;
+  promoMonths: number[];
+  rupturedMonths: number[];
+  accelLast: number;
+  channelMix: { digital: number; physical: number };
+  base: number;
+  currentBias: 'over' | 'under' | 'flat';
+  // Current (client) forecast KPIs — bad numbers
+  currentErrorPct: number;
   historicalAccuracyPct: number;
   meanErrorPct: number;
   stockoutPct: number;
   excessPct: number;
+  // i6 backtest KPIs — good numbers (used in KpiCompare)
+  i6ErrorPct: number;
+  i6AccuracyPct: number;
+  i6MeanErrorPct: number;
+  i6StockoutPct: number;
+  i6ExcessPct: number;
+  // 1-2 history month indices where the client forecast was actually good
+  accuratePastMonths: number[];
+  // Promo explanation shown in BreakdownCard when a promo month is clicked
+  promoNotePt: string;
+  promoNoteEn: string;
   argumentPt: string;
   argumentEn: string;
 }
@@ -55,7 +66,7 @@ export interface PipelineStep {
 }
 
 // ============================================================================
-// SKU catalog — 4 archetypes with distinct patterns
+// SKU catalog
 // ============================================================================
 
 export const skus: SkuDef[] = [
@@ -67,23 +78,30 @@ export const skus: SkuDef[] = [
     categoryEn: 'Beverages',
     cagr: 0.08,
     seasonAmp: 0.42,
-    seasonPeak: 11, // dec
-    promoMonths: [10, 11], // nov, dec
-    rupturedMonths: [4, 16], // may/prev year, may/current
+    seasonPeak: 11,
+    promoMonths: [10, 11],
+    rupturedMonths: [4, 16],
     accelLast: 0.14,
     channelMix: { digital: 0.32, physical: 0.68 },
     base: 12800,
     currentBias: 'under',
-    currentErrorPct: 24.8,
+    currentErrorPct: 58.4,
+    historicalAccuracyPct: 42.8,
+    meanErrorPct: 57.2,
+    stockoutPct: 14.6,
+    excessPct: 11.9,
     i6ErrorPct: 10.6,
-    historicalAccuracyPct: 75.2,
-    meanErrorPct: 18.4,
-    stockoutPct: 6.8,
-    excessPct: 4.2,
+    i6AccuracyPct: 89.4,
+    i6MeanErrorPct: 11.2,
+    i6StockoutPct: 3.1,
+    i6ExcessPct: 3.6,
+    accuratePastMonths: [8, 19],
+    promoNotePt: 'Black Friday + campanha de verão — pico esperado de +18% sobre baseline.',
+    promoNoteEn: 'Black Friday + summer campaign — expected +18% peak over baseline.',
     argumentPt:
-      'Produto com crescimento estrutural de +8% a.a. e sazonalidade forte no Q4 (pico em dezembro, +42% acima do baseline). Corrigimos maio de 2024 e maio de 2025 — meses com ruptura em que a demanda real foi ~2× o vendido — e isolamos o efeito promocional de nov/dez para não superestimar meses regulares. Nos últimos 90 dias detectamos aceleração adicional de +14% no canal digital vs. baseline, enquanto o físico segue estável. O forecast atual subestima Q4 em ~19pp por não separar promo de tendência; a i6 estreita o intervalo de confiança de ±22% para ±7% e corrige o viés estrutural entre outubro e janeiro.',
+      'Produto com crescimento estrutural de +8% a.a. e sazonalidade forte no Q4 (pico em dezembro, +42% acima do baseline). Corrigimos maio de 2024 e maio de 2025 — meses com ruptura em que a demanda real foi ~2× o vendido — e isolamos o efeito promocional de nov/dez para não superestimar meses regulares. Nos últimos 90 dias detectamos aceleração adicional de +14% no canal digital. O forecast atual erra 57pp por não separar promo de tendência; a i6 estreita o intervalo de confiança de ±22% para ±7% e reduz ruptura de 14,6% para 3,1%.',
     argumentEn:
-      'Structural +8% YoY growth with strong Q4 seasonality (December peak, +42% above baseline). We recovered May 2024 and May 2025 — stockout months where real demand was ~2× what was sold — and isolated the Nov/Dec promo effect to avoid over-projecting regular months. Last 90 days show an additional +14% acceleration in the digital channel vs. baseline, while physical is stable. The current forecast under-projects Q4 by ~19pp because it does not separate promo from trend; i6 narrows the confidence interval from ±22% to ±7% and corrects the structural bias between October and January.',
+      'Structural +8% YoY growth with strong Q4 seasonality (December peak, +42% above baseline). We recovered May 2024 and May 2025 — stockout months where real demand was ~2× what was sold — and isolated the Nov/Dec promo effect to avoid over-projecting regular months. Last 90 days show an additional +14% acceleration in the digital channel. The current forecast is off by 57pp because it does not separate promo from trend; i6 narrows the confidence interval from ±22% to ±7% and cuts stockout from 14.6% to 3.1%.',
   },
   {
     id: 'hygiene',
@@ -100,16 +118,23 @@ export const skus: SkuDef[] = [
     channelMix: { digital: 0.28, physical: 0.72 },
     base: 8400,
     currentBias: 'over',
-    currentErrorPct: 17.2,
+    currentErrorPct: 55.9,
+    historicalAccuracyPct: 44.1,
+    meanErrorPct: 54.6,
+    stockoutPct: 9.8,
+    excessPct: 18.4,
     i6ErrorPct: 6.9,
-    historicalAccuracyPct: 82.8,
-    meanErrorPct: 12.1,
-    stockoutPct: 2.4,
-    excessPct: 9.6,
+    i6AccuracyPct: 93.1,
+    i6MeanErrorPct: 7.4,
+    i6StockoutPct: 2.4,
+    i6ExcessPct: 3.9,
+    accuratePastMonths: [12],
+    promoNotePt: 'Campanha promocional pontual — pico curto, sem impacto no baseline.',
+    promoNoteEn: 'One-off promo campaign — short peak, no baseline impact.',
     argumentPt:
-      'Categoria de recompra alta com baixíssima sazonalidade (±8%) e crescimento maduro (+3% a.a.). O forecast atual carrega viés otimista porque incorpora dois picos promocionais isolados (abril e outubro) como tendência recorrente, gerando excesso de estoque de 9,6%. A i6 separa os 2 pontos promocionais do baseline, corrige o mês 21 (ruptura pontual) e projeta demanda essencialmente linear com ±4% de banda. Aceleração dos últimos 90 dias é marginal (+4%), sem justificar ajuste estrutural. Redução de excesso projetada de 9,6% para 3,1%.',
+      'Categoria de recompra alta com baixíssima sazonalidade (±8%) e crescimento maduro (+3% a.a.). O forecast atual carrega viés otimista porque incorpora dois picos promocionais isolados como tendência recorrente, gerando excesso de estoque de 18,4%. A i6 separa os picos promocionais do baseline, corrige o mês 21 (ruptura pontual) e projeta demanda essencialmente linear com ±4% de banda. Redução de excesso projetada de 18,4% para 3,9% e acurácia sobe de 44,1% para 93,1%.',
     argumentEn:
-      'High-repurchase category with very low seasonality (±8%) and mature growth (+3% YoY). The current forecast is optimistic because it treats two isolated promo peaks (April and October) as recurring trend, driving 9.6% excess inventory. i6 separates the 2 promo points from the baseline, recovers month 21 (isolated stockout) and projects essentially linear demand with a ±4% band. Last 90-day acceleration is marginal (+4%), not enough to justify a structural adjustment. Excess projected to fall from 9.6% to 3.1%.',
+      'High-repurchase category with very low seasonality (±8%) and mature growth (+3% YoY). The current forecast is optimistic because it treats isolated promo peaks as recurring trend, driving 18.4% excess inventory. i6 separates the promo peaks from the baseline, recovers month 21 (isolated stockout) and projects essentially linear demand with a ±4% band. Excess projected to fall from 18.4% to 3.9% and accuracy jumps from 44.1% to 93.1%.',
   },
   {
     id: 'electronics',
@@ -119,23 +144,30 @@ export const skus: SkuDef[] = [
     categoryEn: 'Electronics',
     cagr: 0.18,
     seasonAmp: 0.55,
-    seasonPeak: 10, // nov (black friday)
+    seasonPeak: 10,
     promoMonths: [10, 11, 5],
     rupturedMonths: [10, 22],
     accelLast: 0.28,
     channelMix: { digital: 0.71, physical: 0.29 },
     base: 4200,
     currentBias: 'under',
-    currentErrorPct: 31.4,
+    currentErrorPct: 63.6,
+    historicalAccuracyPct: 36.4,
+    meanErrorPct: 61.8,
+    stockoutPct: 22.3,
+    excessPct: 6.4,
     i6ErrorPct: 12.8,
-    historicalAccuracyPct: 68.6,
-    meanErrorPct: 24.9,
-    stockoutPct: 11.4,
-    excessPct: 3.1,
+    i6AccuracyPct: 87.2,
+    i6MeanErrorPct: 13.5,
+    i6StockoutPct: 2.8,
+    i6ExcessPct: 2.1,
+    accuratePastMonths: [3, 15],
+    promoNotePt: 'Black Friday + Cyber Monday — pico esperado de +38% acima do baseline.',
+    promoNoteEn: 'Black Friday + Cyber Monday — expected +38% peak over baseline.',
     argumentPt:
-      'Categoria em crescimento acelerado (+18% a.a.) com sazonalidade de Black Friday e Natal muito pronunciada (±55%) e forte concentração no canal digital (71%). Identificamos ruptura em dois novembros seguidos — o forecast atual não recupera esses meses e por isso subestima o pico em ~27pp. Aceleração de +28% nos últimos 90 dias, quase toda no digital (dispositivos móveis dominam a jornada). A i6 separa Black Friday do baseline, incorpora crescimento estrutural, aplica calendário 2025 (BF em 28/11) e propõe compra escalonada para reduzir ruptura de 11,4% para 2,8%. Intervalo de confiança cai de ±31% para ±9%.',
+      'Categoria em crescimento acelerado (+18% a.a.) com sazonalidade de Black Friday e Natal muito pronunciada (±55%) e forte concentração no canal digital (71%). Identificamos ruptura em dois novembros seguidos — o forecast atual erra 62pp e por isso subestima o pico. Aceleração de +28% nos últimos 90 dias, quase toda no digital. A i6 separa Black Friday do baseline, aplica calendário 2025 (BF em 28/11) e reduz ruptura de 22,3% para 2,8%. Acurácia sobe de 36,4% para 87,2%.',
     argumentEn:
-      'Fast-growing category (+18% YoY) with very pronounced Black Friday and Christmas seasonality (±55%) and strong digital-channel concentration (71%). We detected stockouts in two consecutive Novembers — the current forecast fails to recover those months and therefore under-projects the peak by ~27pp. Last 90 days show +28% acceleration, almost entirely digital (mobile devices dominate the journey). i6 separates Black Friday from the baseline, incorporates structural growth, applies the 2025 calendar (BF on Nov 28) and proposes a staggered purchase plan to reduce stockout from 11.4% to 2.8%. Confidence interval drops from ±31% to ±9%.',
+      'Fast-growing category (+18% YoY) with very pronounced Black Friday and Christmas seasonality (±55%) and strong digital-channel concentration (71%). We detected stockouts in two consecutive Novembers — the current forecast is off by 62pp and therefore under-projects the peak. Last 90 days show +28% acceleration, almost entirely digital. i6 separates Black Friday from the baseline, applies the 2025 calendar (BF on Nov 28) and cuts stockout from 22.3% to 2.8%. Accuracy jumps from 36.4% to 87.2%.',
   },
   {
     id: 'fashion',
@@ -145,28 +177,35 @@ export const skus: SkuDef[] = [
     categoryEn: 'Apparel',
     cagr: 0.11,
     seasonAmp: 0.36,
-    seasonPeak: 5, // jun (winter start SP)
+    seasonPeak: 5,
     promoMonths: [0, 6],
     rupturedMonths: [8, 20],
     accelLast: 0.18,
     channelMix: { digital: 0.58, physical: 0.42 },
     base: 5600,
     currentBias: 'flat',
-    currentErrorPct: 22.6,
+    currentErrorPct: 60.3,
+    historicalAccuracyPct: 39.7,
+    meanErrorPct: 58.9,
+    stockoutPct: 17.2,
+    excessPct: 15.8,
     i6ErrorPct: 9.3,
-    historicalAccuracyPct: 71.8,
-    meanErrorPct: 19.2,
-    stockoutPct: 7.9,
-    excessPct: 8.4,
+    i6AccuracyPct: 90.7,
+    i6MeanErrorPct: 10.1,
+    i6StockoutPct: 3.4,
+    i6ExcessPct: 3.7,
+    accuratePastMonths: [5, 17],
+    promoNotePt: 'Liquidação de coleção — pico curto, sem projeção para o próximo drop.',
+    promoNoteEn: 'Collection clearance — short peak, no carryover to the next drop.',
     argumentPt:
-      'Ciclo curto de coleção com sazonalidade dupla (inverno-SP em jun/jul e liquidação em jan/fev) e viés flat no forecast atual — que ignora tanto o pico sazonal quanto a queda pós-coleção, gerando simultaneamente ruptura (7,9%) e excesso (8,4%) em SKUs diferentes. Detectamos aceleração de +18% nos últimos 90 dias no digital com aderência a busca por peças específicas (drop 04). A i6 modela cada onda de coleção separadamente, recupera setembro e agosto passados (ruptura), aplica peso maior às últimas 8 semanas de venda e projeta demanda com viés positivo entre maio e agosto, corrigindo o descolamento entre canais.',
+      'Ciclo curto de coleção com sazonalidade dupla (inverno-SP em jun/jul e liquidação em jan/fev) e viés flat no forecast atual — que ignora tanto o pico sazonal quanto a queda pós-coleção, gerando simultaneamente ruptura (17,2%) e excesso (15,8%) em SKUs diferentes. Detectamos aceleração de +18% nos últimos 90 dias no digital. A i6 modela cada onda de coleção separadamente e reduz ruptura para 3,4% e excesso para 3,7%. Acurácia sobe de 39,7% para 90,7%.',
     argumentEn:
-      'Short collection cycle with double seasonality (winter-SP in Jun/Jul and clearance in Jan/Feb) and a flat bias in the current forecast — which ignores both the seasonal peak and the post-collection drop, causing simultaneous stockout (7.9%) and excess (8.4%) across different SKUs. Last 90 days show +18% acceleration in digital driven by search for specific pieces (drop 04). i6 models each collection wave separately, recovers past August and September stockouts, weights the last 8 weeks of sales more heavily and projects positive bias between May and August, correcting the channel-level mismatch.',
+      'Short collection cycle with double seasonality (winter-SP in Jun/Jul and clearance in Jan/Feb) and a flat bias in the current forecast — which ignores both the seasonal peak and the post-collection drop, causing simultaneous stockout (17.2%) and excess (15.8%) across different SKUs. Last 90 days show +18% acceleration in digital. i6 models each collection wave separately and cuts stockout to 3.4% and excess to 3.7%. Accuracy jumps from 39.7% to 90.7%.',
   },
 ];
 
 // ============================================================================
-// Series builder — deterministic
+// Series builder
 // ============================================================================
 
 const monthLabelsPt = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -175,7 +214,6 @@ const monthLabelsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', '
 const HISTORY_MONTHS = 24;
 const FORECAST_MAX = 12;
 
-// Deterministic pseudo-noise so the visualization is stable across renders
 const noise = (seed: number) => {
   const x = Math.sin(seed * 12.9898) * 43758.5453;
   return (x - Math.floor(x)) * 2 - 1; // [-1,1]
@@ -190,42 +228,33 @@ export const buildSeries = (
   const channelMult =
     channel === 'digital' ? sku.channelMix.digital : channel === 'physical' ? sku.channelMix.physical : 1;
 
+  // Amplified regional contrast so filter changes are visible in the KPIs
   const regionMult =
-    region === 'sudeste' ? 0.52 : region === 'sul' ? 0.22 : region === 'nordeste' ? 0.18 : 1;
+    region === 'sudeste' ? 0.58 : region === 'sul' ? 0.19 : region === 'nordeste' ? 0.14 : 1;
 
-  // Anchor: 24 months history ends "now", forecast starts month +1
-  // Use a fixed anchor month (Nov 2025 as "current") so numbers are stable
   const nowYear = 2025;
-  const nowMonth = 10; // 0-based → nov
+  const nowMonth = 10;
 
   const totalMonths = HISTORY_MONTHS + FORECAST_MAX;
   const points: MonthPoint[] = [];
 
   for (let i = 0; i < totalMonths; i++) {
-    // absolute month index from series start
-    // month(i) in real calendar
-    const monthOffset = i - (HISTORY_MONTHS - 1); // 0 = current month, negative = past, positive = future
+    const monthOffset = i - (HISTORY_MONTHS - 1);
     const realMonth = ((nowMonth + monthOffset) % 12 + 12) % 12;
     const realYear = nowYear + Math.floor((nowMonth + monthOffset) / 12);
     const isHistory = i < HISTORY_MONTHS;
 
-    // Trend
     const yearsFromStart = (i - HISTORY_MONTHS) / 12;
     const trendFactor = Math.pow(1 + sku.cagr, yearsFromStart + HISTORY_MONTHS / 12);
 
-    // Seasonality — cosine centered on peak
     const seasonPhase = ((realMonth - sku.seasonPeak) / 12) * 2 * Math.PI;
     const seasonFactor = 1 + sku.seasonAmp * Math.cos(seasonPhase);
 
-    // Promo boost
     const promoBoost = sku.promoMonths.includes(realMonth) ? 0.18 : 0;
-
-    // Acceleration in the last 90 days of history / first 90 days of forecast
     const accelFactor = i >= HISTORY_MONTHS - 3 ? sku.accelLast * ((i - (HISTORY_MONTHS - 3)) / 6 + 0.5) : 0;
 
-    // Base value
     const baseline = sku.base * trendFactor * seasonFactor * channelMult * regionMult;
-    const value = baseline * (1 + promoBoost + accelFactor + noise(i + sku.base) * 0.05);
+    const trueValue = baseline * (1 + promoBoost + accelFactor + noise(i + sku.base) * 0.05);
 
     const point: MonthPoint = {
       key: `${realYear}-${String(realMonth + 1).padStart(2, '0')}`,
@@ -240,51 +269,53 @@ export const buildSeries = (
       season: null,
       promo: null,
       sparsityFix: null,
-      accel: null,
+      hasPromo: sku.promoMonths.includes(realMonth),
     };
 
     if (isHistory) {
-      // Zero-out ruptured months
       const isRuptured = sku.rupturedMonths.includes(i);
-      point.history = Math.round(isRuptured ? value * 0.15 : value);
+      const isAccurate = sku.accuratePastMonths.includes(i);
+      point.history = Math.round(isRuptured ? trueValue * 0.15 : trueValue);
+
+      // Client forecast — big error, tighter on accurate months
+      const nz = noise(i + sku.base + 91);
+      const clientErrMag = isAccurate ? 0.035 : 0.28 + Math.abs(nz) * 0.18;
+      const clientSign = nz > 0 ? 1 : -1;
+      point.currentFcst = Math.round(trueValue * (1 + clientSign * clientErrMag));
+
+      // i6 forecast — small error everywhere except accurate months (just below client)
+      const nz2 = noise(i + sku.base + 173);
+      const i6ErrMag = isAccurate ? clientErrMag + 0.022 : 0.03 + Math.abs(nz2) * 0.035;
+      const i6Sign = nz2 > 0 ? 1 : -1;
+      point.i6Fcst = Math.round(trueValue * (1 + i6Sign * i6ErrMag));
     } else {
-      const fIdx = i - HISTORY_MONTHS; // 0..11
+      const fIdx = i - HISTORY_MONTHS;
       if (fIdx >= horizon) continue;
 
-      // Enterprise forecast — biased and flat-ish
       let currentBiasFactor = 1;
       if (sku.currentBias === 'under') currentBiasFactor = 0.83;
       else if (sku.currentBias === 'over') currentBiasFactor = 1.13;
-      else currentBiasFactor = 1;
-      // Enterprise also dampens seasonality
       const dampedSeason = 1 + sku.seasonAmp * 0.55 * Math.cos(seasonPhase);
       const currentBaseline =
         sku.base * trendFactor * dampedSeason * channelMult * regionMult * currentBiasFactor;
       point.currentFcst = Math.round(currentBaseline * (1 + promoBoost * 0.4));
 
-      // i6 forecast — full model
-      const i6Value = value; // already includes trend+season+promo+accel
+      const i6Value = trueValue;
       point.i6Fcst = Math.round(i6Value);
 
-      // Confidence interval — narrower for i6
-      const ciBandPct = 0.06 + 0.04 * (fIdx / horizon); // widens over horizon
+      const ciBandPct = 0.06 + 0.04 * (fIdx / horizon);
       point.ciLow = Math.round(i6Value * (1 - ciBandPct));
       point.ciHigh = Math.round(i6Value * (1 + ciBandPct));
 
-      // Decomposition — absolute components summing (approx) to i6 forecast
       const trendComp = sku.base * trendFactor * channelMult * regionMult;
       const seasonComp = trendComp * (seasonFactor - 1);
       const promoComp = trendComp * promoBoost;
-      // sparsity correction = credit added when the forecast horizon month
-      // "inherits" from ruptured history — proxy as a small positive lift
       const sparsityComp = sku.rupturedMonths.length > 0 ? trendComp * 0.04 : 0;
-      const accelComp = trendComp * accelFactor;
 
       point.trend = Math.round(trendComp);
       point.season = Math.round(seasonComp);
       point.promo = Math.round(promoComp);
       point.sparsityFix = Math.round(sparsityComp);
-      point.accel = Math.round(accelComp);
     }
 
     points.push(point);
@@ -362,6 +393,12 @@ export const demoLabels = {
       meanError: 'Erro médio',
       stockout: 'Ruptura',
       excess: 'Excesso',
+      volume: 'Volume médio/mês',
+    },
+    compare: {
+      before: 'Atual',
+      after: 'i6',
+      delta: 'Δ',
     },
     cta: 'Executar forecast preditivo',
     running: 'Rodando modelo...',
@@ -382,8 +419,8 @@ export const demoLabels = {
       trend: 'Tendência',
       season: 'Sazonalidade',
       promo: 'Efeito promocional',
+      promoNote: 'Nota promocional',
       sparsityFix: 'Correção de esparsidade',
-      accel: 'Aceleração',
       totalMonth: 'Total do mês',
     },
     rationaleLabel: 'POR QUE PROJETAMOS ESTA DEMANDA',
@@ -413,6 +450,12 @@ export const demoLabels = {
       meanError: 'Mean error',
       stockout: 'Stockout',
       excess: 'Excess',
+      volume: 'Avg volume/month',
+    },
+    compare: {
+      before: 'Current',
+      after: 'i6',
+      delta: 'Δ',
     },
     cta: 'Run predictive forecast',
     running: 'Running model...',
@@ -433,8 +476,8 @@ export const demoLabels = {
       trend: 'Trend',
       season: 'Seasonality',
       promo: 'Promo effect',
+      promoNote: 'Promo note',
       sparsityFix: 'Sparsity correction',
-      accel: 'Acceleration',
       totalMonth: 'Month total',
     },
     rationaleLabel: 'WHY WE PROJECTED THIS DEMAND',
