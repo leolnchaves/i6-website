@@ -81,8 +81,8 @@ export const skus: SkuDef[] = [
     cagr: 0.08,
     seasonAmp: 0.42,
     seasonPeak: 11,
-    // Beverage: hot-season peaks Dec/Jan/Feb, valleys Jun/Jul
-    seasonProfile: [0.70, 0.50, 0.10, -0.20, -0.55, -0.85, -0.80, -0.45, -0.15, 0.20, 0.60, 1.00],
+    // Beverage: angular zig-zag — summer peaks Dec/Jan, deep valley Jun/Jul, oscillating shoulders
+    seasonProfile: [0.85, 0.35, -0.10, 0.15, -0.55, -0.90, -0.60, -0.20, 0.20, -0.05, 0.55, 1.00],
     promoMonths: [10, 11],
     rupturedMonths: [4, 16],
     accelLast: 0.14,
@@ -116,8 +116,8 @@ export const skus: SkuDef[] = [
     cagr: 0.03,
     seasonAmp: 0.08,
     seasonPeak: 0,
-    // Hygiene: mostly flat, tiny year-end lift
-    seasonProfile: [-0.10, -0.25, -0.20, -0.10, 0.00, 0.10, 0.15, 0.05, -0.05, 0.15, 0.45, 0.30],
+    // Hygiene: near-flat with angular micro-oscillation, modest Nov lift, mild Feb dip
+    seasonProfile: [-0.05, -0.20, 0.05, -0.10, 0.10, -0.05, 0.15, 0.00, -0.10, 0.20, 0.40, 0.10],
     promoMonths: [3, 9],
     rupturedMonths: [21],
     accelLast: 0.04,
@@ -151,8 +151,8 @@ export const skus: SkuDef[] = [
     cagr: 0.18,
     seasonAmp: 0.55,
     seasonPeak: 10,
-    // Electronics: strong Nov/Dec peak (BF + Xmas), valley Feb/Mar
-    seasonProfile: [-0.30, -0.75, -0.65, -0.40, -0.20, 0.00, 0.05, 0.15, 0.30, 0.45, 1.00, 0.85],
+    // Electronics: Black Friday peak (Nov) + Xmas (Dec), deep Feb/Mar valley, zig-zag shoulders
+    seasonProfile: [-0.20, -0.80, -0.55, -0.30, 0.10, -0.25, 0.15, -0.10, 0.35, 0.20, 1.00, 0.75],
     promoMonths: [10, 11, 5],
     rupturedMonths: [10, 22],
     accelLast: 0.28,
@@ -186,8 +186,8 @@ export const skus: SkuDef[] = [
     cagr: 0.11,
     seasonAmp: 0.36,
     seasonPeak: 5,
-    // Fashion: double peak (May winter drop + Nov summer drop), valleys Aug/Sep
-    seasonProfile: [-0.30, -0.10, 0.20, 0.45, 0.95, 0.35, -0.20, -0.65, -0.55, 0.10, 0.85, 0.40],
+    // Fashion: angular double peak (May winter drop + Nov summer drop), sharp Aug/Sep valleys
+    seasonProfile: [-0.25, 0.15, -0.10, 0.45, 1.00, 0.10, -0.35, -0.70, -0.50, 0.20, 0.90, 0.25],
     promoMonths: [0, 6],
     rupturedMonths: [8, 20],
     accelLast: 0.18,
@@ -248,20 +248,23 @@ export const buildSeries = (
   const totalMonths = HISTORY_MONTHS + FORECAST_MAX;
   const points: MonthPoint[] = [];
 
+  // History ends at current month - 1. Current month (offset 0) is the first forecast point.
+  const HIST_LAST_INDEX = HISTORY_MONTHS - 1; // exclusive end for history; first forecast index
+
   for (let i = 0; i < totalMonths; i++) {
-    const monthOffset = i - (HISTORY_MONTHS - 1);
+    const monthOffset = i - HIST_LAST_INDEX;
     const realMonth = ((nowMonth + monthOffset) % 12 + 12) % 12;
     const realYear = nowYear + Math.floor((nowMonth + monthOffset) / 12);
-    const isHistory = i < HISTORY_MONTHS;
+    const isHistory = i < HIST_LAST_INDEX;
 
-    const yearsFromStart = (i - HISTORY_MONTHS) / 12;
+    const yearsFromStart = monthOffset / 12;
     const trendFactor = Math.pow(1 + sku.cagr, yearsFromStart + HISTORY_MONTHS / 12);
 
     const seasonWeight = sku.seasonProfile[realMonth] ?? 0;
     const seasonFactor = 1 + sku.seasonAmp * seasonWeight;
 
     const promoBoost = sku.promoMonths.includes(realMonth) ? 0.18 : 0;
-    const accelFactor = i >= HISTORY_MONTHS - 3 ? sku.accelLast * ((i - (HISTORY_MONTHS - 3)) / 6 + 0.5) : 0;
+    const accelFactor = i >= HIST_LAST_INDEX - 2 ? sku.accelLast * ((i - (HIST_LAST_INDEX - 2)) / 6 + 0.5) : 0;
 
     const baseline = sku.base * trendFactor * seasonFactor * channelMult * regionMult;
     const trueValue = baseline * (1 + promoBoost + accelFactor + noise(i + sku.base) * 0.05);
@@ -299,7 +302,7 @@ export const buildSeries = (
       const i6Sign = nz2 > 0 ? 1 : -1;
       point.i6Fcst = Math.round(trueValue * (1 + i6Sign * i6ErrMag));
     } else {
-      const fIdx = i - HISTORY_MONTHS;
+      const fIdx = i - HIST_LAST_INDEX; // 0 = current month, 1 = next month, ...
       if (fIdx >= horizon) continue;
 
       let currentBiasFactor = 1;

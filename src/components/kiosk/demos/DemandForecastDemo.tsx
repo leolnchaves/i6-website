@@ -647,10 +647,9 @@ const CompositionChart = ({
     return (x - Math.floor(x)) * 2 - 1;
   };
 
-  // Trend: baseline (median) + small organic delta relative to baseline
+  // Trend: strictly monotonic (no wiggle) so only seasonality oscillates on the chart
   const trendRaw = points.map((p) => p.trend ?? 0);
-  const trendMedian = trendRaw.length ? trendRaw[Math.floor(trendRaw.length / 2)] : 0;
-  const trendDisplay = trendRaw.map((v, i) => v * (1 + wiggle(i * 1.7) * 0.025));
+  const trendDisplay = trendRaw;
 
   // Season: signed (can be negative)
   const seasonSigned = points.map((p) => p.season ?? 0);
