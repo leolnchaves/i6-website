@@ -39,6 +39,21 @@ const DemandForecastDemo = ({ lang }: Props) => {
     [sku, channel, region, horizon],
   );
 
+  // Fixed y-scale based on Total×Total so channel/region filters visibly shrink the chart
+  const scaleReference = useMemo(
+    () => buildSeries(sku, 'total', 'total', horizon),
+    [sku, horizon],
+  );
+  const fixedMaxY = useMemo(() => {
+    const all: number[] = [];
+    scaleReference.forEach((p) => {
+      if (p.history !== null) all.push(p.history);
+      if (p.currentFcst !== null) all.push(p.currentFcst);
+      if (p.i6Fcst !== null) all.push(p.i6Fcst);
+    });
+    return Math.max(...all) * 1.08;
+  }, [scaleReference]);
+
   // Volume avg to visibly react to channel/region filters
   const avgVolume = useMemo(() => {
     const hist = series.map((p) => p.history).filter((v): v is number => v !== null);
