@@ -6,6 +6,7 @@ import {
   scenarios,
   uiLabels,
   currency,
+  buildArgument,
   type Sku,
   type UserMode,
   type Vertical,
@@ -258,7 +259,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
   const lookTotal = recSkus.reduce((acc, s) => acc + s.price, 0) + (selected?.price ?? 0);
   const argumentText = scenario && selected
-    ? scenario.argument[lang].replace('{name}', selected.name[lang])
+    ? buildArgument(`${userMode}-${vertical}` as `${UserMode}-${Vertical}`, selected, recSkus, lang)
     : '';
 
   const modeIcon =
