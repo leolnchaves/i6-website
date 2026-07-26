@@ -1,32 +1,40 @@
-## Contexto
-
-Varri todos os demos e telas do /kiosk atrás de combos (`<select>` / dropdowns). Resultado:
-
-- **MixAssortmentOrderDemo** — 4 combos (Loja/PDV + Região no setup e no cabeçalho do carrinho). São os únicos combos reais do /kiosk.
-- **CommercialTargetsDemo** — sem combos. Tem um switcher de dimensões (Região/Vendedor/Cliente/SKU) mas já é implementado como chips grandes touch-friendly.
-- **PredictivePersonalizationDemo** — sem combos. Abas de cenário são chips.
-- **DemandForecastDemo / PropensityCampaignDemo** — sem combos.
-- **KioskMetrics** — dashboard interno, fora do escopo touch.
-
-O elemento selecionado nesta mensagem (span "Investimento atual" em CommercialTargets) é um cabeçalho de tabela, não um combo — não requer alteração.
-
-Também já criei `src/components/kiosk/ui/TouchSelect.tsx` na iteração anterior. Falta apenas plugar no Mix.
-
 ## O que muda
 
-Substituir os helpers internos `SelectField` e `CompactSelect` de `src/components/kiosk/demos/MixAssortmentOrderDemo.tsx` pelo `TouchSelect` já existente:
+Recalcular o CAC de cada dimensão como **investimento sugerido ÷ volume incremental** — o custo por unidade adicional capturada pelo modelo.
 
-### `TouchSelect` (já criado)
-- Gatilho: botão com min-h ≥ 6.5vmin, label em uppercase acima, valor grande + chevron coral, borda coral quando aberto
-- Popover: ancorado abaixo do gatilho, largura mínima 28vmin, opções com altura ≥ 6vmin, texto ~1.6vmin, marcador coral e check na selecionada
-- Fecha por: seleção, clique/toque fora, tecla Esc
+### Por região (allocation)
+Em `src/data/kiosk/demos/commercialTargets.ts` (bloco `regionAgg` / `allocation`):
 
-### Aplicação no Mix
-- Setup (linhas 99 e 105) — trocar `SelectField` por `TouchSelect`
-- Cabeçalho do carrinho no resultado (linhas 142 e 148) — trocar `CompactSelect` por `TouchSelect` (mesma variante grande, como acordado no plano anterior — o usuário pediu explicitamente mais espaço)
-- Remover as definições internas `SelectField` e `CompactSelect` (código morto)
+- Além do que já existe, agregar por região o `currentScaled` e o `suggested` do dataset `enriched` para obter `regionCurrent` e `regionSuggested`.
+- `regionIncremental = max(0, regionSuggested − regionCurrent)` (em unidades).
+- Cada linha de `allocation` passa a ter:
+  - `incrementalVolume: regionIncremental`
+  - `cac = suggestedInvestment / regionIncremental` (em milhares por unidade; se `incremental == 0`, cai para `suggestedInvestment / max(1, regionSuggested)` para evitar divisão por zero).
+- Remove-se o `rand(...cac..., 10, 25)` da linha 364.
 
-### Escopo
-- Apenas frontend/presentation em `MixAssortmentOrderDemo.tsx`
-- API preservada: `label`, `value`, `onChange`, `options[]` — datasets/tradução/filtro inalterados
-- Nenhum outro demo do /kiosk é tocado (não há combos neles)
+### KPI global (`projectedCac`)
+Trocar a média aritmética atual por:
+
+```
+projectedCac = suggestedInvestment_total / incrementalVolume_total
+```
+
+(usa as somas globais já calculadas em `totalSuggested`/`suggestedInvestment`.)
+
+### Extensão para as outras dimensões
+Adicionar campos `currentInvestmentSum`, `suggestedInvestment` e `cac` em cada `AggregatedRow` de `dimRows.rep / client / sku`:
+
+- `currentInvestmentSum` = soma de `currentInvestment` das linhas base agrupadas por vendedor/cliente/SKU.
+- `suggestedInvestment` = rateio do orçamento total (`budgetVal`) proporcional ao mesmo score `growth/cac` — para vendedor/cliente/SKU usa-se um growth/cac derivado das linhas base (mesma fórmula da região, aplicada por chave).
+- `cac = suggestedInvestment / max(1, suggested − current)` da própria linha.
+- Reaproveita o helper `rand` só para o `growthPct` por chave, mantendo estabilidade entre execuções.
+
+Assim, ao alternar o switcher (Região/Vendedor/Cliente/SKU), a tabela `Allocation` continua mostrando quanto de investimento cada item precisa para ativar o crescimento projetado, com o CAC coerente.
+
+### Impacto na UI
+Nenhuma mudança estrutural em `CommercialTargetsDemo.tsx`. As colunas `Current`, `Suggested` e `CAC` já existem e passam a exibir os valores derivados coerentes. O card **CAC Projetado** passa a exibir o CAC ponderado global.
+
+### Fora de escopo
+- Não altero copy/labels
+- Não altero o formato de exibição (`fmtCAC`, `fmtBRL`)
+- Não mexo em `RegionAllocation` além dos campos citados
