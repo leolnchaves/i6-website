@@ -98,19 +98,20 @@ const MixAssortmentOrderDemo = () => {
               <>
                 {/* Filters — apenas Loja/PDV e Região */}
                 <div className="grid grid-cols-2 gap-[1vmin]">
-                  <SelectField
+                  <TouchSelect
                     label={L.setup.pdv}
                     value={pdv}
                     onChange={(v) => setPdv(v as PdvId)}
                     options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
                   />
-                  <SelectField
+                  <TouchSelect
                     label={L.setup.region}
                     value={region}
                     onChange={(v) => setRegion(v as RegionId)}
                     options={regionsOptions.map((r) => ({ value: r.id, label: r.label }))}
                   />
                 </div>
+
 
                 {/* Context cards — reagem aos filtros */}
                 <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.4vmin] flex flex-col gap-[1vmin]">
