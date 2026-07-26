@@ -6,6 +6,7 @@ import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo
 import DemandForecastDemo from './demos/DemandForecastDemo';
 import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
 import CommercialTargetsDemo from './demos/CommercialTargetsDemo';
+import MixAssortmentOrderDemo from './demos/MixAssortmentOrderDemo';
 
 interface Props {
   solution: LeanSolution;
