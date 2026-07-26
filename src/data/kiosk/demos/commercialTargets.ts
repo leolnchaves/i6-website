@@ -223,14 +223,22 @@ export interface AggregatedRow {
   raw: Row[];
 }
 
-export interface RegionAllocation {
-  region: string;
-  regionId: Exclude<RegionId, 'all'>;
+export interface AllocationRow {
+  key: string;
+  label: string;
+  sublabel?: string;
   growthPct: number;
   currentInvestment: number;
   suggestedInvestment: number;
+  incrementalVolume: number;
   cac: number;
   action: 'up' | 'down' | 'redistribute';
+}
+
+// Kept for backward compatibility — region allocation is a subtype
+export interface RegionAllocation extends AllocationRow {
+  region: string;
+  regionId: Exclude<RegionId, 'all'>;
 }
 
 export interface CommercialResult {
@@ -243,6 +251,7 @@ export interface CommercialResult {
     suggestedInvestment: number;
     projectedCac: number;
   };
+
   highlights: {
     regions: string[];
     clients: string[];
