@@ -30,6 +30,8 @@ export interface SkuDef {
   cagr: number;
   seasonAmp: number;
   seasonPeak: number;
+  /** 12 monthly weights [Jan..Dec] in [-1..+1] — realistic peaks/valleys on specific months */
+  seasonProfile: number[];
   promoMonths: number[];
   rupturedMonths: number[];
   accelLast: number;
@@ -79,6 +81,8 @@ export const skus: SkuDef[] = [
     cagr: 0.08,
     seasonAmp: 0.42,
     seasonPeak: 11,
+    // Beverage: hot-season peaks Dec/Jan/Feb, valleys Jun/Jul
+    seasonProfile: [0.70, 0.50, 0.10, -0.20, -0.55, -0.85, -0.80, -0.45, -0.15, 0.20, 0.60, 1.00],
     promoMonths: [10, 11],
     rupturedMonths: [4, 16],
     accelLast: 0.14,
@@ -112,6 +116,8 @@ export const skus: SkuDef[] = [
     cagr: 0.03,
     seasonAmp: 0.08,
     seasonPeak: 0,
+    // Hygiene: mostly flat, tiny year-end lift
+    seasonProfile: [-0.10, -0.25, -0.20, -0.10, 0.00, 0.10, 0.15, 0.05, -0.05, 0.15, 0.45, 0.30],
     promoMonths: [3, 9],
     rupturedMonths: [21],
     accelLast: 0.04,
@@ -145,6 +151,8 @@ export const skus: SkuDef[] = [
     cagr: 0.18,
     seasonAmp: 0.55,
     seasonPeak: 10,
+    // Electronics: strong Nov/Dec peak (BF + Xmas), valley Feb/Mar
+    seasonProfile: [-0.30, -0.75, -0.65, -0.40, -0.20, 0.00, 0.05, 0.15, 0.30, 0.45, 1.00, 0.85],
     promoMonths: [10, 11, 5],
     rupturedMonths: [10, 22],
     accelLast: 0.28,
@@ -178,6 +186,8 @@ export const skus: SkuDef[] = [
     cagr: 0.11,
     seasonAmp: 0.36,
     seasonPeak: 5,
+    // Fashion: double peak (May winter drop + Nov summer drop), valleys Aug/Sep
+    seasonProfile: [-0.30, -0.10, 0.20, 0.45, 0.95, 0.35, -0.20, -0.65, -0.55, 0.10, 0.85, 0.40],
     promoMonths: [0, 6],
     rupturedMonths: [8, 20],
     accelLast: 0.18,
@@ -247,8 +257,8 @@ export const buildSeries = (
     const yearsFromStart = (i - HISTORY_MONTHS) / 12;
     const trendFactor = Math.pow(1 + sku.cagr, yearsFromStart + HISTORY_MONTHS / 12);
 
-    const seasonPhase = ((realMonth - sku.seasonPeak) / 12) * 2 * Math.PI;
-    const seasonFactor = 1 + sku.seasonAmp * Math.cos(seasonPhase);
+    const seasonWeight = sku.seasonProfile[realMonth] ?? 0;
+    const seasonFactor = 1 + sku.seasonAmp * seasonWeight;
 
     const promoBoost = sku.promoMonths.includes(realMonth) ? 0.18 : 0;
     const accelFactor = i >= HISTORY_MONTHS - 3 ? sku.accelLast * ((i - (HISTORY_MONTHS - 3)) / 6 + 0.5) : 0;
@@ -295,7 +305,7 @@ export const buildSeries = (
       let currentBiasFactor = 1;
       if (sku.currentBias === 'under') currentBiasFactor = 0.83;
       else if (sku.currentBias === 'over') currentBiasFactor = 1.13;
-      const dampedSeason = 1 + sku.seasonAmp * 0.55 * Math.cos(seasonPhase);
+      const dampedSeason = 1 + sku.seasonAmp * 0.55 * seasonWeight;
       const currentBaseline =
         sku.base * trendFactor * dampedSeason * channelMult * regionMult * currentBiasFactor;
       point.currentFcst = Math.round(currentBaseline * (1 + promoBoost * 0.4));
@@ -310,8 +320,7 @@ export const buildSeries = (
       const trendComp = sku.base * trendFactor * channelMult * regionMult;
       // Amplify seasonal contrast so recurring SKUs still show a visible signed wave
       const effectiveSeasonAmp = Math.max(sku.seasonAmp, 0.14);
-      const effectiveSeasonFactor = 1 + effectiveSeasonAmp * Math.cos(seasonPhase);
-      const seasonComp = trendComp * (effectiveSeasonFactor - 1);
+      const seasonComp = trendComp * effectiveSeasonAmp * seasonWeight;
       const promoComp = trendComp * promoBoost;
       const sparsityComp = sku.rupturedMonths.length > 0 ? trendComp * 0.04 : 0;
 
