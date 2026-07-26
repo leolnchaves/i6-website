@@ -1,55 +1,32 @@
 ## Contexto
 
-Os únicos "combos" (dropdowns) no /kiosk são os do demo **Mix, Sortimento e Pedido Ideal** (`src/components/kiosk/demos/MixAssortmentOrderDemo.tsx`):
+Varri todos os demos e telas do /kiosk atrás de combos (`<select>` / dropdowns). Resultado:
 
-- **Setup (2 combos):** Loja/PDV e Região — hoje via `SelectField`
-- **Resultado (2 combos):** Loja/PDV e Região no cabeçalho do carrinho — hoje via `CompactSelect`
+- **MixAssortmentOrderDemo** — 4 combos (Loja/PDV + Região no setup e no cabeçalho do carrinho). São os únicos combos reais do /kiosk.
+- **CommercialTargetsDemo** — sem combos. Tem um switcher de dimensões (Região/Vendedor/Cliente/SKU) mas já é implementado como chips grandes touch-friendly.
+- **PredictivePersonalizationDemo** — sem combos. Abas de cenário são chips.
+- **DemandForecastDemo / PropensityCampaignDemo** — sem combos.
+- **KioskMetrics** — dashboard interno, fora do escopo touch.
 
-Ambos usam `<select>` nativo. Em telas touch, o `<select>` nativo abre um seletor do sistema operacional (roda/lista pequena), com alvos de toque desconfortáveis e visual fora do design do kiosk. Nenhum outro demo do /kiosk usa combos (os switchers de dimensão em Metas Comerciais e as abas de cenário em Personalização já são chips grandes).
+O elemento selecionado nesta mensagem (span "Investimento atual" em CommercialTargets) é um cabeçalho de tabela, não um combo — não requer alteração.
+
+Também já criei `src/components/kiosk/ui/TouchSelect.tsx` na iteração anterior. Falta apenas plugar no Mix.
 
 ## O que muda
 
-Trocar os dois helpers internos (`SelectField` e `CompactSelect`) por um **`TouchSelect`** único — um botão-gatilho com popover controlado por React, dimensionado para dedo.
+Substituir os helpers internos `SelectField` e `CompactSelect` de `src/components/kiosk/demos/MixAssortmentOrderDemo.tsx` pelo `TouchSelect` já existente:
 
-### Especificação do `TouchSelect`
+### `TouchSelect` (já criado)
+- Gatilho: botão com min-h ≥ 6.5vmin, label em uppercase acima, valor grande + chevron coral, borda coral quando aberto
+- Popover: ancorado abaixo do gatilho, largura mínima 28vmin, opções com altura ≥ 6vmin, texto ~1.6vmin, marcador coral e check na selecionada
+- Fecha por: seleção, clique/toque fora, tecla Esc
 
-Gatilho (botão):
-- Altura mínima ≥ 6vmin (setup) / ≥ 5vmin (resultado) — confortável para o dedo
-- Label acima em uppercase (mantém identidade atual)
-- Valor atual em destaque + chevron
-- Borda coral no estado aberto
-
-Popover de opções (abre no clique):
-- Renderizado em portal ancorado ao gatilho, largura ≥ largura do gatilho (mínimo ~28vmin)
-- Cada opção: linha inteira clicável, altura ≥ 6vmin, padding generoso, texto ~1.6vmin
-- Hover/press coral, opção selecionada com marcador coral à esquerda
-- Fecha ao selecionar, ao clicar fora ou no Esc
-- Backdrop translúcido leve para foco visual
-
-### Onde aplicar
-
-- **Setup** (linhas ~99 e ~105 de `MixAssortmentOrderDemo.tsx`): variante "grande" do `TouchSelect`
-- **Cabeçalho do carrinho no resultado** (linhas ~142 e ~148): mesma variante "grande" — o usuário pediu explicitamente mais espaço, então unificamos com o setup em vez de manter uma versão compacta
+### Aplicação no Mix
+- Setup (linhas 99 e 105) — trocar `SelectField` por `TouchSelect`
+- Cabeçalho do carrinho no resultado (linhas 142 e 148) — trocar `CompactSelect` por `TouchSelect` (mesma variante grande, como acordado no plano anterior — o usuário pediu explicitamente mais espaço)
+- Remover as definições internas `SelectField` e `CompactSelect` (código morto)
 
 ### Escopo
-
-- Apenas frontend/presentation em `MixAssortmentOrderDemo.tsx` (mais eventual novo arquivo `TouchSelect.tsx` colocado em `src/components/kiosk/ui/`)
-- API preservada: `label`, `value`, `onChange`, `options[{value,label}]` — nenhuma alteração em datasets, tradução ou lógica de filtro
-- Fora do escopo: `KioskMetrics.tsx` (dashboard interno, não é tela touch)
-
-## Detalhes técnicos
-
-- Novo componente `src/components/kiosk/ui/TouchSelect.tsx` (React puro + Tailwind, sem dependências novas)
-- Fechamento por: seleção, clique fora (`useEffect` + `mousedown` listener no `document`), tecla `Escape`
-- Posicionamento: `absolute` sob o gatilho com `ref` — sem libs de portal; contêiner do demo já tem `overflow` seguro
-- Cores via classes utilitárias já usadas no arquivo (`#F4845F`, `#0B1224`, `white/`)
-- Remoção de `SelectField` e `CompactSelect` após a migração para evitar código morto
-
-```text
-┌─ LOJA/PDV ───────────────┐        ┌─ Todas as lojas ▾ ─┐
-│  Todas as lojas       ▾  │  →     │ ● Todas as lojas    │
-└──────────────────────────┘        │   PDV 001 — Centro  │
-                                    │   PDV 002 — Sul     │
-                                    │   PDV 003 — Norte   │
-                                    └─────────────────────┘
-```
+- Apenas frontend/presentation em `MixAssortmentOrderDemo.tsx`
+- API preservada: `label`, `value`, `onChange`, `options[]` — datasets/tradução/filtro inalterados
+- Nenhum outro demo do /kiosk é tocado (não há combos neles)
