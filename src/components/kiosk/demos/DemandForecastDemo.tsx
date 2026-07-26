@@ -546,27 +546,21 @@ const ChipSelect = ({
 // ============================================================================
 
 const MainChart = ({
-  series, phase, lang,
+  series, phase, lang, fixedMaxY,
 }: {
   series: MonthPoint[];
   phase: Phase;
   lang: KioskLang;
+  fixedMaxY: number;
 }) => {
   const W = 560;
-  const H = 190;
-  const PAD_L = 32;
-  const PAD_R = 8;
-  const PAD_T = 12;
-  const PAD_B = 24;
+  const H = 240;
+  const PAD_L = 34;
+  const PAD_R = 10;
+  const PAD_T = 14;
+  const PAD_B = 28;
 
-  const all: number[] = [];
-  series.forEach((p) => {
-    if (p.history !== null) all.push(p.history);
-    if (p.currentFcst !== null) all.push(p.currentFcst);
-    if (phase === 'result' && p.i6Fcst !== null) all.push(p.i6Fcst);
-    if (phase === 'result' && p.ciHigh !== null) all.push(p.ciHigh);
-  });
-  const maxY = Math.max(...all) * 1.08;
+  const maxY = fixedMaxY;
   const minY = 0;
   const n = series.length;
 
@@ -592,30 +586,14 @@ const MainChart = ({
   const currentPath = buildPath((p) => p.currentFcst);
   const i6Path = phase === 'result' ? buildPath((p) => p.i6Fcst) : '';
 
-  // CI band as polygon (forecast months only)
-  let ciPath = '';
-  if (phase === 'result') {
-    const top: string[] = [];
-    const bot: string[] = [];
-    series.forEach((p, i) => {
-      if (p.ciHigh !== null && p.ciLow !== null) {
-        top.push(`${x(i)},${y(p.ciHigh)}`);
-        bot.push(`${x(i)},${y(p.ciLow)}`);
-      }
-    });
-    if (top.length) {
-      ciPath = `M ${top.join(' L ')} L ${bot.reverse().join(' L ')} Z`;
-    }
-  }
-
-  const ticks = [0, 0.5, 1].map((t) => minY + (maxY - minY) * t);
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => minY + (maxY - minY) * t);
   const xLabels = series
     .map((p, i) => ({ i, label: lang === 'pt' ? p.labelPt : p.labelEn }))
     .filter((_, i) => i % 3 === 0);
 
   return (
-    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 240 }}>
+    <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.4vmin]">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 320 }}>
         {ticks.map((t, i) => (
           <g key={i}>
             <line
@@ -631,7 +609,6 @@ const MainChart = ({
             </text>
           </g>
         ))}
-        {ciPath && <path d={ciPath} fill="rgba(244,132,95,0.16)" stroke="none" />}
         <path d={historyPath} fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.6" />
         <path d={currentPath} fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.4" strokeDasharray="4 3" />
         {i6Path && <path d={i6Path} fill="none" stroke="#F4845F" strokeWidth="2" />}
@@ -652,7 +629,6 @@ const MainChart = ({
         <LegendDot color="rgba(255,255,255,0.85)" label={demoLabels[lang].legend.history} />
         <LegendDot color="rgba(255,255,255,0.5)" dashed label={demoLabels[lang].legend.currentFcst} />
         {phase === 'result' && <LegendDot color="#F4845F" label={demoLabels[lang].legend.i6Fcst} />}
-        {phase === 'result' && <LegendDot color="rgba(244,132,95,0.35)" square label={demoLabels[lang].legend.ci} />}
       </div>
     </div>
   );
