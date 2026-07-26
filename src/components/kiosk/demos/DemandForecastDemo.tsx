@@ -67,8 +67,6 @@ const DemandForecastDemo = ({ lang }: Props) => {
   }, [phase, sku.id]);
 
   useEffect(() => {
-    setPhase('planning');
-    setProgress(0);
     setSelectedMonth(null);
   }, [skuId, channel, region, horizon]);
 
