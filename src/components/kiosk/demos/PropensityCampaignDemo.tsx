@@ -194,30 +194,38 @@ const PropensityCampaignDemo = () => {
                     <span className="text-right">{L.result.tablePropensity}</span>
                     <span className="text-right">{L.result.tableChannel}</span>
                   </div>
-                  {result.tiers.map((t, i) => (
-                    <div
-                      key={i}
-                      className={`grid grid-cols-[1.4fr_0.9fr_0.8fr_1fr] px-[1.4vmin] py-[1.3vmin] items-center text-[1.55vmin] ${
-                        i < 2 ? 'border-t border-white/10' : 'border-t border-white/10'
-                      }`}
-                    >
-                      <span className="flex items-center gap-[0.8vmin]">
-                        <span
-                          className={`w-[1vmin] h-[1vmin] rounded-full ${
-                            i === 0
-                              ? 'bg-[#F4845F]'
-                              : i === 1
-                              ? 'bg-[#F4845F]/60'
-                              : 'bg-white/40'
-                          }`}
-                        />
-                        <span className="text-white/90 font-semibold">{t.tier}</span>
-                      </span>
-                      <span className="text-right text-white font-mono">{fmt(t.clients)}</span>
-                      <span className="text-right text-white/90 font-mono">{t.propensityPct}%</span>
-                      <span className="text-right text-white/80">{channelLabel(t.channel)}</span>
-                    </div>
-                  ))}
+                  {result.tiers.flatMap((t, i) =>
+                    t.channels.map((split, j) => (
+                      <div
+                        key={`${i}-${j}`}
+                        className="grid grid-cols-[1.4fr_0.9fr_0.8fr_1fr] px-[1.4vmin] py-[1.1vmin] items-center text-[1.55vmin] border-t border-white/10"
+                      >
+                        <span className="flex items-center gap-[0.8vmin]">
+                          {j === 0 ? (
+                            <>
+                              <span
+                                className={`w-[1vmin] h-[1vmin] rounded-full ${
+                                  i === 0
+                                    ? 'bg-[#F4845F]'
+                                    : i === 1
+                                    ? 'bg-[#F4845F]/60'
+                                    : 'bg-white/40'
+                                }`}
+                              />
+                              <span className="text-white/90 font-semibold">{t.tier}</span>
+                            </>
+                          ) : (
+                            <span className="pl-[1.8vmin] text-white/50 text-[1.35vmin]">↳ split</span>
+                          )}
+                        </span>
+                        <span className="text-right text-white font-mono">{fmt(split.clients)}</span>
+                        <span className="text-right text-white/90 font-mono">
+                          {j === 0 ? `${t.propensityPct}%` : ''}
+                        </span>
+                        <span className="text-right text-white/80">{channelLabel(split.channel)}</span>
+                      </div>
+                    )),
+                  )}
                 </div>
 
                 {/* Conclusion cards */}
