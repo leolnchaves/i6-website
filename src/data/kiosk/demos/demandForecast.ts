@@ -438,7 +438,7 @@ export const demoLabels = {
     rationaleLabel: 'POR QUE PROJETAMOS ESTA DEMANDA',
     latency: 'Latência',
     latencyHint: 'abaixo da média de mercado (~180 ms)',
-    reset: 'Explorar outra solução',
+    reset: 'Restaurar Forecast Original',
   },
   en: {
     objective: 'OBJECTIVE: SUPPLY EFFICIENCY',
@@ -495,7 +495,7 @@ export const demoLabels = {
     rationaleLabel: 'WHY WE PROJECTED THIS DEMAND',
     latency: 'Latency',
     latencyHint: 'below market average (~180 ms)',
-    reset: 'Explore another solution',
+    reset: 'Restore Original Forecast',
   },
 };
 
