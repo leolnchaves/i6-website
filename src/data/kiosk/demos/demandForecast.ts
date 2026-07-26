@@ -257,8 +257,8 @@ export const buildSeries = (
     const yearsFromStart = (i - HISTORY_MONTHS) / 12;
     const trendFactor = Math.pow(1 + sku.cagr, yearsFromStart + HISTORY_MONTHS / 12);
 
-    const seasonPhase = ((realMonth - sku.seasonPeak) / 12) * 2 * Math.PI;
-    const seasonFactor = 1 + sku.seasonAmp * Math.cos(seasonPhase);
+    const seasonWeight = sku.seasonProfile[realMonth] ?? 0;
+    const seasonFactor = 1 + sku.seasonAmp * seasonWeight;
 
     const promoBoost = sku.promoMonths.includes(realMonth) ? 0.18 : 0;
     const accelFactor = i >= HISTORY_MONTHS - 3 ? sku.accelLast * ((i - (HISTORY_MONTHS - 3)) / 6 + 0.5) : 0;
