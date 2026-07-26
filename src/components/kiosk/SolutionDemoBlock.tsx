@@ -4,6 +4,7 @@ import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
 import DemandForecastDemo from './demos/DemandForecastDemo';
+import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
 
 interface Props {
   solution: LeanSolution;
@@ -25,6 +26,10 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
   // Interactive demo for Demand Forecasting
   if (solution.id === 'demand-forecasting') {
     return <DemandForecastDemo lang={lang} />;
+  }
+
+  if (solution.id === 'predictive-campaign-targeting') {
+    return <PropensityCampaignDemo />;
   }
 
   return (
