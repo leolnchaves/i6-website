@@ -179,7 +179,7 @@ const MixAssortmentOrderDemo = () => {
                         {L.result.recommendedTitle}
                       </span>
                       {selectedSku && (
-                        <span className="text-[1vmin] text-white/50">{L.result.recommendedHint}</span>
+                        <span className="text-[1vmin] font-semibold text-[#F4845F]">{L.result.recommendedHint}</span>
                       )}
                     </div>
                     <MixLine label={L.result.recKeep} value={recommended.keep} />
