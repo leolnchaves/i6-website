@@ -79,11 +79,11 @@ const SkuTile = ({
 const PredictivePersonalizationDemo = ({ lang }: Props) => {
   const t = uiLabels[lang];
 
-  const [userMode, setUserMode] = useState<UserMode | null>(null);
-  const [vertical, setVertical] = useState<Vertical | null>(null);
+  const [userMode, setUserMode] = useState<UserMode>('logged');
+  const [vertical, setVertical] = useState<Vertical>('products');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<Phase>('pick');
+  const [phase, setPhase] = useState<Phase>('list');
 
   const scenarioKey =
     userMode && vertical ? (`${userMode}-${vertical}` as const) : null;
@@ -163,14 +163,6 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     setPhase('list');
   };
 
-  const changeScenario = () => {
-    setUserMode(null);
-    setVertical(null);
-    setSelectedId(null);
-    setProgress(0);
-    setPhase('pick');
-  };
-
   const startScenario = (u: UserMode, v: Vertical) => {
     setUserMode(u);
     setVertical(v);
@@ -179,78 +171,15 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     setPhase('list');
   };
 
-  // ---------- Render: scenario picker ----------
-  if (phase === 'pick' || !scenario || !catalog) {
-    const scenarios2x2: Array<{ u: UserMode; v: Vertical; icon: JSX.Element; title: string; sub: string }> = [
-      {
-        u: 'logged',
-        v: 'products',
-        icon: <User className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userLogged,
-        sub: t.verticalProducts,
-      },
-      {
-        u: 'logged',
-        v: 'fashion',
-        icon: <User className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userLogged,
-        sub: t.verticalFashion,
-      },
-      {
-        u: 'anon',
-        v: 'products',
-        icon: <UserX className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userAnon,
-        sub: t.verticalProducts,
-      },
-      {
-        u: 'anon',
-        v: 'fashion',
-        icon: <UserX className="w-[3vmin] h-[3vmin] text-[#F4845F]" />,
-        title: t.userAnon,
-        sub: t.verticalFashion,
-      },
-    ];
-    return (
-      <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-        <div className="flex items-center gap-[1.5vmin] mb-[2.5vmin]">
-          <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-            <Sparkles className="w-[2.6vmin] h-[2.6vmin] text-[#F4845F]" />
-          </span>
-          <div>
-            <h4 className="text-[2.4vmin] font-bold text-white leading-tight">{t.header}</h4>
-            <p className="text-[1.6vmin] text-white/60">{t.headerSubtitle}</p>
-          </div>
-        </div>
+  const scenarioTabs: Array<{ u: UserMode; v: Vertical; icon: JSX.Element; title: string; sub: string }> = [
+    { u: 'logged', v: 'products', icon: <User className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userLogged, sub: t.verticalProducts },
+    { u: 'logged', v: 'fashion',  icon: <User className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userLogged, sub: t.verticalFashion },
+    { u: 'anon',   v: 'products', icon: <UserX className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userAnon,   sub: t.verticalProducts },
+    { u: 'anon',   v: 'fashion',  icon: <UserX className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />, title: t.userAnon,   sub: t.verticalFashion },
+  ];
 
-        <p className="text-[1.4vmin] tracking-[0.3em] uppercase font-semibold text-[#F4845F] mb-[1vmin]">
-          {t.pickScenarioTitle}
-        </p>
-        <p className="text-[1.7vmin] text-white/70 mb-[2vmin]">{t.pickScenarioHint}</p>
+  if (!scenario || !catalog) return null;
 
-        <div className="grid grid-cols-2 gap-[2vmin]">
-          {scenarios2x2.map(({ u, v, icon, title, sub }) => (
-            <button
-              key={`${u}-${v}`}
-              type="button"
-              onClick={() => startScenario(u, v)}
-              className="text-left rounded-2xl border-2 border-white/15 bg-white/[0.03] p-[2.5vmin] min-h-[14vmin] transition-all hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98]"
-            >
-              <div className="flex items-center gap-[1.5vmin] mb-[1.5vmin]">
-                <span className="w-[5vmin] h-[5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-                  {icon}
-                </span>
-                <div>
-                  <span className="block text-[2vmin] font-bold text-white leading-tight">{title}</span>
-                  <span className="block text-[1.6vmin] text-white/60">{sub}</span>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   // Recommendations: use recIds from selected; for fashion PDP use lookIds
   const recSkus =
@@ -268,48 +197,58 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     ? buildArgument(`${userMode}-${vertical}` as `${UserMode}-${Vertical}`, selected, recSkus, lang)
     : '';
 
-  const modeIcon =
-    userMode === 'logged' ? (
-      <User className="w-[2vmin] h-[2vmin]" />
-    ) : (
-      <UserX className="w-[2vmin] h-[2vmin]" />
-    );
+
+
 
   return (
     <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      {/* Header with scenario chip */}
-      <div className="flex items-center justify-between gap-[2vmin] mb-[2vmin]">
-        <div className="flex items-center gap-[1.5vmin]">
-          <span className="w-[4.5vmin] h-[4.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-            <Sparkles className="w-[2.4vmin] h-[2.4vmin] text-[#F4845F]" />
-          </span>
-          <div>
-            <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{t.header}</h4>
-            <p className="text-[1.4vmin] text-white/60">{t.headerSubtitle}</p>
-          </div>
+      {/* Header */}
+      <div className="flex items-center gap-[1.5vmin] mb-[2vmin]">
+        <span className="w-[4.5vmin] h-[4.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
+          <Sparkles className="w-[2.4vmin] h-[2.4vmin] text-[#F4845F]" />
+        </span>
+        <div>
+          <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{t.header}</h4>
+          <p className="text-[1.4vmin] text-white/60">{t.headerSubtitle}</p>
         </div>
-        <button
-          type="button"
-          onClick={changeScenario}
-          className="inline-flex items-center gap-[0.8vmin] px-[2vmin] py-[1.4vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] transition"
-        >
-          {t.changeScenario}
-        </button>
       </div>
 
-      {/* Scenario chip row */}
+      {/* Scenario tabs — trocar cenário com 1 clique */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-[1vmin] mb-[2vmin]">
+        {scenarioTabs.map(({ u, v, icon, title, sub }) => {
+          const active = userMode === u && vertical === v;
+          return (
+            <button
+              key={`${u}-${v}`}
+              type="button"
+              onClick={() => startScenario(u, v)}
+              className={`text-left rounded-2xl border-2 p-[1.4vmin] transition-all active:scale-[0.98] ${
+                active
+                  ? 'border-[#F4845F] bg-[#F4845F]/[0.12]'
+                  : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+              }`}
+            >
+              <div className="flex items-center gap-[1vmin]">
+                <span className="w-[3.6vmin] h-[3.6vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
+                  {icon}
+                </span>
+                <div className="min-w-0">
+                  <span className="block text-[1.55vmin] font-bold text-white leading-tight truncate">{title}</span>
+                  <span className="block text-[1.3vmin] text-white/60 leading-tight truncate">{sub}</span>
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Objetivo do cenário ativo */}
       <div className="flex flex-wrap items-center gap-[1vmin] mb-[2vmin]">
-        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-white/[0.06] border border-white/15 text-[1.4vmin] text-white/85">
-          {modeIcon}
-          {userMode === 'logged' ? t.userLogged : t.userAnon}
-        </span>
-        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-white/[0.06] border border-white/15 text-[1.4vmin] text-white/85">
-          {vertical === 'products' ? t.verticalProducts : t.verticalFashion}
-        </span>
         <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-[#F4845F]/15 border border-[#F4845F]/40 text-[1.4vmin] font-semibold text-[#F4845F]">
           {t.objectiveLabel}: {scenario.objective[lang]}
         </span>
       </div>
+
 
       <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
         {/* LEFT: e-commerce (list OR pdp) */}
