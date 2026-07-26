@@ -137,18 +137,18 @@ const MixAssortmentOrderDemo = () => {
             {showResult && (
               <>
                 {/* Filtros persistentes */}
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1vmin] flex items-center gap-[1vmin]">
-                  <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50 flex-shrink-0">
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.2vmin] flex flex-col gap-[0.8vmin]">
+                  <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50">
                     {L.result.filtersTitle}
                   </span>
-                  <div className="grid grid-cols-2 gap-[0.8vmin] flex-1">
-                    <CompactSelect
+                  <div className="grid grid-cols-2 gap-[1vmin]">
+                    <TouchSelect
                       label={L.setup.pdv}
                       value={pdv}
                       onChange={(v) => setPdv(v as PdvId)}
                       options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
                     />
-                    <CompactSelect
+                    <TouchSelect
                       label={L.setup.region}
                       value={region}
                       onChange={(v) => setRegion(v as RegionId)}
@@ -156,6 +156,7 @@ const MixAssortmentOrderDemo = () => {
                     />
                   </div>
                 </div>
+
 
                 {/* Comparison */}
                 <div className="grid grid-cols-2 gap-[1vmin]">
