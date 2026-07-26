@@ -1,14 +1,12 @@
 // Static, PT-only dataset & compute for the "Mix, Sortimento e Pedido Ideal" demo.
 
-export type PdvId = 'pdv-01' | 'pdv-02' | 'pdv-03';
+export type PdvId = 'all' | 'pdv-01' | 'pdv-02' | 'pdv-03';
 export type RegionId = 'all' | 'sp-capital' | 'sp-interior' | 'mg' | 'sul';
-export type ClusterId = 'all' | 'urbano-alto' | 'bairro-medio' | 'popular';
-export type CategoryId = 'all' | 'mercearia' | 'bebidas' | 'higiene' | 'perecivel';
-export type CycleId = 'c7' | 'c15' | 'c30';
 
 export type Action = 'manter' | 'incluir' | 'substituir' | 'remover' | 'aumentar' | 'reduzir';
 
 export const pdvs: { id: PdvId; label: string; sublabel: string }[] = [
+  { id: 'all', label: 'Todos', sublabel: 'Rede consolidada' },
   { id: 'pdv-01', label: 'PDV #01427', sublabel: 'Mercado Boa Vista — Centro' },
   { id: 'pdv-02', label: 'PDV #02189', sublabel: 'Empório do Bairro — Zona Sul' },
   { id: 'pdv-03', label: 'PDV #03502', sublabel: 'Rede Popular — Interior' },
@@ -22,32 +20,16 @@ export const regionsOptions: { id: RegionId; label: string }[] = [
   { id: 'sul', label: 'Sul' },
 ];
 
-export const clusters: { id: ClusterId; label: string }[] = [
-  { id: 'all', label: 'Todos' },
-  { id: 'urbano-alto', label: 'Urbano alto poder' },
-  { id: 'bairro-medio', label: 'Bairro classe média' },
-  { id: 'popular', label: 'Popular alto giro' },
-];
-
-export const categories: { id: CategoryId; label: string }[] = [
-  { id: 'all', label: 'Todas' },
-  { id: 'mercearia', label: 'Mercearia' },
-  { id: 'bebidas', label: 'Bebidas' },
-  { id: 'higiene', label: 'Higiene' },
-  { id: 'perecivel', label: 'Perecíveis' },
-];
-
-export const cycles: { id: CycleId; label: string; days: number }[] = [
-  { id: 'c7', label: '7 dias', days: 7 },
-  { id: 'c15', label: '15 dias', days: 15 },
-  { id: 'c30', label: '30 dias', days: 30 },
-];
-
 export const pipeline: { label: string; micro: string; durationMs: number }[] = [
   {
     label: 'Lendo vendas, estoque e mix atual do PDV',
     micro: 'Histórico de pedidos, sell-out, frequência e cobertura de estoque.',
     durationMs: 900,
+  },
+  {
+    label: 'Aprendendo a performance do PDV',
+    micro: 'Giro, margem e ruptura sob comportamento contextual — clima, calendário, cluster e vizinhança.',
+    durationMs: 850,
   },
   {
     label: 'Comparando o PDV com operações semelhantes',
@@ -71,27 +53,7 @@ export const pipeline: { label: string; micro: string; durationMs: number }[] = 
   },
 ];
 
-// --- Current mix snapshot (for the setup context cards) ---
-export const currentMix = {
-  skus: 28,
-  atRisk: 4, // ruptura
-  lowTurn: 7,
-  notPositivated: 6,
-  stockUnits: 3840,
-  recentSales30d: 12760,
-  lastOrder: { units: 2180, value: 41230 },
-};
-
-// --- Recommended mix summary ---
-export const recommendedMix = {
-  keep: 21,
-  include: 5,
-  substitute: 3,
-  remove: 4,
-  increase: 6,
-};
-
-// --- Cart / order lines ---
+// --- Cart / order lines (base — filtered by pdv/region via helpers below) ---
 export type CartRow = {
   sku: string;
   name: string;
@@ -100,12 +62,13 @@ export type CartRow = {
   volume: number;
   delta: number; // +/- vs baseline; for incluir = full volume
   reason: string;
-  factors: string[];
   turn: string;
   coverage: string;
   cluster: string;
   potential: string;
   unitPrice: number;
+  /** PDVs where this SKU decision applies. */
+  pdvScope: Exclude<PdvId, 'all'>[];
 };
 
 export const cart: CartRow[] = [
@@ -117,18 +80,13 @@ export const cart: CartRow[] = [
     volume: 12,
     delta: 12,
     reason:
-      'SKU ausente no mix atual, mas com alta demanda prevista no cluster. PDVs semelhantes têm boa recorrência de venda deste item, e sua inclusão complementa produtos já comprados por este cliente sem elevar significativamente o risco de estoque parado.',
-    factors: [
-      'Presente em 78% dos PDVs do mesmo cluster com giro médio 2.1x/semana',
-      'Demanda prevista de 14 un./ciclo com margem 32% acima da média da categoria',
-      'Complementa cesta de café solúvel e filtro de papel já positivados no PDV',
-      'Risco de excesso baixo: cobertura projetada em 11 dias contra 15 dias de ciclo',
-    ],
+      'SKU ausente no mix atual, mas presente em 78% dos PDVs do mesmo cluster com giro médio de 2.1x/semana. Demanda prevista de 14 un./ciclo, com margem 32% acima da média da categoria e cobertura projetada em 11 dias contra 15 do ciclo — inclusão complementa a cesta de café solúvel e filtro já positivados sem risco de excesso. Potencial estimado: R$ 2.184/ciclo.',
     turn: '2.1x/sem',
     coverage: '11 dias',
     cluster: '78% dos PDVs',
     potential: 'R$ 2.184/ciclo',
     unitPrice: 18.2,
+    pdvScope: ['pdv-01', 'pdv-02'],
   },
   {
     sku: 'SKU-3120',
@@ -138,18 +96,13 @@ export const cart: CartRow[] = [
     volume: 48,
     delta: 8,
     reason:
-      'Cobertura atual está abaixo do ideal frente à demanda projetada para o próximo ciclo. A sazonalidade favorável e o desempenho de PDVs semelhantes (que vendem em média 22% mais deste SKU no período) indicam espaço para elevar o volume, e a embalagem mínima permite a subida sem quebra logística.',
-    factors: [
-      'Sell-out cresceu 18% nas últimas 4 semanas — tendência confirmada',
-      'PDVs pares vendem 22% mais volume deste SKU no mesmo período',
-      'Cobertura atual em 9 dias contra 15 dias de ciclo — risco de ruptura',
-      'Embalagem mínima de 8 un. — subida cabe sem fracionar caixa',
-    ],
+      'Sell-out cresceu 18% nas últimas 4 semanas e PDVs pares vendem 22% mais volume deste SKU no período — tendência confirmada. Cobertura atual em 9 dias contra ciclo de 15 indica risco de ruptura. Giro de 3.4x/sem e embalagem mínima de 8 un. permitem a subida sem fracionar caixa. Ganho incremental estimado: R$ 468.',
     turn: '3.4x/sem',
     coverage: '9 dias',
     cluster: '92% dos PDVs',
     potential: 'R$ 468 incremental',
     unitPrice: 3.9,
+    pdvScope: ['pdv-01', 'pdv-02', 'pdv-03'],
   },
   {
     sku: 'SKU-5548',
@@ -159,18 +112,13 @@ export const cart: CartRow[] = [
     volume: 6,
     delta: 6,
     reason:
-      'O produto atual apresenta baixo giro e concorre diretamente com outro SKU de melhor desempenho no mesmo shelf. A substituição preserva a função da categoria, libera capital de giro, reduz estoque redundante e aumenta a probabilidade de venda — o SKU substituto tem margem líquida superior e sell-out mais estável, reduzindo também o risco de ruptura futura.',
-    factors: [
-      'SKU substituído com giro 0.6x/sem — abaixo do piso saudável (1.2x)',
-      'Substituto tem margem líquida 4.8 p.p. superior e sell-out estável',
-      'Ambos ocupam mesma função de shelf — troca não abre buraco de sortimento',
-      'Capital liberado: R$ 620 realocável para SKUs de maior retorno',
-    ],
+      'SKU atual com giro de 0.6x/sem — abaixo do piso saudável de 1.2x — e concorrendo diretamente com outro item da mesma função de shelf. Substituto tem margem líquida 4.8 p.p. superior, sell-out estável e libera R$ 620 de capital de giro realocável, sem abrir buraco de sortimento. Margem líquida projetada: R$ 312.',
     turn: '1.9x/sem',
     coverage: '13 dias',
     cluster: '65% dos PDVs',
     potential: 'R$ 312 margem líquida',
     unitPrice: 12.4,
+    pdvScope: ['pdv-01', 'pdv-03'],
   },
   {
     sku: 'SKU-9902',
@@ -180,18 +128,13 @@ export const cart: CartRow[] = [
     volume: 14,
     delta: -10,
     reason:
-      'Cobertura acima do ideal e giro em queda nas últimas semanas indicam excesso. Há risco de aproximação da data de vencimento antes do próximo giro completo. O capital preso pode ser realocado para SKUs de maior retorno sem comprometer a presença do item no mix.',
-    factors: [
-      'Cobertura em 28 dias contra 15 dias de ciclo — excesso confirmado',
-      'Giro caiu 24% nas últimas 3 semanas — tendência sustentada',
-      'Vencimento médio da mercadoria em estoque: 42 dias',
-      'Capital preso: R$ 340 realocável para SKUs de maior potencial',
-    ],
+      'Cobertura em 28 dias contra 15 do ciclo indica excesso confirmado, com giro em queda de 24% nas últimas 3 semanas. Vencimento médio do estoque em 42 dias eleva risco de perda antes do próximo giro completo. Redução libera R$ 340 de capital para SKUs de maior retorno, sem comprometer presença no mix.',
     turn: '0.9x/sem',
     coverage: '28 dias',
     cluster: '54% dos PDVs',
     potential: 'R$ 340 liberados',
     unitPrice: 2.8,
+    pdvScope: ['pdv-02', 'pdv-03'],
   },
   {
     sku: 'SKU-6631',
@@ -201,18 +144,13 @@ export const cart: CartRow[] = [
     volume: 36,
     delta: 0,
     reason:
-      'Desempenho dentro da faixa saudável do cluster, sem sinal de ruptura nem excesso. Contribuição estável à cesta e cobertura alinhada ao ciclo — não há oportunidade de ganho relevante ao mexer neste SKU agora.',
-    factors: [
-      'Giro 2.4x/sem — dentro da faixa saudável do cluster',
-      'Cobertura em 14 dias — alinhada ao ciclo de 15 dias',
-      'Sell-out estável nas últimas 8 semanas',
-      'Sem sinal de canibalização com outros SKUs de bebidas',
-    ],
+      'Giro de 2.4x/sem dentro da faixa saudável do cluster, cobertura em 14 dias alinhada ao ciclo de 15 e sell-out estável nas últimas 8 semanas. Sem sinal de canibalização com outros SKUs de bebidas — não há oportunidade de ganho relevante ao mexer neste item agora.',
     turn: '2.4x/sem',
     coverage: '14 dias',
     cluster: '88% dos PDVs',
     potential: 'Estável',
     unitPrice: 4.2,
+    pdvScope: ['pdv-01', 'pdv-02', 'pdv-03'],
   },
   {
     sku: 'SKU-4408',
@@ -222,18 +160,13 @@ export const cart: CartRow[] = [
     volume: 8,
     delta: 8,
     reason:
-      'SKU não positivado, com forte aderência ao perfil do cluster e complementaridade direta com leite e café já vendidos neste PDV. A demanda projetada para o ciclo é suficiente para justificar a inclusão sem gerar excesso.',
-    factors: [
-      'Presente em 71% dos PDVs pares com giro médio 1.8x/sem',
-      'Alta complementaridade com leite integral e café — cesta compartilhada',
-      'Demanda prevista de 9 un./ciclo — cobertura projetada de 12 dias',
-      'Sem risco de canibalização — categoria sem substituto direto no mix',
-    ],
+      'SKU não positivado, presente em 71% dos PDVs pares com giro médio de 1.8x/sem. Alta complementaridade com leite integral e café — cesta compartilhada — e demanda prevista de 9 un./ciclo com cobertura projetada de 12 dias. Sem risco de canibalização, categoria sem substituto direto no mix. Potencial: R$ 1.256/ciclo.',
     turn: '1.8x/sem',
     coverage: '12 dias',
     cluster: '71% dos PDVs',
     potential: 'R$ 1.256/ciclo',
     unitPrice: 15.7,
+    pdvScope: ['pdv-01', 'pdv-02'],
   },
   {
     sku: 'SKU-1177',
@@ -243,18 +176,13 @@ export const cart: CartRow[] = [
     volume: 30,
     delta: 6,
     reason:
-      'Sell-out em aceleração e cobertura abaixo do ideal para o ciclo. PDVs pares registram volume superior, e o SKU tem alto potencial de recompra semanal. Subida controlada respeita a vida útil curta do perecível.',
-    factors: [
-      'Sell-out cresceu 14% nas últimas 4 semanas',
-      'Cobertura em 8 dias — abaixo do ciclo de 15 dias',
-      'Vida útil de 21 dias — subida controlada evita perda',
-      'Recompra semanal em 62% dos consumidores do cluster',
-    ],
+      'Sell-out em aceleração de 14% nas últimas 4 semanas e cobertura em 8 dias — abaixo do ciclo de 15. Giro de 3.1x/sem, recompra semanal em 62% dos consumidores do cluster e vida útil de 21 dias permitem subida controlada sem risco de perda. Incremento estimado: R$ 198.',
     turn: '3.1x/sem',
     coverage: '8 dias',
     cluster: '84% dos PDVs',
     potential: 'R$ 198 incremental',
     unitPrice: 3.3,
+    pdvScope: ['pdv-01', 'pdv-02'],
   },
   {
     sku: 'SKU-2245',
@@ -264,18 +192,13 @@ export const cart: CartRow[] = [
     volume: 12,
     delta: 12,
     reason:
-      'O SKU atual concorre com outro item da mesma função com desempenho estruturalmente melhor. A substituição preserva a categoria, reduz redundância e melhora a rentabilidade do shelf sem risco de abrir buraco de sortimento.',
-    factors: [
-      'SKU substituído com giro 0.7x/sem — abaixo do piso saudável',
-      'Substituto com margem 3.2 p.p. superior e sell-out estável',
-      'Ambos ocupam mesma função — troca é neutra em cobertura',
-      'PDVs pares que fizeram a troca elevaram receita da categoria em 6%',
-    ],
+      'SKU substituído com giro de 0.7x/sem — abaixo do piso saudável. Substituto tem margem 3.2 p.p. superior, sell-out estável e ocupa a mesma função de shelf — troca é neutra em cobertura. PDVs pares que fizeram a troca elevaram receita da categoria em 6%. Margem projetada: R$ 268.',
     turn: '2.2x/sem',
     coverage: '14 dias',
     cluster: '69% dos PDVs',
     potential: 'R$ 268 margem',
     unitPrice: 6.9,
+    pdvScope: ['pdv-02', 'pdv-03'],
   },
   {
     sku: 'SKU-7714',
@@ -285,18 +208,13 @@ export const cart: CartRow[] = [
     volume: 24,
     delta: 0,
     reason:
-      'Item de tíquete alto com giro consistente e cobertura alinhada ao ciclo. Presença estável na cesta média do PDV — sem sinal que justifique mexer no volume agora.',
-    factors: [
-      'Giro 1.6x/sem — dentro da faixa saudável para item de alto tíquete',
-      'Cobertura em 15 dias — alinhada ao ciclo',
-      'Ticket médio elevado — contribuição estável ao pedido',
-      'Sem oscilação relevante de sell-out nas últimas 6 semanas',
-    ],
+      'Giro de 1.6x/sem dentro da faixa saudável para item de alto tíquete, cobertura em 15 dias alinhada ao ciclo e sell-out sem oscilação relevante nas últimas 6 semanas. Contribuição estável à cesta do PDV — sem sinal que justifique mexer no volume agora.',
     turn: '1.6x/sem',
     coverage: '15 dias',
     cluster: '81% dos PDVs',
     potential: 'Estável',
     unitPrice: 22.5,
+    pdvScope: ['pdv-01', 'pdv-02', 'pdv-03'],
   },
   {
     sku: 'SKU-5560',
@@ -306,32 +224,110 @@ export const cart: CartRow[] = [
     volume: 0,
     delta: -8,
     reason:
-      'Giro estruturalmente baixo, com sell-out em declínio há 3 ciclos consecutivos e sem sinal de recuperação. Há SKU semelhante no mix com desempenho superior — a remoção libera espaço de shelf e capital sem abrir buraco de categoria.',
-    factors: [
-      'Giro 0.4x/sem — abaixo do piso mínimo em 3 ciclos consecutivos',
-      'Sell-out em queda sustentada de 8% ao ciclo',
-      'SKU par no mix cobre a mesma função com giro 3x maior',
-      'Capital liberado: R$ 220 realocável imediatamente',
-    ],
+      'Giro estruturalmente baixo de 0.4x/sem em 3 ciclos consecutivos, com sell-out em queda sustentada de 8% ao ciclo. SKU par no mix cobre a mesma função com giro 3x maior — remoção libera R$ 220 de capital realocável imediatamente sem abrir buraco de categoria.',
     turn: '0.4x/sem',
     coverage: '32 dias',
     cluster: '38% dos PDVs',
     potential: 'R$ 220 liberados',
     unitPrice: 3.5,
+    pdvScope: ['pdv-01', 'pdv-03'],
   },
 ];
 
-// --- KPIs ---
-export const kpis = {
-  incrementalOrder: 8420, // R$
-  potentialTicket: 41230 + 8420,
-  newPositivated: 5,
-  ruptureReduction: 62, // %
+// --- Deterministic contextual helpers ---
+// Multipliers per (pdv, region) so that context tiles, cart filter and KPIs
+// react to filter changes without a backend.
+const pdvFactor: Record<PdvId, number> = {
+  all: 1.0,
+  'pdv-01': 0.92,
+  'pdv-02': 1.08,
+  'pdv-03': 0.78,
+};
+const regionFactor: Record<RegionId, number> = {
+  all: 1.0,
+  'sp-capital': 1.12,
+  'sp-interior': 0.94,
+  mg: 0.88,
+  sul: 1.02,
 };
 
-// --- General insight (when no SKU selected) ---
-export const generalInsight =
-  'O modelo consolidou 21 SKUs de manutenção, 5 inclusões, 3 substituições e 4 remoções priorizando os SKUs com maior potencial líquido no cluster. O pedido incremental sugerido de R$ 8.420 respeita limite financeiro, capacidade de estoque e embalagens mínimas — e reduz o risco de ruptura em 62% sobre a base atual.';
+const combined = (pdv: PdvId, region: RegionId) => pdvFactor[pdv] * regionFactor[region];
+
+// --- Current mix snapshot — reactive to filters ---
+export type MixContext = {
+  skus: number;
+  atRisk: number;
+  lowTurn: number;
+  notPositivated: number;
+  stockUnits: number;
+  recentSales30d: number;
+  lastOrder: { units: number; value: number };
+};
+
+export const contextFor = (pdv: PdvId, region: RegionId): MixContext => {
+  const f = combined(pdv, region);
+  return {
+    skus: Math.round(28 * (0.85 + 0.15 * f)),
+    atRisk: Math.max(1, Math.round(4 * (2 - f))),
+    lowTurn: Math.max(2, Math.round(7 * (1.6 - 0.6 * f))),
+    notPositivated: Math.max(2, Math.round(6 * (1.8 - 0.8 * f))),
+    stockUnits: Math.round(3840 * f),
+    recentSales30d: Math.round(12760 * f),
+    lastOrder: {
+      units: Math.round(2180 * f),
+      value: Math.round(41230 * f),
+    },
+  };
+};
+
+// --- Cart filtered by (pdv, region) ---
+export const cartFor = (pdv: PdvId, region: RegionId): CartRow[] => {
+  let rows = pdv === 'all' ? cart : cart.filter((r) => r.pdvScope.includes(pdv));
+  if (region !== 'all') {
+    // Deterministic per-region trim: drop ~1-2 rows based on region hash so
+    // that filter changes visibly reshape the recommendation.
+    const skipIdx = (region.length + region.charCodeAt(0)) % rows.length;
+    rows = rows.filter((_, i) => i !== skipIdx);
+  }
+  return rows;
+};
+
+// --- Recommended mix summary — derived from filtered cart ---
+export const recommendedFor = (rows: CartRow[]) => ({
+  keep: rows.filter((r) => r.action === 'manter').length + 18, // baseline 18 untouched
+  include: rows.filter((r) => r.action === 'incluir').length,
+  substitute: rows.filter((r) => r.action === 'substituir').length,
+  remove: rows.filter((r) => r.action === 'remover').length,
+  increase: rows.filter((r) => r.action === 'aumentar').length + 3, // baseline 3
+});
+
+// --- KPIs — derived from filtered cart + context ---
+export const kpisFor = (rows: CartRow[], ctx: MixContext) => {
+  const incremental = rows.reduce((acc, r) => {
+    if (r.action === 'incluir') return acc + r.volume * r.unitPrice;
+    if (r.action === 'aumentar') return acc + r.delta * r.unitPrice;
+    if (r.action === 'substituir') return acc + r.volume * r.unitPrice * 0.4;
+    if (r.action === 'reduzir' || r.action === 'remover')
+      return acc - Math.abs(r.delta) * r.unitPrice * 0.5;
+    return acc;
+  }, 0);
+  const incrementalRounded = Math.max(0, Math.round(incremental));
+  return {
+    incrementalOrder: incrementalRounded,
+    potentialTicket: ctx.lastOrder.value + incrementalRounded,
+    newPositivated: rows.filter((r) => r.action === 'incluir').length,
+    ruptureReduction: Math.min(78, 40 + rows.filter((r) => r.action !== 'manter').length * 4),
+  };
+};
+
+// --- General insight ---
+export const generalInsightFor = (rows: CartRow[]) => {
+  const keep = rows.filter((r) => r.action === 'manter').length + 18;
+  const include = rows.filter((r) => r.action === 'incluir').length;
+  const substitute = rows.filter((r) => r.action === 'substituir').length;
+  const remove = rows.filter((r) => r.action === 'remover').length;
+  return `O modelo consolidou ${keep} SKUs de manutenção, ${include} inclusões, ${substitute} substituições e ${remove} remoções priorizando os SKUs com maior potencial líquido no cluster. O pedido incremental sugerido respeita limite financeiro, capacidade de estoque e embalagens mínimas — e reduz o risco de ruptura sobre a base atual.`;
+};
 
 // --- Formatters ---
 export const fmtBR = (n: number) => n.toLocaleString('pt-BR');
@@ -354,27 +350,26 @@ export const labels = {
   reasoningSubtitle: 'Do PDV ao pedido ideal, sob restrições reais.',
   setup: {
     title: 'Portal de vendas B2B',
-    subtitle: 'Configure o PDV e o próximo ciclo de abastecimento.',
+    subtitle: 'Configure o PDV e a região para simular o próximo ciclo de abastecimento.',
     pdv: 'Loja / PDV',
     region: 'Região',
-    cluster: 'Cluster',
-    category: 'Categoria',
-    cycle: 'Próximo ciclo',
     contextTitle: 'Contexto atual do PDV',
     contextMix: 'Mix atual',
     contextStock: 'Estoque disponível',
     contextSales: 'Vendas recentes (30d)',
     contextLast: 'Último pedido',
     contextNotPos: 'Não positivados',
+    contextRupture: 'Ruptura em curso',
     cta: 'Gerar mix e pedido ideal',
   },
   running: 'Processando mix e pedido ideal…',
   result: {
     title: 'Mix e pedido ideal',
     subtitle: 'Comparação, carrinho sugerido e justificativas.',
-    compareTitle: 'Comparação de mix',
+    filtersTitle: 'Filtros ativos',
     currentTitle: 'Mix atual',
     recommendedTitle: 'Mix recomendado',
+    recommendedHint: 'Clique para ver o consolidado',
     currentSkus: 'SKUs no mix',
     currentAtRisk: 'Com risco de ruptura',
     currentLowTurn: 'Com baixo giro',
@@ -396,11 +391,9 @@ export const labels = {
     insightGeneralTitle: 'Por que essa recomendação',
     insightSkuTitle: 'Por que este SKU',
     newSimulation: 'Nova simulação',
-    drillFactors: 'Fatores considerados',
     drillTurn: 'Giro',
     drillCoverage: 'Cobertura',
     drillCluster: 'Presença no cluster',
     drillPotential: 'Potencial',
-    drillClose: 'Fechar',
   },
 } as const;

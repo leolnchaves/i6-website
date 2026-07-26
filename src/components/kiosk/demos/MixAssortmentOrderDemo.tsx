@@ -2,22 +2,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Minus, Plus, Repeat, Sparkles, X } from 'lucide-react';
 import {
   actionMeta,
-  cart,
-  categories,
-  clusters,
-  currentMix,
-  cycles,
+  cartFor,
+  contextFor,
   fmtBR,
   fmtBRL,
-  generalInsight,
-  kpis,
+  generalInsightFor,
+  kpisFor,
   labels as L,
   pdvs,
   pipeline,
-  recommendedMix,
+  recommendedFor,
   regionsOptions,
   type Action,
   type CartRow,
+  type PdvId,
+  type RegionId,
 } from '@/data/kiosk/demos/mixAssortmentOrder';
 
 type Phase = 'setup' | 'running' | 'result';
@@ -34,11 +33,8 @@ const actionIcon: Record<Action, JSX.Element> = {
 };
 
 const MixAssortmentOrderDemo = () => {
-  const [pdv, setPdv] = useState(pdvs[0].id);
-  const [region, setRegion] = useState(regionsOptions[1].id);
-  const [cluster, setCluster] = useState(clusters[2].id);
-  const [category, setCategory] = useState(categories[0].id);
-  const [cycle, setCycle] = useState(cycles[1].id);
+  const [pdv, setPdv] = useState<PdvId>('all');
+  const [region, setRegion] = useState<RegionId>('all');
   const [phase, setPhase] = useState<Phase>('setup');
   const [progress, setProgress] = useState(0);
   const [selectedSku, setSelectedSku] = useState<CartRow | null>(null);
@@ -63,7 +59,18 @@ const MixAssortmentOrderDemo = () => {
   };
 
   const showResult = phase === 'result';
-  const pdvInfo = useMemo(() => pdvs.find((p) => p.id === pdv)!, [pdv]);
+  const context = useMemo(() => contextFor(pdv, region), [pdv, region]);
+  const filteredCart = useMemo(() => cartFor(pdv, region), [pdv, region]);
+  const recommended = useMemo(() => recommendedFor(filteredCart), [filteredCart]);
+  const kpis = useMemo(() => kpisFor(filteredCart, context), [filteredCart, context]);
+  const generalInsight = useMemo(() => generalInsightFor(filteredCart), [filteredCart]);
+
+  // If the SKU is filtered out by a filter change, drop selection
+  useEffect(() => {
+    if (selectedSku && !filteredCart.find((r) => r.sku === selectedSku.sku)) {
+      setSelectedSku(null);
+    }
+  }, [filteredCart, selectedSku]);
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
@@ -87,64 +94,38 @@ const MixAssortmentOrderDemo = () => {
           <div className="p-[2.2vmin] flex-1 flex flex-col gap-[1.4vmin]">
             {!showResult && (
               <>
-                {/* Filters grid */}
+                {/* Filters — apenas Loja/PDV e Região */}
                 <div className="grid grid-cols-2 gap-[1vmin]">
                   <SelectField
                     label={L.setup.pdv}
                     value={pdv}
-                    onChange={(v) => setPdv(v as typeof pdv)}
+                    onChange={(v) => setPdv(v as PdvId)}
                     options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
                   />
                   <SelectField
                     label={L.setup.region}
                     value={region}
-                    onChange={(v) => setRegion(v as typeof region)}
+                    onChange={(v) => setRegion(v as RegionId)}
                     options={regionsOptions.map((r) => ({ value: r.id, label: r.label }))}
                   />
-                  <SelectField
-                    label={L.setup.cluster}
-                    value={cluster}
-                    onChange={(v) => setCluster(v as typeof cluster)}
-                    options={clusters.map((c) => ({ value: c.id, label: c.label }))}
-                  />
-                  <SelectField
-                    label={L.setup.category}
-                    value={category}
-                    onChange={(v) => setCategory(v as typeof category)}
-                    options={categories.map((c) => ({ value: c.id, label: c.label }))}
-                  />
-                  <SelectField
-                    label={L.setup.cycle}
-                    value={cycle}
-                    onChange={(v) => setCycle(v as typeof cycle)}
-                    options={cycles.map((c) => ({ value: c.id, label: c.label }))}
-                  />
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.2vmin] flex flex-col justify-center">
-                    <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50">
-                      PDV
-                    </span>
-                    <span className="text-[1.4vmin] text-white/90 font-semibold leading-tight">
-                      {pdvInfo.sublabel}
-                    </span>
-                  </div>
                 </div>
 
-                {/* Context cards */}
+                {/* Context cards — reagem aos filtros */}
                 <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.4vmin] flex flex-col gap-[1vmin]">
                   <span className="text-[1.15vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F]">
                     {L.setup.contextTitle}
                   </span>
                   <div className="grid grid-cols-3 gap-[0.8vmin]">
-                    <ContextTile label={L.setup.contextMix} value={`${currentMix.skus} SKUs`} />
-                    <ContextTile label={L.setup.contextStock} value={`${fmtBR(currentMix.stockUnits)} un.`} />
-                    <ContextTile label={L.setup.contextSales} value={`${fmtBR(currentMix.recentSales30d)} un.`} />
+                    <ContextTile label={L.setup.contextMix} value={`${context.skus} SKUs`} />
+                    <ContextTile label={L.setup.contextStock} value={`${fmtBR(context.stockUnits)} un.`} />
+                    <ContextTile label={L.setup.contextSales} value={`${fmtBR(context.recentSales30d)} un.`} />
                     <ContextTile
                       label={L.setup.contextLast}
-                      value={fmtBRL(currentMix.lastOrder.value)}
-                      hint={`${fmtBR(currentMix.lastOrder.units)} un.`}
+                      value={fmtBRL(context.lastOrder.value)}
+                      hint={`${fmtBR(context.lastOrder.units)} un.`}
                     />
-                    <ContextTile label={L.setup.contextNotPos} value={`${currentMix.notPositivated}`} tone="warn" />
-                    <ContextTile label="Ruptura em curso" value={`${currentMix.atRisk}`} tone="warn" />
+                    <ContextTile label={L.setup.contextNotPos} value={`${context.notPositivated}`} tone="warn" />
+                    <ContextTile label={L.setup.contextRupture} value={`${context.atRisk}`} tone="warn" />
                   </div>
                 </div>
               </>
@@ -152,30 +133,64 @@ const MixAssortmentOrderDemo = () => {
 
             {showResult && (
               <>
+                {/* Filtros persistentes */}
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1vmin] flex items-center gap-[1vmin]">
+                  <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/50 flex-shrink-0">
+                    {L.result.filtersTitle}
+                  </span>
+                  <div className="grid grid-cols-2 gap-[0.8vmin] flex-1">
+                    <CompactSelect
+                      label={L.setup.pdv}
+                      value={pdv}
+                      onChange={(v) => setPdv(v as PdvId)}
+                      options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
+                    />
+                    <CompactSelect
+                      label={L.setup.region}
+                      value={region}
+                      onChange={(v) => setRegion(v as RegionId)}
+                      options={regionsOptions.map((r) => ({ value: r.id, label: r.label }))}
+                    />
+                  </div>
+                </div>
+
                 {/* Comparison */}
                 <div className="grid grid-cols-2 gap-[1vmin]">
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-[1.2vmin] flex flex-col gap-[0.7vmin]">
                     <span className="text-[1.1vmin] tracking-[0.25em] uppercase font-semibold text-white/60">
                       {L.result.currentTitle}
                     </span>
-                    <MixLine label={L.result.currentSkus} value={currentMix.skus} />
-                    <MixLine label={L.result.currentAtRisk} value={currentMix.atRisk} tone="warn" />
-                    <MixLine label={L.result.currentLowTurn} value={currentMix.lowTurn} tone="warn" />
-                    <MixLine label={L.result.currentNotPos} value={currentMix.notPositivated} tone="warn" />
+                    <MixLine label={L.result.currentSkus} value={context.skus} />
+                    <MixLine label={L.result.currentAtRisk} value={context.atRisk} tone="warn" />
+                    <MixLine label={L.result.currentLowTurn} value={context.lowTurn} tone="warn" />
+                    <MixLine label={L.result.currentNotPos} value={context.notPositivated} tone="warn" />
                   </div>
-                  <div className="rounded-xl border-2 border-[#F4845F]/50 bg-[#F4845F]/[0.05] p-[1.2vmin] flex flex-col gap-[0.7vmin]">
-                    <span className="text-[1.1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F]">
-                      {L.result.recommendedTitle}
-                    </span>
-                    <MixLine label={L.result.recKeep} value={recommendedMix.keep} />
-                    <MixLine label={L.result.recInclude} value={recommendedMix.include} tone="good" />
-                    <MixLine label={L.result.recSubstitute} value={recommendedMix.substitute} tone="accent" />
-                    <MixLine label={L.result.recRemove} value={recommendedMix.remove} tone="bad" />
-                    <MixLine label={L.result.recIncrease} value={recommendedMix.increase} tone="info" />
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSku(null)}
+                    className={`text-left rounded-xl border-2 p-[1.2vmin] flex flex-col gap-[0.7vmin] transition-all ${
+                      selectedSku
+                        ? 'border-[#F4845F]/50 bg-[#F4845F]/[0.05] hover:border-[#F4845F] hover:bg-[#F4845F]/[0.1] cursor-pointer'
+                        : 'border-[#F4845F] bg-[#F4845F]/[0.1] shadow-[0_0_16px_rgba(244,132,95,0.25)]'
+                    }`}
+                  >
+                    <div className="flex items-baseline justify-between gap-[0.5vmin]">
+                      <span className="text-[1.1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F]">
+                        {L.result.recommendedTitle}
+                      </span>
+                      {selectedSku && (
+                        <span className="text-[1vmin] text-white/50">{L.result.recommendedHint}</span>
+                      )}
+                    </div>
+                    <MixLine label={L.result.recKeep} value={recommended.keep} />
+                    <MixLine label={L.result.recInclude} value={recommended.include} tone="good" />
+                    <MixLine label={L.result.recSubstitute} value={recommended.substitute} tone="accent" />
+                    <MixLine label={L.result.recRemove} value={recommended.remove} tone="bad" />
+                    <MixLine label={L.result.recIncrease} value={recommended.increase} tone="info" />
+                  </button>
                 </div>
 
-                {/* Cart */}
+                {/* Cart — altura reduzida para caber os filtros */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
                   <div className="px-[1.4vmin] py-[0.9vmin] bg-white/[0.05] flex items-baseline justify-between border-b border-white/10">
                     <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-semibold text-white/70">
@@ -188,8 +203,8 @@ const MixAssortmentOrderDemo = () => {
                     <span className="text-center">{L.result.colAction}</span>
                     <span className="text-right">{L.result.colVolume}</span>
                   </div>
-                  <div className="max-h-[38vmin] overflow-y-auto">
-                    {cart.map((row) => {
+                  <div className="max-h-[28vmin] overflow-y-auto">
+                    {filteredCart.map((row) => {
                       const meta = actionMeta[row.action];
                       const active = selectedSku?.sku === row.sku;
                       return (
@@ -357,22 +372,6 @@ const MixAssortmentOrderDemo = () => {
                       <MiniStat label={L.result.drillCluster} value={selectedSku.cluster} />
                       <MiniStat label={L.result.drillPotential} value={selectedSku.potential} />
                     </div>
-                    <div className="mt-[1vmin]">
-                      <span className="block text-[1.1vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F] mb-[0.4vmin]">
-                        {L.result.drillFactors}
-                      </span>
-                      <ul className="flex flex-col gap-[0.4vmin]">
-                        {selectedSku.factors.map((f, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-[0.6vmin] text-[1.25vmin] text-white/85 leading-snug"
-                          >
-                            <span className="mt-[0.55vmin] w-[0.55vmin] h-[0.55vmin] rounded-full bg-[#F4845F] flex-shrink-0" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
                   </>
                 ) : (
                   generalInsight
@@ -415,6 +414,35 @@ const SelectField = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       className="bg-transparent text-white text-[1.5vmin] font-semibold outline-none cursor-pointer"
+    >
+      {options.map((o) => (
+        <option key={o.value} value={o.value} className="bg-[#0B1224]">
+          {o.label}
+        </option>
+      ))}
+    </select>
+  </label>
+);
+
+const CompactSelect = ({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
+}) => (
+  <label className="rounded-lg border border-white/10 bg-white/[0.04] px-[1vmin] py-[0.5vmin] flex items-center gap-[0.6vmin] hover:border-[#F4845F]/40 transition">
+    <span className="text-[0.95vmin] tracking-[0.18em] uppercase font-semibold text-white/50 flex-shrink-0">
+      {label}
+    </span>
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="bg-transparent text-white text-[1.25vmin] font-semibold outline-none cursor-pointer flex-1 min-w-0"
     >
       {options.map((o) => (
         <option key={o.value} value={o.value} className="bg-[#0B1224]">

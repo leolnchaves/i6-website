@@ -360,6 +360,13 @@ export const pipeline: PipelineStep[] = [
     durationMs: 480,
   },
   {
+    labelPt: 'Aprendendo a performance do PDV',
+    labelEn: 'Learning point-of-sale performance',
+    microPt: 'Giro, margem e ruptura sob comportamento contextual da loja.',
+    microEn: 'Turnover, margin and stockout under store contextual behavior.',
+    durationMs: 460,
+  },
+  {
     labelPt: 'Detectando tendência e sazonalidade',
     labelEn: 'Detecting trend and seasonality',
     microPt: 'ciclos · mudanças estruturais · efeitos recorrentes',
