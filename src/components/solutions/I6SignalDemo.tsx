@@ -7,7 +7,7 @@ import {
   Lightbulb, Sparkles, TrendingUp, Shuffle, Repeat, Layers, Zap
 } from 'lucide-react';
 import { signalDemoContent as content, TYPING_SPEED, RESPONSE_DELAY, type Scenario, type Phase } from '@/data/signalDemo/content';
-import { SupplyTable, ForecastChart, ComercialChart, MixComparison, PdvBarChart } from '@/components/signalDemo/visualizations';
+import { SupplyTable, ForecastChart, ComercialChart, MixComparison, PdvBarChart, PropensityByProductChart, BehaviorClustersTable } from '@/components/signalDemo/visualizations';
 
 // Bilingual content moved to @/data/signalDemo/content
 
