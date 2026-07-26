@@ -176,6 +176,7 @@ const DemandForecastDemo = ({ lang }: Props) => {
                 series={series}
                 phase={phase}
                 lang={lang}
+                fixedMaxY={fixedMaxY}
               />
             </div>
 
