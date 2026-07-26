@@ -56,9 +56,14 @@ export const dimensions: { id: DimensionId; label: string }[] = [
 
 export const pipeline: { label: string; micro: string; durationMs: number }[] = [
   {
-    label: 'Lendo vendas e execução comercial',
-    micro: 'Histórico, positivação, visitas e campanhas por SKU, cliente e vendedor.',
+    label: 'Analisando performance do PDV',
+    micro: 'Giro, ruptura, positivação e execução no ponto de venda por SKU, cliente e vendedor.',
     durationMs: 900,
+  },
+  {
+    label: 'Projetando demanda futura',
+    micro: 'Demanda esperada por SKU, região e cliente considerando sazonalidade, calendário comercial e sinais contextuais.',
+    durationMs: 850,
   },
   {
     label: 'Projetando o potencial de crescimento',
@@ -80,12 +85,8 @@ export const pipeline: { label: string; micro: string; durationMs: number }[] = 
     micro: 'Combinações região × SKU × cliente com maior potencial e CAC sustentável.',
     durationMs: 850,
   },
-  {
-    label: 'Distribuindo metas granulares',
-    micro: 'Metas por vendedor, cliente e SKU + investimento comercial recomendado.',
-    durationMs: 800,
-  },
 ];
+
 
 export const labels = {
   objective: 'OBJETIVO: CRESCIMENTO E EFICIÊNCIA DE INVESTIMENTO COMERCIAL',
