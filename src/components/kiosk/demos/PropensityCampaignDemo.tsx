@@ -72,9 +72,9 @@ const PropensityCampaignDemo = () => {
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      <div className="grid grid-cols-[1.25fr_1fr] gap-[3vmin] items-stretch">
-        {/* LEFT — CRM setup or results */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
+      <div className="flex flex-col gap-[2.4vmin]">
+        {/* TOP — CRM setup or results */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col">
           <div className="flex items-baseline justify-between px-[2.5vmin] py-[1.6vmin] bg-white/[0.04] border-b border-white/10">
             <div>
               <h4 className="text-[2.2vmin] font-bold text-white leading-tight">
@@ -89,7 +89,7 @@ const PropensityCampaignDemo = () => {
             </span>
           </div>
 
-          <div className="p-[2.2vmin] flex-1 flex flex-col gap-[1.6vmin]">
+          <div className="p-[2.2vmin] flex flex-col gap-[1.6vmin]">
             {phase !== 'result' && (
               <>
                 {/* Product */}
@@ -121,9 +121,6 @@ const PropensityCampaignDemo = () => {
                   </div>
                 </Section>
 
-
-
-
                 {/* Channels */}
                 <Section title={L.crm.channels} hint={L.crm.channelsHint}>
                   <div className="flex flex-wrap gap-[0.6vmin]">
@@ -152,14 +149,14 @@ const PropensityCampaignDemo = () => {
                   <button
                     type="button"
                     onClick={() => setPhase('running')}
-                    className="mt-auto self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
+                    className="self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
                   >
                     {L.crm.cta}
                   </button>
                 )}
 
                 {phase === 'running' && (
-                  <div className="mt-auto rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
+                  <div className="rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
                     <span className="w-[1.8vmin] h-[1.8vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
                     <span className="text-[1.6vmin] text-white/90 font-semibold">{L.running}</span>
                   </div>
@@ -178,7 +175,6 @@ const PropensityCampaignDemo = () => {
                   </div>
                   {result.tiers.map((t, i) => (
                     <div key={i}>
-                      {/* Parent row */}
                       <div className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[1.1vmin] items-center text-[1.55vmin] border-t border-white/10">
                         <span className="flex items-center gap-[0.8vmin]">
                           <span
@@ -195,7 +191,6 @@ const PropensityCampaignDemo = () => {
                         <span className="text-right text-white font-mono">{fmt(t.clients)}</span>
                         <span className="text-right text-white/90 font-mono">{t.propensityPct}%</span>
                       </div>
-                      {/* Split rows */}
                       {t.channels.map((split, j) => (
                         <div
                           key={j}
@@ -213,8 +208,15 @@ const PropensityCampaignDemo = () => {
                   ))}
                 </div>
 
-                {/* Conclusion cards */}
-                <div className="grid grid-cols-3 gap-[1vmin]">
+                {/* KPI row: reset button + 3 KPIs on the same line */}
+                <div className="grid grid-cols-4 gap-[1vmin]">
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="rounded-xl border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition px-[1.4vmin] py-[1.2vmin]"
+                  >
+                    {L.result.reset}
+                  </button>
                   <ConclusionCard
                     label={L.result.audience}
                     value={fmt(result.recommendedAudience)}
@@ -234,7 +236,7 @@ const PropensityCampaignDemo = () => {
                 <button
                   type="button"
                   onClick={() => setDrillOpen(true)}
-                  className="mt-auto w-full min-h-[6vmin] rounded-full border border-[#F4845F]/60 bg-[#F4845F]/[0.08] text-[1.55vmin] text-white font-semibold hover:bg-[#F4845F]/[0.16] active:scale-[0.98] transition"
+                  className="w-full min-h-[6vmin] rounded-full border border-[#F4845F]/60 bg-[#F4845F]/[0.08] text-[1.55vmin] text-white font-semibold hover:bg-[#F4845F]/[0.16] active:scale-[0.98] transition"
                 >
                   {L.result.drillCta}
                 </button>
@@ -243,102 +245,106 @@ const PropensityCampaignDemo = () => {
           </div>
         </div>
 
-        {/* RIGHT — reasoning */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
-          <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
+        {/* BOTTOM — reasoning: POR QUE + horizontal timeline */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin]">
+          <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
             <span className="w-[4.2vmin] h-[4.2vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
               <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />
             </span>
-            <div className="flex-1">
-              <h4 className="text-[2vmin] font-bold text-white leading-tight">
-                {L.reasoningTitle}
-              </h4>
-              <p className="text-[1.4vmin] text-white/60">{L.reasoningSubtitle}</p>
+            <div>
+              <h4 className="text-[1.9vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
+              <p className="text-[1.35vmin] text-white/60">{L.reasoningSubtitle}</p>
             </div>
           </div>
 
-          <div className="flex flex-col gap-[0.9vmin]">
-            {pipeline.map((step, i) => {
-              const state =
-                phase === 'setup'
-                  ? 'idle'
-                  : phase === 'running'
-                  ? i < progress
-                    ? 'done'
-                    : i === progress
-                    ? 'active'
-                    : 'idle'
-                  : 'done';
-              return (
-                <div
-                  key={i}
-                  className={`rounded-xl border p-[1.1vmin] transition-all ${
-                    state === 'active'
-                      ? 'border-[#F4845F] bg-[#F4845F]/10'
-                      : state === 'done'
-                      ? 'border-white/20 bg-white/[0.04]'
-                      : 'border-white/10 bg-white/[0.02] opacity-60'
-                  }`}
-                >
-                  <div className="flex items-center gap-[1.2vmin] mb-[0.4vmin]">
+          {/* Compact POR QUE above timeline */}
+          {phase === 'result' && (
+            <div className="mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[1.6vmin] py-[1.2vmin] animate-fade-in">
+              <div className="flex items-center gap-[1vmin] mb-[0.5vmin]">
+                <Sparkles className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" strokeWidth={2.5} />
+                <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                  {L.rationaleLabel}
+                </span>
+                <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
+                  {L.latency}: {latencyMs} ms
+                </span>
+              </div>
+              <p className="text-[1.5vmin] leading-snug text-white/95">{result.argument}</p>
+            </div>
+          )}
+
+          {/* Micro-metric of active step */}
+          <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
+            {phase === 'running' && progress < pipeline.length && (
+              <span className="text-[1.2vmin] text-white/60 font-mono">
+                {pipeline[progress].micro}
+              </span>
+            )}
+          </div>
+
+          {/* Horizontal timeline */}
+          <div className="relative px-[2vmin] pb-[1vmin]">
+            <div className="absolute left-[3vmin] right-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-white/10" />
+            <div
+              className="absolute left-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-[#F4845F] transition-all duration-500"
+              style={{
+                width: `calc((100% - 6vmin) * ${
+                  pipeline.length > 1
+                    ? Math.min(progress, pipeline.length - 1) / (pipeline.length - 1)
+                    : 0
+                })`,
+              }}
+            />
+            <div
+              className="relative grid"
+              style={{ gridTemplateColumns: `repeat(${pipeline.length}, minmax(0,1fr))` }}
+            >
+              {pipeline.map((step, i) => {
+                const state =
+                  phase === 'setup'
+                    ? 'idle'
+                    : phase === 'running'
+                    ? i < progress
+                      ? 'done'
+                      : i === progress
+                      ? 'active'
+                      : 'idle'
+                    : 'done';
+                return (
+                  <div key={i} className="flex flex-col items-center gap-[0.8vmin] px-[0.5vmin]">
                     <span
-                      className={`flex-shrink-0 w-[2.2vmin] h-[2.2vmin] rounded-full flex items-center justify-center text-[1.2vmin] font-bold border-2 ${
+                      className={`flex-shrink-0 w-[3.8vmin] h-[3.8vmin] rounded-full flex items-center justify-center text-[1.5vmin] font-bold border-2 transition-all ${
                         state === 'done'
                           ? 'bg-[#F4845F] border-[#F4845F] text-white'
                           : state === 'active'
-                          ? 'border-[#F4845F] text-[#F4845F]'
-                          : 'border-white/30 text-white/50'
+                          ? 'border-[#F4845F] text-[#F4845F] bg-[#F4845F]/15 animate-pulse'
+                          : 'border-white/25 text-white/50 bg-[#0B1224]'
                       }`}
                     >
-                      {state === 'done' ? <Check className="w-[1.3vmin] h-[1.3vmin]" /> : i + 1}
+                      {state === 'done' ? <Check className="w-[1.8vmin] h-[1.8vmin]" /> : i + 1}
                     </span>
-                    <span className="text-[1.55vmin] leading-tight text-white/90 font-semibold">
+                    <span
+                      className={`text-center text-[1.3vmin] leading-tight font-semibold ${
+                        state === 'idle' ? 'text-white/45' : 'text-white/90'
+                      }`}
+                    >
                       {step.label}
                     </span>
-                  </div>
-                  <div className="pl-[3.4vmin]">
-                    <p className="text-[1.2vmin] text-white/60 font-mono mb-[0.4vmin]">
+                    <span
+                      className={`text-center text-[1.1vmin] leading-tight font-mono ${
+                        state === 'idle' ? 'text-white/30' : 'text-white/55'
+                      }`}
+                    >
                       {step.micro}
-                    </p>
-                    {state === 'active' && (
-                      <div className="h-[0.35vmin] rounded-full bg-white/10 overflow-hidden">
-                        <div
-                          className="h-full bg-[#F4845F] animate-[kiosk-progress_var(--dur)_linear_forwards]"
-                          style={{ ['--dur' as string]: `${step.durationMs}ms` }}
-                        />
-                      </div>
-                    )}
+                    </span>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {phase === 'result' && (
-            <div className="mt-[1.4vmin] flex flex-col gap-[1vmin] flex-1">
-
-              <div className="relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.5vmin] text-white/95 leading-relaxed">
-                <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
-                  <Sparkles className="w-[1.4vmin] h-[1.4vmin]" strokeWidth={2.5} />
-                  <span>Insight</span>
-                </div>
-                <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
-                  {L.rationaleLabel}
-                </span>
-                {result.argument}
-              </div>
-
-              <button
-                type="button"
-                onClick={reset}
-                className="mt-auto w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.55vmin] text-white/85 hover:text-white hover:border-white/50 active:scale-[0.98] transition"
-              >
-                {L.result.reset}
-              </button>
+                );
+              })}
             </div>
-          )}
+          </div>
         </div>
       </div>
+
 
       {/* Drill-down modal */}
       {drillOpen && phase === 'result' && (
