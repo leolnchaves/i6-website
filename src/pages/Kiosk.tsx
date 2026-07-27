@@ -177,14 +177,20 @@ const Kiosk = () => {
         )}
 
         {stage !== 'attract' && (
-          <button
-            type="button"
-            onClick={reset}
-            className="fixed top-[3vmin] right-[3vmin] z-20 flex items-center gap-[1.5vmin] px-[3vmin] py-[2vmin] rounded-full bg-white/10 border border-white/20 text-[1.8vmin] font-semibold text-white/85 min-h-[8vmin]"
-          >
-            <RotateCcw className="w-[2.4vmin] h-[2.4vmin]" />
-            {kContent.footer.resetLabel}
-          </button>
+          <div className="fixed top-[2vmin] right-[2vmin] z-20">
+            <div
+              aria-hidden
+              className="absolute -inset-y-[0.8vmin] -inset-x-[1.2vmin] rounded-full bg-[#0B1224]/85 backdrop-blur-md ring-1 ring-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
+            />
+            <button
+              type="button"
+              onClick={reset}
+              className="relative flex items-center gap-[1.2vmin] px-[2.4vmin] py-[1.2vmin] rounded-full bg-transparent border border-white/25 text-[1.8vmin] font-semibold text-white/90 min-h-[6vmin]"
+            >
+              <RotateCcw className="w-[2vmin] h-[2vmin]" />
+              {kContent.footer.resetLabel}
+            </button>
+          </div>
         )}
 
         {stage === 'attract' && <AttractScreen content={kContent} onStart={handleStart} />}
