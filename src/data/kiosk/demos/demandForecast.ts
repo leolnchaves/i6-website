@@ -173,9 +173,9 @@ export const skus: SkuDef[] = [
     promoNotePt: 'Liquidação de coleção — pico curto, sem projeção para o próximo drop.',
     promoNoteEn: 'Collection clearance — short peak, no carryover to the next drop.',
     argumentPt:
-      'Ciclo curto de coleção com sazonalidade dupla (inverno-SP em jun/jul e liquidação em jan/fev) e viés flat no forecast atual — que ignora tanto o pico sazonal quanto a queda pós-coleção, gerando simultaneamente ruptura (17,2%) e excesso (15,8%) em SKUs diferentes. Detectamos aceleração de +18% nos últimos 90 dias no digital. A i6 modela cada onda de coleção separadamente e reduz ruptura para 3,4% e excesso para 3,7%. Acurácia sobe de 39,7% para 90,7%.',
+      'Ciclo curto de coleção com sazonalidade dupla (inverno-SP em jun/jul e liquidação em jan/fev) e viés flat no forecast atual, que ignora pico e queda pós-coleção — gerando ruptura (17,2%) e excesso (15,8%) simultâneos em SKUs distintos. Últimos 90 dias com +18% no digital. A i6 modela cada onda separadamente, reduz ruptura para 3,4%, excesso para 3,7% e eleva a acurácia de 39,7% para 90,7%.',
     argumentEn:
-      'Short collection cycle with double seasonality (winter-SP in Jun/Jul and clearance in Jan/Feb) and a flat bias in the current forecast — which ignores both the seasonal peak and the post-collection drop, causing simultaneous stockout (17.2%) and excess (15.8%) across different SKUs. Last 90 days show +18% acceleration in digital. i6 models each collection wave separately and cuts stockout to 3.4% and excess to 3.7%. Accuracy jumps from 39.7% to 90.7%.',
+      'Short collection cycle with double seasonality (winter-SP in Jun/Jul and clearance in Jan/Feb) and a flat bias in the current forecast, which ignores both peak and post-collection drop — causing simultaneous stockout (17.2%) and excess (15.8%) across different SKUs. Last 90 days: +18% in digital. i6 models each wave separately, cuts stockout to 3.4%, excess to 3.7% and lifts accuracy from 39.7% to 90.7%.',
   },
 ];
 
