@@ -1,7 +1,7 @@
 // Shared content + types for the i6 Signal Intelliboard demo.
 // Consumed by both /solutions (I6SignalDemo) and /kiosk (KioskSignalIntelliboard).
 
-export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk';
+export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps';
 export type Phase = 'idle' | 'typing' | 'responding';
 
 export const TYPING_SPEED = 30;
