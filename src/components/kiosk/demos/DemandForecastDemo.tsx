@@ -850,10 +850,14 @@ const KpiCompare = ({
     ? ((newValue - oldValue) / Math.max(0.01, oldValue)) * 100
     : ((oldValue - newValue) / Math.max(0.01, oldValue)) * 100;
   const improved = delta > 0;
+  const sign = improved ? (higherIsBetter ? '+' : '−') : higherIsBetter ? '−' : '+';
   return (
-    <div className="rounded-lg p-[1vmin] border bg-white/[0.03] border-[#F4845F]/30">
-      <span className="block text-[1.05vmin] tracking-[0.18em] uppercase font-semibold text-[#F4845F] mb-[0.3vmin] leading-tight">
-        {label}
+    <div className="rounded-lg px-[1vmin] py-[0.6vmin] border bg-white/[0.03] border-[#F4845F]/30">
+      <span className="block text-[1.05vmin] tracking-[0.18em] uppercase font-semibold text-[#F4845F] mb-[0.2vmin] leading-tight">
+        {label}{' '}
+        <span className={`font-bold ${improved ? 'text-emerald-400' : 'text-red-400'}`}>
+          [{sign}{Math.abs(delta).toFixed(0)}%]
+        </span>
       </span>
       <div className="flex items-baseline gap-[0.5vmin]">
         <span className="text-[1.35vmin] text-white/40 line-through leading-none">
@@ -863,17 +867,10 @@ const KpiCompare = ({
           {newValue.toFixed(1)}%
         </span>
       </div>
-      <span
-        className={`block text-[1.05vmin] font-bold mt-[0.3vmin] ${
-          improved ? 'text-emerald-400' : 'text-red-400'
-        }`}
-      >
-        {L.compare.delta} {improved ? (higherIsBetter ? '+' : '−') : higherIsBetter ? '−' : '+'}
-        {Math.abs(delta).toFixed(0)}%
-      </span>
     </div>
   );
 };
+
 
 const MetricPill = ({
   label, value, hint,
