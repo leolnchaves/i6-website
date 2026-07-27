@@ -521,13 +521,14 @@ export const MixBehaviorScatter = ({ data, lang }: { data: MixScatterPoint[]; la
       <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
         {lang === 'pt' ? 'Aderência ao mix ideal por PDV' : 'Ideal-mix adherence per store'}
       </p>
-      <div className="h-[280px] w-full">
+      <div className="h-[380px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={rows} layout="vertical" margin={{ top: 10, right: 20, left: 20, bottom: 10 }} stackOffset="expand">
+          <BarChart data={rows} layout="vertical" margin={{ top: 10, right: 24, left: 24, bottom: 10 }} barCategoryGap={6}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
             <XAxis
               type="number"
               domain={[0, 100]}
+              ticks={[0, 25, 50, 75, 100]}
               tick={{ fontSize: 12, fill: '#6b7280' }}
               tickFormatter={(v) => `${v}%`}
             />
@@ -542,8 +543,8 @@ export const MixBehaviorScatter = ({ data, lang }: { data: MixScatterPoint[]; la
               formatter={(value: number, name: string) => [`${value}%`, name]}
             />
             <Legend wrapperStyle={{ color: '#6b7280', fontSize: '11px', paddingTop: '8px' }} />
-            <Bar dataKey="adherent" name={lang === 'pt' ? 'Aderente' : 'Adherent'} stackId="mix" fill="#10b981" radius={[4, 0, 0, 4]} />
-            <Bar dataKey="gap" name={lang === 'pt' ? 'Gap' : 'Gap'} stackId="mix" fill="#F4845F" radius={[0, 4, 4, 0]} />
+            <Bar dataKey="adherent" name={lang === 'pt' ? 'Aderente' : 'Adherent'} stackId="mix" fill="#10b981" radius={[4, 0, 0, 4]} barSize={22} />
+            <Bar dataKey="gap" name={lang === 'pt' ? 'Gap' : 'Gap'} stackId="mix" fill="#F4845F" radius={[0, 4, 4, 0]} barSize={22} />
           </BarChart>
         </ResponsiveContainer>
       </div>
