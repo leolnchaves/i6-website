@@ -218,7 +218,7 @@ const PriceMarginDemo = () => {
                 running={phase === 'running'}
               />
             ) : (
-              selected && <ResultView selected={selected} />
+              selected && derived && <ResultView selected={selected} derived={derived} />
             )}
           </div>
         </div>
