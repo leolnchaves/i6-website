@@ -532,7 +532,7 @@ export const signalDemoContent = {
       },
       personalizationBehavior: {
         label: 'Recomendação por comportamento',
-        question: 'Quais produtos ou looks devem ser priorizados para cada perfil de navegação, e quais comportamentos explicam essa recomendação?',
+        question: 'Quais produtos devem ser priorizados para cada perfil de navegação?',
         title: 'Recomendações preditivas por comportamento de navegação',
         analysis: 'O modelo identificou quatro comportamentos predominantes na jornada atual. Usuários orientados a performance apresentam maior aderência a produtos técnicos e complementares, enquanto usuários exploratórios respondem melhor a novidades e combinações que ampliam a descoberta. Para o perfil selecionado, a maior oportunidade está no cross-sell de produtos complementares ao item visualizado. A recomendação combina intenção atual, histórico individual, afinidade entre produtos e comportamento previsto de usuários semelhantes.\n\nEstes produtos foram recomendados porque complementam o item visualizado, apresentam alta recorrência em jornadas semelhantes e estão alinhados ao padrão de interesse previsto para este usuário.\n\nNo varejo fashion, o look é recomendado porque combina estilo, categoria, cor, ocasião de uso e preferências comportamentais, evitando combinações incoerentes ou pouco aderentes.',
         behaviorMatrix: {
