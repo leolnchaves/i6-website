@@ -435,16 +435,16 @@ export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing
  */
 export const territoryEbook: Record<RouteId, { pt: string; en: string }> = {
   growth: {
-    pt: 'eBook Inteligência Preditiva do Consumidor',
-    en: 'eBook Predictive Customer Intelligence',
+    pt: 'Inteligência do Consumidor Orientada à Decisão',
+    en: 'Decision-Oriented Customer Intelligence',
   },
   planning: {
-    pt: 'eBook Supply Preditivo',
-    en: 'eBook Predictive Supply',
+    pt: 'Supply Preditivo',
+    en: 'Predictive Supply',
   },
   pricing: {
-    pt: 'eBook Pricing Orientado a Resultados',
-    en: 'Results-Driven Pricing eBook',
+    pt: 'Pricing Orientado a Resultados',
+    en: 'Results-Driven Pricing',
   },
 };
 
