@@ -276,28 +276,28 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
     objective: { pt: 'Cross-sell', en: 'Cross-sell' },
     features: [
       {
-        label: { pt: 'Histórico de sessões', en: 'Session history' },
-        microMetric: { pt: '312 eventos · janela 30d', en: '312 events · 30d window' },
+        label: { pt: 'Lendo o histórico de navegação e compra do cliente', en: 'Reading the customer’s browsing and purchase history' },
+        microMetric: { pt: 'Sessões, cliques e transações dos últimos 30 dias no perfil identificado.', en: 'Sessions, clicks and transactions from the last 30 days on the identified profile.' },
         durationMs: 520,
       },
       {
-        label: { pt: 'Afinidade categórica', en: 'Category affinity' },
-        microMetric: { pt: 'top-3: Áudio 0.87 · Perif 0.61', en: 'top-3: Audio 0.87 · Perif 0.61' },
+        label: { pt: 'Identificando as categorias de maior afinidade', en: 'Identifying the categories with the strongest affinity' },
+        microMetric: { pt: 'Áudio e periféricos concentram o interesse recente deste cliente.', en: 'Audio and peripherals concentrate this customer’s recent interest.' },
         durationMs: 460,
       },
       {
-        label: { pt: 'Co-visualização', en: 'Co-view graph' },
-        microMetric: { pt: 'grafo 2-hop · 148 nós', en: '2-hop graph · 148 nodes' },
+        label: { pt: 'Mapeando produtos que costumam ser vistos e comprados juntos', en: 'Mapping products that are usually viewed and bought together' },
+        microMetric: { pt: 'Grafo de co-visualização e co-compra a 2 níveis a partir do item âncora.', en: '2-hop co-view and co-purchase graph anchored on the selected item.' },
         durationMs: 540,
       },
       {
-        label: { pt: 'Aderência contextual', en: 'Contextual fit' },
-        microMetric: { pt: 'estoque · preço · sazonal', en: 'stock · price · seasonal' },
+        label: { pt: 'Aplicando contexto de estoque, preço e sazonalidade', en: 'Applying stock, price and seasonality context' },
+        microMetric: { pt: 'Só entram no ranking itens disponíveis, com preço competitivo e coerentes com o momento.', en: 'Only in-stock, competitively priced and season-consistent items enter the ranking.' },
         durationMs: 420,
       },
       {
-        label: { pt: 'Cross-sell ranking', en: 'Cross-sell ranking' },
-        microMetric: { pt: 'i6RecSys · MAML fine-tune', en: 'i6RecSys · MAML fine-tune' },
+        label: { pt: 'Ranqueando as melhores recomendações de cross-sell', en: 'Ranking the best cross-sell recommendations' },
+        microMetric: { pt: 'Modelo i6RecSys prioriza combinações com maior probabilidade de compra conjunta.', en: 'The i6RecSys model prioritizes combinations with the highest joint-purchase probability.' },
         durationMs: 520,
       },
     ],
