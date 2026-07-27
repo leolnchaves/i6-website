@@ -259,9 +259,6 @@ const PropensityCampaignDemo = () => {
         {/* BOTTOM — reasoning: POR QUE + horizontal timeline */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin]">
           <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
-            <span className="w-[4.2vmin] h-[4.2vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-              <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />
-            </span>
             <div>
               <h4 className="text-[1.9vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
               <p className="text-[1.35vmin] text-white/60">{L.reasoningSubtitle}</p>
