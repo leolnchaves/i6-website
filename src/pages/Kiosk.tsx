@@ -65,6 +65,7 @@ const Kiosk = () => {
     setRoute(null);
     setRecommendedIds(null);
     setSelectedSolutionId(null);
+    setSimulationCompleted({});
   };
 
   // Ao entrar em results, auto-seleciona a primeira solução recomendada
