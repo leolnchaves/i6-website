@@ -61,9 +61,9 @@ const DemandForecastDemo = ({ lang }: Props) => {
     return Math.round(hist.reduce((a, b) => a + b, 0) / hist.length);
   }, [series]);
 
-  const latencyMs = useMemo(() => {
+  const latencySec = useMemo(() => {
     if (phase === 'planning') return '0.00';
-    return (28 + Math.random() * 34).toFixed(2);
+    return ((28 + Math.random() * 34) / 1000).toFixed(2);
   }, [phase, sku.id]);
 
   useEffect(() => {
