@@ -590,6 +590,10 @@ export const uiLabels = {
     tapToExplore: 'Clique num item para novo ciclo',
     objectiveLabel: 'Objetivo',
     analyzing: 'Analisando…',
+    kpiTicketUplift: 'Uplift no ticket',
+    kpiCrossSell: 'Propensão cross-sell',
+    kpiConfidence: 'Confiança',
+
   },
   en: {
     header: 'Personalization & Discovery · i6RecSys',
@@ -615,6 +619,9 @@ export const uiLabels = {
     tapToExplore: 'Tap an item to run a new cycle',
     objectiveLabel: 'Objective',
     analyzing: 'Analyzing…',
+    kpiTicketUplift: 'Ticket uplift',
+    kpiCrossSell: 'Cross-sell propensity',
+    kpiConfidence: 'Confidence',
   },
 } as const;
 

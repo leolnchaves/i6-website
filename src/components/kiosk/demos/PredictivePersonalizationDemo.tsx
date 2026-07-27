@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Check, Sparkles, User, UserX } from 'lucide-react';
+import { Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import {
   catalogs,
@@ -15,6 +15,42 @@ import {
 interface Props {
   lang: KioskLang;
 }
+
+const KPI_PRESETS: Record<`${UserMode}-${Vertical}`, { uplift: string; crossSell: number; confidence: number }> = {
+  'logged-products': { uplift: '+1.6×', crossSell: 72, confidence: 92 },
+  'logged-fashion':  { uplift: '+1.8×', crossSell: 74, confidence: 90 },
+  'anon-products':   { uplift: '+1.3×', crossSell: 58, confidence: 78 },
+  'anon-fashion':    { uplift: '+1.4×', crossSell: 61, confidence: 76 },
+};
+
+const MetricPill = ({
+  label,
+  value,
+  hint,
+  highlight,
+  trend,
+}: {
+  label: string;
+  value: string;
+  hint?: string;
+  highlight?: boolean;
+  trend?: 'up' | 'down';
+}) => (
+  <div
+    className={`rounded-lg border px-[1.2vmin] py-[0.9vmin] ${
+      highlight ? 'border-[#F4845F]/50 bg-[#F4845F]/10' : 'border-white/10 bg-white/[0.03]'
+    }`}
+  >
+    <span className="block text-[1vmin] tracking-[0.2em] uppercase font-semibold text-white/55 mb-[0.2vmin]">
+      {label}
+    </span>
+    <span className={`inline-flex items-center gap-[0.5vmin] text-[1.7vmin] font-bold ${highlight ? 'text-[#F4845F]' : 'text-white'}`}>
+      {trend === 'up' && <TrendingUp className="w-[1.5vmin] h-[1.5vmin]" />}
+      {value}
+    </span>
+    {hint && <span className="block text-[1vmin] text-white/40 mt-[0.2vmin]">{hint}</span>}
+  </div>
+);
 
 type Phase = 'pick' | 'list' | 'training' | 'pdp';
 
@@ -196,6 +232,8 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
   const argumentText = scenario && selected
     ? buildArgument(`${userMode}-${vertical}` as `${UserMode}-${Vertical}`, selected, recSkus, lang)
     : '';
+
+  const kpiPreset = KPI_PRESETS[`${userMode}-${vertical}` as `${UserMode}-${Vertical}`];
 
 
 
@@ -392,6 +430,25 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                       </div>
                     )}
                   </>
+                )}
+
+                {phase === 'pdp' && (
+                  <div className="grid grid-cols-3 gap-[1vmin] mt-[1.5vmin] animate-fade-in">
+                    <MetricPill
+                      label={t.kpiTicketUplift}
+                      value={kpiPreset.uplift}
+                      highlight
+                      trend="up"
+                    />
+                    <MetricPill
+                      label={t.kpiCrossSell}
+                      value={`${kpiPreset.crossSell}%`}
+                    />
+                    <MetricPill
+                      label={t.kpiConfidence}
+                      value={`${kpiPreset.confidence}%`}
+                    />
+                  </div>
                 )}
               </div>
             )}

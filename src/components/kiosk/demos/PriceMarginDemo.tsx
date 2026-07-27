@@ -305,23 +305,7 @@ const PriceMarginDemo = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-[1vmin]">
-                <MetricPill
-                  label="Confiança"
-                  value={`${(derived ?? selected).confidencePct}%`}
-                />
-                <MetricPill
-                  label="Impacto na margem"
-                  value={`+${(derived ?? selected).marginImpactPp.toFixed(1)} pp`}
-                  highlight
-                  trend="up"
-                />
-                <MetricPill
-                  label="Impacto no volume"
-                  value={`${(derived ?? selected).volumeImpactPct.toFixed(1)}%`}
-                  trend="down"
-                />
-              </div>
+
 
               <div className="kiosk-insight-card relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.55vmin] text-white/95 leading-relaxed">
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
@@ -652,6 +636,25 @@ const ResultView = ({ selected, derived }: { selected: PriceMarginSku; derived: 
             </div>
           );
         })}
+      </div>
+
+      {/* Post-model KPIs (left column) */}
+      <div className="grid grid-cols-3 gap-[1vmin]">
+        <MetricPill
+          label="Confiança"
+          value={`${derived.confidencePct}%`}
+        />
+        <MetricPill
+          label="Impacto na margem"
+          value={`+${derived.marginImpactPp.toFixed(1)} pp`}
+          highlight
+          trend="up"
+        />
+        <MetricPill
+          label="Impacto no volume"
+          value={`${derived.volumeImpactPct.toFixed(1)}%`}
+          trend="down"
+        />
       </div>
     </>
   );
