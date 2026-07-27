@@ -1195,3 +1195,233 @@ export const TurnoverMarkdownTable = ({ data, lang }: { data: { headers: string[
     </div>
   </div>
 );
+
+// ============================================================================
+// Personalização Preditiva + Descoberta Inteligente
+// ============================================================================
+
+const OBJECTIVE_CHIP: Record<string, string> = {
+  'cross-sell':           'bg-orange-50 text-orange-700 border-orange-200',
+  'discovery':            'bg-blue-50 text-blue-700 border-blue-200',
+  'look recommendation':  'bg-purple-50 text-purple-700 border-purple-200',
+  'conversão':            'bg-emerald-50 text-emerald-700 border-emerald-200',
+  'conversion':           'bg-emerald-50 text-emerald-700 border-emerald-200',
+};
+
+const adherenceTone = (raw: string): string => {
+  const n = parseInt(raw.replace('%', ''), 10);
+  if (!isNaN(n)) {
+    if (n >= 88) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+    if (n >= 80) return 'bg-orange-50 text-orange-700 border-orange-200';
+    return 'bg-amber-50 text-amber-700 border-amber-200';
+  }
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+const effectTone = (raw: string): string => {
+  const v = raw.toLowerCase().trim();
+  if (v.startsWith('alto') || v.startsWith('high')) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+  if (v.startsWith('médio') || v.startsWith('medio') || v.startsWith('medium')) return 'bg-amber-50 text-amber-700 border-amber-200';
+  if (v.startsWith('baixo') || v.startsWith('low')) return 'bg-gray-100 text-gray-600 border-gray-200';
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+export const PersonalizationBehaviorMatrix = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Matriz de comportamento por recomendação' : 'Behavior-to-recommendation matrix'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i >= 3 ? 'text-center' : 'text-left'}`}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 1 || ci === 2) return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 3) return (
+                  <td key={ci} className="py-2.5 px-3 text-center">
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border tabular-nums ${adherenceTone(cell)}`}>{cell}</span>
+                  </td>
+                );
+                if (ci === 4) return (
+                  <td key={ci} className="py-2.5 px-3 text-center">
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border ${OBJECTIVE_CHIP[cell.toLowerCase()] ?? 'bg-gray-50 text-gray-700 border-gray-200'}`}>{cell}</span>
+                  </td>
+                );
+                return <td key={ci} className="py-2.5 px-3 text-gray-800">{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+export const PersonalizationSignalsTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Sinais que sustentam a recomendação' : 'Signals supporting the recommendation'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
+                return (
+                  <td key={ci} className="py-2.5 px-3 text-center">
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border ${effectTone(cell)}`}>{cell}</span>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+type CurvePoint = { day: number; probability: number };
+
+export const RepurchaseCurveChart = ({
+  data, window, peak, legend, lang,
+}: {
+  data: CurvePoint[];
+  window: { start: number; end: number };
+  peak: { day: number; probability: number };
+  legend: string[];
+  lang: string;
+}) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Curva temporal de recompra' : 'Repurchase time curve'}
+    </p>
+    <div className="h-[260px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data} margin={{ top: 10, right: 24, left: 10, bottom: 20 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+          <XAxis
+            type="number"
+            dataKey="day"
+            domain={[0, 50]}
+            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tickFormatter={(v) => `${v}`}
+            label={{ value: lang === 'pt' ? 'Dias desde a última compra' : 'Days since last purchase', position: 'insideBottom', offset: -6, fill: '#6b7280', fontSize: 11 }}
+          />
+          <YAxis
+            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tickFormatter={(v) => `${v}%`}
+            label={{ value: lang === 'pt' ? 'Probabilidade prevista' : 'Predicted probability', angle: -90, position: 'insideLeft', fill: '#6b7280', fontSize: 11 }}
+          />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+            formatter={(value: number) => [`${value}%`, lang === 'pt' ? 'Propensão' : 'Propensity']}
+            labelFormatter={(l) => `${lang === 'pt' ? 'Dia' : 'Day'} ${l}`}
+          />
+          <ReferenceArea x1={window.start} x2={window.end} y1={0} y2={100} fill="#F4845F" fillOpacity={0.12} stroke="#F4845F" strokeOpacity={0.35} strokeDasharray="4 4" />
+          <Line type="monotone" dataKey="probability" stroke="#F4845F" strokeWidth={2.5} dot={{ r: 3, fill: '#F4845F' }} />
+          <ReferenceDot x={peak.day} y={peak.probability} r={6} fill="#10b981" stroke="#065f46" strokeWidth={2} label={{ value: lang === 'pt' ? 'Pico' : 'Peak', position: 'top', fill: '#065f46', fontSize: 11, fontWeight: 600 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+    <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1">
+      {legend.map((l, i) => (
+        <li key={i} className="text-gray-500 text-xs leading-relaxed flex gap-2">
+          <span className="text-orange-500 mt-0.5 flex-shrink-0">•</span>
+          <span>{l}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const propensityTone = (raw: string): string => {
+  const n = parseInt(raw.replace('%', ''), 10);
+  if (!isNaN(n)) {
+    if (n >= 80) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+    if (n >= 70) return 'bg-orange-50 text-orange-700 border-orange-200';
+    return 'bg-amber-50 text-amber-700 border-amber-200';
+  }
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+export const RepurchaseBehaviorTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Comportamentos previstos de recompra' : 'Predicted repurchase behaviors'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 1 || i === 3 ? 'text-center' : 'text-left'}`}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 1) return <td key={ci} className="py-2.5 px-3 text-center tabular-nums text-gray-800 font-medium">{cell}</td>;
+                if (ci === 2) return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 3) return (
+                  <td key={ci} className="py-2.5 px-3 text-center">
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border tabular-nums ${propensityTone(cell)}`}>{cell}</span>
+                  </td>
+                );
+                return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+export const RepurchaseCorrelationsTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Correlações comportamentais' : 'Behavioral correlations'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              <td className="py-2.5 px-3 text-left font-medium text-gray-900">{row[0]}</td>
+              <td className="py-2.5 px-3 text-left text-gray-700">{row[1]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
