@@ -271,27 +271,6 @@ const Kiosk = () => {
                 </>
               );
             })()}
-                  <KioskSignalIntelliboard
-                    lang={lang}
-                    content={kContent}
-                    solutionId={selectedSolution.id}
-                  />
-
-                  <EbookCTA
-                    lang={lang}
-                    content={kContent}
-                    route={route}
-                    solutionId={selectedSolution.id}
-                    solutionTitle={selectedSolution.title}
-                    ebookTitle={ebookTitle}
-                  />
-                </>
-              ) : (
-                <p className="text-center text-[2.2vmin] text-white/50 py-[4vmin]">
-                  {kContent.results.selectSolutionHint}
-                </p>
-              )}
-            </div>
 
             <p className="text-center text-[1.6vmin] tracking-[0.3em] uppercase text-white/40 mt-[6vmin]">
               {kContent.footer.tagline}
