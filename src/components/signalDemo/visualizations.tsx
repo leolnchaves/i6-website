@@ -347,7 +347,7 @@ const QUADRANT_LABELS: Record<string, { pt: string; en: string }> = {
   uncertain: { pt: 'Alta incerteza', en: 'High uncertainty' },
 };
 
-type ScatterPoint = { probability: number; delta: number; size: number; label: string; quadrant: 'above' | 'match' | 'below' | 'uncertain' };
+type ScatterPoint = { probability: number; delta: number; size: number; label: string; quadrant: string };
 
 export const TargetsRiskScatter = ({ data, lang }: { data: ScatterPoint[]; lang: string }) => {
   const quadrants: ScatterPoint['quadrant'][] = ['above', 'match', 'below', 'uncertain'];
