@@ -2,14 +2,24 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Sparkles, X } from 'lucide-react';
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 
+interface Labels {
+  resolve: string;
+  entrega: string;
+  impacto: string;
+}
+
 interface Props {
   lang: KioskLang;
   solutionTitle: string;
   solutionTagline?: string;
+  resolve?: string;
+  entrega?: string;
+  impacto?: string;
+  labels?: Labels;
   children: ReactNode;
 }
 
-const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, children }: Props) => {
+const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, resolve, entrega, impacto, labels, children }: Props) => {
   const [open, setOpen] = useState(false);
   const [instanceKey, setInstanceKey] = useState(0);
   const t = kioskContent[lang].results;
