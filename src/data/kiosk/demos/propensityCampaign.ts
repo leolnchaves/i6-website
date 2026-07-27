@@ -329,7 +329,7 @@ export const labels = {
     conversion: 'Conversão potencial',
     channel: 'Canal prioritário',
     pressure: 'Pressão recomendada',
-    drillCta: 'Explorar clientes priorizados',
+    drillCta: 'EXPLORAR GRANULARIDADE POR CLIENTE',
     drillTitle: 'Cliente priorizado',
     drillTopProduct: 'Produto com maior propensão',
     drillChannel: 'Canal recomendado',
