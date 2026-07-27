@@ -1,48 +1,59 @@
 ## Objetivo
-Aplicar em **Campanhas por Propensão** o mesmo padrão que ficou aprovado em Personalização + Descoberta Preditiva: fora do modal só existe um card com o botão coral "Clique aqui para simular a solução"; toda a experiência da demo (setup, pipeline, resultado, POR QUE) roda dentro de um modal ocupando 90% da tela, com botão "Fechar simulação" no rodapé.
 
-## Escopo
+Reescrever os textos dos steps (label + descrição abaixo) da timeline de raciocínio da demo **Personalização + Descoberta Preditiva** no Kiosk, seguindo o padrão narrativo/de negócio da demo **Campanhas por Propensão** — sem tocar nada em Campanhas.
 
-### 1. Reutilizar o padrão do launcher
-Generalizar `PersonalizationSimulationLauncher.tsx` para receber o conteúdo da demo como children (ou criar um `SimulationLauncher` genérico usado por ambas as soluções). O launcher mantém:
-- Card coral com título/tagline da solução.
-- Botão grande "Clique aqui para simular a solução".
-- Modal fullscreen 90vw × 90vh, fecha em Esc / overlay / botão "Fechar simulação" no rodapé.
-- Reset do estado interno da demo ao fechar (via `key` remount).
+## Referência do padrão (Campanhas — não mudar)
 
-### 2. Rota em `SolutionDemoBlock`
-Trocar o retorno de `predictive-campaign-targeting` para embrulhar `<PropensityCampaignDemo />` dentro desse launcher genérico, passando `solution.title` e `solution.tagline`.
+Em Campanhas, cada step tem:
+- **label**: frase de ação em linguagem de negócio ("Lendo comportamento e histórico dos clientes")
+- **micro**: sub-frase explicativa em português corrido ("Compras, interações, recência, frequência e resposta a campanhas.")
 
-### 3. Ajustes de layout em `PropensityCampaignDemo` para retrato
-Hoje é `grid-cols-[1.25fr_1fr]` (lado a lado). Em totem retrato empilhar em coluna:
-- **Bloco superior**: CRM/setup + resultado (canvas atual da esquerda) — inalterado em conteúdo.
-- **Linha de KPIs + botão "Voltar ao setup" na mesma linha** (padrão que aprovamos em Personalização), logo abaixo do resultado.
-- **Bloco inferior — raciocínio**:
-  - Card **POR QUE** compacto no topo (título + argumento + latência em 1 linha), sem SVG conector nem pontilhados.
-  - **Timeline horizontal** abaixo do POR QUE, com cada passo do `pipeline` virando um ponto (idle / active pulsando / done com check), micro-métrica do passo ativo em linha discreta acima da timeline e o label + microMetric fixo abaixo de cada ponto.
-- Remover qualquer `useLayoutEffect` de medição / refs de linha conectora que existam nesse demo (se houver), análogo ao que foi feito em Personalização.
+Hoje em Personalização os steps estão em formato curto/técnico:
+- label: "Histórico de sessões"
+- micro: "312 eventos · janela 30d"
 
-### 4. Fora do escopo
-- Demais conclusões (Forecast, Metas, Mix, Preços) — migram depois de validar Campanhas.
-- Sem mudança de conteúdo/textos, cenários, KPIs calculados ou lógica de `computeResult`.
-- Sem mudança em i6Signal Intelliboard e EbookCTA.
+Vou usar os valores atuais (mostrados no anexo) como matéria-prima e reescrever ambos no estilo Campanhas.
 
-### 5. i18n
-Reaproveitar as chaves existentes `results.simulateButton` e `results.closeSimulation` já usadas em Personalização. Nenhuma nova string necessária.
+## O que vai mudar
 
-## Detalhes técnicos
-- Preferência: extrair `SimulationLauncher` genérico em `src/components/kiosk/SimulationLauncher.tsx` (mesmo markup do atual `PersonalizationSimulationLauncher`) recebendo `children`. `PersonalizationSimulationLauncher` passa a ser um wrapper fino ou é substituído nos dois pontos de uso em `SolutionDemoBlock`.
-- Timeline em `PropensityCampaignDemo`: reaproveitar o padrão CSS/flex de Personalização (pontos em `flex justify-between`, linha coral fina, preenchimento por `width: progress/steps * 100%`).
-- Tudo continua em `vmin` para escalar no totem 27" retrato.
+Arquivo único: `src/data/kiosk/demos/predictivePersonalization.ts` — apenas os campos `label` e `microMetric` (PT+EN) de cada `feature` dentro dos 4 cenários. Nenhum outro campo (`durationMs`, `scenarioIntro`, `categoryReading`, `recsRationale`, catálogos, imagens) muda.
 
-## Estrutura resultante (dentro do modal, empilhada)
+Cenários e mapeamento proposto (PT — EN análogo):
 
-```text
-[ CRM / Setup ] → [ Resultado da campanha ]
-[ Voltar ao setup ] [ KPI 1 ] [ KPI 2 ] [ KPI 3 ]
---------------------------------------------------
-| POR QUE  · argumento em 1–3 linhas · 42.17 ms  |
---------------------------------------------------
-[ ●───●───●───●  ]   ← timeline horizontal
- Sinal  Feats  Score  Rank
-```
+### 1) `logged-products` (Cross-sell)
+1. **Lendo o histórico de navegação e compra do cliente** — Sessões, cliques e transações dos últimos 30 dias no perfil identificado.
+2. **Identificando as categorias de maior afinidade** — Áudio e periféricos concentram o interesse recente deste cliente.
+3. **Mapeando produtos que costumam ser vistos e comprados juntos** — Grafo de co-visualização e co-compra a 2 níveis a partir do item âncora.
+4. **Aplicando contexto de estoque, preço e sazonalidade** — Só entram no ranking itens disponíveis, com preço competitivo e coerentes com o momento.
+5. **Ranqueando as melhores recomendações de cross-sell** — Modelo i6RecSys prioriza combinações com maior probabilidade de compra conjunta.
+
+### 2) `logged-fashion` (Cross-sell · Look)
+1. **Lendo o histórico de estilo e navegação do cliente** — Peças visualizadas e compradas nos últimos 30 dias no perfil identificado.
+2. **Inferindo estilo e paleta preferidos** — Cluster de estilo urban-minimal, com preferência por tons neutros e caimento reto.
+3. **Buscando peças que combinam com a âncora escolhida** — Grafo de co-look identifica bottoms, calçados e sobreposições que fecham a composição.
+4. **Ajustando o look ao contexto de estação, região e estoque** — Só permanecem peças coerentes com clima/geo e disponíveis para retirada rápida.
+5. **Compondo o look final priorizando ticket médio** — Outfit composer i6RecSys prioriza combinações que elevam o valor do carrinho sem quebrar o estilo.
+
+### 3) `anon-products` (Descoberta)
+1. **Lendo os sinais desta sessão anônima** — Região, horário, canal de entrada e tipo de dispositivo para dar contexto ao modelo.
+2. **Encontrando clientes com comportamento parecido** — Embeddings de sessão aproximam esta visita a clusters de compradores similares.
+3. **Filtrando por catálogo disponível e tendências do momento** — Só entram itens em estoque, com preço saudável e com tração recente.
+4. **Rankeando descobertas com maior chance de engajar** — Modelo i6RecSys aprende em tempo real quais produtos convertem melhor neste tipo de sessão.
+
+### 4) `anon-fashion` (Descoberta · Look)
+1. **Lendo os sinais desta visita anônima** — Clima, região, horário e canal de entrada guiam a leitura da intenção.
+2. **Encontrando visitas parecidas para inferir preferências** — Embeddings de sessão aproximam esta visita de perfis de estilo similares.
+3. **Inferindo o estilo e a paleta prováveis desta sessão** — Estilo inferido com confiança moderada, base para compor peças que combinam entre si.
+4. **Compondo um look coerente com o contexto atual** — Outfit composer i6RecSys prioriza uma combinação alinhada ao clima, ao momento e ao item explorado.
+
+Cada um recebe também a tradução equivalente em `en`.
+
+## Componente / render
+
+`src/components/kiosk/demos/PredictivePersonalizationDemo.tsx` **não muda** — ele já renderiza `step.label[lang]` e `step.microMetric[lang]` na timeline horizontal (mesmo layout de Campanhas). Só os textos-fonte é que ficam mais descritivos, então visualmente o step passa a comunicar valor de negócio como em Campanhas.
+
+## Fora de escopo
+
+- Campanhas por Propensão (não mexer)
+- Layout, animação, durações, catálogos, imagens, `scenarioIntro`, `categoryReading`, `recsRationale`
+- Publicação (release/tag) — só quando você pedir
