@@ -409,10 +409,6 @@ const SetupView = ({
         <FilterRow label="Filtros">
           <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
           <TouchSelect label="Região / Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col justify-center px-[1.4vmin]">
-            <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/55">Portfólio</span>
-            <span className="text-[1.7vmin] font-semibold text-white">{filtered.length} SKUs</span>
-          </div>
         </FilterRow>
 
         <FilterRow label="Restrições">
