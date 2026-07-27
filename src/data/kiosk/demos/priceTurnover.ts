@@ -2,33 +2,42 @@
 
 export type ClusterAction = 'hold' | 'markdown' | 'wait';
 
+export interface SkuRow {
+  sku: string;
+  name: string;
+  currentPrice: number;
+  recommendedPrice: number;
+  markdownPct: number;
+  sellThroughProjectedPct: number;
+}
+
 export interface TurnoverCluster {
   id: string;
   name: string;
   region: string;
-  // Coords in the SVG viewBox (0..400 x, 0..500 y) approximating Brazil
   x: number;
   y: number;
   stores: number;
   stockUnits: number;
   avgStockAgeDays: number;
-  sellVelocity: number; // un/sem
+  sellVelocity: number;
   categoryAvgVelocity: number;
   currentPrice: number;
   currentMarkdownPct: number;
-  remainingMarginPp: number; // pp
+  remainingMarginPp: number;
   elasticity: number;
   situation: string;
   action: ClusterAction;
   recommendedPrice: number;
-  recommendedMarkdownPct: number; // 0 when hold/wait
+  recommendedMarkdownPct: number;
   nextAction: string;
-  actInDays: number; // 0 today, 14 for wait
+  actInDays: number;
   sellThroughProjectedPct: number;
   agedStockPct: number;
   marginPreservedPp: number;
   capitalUnlockedBRL: number;
   argument: string;
+  skus: SkuRow[];
 }
 
 export interface PipelineStep {
