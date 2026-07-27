@@ -1,10 +1,16 @@
-Adicionar um rótulo "SELECIONE UMA CATEGORIA E TIPO DE CLIENTE" imediatamente acima do quadro da matriz de seleção (faixas MODA / BENS DE CONSUMO) na demo de **Personalização + Descoberta Preditiva**, usando o mesmo design do rótulo "ESCOLHA UM PRODUTO OU OFERTA" (anexo 2).
+Aumentar visualmente os cards de KPI (UPLIFT NO TICKET, PROPENSÃO CROSS-SELL, CONFIANÇA e o botão "Voltar à vitrine") na demo de **Personalização + Descoberta Preditiva**, encolhendo levemente os tiles de produto para preservar a altura da coluna esquerda.
 
-## Alteração
-- `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`: inserir um `<span>` logo antes do container da matriz de seleção com as classes:
-  `block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1.2vmin]`
-- Localização:
-  - PT: `SELECIONE UMA CATEGORIA E TIPO DE CLIENTE`
-  - EN: `SELECT A CATEGORY AND CUSTOMER TYPE`
+## Alterações em `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`
 
-Sem alterar o quadro atual — apenas adiciona a linha de rótulo acima.
+1. `MetricPill` (linhas 26–50):
+   - `px-[1.2vmin] py-[0.9vmin]` → `px-[1.8vmin] py-[1.5vmin]`
+   - label: `text-[1vmin]` → `text-[1.25vmin]`, `mb-[0.2vmin]` → `mb-[0.6vmin]`
+   - valor: `text-[1.7vmin]` → `text-[2.4vmin]`, ícone `w-[1.5vmin] h-[1.5vmin]` → `w-[2vmin] h-[2vmin]`
+2. Botão "Voltar à vitrine" (linha 365): `py-[1.2vmin]` → `py-[1.8vmin]`, `text-[1.5vmin]` → `text-[1.7vmin]` para acompanhar a nova altura.
+3. `SkuTile` variante `small` (linhas 72–89):
+   - padding `p-[1.3vmin]` → `p-[1.1vmin]`
+   - categoria `text-[1.15vmin]` → `text-[1.05vmin]`
+   - nome `text-[1.5vmin]` → `text-[1.35vmin]`, `min-h-[3.4vmin]` → `min-h-[3vmin]`
+   - preço `text-[1.5vmin]` → `text-[1.4vmin]`
+
+Sem outras mudanças estruturais.
