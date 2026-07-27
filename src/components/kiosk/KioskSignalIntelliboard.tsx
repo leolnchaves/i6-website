@@ -26,6 +26,11 @@ import {
   MixGapsHeatmap,
   MixGapsTable,
   MixGapsDetailList,
+  MarginOpportunitiesScatter,
+  MarginOpportunitiesTable,
+  MarginBehaviorReading,
+  MarginSignalsChart,
+  MarginSignalsTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
@@ -339,7 +344,30 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                 </>
               )}
 
-              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps') && 'reasoning' in scenario && (
+              {activeScenario === 'marginOpportunities' && 'scatter' in scenario && 'skuTable' in scenario && (
+                <>
+                  <MarginOpportunitiesScatter
+                    data={(scenario as typeof t.scenarios.marginOpportunities).scatter}
+                    lang={lang}
+                  />
+                  <MarginOpportunitiesTable data={(scenario as typeof t.scenarios.marginOpportunities).skuTable} />
+                  <MarginBehaviorReading
+                    paragraphs={(scenario as typeof t.scenarios.marginOpportunities).behaviorReading}
+                    lang={lang}
+                  />
+                </>
+              )}
+              {activeScenario === 'marginSignals' && 'signalsChart' in scenario && (
+                <>
+                  <MarginSignalsChart
+                    data={(scenario as typeof t.scenarios.marginSignals).signalsChart}
+                    lang={lang}
+                  />
+                  <MarginSignalsTable data={(scenario as typeof t.scenarios.marginSignals).signalsTable} />
+                </>
+              )}
+
+              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps' || activeScenario === 'marginSignals') && 'reasoning' in scenario && (
                 <div className="mt-[2.5vmin] rounded-[1.4vmin] border border-orange-200 bg-orange-50/60 p-[2vmin]">
                   <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                     <Brain className="w-[2vmin] h-[2vmin] text-orange-500" />
