@@ -746,4 +746,248 @@ export const MixGapsDetailList = ({ items, lang }: { items: string[]; lang: stri
   </div>
 );
 
+// ============================================================================
+// Preço Orientado à Margem
+// ============================================================================
+
+const MARGIN_QUADRANT_COLORS: Record<string, string> = {
+  priority:   '#10b981', // verde — prioridade de aumento
+  controlled: '#3b82f6', // azul — ajuste controlado
+  hold:       '#6b7280', // cinza — manter
+  volume:     '#f59e0b', // âmbar — reduzir p/ ganho de volume
+  risk:       '#ef4444', // vermelho — risco
+};
+
+const MARGIN_QUADRANT_LABELS: Record<string, { pt: string; en: string }> = {
+  priority:   { pt: 'Prioridade de margem', en: 'Margin priority' },
+  controlled: { pt: 'Ajuste controlado',    en: 'Controlled adjust' },
+  hold:       { pt: 'Manter preço',         en: 'Hold price' },
+  volume:     { pt: 'Reduzir p/ volume',    en: 'Reduce for volume' },
+  risk:       { pt: 'Risco',                en: 'Risk' },
+};
+
+type MarginScatterPoint = { sensitivity: number; incrementalMargin: number; size: number; label: string; quadrant: string };
+
+export const MarginOpportunitiesScatter = ({ data, lang }: { data: MarginScatterPoint[]; lang: string }) => {
+  const quadrants: string[] = ['priority', 'controlled', 'hold', 'volume', 'risk'];
+  return (
+    <div className="my-4">
+      <div className="h-[280px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <ScatterChart margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+            <XAxis
+              type="number"
+              dataKey="sensitivity"
+              domain={[0, 100]}
+              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tickFormatter={(v) => `${v}`}
+              label={{ value: lang === 'pt' ? 'Sensibilidade prevista ao preço' : 'Predicted price sensitivity', position: 'insideBottom', offset: -4, fill: '#6b7280', fontSize: 11 }}
+            />
+            <YAxis
+              type="number"
+              dataKey="incrementalMargin"
+              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tickFormatter={(v) => `${v}k`}
+              label={{ value: lang === 'pt' ? 'Margem incremental (R$ mil)' : 'Incremental margin ($ k)', angle: -90, position: 'insideLeft', fill: '#6b7280', fontSize: 11 }}
+            />
+            <ZAxis type="number" dataKey="size" range={[120, 900]} />
+            <ReferenceLine x={50} stroke="#9ca3af" strokeDasharray="4 4" />
+            <ReferenceLine y={0} stroke="#9ca3af" strokeDasharray="4 4" />
+            <Tooltip
+              cursor={{ strokeDasharray: '3 3' }}
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+              formatter={(value: number, name: string) => {
+                if (name === 'sensitivity') return [`${value}`, lang === 'pt' ? 'Sensibilidade' : 'Sensitivity'];
+                if (name === 'incrementalMargin') return [`${value >= 0 ? '+' : ''}${value}k`, lang === 'pt' ? 'Margem incremental' : 'Incremental margin'];
+                if (name === 'size') return [value.toLocaleString(lang === 'pt' ? 'pt-BR' : 'en-US'), lang === 'pt' ? 'Receita relativa' : 'Relative revenue'];
+                return [value, name];
+              }}
+              labelFormatter={(_, payload) => (payload?.[0]?.payload as MarginScatterPoint | undefined)?.label ?? ''}
+            />
+            {quadrants.map((q) => (
+              <Scatter key={q} name={MARGIN_QUADRANT_LABELS[q][lang === 'pt' ? 'pt' : 'en']} data={data.filter((d) => d.quadrant === q)} fill={MARGIN_QUADRANT_COLORS[q]}>
+                {data.filter((d) => d.quadrant === q).map((_, i) => (
+                  <Cell key={i} fill={MARGIN_QUADRANT_COLORS[q]} fillOpacity={0.75} stroke={MARGIN_QUADRANT_COLORS[q]} />
+                ))}
+              </Scatter>
+            ))}
+            <Legend wrapperStyle={{ color: '#6b7280', fontSize: '11px', paddingTop: '8px' }} />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </div>
+      <p className="text-gray-400 text-xs mt-3 leading-relaxed">
+        {lang === 'pt'
+          ? 'Eixo X: sensibilidade prevista ao preço. Eixo Y: margem incremental potencial. Tamanho da bolha: receita relativa do SKU.'
+          : 'X axis: predicted price sensitivity. Y axis: potential incremental margin. Bubble size: SKU relative revenue.'}
+      </p>
+    </div>
+  );
+};
+
+const volumeReactionTone = (raw: string): string => {
+  if (raw.startsWith('+')) return 'text-amber-600 font-semibold';
+  if (raw.startsWith('−') || raw.startsWith('-')) {
+    const n = Math.abs(parseFloat(raw.replace(/[^\d.,-]/g, '').replace(',', '.')));
+    if (!isNaN(n) && n >= 5) return 'text-red-600 font-semibold';
+    return 'text-emerald-700 font-semibold';
+  }
+  return 'text-gray-800';
+};
+
+const incrementalMarginTone = (raw: string): string => {
+  if (raw.toLowerCase().includes('sem') || raw.toLowerCase().includes('no ')) return 'text-gray-500 italic';
+  if (raw.startsWith('+')) return 'text-emerald-700 font-bold';
+  return 'text-gray-800';
+};
+
+export const MarginOpportunitiesTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
+  <div className="overflow-x-auto my-4">
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="border-b border-gray-200 bg-gray-50/60">
+          {data.headers.map((h, i) => (
+            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-right'}`}>
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.rows.map((row, ri) => (
+          <tr key={ri} className="border-b border-gray-100">
+            {row.map((cell, ci) => {
+              if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+              if (ci === 3) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${volumeReactionTone(cell)}`}>{cell}</td>;
+              if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${incrementalMarginTone(cell)}`}>{cell}</td>;
+              if (ci === 5) return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-orange-600 font-semibold">{cell}</td>;
+              return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-gray-800">{cell}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+export const MarginBehaviorReading = ({ paragraphs, lang }: { paragraphs: string[]; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Leitura comportamental' : 'Behavioral reading'}
+    </p>
+    <div className="space-y-2">
+      {paragraphs.map((p, i) => (
+        <p key={i} className="text-gray-700 text-sm leading-relaxed">{p}</p>
+      ))}
+    </div>
+  </div>
+);
+
+type MarginSignalRow = {
+  sku: string;
+  demand: number;
+  sensitivity: number;
+  competition: number;
+  stock: number;
+  currentMargin: number;
+  category: number;
+};
+
+const MARGIN_SIGNAL_KEYS: { key: keyof Omit<MarginSignalRow, 'sku'>; pt: string; en: string; color: string }[] = [
+  { key: 'demand',        pt: 'Demanda prevista',       en: 'Predicted demand',    color: '#F4845F' },
+  { key: 'sensitivity',   pt: 'Sensibilidade ao preço', en: 'Price sensitivity',   color: '#3b82f6' },
+  { key: 'competition',   pt: 'Posição competitiva',    en: 'Competitive position', color: '#10b981' },
+  { key: 'stock',         pt: 'Estoque disponível',     en: 'Available stock',     color: '#f59e0b' },
+  { key: 'currentMargin', pt: 'Margem atual',           en: 'Current margin',      color: '#8b5cf6' },
+  { key: 'category',      pt: 'Comportamento da categoria', en: 'Category behavior', color: '#06b6d4' },
+];
+
+export const MarginSignalsChart = ({ data, lang }: { data: MarginSignalRow[]; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Contribuição dos sinais por SKU' : 'Signal contribution by SKU'}
+    </p>
+    <div className="h-[300px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 5, right: 20, left: 10, bottom: 5 }} stackOffset="sign">
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+          <XAxis dataKey="sku" stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} />
+          <YAxis stroke="rgba(0,0,0,0.4)" tick={{ fontSize: 12, fill: '#6b7280' }} />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+            labelStyle={{ color: '#6b7280' }}
+            formatter={(value: number, name: string) => [`${value > 0 ? '+' : ''}${value}`, name]}
+          />
+          <Legend wrapperStyle={{ color: '#6b7280', fontSize: '11px' }} />
+          <ReferenceLine y={0} stroke="#9ca3af" />
+          {MARGIN_SIGNAL_KEYS.map((s) => (
+            <Bar
+              key={s.key}
+              dataKey={s.key}
+              name={lang === 'pt' ? s.pt : s.en}
+              stackId="signals"
+              fill={s.color}
+              radius={[2, 2, 0, 0]}
+            />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+    <p className="text-gray-400 text-xs mt-3 leading-relaxed">
+      {lang === 'pt'
+        ? 'Barras positivas indicam sinais que abrem espaço para captura de margem. Barras negativas indicam restrições que limitam o aumento de preço.'
+        : 'Positive bars indicate signals that open room for margin capture. Negative bars indicate constraints that limit price increases.'}
+    </p>
+  </div>
+);
+
+const marginRoomTone = (raw: string): string => {
+  const v = raw.toLowerCase();
+  if (v.startsWith('alto') || v.startsWith('high')) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+  if (v.startsWith('médio') || v.startsWith('medio') || v.startsWith('medium')) return 'bg-blue-50 text-blue-700 border-blue-200';
+  if (v.startsWith('baixo') || v.startsWith('low')) return 'bg-amber-50 text-amber-700 border-amber-200';
+  if (v.startsWith('negativo') || v.startsWith('negative')) return 'bg-red-50 text-red-700 border-red-200';
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+const directionTone = (raw: string): string => {
+  const v = raw.toLowerCase();
+  if (v.startsWith('aumentar') || v.startsWith('increase')) return 'text-emerald-700 font-semibold';
+  if (v.startsWith('ajuste') || v.startsWith('controlled')) return 'text-blue-700 font-semibold';
+  if (v.startsWith('manter') || v.startsWith('hold')) return 'text-gray-700 font-semibold';
+  if (v.startsWith('reduzir') || v.startsWith('reduce')) return 'text-amber-700 font-semibold';
+  return 'text-gray-800';
+};
+
+export const MarginSignalsTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
+  <div className="overflow-x-auto my-4">
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="border-b border-gray-200 bg-gray-50/60">
+          {data.headers.map((h, i) => (
+            <th key={i} className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.rows.map((row, ri) => (
+          <tr key={ri} className="border-b border-gray-100">
+            {row.map((cell, ci) => {
+              if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+              if (ci === 1) return (
+                <td key={ci} className="py-2.5 px-3 text-left">
+                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border ${marginRoomTone(cell)}`}>{cell}</span>
+                </td>
+              );
+              if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-left ${directionTone(cell)}`}>{cell}</td>;
+              return <td key={ci} className="py-2.5 px-3 text-left text-gray-800">{cell}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
 

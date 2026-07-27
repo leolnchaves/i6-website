@@ -408,14 +408,14 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
 /**
  * Map from solutionId → i6Signal scenario keys to show for that solution.
  */
-export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps')[]> = {
+export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals')[]> = {
   'predictive-personalization': ['pdv', 'comercial'],
   'smart-discovery': ['pdv', 'comercial'],
   'predictive-campaign-targeting': ['propensity', 'clusters'],
   'demand-forecasting': ['forecast', 'supply'],
   'predictive-commercial-targets': ['targetsPotential', 'targetsRisk'],
   'mix-assortment-order': ['mixBehavior', 'mixGaps'],
-  'price-to-margin': ['pricing', 'mix'],
+  'price-to-margin': ['marginOpportunities', 'marginSignals'],
   'price-to-turnover': ['pricing', 'supply'],
   'price-to-conversion': ['pricing', 'comercial'],
 };
