@@ -305,21 +305,20 @@ const PriceMarginDemo = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-[1vmin]">
-                <MetricPill label="Latência do modelo" value={`${latencyMs} ms`} hint="média mercado ~180 ms" />
+              <div className="grid grid-cols-3 gap-[1vmin]">
                 <MetricPill
                   label="Confiança"
-                  value={`${selected.confidencePct}%`}
+                  value={`${(derived ?? selected).confidencePct}%`}
                 />
                 <MetricPill
                   label="Impacto na margem"
-                  value={`+${selected.marginImpactPp.toFixed(1)} pp`}
+                  value={`+${(derived ?? selected).marginImpactPp.toFixed(1)} pp`}
                   highlight
                   trend="up"
                 />
                 <MetricPill
                   label="Impacto no volume"
-                  value={`${selected.volumeImpactPct.toFixed(1)}%`}
+                  value={`${(derived ?? selected).volumeImpactPct.toFixed(1)}%`}
                   trend="down"
                 />
               </div>
