@@ -572,6 +572,14 @@ const ResultLeft = ({
       </div>
 
       <MarkdownRuler derived={derived} price={derived.recommendedPrice} />
+
+      {/* Post-model KPIs (left column) */}
+      <div className="grid grid-cols-4 gap-[0.8vmin]">
+        <KpiPill label="Estoque envelhecido" value={`${derived.agedStockPct}%`} />
+        <KpiPill label="Sell-through projetado" value={`${derived.sellThroughProjectedPct}%`} highlight />
+        <KpiPill label="Margem preservada" value={`+${derived.marginPreservedPp.toFixed(1)} pp`} highlight />
+        <KpiPill label="Capital liberado" value={fmtBRLk(derived.capitalUnlockedBRL)} />
+      </div>
     </>
   );
 };
