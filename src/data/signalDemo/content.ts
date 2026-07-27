@@ -1,7 +1,7 @@
 // Shared content + types for the i6 Signal Intelliboard demo.
 // Consumed by both /solutions (I6SignalDemo) and /kiosk (KioskSignalIntelliboard).
 
-export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters';
+export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk';
 export type Phase = 'idle' | 'typing' | 'responding';
 
 export const TYPING_SPEED = 30;
@@ -233,6 +233,78 @@ export const signalDemoContent = {
           'Qual cluster tem maior migração positiva (upgrade de valor)?',
         ],
       },
+      targetsPotential: {
+        label: 'Potencial de Metas',
+        question: 'Onde está o maior potencial de crescimento de volume por região?',
+        title: 'Potencial preditivo de crescimento e distribuição de metas',
+        analysis: 'O modelo identificou potencial incremental de 186 mil unidades para o próximo trimestre. Desse volume, 64% está concentrado em três combinações de região, cliente e SKU que atualmente recebem metas abaixo de sua capacidade prevista. O Interior de São Paulo apresenta a maior oportunidade, impulsionada pelos SKUs A e C e por clientes com expansão de demanda ainda não refletida nas metas atuais.',
+        potentialTable: {
+          headers: ['Região', 'Vendedor', 'Cliente', 'SKU', 'Meta atual', 'Meta sugerida', 'Potencial'],
+          rows: [
+            ['Interior de SP', 'Carlos', 'Cliente A', 'SKU A', '12.000', '15.400', '16.100'],
+            ['Interior de SP', 'Carlos', 'Cliente B', 'SKU C', '8.500', '10.200', '10.700'],
+            ['Minas Gerais', 'Marina', 'Cliente D', 'SKU B', '9.800', '8.900', '9.200'],
+            ['Sul', 'Rafael', 'Cliente F', 'SKU A', '7.200', '8.600', '9.000'],
+          ],
+        },
+        reasoning: 'A meta do Cliente A foi elevada porque o modelo prevê aumento de demanda para o SKU A, maior capacidade de absorção e expansão da categoria na região. Já a meta do Cliente D foi reduzida porque o volume atual está acima do potencial previsto e exigiria esforço comercial desproporcional para ser atingido.',
+        actions: [
+          { bold: 'Adicionar 3.400 unidades à meta do Cliente A', text: 'para o SKU A, preservando uma faixa de segurança abaixo do potencial máximo.' },
+          { bold: 'Reduzir a meta do Cliente D em 900 unidades', text: 'evitando pressão comercial sem demanda correspondente.' },
+          { bold: 'Redistribuir metas', text: 'dos vendedores com territórios saturados para carteiras com maior potencial incremental.' },
+        ],
+        questions: [
+          'Quais vendedores estão com carteiras saturadas em relação ao potencial?',
+          'Como o potencial se distribui entre SKUs A, B e C nas próximas 12 semanas?',
+          'Qual o impacto financeiro de recalibrar as 3 combinações prioritárias?',
+        ],
+      },
+      targetsRisk: {
+        label: 'Risco de Meta',
+        question: 'Quais metas apresentam maior risco de não serem atingidas ou estão abaixo do potencial previsto?',
+        title: 'Risco preditivo de atingimento e recalibração de metas',
+        analysis: 'O modelo identificou 27 combinações de vendedor, cliente e SKU com metas desalinhadas para o próximo trimestre. Onze apresentam risco elevado de não atingimento, principalmente por desaceleração da demanda, queda de frequência de compra e redução da capacidade de absorção dos clientes. Outras 16 estão abaixo do potencial previsto e podem limitar o crescimento comercial mesmo com comportamento favorável de demanda.',
+        scatter: [
+          { probability: 94, delta: 3100, size: 15100, label: 'Carlos • Cliente A • SKU A', quadrant: 'below' },
+          { probability: 38, delta: -2200, size: 7600, label: 'Marina • Cliente D • SKU B', quadrant: 'above' },
+          { probability: 82, delta: 300, size: 8700, label: 'Rafael • Cliente F • SKU C', quadrant: 'match' },
+          { probability: 89, delta: 1400, size: 7900, label: 'Paula • Cliente H • SKU D', quadrant: 'below' },
+          { probability: 71, delta: 900, size: 6200, label: 'André • Cliente J • SKU A', quadrant: 'below' },
+          { probability: 44, delta: -1600, size: 5400, label: 'Lívia • Cliente K • SKU C', quadrant: 'above' },
+          { probability: 55, delta: -400, size: 4800, label: 'Bruno • Cliente L • SKU B', quadrant: 'uncertain' },
+          { probability: 63, delta: 200, size: 5600, label: 'Sofia • Cliente M • SKU D', quadrant: 'match' },
+        ],
+        riskTable: {
+          headers: ['Vendedor', 'Cliente', 'SKU', 'Meta atual', 'Volume projetado', 'Prob. atingimento', 'Diagnóstico'],
+          rows: [
+            ['Carlos', 'Cliente A', 'SKU A', '12.000', '15.100', '94%', 'Meta abaixo do potencial'],
+            ['Marina', 'Cliente D', 'SKU B', '9.800', '7.600', '38%', 'Meta acima do potencial'],
+            ['Rafael', 'Cliente F', 'SKU C', '8.400', '8.700', '82%', 'Meta compatível'],
+            ['Paula', 'Cliente H', 'SKU D', '6.500', '7.900', '89%', 'Oportunidade de expansão'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Sinal comportamental', 'Cliente A', 'Cliente D'],
+          rows: [
+            ['Frequência prevista de compra', '+18%', '−12%'],
+            ['Volume médio por pedido', '+9%', '−7%'],
+            ['Potencial de expansão de mix', 'Alto', 'Baixo'],
+            ['Demanda prevista do SKU', '+21%', '−14%'],
+            ['Probabilidade de recompra', '86%', '43%'],
+          ],
+        },
+        reasoning: 'A meta do Cliente A está abaixo do potencial porque o modelo prevê maior frequência de compra, crescimento do volume médio e expansão da demanda do SKU A. Mantê-la no nível atual pode limitar a captura de um comportamento de crescimento já identificado. Já a meta do Cliente D está acima do potencial previsto: o cliente apresenta desaceleração de compras, redução do volume por pedido e menor probabilidade de recompra do SKU B — manter a meta gera pressão sobre o vendedor sem demanda para sustentá-la.',
+        actions: [
+          { bold: 'Elevar metas com probabilidade > 85%', text: 'e potencial ainda não capturado, priorizando SKU A em clientes com sinais positivos.' },
+          { bold: 'Recalibrar metas com probabilidade < 50%', text: 'redistribuindo o volume para clientes e SKUs com comportamento mais favorável.' },
+          { bold: 'Revisar mensalmente metas de alta incerteza', text: 'incorporando mudanças de frequência, mix, demanda e recompra.' },
+        ],
+        questions: [
+          'Quais vendedores concentram o maior número de metas em risco?',
+          'Como priorizar recalibragens dentro do trimestre em curso?',
+          'Qual o ganho esperado ao redistribuir o volume das metas em risco?',
+        ],
+      },
     },
   },
   en: {
@@ -458,6 +530,78 @@ export const signalDemoContent = {
           'What is the projected LTV per cluster over the next 12 months?',
           'How to avoid contact overlap across cadences?',
           'Which cluster shows the highest positive migration (value upgrade)?',
+        ],
+      },
+      targetsPotential: {
+        label: 'Target Potential',
+        question: 'Where is the largest volume growth potential by region?',
+        title: 'Predictive growth potential and target distribution',
+        analysis: 'The model identified 186k units of incremental potential for the next quarter. 64% of that volume is concentrated in three combinations of region, client and SKU that currently receive targets below their predicted capacity. São Paulo Countryside shows the largest opportunity, driven by SKUs A and C and by clients whose demand expansion is not yet reflected in current targets.',
+        potentialTable: {
+          headers: ['Region', 'Rep', 'Client', 'SKU', 'Current target', 'Suggested target', 'Potential'],
+          rows: [
+            ['São Paulo Countryside', 'Carlos', 'Client A', 'SKU A', '12,000', '15,400', '16,100'],
+            ['São Paulo Countryside', 'Carlos', 'Client B', 'SKU C', '8,500', '10,200', '10,700'],
+            ['Minas Gerais', 'Marina', 'Client D', 'SKU B', '9,800', '8,900', '9,200'],
+            ['South', 'Rafael', 'Client F', 'SKU A', '7,200', '8,600', '9,000'],
+          ],
+        },
+        reasoning: 'Client A\u2019s target was raised because the model predicts higher demand for SKU A, stronger absorption capacity and category expansion in the region. Client D\u2019s target was lowered because current volume already sits above the predicted potential and would require disproportionate commercial effort to be reached.',
+        actions: [
+          { bold: 'Add 3,400 units to Client A\u2019s target', text: 'for SKU A, keeping a safety band below the maximum potential.' },
+          { bold: 'Reduce Client D\u2019s target by 900 units', text: 'avoiding commercial pressure without matching demand.' },
+          { bold: 'Redistribute targets', text: 'from reps with saturated territories to portfolios with higher incremental potential.' },
+        ],
+        questions: [
+          'Which reps carry saturated portfolios relative to potential?',
+          'How does potential split across SKUs A, B and C over the next 12 weeks?',
+          'What is the financial impact of recalibrating the 3 priority combinations?',
+        ],
+      },
+      targetsRisk: {
+        label: 'Target Risk',
+        question: 'Which targets show the highest risk of miss or sit below predicted potential?',
+        title: 'Predictive attainment risk and target recalibration',
+        analysis: 'The model identified 27 rep-client-SKU combinations with misaligned targets for the next quarter. Eleven show high risk of miss, mainly due to demand deceleration, lower purchase frequency and reduced client absorption capacity. Another 16 sit below predicted potential and may cap commercial growth even with favorable demand behavior.',
+        scatter: [
+          { probability: 94, delta: 3100, size: 15100, label: 'Carlos • Client A • SKU A', quadrant: 'below' },
+          { probability: 38, delta: -2200, size: 7600, label: 'Marina • Client D • SKU B', quadrant: 'above' },
+          { probability: 82, delta: 300, size: 8700, label: 'Rafael • Client F • SKU C', quadrant: 'match' },
+          { probability: 89, delta: 1400, size: 7900, label: 'Paula • Client H • SKU D', quadrant: 'below' },
+          { probability: 71, delta: 900, size: 6200, label: 'André • Client J • SKU A', quadrant: 'below' },
+          { probability: 44, delta: -1600, size: 5400, label: 'Lívia • Client K • SKU C', quadrant: 'above' },
+          { probability: 55, delta: -400, size: 4800, label: 'Bruno • Client L • SKU B', quadrant: 'uncertain' },
+          { probability: 63, delta: 200, size: 5600, label: 'Sofia • Client M • SKU D', quadrant: 'match' },
+        ],
+        riskTable: {
+          headers: ['Rep', 'Client', 'SKU', 'Current target', 'Projected volume', 'Attain. prob.', 'Diagnosis'],
+          rows: [
+            ['Carlos', 'Client A', 'SKU A', '12,000', '15,100', '94%', 'Target below potential'],
+            ['Marina', 'Client D', 'SKU B', '9,800', '7,600', '38%', 'Target above potential'],
+            ['Rafael', 'Client F', 'SKU C', '8,400', '8,700', '82%', 'Target aligned'],
+            ['Paula', 'Client H', 'SKU D', '6,500', '7,900', '89%', 'Expansion opportunity'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Behavioral signal', 'Client A', 'Client D'],
+          rows: [
+            ['Predicted purchase frequency', '+18%', '−12%'],
+            ['Avg. volume per order', '+9%', '−7%'],
+            ['Mix expansion potential', 'High', 'Low'],
+            ['Predicted SKU demand', '+21%', '−14%'],
+            ['Repurchase probability', '86%', '43%'],
+          ],
+        },
+        reasoning: 'Client A\u2019s target sits below potential because the model predicts higher purchase frequency, growing average volume and expanding demand for SKU A. Keeping it at the current level may cap the capture of a growth behavior already identified. Client D\u2019s target sits above the predicted potential: the client shows purchase deceleration, lower volume per order and reduced repurchase probability of SKU B — keeping the target creates pressure on the rep without demand to sustain it.',
+        actions: [
+          { bold: 'Raise targets with attainment probability > 85%', text: 'and potential not yet captured, prioritizing SKU A in clients with positive signals.' },
+          { bold: 'Recalibrate targets with probability < 50%', text: 'redistributing volume to clients and SKUs with more favorable behavior.' },
+          { bold: 'Review high-uncertainty targets monthly', text: 'incorporating changes in frequency, mix, demand and repurchase.' },
+        ],
+        questions: [
+          'Which reps concentrate the largest number of at-risk targets?',
+          'How to prioritize recalibrations within the ongoing quarter?',
+          'What is the expected gain from redistributing at-risk target volume?',
         ],
       },
     },
