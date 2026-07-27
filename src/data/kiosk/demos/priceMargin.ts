@@ -93,7 +93,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 3.2,
     volumeImpactPct: -1.4,
     argument:
-      'Nas últimas 8 semanas o SKU manteve giro estável mesmo após 3 reajustes de até +4%. Concorrentes diretos estão operando entre R$ 95 e R$ 99, e a base de clientes recorrentes (58% do volume) não migrou nos últimos ciclos. A faixa recomendada captura margem adicional sem sair da banda competitiva percebida no PDV.',
+      'Sensibilidade de preço baixa (elasticidade −0,42): cada +1% em preço projeta apenas −0,42% em volume dentro da faixa recomendada. A projeção de demanda para as próximas 6 semanas indica tendência de alta suave (+3,2% vs. ciclo anterior) puxada por reposição do canal, sem sazonalidade adversa no horizonte. Concorrentes operam entre R$ 95 e R$ 99 e a base recorrente (58% do volume) não migrou nos últimos 3 reajustes de até +4%, o que sustenta o reajuste dentro da banda competitiva.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
