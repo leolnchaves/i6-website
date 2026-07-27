@@ -312,7 +312,7 @@ export const labels = {
     product: 'ESCOLHA UM PRODUTO OU OFERTA',
     audience: 'Público disponível',
     period: 'Período da campanha',
-    channels: 'Canais permitidos',
+    channels: 'SELECIONE OS CANAIS DESEJADOS',
     cta: 'Calcular melhor audiência',
     channelsHint: 'Selecione um ou mais canais',
   },
