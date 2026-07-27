@@ -71,7 +71,7 @@ const SkuTile = ({
         onClick ? 'hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06] active:scale-[0.98]' : ''
       } ${small ? 'p-[1.1vmin]' : 'p-[1.6vmin]'}`}
     >
-      <div className="aspect-[16/17] rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[1vmin] flex items-center justify-center">
+      <div className="aspect-[16/14] rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[1vmin] flex items-center justify-center">
         <img src={sku.image} alt="" loading="lazy" className="w-full h-full object-cover" />
       </div>
       <span
