@@ -38,6 +38,7 @@ const SimulationLauncher = ({
   secondaryResolve,
   secondaryEntrega,
   secondaryImpacto,
+  icon: Icon = Sparkles,
   children,
 }: Props) => {
   const [open, setOpen] = useState(false);
