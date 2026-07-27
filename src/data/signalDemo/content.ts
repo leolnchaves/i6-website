@@ -1,7 +1,7 @@
 // Shared content + types for the i6 Signal Intelliboard demo.
 // Consumed by both /solutions (I6SignalDemo) and /kiosk (KioskSignalIntelliboard).
 
-export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals';
+export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown';
 export type Phase = 'idle' | 'typing' | 'responding';
 
 export const TYPING_SPEED = 30;
@@ -465,7 +465,79 @@ export const signalDemoContent = {
           'Como priorizar decisões quando dois sinais se contradizem?',
         ],
       },
+      turnoverRisk: {
+        label: 'Risco de Envelhecimento',
+        question: 'Em quais regiões, lojas ou clusters os produtos apresentam maior risco de estoque envelhecido?',
+        title: 'Risco preditivo de envelhecimento por região e cluster',
+        analysis: 'O modelo identificou risco elevado de envelhecimento para o SKU A em 38 lojas, concentradas principalmente nos clusters Interior de Minas e Sul Metropolitano. Nessas localidades, a velocidade prevista de venda está abaixo da necessária para consumir o estoque antes do fim do ciclo comercial. Em São Paulo Premium, o mesmo produto mantém demanda consistente e não apresenta necessidade de desconto.',
+        regionTable: {
+          headers: ['Região ou cluster', 'Estoque atual', 'Cobertura projetada', 'Sell-through previsto', 'Risco'],
+          rows: [
+            ['São Paulo Premium', '8.400 un.', '32 dias', '78%', 'Baixo'],
+            ['Interior de São Paulo', '6.200 un.', '49 dias', '61%', 'Médio'],
+            ['Interior de Minas', '7.100 un.', '83 dias', '39%', 'Alto'],
+            ['Sul Metropolitano', '5.800 un.', '76 dias', '44%', 'Alto'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Sinal preditivo', 'Interior de Minas', 'São Paulo Premium'],
+          rows: [
+            ['Velocidade prevista de venda', '−24%', '+8%'],
+            ['Sensibilidade ao preço', 'Alta', 'Baixa'],
+            ['Demanda sazonal futura', 'Baixa', 'Estável'],
+            ['Idade média do estoque', '71 dias', '29 dias'],
+            ['Pressão competitiva', 'Alta', 'Moderada'],
+          ],
+        },
+        reasoning: 'O risco no Interior de Minas é sustentado pela combinação de baixa velocidade prevista de venda, maior sensibilidade ao preço e estoque acima da demanda esperada. Mantido o preço atual, parte relevante das unidades deve permanecer em estoque após o encerramento do ciclo comercial. Em São Paulo Premium, o comportamento é diferente. A demanda permanece consistente, o estoque está equilibrado e um desconto antecipado reduziria margem sem produzir ganho relevante de giro.',
+        actions: [
+          { bold: 'Priorizar ações de giro nas 38 lojas', text: 'com cobertura projetada acima do limite saudável.' },
+          { bold: 'Preservar o preço nos clusters com demanda consistente', text: 'evitando markdown desnecessário.' },
+          { bold: 'Redistribuir estoque entre regiões', text: 'sempre que a transferência for mais rentável do que a redução de preço.' },
+        ],
+        questions: [
+          'Quais lojas dentro do Interior de Minas concentram o maior risco?',
+          'Qual o impacto financeiro previsto se nenhuma ação for tomada?',
+          'Como redistribuir estoque entre clusters preservando margem?',
+        ],
+      },
+      turnoverMarkdown: {
+        label: 'Régua de Markdown',
+        question: 'Quais SKUs devem entrar em markdown agora e qual régua de redução de preço é recomendada para cada cluster?',
+        title: 'Markdown preditivo por SKU, região e ciclo de vida',
+        analysis: 'O modelo recomenda iniciar markdown imediato para sete SKUs e manter o preço de outros onze produtos. O SKU A exige ação antecipada no Interior de Minas, onde um desconto inicial de 12% apresenta maior probabilidade de recuperar o giro e evitar uma liquidação mais profunda no fim do ciclo. Para o mesmo produto em São Paulo Premium, a recomendação é manter o preço atual por pelo menos 21 dias.',
+        markdownRuler: {
+          headers: ['Cluster', 'Hoje', 'Em 7 dias', 'Em 14 dias', 'Em 21 dias'],
+          rows: [
+            ['São Paulo Premium', 'Manter', 'Manter', 'Manter', 'Reavaliar'],
+            ['Interior de SP', '−5%', '−8%', 'Reavaliar', '−12%'],
+            ['Interior de Minas', '−12%', 'Manter', '−18%', '−24%'],
+            ['Sul Metropolitano', '−8%', '−12%', '−18%', 'Reavaliar'],
+          ],
+        },
+        skuTable: {
+          headers: ['SKU', 'Cluster prioritário', 'Preço atual', 'Preço recomendado', 'Sell-through projetado', 'Margem preservada'],
+          rows: [
+            ['SKU A', 'Interior de Minas', 'R$ 129,90', 'R$ 114,30', '68%', 'R$ 84 mil'],
+            ['SKU B', 'Sul Metropolitano', 'R$ 89,90', 'R$ 82,70', '73%', 'R$ 51 mil'],
+            ['SKU C', 'Interior de SP', 'R$ 159,90', 'R$ 151,90', '64%', 'R$ 42 mil'],
+            ['SKU D', 'São Paulo Premium', 'R$ 119,90', 'Manter', '81%', 'Sem desconto'],
+          ],
+        },
+        reasoning: 'O markdown de 12% para o SKU A foi recomendado porque aumenta o sell-through projetado de 39% para 68% no Interior de Minas. A ação antecipada preserva mais margem do que aguardar o envelhecimento do estoque e aplicar um desconto superior a 25% no encerramento do ciclo. A régua não é replicada nacionalmente. Cada cluster recebe uma recomendação diferente de acordo com velocidade de giro, sensibilidade ao preço, estoque, sazonalidade e comportamento local da demanda.',
+        actions: [
+          { bold: 'Aplicar o markdown inicial nos clusters de maior risco', text: 'sem alterar o preço nacionalmente.' },
+          { bold: 'Interromper novas reduções', text: 'quando o sell-through atingir a trajetória esperada.' },
+          { bold: 'Recalcular semanalmente a régua', text: 'incorporando vendas, estoque restante, concorrência e resposta ao desconto.' },
+        ],
+        questions: [
+          'Como o markdown recomendado evolui semana a semana?',
+          'Qual o ganho de margem vs. aguardar liquidação no fim do ciclo?',
+          'Quais SKUs sairão do markdown mais cedo, com base na resposta?',
+        ],
+      },
     },
+
   },
   en: {
     sectionTitle: '',
@@ -921,6 +993,77 @@ export const signalDemoContent = {
           'How do signals evolve week by week for each SKU?',
           'Which SKUs are about to shift their room-for-margin band?',
           'How to prioritize decisions when two signals contradict each other?',
+        ],
+      },
+      turnoverRisk: {
+        label: 'Aging Risk',
+        question: 'In which regions, stores or clusters do products show the highest aging inventory risk?',
+        title: 'Predictive aging risk by region and cluster',
+        analysis: 'The model identified elevated aging risk for SKU A across 38 stores, concentrated mostly in the Minas Countryside and Southern Metropolitan clusters. In these locations, predicted sales velocity is below what is needed to consume the stock before the end of the commercial cycle. In São Paulo Premium, the same product keeps consistent demand and does not require a markdown.',
+        regionTable: {
+          headers: ['Region or cluster', 'Current stock', 'Projected coverage', 'Predicted sell-through', 'Risk'],
+          rows: [
+            ['São Paulo Premium', '8,400 units', '32 days', '78%', 'Low'],
+            ['São Paulo Countryside', '6,200 units', '49 days', '61%', 'Medium'],
+            ['Minas Countryside', '7,100 units', '83 days', '39%', 'High'],
+            ['Southern Metropolitan', '5,800 units', '76 days', '44%', 'High'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Predictive signal', 'Minas Countryside', 'São Paulo Premium'],
+          rows: [
+            ['Predicted sales velocity', '−24%', '+8%'],
+            ['Price sensitivity', 'High', 'Low'],
+            ['Future seasonal demand', 'Low', 'Stable'],
+            ['Average stock age', '71 days', '29 days'],
+            ['Competitive pressure', 'High', 'Moderate'],
+          ],
+        },
+        reasoning: 'Risk in Minas Countryside is sustained by a combination of low predicted sales velocity, higher price sensitivity and stock above expected demand. At the current price, a relevant share of units is likely to remain in stock after the cycle closes. In São Paulo Premium, behavior is different. Demand remains consistent, stock is balanced and an early markdown would reduce margin without producing a relevant turn gain.',
+        actions: [
+          { bold: 'Prioritize turn actions in the 38 stores', text: 'with projected coverage above the healthy threshold.' },
+          { bold: 'Hold the price in clusters with consistent demand', text: 'to avoid unnecessary markdowns.' },
+          { bold: 'Redistribute stock across regions', text: 'whenever the transfer is more profitable than a price reduction.' },
+        ],
+        questions: [
+          'Which stores in Minas Countryside concentrate the highest risk?',
+          'What is the predicted financial impact if no action is taken?',
+          'How to redistribute stock across clusters while preserving margin?',
+        ],
+      },
+      turnoverMarkdown: {
+        label: 'Markdown Ladder',
+        question: 'Which SKUs should enter markdown now and what price-reduction ladder is recommended for each cluster?',
+        title: 'Predictive markdown by SKU, region and life cycle',
+        analysis: 'The model recommends starting an immediate markdown on seven SKUs and holding the price on eleven others. SKU A requires early action in Minas Countryside, where an initial 12% discount has the highest probability of recovering turn and avoiding a deeper clearance at the end of the cycle. For the same product in São Paulo Premium, the recommendation is to hold the current price for at least 21 days.',
+        markdownRuler: {
+          headers: ['Cluster', 'Today', 'In 7 days', 'In 14 days', 'In 21 days'],
+          rows: [
+            ['São Paulo Premium', 'Hold', 'Hold', 'Hold', 'Reassess'],
+            ['São Paulo Countryside', '−5%', '−8%', 'Reassess', '−12%'],
+            ['Minas Countryside', '−12%', 'Hold', '−18%', '−24%'],
+            ['Southern Metropolitan', '−8%', '−12%', '−18%', 'Reassess'],
+          ],
+        },
+        skuTable: {
+          headers: ['SKU', 'Priority cluster', 'Current price', 'Recommended price', 'Projected sell-through', 'Preserved margin'],
+          rows: [
+            ['SKU A', 'Minas Countryside', '$ 129.90', '$ 114.30', '68%', '$ 84k'],
+            ['SKU B', 'Southern Metropolitan', '$ 89.90', '$ 82.70', '73%', '$ 51k'],
+            ['SKU C', 'São Paulo Countryside', '$ 159.90', '$ 151.90', '64%', '$ 42k'],
+            ['SKU D', 'São Paulo Premium', '$ 119.90', 'Hold', '81%', 'No discount'],
+          ],
+        },
+        reasoning: 'The 12% markdown on SKU A was recommended because it lifts projected sell-through from 39% to 68% in Minas Countryside. Early action preserves more margin than waiting for stock to age and then applying a discount above 25% at cycle close. The ladder is not replicated nationally. Each cluster receives a different recommendation based on turn velocity, price sensitivity, stock, seasonality and local demand behavior.',
+        actions: [
+          { bold: 'Apply the initial markdown in higher-risk clusters', text: 'without changing the price nationally.' },
+          { bold: 'Stop further reductions', text: 'as soon as sell-through reaches the expected trajectory.' },
+          { bold: 'Recompute the ladder weekly', text: 'incorporating sales, remaining stock, competition and response to the discount.' },
+        ],
+        questions: [
+          'How does the recommended markdown evolve week by week?',
+          'What is the margin gain vs. waiting for end-of-cycle clearance?',
+          'Which SKUs will exit markdown earliest, based on response?',
         ],
       },
     },

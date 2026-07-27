@@ -408,7 +408,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
 /**
  * Map from solutionId → i6Signal scenario keys to show for that solution.
  */
-export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals')[]> = {
+export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown')[]> = {
   'predictive-personalization': ['pdv', 'comercial'],
   'smart-discovery': ['pdv', 'comercial'],
   'predictive-campaign-targeting': ['propensity', 'clusters'],
@@ -416,7 +416,7 @@ export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing
   'predictive-commercial-targets': ['targetsPotential', 'targetsRisk'],
   'mix-assortment-order': ['mixBehavior', 'mixGaps'],
   'price-to-margin': ['marginOpportunities', 'marginSignals'],
-  'price-to-turnover': ['pricing', 'supply'],
+  'price-to-turnover': ['turnoverRisk', 'turnoverMarkdown'],
   'price-to-conversion': ['pricing', 'comercial'],
 };
 

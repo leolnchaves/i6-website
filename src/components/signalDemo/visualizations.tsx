@@ -991,3 +991,207 @@ export const MarginSignalsTable = ({ data }: { data: { headers: string[]; rows: 
   </div>
 );
 
+
+// ============================================================
+// TURNOVER — Price-to-Turnover scenarios
+// ============================================================
+
+const riskTone = (raw: string): string => {
+  const v = raw.toLowerCase();
+  if (v.startsWith('alto') || v.startsWith('high')) return 'bg-red-50 text-red-700 border-red-200';
+  if (v.startsWith('médio') || v.startsWith('medio') || v.startsWith('medium')) return 'bg-amber-50 text-amber-700 border-amber-200';
+  if (v.startsWith('baixo') || v.startsWith('low')) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+const sellThroughTone = (raw: string): string => {
+  const m = raw.match(/(\d+)/);
+  if (!m) return 'text-gray-800';
+  const n = parseInt(m[1], 10);
+  if (n >= 70) return 'text-emerald-700 font-semibold';
+  if (n >= 55) return 'text-blue-700 font-semibold';
+  return 'text-amber-700 font-semibold';
+};
+
+export const TurnoverRiskTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Risco de envelhecimento por região' : 'Aging risk by region'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-right'}`}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 3) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${sellThroughTone(cell)}`}>{cell}</td>;
+                if (ci === row.length - 1) return (
+                  <td key={ci} className="py-2.5 px-3 text-right">
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border ${riskTone(cell)}`}>{cell}</span>
+                  </td>
+                );
+                return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-gray-800">{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+const compareValueTone = (raw: string): string => {
+  const v = raw.toLowerCase().trim();
+  if (v.startsWith('+')) return 'text-emerald-700 font-semibold';
+  if (v.startsWith('−') || v.startsWith('-')) return 'text-red-700 font-semibold';
+  if (v.startsWith('alta') || v.startsWith('high')) return 'text-red-700 font-semibold';
+  if (v.startsWith('baixa') || v.startsWith('low')) return 'text-emerald-700 font-semibold';
+  if (v.startsWith('moderada') || v.startsWith('moderate') || v.startsWith('média') || v.startsWith('media') || v.startsWith('medium')) return 'text-amber-700 font-semibold';
+  if (v.startsWith('estável') || v.startsWith('estavel') || v.startsWith('stable')) return 'text-blue-700 font-semibold';
+  return 'text-gray-800';
+};
+
+export const TurnoverSignalsCompareTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Sinais comportamentais comparados' : 'Behavioral signals compared'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
+                return <td key={ci} className={`py-2.5 px-3 text-center ${compareValueTone(cell)}`}>{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+const markdownCellTone = (raw: string): string => {
+  const v = raw.toLowerCase().trim();
+  if (v.startsWith('manter') || v.startsWith('hold')) return 'bg-gray-100 text-gray-700 border-gray-200';
+  if (v.startsWith('reavaliar') || v.startsWith('reassess')) return 'bg-amber-50 text-amber-700 border-amber-200';
+  // discounts
+  const m = v.match(/(\d+)/);
+  if (m) {
+    const n = parseInt(m[1], 10);
+    if (n >= 18) return 'bg-red-50 text-red-700 border-red-200';
+    if (n >= 10) return 'bg-orange-50 text-orange-700 border-orange-200';
+    return 'bg-orange-50/70 text-orange-600 border-orange-100';
+  }
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+export const TurnoverMarkdownRuler = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Régua temporal de markdown' : 'Markdown timing ladder'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+                return (
+                  <td key={ci} className="py-2 px-2 text-center">
+                    <span className={`inline-block min-w-[70px] px-3 py-1 rounded-md text-xs font-semibold border ${markdownCellTone(cell)}`}>
+                      {cell}
+                    </span>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p className="text-gray-400 text-xs mt-3 leading-relaxed">
+      {lang === 'pt'
+        ? 'Cada célula representa a recomendação preditiva para o SKU A naquele cluster e janela temporal.'
+        : 'Each cell represents the predictive recommendation for SKU A in that cluster and time window.'}
+    </p>
+  </div>
+);
+
+export const TurnoverMarkdownTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Detalhamento por SKU' : 'Detail by SKU'}
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50/60">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i <= 1 ? 'text-left' : 'text-right'}`}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 1) return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 3) {
+                  const hold = /manter|hold/i.test(cell);
+                  return (
+                    <td key={ci} className="py-2.5 px-3 text-right">
+                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border ${hold ? 'bg-gray-100 text-gray-700 border-gray-200' : 'bg-orange-50 text-orange-700 border-orange-200'}`}>
+                        {cell}
+                      </span>
+                    </td>
+                  );
+                }
+                if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${sellThroughTone(cell)}`}>{cell}</td>;
+                if (ci === 5) {
+                  const nodisc = /sem desconto|no discount/i.test(cell);
+                  return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${nodisc ? 'text-gray-500' : 'text-emerald-700 font-semibold'}`}>{cell}</td>;
+                }
+                return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-gray-800">{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
