@@ -295,12 +295,7 @@ const PriceTurnoverDemo = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-4 gap-[0.8vmin]">
-                <KpiPill label="Estoque envelhecido" value={`${derived.agedStockPct}%`} />
-                <KpiPill label="Sell-through projetado" value={`${derived.sellThroughProjectedPct}%`} highlight />
-                <KpiPill label="Margem preservada" value={`+${derived.marginPreservedPp.toFixed(1)} pp`} highlight />
-                <KpiPill label="Capital liberado" value={fmtBRLk(derived.capitalUnlockedBRL)} />
-              </div>
+
 
               <div className="kiosk-insight-card relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.55vmin] text-white/95 leading-relaxed">
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
