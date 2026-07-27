@@ -218,9 +218,11 @@ const Kiosk = () => {
               highlightAll={isCombo}
             />
 
-            <p className="mt-[5vmin] text-center text-[2.2vmin] text-white/65">
-              {isCombo ? kContent.results.tieSubtitle : kContent.results.subtitle}
-            </p>
+            {!(selectedSolution && ['predictive-personalization', 'smart-discovery', 'predictive-campaign-targeting'].includes(selectedSolution.id)) && (
+              <p className="mt-[5vmin] text-center text-[2.2vmin] text-white/65">
+                {isCombo ? kContent.results.tieSubtitle : kContent.results.subtitle}
+              </p>
+            )}
 
             <div id="kiosk-solution-demo" className="mt-[6vmin] flex flex-col gap-[4vmin]">
               {selectedSolution ? (
