@@ -57,6 +57,14 @@ const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, resolve, ent
           </div>
         </div>
 
+        {labels && (resolve || entrega || impacto) && (
+          <div className="grid grid-cols-1 gap-[2vmin] mb-[2.5vmin]">
+            {resolve && <SummaryRow label={labels.resolve} value={resolve} />}
+            {entrega && <SummaryRow label={labels.entrega} value={entrega} />}
+            {impacto && <SummaryRow label={labels.impacto} value={impacto} highlight />}
+          </div>
+        )}
+
         <button
           type="button"
           onClick={() => setOpen(true)}
