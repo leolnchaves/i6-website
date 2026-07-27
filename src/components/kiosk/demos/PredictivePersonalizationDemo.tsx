@@ -272,57 +272,62 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
                 {vertical === 'fashion' && phase === 'pdp' ? (
                   <div className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)] gap-[1.2vmin] items-stretch animate-fade-in">
-                    <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.4vmin] flex flex-col">
-                      <div className="w-full aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[1vmin]">
-                        <img src={selected.image} alt="" className="w-full h-full object-cover" />
+                    <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin] flex items-center">
+                      <div className="flex gap-[1.5vmin] items-center w-full">
+                        <div className="w-[14vmin] h-[14vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                          <img src={selected.image} alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="block text-[1.2vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
+                            {selected.category[lang]}
+                          </span>
+                          <h5 className="text-[1.7vmin] leading-tight text-white font-bold mb-[0.4vmin]">
+                            {selected.name[lang]}
+                          </h5>
+                          <span
+                            className="block text-[2.2vmin] font-bold text-white leading-none"
+                            style={{ textShadow: '0 0 20px rgba(244,132,95,0.4)' }}
+                          >
+                            {currency(selected.price, lang)}
+                          </span>
+                        </div>
                       </div>
-                      <span className="block text-[1.15vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
-                        {selected.category[lang]}
-                      </span>
-                      <h5 className="text-[1.7vmin] leading-tight text-white font-bold mb-[0.4vmin]">
-                        {selected.name[lang]}
-                      </h5>
-                      <span
-                        className="block text-[2vmin] font-bold text-white leading-none mt-auto"
-                        style={{ textShadow: '0 0 20px rgba(244,132,95,0.4)' }}
-                      >
-                        {currency(selected.price, lang)}
-                      </span>
                     </div>
 
                     <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-[#F4845F]/[0.06] p-[1.4vmin] flex flex-col">
-                      <div className="flex items-center justify-between mb-[1vmin]">
+                      <div className="flex items-center justify-between mb-[0.8vmin]">
                         <span className="text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-[#F4845F]">
                           {t.lookTitle}
                         </span>
                         <span className="text-[1.2vmin] text-white/50">{t.tapToExplore}</span>
                       </div>
-                      <div className="flex flex-col gap-[0.6vmin] flex-1">
+                      <div className="flex flex-col gap-[0.4vmin] flex-1">
                         {recSkus.slice(0, 3).map((s) => (
                           <button
                             key={s.id}
                             type="button"
                             onClick={() => pickProduct(s.id)}
-                            className="w-full flex items-center gap-[1.4vmin] rounded-lg p-[0.8vmin] transition-all hover:bg-white/[0.05] active:scale-[0.99] text-left"
+                            className="w-full flex items-center gap-[1.2vmin] rounded-lg p-[0.4vmin] transition-all hover:bg-white/[0.05] active:scale-[0.99] text-left"
                           >
-                            <div className="w-[11vmin] h-[11vmin] flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                            <div className="w-[5.5vmin] h-[5.5vmin] flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
                               <img src={s.image} alt="" className="w-full h-full object-cover" />
                             </div>
-                            <span className="flex-1 min-w-0 text-[1.5vmin] leading-tight text-white/90 font-semibold truncate">
+                            <span className="flex-1 min-w-0 text-[1.4vmin] leading-tight text-white/90 font-semibold truncate">
                               {s.name[lang]}
                             </span>
-                            <span className="flex-shrink-0 text-[1.6vmin] text-white font-bold tabular-nums">
+                            <span className="flex-shrink-0 text-[1.5vmin] text-white font-bold tabular-nums">
                               {currency(s.price, lang)}
                             </span>
                           </button>
                         ))}
                       </div>
-                      <div className="mt-[1vmin] pt-[1vmin] border-t border-white/10 flex items-center justify-between">
-                        <span className="text-[1.4vmin] text-white/80">{t.lookTotal}</span>
-                        <span className="text-[1.9vmin] font-bold text-white tabular-nums">{currency(lookTotal, lang)}</span>
+                      <div className="mt-[0.6vmin] pt-[0.6vmin] border-t border-white/10 flex items-center justify-between">
+                        <span className="text-[1.3vmin] text-white/80">{t.lookTotal}</span>
+                        <span className="text-[1.8vmin] font-bold text-white tabular-nums">{currency(lookTotal, lang)}</span>
                       </div>
                     </div>
                   </div>
+
                 ) : (
                   <>
                     <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin]">
