@@ -1,4 +1,13 @@
+import { createElement, Fragment, type ReactNode } from 'react';
 import type { TerritoryId } from '@/data/solutionsV2/content';
+
+const highlightEbook = (prefix: string, name: string): ReactNode =>
+  createElement(
+    Fragment,
+    null,
+    prefix,
+    createElement('span', { className: 'text-[#F4845F]' }, `eBook ${name}`),
+  );
 
 export type KioskLang = 'pt' | 'en';
 
@@ -49,7 +58,7 @@ export interface QuizContent {
   };
   ebook: {
     eyebrow: string;
-    title: (solutionTitle: string) => string;
+    title: (solutionTitle: string) => ReactNode;
     subtitle: string;
     cta: string;
     nameLabel: string;
@@ -215,7 +224,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     ebook: {
       eyebrow: 'Leve o conteúdo com você',
-      title: (t) => `Receba o eBook: ${t}`,
+      title: (t) => highlightEbook('Receba o ', t),
       subtitle: 'Deixe seu nome e email e enviamos o material completo em minutos.',
       cta: 'Quero receber',
       nameLabel: 'Nome',
@@ -375,7 +384,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     ebook: {
       eyebrow: 'Take the content with you',
-      title: (t) => `Get the eBook: ${t}`,
+      title: (t) => highlightEbook('Get the ', t),
       subtitle: 'Leave your name and email and we will send the full material in minutes.',
       cta: 'I want it',
       nameLabel: 'Name',
@@ -426,16 +435,16 @@ export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing
  */
 export const territoryEbook: Record<RouteId, { pt: string; en: string }> = {
   growth: {
-    pt: 'eBook Inteligência Preditiva do Consumidor',
-    en: 'eBook Predictive Customer Intelligence',
+    pt: 'Inteligência do Consumidor Orientada à Decisão',
+    en: 'Decision-Oriented Customer Intelligence',
   },
   planning: {
-    pt: 'eBook Supply Preditivo',
-    en: 'eBook Predictive Supply',
+    pt: 'Supply Preditivo',
+    en: 'Predictive Supply',
   },
   pricing: {
-    pt: 'eBook Pricing Orientado a Resultados',
-    en: 'Results-Driven Pricing eBook',
+    pt: 'Pricing Orientado a Resultados',
+    en: 'Results-Driven Pricing',
   },
 };
 
