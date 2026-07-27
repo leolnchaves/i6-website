@@ -532,6 +532,78 @@ export const signalDemoContent = {
           'Which cluster shows the highest positive migration (value upgrade)?',
         ],
       },
+      targetsPotential: {
+        label: 'Target Potential',
+        question: 'Where is the largest volume growth potential by region?',
+        title: 'Predictive growth potential and target distribution',
+        analysis: 'The model identified 186k units of incremental potential for the next quarter. 64% of that volume is concentrated in three combinations of region, client and SKU that currently receive targets below their predicted capacity. São Paulo Countryside shows the largest opportunity, driven by SKUs A and C and by clients whose demand expansion is not yet reflected in current targets.',
+        potentialTable: {
+          headers: ['Region', 'Rep', 'Client', 'SKU', 'Current target', 'Suggested target', 'Potential'],
+          rows: [
+            ['São Paulo Countryside', 'Carlos', 'Client A', 'SKU A', '12,000', '15,400', '16,100'],
+            ['São Paulo Countryside', 'Carlos', 'Client B', 'SKU C', '8,500', '10,200', '10,700'],
+            ['Minas Gerais', 'Marina', 'Client D', 'SKU B', '9,800', '8,900', '9,200'],
+            ['South', 'Rafael', 'Client F', 'SKU A', '7,200', '8,600', '9,000'],
+          ],
+        },
+        reasoning: 'Client A\u2019s target was raised because the model predicts higher demand for SKU A, stronger absorption capacity and category expansion in the region. Client D\u2019s target was lowered because current volume already sits above the predicted potential and would require disproportionate commercial effort to be reached.',
+        actions: [
+          { bold: 'Add 3,400 units to Client A\u2019s target', text: 'for SKU A, keeping a safety band below the maximum potential.' },
+          { bold: 'Reduce Client D\u2019s target by 900 units', text: 'avoiding commercial pressure without matching demand.' },
+          { bold: 'Redistribute targets', text: 'from reps with saturated territories to portfolios with higher incremental potential.' },
+        ],
+        questions: [
+          'Which reps carry saturated portfolios relative to potential?',
+          'How does potential split across SKUs A, B and C over the next 12 weeks?',
+          'What is the financial impact of recalibrating the 3 priority combinations?',
+        ],
+      },
+      targetsRisk: {
+        label: 'Target Risk',
+        question: 'Which targets show the highest risk of miss or sit below predicted potential?',
+        title: 'Predictive attainment risk and target recalibration',
+        analysis: 'The model identified 27 rep-client-SKU combinations with misaligned targets for the next quarter. Eleven show high risk of miss, mainly due to demand deceleration, lower purchase frequency and reduced client absorption capacity. Another 16 sit below predicted potential and may cap commercial growth even with favorable demand behavior.',
+        scatter: [
+          { probability: 94, delta: 3100, size: 15100, label: 'Carlos • Client A • SKU A', quadrant: 'below' },
+          { probability: 38, delta: -2200, size: 7600, label: 'Marina • Client D • SKU B', quadrant: 'above' },
+          { probability: 82, delta: 300, size: 8700, label: 'Rafael • Client F • SKU C', quadrant: 'match' },
+          { probability: 89, delta: 1400, size: 7900, label: 'Paula • Client H • SKU D', quadrant: 'below' },
+          { probability: 71, delta: 900, size: 6200, label: 'André • Client J • SKU A', quadrant: 'below' },
+          { probability: 44, delta: -1600, size: 5400, label: 'Lívia • Client K • SKU C', quadrant: 'above' },
+          { probability: 55, delta: -400, size: 4800, label: 'Bruno • Client L • SKU B', quadrant: 'uncertain' },
+          { probability: 63, delta: 200, size: 5600, label: 'Sofia • Client M • SKU D', quadrant: 'match' },
+        ],
+        riskTable: {
+          headers: ['Rep', 'Client', 'SKU', 'Current target', 'Projected volume', 'Attain. prob.', 'Diagnosis'],
+          rows: [
+            ['Carlos', 'Client A', 'SKU A', '12,000', '15,100', '94%', 'Target below potential'],
+            ['Marina', 'Client D', 'SKU B', '9,800', '7,600', '38%', 'Target above potential'],
+            ['Rafael', 'Client F', 'SKU C', '8,400', '8,700', '82%', 'Target aligned'],
+            ['Paula', 'Client H', 'SKU D', '6,500', '7,900', '89%', 'Expansion opportunity'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Behavioral signal', 'Client A', 'Client D'],
+          rows: [
+            ['Predicted purchase frequency', '+18%', '−12%'],
+            ['Avg. volume per order', '+9%', '−7%'],
+            ['Mix expansion potential', 'High', 'Low'],
+            ['Predicted SKU demand', '+21%', '−14%'],
+            ['Repurchase probability', '86%', '43%'],
+          ],
+        },
+        reasoning: 'Client A\u2019s target sits below potential because the model predicts higher purchase frequency, growing average volume and expanding demand for SKU A. Keeping it at the current level may cap the capture of a growth behavior already identified. Client D\u2019s target sits above the predicted potential: the client shows purchase deceleration, lower volume per order and reduced repurchase probability of SKU B — keeping the target creates pressure on the rep without demand to sustain it.',
+        actions: [
+          { bold: 'Raise targets with attainment probability > 85%', text: 'and potential not yet captured, prioritizing SKU A in clients with positive signals.' },
+          { bold: 'Recalibrate targets with probability < 50%', text: 'redistributing volume to clients and SKUs with more favorable behavior.' },
+          { bold: 'Review high-uncertainty targets monthly', text: 'incorporating changes in frequency, mix, demand and repurchase.' },
+        ],
+        questions: [
+          'Which reps concentrate the largest number of at-risk targets?',
+          'How to prioritize recalibrations within the ongoing quarter?',
+          'What is the expected gain from redistributing at-risk target volume?',
+        ],
+      },
     },
   },
 };
