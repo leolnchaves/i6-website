@@ -338,7 +338,7 @@ export const labels = {
     drillClose: 'Fechar',
     reset: 'Nova simulação',
   },
-  reasoningTitle: 'Como o modelo está pensando',
+  reasoningTitle: 'Explicabilidade e Raciocínio do modelo • i6RecSys',
   reasoningSubtitle: 'Etapas do modelo de propensão da infinity6',
   rationaleLabel: 'Por que recomendamos esta audiência',
   latency: 'Latência',
