@@ -149,7 +149,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 3.6,
     volumeImpactPct: -1.1,
     argument:
-      'O SKU apresenta baixa sensibilidade dentro da faixa recomendada e está abaixo da banda observada para produtos comparáveis nos últimos 60 dias. O aumento proposto captura margem adicional com impacto controlado sobre o volume, respeitando margem mínima, posição competitiva e estratégia da categoria.',
+      'Baixa sensibilidade de preço (elasticidade −0,38) na faixa recomendada — o modelo projeta ≈ −0,38% de volume por +1% de preço, com intervalo de confiança estreito. A projeção de demanda para as próximas 8 semanas mostra tendência de alta (+5,4%) sustentada pela recompra do haircare e sem sazonalidade adversa. O SKU segue abaixo da banda observada nos últimos 60 dias, permitindo capturar margem adicional sem estressar posição competitiva.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
