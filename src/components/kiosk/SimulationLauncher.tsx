@@ -23,6 +23,7 @@ interface Props {
   secondaryEntrega?: string;
   secondaryImpacto?: string;
   icon?: IconType;
+  onSimulationClosed?: () => void;
   children: ReactNode;
 }
 
