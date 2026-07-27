@@ -27,6 +27,11 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
     return <PriceMarginDemo />;
   }
 
+  if (solution.id === 'price-to-turnover') {
+    return <PriceTurnoverDemo />;
+  }
+
+
 
   // Interactive demo for Predictive Personalization + Smart Discovery combo
   if (solution.id === 'predictive-personalization' || solution.id === 'smart-discovery') {
