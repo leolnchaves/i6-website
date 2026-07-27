@@ -259,17 +259,17 @@ const PropensityCampaignDemo = () => {
 
           {/* Compact POR QUE above timeline */}
           {phase === 'result' && (
-            <div className="mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[1.6vmin] py-[1.2vmin] animate-fade-in">
-              <div className="flex items-center gap-[1vmin] mb-[0.5vmin]">
-                <Sparkles className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" strokeWidth={2.5} />
-                <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+            <div className="mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.8vmin] animate-fade-in">
+              <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
+                <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" strokeWidth={2.5} />
+                <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
                   {L.rationaleLabel}
                 </span>
                 <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
                   {L.latency}: {latencyMs} ms
                 </span>
               </div>
-              <p className="text-[1.5vmin] leading-snug text-white/95">{result.argument}</p>
+              <p className="text-[2vmin] leading-relaxed text-white/95">{result.argument}</p>
             </div>
           )}
 
