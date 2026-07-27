@@ -31,6 +31,10 @@ import {
   MarginBehaviorReading,
   MarginSignalsChart,
   MarginSignalsTable,
+  TurnoverRiskTable,
+  TurnoverSignalsCompareTable,
+  TurnoverMarkdownRuler,
+  TurnoverMarkdownTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
