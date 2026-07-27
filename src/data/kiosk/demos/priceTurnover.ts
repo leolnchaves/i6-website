@@ -204,6 +204,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 62000,
     argument:
       'Forecast sinaliza pico sazonal em 12–16 dias (entrada de frente fria + calendário regional de datas comemorativas), com elasticidade projetada caindo de −1,1 para −0,4 nesse período. Descontar agora antecipa margem que o próprio clima devolve — janela ótima de ação em 2 semanas, quando o modelo reprograma automaticamente a régua para R$ 124,90 caso o giro não acompanhe.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 76 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+      { sku: 'JQT-INV-009', name: 'Jaqueta acolchoada vinho M', currentPrice: 129.9, recommendedPrice: 124.9, markdownPct: 4, sellThroughProjectedPct: 72 },
+      { sku: 'JQT-INV-010', name: 'Jaqueta acolchoada grafite G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 73 },
+    ],
   },
 ];
 
