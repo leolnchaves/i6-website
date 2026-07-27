@@ -1294,7 +1294,7 @@ export const RepurchaseCurveChart = ({
     </p>
     <div className="h-[260px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 10, right: 24, left: 10, bottom: 20 }}>
+        <LineChart data={data} margin={{ top: 28, right: 24, left: 10, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
           <XAxis
             type="number"
@@ -1305,6 +1305,7 @@ export const RepurchaseCurveChart = ({
             label={{ value: lang === 'pt' ? 'Dias desde a última compra' : 'Days since last purchase', position: 'insideBottom', offset: -6, fill: '#6b7280', fontSize: 11 }}
           />
           <YAxis
+            domain={[0, 100]}
             tick={{ fontSize: 12, fill: '#6b7280' }}
             tickFormatter={(v) => `${v}%`}
             label={{ value: lang === 'pt' ? 'Probabilidade prevista' : 'Predicted probability', angle: -90, position: 'insideLeft', fill: '#6b7280', fontSize: 11 }}
@@ -1316,7 +1317,7 @@ export const RepurchaseCurveChart = ({
           />
           <ReferenceArea x1={window.start} x2={window.end} y1={0} y2={100} fill="#F4845F" fillOpacity={0.12} stroke="#F4845F" strokeOpacity={0.35} strokeDasharray="4 4" />
           <Line type="monotone" dataKey="probability" stroke="#F4845F" strokeWidth={2.5} dot={{ r: 3, fill: '#F4845F' }} />
-          <ReferenceDot x={peak.day} y={peak.probability} r={6} fill="#10b981" stroke="#065f46" strokeWidth={2} label={{ value: lang === 'pt' ? 'Pico' : 'Peak', position: 'top', fill: '#065f46', fontSize: 11, fontWeight: 600 }} />
+          <ReferenceDot x={peak.day} y={peak.probability} r={6} fill="#10b981" stroke="#065f46" strokeWidth={2} label={{ value: lang === 'pt' ? 'Pico' : 'Peak', position: 'top', offset: 10, fill: '#065f46', fontSize: 11, fontWeight: 600 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
