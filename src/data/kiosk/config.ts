@@ -221,7 +221,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tieSubtitle: 'Toque em uma solução para ver o exemplo de aplicação.',
       selectSolutionHint: 'Toque em uma solução acima',
       simulateButton: 'Clique aqui para simular a solução',
-      closeSimulation: 'Fechar simulação',
+      closeSimulation: 'Conversar com a camada preditiva de comportamento',
       matrixFashion: 'Moda',
       matrixProducts: 'Bens de consumo',
       signalEyebrow: 'i6 Signal',
