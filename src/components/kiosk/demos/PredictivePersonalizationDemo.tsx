@@ -236,17 +236,8 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
       <div className="flex flex-col gap-[2vmin]">
         {/* TOP: e-commerce (list OR pdp) */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden">
-          <div className="flex items-center gap-[1vmin] px-[2vmin] py-[1.5vmin] bg-white/[0.04] border-b border-white/10">
-            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ff5f56]" />
-            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ffbd2e]" />
-            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#27c93f]" />
-            <span className="ml-[1.5vmin] text-[1.4vmin] text-white/50 font-mono">
-              vivashop.io / {vertical}
-            </span>
-            <span className="ml-auto inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.5vmin] rounded-full bg-[#F4845F]/15 border border-[#F4845F]/40 text-[1.3vmin] font-semibold text-[#F4845F]">
-              {t.objectiveLabel}: {scenario.objective[lang]}
-            </span>
-          </div>
+
+
 
 
           <div className="p-[2vmin]">
