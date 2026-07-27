@@ -20,6 +20,12 @@ import {
   TargetsRiskScatter,
   TargetsRiskTable,
   TargetsSignalsTable,
+  MixBehaviorScatter,
+  MixBehaviorTable,
+  MixBehaviorReading,
+  MixGapsHeatmap,
+  MixGapsTable,
+  MixGapsDetailList,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
