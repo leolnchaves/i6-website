@@ -103,7 +103,21 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
   }
 
   if (solution.id === 'predictive-commercial-targets') {
-    return <CommercialTargetsDemo />;
+    return (
+      <SimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
+        icon={Target}
+        onSimulationClosed={onSimulationClosed}
+      >
+        <CommercialTargetsDemo lang={lang} />
+      </SimulationLauncher>
+    );
   }
 
   if (solution.id === 'mix-assortment-order') {
