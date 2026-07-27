@@ -78,6 +78,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
         entrega={solution.entrega}
         impacto={solution.impacto}
         labels={labels}
+        icon={Megaphone}
       >
         <PropensityCampaignDemo />
       </SimulationLauncher>
