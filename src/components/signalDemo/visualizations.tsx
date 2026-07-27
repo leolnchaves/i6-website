@@ -1400,3 +1400,259 @@ export const RepurchaseCorrelationsTable = ({ data, lang }: { data: { headers: s
     </div>
   </div>
 );
+
+// ============================================================================
+// Preço Orientado à Conversão
+// ============================================================================
+
+// Heatmap of price friction (product × context)
+export const PriceConversionFrictionHeatmap = ({
+  data,
+  lang,
+}: {
+  data: { contexts: string[]; products: string[]; matrix: number[][] };
+  lang: string;
+}) => {
+  const frictionColor = (v: number): string => {
+    if (v >= 70) return 'bg-red-500/85 text-white';
+    if (v >= 55) return 'bg-orange-500/80 text-white';
+    if (v >= 40) return 'bg-amber-400/70 text-gray-900';
+    if (v >= 25) return 'bg-emerald-300/70 text-emerald-900';
+    return 'bg-emerald-500/85 text-white';
+  };
+  return (
+    <div className="my-4">
+      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+        {lang === 'pt' ? 'Fricção prevista de preço por produto e contexto' : 'Predicted price friction by product and context'}
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs border-collapse">
+          <thead>
+            <tr>
+              <th className="py-2 px-2 text-left text-gray-700 font-medium text-[11px] uppercase tracking-wider">
+                {lang === 'pt' ? 'Produto' : 'Product'}
+              </th>
+              {data.contexts.map((c, i) => (
+                <th key={i} className="py-2 px-2 text-center text-gray-700 font-medium text-[11px] uppercase tracking-wider">
+                  {c}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.products.map((p, ri) => (
+              <tr key={ri}>
+                <td className="py-1.5 px-2 text-gray-900 font-semibold text-left whitespace-nowrap">{p}</td>
+                {data.matrix[ri].map((v, ci) => (
+                  <td key={ci} className="py-1 px-1 text-center">
+                    <div className={`inline-block min-w-[42px] px-2 py-1.5 rounded-md text-[11px] font-semibold ${frictionColor(v)}`}>
+                      {v}
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-gray-400 text-[11px] mt-2 leading-relaxed">
+        {lang === 'pt'
+          ? 'Escala 0–100 · verde = baixa fricção · laranja/vermelho = fricção alta de preço.'
+          : 'Scale 0–100 · green = low friction · orange/red = high price friction.'}
+      </p>
+    </div>
+  );
+};
+
+// Context table with tone on friction and recommended direction
+export const PriceConversionContextTable = ({
+  data,
+}: {
+  data: { headers: string[]; rows: string[][] };
+}) => {
+  const frictionTextTone = (v: string): string => {
+    const s = v.toLowerCase();
+    if (s.startsWith('alto') || s.startsWith('high')) return 'text-red-600 font-semibold';
+    if (s.startsWith('médio') || s.startsWith('medio') || s.startsWith('medium')) return 'text-amber-700 font-semibold';
+    if (s.startsWith('baixo') || s.startsWith('low')) return 'text-emerald-700 font-semibold';
+    return 'text-gray-700 font-semibold';
+  };
+  const directionTone = (v: string): string => {
+    const s = v.toLowerCase();
+    if (s.includes('imediata') || s.includes('immediate')) return 'text-red-600 font-semibold';
+    if (s.includes('manter') || s.includes('hold')) return 'text-gray-500 font-semibold';
+    if (s.includes('não incent') || s.includes('do not')) return 'text-gray-500 font-semibold';
+    if (s.includes('contextual') || s.includes('moderad')) return 'text-orange-600 font-semibold';
+    return 'text-gray-700 font-semibold';
+  };
+  return (
+    <div className="my-4 overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
+                if (ci === 2) return <td key={ci} className={`py-2.5 px-3 text-center ${frictionTextTone(cell)}`}>{cell}</td>;
+                if (ci === 3) return <td key={ci} className="py-2.5 px-3 text-center text-orange-600 font-semibold tabular-nums">{cell}</td>;
+                if (ci === row.length - 1) return <td key={ci} className={`py-2.5 px-3 text-center ${directionTone(cell)}`}>{cell}</td>;
+                return <td key={ci} className="py-2.5 px-3 text-center text-gray-800">{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+// Generic 2-column signals table (used by conversion friction)
+export const PriceConversionSignalsTable = ({
+  data,
+  lang,
+}: {
+  data: { headers: string[]; rows: string[][] };
+  lang: string;
+}) => (
+  <div className="my-4 overflow-x-auto">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Sinais comportamentais' : 'Behavioral signals'}
+    </p>
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="border-b border-gray-200">
+          {data.headers.map((h, i) => (
+            <th key={i} className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.rows.map((row, ri) => (
+          <tr key={ri} className="border-b border-gray-100">
+            {row.map((cell, ci) => (
+              <td key={ci} className={`py-2.5 px-3 text-left ${ci === 0 ? 'text-gray-900 font-medium' : 'text-gray-700'}`}>
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+// Distribution bars (57 / 28 / 15 %) for incentive-need
+export const PriceConversionIncentiveDistribution = ({
+  data,
+  lang,
+}: {
+  data: { group: string; percentage: number }[];
+  lang: string;
+}) => {
+  const palette = ['#10b981', '#F4845F', '#94a3b8'];
+  return (
+    <div className="my-4">
+      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+        {lang === 'pt' ? 'Distribuição preditiva da audiência' : 'Predictive audience distribution'}
+      </p>
+      <div className="flex w-full h-8 rounded-md overflow-hidden">
+        {data.map((d, i) => (
+          <div
+            key={i}
+            style={{ width: `${d.percentage}%`, backgroundColor: palette[i % palette.length] }}
+            className="flex items-center justify-center text-white text-xs font-semibold"
+            title={`${d.group} · ${d.percentage}%`}
+          >
+            {d.percentage}%
+          </div>
+        ))}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+        {data.map((d, i) => (
+          <div key={i} className="flex items-center gap-2 text-gray-700">
+            <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: palette[i % palette.length] }} />
+            <span>{d.group}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Incentive table with tone on recommended action
+export const PriceConversionIncentiveTable = ({
+  data,
+}: {
+  data: { headers: string[]; rows: string[][] };
+}) => {
+  const actionTone = (v: string): string => {
+    const s = v.toLowerCase();
+    if (s.includes('manter') || s.includes('hold')) return 'text-gray-500 font-semibold';
+    if (s.includes('não') || s.includes('do not')) return 'text-gray-500 font-semibold';
+    if (s.includes('controlado') || s.includes('controlled') || s.includes('moderado')) return 'text-orange-600 font-semibold';
+    if (s.includes('direcionado') || s.includes('targeted')) return 'text-amber-700 font-semibold';
+    return 'text-gray-700 font-semibold';
+  };
+  return (
+    <div className="my-4 overflow-x-auto">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-gray-200">
+            {data.headers.map((h, i) => (
+              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 || i === data.headers.length - 1 ? 'text-left' : 'text-center'}`}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              {row.map((cell, ci) => {
+                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
+                if (ci === 1) return <td key={ci} className="py-2.5 px-3 text-center tabular-nums text-gray-800">{cell}</td>;
+                if (ci === 2) return <td key={ci} className="py-2.5 px-3 text-center tabular-nums text-orange-600 font-semibold">{cell}</td>;
+                if (ci === 3) return <td key={ci} className={`py-2.5 px-3 text-center ${actionTone(cell)}`}>{cell}</td>;
+                return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+// Simple bullet list for "what the model observes" style detail
+export const PriceConversionDetailList = ({
+  items,
+  lang,
+}: {
+  items: string[];
+  lang: string;
+}) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'O que o modelo observa em cada sessão' : 'What the model observes in each session'}
+    </p>
+    <ul className="space-y-1.5">
+      {items.map((it, i) => (
+        <li key={i} className="text-gray-700 text-sm flex gap-2 leading-relaxed">
+          <span className="text-orange-500 flex-shrink-0">•</span>
+          <span>{it}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
