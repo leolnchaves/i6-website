@@ -356,30 +356,26 @@ const FilterChips = ({
         onSelect={onSku}
         disabled={disabled}
       />
-      <SegmentedRow
-        label={L.filters.channel}
-        options={(['total', 'digital', 'physical'] as Channel[]).map((c) => ({ id: c, label: L.channelOptions[c] }))}
-        selectedId={channel}
-        onSelect={(v) => onChannel(v as Channel)}
-        disabled={disabled}
-      />
-      <SegmentedRow
-        label={L.filters.region}
-        options={(['total', 'sudeste', 'sul', 'nordeste'] as Region[]).map((r) => ({ id: r, label: L.regionOptions[r] }))}
-        selectedId={region}
-        onSelect={(v) => onRegion(v as Region)}
-        disabled={disabled}
-      />
-      <SegmentedRow
-        label={L.filters.horizon}
-        options={([6, 12] as Horizon[]).map((h) => ({ id: String(h), label: L.horizonOptions[h] }))}
-        selectedId={String(horizon)}
-        onSelect={(v) => onHorizon(Number(v) as Horizon)}
-        disabled={disabled}
-      />
+      <div className="grid grid-cols-2 gap-[1vmin]">
+        <SegmentedRow
+          label={L.filters.channel}
+          options={(['total', 'digital', 'physical'] as Channel[]).map((c) => ({ id: c, label: L.channelOptions[c] }))}
+          selectedId={channel}
+          onSelect={(v) => onChannel(v as Channel)}
+          disabled={disabled}
+        />
+        <SegmentedRow
+          label={L.filters.region}
+          options={(['total', 'sudeste', 'sul'] as Region[]).map((r) => ({ id: r, label: L.regionOptions[r] }))}
+          selectedId={region}
+          onSelect={(v) => onRegion(v as Region)}
+          disabled={disabled}
+        />
+      </div>
     </div>
   );
 };
+
 
 const SegmentedRow = ({
   label, options, selectedId, onSelect, disabled,
