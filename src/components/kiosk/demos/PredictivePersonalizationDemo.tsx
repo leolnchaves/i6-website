@@ -362,7 +362,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     <button
                       type="button"
                       onClick={backToCatalog}
-                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.2vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.8vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.7vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
                     >
                       {t.backToCatalog}
                     </button>
