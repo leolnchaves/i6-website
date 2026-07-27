@@ -42,6 +42,7 @@ const Kiosk = () => {
   const [route, setRoute] = useState<RouteId | null>(null);
   const [recommendedIds, setRecommendedIds] = useState<string[] | null>(null);
   const [selectedSolutionId, setSelectedSolutionId] = useState<string | null>(null);
+  const [simulationCompleted, setSimulationCompleted] = useState<Record<string, boolean>>({});
 
   const kContent = kioskContent[lang];
   const sContent = solutionsContent[lang];
