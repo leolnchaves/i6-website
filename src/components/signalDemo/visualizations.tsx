@@ -1,4 +1,4 @@
-import { LineChart, Line, BarChart, Bar, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis, ReferenceLine, Cell } from 'recharts';
+import { LineChart, Line, BarChart, Bar, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis, ReferenceLine, ReferenceArea, ReferenceDot, Cell } from 'recharts';
 
 export const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-x-auto my-4">
