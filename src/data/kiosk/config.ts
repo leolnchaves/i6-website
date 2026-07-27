@@ -384,7 +384,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
     },
     ebook: {
       eyebrow: 'Take the content with you',
-      title: (t) => `Get the eBook: ${t}`,
+      title: (t) => highlightEbook('Get the ', t),
       subtitle: 'Leave your name and email and we will send the full material in minutes.',
       cta: 'I want it',
       nameLabel: 'Name',
