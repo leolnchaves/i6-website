@@ -41,6 +41,10 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
         lang={lang}
         solutionTitle={solution.title}
         solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>
@@ -58,6 +62,10 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
         lang={lang}
         solutionTitle={solution.title}
         solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
       >
         <PropensityCampaignDemo />
       </SimulationLauncher>
