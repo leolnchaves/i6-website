@@ -1,25 +1,21 @@
-## Objetivo
+## Problema
 
-Remover completamente a "Correção de esparsidade" (`sparsityFix`) da UI do modal de Forecast — tanto do gráfico de composição quanto do card de breakdown que aparece ao clicar num mês.
+Os SVGs dos gráficos do modal de Forecast usam `viewBox` + `className="w-full h-auto"` + `maxHeight`. Como o `preserveAspectRatio` padrão é `xMidYMid meet`, quando o `maxHeight` limita a altura o SVG também encolhe a largura para manter o aspect ratio — resultado: gráfico centralizado com espaço vazio nas laterais.
 
-## Mudanças em `src/components/kiosk/demos/DemandForecastDemo.tsx`
+## Solução
 
-1. **Gráfico de composição (`CompositionChart`)**
-   - Remover cálculo `sparsityVals` e sua entrada no `posMax`.
-   - Remover a cor `sparsityFix` do objeto `colors`.
-   - Remover o bloco de renderização das barras de esparsidade (loop `points.map` que desenha os `<rect>` cor coral translúcida).
-   - Remover a `<LegendDot square … label={L.result.sparsityFix} />` da legenda.
+Fazer o SVG esticar horizontalmente para preencher todo o container, mantendo a altura atual.
 
-2. **Breakdown card (`BreakdownCard`)**
-   - Remover a entrada `{ label: L.result.sparsityFix, value: point.sparsityFix ?? 0 }` do array `parts`.
-   - Ajustar o grid de `grid-cols-3` para `grid-cols-2` (agora só Tendência e Sazonalidade).
+Em `src/components/kiosk/demos/DemandForecastDemo.tsx`, nos dois `<svg>`:
 
-## Fora do escopo (não mexer)
+- **Gráfico principal (linha 471)** — altura atual 164px
+- **Gráfico de composição (linha 615)** — altura atual 116px
 
-- Dados em `src/data/kiosk/demos/demandForecast.ts` (o campo `sparsityFix` permanece no tipo/mock; apenas deixa de ser exibido). Assim evitamos efeitos colaterais em `MonthPoint` ou nos cálculos de `i6Fcst`.
-- Labels (`L.result.sparsityFix`) e o passo do reasoning ("Tratando esparsidade…") permanecem — o pedido foi remover do gráfico e do breakdown, não do texto de raciocínio.
+Alterar em cada um:
+- `className="w-full h-auto block"` → `className="w-full block"`
+- Trocar `style={{ maxHeight: N }}` por `style={{ width: '100%', height: N }}`
+- Adicionar `preserveAspectRatio="none"` no `<svg>`
 
-## Validação visual
+Isso força o SVG a ocupar 100% da largura do container mantendo exatamente a altura já definida. Elementos internos posicionados via coordenadas do `viewBox` continuam funcionando; o texto (labels de eixo, legendas) fica com leve alongamento horizontal apenas se o container ficar muito mais largo que o `viewBox` — dentro do modal do Kiosk (retrato 27") a diferença é pequena e aceitável.
 
-- Abrir Forecast → gráfico de composição sem barras coral translúcidas e legenda sem o item de esparsidade.
-- Clicar num mês → breakdown mostra apenas 2 cards (Tendência, Sazonalidade) ocupando a largura toda.
+Nenhuma outra alteração — a altura permanece a mesma que ficou após as reduções recentes.
