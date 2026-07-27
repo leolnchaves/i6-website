@@ -151,7 +151,7 @@ const SummaryRow = ({ label, value, highlight }: { label: string; value: string;
     <span className="block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.6vmin]">
       {label}
     </span>
-    <span className="block text-[2.4vmin] leading-snug text-white/90">{value}</span>
+    <span className="block text-[2.4vmin] leading-snug text-white/90 whitespace-pre-line">{value}</span>
   </div>
 );
 
