@@ -1,21 +1,30 @@
-## Problema
-Os botões "Voltar" (Personalização — "← Voltar à vitrine" na linha 380–386 de `PredictivePersonalizationDemo.tsx`; PriceToMargin — "← Escolher outro produto" na linha 156–162 de `PriceToMarginDemo.tsx`) usam a mesma linguagem visual dos `MetricPill` (fundo escuro `bg-white/[0.04]`, borda clara `border-white/25`, cantos arredondados, tipografia sóbria). Como estão lado a lado com os KPIs, o usuário não distingue o que é ação e o que é informação.
+## Objetivo
 
-## Correção — novo padrão visual do "Voltar"
+Eliminar o scroll horizontal em todas as respostas do i6 Signal dentro do Kiosk, sem quebrar a legibilidade das tabelas.
 
-Criar um design de botão claramente afordante, distinto dos pills de KPI. Aplicar em ambos os componentes:
+## Diagnóstico (verificado)
 
-- **Forma**: `rounded-full` (pill), altura fixa alinhada à altura dos KPIs para não desalinhar o grid.
-- **Cor**: fundo sólido em tom neutro escuro elevado — `bg-white/10` com borda `border-white/20` — SEM o hover coral (o coral é a cor de destaque de dados/preço, então some da linguagem do botão para não confundir).
-- **Estado hover**: `bg-white/20` (só clareia, mantém neutro).
-- **Ícone**: substituir o "←" textual por `<ArrowLeft>` do lucide-react (12–14px) à esquerda, dando afordância clara de ação.
-- **Tipografia**: `font-semibold`, `tracking-wide`, `uppercase` opcional — diferente do case natural dos labels de KPI, reforçando que é comando.
-- **Peso visual**: sombra sutil `shadow-md` e leve `ring-1 ring-white/10` para elevá-lo levemente da superfície plana dos KPIs.
-- **Interação**: manter `active:scale-[0.98]` para feedback tátil.
+- `src/components/kiosk/KioskSignalIntelliboard.tsx` (linha 231): o card branco já usa `overflow-x-hidden` — ou seja, o container externo não rola.
+- `src/components/signalDemo/visualizations.tsx`: os wrappers de tabela usam `overflow-x-auto` em ~20 locais (ex.: linhas 4, 77, 207, 238, 298, 428, 463, 578, 625, 687, 838, 956, 1012, 1058, 1103, 1143, 1218, 1254 …). Isso gera **scroll horizontal interno** quando as colunas somadas superam a largura útil.
+- Reforçadores do estouro: `whitespace-nowrap` em células com texto longo (ex.: linha 259 na `BehaviorClustersTable`, linha 645 no scenario regional, linha 259 dos cluster names) prendem a largura mínima da coluna e impedem a quebra.
 
-Arquivos:
-1. `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx` — atualizar classe do botão da linha 380–386 e importar `ArrowLeft` do lucide-react; remover o "← " prefixado no label vindo dos dados (usar `t.backToCatalog.replace(/^←\s*/, '')`) para não duplicar seta.
-2. `src/components/kiosk/demos/PriceToMarginDemo.tsx` — mesma atualização no botão da linha 156–162.
-3. Sem alteração nos dados de tradução (`predictivePersonalization.ts`, `priceToMargin.ts`) — a limpeza da seta é feita em render, mantendo compatibilidade caso alguém volte ao estilo textual.
+## Mudanças (apenas apresentação, sem lógica)
 
-Escopo restrito: apenas o botão "Voltar" nessas duas demos. Nenhuma alteração nos MetricPills, layout do grid, animações ou lógica de reset.
+1) **Trocar `overflow-x-auto` por `overflow-hidden` em todos os wrappers de tabela** em `src/components/signalDemo/visualizations.tsx`. Assim as tabelas passam a se ajustar à largura do card em vez de rolar.
+
+2) **Permitir quebra de linha nas células que hoje travam a largura mínima**:
+   - Remover `whitespace-nowrap` das células de nome/cluster/região listadas acima (linhas 259, 645 e demais equivalentes que aparecerem na varredura).
+   - Onde o texto precisar caber melhor, adicionar `break-words` / `leading-tight` para manter a leitura sem estourar.
+
+3) **Forçar layout de tabela previsível**: adicionar `table-fixed` ao `<table>` nos casos em que ainda houver risco de estouro (ex.: `BehaviorClustersTable` segunda tabela com 3 colunas longas), e reduzir o padding lateral das células (`px-3` → `px-2`) apenas nessas tabelas quando necessário para manter todas as colunas visíveis.
+
+4) **Validação visual**: após o ajuste, verificar no viewport do Kiosk (retrato 27") os cenários citados como problemáticos (Personalização — resposta 2 / Clusters Comportamentais) e um cenário por família (Forecast, Metas, Mix, Preço, Turnover) para confirmar que nenhuma tabela apresenta scroll horizontal.
+
+## Arquivos afetados
+
+- `src/components/signalDemo/visualizations.tsx` (único arquivo alterado — apenas classes utilitárias)
+
+## Fora de escopo
+
+- Nenhuma mudança em lógica, dados ou textos dos cenários.
+- Nenhuma mudança em `KioskSignalIntelliboard.tsx` (o container externo já está correto).
