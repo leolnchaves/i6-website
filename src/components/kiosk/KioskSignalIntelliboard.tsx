@@ -143,7 +143,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
         <h3 className="text-white text-[3.2vmin] font-bold leading-tight">
           {content.results.signalTitle}
         </h3>
-        <p className="text-white/60 text-[1.8vmin] mt-[1vmin] max-w-[70vmin] mx-auto">
+        <p className="text-white/60 text-[1.8vmin] mt-[1vmin] w-full max-w-none px-[2vmin]">
           {content.results.signalSubtitle}
         </p>
       </div>
