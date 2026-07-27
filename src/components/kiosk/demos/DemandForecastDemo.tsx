@@ -752,7 +752,7 @@ const BreakdownCard = ({
           ✕
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-[0.6vmin]">
+      <div className="grid grid-cols-2 gap-[0.6vmin]">
         {parts.map((p) => {
           const pct = positive > 0 ? (Math.max(0, p.value) / positive) * 100 : 0;
           return (
