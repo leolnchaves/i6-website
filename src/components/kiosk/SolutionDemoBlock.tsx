@@ -4,7 +4,7 @@ import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PriceMarginDemo from './demos/PriceMarginDemo';
 import PriceTurnoverDemo from './demos/PriceTurnoverDemo';
-import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
+import PersonalizationSimulationLauncher from './PersonalizationSimulationLauncher';
 import DemandForecastDemo from './demos/DemandForecastDemo';
 import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
 import CommercialTargetsDemo from './demos/CommercialTargetsDemo';
