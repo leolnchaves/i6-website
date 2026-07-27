@@ -1,4 +1,4 @@
-import { Sparkles, UserRoundSearch, Megaphone } from 'lucide-react';
+import { Sparkles, UserRoundSearch, Megaphone, LineChart } from 'lucide-react';
 import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/content';
 import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
@@ -67,7 +67,21 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
 
   // Interactive demo for Demand Forecasting
   if (solution.id === 'demand-forecasting') {
-    return <DemandForecastDemo lang={lang} />;
+    return (
+      <SimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
+        icon={LineChart}
+        onSimulationClosed={onSimulationClosed}
+      >
+        <DemandForecastDemo lang={lang} />
+      </SimulationLauncher>
+    );
   }
 
   if (solution.id === 'predictive-campaign-targeting') {
