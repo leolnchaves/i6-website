@@ -65,6 +65,7 @@ const SimulationLauncher = ({
     setOpen(false);
     // remount children next time so internal demo state resets
     setInstanceKey((k) => k + 1);
+    onSimulationClosed?.();
   };
 
   return (
