@@ -7,9 +7,106 @@ import {
   filterOptions,
   fmtBRL,
   type PriceMarginSku,
+  type AlternativeScenario,
 } from '@/data/kiosk/demos/priceMargin';
 
 type Phase = 'setup' | 'running' | 'result';
+
+// Derived outcome, reactive to strategy / minMargin / competitive band
+interface Derived {
+  optimalPrice: number;
+  rangeMin: number;
+  rangeMax: number;
+  confidencePct: number;
+  marginImpactPp: number;
+  volumeImpactPct: number;
+  alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario];
+}
+
+const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+
+const computeOutcome = (
+  s: PriceMarginSku,
+  strategy: string,
+  minMargin: string,
+  competitiveBand: string,
+): Derived => {
+  // Strategy shifts price ± and rebalances margin/volume impact
+  const strat =
+    strategy === 'margin'
+      ? { price: 1.018, margin: 1.4, volume: -1.6, conf: -3 }
+      : strategy === 'defense'
+      ? { price: 0.984, margin: -1.1, volume: 1.9, conf: 2 }
+      : { price: 1, margin: 0, volume: 0, conf: 0 };
+
+  // Competitive band controls range width and price ceiling vs. competitor
+  const band =
+    competitiveBand === 'strict'
+      ? { spread: 0.55, ceilingMult: 1.0 }
+      : competitiveBand === 'wide'
+      ? { spread: 1.4, ceilingMult: 1.06 }
+      : { spread: 1, ceilingMult: 1.03 };
+
+  // Minimum margin acts as a floor: raises price and margin, dents confidence and volume
+  const mm = parseInt(minMargin, 10);
+  const floor =
+    mm >= 45
+      ? { price: 1.014, margin: 1.1, volume: -0.9, conf: -6 }
+      : mm >= 40
+      ? { price: 1.007, margin: 0.6, volume: -0.4, conf: -3 }
+      : mm >= 35
+      ? { price: 1, margin: 0, volume: 0, conf: 0 }
+      : { price: 0.997, margin: -0.3, volume: 0.3, conf: 1 };
+
+  const rawOptimal = s.optimalPrice * strat.price * floor.price;
+  const ceiling = s.competitorPrice * band.ceilingMult;
+  const optimalPrice = Math.min(rawOptimal, ceiling);
+
+  const halfSpread = ((s.rangeMax - s.rangeMin) / 2) * band.spread;
+  const rangeMin = optimalPrice - halfSpread;
+  const rangeMax = Math.min(optimalPrice + halfSpread, ceiling + halfSpread * 0.3);
+
+  const marginImpactPp = s.marginImpactPp + strat.margin + floor.margin;
+  const volumeImpactPct = s.volumeImpactPct + strat.volume + floor.volume;
+  const confidencePct = clamp(s.confidencePct + strat.conf + floor.conf, 62, 97);
+
+  const round2 = (v: number) => Math.round(v * 100) / 100;
+  const round1 = (v: number) => Math.round(v * 10) / 10;
+
+  const alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario] = [
+    {
+      id: 'conservative',
+      label: 'Conservador',
+      price: round2(rangeMin),
+      margin: 'Maior',
+      volume: 'Queda mínima',
+    },
+    {
+      id: 'recommended',
+      label: 'Recomendado',
+      price: round2(optimalPrice),
+      margin: 'Ótima',
+      volume: 'Queda controlada',
+    },
+    {
+      id: 'aggressive',
+      label: 'Agressivo',
+      price: round2(rangeMax),
+      margin: 'Máxima',
+      volume: 'Maior risco de volume',
+    },
+  ];
+
+  return {
+    optimalPrice: round2(optimalPrice),
+    rangeMin: round2(rangeMin),
+    rangeMax: round2(rangeMax),
+    confidencePct: Math.round(confidencePct),
+    marginImpactPp: round1(marginImpactPp),
+    volumeImpactPct: round1(volumeImpactPct),
+    alternatives,
+  };
+};
 
 const DASH = '—';
 
