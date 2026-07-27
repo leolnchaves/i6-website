@@ -166,6 +166,17 @@ const PropensityCampaignDemo = () => {
 
             {phase === 'result' && (
               <>
+                {/* Selected product */}
+                <div className="rounded-xl border border-[#F4845F]/40 bg-[#F4845F]/[0.06] px-[1.6vmin] py-[1.2vmin]">
+                  <div className="text-[1.15vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.3vmin]">
+                    Produto selecionado
+                  </div>
+                  <div className="text-[1.9vmin] font-bold text-white leading-tight">{product.name}</div>
+                  <div className="text-[1.3vmin] text-white/60 mt-[0.2vmin]">
+                    {product.category} · {fmt(product.audienceTotal)} elegíveis
+                  </div>
+                </div>
+
                 {/* Priority table */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
                   <div className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.2vmin] uppercase tracking-[0.2em] font-semibold text-white/60">

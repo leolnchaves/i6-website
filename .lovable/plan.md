@@ -1,17 +1,14 @@
 ## Objetivo
 
-Unificar o card do launcher em "Personalização + Descoberta" em um único bloco, sem duplicar RESOLVE/ENTREGA/IMPACTO.
+Na tela de resultado da demo **Campanhas por Propensão**, exibir o produto/oferta selecionado acima da tabela de faixas de prioridade.
 
 ## Mudanças
 
-**`src/components/kiosk/SolutionDemoBlock.tsx`** (branch `predictive-personalization` | `smart-discovery`):
-- Título fixo: `"Personalização e Descoberta Preditiva"` (PT) / `"Predictive Personalization and Discovery"` (EN).
-- Subtítulo fixo: `"Antecipe a próxima melhor oferta para cada cliente, inclusive anônimos."` (PT) / equivalente EN.
-- Passar apenas `resolve`, `entrega`, `impacto` já concatenados (uma descrição por linha, dividida por `\n`), combinando os textos das duas soluções (`solution` + `companion`).
-- Remover as props `secondaryTitle`/`secondaryResolve`/`secondaryEntrega`/`secondaryImpacto` neste caso.
+**`src/components/kiosk/demos/PropensityCampaignDemo.tsx`** (dentro do bloco `phase === 'result'`, antes da tabela em ~linha 170):
+- Adicionar um cabeçalho compacto com:
+  - Label pequeno `"Produto"` (PT) / `"Product"` (EN) em coral, uppercase tracking.
+  - Nome do produto (`product.name`) em texto branco bold ~`text-[1.9vmin]`.
+  - Categoria em cinza claro (`text-white/60`).
+- Adicionar chaves de label em `L.result` (`selectedProduct`) em `src/data/kiosk/demos/propensityCampaign.ts` (PT: "Produto selecionado"). Se o arquivo já for só PT (é), basta uma string.
 
-**`src/components/kiosk/SimulationLauncher.tsx`**:
-- Ajustar `SummaryRow` para renderizar `value` preservando quebras de linha (`whitespace-pre-line`), permitindo mostrar as duas descrições empilhadas dentro do mesmo box coral.
-- Nenhuma mudança visual nos casos que passam `value` de linha única (Campanhas).
-
-Sem alterações em conteúdo dos textos (usa os `resolve`/`entrega`/`impacto` já existentes em `LeanSolution`) nem em lógica de modal/simulação.
+Sem alteração na lógica de cálculo nem no restante do layout.
