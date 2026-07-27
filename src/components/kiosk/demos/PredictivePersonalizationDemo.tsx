@@ -111,9 +111,9 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     return catalog.skus.find((s) => s.id === selectedId) ?? null;
   }, [catalog, selectedId]);
 
-  const latencyMs = useMemo(() => {
+  const latencySec = useMemo(() => {
     if (!selected) return '0.00';
-    return (18 + Math.random() * 22).toFixed(2);
+    return ((18 + Math.random() * 22) / 1000).toFixed(2);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId]);
 
