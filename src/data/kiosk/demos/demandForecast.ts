@@ -138,9 +138,9 @@ export const skus: SkuDef[] = [
     promoNotePt: 'Black Friday + campanha de verão — pico esperado de +18% sobre baseline.',
     promoNoteEn: 'Black Friday + summer campaign — expected +18% peak over baseline.',
     argumentPt:
-      'Produto com crescimento estrutural de +8% a.a. e sazonalidade forte no Q4 (pico em dezembro, +42% acima do baseline). Corrigimos maio de 2024 e maio de 2025 — meses com ruptura em que a demanda real foi ~2× o vendido — e isolamos o efeito promocional de nov/dez para não superestimar meses regulares. Nos últimos 90 dias detectamos aceleração adicional de +14% no canal digital. O forecast atual erra 57pp por não separar promo de tendência; a i6 estreita o intervalo de confiança de ±22% para ±7% e reduz ruptura de 14,6% para 3,1%.',
+      'Crescimento estrutural de +8% a.a. com Q4 forte (pico de dezembro, +42% acima do baseline). Recuperamos maio/2024 e maio/2025 — meses com ruptura em que a demanda real foi ~2× o vendido — e isolamos a promo de nov/dez para não inflar meses regulares. Últimos 90 dias com +14% no digital. O forecast atual erra 57pp por não separar promo de tendência; a i6 estreita o intervalo de ±22% para ±7% e reduz ruptura de 14,6% para 3,1%.',
     argumentEn:
-      'Structural +8% YoY growth with strong Q4 seasonality (December peak, +42% above baseline). We recovered May 2024 and May 2025 — stockout months where real demand was ~2× what was sold — and isolated the Nov/Dec promo effect to avoid over-projecting regular months. Last 90 days show an additional +14% acceleration in the digital channel. The current forecast is off by 57pp because it does not separate promo from trend; i6 narrows the confidence interval from ±22% to ±7% and cuts stockout from 14.6% to 3.1%.',
+      'Structural +8% YoY growth with strong Q4 (December peak, +42% above baseline). We recovered May 2024 and May 2025 — stockout months where real demand was ~2× what was sold — and isolated the Nov/Dec promo to avoid inflating regular months. Last 90 days: +14% in digital. The current forecast misses by 57pp for not splitting promo from trend; i6 narrows the interval from ±22% to ±7% and cuts stockout from 14.6% to 3.1%.',
   },
   {
     id: 'fashion',
