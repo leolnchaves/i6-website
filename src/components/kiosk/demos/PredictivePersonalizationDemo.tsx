@@ -35,15 +35,15 @@ const MetricPill = ({
   trend?: 'up' | 'down';
 }) => (
   <div
-    className={`rounded-lg border px-[1.2vmin] py-[0.9vmin] ${
+    className={`rounded-lg border px-[1.8vmin] py-[1.5vmin] ${
       highlight ? 'border-[#F4845F]/50 bg-[#F4845F]/10' : 'border-white/10 bg-white/[0.03]'
     }`}
   >
-    <span className="block text-[1vmin] tracking-[0.2em] uppercase font-semibold text-white/55 mb-[0.2vmin]">
+    <span className="block text-[1.25vmin] tracking-[0.2em] uppercase font-semibold text-white/55 mb-[0.6vmin]">
       {label}
     </span>
-    <span className={`inline-flex items-center gap-[0.5vmin] text-[1.7vmin] font-bold ${highlight ? 'text-[#F4845F]' : 'text-white'}`}>
-      {trend === 'up' && <TrendingUp className="w-[1.5vmin] h-[1.5vmin]" />}
+    <span className={`inline-flex items-center gap-[0.5vmin] text-[2.4vmin] font-bold ${highlight ? 'text-[#F4845F]' : 'text-white'}`}>
+      {trend === 'up' && <TrendingUp className="w-[2vmin] h-[2vmin]" />}
       {value}
     </span>
   </div>
@@ -69,23 +69,23 @@ const SkuTile = ({
       onClick={onClick}
       className={`text-left rounded-xl border-2 transition-all bg-white/[0.03] border-white/10 ${
         onClick ? 'hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06] active:scale-[0.98]' : ''
-      } ${small ? 'p-[1.3vmin]' : 'p-[1.6vmin]'}`}
+      } ${small ? 'p-[1.1vmin]' : 'p-[1.6vmin]'}`}
     >
       <div className="aspect-[4/5] rounded-lg overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02] mb-[1vmin] flex items-center justify-center">
         <img src={sku.image} alt="" loading="lazy" className="w-full h-full object-cover" />
       </div>
       <span
-        className={`block ${small ? 'text-[1.15vmin]' : 'text-[1.3vmin]'} uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]`}
+        className={`block ${small ? 'text-[1.05vmin]' : 'text-[1.3vmin]'} uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]`}
       >
         {sku.category[lang]}
       </span>
       <span
-        className={`block ${small ? 'text-[1.5vmin]' : 'text-[1.65vmin]'} leading-tight text-white/90 font-semibold ${small ? 'min-h-[3.4vmin]' : 'min-h-[3.8vmin]'}`}
+        className={`block ${small ? 'text-[1.35vmin]' : 'text-[1.65vmin]'} leading-tight text-white/90 font-semibold ${small ? 'min-h-[3vmin]' : 'min-h-[3.8vmin]'}`}
       >
         {sku.name[lang]}
       </span>
       <span
-        className={`block ${small ? 'text-[1.5vmin]' : 'text-[1.65vmin]'} text-white font-bold mt-[0.5vmin]`}
+        className={`block ${small ? 'text-[1.4vmin]' : 'text-[1.65vmin]'} text-white font-bold mt-[0.5vmin]`}
       >
         {currency(sku.price, lang)}
       </span>
@@ -362,7 +362,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     <button
                       type="button"
                       onClick={backToCatalog}
-                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.2vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.8vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.7vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
                     >
                       {t.backToCatalog}
                     </button>
