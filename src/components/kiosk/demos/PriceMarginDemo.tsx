@@ -661,7 +661,7 @@ const ResultView = ({ selected, derived }: { selected: PriceMarginSku; derived: 
   );
 };
 
-const FilterRow = ({ label, children }: { label: string; children: React.ReactNode }) => (
+const FilterRow = ({ label, children }: { label: string; children: ReactNode }) => (
   <div className="rounded-xl border border-white/10 bg-white/[0.02] px-[1.2vmin] py-[1vmin]">
     <span className="block text-[1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.7vmin]">
       {label}
