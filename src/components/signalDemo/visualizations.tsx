@@ -1208,7 +1208,7 @@ const OBJECTIVE_CHIP: Record<string, string> = {
   'conversion':           'bg-emerald-50 text-emerald-700 border-emerald-200',
 };
 
-const adherenceTone = (raw: string): string => {
+const personalizationAdherenceTone = (raw: string): string => {
   const n = parseInt(raw.replace('%', ''), 10);
   if (!isNaN(n)) {
     if (n >= 88) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
