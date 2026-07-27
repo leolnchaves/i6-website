@@ -1414,12 +1414,12 @@ export const PriceConversionFrictionHeatmap = ({
   data: { contexts: string[]; products: string[]; matrix: number[][] };
   lang: string;
 }) => {
-  const frictionColor = (v: number): string => {
-    if (v >= 70) return 'bg-red-500/85 text-white';
-    if (v >= 55) return 'bg-orange-500/80 text-white';
-    if (v >= 40) return 'bg-amber-400/70 text-gray-900';
-    if (v >= 25) return 'bg-emerald-300/70 text-emerald-900';
-    return 'bg-emerald-500/85 text-white';
+  const frictionTextColor = (v: number): string => {
+    if (v >= 70) return 'text-red-600 font-bold';
+    if (v >= 55) return 'text-orange-600 font-semibold';
+    if (v >= 40) return 'text-amber-700 font-semibold';
+    if (v >= 25) return 'text-emerald-700 font-semibold';
+    return 'text-emerald-600 font-semibold';
   };
   return (
     <div className="my-4">
@@ -1429,7 +1429,7 @@ export const PriceConversionFrictionHeatmap = ({
       <div className="overflow-x-auto">
         <table className="w-full text-xs border-collapse">
           <thead>
-            <tr>
+            <tr className="border-b border-gray-200">
               <th className="py-2 px-2 text-left text-gray-700 font-medium text-[11px] uppercase tracking-wider">
                 {lang === 'pt' ? 'Produto' : 'Product'}
               </th>
@@ -1442,13 +1442,11 @@ export const PriceConversionFrictionHeatmap = ({
           </thead>
           <tbody>
             {data.products.map((p, ri) => (
-              <tr key={ri}>
-                <td className="py-1.5 px-2 text-gray-900 font-semibold text-left whitespace-nowrap">{p}</td>
+              <tr key={ri} className="border-b border-gray-100">
+                <td className="py-2 px-2 text-gray-900 font-semibold text-left whitespace-nowrap">{p}</td>
                 {data.matrix[ri].map((v, ci) => (
-                  <td key={ci} className="py-1 px-1 text-center">
-                    <div className={`inline-block min-w-[42px] px-2 py-1.5 rounded-md text-[11px] font-semibold ${frictionColor(v)}`}>
-                      {v}
-                    </div>
+                  <td key={ci} className={`py-2 px-2 text-center tabular-nums ${frictionTextColor(v)}`}>
+                    {v}
                   </td>
                 ))}
               </tr>
