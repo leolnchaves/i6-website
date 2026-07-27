@@ -177,9 +177,6 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
       {/* Header */}
       <div className="flex items-center gap-[1.5vmin] mb-[2vmin]">
-        <span className="w-[4.5vmin] h-[4.5vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-          <Sparkles className="w-[2.4vmin] h-[2.4vmin] text-[#F4845F]" />
-        </span>
         <div>
           <h4 className="text-[2.2vmin] font-bold text-white leading-tight">{t.header}</h4>
           <p className="text-[1.4vmin] text-white/60">{t.headerSubtitle}</p>
