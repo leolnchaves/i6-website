@@ -2,14 +2,24 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Sparkles, X } from 'lucide-react';
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 
+interface Labels {
+  resolve: string;
+  entrega: string;
+  impacto: string;
+}
+
 interface Props {
   lang: KioskLang;
   solutionTitle: string;
   solutionTagline?: string;
+  resolve?: string;
+  entrega?: string;
+  impacto?: string;
+  labels?: Labels;
   children: ReactNode;
 }
 
-const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, children }: Props) => {
+const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, resolve, entrega, impacto, labels, children }: Props) => {
   const [open, setOpen] = useState(false);
   const [instanceKey, setInstanceKey] = useState(0);
   const t = kioskContent[lang].results;
@@ -46,6 +56,14 @@ const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, children }: 
             {solutionTagline && <p className="text-[2vmin] text-white/70">{solutionTagline}</p>}
           </div>
         </div>
+
+        {labels && (resolve || entrega || impacto) && (
+          <div className="grid grid-cols-1 gap-[2vmin] mb-[2.5vmin]">
+            {resolve && <SummaryRow label={labels.resolve} value={resolve} />}
+            {entrega && <SummaryRow label={labels.entrega} value={entrega} />}
+            {impacto && <SummaryRow label={labels.impacto} value={impacto} highlight />}
+          </div>
+        )}
 
         <button
           type="button"
@@ -93,5 +111,18 @@ const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, children }: 
     </>
   );
 };
+
+const SummaryRow = ({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) => (
+  <div
+    className={`rounded-2xl p-[2.5vmin] border ${
+      highlight ? 'bg-[#F4845F]/10 border-[#F4845F]/40' : 'bg-white/5 border-white/10'
+    }`}
+  >
+    <span className="block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.6vmin]">
+      {label}
+    </span>
+    <span className="block text-[2.4vmin] leading-snug text-white/90">{value}</span>
+  </div>
+);
 
 export default SimulationLauncher;
