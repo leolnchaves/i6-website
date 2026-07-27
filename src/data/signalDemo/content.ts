@@ -1241,7 +1241,7 @@ export const signalDemoContent = {
       },
       personalizationBehavior: {
         label: 'Behavior-based recommendation',
-        question: 'Which products or looks should be prioritized for each browsing profile, and which behaviors explain that recommendation?',
+        question: 'Which products should be prioritized for each browsing profile?',
         title: 'Predictive recommendations by browsing behavior',
         analysis: 'The model identified four dominant behaviors in the current journey. Performance-oriented users show higher adherence to technical and complementary products, while exploratory users respond better to new arrivals and combinations that expand discovery. For the selected profile, the largest opportunity is cross-selling products complementary to the item viewed. The recommendation combines current intent, individual history, product affinity and predicted behavior of similar users.\n\nThese products were recommended because they complement the item viewed, show high recurrence in similar journeys and align with the predicted interest pattern for this user.\n\nIn fashion retail, the look is recommended because it combines style, category, color, use occasion and behavioral preferences, avoiding incoherent or low-fit combinations.',
         behaviorMatrix: {
