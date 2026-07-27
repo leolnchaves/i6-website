@@ -102,6 +102,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 0,
     argument:
       'Velocidade de venda 34 un/sem, 42% acima da média da categoria (24 un/sem), com estoque de idade 22 dias contra 41 dias da categoria. Elasticidade −0,7 indica baixa sensibilidade nesta faixa: um markdown antecipado reduziria margem em 4,8 pp sem impacto material em giro — a demanda absorve o preço atual nas próximas 3 semanas dentro do sell-through projetado de 78%.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 82 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 79 },
+      { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+      { sku: 'JQT-INV-004', name: 'Jaqueta acolchoada bordô M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 77 },
+    ],
   },
   {
     id: 'interior-sp',
