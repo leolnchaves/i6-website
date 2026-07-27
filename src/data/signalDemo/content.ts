@@ -1015,7 +1015,7 @@ export const signalDemoContent = {
       },
       mixBehavior: {
         label: 'Mix by Store',
-        question: 'How do stores in this region behave relative to the ideal assortment, and which ones show meaningful deviations or non-standard opportunities?',
+        question: 'How do stores in the region behave relative to the ideal assortment and show meaningful deviations?',
         title: 'Store behavior versus ideal assortment',
         analysis: 'The model identified three predominant behaviors among the region\u2019s stores. Most operate close to the assortment expected for their profile, but 18% show meaningful deviations. Some carry variety below predicted potential, while others concentrate redundant or low-turn products. Store 184 is the leading positive outlier — with an assortment 22% smaller than the regional average, it still shows high productivity per SKU and headroom to absorb new categories. Store 327, in turn, carries a broad assortment that poorly matches its predicted demand behavior, raising the risk of idle inventory.',
         scatter: [
