@@ -170,6 +170,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 216000,
     argument:
       'Idade média do estoque 63 dias, 37% acima da média da categoria (46d), com perda projetada de valor de 2,1 pp/semana caso mantido. Elasticidade −1,6 e coleção nova entrando em 21 dias: markdown de 15% agora captura demanda de fim de ciclo antes da transição e evita uma liquidação profunda típica desta janela (~30%), preservando 9,4 pp de margem em relação a esse cenário tardio.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 85 },
+      { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 104.9, markdownPct: 19, sellThroughProjectedPct: 82 },
+      { sku: 'JQT-INV-007', name: 'Jaqueta acolchoada marrom M', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 80 },
+      { sku: 'JQT-INV-008', name: 'Jaqueta acolchoada azul GG', currentPrice: 129.9, recommendedPrice: 99.9, markdownPct: 23, sellThroughProjectedPct: 78 },
+    ],
   },
   {
     id: 'sul',
