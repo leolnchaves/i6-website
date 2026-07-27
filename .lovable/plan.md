@@ -1,48 +1,46 @@
-## Plano: Preço Orientado ao Giro — 2 novas perguntas no i6 Signal
+## Objetivo
 
-Mesmo padrão de `marginOpportunities`/`marginSignals`: novos cenários no union, conteúdo PT/EN, componentes de visualização e wiring no Intelliboard.
+Adicionar dois novos cenários ao i6 Signal para a solução **Personalização Preditiva + Descoberta Inteligente**, seguindo o mesmo padrão dos cenários já implementados (mix, margem, giro, metas, forecast).
 
-### 1. `src/data/signalDemo/content.ts`
-Adicionar dois novos cenários ao union `Scenario`:
+## Cenários
 
-- **`turnoverRisk`** (Pergunta 1 — Risco preditivo de envelhecimento por região e cluster)
-  - `question`, `title`, `executive` (2 parágrafos: SKU A em 38 lojas, Interior de Minas / Sul Metropolitano vs São Paulo Premium)
-  - `regionTable`: Região/cluster, Estoque atual, Cobertura projetada, Sell-through previsto, Risco (badge Baixo/Médio/Alto)
-  - `signalsTable`: 5 sinais preditivos comparados entre Interior de Minas × São Paulo Premium (velocidade, sensibilidade, sazonalidade, idade estoque, pressão competitiva)
-  - `reasoning` (argumentação preditiva, 2 parágrafos)
-  - `actions` (3 ações)
+### P1 — `personalizationBehavior`
+"Quais produtos ou looks devem ser priorizados para cada perfil de navegação, e quais comportamentos explicam essa recomendação?"
 
-- **`turnoverMarkdown`** (Pergunta 2 — Markdown preditivo por SKU, região e ciclo de vida)
-  - `question`, `title`, `executive` (2 parágrafos: 7 SKUs em markdown, SKU A Interior de Minas 12%, SKU D São Paulo Premium manter 21 dias)
-  - `markdownRuler`: régua temporal 4 clusters × 4 janelas (Hoje / 7 dias / 14 dias / 21 dias) com valores tipo `-12%`, `Manter`, `Reavaliar`
-  - `skuTable`: SKU, Cluster prioritário, Preço atual, Preço recomendado, Sell-through projetado, Margem preservada
-  - `reasoning` (2 parágrafos)
-  - `actions` (3 ações)
+**Visuais**
+- `PersonalizationBehaviorMatrix` — tabela: Perfil comportamental / Intenção prevista / Produto ou look recomendado / Aderência (badge tonal) / Objetivo (chip colorido: Cross-sell, Discovery, Look recommendation, Conversão).
+- `PersonalizationSignalsTable` — sinais preditivos com efeito Alto/Médio/Baixo (badges tonais).
+- Quadro de "Argumentação preditiva" + bloco "Ações recomendadas".
 
-Blocos EN espelham PT com terminologia já adotada ("cluster", "sell-through", "markdown", "SKU").
+### P2 — `personalizationRepurchase`
+"Quais clientes estão entrando em janela de recompra, o que tendem a comprar novamente e qual é o melhor momento para ativá-los?"
 
-### 2. `src/data/kiosk/config.ts`
-- Remapear `price-to-turnover` em `solutionSignalMap` de `['pricing', 'supply']` para `['turnoverRisk', 'turnoverMarkdown']`.
-- Estender assinatura do union com `turnoverRisk` e `turnoverMarkdown`.
+**Visuais**
+- `RepurchaseCurveChart` — curva temporal (recharts LineChart) com:
+  - eixo X: dias desde a última compra
+  - eixo Y: probabilidade prevista
+  - ReferenceArea para janela de oportunidade
+  - ReferenceDot para pico
+  - anotação de queda pós-pico
+  - legenda explicativa dos 5 elementos
+- `RepurchaseBehaviorTable` — Comportamento previsto / Clientes / Janela / Propensão (badge) / Próxima melhor recomendação.
+- `RepurchaseCorrelationsTable` — sinal preditivo × efeito sobre recompra.
+- Quadro de "Argumentação preditiva" (2 blocos: cliente típico + cliente com migração) + "Ações recomendadas".
 
-### 3. `src/components/signalDemo/visualizations.tsx`
-Novos componentes (reaproveitando paleta e estilos existentes):
+## Arquivos afetados
 
-- `TurnoverRiskTable`: tabela regional com badge tonal em Risco (verde Baixo, âmbar Médio, coral Alto) e coluna de sell-through com barra tonal.
-- `TurnoverSignalsCompareTable`: tabela comparativa 2 colunas (Interior de Minas × São Paulo Premium), com badges tonais Alta/Média/Baixa e deltas coloridos (+8% verde, -24% coral).
-- `TurnoverMarkdownRuler`: grid 4×5 (cluster × 4 janelas + label) com células coloridas conforme o valor (coral para descontos, cinza para Manter, âmbar para Reavaliar). Renderiza como tabela responsiva no mesmo estilo dos outros quadros escuros.
-- `TurnoverMarkdownTable`: tabela de SKUs com badge em Preço recomendado (coral se desconto, cinza "Manter") e formatação BRL.
-- Reaproveitar `MarginReasoningBlock` (renomear para bloco genérico `ReasoningBlock` já usado, ou duplicar com título "Argumentação preditiva") — verificar bloco existente antes de duplicar.
+- `src/data/signalDemo/content.ts` — adicionar `personalizationBehavior` e `personalizationRepurchase` em PT e EN, com os textos, tabelas, sinais, argumentação e ações fornecidos pelo usuário.
+- `src/data/kiosk/config.ts` — mapear a solução `personalization-discovery` (ou slug atual) para os 2 novos cenários como P1/P2.
+- `src/components/signalDemo/visualizations.tsx` — implementar os 5 componentes acima, reutilizando estilos tonais (aderência/propensão) já usados em margem/giro.
+- `src/components/kiosk/KioskSignalIntelliboard.tsx` — renderizar os novos visuais e o quadro de "Argumentação preditiva" para os dois cenários.
 
-### 4. `src/components/kiosk/KioskSignalIntelliboard.tsx`
-- Importar novos componentes.
-- Branches `activeScenario === 'turnoverRisk'` e `=== 'turnoverMarkdown'` antes do `h4 "Ações recomendadas"`.
-- `turnoverRisk`: `TurnoverRiskTable` + `TurnoverSignalsCompareTable` + quadro "Argumentação preditiva".
-- `turnoverMarkdown`: `TurnoverMarkdownRuler` + `TurnoverMarkdownTable` + quadro "Argumentação preditiva".
+## Regras de estilo (mantidas)
 
-### Notas técnicas
-- Sem novos pacotes — tudo em tabelas Tailwind + eventual heatmap simples via `div grid` (sem recharts nesses dois cenários, pois régua e tabela regional são tabulares).
-- Valores em BRL (R$). SKU permanece SKU em EN.
-- Sem alteração em `signals.ts`, no fluxo do quiz, ou em demos do Kiosk.
+- Tabelas padronizadas (memória: i6Signal Visualization Style).
+- Sem emoji; badges tonais consistentes com os outros cenários.
+- Textos EN espelham a estrutura PT.
+- Nenhuma mudança em outros cenários.
 
-Publicação de release patch após validação visual.
+## Release
+
+Após validação visual sua, publico um patch (v2.2.x) via GitHub API conforme o release flow.

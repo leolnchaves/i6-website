@@ -1,7 +1,7 @@
 // Shared content + types for the i6 Signal Intelliboard demo.
 // Consumed by both /solutions (I6SignalDemo) and /kiosk (KioskSignalIntelliboard).
 
-export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown';
+export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown' | 'personalizationBehavior' | 'personalizationRepurchase';
 export type Phase = 'idle' | 'typing' | 'responding';
 
 export const TYPING_SPEED = 30;
@@ -536,6 +536,105 @@ export const signalDemoContent = {
           'Quais SKUs sairão do markdown mais cedo, com base na resposta?',
         ],
       },
+      personalizationBehavior: {
+        label: 'Recomendação por comportamento',
+        question: 'Quais produtos ou looks devem ser priorizados para cada perfil de navegação, e quais comportamentos explicam essa recomendação?',
+        title: 'Recomendações preditivas por comportamento de navegação',
+        analysis: 'O modelo identificou quatro comportamentos predominantes na jornada atual. Usuários orientados a performance apresentam maior aderência a produtos técnicos e complementares, enquanto usuários exploratórios respondem melhor a novidades e combinações que ampliam a descoberta. Para o perfil selecionado, a maior oportunidade está no cross-sell de produtos complementares ao item visualizado. A recomendação combina intenção atual, histórico individual, afinidade entre produtos e comportamento previsto de usuários semelhantes.',
+        behaviorMatrix: {
+          headers: ['Perfil comportamental', 'Intenção prevista', 'Produto ou look recomendado', 'Aderência', 'Objetivo'],
+          rows: [
+            ['Performance recorrente', 'Completar solução', 'Tênis + meia técnica + relógio', '91%', 'Cross-sell'],
+            ['Explorador de novidades', 'Descobrir alternativas', 'Nova coleção da categoria', '84%', 'Discovery'],
+            ['Sensível a estilo', 'Compor combinação', 'Look completo coordenado', '88%', 'Look recommendation'],
+            ['Compra objetiva', 'Finalizar rapidamente', 'Produto principal + acessório essencial', '79%', 'Conversão'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Sinal preditivo', 'Efeito'],
+          rows: [
+            ['Afinidade com a categoria', 'Alto'],
+            ['Complementaridade entre produtos', 'Alto'],
+            ['Padrão de navegação recente', 'Alto'],
+            ['Histórico de compras', 'Médio'],
+            ['Preferência de preço', 'Médio'],
+            ['Tendência comportamental do cluster', 'Alto'],
+          ],
+        },
+        reasoning: 'Estes produtos foram recomendados porque complementam o item visualizado, apresentam alta recorrência em jornadas semelhantes e estão alinhados ao padrão de interesse previsto para este usuário.\n\nNo varejo fashion, o look é recomendado porque combina estilo, categoria, cor, ocasião de uso e preferências comportamentais, evitando combinações incoerentes ou pouco aderentes.',
+        actions: [
+          { bold: 'Priorizar produtos complementares com alta aderência', text: 'evitando recomendações baseadas apenas em popularidade.' },
+          { bold: 'Adaptar a composição da vitrine ao comportamento da sessão', text: 'alternando conversão, cross-sell e descoberta.' },
+          { bold: 'Destacar o argumento de recomendação', text: 'explicando por que cada produto ou look faz sentido para aquele contexto.' },
+        ],
+        questions: [
+          'Como a aderência evolui entre categorias e clusters comportamentais?',
+          'Quais produtos ganham espaço quando o objetivo é discovery?',
+          'Como validar o impacto das recomendações em ticket médio e conversão?',
+        ],
+      },
+      personalizationRepurchase: {
+        label: 'Janela de Recompra',
+        question: 'Quais clientes estão entrando em uma janela de recompra, o que tendem a comprar novamente e qual é o melhor momento para ativá-los?',
+        title: 'Comportamento preditivo de recompra',
+        analysis: 'O modelo identificou 18.420 clientes com probabilidade relevante de nova compra nos próximos 30 dias. Desses, 46% tendem a recomprar o mesmo produto, 34% devem migrar para uma variação ou produto substituto e 20% apresentam maior propensão a complementar a compra anterior. A principal oportunidade está nos clientes cuja janela prevista de recompra começa nos próximos sete dias. Uma ativação antecipada demais tende a gerar baixa resposta. Uma abordagem tardia aumenta o risco de perda da recompra para outro canal ou concorrente.',
+        curveData: [
+          { day: 0, probability: 2 },
+          { day: 5, probability: 6 },
+          { day: 10, probability: 12 },
+          { day: 14, probability: 21 },
+          { day: 18, probability: 34 },
+          { day: 22, probability: 56 },
+          { day: 24, probability: 70 },
+          { day: 26, probability: 78 },
+          { day: 28, probability: 72 },
+          { day: 32, probability: 54 },
+          { day: 36, probability: 38 },
+          { day: 42, probability: 22 },
+          { day: 50, probability: 11 },
+        ],
+        curveWindow: { start: 22, end: 32 },
+        curvePeak: { day: 26, probability: 78 },
+        curveLegend: [
+          'Eixo X: dias desde a última compra',
+          'Eixo Y: probabilidade prevista de recompra',
+          'Faixa destacada: início da janela de oportunidade',
+          'Ponto marcado: maior propensão prevista',
+          'Curva descendente: queda prevista após o pico',
+        ],
+        behaviorTable: {
+          headers: ['Comportamento previsto', 'Clientes', 'Janela de recompra', 'Propensão', 'Próxima melhor recomendação'],
+          rows: [
+            ['Recompra do mesmo produto', '8.473', '5 a 12 dias', '84%', 'Mesmo SKU'],
+            ['Recompra com variação', '3.942', '8 a 18 dias', '73%', 'Tamanho, versão ou embalagem diferente'],
+            ['Migração para produto substituto', '2.321', '10 a 21 dias', '68%', 'Alternativa de maior aderência'],
+            ['Compra complementar', '3.684', '3 a 14 dias', '76%', 'Produto relacionado à compra anterior'],
+          ],
+        },
+        correlationsTable: {
+          headers: ['Sinal preditivo', 'Efeito sobre a recompra'],
+          rows: [
+            ['Frequência entre compras anteriores', 'Define o timing provável'],
+            ['Consumo estimado do produto', 'Indica proximidade de reposição'],
+            ['Recompra recorrente do mesmo SKU', 'Aumenta a probabilidade de repetição'],
+            ['Mudança recente de preferência', 'Aumenta a chance de migração'],
+            ['Compra conjunta em jornadas semelhantes', 'Indica oportunidade de complemento'],
+            ['Sensibilidade a preço e promoção', 'Influencia oferta e momento de ativação'],
+            ['Disponibilidade e substituição de produto', 'Altera o item mais provável da próxima compra'],
+          ],
+        },
+        reasoning: 'Este cliente está entrando em sua janela de recompra porque o intervalo desde a última compra se aproxima do seu ciclo previsto de consumo. O comportamento anterior indica alta recorrência no mesmo SKU, baixa propensão à troca e maior resposta quando ativado entre o 24º e o 28º dia após a compra.\n\nPara um cliente com tendência de migração, a próxima compra não deve repetir exatamente o item anterior. O modelo identificou aumento de interesse por uma versão superior, comportamento semelhante ao de clientes que migraram de produto e maior aderência à nova opção dentro da janela prevista de recompra.',
+        actions: [
+          { bold: 'Ativar primeiro os clientes na janela de maior propensão', text: 'evitando contatos prematuros ou tardios.' },
+          { bold: 'Diferenciar recompra, migração e compra complementar', text: 'apresentando o produto mais aderente a cada comportamento previsto.' },
+          { bold: 'Atualizar a recomendação conforme novas interações surgirem', text: 'recalculando produto, timing e probabilidade de recompra.' },
+        ],
+        questions: [
+          'Quais clusters concentram a maior propensão nos próximos 7 dias?',
+          'Como diferenciar cliente de recompra vs. migração no mesmo cluster?',
+          'Qual o impacto financeiro previsto se a ativação ocorrer fora da janela?',
+        ],
+      },
     },
 
   },
@@ -1064,6 +1163,105 @@ export const signalDemoContent = {
           'How does the recommended markdown evolve week by week?',
           'What is the margin gain vs. waiting for end-of-cycle clearance?',
           'Which SKUs will exit markdown earliest, based on response?',
+        ],
+      },
+      personalizationBehavior: {
+        label: 'Behavior-based recommendation',
+        question: 'Which products or looks should be prioritized for each browsing profile, and which behaviors explain that recommendation?',
+        title: 'Predictive recommendations by browsing behavior',
+        analysis: 'The model identified four dominant behaviors in the current journey. Performance-oriented users show higher adherence to technical and complementary products, while exploratory users respond better to new arrivals and combinations that expand discovery. For the selected profile, the largest opportunity is cross-selling products complementary to the item viewed. The recommendation combines current intent, individual history, product affinity and predicted behavior of similar users.',
+        behaviorMatrix: {
+          headers: ['Behavioral profile', 'Predicted intent', 'Recommended product or look', 'Adherence', 'Objective'],
+          rows: [
+            ['Recurring performance', 'Complete the solution', 'Sneakers + technical socks + watch', '91%', 'Cross-sell'],
+            ['Newness explorer', 'Discover alternatives', 'New collection in the category', '84%', 'Discovery'],
+            ['Style-sensitive', 'Build a combination', 'Coordinated full look', '88%', 'Look recommendation'],
+            ['Goal-driven buyer', 'Finish quickly', 'Main product + essential accessory', '79%', 'Conversion'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Predictive signal', 'Effect'],
+          rows: [
+            ['Category affinity', 'High'],
+            ['Product complementarity', 'High'],
+            ['Recent browsing pattern', 'High'],
+            ['Purchase history', 'Medium'],
+            ['Price preference', 'Medium'],
+            ['Cluster behavioral trend', 'High'],
+          ],
+        },
+        reasoning: 'These products were recommended because they complement the item viewed, show high recurrence in similar journeys and align with the predicted interest pattern for this user.\n\nIn fashion retail, the look is recommended because it combines style, category, color, use occasion and behavioral preferences, avoiding incoherent or low-fit combinations.',
+        actions: [
+          { bold: 'Prioritize complementary products with high adherence', text: 'avoiding recommendations based on popularity alone.' },
+          { bold: 'Adapt the storefront composition to session behavior', text: 'alternating conversion, cross-sell and discovery.' },
+          { bold: 'Highlight the recommendation rationale', text: 'explaining why each product or look fits that context.' },
+        ],
+        questions: [
+          'How does adherence evolve across categories and behavioral clusters?',
+          'Which products gain space when the objective is discovery?',
+          'How to validate recommendation impact on basket and conversion?',
+        ],
+      },
+      personalizationRepurchase: {
+        label: 'Repurchase Window',
+        question: 'Which customers are entering a repurchase window, what are they likely to buy again and when is the best moment to activate them?',
+        title: 'Predictive repurchase behavior',
+        analysis: 'The model identified 18,420 customers with a relevant probability of a new purchase in the next 30 days. Of those, 46% are likely to repurchase the same product, 34% should migrate to a variation or substitute, and 20% show higher propensity to complement the previous purchase. The main opportunity is customers whose predicted repurchase window starts in the next seven days. Activating too early tends to yield low response. A late approach raises the risk of losing the repurchase to another channel or competitor.',
+        curveData: [
+          { day: 0, probability: 2 },
+          { day: 5, probability: 6 },
+          { day: 10, probability: 12 },
+          { day: 14, probability: 21 },
+          { day: 18, probability: 34 },
+          { day: 22, probability: 56 },
+          { day: 24, probability: 70 },
+          { day: 26, probability: 78 },
+          { day: 28, probability: 72 },
+          { day: 32, probability: 54 },
+          { day: 36, probability: 38 },
+          { day: 42, probability: 22 },
+          { day: 50, probability: 11 },
+        ],
+        curveWindow: { start: 22, end: 32 },
+        curvePeak: { day: 26, probability: 78 },
+        curveLegend: [
+          'X axis: days since the last purchase',
+          'Y axis: predicted repurchase probability',
+          'Highlighted band: start of the opportunity window',
+          'Marked point: highest predicted propensity',
+          'Descending curve: predicted drop after the peak',
+        ],
+        behaviorTable: {
+          headers: ['Predicted behavior', 'Customers', 'Repurchase window', 'Propensity', 'Next best recommendation'],
+          rows: [
+            ['Repurchase of the same product', '8,473', '5 to 12 days', '84%', 'Same SKU'],
+            ['Repurchase with variation', '3,942', '8 to 18 days', '73%', 'Different size, version or pack'],
+            ['Migration to a substitute product', '2,321', '10 to 21 days', '68%', 'Higher-fit alternative'],
+            ['Complementary purchase', '3,684', '3 to 14 days', '76%', 'Product related to the previous purchase'],
+          ],
+        },
+        correlationsTable: {
+          headers: ['Predictive signal', 'Effect on repurchase'],
+          rows: [
+            ['Frequency between prior purchases', 'Defines the likely timing'],
+            ['Estimated product consumption', 'Signals replenishment proximity'],
+            ['Recurring repurchase of the same SKU', 'Raises the probability of repetition'],
+            ['Recent preference shift', 'Raises the chance of migration'],
+            ['Joint purchases in similar journeys', 'Signals a complement opportunity'],
+            ['Price and promo sensitivity', 'Influences offer and activation timing'],
+            ['Product availability and substitution', 'Alters the most likely next item'],
+          ],
+        },
+        reasoning: 'This customer is entering their repurchase window because the interval since the last purchase approaches their predicted consumption cycle. Prior behavior indicates high recurrence on the same SKU, low propensity to switch and stronger response when activated between day 24 and day 28 after the purchase.\n\nFor a customer with a migration tendency, the next purchase should not repeat the previous item exactly. The model identified rising interest in a higher-tier version, behavior similar to customers who migrated products and higher adherence to the new option within the predicted repurchase window.',
+        actions: [
+          { bold: 'Activate customers in the highest-propensity window first', text: 'avoiding premature or late contacts.' },
+          { bold: 'Differentiate repurchase, migration and complementary purchase', text: 'presenting the product that best fits each predicted behavior.' },
+          { bold: 'Update the recommendation as new interactions arrive', text: 'recalculating product, timing and repurchase probability.' },
+        ],
+        questions: [
+          'Which clusters concentrate the highest propensity in the next 7 days?',
+          'How to distinguish repurchase vs. migration customers in the same cluster?',
+          'What is the predicted financial impact if activation happens outside the window?',
         ],
       },
     },

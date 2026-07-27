@@ -35,6 +35,11 @@ import {
   TurnoverSignalsCompareTable,
   TurnoverMarkdownRuler,
   TurnoverMarkdownTable,
+  PersonalizationBehaviorMatrix,
+  PersonalizationSignalsTable,
+  RepurchaseCurveChart,
+  RepurchaseBehaviorTable,
+  RepurchaseCorrelationsTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
@@ -396,7 +401,39 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                 </>
               )}
 
-              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps' || activeScenario === 'marginSignals' || activeScenario === 'turnoverRisk' || activeScenario === 'turnoverMarkdown') && 'reasoning' in scenario && (
+              {activeScenario === 'personalizationBehavior' && 'behaviorMatrix' in scenario && (
+                <>
+                  <PersonalizationBehaviorMatrix
+                    data={(scenario as typeof t.scenarios.personalizationBehavior).behaviorMatrix}
+                    lang={lang}
+                  />
+                  <PersonalizationSignalsTable
+                    data={(scenario as typeof t.scenarios.personalizationBehavior).signalsTable}
+                    lang={lang}
+                  />
+                </>
+              )}
+              {activeScenario === 'personalizationRepurchase' && 'curveData' in scenario && (
+                <>
+                  <RepurchaseCurveChart
+                    data={(scenario as typeof t.scenarios.personalizationRepurchase).curveData}
+                    window={(scenario as typeof t.scenarios.personalizationRepurchase).curveWindow}
+                    peak={(scenario as typeof t.scenarios.personalizationRepurchase).curvePeak}
+                    legend={(scenario as typeof t.scenarios.personalizationRepurchase).curveLegend}
+                    lang={lang}
+                  />
+                  <RepurchaseBehaviorTable
+                    data={(scenario as typeof t.scenarios.personalizationRepurchase).behaviorTable}
+                    lang={lang}
+                  />
+                  <RepurchaseCorrelationsTable
+                    data={(scenario as typeof t.scenarios.personalizationRepurchase).correlationsTable}
+                    lang={lang}
+                  />
+                </>
+              )}
+
+              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps' || activeScenario === 'marginSignals' || activeScenario === 'turnoverRisk' || activeScenario === 'turnoverMarkdown' || activeScenario === 'personalizationBehavior' || activeScenario === 'personalizationRepurchase') && 'reasoning' in scenario && (
                 <div className="mt-[2.5vmin] rounded-[1.4vmin] border border-orange-200 bg-orange-50/60 p-[2vmin]">
                   <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                     <Brain className="w-[2vmin] h-[2vmin] text-orange-500" />
@@ -405,7 +442,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                     </span>
 
                   </div>
-                  <p className="text-gray-700 text-[1.75vmin] leading-relaxed">
+                  <p className="text-gray-700 text-[1.75vmin] leading-relaxed whitespace-pre-line">
                     {(scenario as { reasoning: string }).reasoning}
                   </p>
                 </div>

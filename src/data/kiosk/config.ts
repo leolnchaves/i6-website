@@ -408,9 +408,9 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
 /**
  * Map from solutionId → i6Signal scenario keys to show for that solution.
  */
-export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown')[]> = {
-  'predictive-personalization': ['pdv', 'comercial'],
-  'smart-discovery': ['pdv', 'comercial'],
+export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown' | 'personalizationBehavior' | 'personalizationRepurchase')[]> = {
+  'predictive-personalization': ['personalizationBehavior', 'personalizationRepurchase'],
+  'smart-discovery': ['personalizationBehavior', 'personalizationRepurchase'],
   'predictive-campaign-targeting': ['propensity', 'clusters'],
   'demand-forecasting': ['forecast', 'supply'],
   'predictive-commercial-targets': ['targetsPotential', 'targetsRisk'],
