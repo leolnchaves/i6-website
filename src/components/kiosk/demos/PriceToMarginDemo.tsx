@@ -285,29 +285,8 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                   {content.doneLabel}
                 </span>
               </div>
-              <div className="grid grid-cols-2 gap-[1vmin]">
-                <MetricPill
-                  label={content.productLabels.recommended}
-                  value={currency(selected.recommendedPrice, lang)}
-                  highlight
-                />
-                <MetricPill
-                  label={content.productLabels.deltaConversion}
-                  value={`+${selected.deltaConversionPct.toFixed(1)}%`}
-                  highlight
-                />
-                <MetricPill
-                  label={content.productLabels.deltaRevenue}
-                  value={`+${selected.deltaRevenuePct.toFixed(1)}%`}
-                  highlight
-                />
-                <MetricPill
-                  label={content.productLabels.latency}
-                  value={`${latencyMs} ms`}
-                  hint={content.productLabels.latencyHint}
-                  highlight
-                />
-              </div>
+
+
 
               <div
                 ref={insightRef}
