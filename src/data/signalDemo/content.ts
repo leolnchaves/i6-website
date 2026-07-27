@@ -568,7 +568,7 @@ export const signalDemoContent = {
       },
       personalizationRepurchase: {
         label: 'Janela de Recompra',
-        question: 'Quais clientes estão entrando em uma janela de recompra, o que tendem a comprar novamente e qual é o melhor momento para ativá-los?',
+        question: 'Quais clientes estão entrando em uma janela de recompra e qual o melhor momento para ativá-los?',
         title: 'Comportamento preditivo de recompra',
         analysis: 'O modelo identificou 18.420 clientes com probabilidade relevante de nova compra nos próximos 30 dias. Desses, 46% tendem a recomprar o mesmo produto, 34% devem migrar para uma variação ou produto substituto e 20% apresentam maior propensão a complementar a compra anterior. A principal oportunidade está nos clientes cuja janela prevista de recompra começa nos próximos sete dias. Uma ativação antecipada demais tende a gerar baixa resposta. Uma abordagem tardia aumenta o risco de perda da recompra para outro canal ou concorrente.\n\nEste cliente está entrando em sua janela de recompra porque o intervalo desde a última compra se aproxima do seu ciclo previsto de consumo. O comportamento anterior indica alta recorrência no mesmo SKU, baixa propensão à troca e maior resposta quando ativado entre o 24º e o 28º dia após a compra.\n\nPara um cliente com tendência de migração, a próxima compra não deve repetir exatamente o item anterior. O modelo identificou aumento de interesse por uma versão superior, comportamento semelhante ao de clientes que migraram de produto e maior aderência à nova opção dentro da janela prevista de recompra.',
         curveData: [
