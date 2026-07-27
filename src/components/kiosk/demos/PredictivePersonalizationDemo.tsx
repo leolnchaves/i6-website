@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
+import { ArrowLeft, Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 import {
   catalogs,
