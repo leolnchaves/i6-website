@@ -1,11 +1,18 @@
-Diferenciar visualmente as duas faixas de seleção (MODA vs BENS DE CONSUMO) na demo de Personalização + Descoberta Preditiva, para eliminar a confusão entre elas.
+## Problema
+Na conclusão de "Personalização + Descoberta Preditiva", quando o usuário escolhe **Moda**, o quadro de resultados (produto selecionado + Look) fica visivelmente mais alto que o quadro equivalente de **Bens de Consumo**.
 
-## Alterações em `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx` (linhas 190–222)
+A causa está em `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`:
+- Fashion (linhas 273-325): card à esquerda usa imagem em `aspect-[3/4]` (retrato grande) → domina a altura; o card do Look à direita cresce por `items-stretch` para acompanhar.
+- Bens de Consumo (linhas 328-348): card único horizontal com miniatura `14vmin × 14vmin` → altura bem menor.
 
-- Remover o wrapper único cinza (`bg-white/[0.02]` com todas as rows dentro) e renderizar cada faixa como um bloco independente com identidade própria:
-  - **MODA** (fashion): faixa com fundo `bg-[#F4845F]/[0.06]`, borda esquerda de destaque `border-l-4 border-l-[#F4845F]` e borda geral `border border-[#F4845F]/25`.
-  - **BENS DE CONSUMO** (products): faixa com fundo `bg-sky-400/[0.05]`, borda esquerda `border-l-4 border-l-sky-400/70` e borda geral `border border-sky-400/20`. O rótulo à esquerda passa a usar `text-sky-300` (em vez de coral) para reforçar a diferença.
-- Aumentar levemente o espaçamento vertical entre as duas faixas (`gap-[1vmin]`) para separá-las com clareza.
-- Os botões (Usuário anônimo / Usuário logado) mantêm o mesmo estilo e o realce coral quando ativos — apenas o "trilho" da faixa muda de cor.
+## Ajuste
+Reescrever o bloco Moda para ter a mesma "moldura" compacta do CG, mantendo o Look ao lado:
 
-Sem outras mudanças estruturais ou de conteúdo.
+1. **Card do produto selecionado (Moda)**: trocar layout retrato por horizontal, espelhando o do CG — miniatura `14vmin × 14vmin`, categoria/nome/preço à direita. Remove o `aspect-[3/4]` que estava esticando a coluna.
+2. **Card do Look (direita)**: manter grid `0.85fr / 1.7fr` e `items-stretch`, mas como o card da esquerda passa a ter altura compacta, o Look encolhe junto. Reduzir também o número de itens visíveis para 3 (já é o caso) e diminuir a miniatura de `11vmin` para ~`9vmin` para não estourar a altura alvo.
+3. Garantir que a altura resultante do bloco Moda seja igual à do card horizontal do CG (aprox. `14vmin` + paddings), sem alterar o restante da tela (KPIs, timeline, etc.).
+
+Nenhuma outra tela/demo é afetada.
+
+## Arquivos
+- `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx` — reescrever apenas o ramo `vertical === 'fashion' && phase === 'pdp'` (linhas ~273-325).
