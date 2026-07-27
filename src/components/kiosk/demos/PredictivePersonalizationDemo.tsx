@@ -275,13 +275,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
             {(phase === 'training' || phase === 'pdp') && selected && (
               <div className="flex flex-col animate-fade-in">
-                <button
-                  type="button"
-                  onClick={backToCatalog}
-                  className="self-start inline-flex items-center gap-[1vmin] min-h-[7vmin] px-[2.5vmin] py-[1.6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition mb-[1.5vmin]"
-                >
-                  {t.backToCatalog}
-                </button>
+
 
                 {vertical === 'fashion' && phase === 'pdp' ? (
                   <div className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)] gap-[1.2vmin] items-stretch animate-fade-in">
