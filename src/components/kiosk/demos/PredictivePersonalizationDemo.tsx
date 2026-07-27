@@ -238,13 +238,6 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
         </div>
       </div>
 
-      {/* Objetivo */}
-      <div className="flex flex-wrap items-center gap-[1vmin] mb-[2vmin]">
-        <span className="inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.6vmin] rounded-full bg-[#F4845F]/15 border border-[#F4845F]/40 text-[1.4vmin] font-semibold text-[#F4845F]">
-          {t.objectiveLabel}: {scenario.objective[lang]}
-        </span>
-      </div>
-
       {/* STACKED: top = store, bottom = reasoning */}
       <div className="flex flex-col gap-[2vmin]">
         {/* TOP: e-commerce (list OR pdp) */}
@@ -256,7 +249,11 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
             <span className="ml-[1.5vmin] text-[1.4vmin] text-white/50 font-mono">
               vivashop.io / {vertical}
             </span>
+            <span className="ml-auto inline-flex items-center gap-[0.8vmin] px-[1.4vmin] py-[0.5vmin] rounded-full bg-[#F4845F]/15 border border-[#F4845F]/40 text-[1.3vmin] font-semibold text-[#F4845F]">
+              {t.objectiveLabel}: {scenario.objective[lang]}
+            </span>
           </div>
+
 
           <div className="p-[2vmin]">
             {phase === 'list' && (
