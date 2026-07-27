@@ -1,33 +1,28 @@
-# Corrigir estouro horizontal no i6 Signal (Kiosk)
+## Objetivo
 
-## Problema
-Em várias respostas do demo do i6 Signal dentro do `/kiosk` (formato retrato 27"), o conteúdo estoura a largura disponível e força um scroll horizontal na página inteira. As tabelas e gráficos internos até têm `overflow-x-auto`, mas o contêiner pai não está sendo forçado a respeitar a largura da coluna — quando um filho tem largura mínima maior que o pai (chart com `min-width`, tabela com muitas colunas `whitespace-nowrap`), ele empurra a coluna para fora.
+Substituir o ícone genérico `Sparkles` no cabeçalho do card do `SimulationLauncher` por um ícone `lucide-react` que reflita o tema de cada solução do Kiosk.
 
-## Causa
-Em `src/components/kiosk/KioskSignalIntelliboard.tsx`:
-- O wrapper do painel (`rounded-[2vmin] ... overflow-hidden`) não tem `min-w-0` nem largura explícita.
-- O "chat surface" (`bg-white p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto`) não trava `overflow-x`, e o wrapper interno da resposta (`animate-fade-in`) também não tem `min-w-0`.
-- Dentro do Flexbox em `src/pages/Kiosk.tsx` (`flex flex-col gap-[4vmin]`), colunas flex sem `min-w-0` aceitam crescer além do pai.
+## Mapeamento proposto (id da solução → ícone)
 
-## Mudanças
+- `predictive-personalization` + `smart-discovery` (combo) → `UserRoundSearch` (personalização/descoberta por perfil)
+- `predictive-campaign-targeting` → `Megaphone` (campanhas)
+  AS VERSOES ABAIXO SERAO IMPLEMENTADAS QUANDO AJUSTARMOS AS PAGINAS DE CONCLUSAO PARA O NOVO FORMATO. 
+- `price-to-margin` → `TrendingUp` (captura de margem)
+- `price-to-turnover` → `RefreshCw` (giro de estoque)
+- `price-to-conversion` → `MousePointerClick` (conversão)
+- `demand-forecasting` → `LineChart` (previsão de demanda)
+- `predictive-commercial-targets` → `Target` (metas comerciais)
+- `mix-assortment-order` → `LayoutGrid` (mix e sortimento)
 
-1. `src/components/kiosk/KioskSignalIntelliboard.tsx`
-   - Painel externo (linha ~206): acrescentar `w-full min-w-0`.
-   - "Chat surface" (linha ~231): acrescentar `overflow-x-hidden min-w-0 w-full`.
-   - Div da resposta com `ref={responseRef}` (linha ~253): acrescentar `min-w-0 w-full`.
+Confirme se algum ícone deve ser trocado antes de eu implementar.
 
-2. `src/pages/Kiosk.tsx`
-   - Contêiner `#kiosk-solution-demo` (linha 240): acrescentar `min-w-0 w-full` para impedir que filhos flex escapem da coluna.
+## Alterações
 
-3. `src/components/signalDemo/visualizations.tsx`
-   - Em cada wrapper que hoje tem apenas `overflow-x-auto`, acrescentar `w-full min-w-0` para garantir que o próprio wrapper não expanda o pai (o scroll passa a ser puramente interno da tabela/gráfico, como já é esperado).
-   - Onde há `ResponsiveContainer`/charts sem `width="100%"` explícito ou dentro de blocos com largura mínima, envolver em `<div className="w-full min-w-0 overflow-x-auto">`.
+1. `src/components/kiosk/SimulationLauncher.tsx`
+  - Trocar o import fixo de `Sparkles` por uma prop opcional `icon?: LucideIcon` (fallback `Sparkles`).
+  - Renderizar o componente recebido no mesmo quadrado coral (linha 69).
+2. `src/components/kiosk/SolutionDemoBlock.tsx`
+  - Definir um mapa `solutionId → LucideIcon` com o mapeamento acima.
+  - Passar o ícone correspondente para cada uma das duas instâncias de `<SimulationLauncher>` (combo Personalização+Descoberta usa o do combo; demais usam o do próprio `solution.id`).
 
-## Verificação
-- Abrir `/kiosk`, percorrer todas as 8 soluções e as 2 perguntas de cada uma no i6 Signal em viewport retrato (ex.: 2160×3840 simulado).
-- Confirmar que a barra de scroll horizontal da página nunca aparece; scroll horizontal, quando necessário, fica dentro da tabela/gráfico específico.
-- Rodar Playwright headless em viewport `{width: 1080, height: 1920}` capturando `document.documentElement.scrollWidth === clientWidth` após clicar cada pergunta.
-
-## Fora do escopo
-- Redesenho de tabelas/gráficos (colunas, tipografia).
-- Ajuste de largura mínima interna dos charts (mantidos como estão; passam a ter scroll interno apenas quando realmente não couberem).
+Sem mudanças de layout, tamanho ou cor — apenas o glifo dentro do quadrado coral.
