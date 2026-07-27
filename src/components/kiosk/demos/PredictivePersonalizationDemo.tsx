@@ -373,12 +373,20 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                 )}
 
                 {phase === 'pdp' && (
-                  <div className="grid grid-cols-3 gap-[1vmin] mt-[1.5vmin] animate-fade-in">
+                  <div className="grid grid-cols-4 gap-[1vmin] mt-[1.5vmin] animate-fade-in items-stretch">
+                    <button
+                      type="button"
+                      onClick={backToCatalog}
+                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.2vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+                    >
+                      {t.backToCatalog}
+                    </button>
                     <MetricPill label={t.kpiTicketUplift} value={kpiPreset.uplift} highlight trend="up" />
                     <MetricPill label={t.kpiCrossSell} value={`${kpiPreset.crossSell}%`} />
                     <MetricPill label={t.kpiConfidence} value={`${kpiPreset.confidence}%`} />
                   </div>
                 )}
+
               </div>
             )}
           </div>
