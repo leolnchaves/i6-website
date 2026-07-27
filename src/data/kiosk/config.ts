@@ -1,4 +1,13 @@
+import { createElement, Fragment, type ReactNode } from 'react';
 import type { TerritoryId } from '@/data/solutionsV2/content';
+
+const highlightEbook = (prefix: string, name: string): ReactNode =>
+  createElement(
+    Fragment,
+    null,
+    prefix,
+    createElement('span', { className: 'text-[#F4845F]' }, `eBook ${name}`),
+  );
 
 export type KioskLang = 'pt' | 'en';
 
