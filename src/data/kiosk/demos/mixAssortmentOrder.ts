@@ -346,7 +346,7 @@ export const actionMeta: Record<Action, { label: string; tone: string }> = {
 
 export const labels = {
   objective: 'OBJETIVO: MIX E PEDIDO',
-  reasoningTitle: 'Explicabilidade e Raciocínio do modelo • i6RecSys',
+  reasoningTitle: 'Explicabilidade e raciocínio do modelo • i6RecSys',
   reasoningSubtitle: 'Do PDV ao pedido ideal, sob restrições reais.',
   setup: {
     title: 'Portal de vendas B2B',

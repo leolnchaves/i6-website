@@ -219,7 +219,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     },
 
     objectiveLabel: 'Objetivo: conversão',
-    reasoningTitle: 'Explicabilidade e Raciocínio do modelo • i6RecSys',
+    reasoningTitle: 'Explicabilidade e raciocínio do modelo • i6RecSys',
     reasoningSubtitle: 'Pipeline preditivo · i6ElasticPrice',
     pipeline: [
       { label: 'Lendo sessões, cliques e carrinhos abandonados', microMetric: '48.612 sessões · janela de 30 dias', durationMs: 1400 },
@@ -257,7 +257,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     },
 
     objectiveLabel: 'Objective: conversion',
-    reasoningTitle: 'Explainability and Model reasoning • i6RecSys',
+    reasoningTitle: 'Explainability and model reasoning • i6RecSys',
     reasoningSubtitle: 'Predictive pipeline · i6ElasticPrice',
     pipeline: [
       { label: 'Reading sessions, clicks and abandoned carts', microMetric: '48,612 sessions · 30-day window', durationMs: 1400 },

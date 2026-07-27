@@ -102,7 +102,7 @@ export const labels = {
     cta: 'Calcular metas e investimento ideal',
   },
   running: 'Calculando metas e alocando investimento...',
-  reasoningTitle: 'Explicabilidade e Raciocínio do modelo • i6RecSys',
+  reasoningTitle: 'Explicabilidade e raciocínio do modelo • i6RecSys',
   reasoningSubtitle: 'Pipeline preditivo de metas e investimento.',
   result: {
     title: 'Meta atual × Meta preditiva',
