@@ -81,6 +81,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         impacto={solution.impacto}
         labels={labels}
         icon={Megaphone}
+        onSimulationClosed={onSimulationClosed}
       >
         <PropensityCampaignDemo />
       </SimulationLauncher>
