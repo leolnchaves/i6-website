@@ -133,7 +133,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
   const scenario = activeScenario ? t.scenarios[activeScenario] : null;
 
   return (
-    <section className="w-full">
+    <section id="kiosk-signal-intelliboard" className="w-full">
       {/* Section header */}
       <div className="text-center mb-[3vmin]">
         <div className="inline-flex items-center gap-[1.2vmin] px-[2vmin] py-[0.8vmin] rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 text-[1.5vmin] font-semibold tracking-[0.2em] uppercase mb-[1.5vmin]">
