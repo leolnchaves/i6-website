@@ -1,5 +1,5 @@
 import { memo, useState, useEffect, useRef, useCallback } from 'react';
-import { Send, Lightbulb, Brain } from 'lucide-react';
+import { Send, Lightbulb } from 'lucide-react';
 import avatarRicardo from '@/assets/images/avatar-ricardo.jpg';
 import {
   signalDemoContent,
@@ -40,6 +40,12 @@ import {
   RepurchaseCurveChart,
   RepurchaseBehaviorTable,
   RepurchaseCorrelationsTable,
+  PriceConversionFrictionHeatmap,
+  PriceConversionContextTable,
+  PriceConversionSignalsTable,
+  PriceConversionIncentiveDistribution,
+  PriceConversionIncentiveTable,
+  PriceConversionDetailList,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
@@ -260,7 +266,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
               <h4 className="text-orange-500 font-semibold text-[1.6vmin] mb-[0.8vmin] uppercase tracking-wider">
                 {t.executiveAnalysis}
               </h4>
-              <p className="text-gray-700 text-[1.8vmin] leading-relaxed mb-[2vmin]">
+              <p className="text-gray-700 text-[1.8vmin] leading-relaxed mb-[2vmin] whitespace-pre-line">
                 {scenario.analysis}
               </p>
 
@@ -433,20 +439,37 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                 </>
               )}
 
-              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps' || activeScenario === 'marginSignals' || activeScenario === 'turnoverRisk' || activeScenario === 'turnoverMarkdown' || activeScenario === 'personalizationBehavior' || activeScenario === 'personalizationRepurchase') && 'reasoning' in scenario && (
-                <div className="mt-[2.5vmin] rounded-[1.4vmin] border border-orange-200 bg-orange-50/60 p-[2vmin]">
-                  <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
-                    <Brain className="w-[2vmin] h-[2vmin] text-orange-500" />
-                    <span className="text-orange-600 font-semibold text-[1.4vmin] uppercase tracking-wider">
-                      {lang === 'pt' ? 'Argumentação preditiva' : 'Predictive reasoning'}
-                    </span>
-
-                  </div>
-                  <p className="text-gray-700 text-[1.75vmin] leading-relaxed whitespace-pre-line">
-                    {(scenario as { reasoning: string }).reasoning}
-                  </p>
-                </div>
+              {activeScenario === 'priceConversionFriction' && 'frictionHeatmap' in scenario && (
+                <>
+                  <PriceConversionFrictionHeatmap
+                    data={(scenario as typeof t.scenarios.priceConversionFriction).frictionHeatmap}
+                    lang={lang}
+                  />
+                  <PriceConversionContextTable
+                    data={(scenario as typeof t.scenarios.priceConversionFriction).contextTable}
+                  />
+                  <PriceConversionSignalsTable
+                    data={(scenario as typeof t.scenarios.priceConversionFriction).signalsTable}
+                    lang={lang}
+                  />
+                </>
               )}
+              {activeScenario === 'priceConversionIncentiveNeed' && 'distribution' in scenario && (
+                <>
+                  <PriceConversionIncentiveDistribution
+                    data={(scenario as typeof t.scenarios.priceConversionIncentiveNeed).distribution}
+                    lang={lang}
+                  />
+                  <PriceConversionIncentiveTable
+                    data={(scenario as typeof t.scenarios.priceConversionIncentiveNeed).incentiveTable}
+                  />
+                  <PriceConversionDetailList
+                    items={(scenario as typeof t.scenarios.priceConversionIncentiveNeed).detail}
+                    lang={lang}
+                  />
+                </>
+              )}
+
 
               <h4 className="text-orange-500 font-semibold text-[1.6vmin] mt-[2.5vmin] mb-[1vmin] uppercase tracking-wider">
                 {t.recommendedActions}
