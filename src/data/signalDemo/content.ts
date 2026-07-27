@@ -237,7 +237,7 @@ export const signalDemoContent = {
         label: 'Potencial de Metas',
         question: 'Onde está o maior potencial de crescimento de volume por região?',
         title: 'Potencial preditivo de crescimento e distribuição de metas',
-        analysis: 'O modelo identificou potencial incremental de 186 mil unidades para o próximo trimestre. Desse volume, 64% está concentrado em três combinações de região, cliente e SKU que atualmente recebem metas abaixo de sua capacidade prevista. O Interior de São Paulo apresenta a maior oportunidade, impulsionada pelos SKUs A e C e por clientes com expansão de demanda ainda não refletida nas metas atuais.',
+        analysis: 'O modelo identificou potencial incremental de 186 mil unidades para o próximo trimestre. Desse volume, 64% está concentrado em três combinações de região, cliente e SKU que atualmente recebem metas abaixo de sua capacidade prevista. O Interior de São Paulo apresenta a maior oportunidade, impulsionada pelos SKUs A e C e por clientes com expansão de demanda ainda não refletida nas metas atuais.\n\nA meta do Cliente A foi elevada porque o modelo prevê aumento de demanda para o SKU A, maior capacidade de absorção e expansão da categoria na região. Já a meta do Cliente D foi reduzida porque o volume atual está acima do potencial previsto e exigiria esforço comercial desproporcional para ser atingido.',
         potentialTable: {
           headers: ['Região', 'Vendedor', 'Cliente', 'SKU', 'Meta atual', 'Meta sugerida', 'Potencial'],
           rows: [
@@ -247,7 +247,6 @@ export const signalDemoContent = {
             ['Sul', 'Rafael', 'Cliente F', 'SKU A', '7.200', '8.600', '9.000'],
           ],
         },
-        reasoning: 'A meta do Cliente A foi elevada porque o modelo prevê aumento de demanda para o SKU A, maior capacidade de absorção e expansão da categoria na região. Já a meta do Cliente D foi reduzida porque o volume atual está acima do potencial previsto e exigiria esforço comercial desproporcional para ser atingido.',
         actions: [
           { bold: 'Adicionar 3.400 unidades à meta do Cliente A', text: 'para o SKU A, preservando uma faixa de segurança abaixo do potencial máximo.' },
           { bold: 'Reduzir a meta do Cliente D em 900 unidades', text: 'evitando pressão comercial sem demanda correspondente.' },
@@ -263,7 +262,7 @@ export const signalDemoContent = {
         label: 'Risco de Meta',
         question: 'Quais metas apresentam maior risco de não serem atingidas ou estão abaixo do potencial previsto?',
         title: 'Risco preditivo de atingimento e recalibração de metas',
-        analysis: 'O modelo identificou 27 combinações de vendedor, cliente e SKU com metas desalinhadas para o próximo trimestre. Onze apresentam risco elevado de não atingimento, principalmente por desaceleração da demanda, queda de frequência de compra e redução da capacidade de absorção dos clientes. Outras 16 estão abaixo do potencial previsto e podem limitar o crescimento comercial mesmo com comportamento favorável de demanda.',
+        analysis: 'O modelo identificou 27 combinações de vendedor, cliente e SKU com metas desalinhadas para o próximo trimestre. Onze apresentam risco elevado de não atingimento, principalmente por desaceleração da demanda, queda de frequência de compra e redução da capacidade de absorção dos clientes. Outras 16 estão abaixo do potencial previsto e podem limitar o crescimento comercial mesmo com comportamento favorável de demanda.\n\nA meta do Cliente A está abaixo do potencial porque o modelo prevê maior frequência de compra, crescimento do volume médio e expansão da demanda do SKU A. Mantê-la no nível atual pode limitar a captura de um comportamento de crescimento já identificado. Já a meta do Cliente D está acima do potencial previsto: o cliente apresenta desaceleração de compras, redução do volume por pedido e menor probabilidade de recompra do SKU B — manter a meta gera pressão sobre o vendedor sem demanda para sustentá-la.',
         scatter: [
           { probability: 94, delta: 3100, size: 15100, label: 'Carlos • Cliente A • SKU A', quadrant: 'below' },
           { probability: 38, delta: -2200, size: 7600, label: 'Marina • Cliente D • SKU B', quadrant: 'above' },
@@ -293,7 +292,6 @@ export const signalDemoContent = {
             ['Probabilidade de recompra', '86%', '43%'],
           ],
         },
-        reasoning: 'A meta do Cliente A está abaixo do potencial porque o modelo prevê maior frequência de compra, crescimento do volume médio e expansão da demanda do SKU A. Mantê-la no nível atual pode limitar a captura de um comportamento de crescimento já identificado. Já a meta do Cliente D está acima do potencial previsto: o cliente apresenta desaceleração de compras, redução do volume por pedido e menor probabilidade de recompra do SKU B — manter a meta gera pressão sobre o vendedor sem demanda para sustentá-la.',
         actions: [
           { bold: 'Elevar metas com probabilidade > 85%', text: 'e potencial ainda não capturado, priorizando SKU A em clientes com sinais positivos.' },
           { bold: 'Recalibrar metas com probabilidade < 50%', text: 'redistribuindo o volume para clientes e SKUs com comportamento mais favorável.' },
@@ -348,7 +346,7 @@ export const signalDemoContent = {
         label: 'Gaps de Mix',
         question: 'Por região, quais produtos apresentam o maior gap no mix atual e o maior potencial de aumentar o ticket médio dos PDVs?',
         title: 'Gaps de mix com maior potencial de ticket por região',
-        analysis: 'O modelo identificou 14 produtos sub-representados no mix atual, mas apenas cinco concentram a maior oportunidade de crescimento de ticket. No Interior de São Paulo, os SKUs A e C apresentam o maior potencial porque possuem alta aderência ao comportamento previsto dos PDVs, recorrência em estabelecimentos semelhantes e forte complementaridade com produtos já vendidos. A inclusão desses produtos nos PDVs elegíveis pode elevar o ticket médio regional em até 12%, sem ampliar significativamente o risco de estoque parado.',
+        analysis: 'O modelo identificou 14 produtos sub-representados no mix atual, mas apenas cinco concentram a maior oportunidade de crescimento de ticket. No Interior de São Paulo, os SKUs A e C apresentam o maior potencial porque possuem alta aderência ao comportamento previsto dos PDVs, recorrência em estabelecimentos semelhantes e forte complementaridade com produtos já vendidos. A inclusão desses produtos nos PDVs elegíveis pode elevar o ticket médio regional em até 12%, sem ampliar significativamente o risco de estoque parado.\n\nO SKU A apresenta o maior gap no Interior de São Paulo porque está ausente em 38% dos PDVs que demonstram comportamento compatível com sua categoria. Esses estabelecimentos já vendem produtos complementares, possuem frequência de compra crescente e apresentam ticket inferior ao de PDVs semelhantes com o SKU presente. A oportunidade não está em distribuir o produto para toda a região — o modelo recomenda sua inclusão apenas nos 126 PDVs com maior aderência prevista.',
         heatmap: {
           regions: ['Interior de SP', 'Minas Gerais', 'Sul', 'Nordeste', 'Norte'],
           skus: ['SKU A', 'SKU B', 'SKU C', 'SKU D', 'SKU E'],
@@ -379,7 +377,6 @@ export const signalDemoContent = {
           'Quais PDVs semelhantes já apresentam comportamento compatível.',
           'Qual o risco de baixo giro previsto para cada inclusão.',
         ],
-        reasoning: 'O SKU A apresenta o maior gap no Interior de São Paulo porque está ausente em 38% dos PDVs que demonstram comportamento compatível com sua categoria. Esses estabelecimentos já vendem produtos complementares, possuem frequência de compra crescente e apresentam ticket inferior ao de PDVs semelhantes com o SKU presente. A oportunidade não está em distribuir o produto para toda a região — o modelo recomenda sua inclusão apenas nos 126 PDVs com maior aderência prevista.',
         actions: [
           { bold: 'Priorizar o SKU A nos 126 PDVs de maior aderência', text: 'no Interior de SP, usando volume inicial compatível com a demanda prevista.' },
           { bold: 'Associar a inclusão do SKU C aos complementares', text: 'já presentes no mix, aumentando a probabilidade de crescimento do ticket.' },
@@ -435,7 +432,7 @@ export const signalDemoContent = {
         label: 'Sinais de Margem',
         question: 'Quais sinais estão abrindo ou reduzindo espaço para captura de margem em cada SKU?',
         title: 'Sinais preditivos que movimentam a margem',
-        analysis: 'O modelo identificou que o espaço para captura de margem está concentrado em SKUs com demanda prevista estável, menor sensibilidade a preço e posicionamento abaixo da banda competitiva. O SKU A apresenta a combinação mais favorável. Já o SKU D possui alta sensibilidade e desaceleração prevista de demanda, o que limita qualquer aumento de preço neste momento.',
+        analysis: 'O modelo identificou que o espaço para captura de margem está concentrado em SKUs com demanda prevista estável, menor sensibilidade a preço e posicionamento abaixo da banda competitiva. O SKU A apresenta a combinação mais favorável. Já o SKU D possui alta sensibilidade e desaceleração prevista de demanda, o que limita qualquer aumento de preço neste momento.\n\nO SKU A possui espaço para captura de margem porque sua demanda deve permanecer estável, mesmo com um ajuste moderado de preço. Além disso, o produto está posicionado abaixo de alternativas comparáveis e possui estoque compatível com o ritmo previsto de venda. Já o SKU D não apresenta oportunidade de aumento neste momento — o modelo prevê maior sensibilidade ao preço e desaceleração da demanda, indicando que o ganho unitário seria insuficiente para compensar a perda de volume.',
         signalsChart: [
           { sku: 'SKU A', demand: 22, sensitivity: 18, competition: 24, stock: 10, currentMargin: 8, category: 12 },
           { sku: 'SKU B', demand: 14, sensitivity: 12, competition: 22, stock: -6, currentMargin: 6, category: 8 },
@@ -453,7 +450,6 @@ export const signalDemoContent = {
             ['SKU E', 'Negativo', 'Potencial de ganho de volume', 'Estoque elevado', 'Reduzir'],
           ],
         },
-        reasoning: 'O SKU A possui espaço para captura de margem porque sua demanda deve permanecer estável, mesmo com um ajuste moderado de preço. Além disso, o produto está posicionado abaixo de alternativas comparáveis e possui estoque compatível com o ritmo previsto de venda. Já o SKU D não apresenta oportunidade de aumento neste momento — o modelo prevê maior sensibilidade ao preço e desaceleração da demanda, indicando que o ganho unitário seria insuficiente para compensar a perda de volume.',
         actions: [
           { bold: 'Priorizar os SKUs com demanda estável', text: 'baixa sensibilidade e preço abaixo da banda competitiva.' },
           { bold: 'Manter os preços dos produtos', text: 'cujo comportamento previsto indique risco relevante de perda de volume.' },
@@ -469,7 +465,7 @@ export const signalDemoContent = {
         label: 'Risco de Envelhecimento',
         question: 'Em quais regiões, lojas ou clusters os produtos apresentam maior risco de estoque envelhecido?',
         title: 'Risco preditivo de envelhecimento por região e cluster',
-        analysis: 'O modelo identificou risco elevado de envelhecimento para o SKU A em 38 lojas, concentradas principalmente nos clusters Interior de Minas e Sul Metropolitano. Nessas localidades, a velocidade prevista de venda está abaixo da necessária para consumir o estoque antes do fim do ciclo comercial. Em São Paulo Premium, o mesmo produto mantém demanda consistente e não apresenta necessidade de desconto.',
+        analysis: 'O modelo identificou risco elevado de envelhecimento para o SKU A em 38 lojas, concentradas principalmente nos clusters Interior de Minas e Sul Metropolitano. Nessas localidades, a velocidade prevista de venda está abaixo da necessária para consumir o estoque antes do fim do ciclo comercial. Em São Paulo Premium, o mesmo produto mantém demanda consistente e não apresenta necessidade de desconto.\n\nO risco no Interior de Minas é sustentado pela combinação de baixa velocidade prevista de venda, maior sensibilidade ao preço e estoque acima da demanda esperada. Mantido o preço atual, parte relevante das unidades deve permanecer em estoque após o encerramento do ciclo comercial. Em São Paulo Premium, o comportamento é diferente. A demanda permanece consistente, o estoque está equilibrado e um desconto antecipado reduziria margem sem produzir ganho relevante de giro.',
         regionTable: {
           headers: ['Região ou cluster', 'Estoque atual', 'Cobertura projetada', 'Sell-through previsto', 'Risco'],
           rows: [
@@ -489,7 +485,6 @@ export const signalDemoContent = {
             ['Pressão competitiva', 'Alta', 'Moderada'],
           ],
         },
-        reasoning: 'O risco no Interior de Minas é sustentado pela combinação de baixa velocidade prevista de venda, maior sensibilidade ao preço e estoque acima da demanda esperada. Mantido o preço atual, parte relevante das unidades deve permanecer em estoque após o encerramento do ciclo comercial. Em São Paulo Premium, o comportamento é diferente. A demanda permanece consistente, o estoque está equilibrado e um desconto antecipado reduziria margem sem produzir ganho relevante de giro.',
         actions: [
           { bold: 'Priorizar ações de giro nas 38 lojas', text: 'com cobertura projetada acima do limite saudável.' },
           { bold: 'Preservar o preço nos clusters com demanda consistente', text: 'evitando markdown desnecessário.' },
@@ -505,7 +500,7 @@ export const signalDemoContent = {
         label: 'Régua de Markdown',
         question: 'Quais SKUs devem entrar em markdown agora e qual régua de redução de preço é recomendada para cada cluster?',
         title: 'Markdown preditivo por SKU, região e ciclo de vida',
-        analysis: 'O modelo recomenda iniciar markdown imediato para sete SKUs e manter o preço de outros onze produtos. O SKU A exige ação antecipada no Interior de Minas, onde um desconto inicial de 12% apresenta maior probabilidade de recuperar o giro e evitar uma liquidação mais profunda no fim do ciclo. Para o mesmo produto em São Paulo Premium, a recomendação é manter o preço atual por pelo menos 21 dias.',
+        analysis: 'O modelo recomenda iniciar markdown imediato para sete SKUs e manter o preço de outros onze produtos. O SKU A exige ação antecipada no Interior de Minas, onde um desconto inicial de 12% apresenta maior probabilidade de recuperar o giro e evitar uma liquidação mais profunda no fim do ciclo. Para o mesmo produto em São Paulo Premium, a recomendação é manter o preço atual por pelo menos 21 dias.\n\nO markdown de 12% para o SKU A foi recomendado porque aumenta o sell-through projetado de 39% para 68% no Interior de Minas. A ação antecipada preserva mais margem do que aguardar o envelhecimento do estoque e aplicar um desconto superior a 25% no encerramento do ciclo. A régua não é replicada nacionalmente. Cada cluster recebe uma recomendação diferente de acordo com velocidade de giro, sensibilidade ao preço, estoque, sazonalidade e comportamento local da demanda.',
         markdownRuler: {
           headers: ['Cluster', 'Hoje', 'Em 7 dias', 'Em 14 dias', 'Em 21 dias'],
           rows: [
@@ -524,7 +519,6 @@ export const signalDemoContent = {
             ['SKU D', 'São Paulo Premium', 'R$ 119,90', 'Manter', '81%', 'Sem desconto'],
           ],
         },
-        reasoning: 'O markdown de 12% para o SKU A foi recomendado porque aumenta o sell-through projetado de 39% para 68% no Interior de Minas. A ação antecipada preserva mais margem do que aguardar o envelhecimento do estoque e aplicar um desconto superior a 25% no encerramento do ciclo. A régua não é replicada nacionalmente. Cada cluster recebe uma recomendação diferente de acordo com velocidade de giro, sensibilidade ao preço, estoque, sazonalidade e comportamento local da demanda.',
         actions: [
           { bold: 'Aplicar o markdown inicial nos clusters de maior risco', text: 'sem alterar o preço nacionalmente.' },
           { bold: 'Interromper novas reduções', text: 'quando o sell-through atingir a trajetória esperada.' },
@@ -540,7 +534,7 @@ export const signalDemoContent = {
         label: 'Recomendação por comportamento',
         question: 'Quais produtos ou looks devem ser priorizados para cada perfil de navegação, e quais comportamentos explicam essa recomendação?',
         title: 'Recomendações preditivas por comportamento de navegação',
-        analysis: 'O modelo identificou quatro comportamentos predominantes na jornada atual. Usuários orientados a performance apresentam maior aderência a produtos técnicos e complementares, enquanto usuários exploratórios respondem melhor a novidades e combinações que ampliam a descoberta. Para o perfil selecionado, a maior oportunidade está no cross-sell de produtos complementares ao item visualizado. A recomendação combina intenção atual, histórico individual, afinidade entre produtos e comportamento previsto de usuários semelhantes.',
+        analysis: 'O modelo identificou quatro comportamentos predominantes na jornada atual. Usuários orientados a performance apresentam maior aderência a produtos técnicos e complementares, enquanto usuários exploratórios respondem melhor a novidades e combinações que ampliam a descoberta. Para o perfil selecionado, a maior oportunidade está no cross-sell de produtos complementares ao item visualizado. A recomendação combina intenção atual, histórico individual, afinidade entre produtos e comportamento previsto de usuários semelhantes.\n\nEstes produtos foram recomendados porque complementam o item visualizado, apresentam alta recorrência em jornadas semelhantes e estão alinhados ao padrão de interesse previsto para este usuário.\n\nNo varejo fashion, o look é recomendado porque combina estilo, categoria, cor, ocasião de uso e preferências comportamentais, evitando combinações incoerentes ou pouco aderentes.',
         behaviorMatrix: {
           headers: ['Perfil comportamental', 'Intenção prevista', 'Produto ou look recomendado', 'Aderência', 'Objetivo'],
           rows: [
@@ -561,7 +555,6 @@ export const signalDemoContent = {
             ['Tendência comportamental do cluster', 'Alto'],
           ],
         },
-        reasoning: 'Estes produtos foram recomendados porque complementam o item visualizado, apresentam alta recorrência em jornadas semelhantes e estão alinhados ao padrão de interesse previsto para este usuário.\n\nNo varejo fashion, o look é recomendado porque combina estilo, categoria, cor, ocasião de uso e preferências comportamentais, evitando combinações incoerentes ou pouco aderentes.',
         actions: [
           { bold: 'Priorizar produtos complementares com alta aderência', text: 'evitando recomendações baseadas apenas em popularidade.' },
           { bold: 'Adaptar a composição da vitrine ao comportamento da sessão', text: 'alternando conversão, cross-sell e descoberta.' },
@@ -577,7 +570,7 @@ export const signalDemoContent = {
         label: 'Janela de Recompra',
         question: 'Quais clientes estão entrando em uma janela de recompra, o que tendem a comprar novamente e qual é o melhor momento para ativá-los?',
         title: 'Comportamento preditivo de recompra',
-        analysis: 'O modelo identificou 18.420 clientes com probabilidade relevante de nova compra nos próximos 30 dias. Desses, 46% tendem a recomprar o mesmo produto, 34% devem migrar para uma variação ou produto substituto e 20% apresentam maior propensão a complementar a compra anterior. A principal oportunidade está nos clientes cuja janela prevista de recompra começa nos próximos sete dias. Uma ativação antecipada demais tende a gerar baixa resposta. Uma abordagem tardia aumenta o risco de perda da recompra para outro canal ou concorrente.',
+        analysis: 'O modelo identificou 18.420 clientes com probabilidade relevante de nova compra nos próximos 30 dias. Desses, 46% tendem a recomprar o mesmo produto, 34% devem migrar para uma variação ou produto substituto e 20% apresentam maior propensão a complementar a compra anterior. A principal oportunidade está nos clientes cuja janela prevista de recompra começa nos próximos sete dias. Uma ativação antecipada demais tende a gerar baixa resposta. Uma abordagem tardia aumenta o risco de perda da recompra para outro canal ou concorrente.\n\nEste cliente está entrando em sua janela de recompra porque o intervalo desde a última compra se aproxima do seu ciclo previsto de consumo. O comportamento anterior indica alta recorrência no mesmo SKU, baixa propensão à troca e maior resposta quando ativado entre o 24º e o 28º dia após a compra.\n\nPara um cliente com tendência de migração, a próxima compra não deve repetir exatamente o item anterior. O modelo identificou aumento de interesse por uma versão superior, comportamento semelhante ao de clientes que migraram de produto e maior aderência à nova opção dentro da janela prevista de recompra.',
         curveData: [
           { day: 0, probability: 2 },
           { day: 5, probability: 6 },
@@ -623,7 +616,6 @@ export const signalDemoContent = {
             ['Disponibilidade e substituição de produto', 'Altera o item mais provável da próxima compra'],
           ],
         },
-        reasoning: 'Este cliente está entrando em sua janela de recompra porque o intervalo desde a última compra se aproxima do seu ciclo previsto de consumo. O comportamento anterior indica alta recorrência no mesmo SKU, baixa propensão à troca e maior resposta quando ativado entre o 24º e o 28º dia após a compra.\n\nPara um cliente com tendência de migração, a próxima compra não deve repetir exatamente o item anterior. O modelo identificou aumento de interesse por uma versão superior, comportamento semelhante ao de clientes que migraram de produto e maior aderência à nova opção dentro da janela prevista de recompra.',
         actions: [
           { bold: 'Ativar primeiro os clientes na janela de maior propensão', text: 'evitando contatos prematuros ou tardios.' },
           { bold: 'Diferenciar recompra, migração e compra complementar', text: 'apresentando o produto mais aderente a cada comportamento previsto.' },
@@ -867,7 +859,7 @@ export const signalDemoContent = {
         label: 'Target Potential',
         question: 'Where is the largest volume growth potential by region?',
         title: 'Predictive growth potential and target distribution',
-        analysis: 'The model identified 186k units of incremental potential for the next quarter. 64% of that volume is concentrated in three combinations of region, client and SKU that currently receive targets below their predicted capacity. São Paulo Countryside shows the largest opportunity, driven by SKUs A and C and by clients whose demand expansion is not yet reflected in current targets.',
+        analysis: 'The model identified 186k units of incremental potential for the next quarter. 64% of that volume is concentrated in three combinations of region, client and SKU that currently receive targets below their predicted capacity. São Paulo Countryside shows the largest opportunity, driven by SKUs A and C and by clients whose demand expansion is not yet reflected in current targets.\n\nClient A\u2019s target was raised because the model predicts higher demand for SKU A, stronger absorption capacity and category expansion in the region. Client D\u2019s target was lowered because current volume already sits above the predicted potential and would require disproportionate commercial effort to be reached.',
         potentialTable: {
           headers: ['Region', 'Rep', 'Client', 'SKU', 'Current target', 'Suggested target', 'Potential'],
           rows: [
@@ -877,7 +869,6 @@ export const signalDemoContent = {
             ['South', 'Rafael', 'Client F', 'SKU A', '7,200', '8,600', '9,000'],
           ],
         },
-        reasoning: 'Client A\u2019s target was raised because the model predicts higher demand for SKU A, stronger absorption capacity and category expansion in the region. Client D\u2019s target was lowered because current volume already sits above the predicted potential and would require disproportionate commercial effort to be reached.',
         actions: [
           { bold: 'Add 3,400 units to Client A\u2019s target', text: 'for SKU A, keeping a safety band below the maximum potential.' },
           { bold: 'Reduce Client D\u2019s target by 900 units', text: 'avoiding commercial pressure without matching demand.' },
@@ -893,7 +884,7 @@ export const signalDemoContent = {
         label: 'Target Risk',
         question: 'Which targets show the highest risk of miss or sit below predicted potential?',
         title: 'Predictive attainment risk and target recalibration',
-        analysis: 'The model identified 27 rep-client-SKU combinations with misaligned targets for the next quarter. Eleven show high risk of miss, mainly due to demand deceleration, lower purchase frequency and reduced client absorption capacity. Another 16 sit below predicted potential and may cap commercial growth even with favorable demand behavior.',
+        analysis: 'The model identified 27 rep-client-SKU combinations with misaligned targets for the next quarter. Eleven show high risk of miss, mainly due to demand deceleration, lower purchase frequency and reduced client absorption capacity. Another 16 sit below predicted potential and may cap commercial growth even with favorable demand behavior.\n\nClient A\u2019s target sits below potential because the model predicts higher purchase frequency, growing average volume and expanding demand for SKU A. Keeping it at the current level may cap the capture of a growth behavior already identified. Client D\u2019s target sits above the predicted potential: the client shows purchase deceleration, lower volume per order and reduced repurchase probability of SKU B — keeping the target creates pressure on the rep without demand to sustain it.',
         scatter: [
           { probability: 94, delta: 3100, size: 15100, label: 'Carlos • Client A • SKU A', quadrant: 'below' },
           { probability: 38, delta: -2200, size: 7600, label: 'Marina • Client D • SKU B', quadrant: 'above' },
@@ -923,7 +914,6 @@ export const signalDemoContent = {
             ['Repurchase probability', '86%', '43%'],
           ],
         },
-        reasoning: 'Client A\u2019s target sits below potential because the model predicts higher purchase frequency, growing average volume and expanding demand for SKU A. Keeping it at the current level may cap the capture of a growth behavior already identified. Client D\u2019s target sits above the predicted potential: the client shows purchase deceleration, lower volume per order and reduced repurchase probability of SKU B — keeping the target creates pressure on the rep without demand to sustain it.',
         actions: [
           { bold: 'Raise targets with attainment probability > 85%', text: 'and potential not yet captured, prioritizing SKU A in clients with positive signals.' },
           { bold: 'Recalibrate targets with probability < 50%', text: 'redistributing volume to clients and SKUs with more favorable behavior.' },
@@ -978,7 +968,7 @@ export const signalDemoContent = {
         label: 'Assortment Gaps',
         question: 'By region, which products show the largest gap in the current assortment and the largest potential to lift average basket per store?',
         title: 'Assortment gaps with highest basket potential by region',
-        analysis: 'The model identified 14 under-represented products in the current assortment, but only five concentrate the largest basket-growth opportunity. In São Paulo Countryside, SKUs A and C hold the highest potential due to strong adherence to store behavior, recurrence in similar outlets and complementarity with products already sold. Adding these products to eligible stores can lift regional average basket by up to 12% without materially increasing idle-inventory risk.',
+        analysis: 'The model identified 14 under-represented products in the current assortment, but only five concentrate the largest basket-growth opportunity. In São Paulo Countryside, SKUs A and C hold the highest potential due to strong adherence to store behavior, recurrence in similar outlets and complementarity with products already sold. Adding these products to eligible stores can lift regional average basket by up to 12% without materially increasing idle-inventory risk.\n\nSKU A shows the largest gap in São Paulo Countryside because it is missing in 38% of stores that behave in line with its category. These outlets already sell complementary products, show rising purchase frequency and post a lower basket than similar stores that already carry the SKU. The opportunity is not to distribute it across the whole region — the model recommends including it only in the 126 stores with the highest predicted adherence.',
         heatmap: {
           regions: ['São Paulo Countryside', 'Minas Gerais', 'South', 'Northeast', 'North'],
           skus: ['SKU A', 'SKU B', 'SKU C', 'SKU D', 'SKU E'],
@@ -1008,7 +998,6 @@ export const signalDemoContent = {
           'Which similar stores already show compatible behavior.',
           'What low-turn risk is predicted for each inclusion.',
         ],
-        reasoning: 'SKU A shows the largest gap in São Paulo Countryside because it is missing in 38% of stores that behave in line with its category. These outlets already sell complementary products, show rising purchase frequency and post a lower basket than similar stores that already carry the SKU. The opportunity is not to distribute it across the whole region — the model recommends including it only in the 126 stores with the highest predicted adherence.',
         actions: [
           { bold: 'Prioritize SKU A across the 126 highest-adherence stores', text: 'in São Paulo Countryside, using an initial volume aligned with predicted demand.' },
           { bold: 'Pair SKU C inclusion with existing complementary products', text: 'already in the mix to raise the probability of basket growth.' },
@@ -1064,7 +1053,7 @@ export const signalDemoContent = {
         label: 'Margin Signals',
         question: 'Which signals are opening or reducing room for margin capture on each SKU?',
         title: 'Predictive signals that move margin',
-        analysis: 'The model identified that room for margin capture is concentrated in SKUs with stable predicted demand, lower price sensitivity and positioning below the competitive band. SKU A shows the most favorable combination. SKU D, on the other hand, shows high sensitivity and predicted demand deceleration, limiting any price increase at this time.',
+        analysis: 'The model identified that room for margin capture is concentrated in SKUs with stable predicted demand, lower price sensitivity and positioning below the competitive band. SKU A shows the most favorable combination. SKU D, on the other hand, shows high sensitivity and predicted demand deceleration, limiting any price increase at this time.\n\nSKU A has room for margin capture because its demand is expected to remain stable, even with a moderate price adjustment. The product is positioned below comparable alternatives and its stock is aligned with the predicted sales pace. SKU D shows no opportunity for an increase at this time — the model predicts higher price sensitivity and slowing demand, indicating the unit gain would not offset the volume loss.',
         signalsChart: [
           { sku: 'SKU A', demand: 22, sensitivity: 18, competition: 24, stock: 10, currentMargin: 8, category: 12 },
           { sku: 'SKU B', demand: 14, sensitivity: 12, competition: 22, stock: -6, currentMargin: 6, category: 8 },
@@ -1082,7 +1071,6 @@ export const signalDemoContent = {
             ['SKU E', 'Negative', 'Volume-gain potential', 'Elevated stock', 'Reduce'],
           ],
         },
-        reasoning: 'SKU A has room for margin capture because its demand is expected to remain stable, even with a moderate price adjustment. The product is positioned below comparable alternatives and its stock is aligned with the predicted sales pace. SKU D shows no opportunity for an increase at this time — the model predicts higher price sensitivity and slowing demand, indicating the unit gain would not offset the volume loss.',
         actions: [
           { bold: 'Prioritize SKUs with stable demand', text: 'low sensitivity and a price below the competitive band.' },
           { bold: 'Hold prices on products', text: 'whose predicted behavior indicates material risk of volume loss.' },
@@ -1098,7 +1086,7 @@ export const signalDemoContent = {
         label: 'Aging Risk',
         question: 'In which regions, stores or clusters do products show the highest aging inventory risk?',
         title: 'Predictive aging risk by region and cluster',
-        analysis: 'The model identified elevated aging risk for SKU A across 38 stores, concentrated mostly in the Minas Countryside and Southern Metropolitan clusters. In these locations, predicted sales velocity is below what is needed to consume the stock before the end of the commercial cycle. In São Paulo Premium, the same product keeps consistent demand and does not require a markdown.',
+        analysis: 'The model identified elevated aging risk for SKU A across 38 stores, concentrated mostly in the Minas Countryside and Southern Metropolitan clusters. In these locations, predicted sales velocity is below what is needed to consume the stock before the end of the commercial cycle. In São Paulo Premium, the same product keeps consistent demand and does not require a markdown.\n\nRisk in Minas Countryside is sustained by a combination of low predicted sales velocity, higher price sensitivity and stock above expected demand. At the current price, a relevant share of units is likely to remain in stock after the cycle closes. In São Paulo Premium, behavior is different. Demand remains consistent, stock is balanced and an early markdown would reduce margin without producing a relevant turn gain.',
         regionTable: {
           headers: ['Region or cluster', 'Current stock', 'Projected coverage', 'Predicted sell-through', 'Risk'],
           rows: [
@@ -1118,7 +1106,6 @@ export const signalDemoContent = {
             ['Competitive pressure', 'High', 'Moderate'],
           ],
         },
-        reasoning: 'Risk in Minas Countryside is sustained by a combination of low predicted sales velocity, higher price sensitivity and stock above expected demand. At the current price, a relevant share of units is likely to remain in stock after the cycle closes. In São Paulo Premium, behavior is different. Demand remains consistent, stock is balanced and an early markdown would reduce margin without producing a relevant turn gain.',
         actions: [
           { bold: 'Prioritize turn actions in the 38 stores', text: 'with projected coverage above the healthy threshold.' },
           { bold: 'Hold the price in clusters with consistent demand', text: 'to avoid unnecessary markdowns.' },
@@ -1134,7 +1121,7 @@ export const signalDemoContent = {
         label: 'Markdown Ladder',
         question: 'Which SKUs should enter markdown now and what price-reduction ladder is recommended for each cluster?',
         title: 'Predictive markdown by SKU, region and life cycle',
-        analysis: 'The model recommends starting an immediate markdown on seven SKUs and holding the price on eleven others. SKU A requires early action in Minas Countryside, where an initial 12% discount has the highest probability of recovering turn and avoiding a deeper clearance at the end of the cycle. For the same product in São Paulo Premium, the recommendation is to hold the current price for at least 21 days.',
+        analysis: 'The model recommends starting an immediate markdown on seven SKUs and holding the price on eleven others. SKU A requires early action in Minas Countryside, where an initial 12% discount has the highest probability of recovering turn and avoiding a deeper clearance at the end of the cycle. For the same product in São Paulo Premium, the recommendation is to hold the current price for at least 21 days.\n\nThe 12% markdown on SKU A was recommended because it lifts projected sell-through from 39% to 68% in Minas Countryside. Early action preserves more margin than waiting for stock to age and then applying a discount above 25% at cycle close. The ladder is not replicated nationally. Each cluster receives a different recommendation based on turn velocity, price sensitivity, stock, seasonality and local demand behavior.',
         markdownRuler: {
           headers: ['Cluster', 'Today', 'In 7 days', 'In 14 days', 'In 21 days'],
           rows: [
@@ -1153,7 +1140,6 @@ export const signalDemoContent = {
             ['SKU D', 'São Paulo Premium', '$ 119.90', 'Hold', '81%', 'No discount'],
           ],
         },
-        reasoning: 'The 12% markdown on SKU A was recommended because it lifts projected sell-through from 39% to 68% in Minas Countryside. Early action preserves more margin than waiting for stock to age and then applying a discount above 25% at cycle close. The ladder is not replicated nationally. Each cluster receives a different recommendation based on turn velocity, price sensitivity, stock, seasonality and local demand behavior.',
         actions: [
           { bold: 'Apply the initial markdown in higher-risk clusters', text: 'without changing the price nationally.' },
           { bold: 'Stop further reductions', text: 'as soon as sell-through reaches the expected trajectory.' },
@@ -1169,7 +1155,7 @@ export const signalDemoContent = {
         label: 'Behavior-based recommendation',
         question: 'Which products or looks should be prioritized for each browsing profile, and which behaviors explain that recommendation?',
         title: 'Predictive recommendations by browsing behavior',
-        analysis: 'The model identified four dominant behaviors in the current journey. Performance-oriented users show higher adherence to technical and complementary products, while exploratory users respond better to new arrivals and combinations that expand discovery. For the selected profile, the largest opportunity is cross-selling products complementary to the item viewed. The recommendation combines current intent, individual history, product affinity and predicted behavior of similar users.',
+        analysis: 'The model identified four dominant behaviors in the current journey. Performance-oriented users show higher adherence to technical and complementary products, while exploratory users respond better to new arrivals and combinations that expand discovery. For the selected profile, the largest opportunity is cross-selling products complementary to the item viewed. The recommendation combines current intent, individual history, product affinity and predicted behavior of similar users.\n\nThese products were recommended because they complement the item viewed, show high recurrence in similar journeys and align with the predicted interest pattern for this user.\n\nIn fashion retail, the look is recommended because it combines style, category, color, use occasion and behavioral preferences, avoiding incoherent or low-fit combinations.',
         behaviorMatrix: {
           headers: ['Behavioral profile', 'Predicted intent', 'Recommended product or look', 'Adherence', 'Objective'],
           rows: [
@@ -1190,7 +1176,6 @@ export const signalDemoContent = {
             ['Cluster behavioral trend', 'High'],
           ],
         },
-        reasoning: 'These products were recommended because they complement the item viewed, show high recurrence in similar journeys and align with the predicted interest pattern for this user.\n\nIn fashion retail, the look is recommended because it combines style, category, color, use occasion and behavioral preferences, avoiding incoherent or low-fit combinations.',
         actions: [
           { bold: 'Prioritize complementary products with high adherence', text: 'avoiding recommendations based on popularity alone.' },
           { bold: 'Adapt the storefront composition to session behavior', text: 'alternating conversion, cross-sell and discovery.' },
@@ -1206,7 +1191,7 @@ export const signalDemoContent = {
         label: 'Repurchase Window',
         question: 'Which customers are entering a repurchase window, what are they likely to buy again and when is the best moment to activate them?',
         title: 'Predictive repurchase behavior',
-        analysis: 'The model identified 18,420 customers with a relevant probability of a new purchase in the next 30 days. Of those, 46% are likely to repurchase the same product, 34% should migrate to a variation or substitute, and 20% show higher propensity to complement the previous purchase. The main opportunity is customers whose predicted repurchase window starts in the next seven days. Activating too early tends to yield low response. A late approach raises the risk of losing the repurchase to another channel or competitor.',
+        analysis: 'The model identified 18,420 customers with a relevant probability of a new purchase in the next 30 days. Of those, 46% are likely to repurchase the same product, 34% should migrate to a variation or substitute, and 20% show higher propensity to complement the previous purchase. The main opportunity is customers whose predicted repurchase window starts in the next seven days. Activating too early tends to yield low response. A late approach raises the risk of losing the repurchase to another channel or competitor.\n\nThis customer is entering their repurchase window because the interval since the last purchase approaches their predicted consumption cycle. Prior behavior indicates high recurrence on the same SKU, low propensity to switch and stronger response when activated between day 24 and day 28 after the purchase.\n\nFor a customer with a migration tendency, the next purchase should not repeat the previous item exactly. The model identified rising interest in a higher-tier version, behavior similar to customers who migrated products and higher adherence to the new option within the predicted repurchase window.',
         curveData: [
           { day: 0, probability: 2 },
           { day: 5, probability: 6 },
@@ -1252,7 +1237,6 @@ export const signalDemoContent = {
             ['Product availability and substitution', 'Alters the most likely next item'],
           ],
         },
-        reasoning: 'This customer is entering their repurchase window because the interval since the last purchase approaches their predicted consumption cycle. Prior behavior indicates high recurrence on the same SKU, low propensity to switch and stronger response when activated between day 24 and day 28 after the purchase.\n\nFor a customer with a migration tendency, the next purchase should not repeat the previous item exactly. The model identified rising interest in a higher-tier version, behavior similar to customers who migrated products and higher adherence to the new option within the predicted repurchase window.',
         actions: [
           { bold: 'Activate customers in the highest-propensity window first', text: 'avoiding premature or late contacts.' },
           { bold: 'Differentiate repurchase, migration and complementary purchase', text: 'presenting the product that best fits each predicted behavior.' },
