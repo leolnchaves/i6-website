@@ -142,12 +142,8 @@ const SimulationLauncher = ({
   );
 };
 
-const SummaryRow = ({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) => (
-  <div
-    className={`rounded-2xl p-[2.5vmin] border ${
-      highlight ? 'bg-[#F4845F]/10 border-[#F4845F]/40' : 'bg-white/5 border-white/10'
-    }`}
-  >
+const SummaryRow = ({ label, value }: { label: string; value: string; highlight?: boolean }) => (
+  <div className="py-[1vmin]">
     <span className="block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.6vmin]">
       {label}
     </span>
