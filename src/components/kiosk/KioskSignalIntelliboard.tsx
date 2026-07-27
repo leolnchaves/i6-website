@@ -19,16 +19,12 @@ import {
   TargetsPotentialTable,
   TargetsRiskScatter,
   TargetsRiskTable,
-  TargetsSignalsTable,
   MixBehaviorScatter,
   MixBehaviorTable,
-  MixBehaviorReading,
   MixGapsHeatmap,
   MixGapsTable,
-  MixGapsDetailList,
   MarginOpportunitiesScatter,
   MarginOpportunitiesTable,
-  MarginBehaviorReading,
   MarginSignalsChart,
   MarginSignalsTable,
   TurnoverRiskTable,
@@ -36,16 +32,12 @@ import {
   TurnoverMarkdownRuler,
   TurnoverMarkdownTable,
   PersonalizationBehaviorMatrix,
-  PersonalizationSignalsTable,
   RepurchaseCurveChart,
   RepurchaseBehaviorTable,
-  RepurchaseCorrelationsTable,
   PriceConversionFrictionHeatmap,
   PriceConversionContextTable,
-  PriceConversionSignalsTable,
   PriceConversionIncentiveDistribution,
   PriceConversionIncentiveTable,
-  PriceConversionDetailList,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
@@ -326,10 +318,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                     lang={lang}
                   />
                   <TargetsRiskTable data={(scenario as typeof t.scenarios.targetsRisk).riskTable} />
-                  <TargetsSignalsTable
-                    data={(scenario as typeof t.scenarios.targetsRisk).signalsTable}
-                    lang={lang}
-                  />
                 </>
               )}
               {activeScenario === 'mixBehavior' && 'scatter' in scenario && 'pdvTable' in scenario && (
@@ -339,10 +327,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                     lang={lang}
                   />
                   <MixBehaviorTable data={(scenario as typeof t.scenarios.mixBehavior).pdvTable} />
-                  <MixBehaviorReading
-                    paragraphs={(scenario as typeof t.scenarios.mixBehavior).behaviorReading}
-                    lang={lang}
-                  />
                 </>
               )}
               {activeScenario === 'mixGaps' && 'heatmap' in scenario && (
@@ -352,10 +336,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                     lang={lang}
                   />
                   <MixGapsTable data={(scenario as typeof t.scenarios.mixGaps).gapsTable} />
-                  <MixGapsDetailList
-                    items={(scenario as typeof t.scenarios.mixGaps).behaviorDetail}
-                    lang={lang}
-                  />
                 </>
               )}
 
@@ -366,10 +346,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                     lang={lang}
                   />
                   <MarginOpportunitiesTable data={(scenario as typeof t.scenarios.marginOpportunities).skuTable} />
-                  <MarginBehaviorReading
-                    paragraphs={(scenario as typeof t.scenarios.marginOpportunities).behaviorReading}
-                    lang={lang}
-                  />
                 </>
               )}
               {activeScenario === 'marginSignals' && 'signalsChart' in scenario && (
@@ -408,16 +384,10 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
               )}
 
               {activeScenario === 'personalizationBehavior' && 'behaviorMatrix' in scenario && (
-                <>
-                  <PersonalizationBehaviorMatrix
-                    data={(scenario as typeof t.scenarios.personalizationBehavior).behaviorMatrix}
-                    lang={lang}
-                  />
-                  <PersonalizationSignalsTable
-                    data={(scenario as typeof t.scenarios.personalizationBehavior).signalsTable}
-                    lang={lang}
-                  />
-                </>
+                <PersonalizationBehaviorMatrix
+                  data={(scenario as typeof t.scenarios.personalizationBehavior).behaviorMatrix}
+                  lang={lang}
+                />
               )}
               {activeScenario === 'personalizationRepurchase' && 'curveData' in scenario && (
                 <>
@@ -432,10 +402,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                     data={(scenario as typeof t.scenarios.personalizationRepurchase).behaviorTable}
                     lang={lang}
                   />
-                  <RepurchaseCorrelationsTable
-                    data={(scenario as typeof t.scenarios.personalizationRepurchase).correlationsTable}
-                    lang={lang}
-                  />
                 </>
               )}
 
@@ -448,10 +414,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                   <PriceConversionContextTable
                     data={(scenario as typeof t.scenarios.priceConversionFriction).contextTable}
                   />
-                  <PriceConversionSignalsTable
-                    data={(scenario as typeof t.scenarios.priceConversionFriction).signalsTable}
-                    lang={lang}
-                  />
                 </>
               )}
               {activeScenario === 'priceConversionIncentiveNeed' && 'distribution' in scenario && (
@@ -462,10 +424,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                   />
                   <PriceConversionIncentiveTable
                     data={(scenario as typeof t.scenarios.priceConversionIncentiveNeed).incentiveTable}
-                  />
-                  <PriceConversionDetailList
-                    items={(scenario as typeof t.scenarios.priceConversionIncentiveNeed).detail}
-                    lang={lang}
                   />
                 </>
               )}
