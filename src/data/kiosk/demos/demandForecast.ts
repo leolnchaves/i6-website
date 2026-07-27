@@ -103,9 +103,9 @@ export const skus: SkuDef[] = [
     promoNotePt: 'Black Friday + Cyber Monday — pico esperado de +38% acima do baseline.',
     promoNoteEn: 'Black Friday + Cyber Monday — expected +38% peak over baseline.',
     argumentPt:
-      'Categoria em crescimento acelerado (+18% a.a.) com sazonalidade de Black Friday e Natal muito pronunciada (±55%) e forte concentração no canal digital (71%). Identificamos ruptura em dois novembros seguidos — o forecast atual erra 62pp e por isso subestima o pico. Aceleração de +28% nos últimos 90 dias, quase toda no digital. A i6 separa Black Friday do baseline, aplica calendário 2025 (BF em 28/11) e reduz ruptura de 22,3% para 2,8%. Acurácia sobe de 36,4% para 87,2%.',
+      'Crescimento acelerado (+18% a.a.), com sazonalidade forte de Black Friday e Natal (±55%) e alta concentração no digital (71%). Ruptura em dois novembros seguidos leva o forecast atual a errar 62pp e subestimar o pico. Nos últimos 90 dias, aceleração de +28%, quase toda no digital. A i6 separa Black Friday do baseline, aplica o calendário 2025 (BF em 28/11) e leva ruptura de 22,3% para 2,8% e acurácia de 36,4% para 87,2%.',
     argumentEn:
-      'Fast-growing category (+18% YoY) with very pronounced Black Friday and Christmas seasonality (±55%) and strong digital-channel concentration (71%). We detected stockouts in two consecutive Novembers — the current forecast is off by 62pp and therefore under-projects the peak. Last 90 days show +28% acceleration, almost entirely digital. i6 separates Black Friday from the baseline, applies the 2025 calendar (BF on Nov 28) and cuts stockout from 22.3% to 2.8%. Accuracy jumps from 36.4% to 87.2%.',
+      'Fast-growing category (+18% YoY) with pronounced Black Friday and Christmas seasonality (±55%) and heavy digital concentration (71%). Two consecutive November stockouts make the current forecast miss by 62pp and under-project the peak. Last 90 days: +28% acceleration, mostly digital. i6 splits Black Friday from the baseline, applies the 2025 calendar (BF on Nov 28) and cuts stockout from 22.3% to 2.8% while lifting accuracy from 36.4% to 87.2%.',
   },
   {
     id: 'beverage',
