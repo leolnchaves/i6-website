@@ -459,6 +459,13 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                         >
                           {step.label[lang]}
                         </span>
+                        <span
+                          className={`text-center text-[1.1vmin] leading-tight font-mono ${
+                            state === 'idle' ? 'text-white/30' : 'text-white/55'
+                          }`}
+                        >
+                          {step.microMetric[lang]}
+                        </span>
                       </div>
                     );
                   })}
