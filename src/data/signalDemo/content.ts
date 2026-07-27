@@ -568,7 +568,7 @@ export const signalDemoContent = {
       },
       personalizationRepurchase: {
         label: 'Janela de Recompra',
-        question: 'Quais clientes estão entrando em uma janela de recompra e qual o melhor momento para ativá-los?',
+        question: 'Quais clientes estão em janela de recompra nos próximos 30 dias?',
         title: 'Comportamento preditivo de recompra',
         analysis: 'O modelo identificou 18.420 clientes com probabilidade relevante de nova compra nos próximos 30 dias. Desses, 46% tendem a recomprar o mesmo produto, 34% devem migrar para uma variação ou produto substituto e 20% apresentam maior propensão a complementar a compra anterior. A principal oportunidade está nos clientes cuja janela prevista de recompra começa nos próximos sete dias. Uma ativação antecipada demais tende a gerar baixa resposta. Uma abordagem tardia aumenta o risco de perda da recompra para outro canal ou concorrente.\n\nEste cliente está entrando em sua janela de recompra porque o intervalo desde a última compra se aproxima do seu ciclo previsto de consumo. O comportamento anterior indica alta recorrência no mesmo SKU, baixa propensão à troca e maior resposta quando ativado entre o 24º e o 28º dia após a compra.\n\nPara um cliente com tendência de migração, a próxima compra não deve repetir exatamente o item anterior. O modelo identificou aumento de interesse por uma versão superior, comportamento semelhante ao de clientes que migraram de produto e maior aderência à nova opção dentro da janela prevista de recompra.',
         curveData: [
@@ -1277,7 +1277,7 @@ export const signalDemoContent = {
       },
       personalizationRepurchase: {
         label: 'Repurchase Window',
-        question: 'Which customers are entering a repurchase window and when is the best moment to activate them?',
+        question: 'Which customers are in a repurchase window in the next 30 days?',
         title: 'Predictive repurchase behavior',
         analysis: 'The model identified 18,420 customers with a relevant probability of a new purchase in the next 30 days. Of those, 46% are likely to repurchase the same product, 34% should migrate to a variation or substitute, and 20% show higher propensity to complement the previous purchase. The main opportunity is customers whose predicted repurchase window starts in the next seven days. Activating too early tends to yield low response. A late approach raises the risk of losing the repurchase to another channel or competitor.\n\nThis customer is entering their repurchase window because the interval since the last purchase approaches their predicted consumption cycle. Prior behavior indicates high recurrence on the same SKU, low propensity to switch and stronger response when activated between day 24 and day 28 after the purchase.\n\nFor a customer with a migration tendency, the next purchase should not repeat the previous item exactly. The model identified rising interest in a higher-tier version, behavior similar to customers who migrated products and higher adherence to the new option within the predicted repurchase window.',
         curveData: [
