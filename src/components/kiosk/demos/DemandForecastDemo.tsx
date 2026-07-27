@@ -564,12 +564,10 @@ const CompositionChart = ({
 
   // Season: signed (can be negative)
   const seasonSigned = points.map((p) => p.season ?? 0);
-  const sparsityVals = points.map((p) => Math.max(0, p.sparsityFix ?? 0));
 
   const posMax = Math.max(
     ...trendDisplay,
     ...seasonSigned.map((v) => Math.max(0, v)),
-    ...sparsityVals,
     1,
   );
   const negMin = Math.min(
@@ -588,7 +586,6 @@ const CompositionChart = ({
   const colors = {
     trend: '#F4845F',
     season: 'rgba(255,255,255,0.85)',
-    sparsityFix: 'rgba(244,132,95,0.45)',
     promo: '#F4845F',
     zero: 'rgba(255,255,255,0.25)',
   };
@@ -630,29 +627,8 @@ const CompositionChart = ({
           </g>
         ))}
 
-        {/* Sparsity bars — always above zero line */}
-        {points.map((p, i) => {
-          const sp = Math.max(0, p.sparsityFix ?? 0);
-          const barTop = y(sp);
-          const barH = yZero - barTop;
-          const cx = xAt(i);
-          const selected = selectedKey === p.key;
-          return (
-            <rect
-              key={`bar-${p.key}`}
-              x={cx - barW / 2}
-              y={barTop}
-              width={barW}
-              height={Math.max(0, barH)}
-              fill={colors.sparsityFix}
-              rx={2}
-              style={{
-                opacity: selectedKey && !selected ? 0.35 : 1,
-                pointerEvents: 'none',
-              }}
-            />
-          );
-        })}
+
+
 
         {/* Zero baseline redraw over bars */}
         <line x1={PAD_L} x2={W - PAD_R} y1={yZero} y2={yZero} stroke={colors.zero} strokeWidth={1} />
@@ -729,7 +705,7 @@ const CompositionChart = ({
       <div className="flex flex-wrap gap-[1.4vmin] mt-[0.8vmin] text-[1.2vmin] text-white/75">
         <LegendDot color={colors.trend} label={L.result.trend} />
         <LegendDot color={colors.season} dashed label={L.result.season} />
-        <LegendDot square color={colors.sparsityFix} label={L.result.sparsityFix} />
+        
         <span className="inline-flex items-center gap-[0.5vmin]">
           <span className="inline-block w-[1.4vmin] h-[1.4vmin] rounded-full" style={{ background: colors.promo, border: '1.5px solid #0B1224', boxShadow: '0 0 0 1px rgba(255,255,255,0.15)' }} />
           <span>{L.result.promo}</span>
@@ -755,7 +731,6 @@ const BreakdownCard = ({
   const parts = [
     { label: L.result.trend, value: point.trend ?? 0 },
     { label: L.result.season, value: point.season ?? 0 },
-    { label: L.result.sparsityFix, value: point.sparsityFix ?? 0 },
   ];
   const positive = parts.reduce((s, p) => s + Math.max(0, p.value), 0);
   const promoText = point.hasPromo ? (lang === 'pt' ? sku.promoNotePt : sku.promoNoteEn) : null;
@@ -777,7 +752,7 @@ const BreakdownCard = ({
           ✕
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-[0.6vmin]">
+      <div className="grid grid-cols-2 gap-[0.6vmin]">
         {parts.map((p) => {
           const pct = positive > 0 ? (Math.max(0, p.value) / positive) * 100 : 0;
           return (
