@@ -186,57 +186,42 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
         </div>
       </div>
 
-      {/* 2×2 scenario matrix */}
-      <div className="mb-[1.5vmin] rounded-2xl border border-white/10 bg-white/[0.02] p-[0.9vmin]">
-        <div className="grid grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[0.6vmin] items-center">
-          {/* header row */}
-          <span />
-          {cols.map((c) => (
-            <span
-              key={`h-${c.u}`}
-              className="flex items-center gap-[0.8vmin] px-[0.8vmin] text-[1.2vmin] tracking-[0.2em] uppercase font-semibold text-white/60"
-            >
-              {c.icon}
-              {c.label}
+      {/* Vertical rows with user-mode buttons */}
+      <div className="mb-[1.5vmin] rounded-2xl border border-white/10 bg-white/[0.02] p-[0.9vmin] flex flex-col gap-[0.7vmin]">
+        {rows.map((r) => (
+          <div
+            key={`row-${r.v}`}
+            className="grid grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[0.8vmin] items-stretch bg-white/[0.03] rounded-xl px-[1.4vmin] py-[0.8vmin]"
+          >
+            <span className="flex items-center text-[1.6vmin] tracking-[0.2em] uppercase font-bold text-[#F4845F]">
+              {r.label}
             </span>
-          ))}
-          {rows.map((r) => (
-            <>
-              <span
-                key={`l-${r.v}`}
-                className="px-[0.8vmin] text-[1.4vmin] tracking-[0.18em] uppercase font-bold text-[#F4845F]"
-              >
-                {r.label}
-              </span>
-              {cols.map((c) => {
-                const active = userMode === c.u && vertical === r.v;
-                return (
-                  <button
-                    key={`${r.v}-${c.u}`}
-                    type="button"
-                    onClick={() => startScenario(c.u, r.v)}
-                    className={`min-h-[6vmin] rounded-xl border-2 px-[1.2vmin] py-[0.7vmin] text-left transition-all active:scale-[0.98] ${
-                      active
-                        ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
-                        : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
-                    }`}
-                  >
-                    <span className="flex items-center gap-[1vmin]">
-                      <span className="w-[3vmin] h-[3vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
-                        {c.icon}
-                      </span>
-                      <span className="flex-1 min-w-0">
-                        <span className="block text-[1.5vmin] font-bold text-white leading-tight">{c.label}</span>
-                        <span className="block text-[1.15vmin] text-white/55 leading-tight">{r.label}</span>
-                      </span>
+            {cols.map((c) => {
+              const active = userMode === c.u && vertical === r.v;
+              return (
+                <button
+                  key={`${r.v}-${c.u}`}
+                  type="button"
+                  onClick={() => startScenario(c.u, r.v)}
+                  className={`min-h-[6vmin] rounded-xl border-2 px-[1.2vmin] py-[0.7vmin] text-left transition-all active:scale-[0.98] ${
+                    active
+                      ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
+                      : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+                  }`}
+                >
+                  <span className="flex items-center gap-[1vmin]">
+                    <span className="w-[3vmin] h-[3vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
+                      {c.icon}
                     </span>
-                  </button>
-                );
-              })}
-            </>
-          ))}
-        </div>
+                    <span className="text-[1.6vmin] font-bold text-white leading-tight">{c.label}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
+
 
 
       {/* STACKED: top = store, bottom = reasoning */}
