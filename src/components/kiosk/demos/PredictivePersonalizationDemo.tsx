@@ -184,6 +184,9 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
       </div>
 
       {/* Vertical rows with user-mode buttons */}
+      <span className="block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1.2vmin]">
+        {lang === 'pt' ? 'SELECIONE UMA CATEGORIA E TIPO DE CLIENTE' : 'SELECT A CATEGORY AND CUSTOMER TYPE'}
+      </span>
       <div className="mb-[1.5vmin] rounded-2xl border border-white/10 bg-white/[0.02] p-[0.9vmin] flex flex-col gap-[0.7vmin]">
         {rows.map((r) => (
           <div

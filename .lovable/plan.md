@@ -1,15 +1,10 @@
-Remover, em todas as demos do Kiosk, o pequeno quadrado coral com ícone `Sparkles` que fica no cabeçalho da seção de raciocínio (POR QUE / timeline).
+Adicionar um rótulo "SELECIONE UMA CATEGORIA E TIPO DE CLIENTE" imediatamente acima do quadro da matriz de seleção (faixas MODA / BENS DE CONSUMO) na demo de **Personalização + Descoberta Preditiva**, usando o mesmo design do rótulo "ESCOLHA UM PRODUTO OU OFERTA" (anexo 2).
 
-## Arquivos
-Remover o `<span>...<Sparkles/></span>` (quadrado coral) e ajustar o `flex` do cabeçalho para que o título continue alinhado corretamente:
+## Alteração
+- `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`: inserir um `<span>` logo antes do container da matriz de seleção com as classes:
+  `block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1.2vmin]`
+- Localização:
+  - PT: `SELECIONE UMA CATEGORIA E TIPO DE CLIENTE`
+  - EN: `SELECT A CATEGORY AND CUSTOMER TYPE`
 
-- `src/components/kiosk/demos/PropensityCampaignDemo.tsx` (linhas 262–264)
-- `src/components/kiosk/demos/PriceTurnoverDemo.tsx` (linha 220)
-- `src/components/kiosk/demos/MixAssortmentOrderDemo.tsx` (linha 293)
-- `src/components/kiosk/demos/PriceToMarginDemo.tsx` (linha 241)
-- `src/components/kiosk/demos/DemandForecastDemo.tsx` (linha 262)
-- `src/components/kiosk/demos/PriceMarginDemo.tsx` (linha 229)
-- `src/components/kiosk/demos/CommercialTargetsDemo.tsx` (linha 282)
-- `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx` (mesmo padrão perto da linha 381)
-
-Escopo: apenas o quadrado coral no header da seção "raciocínio preditivo". Não mexo nos outros usos de `Sparkles` (ex.: o dentro do card "POR QUE" já foi removido em passos anteriores, mas se restar algum na mesma linha do label do POR QUE, também será removido para consistência).
+Sem alterar o quadro atual — apenas adiciona a linha de rótulo acima.
