@@ -96,13 +96,10 @@ const DemandForecastDemo = ({ lang }: Props) => {
   const clickedPoint = selectedMonth ? forecastPoints.find((p) => p.key === selectedMonth) ?? null : null;
 
   return (
-    <div
-      ref={containerRef}
-      className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]"
-    >
-      <div className="grid grid-cols-[1.25fr_1fr] gap-[3vmin] items-stretch">
-        {/* LEFT — dashboard / result */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
+    <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
+      <div className="flex flex-col gap-[2.4vmin]">
+        {/* TOP — dashboard / result */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col">
           {/* Header */}
           <div className="flex items-baseline justify-between px-[2.5vmin] py-[1.6vmin] bg-white/[0.04] border-b border-white/10">
             <div>
@@ -118,7 +115,7 @@ const DemandForecastDemo = ({ lang }: Props) => {
             </span>
           </div>
 
-          <div className="p-[2.2vmin] flex-1 flex flex-col gap-[1.5vmin]">
+          <div className="p-[2.2vmin] flex flex-col gap-[1.5vmin]">
             <FilterChips
               lang={lang}
               L={L}
@@ -133,14 +130,12 @@ const DemandForecastDemo = ({ lang }: Props) => {
               disabled={phase === 'running'}
             />
 
-            <div ref={mainChartRef}>
-              <MainChart
-                series={series}
-                phase={phase}
-                lang={lang}
-                fixedMaxY={fixedMaxY}
-              />
-            </div>
+            <MainChart
+              series={series}
+              phase={phase}
+              lang={lang}
+              fixedMaxY={fixedMaxY}
+            />
 
             {phase === 'planning' && (
               <>
@@ -154,7 +149,7 @@ const DemandForecastDemo = ({ lang }: Props) => {
                 <button
                   type="button"
                   onClick={() => setPhase('running')}
-                  className="mt-auto self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
+                  className="self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
                 >
                   {L.cta}
                 </button>
@@ -162,7 +157,7 @@ const DemandForecastDemo = ({ lang }: Props) => {
             )}
 
             {phase === 'running' && (
-              <div className="mt-auto rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
+              <div className="rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
                 <span className="w-[1.8vmin] h-[1.8vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
                 <span className="text-[1.6vmin] text-white/90 font-semibold">{L.running}</span>
               </div>
@@ -171,31 +166,10 @@ const DemandForecastDemo = ({ lang }: Props) => {
             {phase === 'result' && (
               <>
                 <div className="grid grid-cols-4 gap-[1vmin]">
-                  <KpiCompare
-                    label={L.kpi.accuracy}
-                    oldValue={sku.historicalAccuracyPct}
-                    newValue={sku.i6AccuracyPct}
-                    higherIsBetter
-                    L={L}
-                  />
-                  <KpiCompare
-                    label={L.kpi.meanError}
-                    oldValue={sku.meanErrorPct}
-                    newValue={sku.i6MeanErrorPct}
-                    L={L}
-                  />
-                  <KpiCompare
-                    label={L.kpi.stockout}
-                    oldValue={sku.stockoutPct}
-                    newValue={sku.i6StockoutPct}
-                    L={L}
-                  />
-                  <KpiCompare
-                    label={L.kpi.excess}
-                    oldValue={sku.excessPct}
-                    newValue={sku.i6ExcessPct}
-                    L={L}
-                  />
+                  <KpiCompare label={L.kpi.accuracy} oldValue={sku.historicalAccuracyPct} newValue={sku.i6AccuracyPct} higherIsBetter L={L} />
+                  <KpiCompare label={L.kpi.meanError} oldValue={sku.meanErrorPct} newValue={sku.i6MeanErrorPct} L={L} />
+                  <KpiCompare label={L.kpi.stockout} oldValue={sku.stockoutPct} newValue={sku.i6StockoutPct} L={L} />
+                  <KpiCompare label={L.kpi.excess} oldValue={sku.excessPct} newValue={sku.i6ExcessPct} L={L} />
                 </div>
                 {clickedPoint && (
                   <BreakdownCard point={clickedPoint} sku={sku} L={L} lang={lang} onClose={() => setSelectedMonth(null)} />
@@ -220,126 +194,114 @@ const DemandForecastDemo = ({ lang }: Props) => {
           </div>
         </div>
 
-        {/* RIGHT — reasoning + insight */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
-          <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
-            <div className="flex-1">
-              <h4 className="text-[2vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
-              <p className="text-[1.4vmin] text-white/60">{L.reasoningSubtitle}</p>
+        {/* BOTTOM — reasoning: POR QUE + horizontal timeline */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin]">
+          <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
+            <div>
+              <h4 className="text-[1.9vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
+              <p className="text-[1.35vmin] text-white/60">{L.reasoningSubtitle}</p>
             </div>
           </div>
 
-          <div className="flex flex-col gap-[0.9vmin]">
-            {pipeline.map((step, i) => {
-              const state =
-                phase === 'planning'
-                  ? 'idle'
-                  : phase === 'running'
-                  ? i < progress
-                    ? 'done'
-                    : i === progress
-                    ? 'active'
-                    : 'idle'
-                  : 'done';
-              return (
-                <div
-                  key={i}
-                  className={`rounded-xl border p-[1.1vmin] transition-all ${
-                    state === 'active'
-                      ? 'border-[#F4845F] bg-[#F4845F]/10'
-                      : state === 'done'
-                      ? 'border-white/20 bg-white/[0.04]'
-                      : 'border-white/10 bg-white/[0.02] opacity-60'
-                  }`}
-                >
-                  <div className="flex items-center gap-[1.2vmin] mb-[0.4vmin]">
+          {/* POR QUE above timeline */}
+          {phase === 'result' && (
+            <div className="kiosk-insight-card mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.8vmin]">
+              <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
+                <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
+                <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                  {L.rationaleLabel}
+                </span>
+                <span className="ml-auto text-[1.15vmin] text-white/60 font-mono whitespace-nowrap">
+                  {L.latency}: {latencySec} s
+                </span>
+              </div>
+              <p className="text-[2vmin] leading-relaxed text-white/95">
+                {lang === 'pt' ? sku.argumentPt : sku.argumentEn}
+              </p>
+            </div>
+          )}
+
+          {/* Micro-metric of active step */}
+          <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
+            {phase === 'running' && progress < pipeline.length && (
+              <span className="text-[1.2vmin] text-white/60 font-mono">
+                {lang === 'pt' ? pipeline[progress].microPt : pipeline[progress].microEn}
+              </span>
+            )}
+          </div>
+
+          {/* Horizontal timeline */}
+          <div className="relative px-[2vmin] pb-[1vmin]">
+            <div className="absolute left-[3vmin] right-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-white/10" />
+            <div
+              className="absolute left-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-[#F4845F] transition-all duration-500"
+              style={{
+                width: `calc((100% - 6vmin) * ${
+                  pipeline.length > 1
+                    ? Math.min(progress, pipeline.length - 1) / (pipeline.length - 1)
+                    : 0
+                })`,
+              }}
+            />
+            <div
+              className="relative grid"
+              style={{ gridTemplateColumns: `repeat(${pipeline.length}, minmax(0,1fr))` }}
+            >
+              {pipeline.map((step, i) => {
+                const state =
+                  phase === 'planning'
+                    ? 'idle'
+                    : phase === 'running'
+                    ? i < progress
+                      ? 'done'
+                      : i === progress
+                      ? 'active'
+                      : 'idle'
+                    : 'done';
+                return (
+                  <div key={i} className="flex flex-col items-center gap-[0.8vmin] px-[0.5vmin]">
                     <span
-                      className={`flex-shrink-0 w-[2.2vmin] h-[2.2vmin] rounded-full flex items-center justify-center text-[1.2vmin] font-bold border-2 ${
+                      className={`flex-shrink-0 w-[3.8vmin] h-[3.8vmin] rounded-full flex items-center justify-center text-[1.5vmin] font-bold border-2 transition-all ${
                         state === 'done'
                           ? 'bg-[#F4845F] border-[#F4845F] text-white'
                           : state === 'active'
-                          ? 'border-[#F4845F] text-[#F4845F]'
-                          : 'border-white/30 text-white/50'
+                          ? 'border-[#F4845F] text-[#F4845F] bg-[#F4845F]/15 animate-pulse'
+                          : 'border-white/25 text-white/50 bg-[#0B1224]'
                       }`}
                     >
-                      {state === 'done' ? <Check className="w-[1.3vmin] h-[1.3vmin]" /> : i + 1}
+                      {state === 'done' ? <Check className="w-[1.8vmin] h-[1.8vmin]" /> : i + 1}
                     </span>
-                    <span className="text-[1.55vmin] leading-tight text-white/90 font-semibold">
+                    <span
+                      className={`text-center text-[1.3vmin] leading-tight font-semibold ${
+                        state === 'idle' ? 'text-white/45' : 'text-white/90'
+                      }`}
+                    >
                       {lang === 'pt' ? step.labelPt : step.labelEn}
                     </span>
-                  </div>
-                  <div className="pl-[3.4vmin]">
-                    <p className="text-[1.2vmin] text-white/60 font-mono mb-[0.4vmin]">
+                    <span
+                      className={`text-center text-[1.1vmin] leading-tight font-mono ${
+                        state === 'idle' ? 'text-white/30' : 'text-white/55'
+                      }`}
+                    >
                       {lang === 'pt' ? step.microPt : step.microEn}
-                    </p>
-                    {state === 'active' && (
-                      <div className="h-[0.35vmin] rounded-full bg-white/10 overflow-hidden">
-                        <div
-                          className="h-full bg-[#F4845F] animate-[kiosk-progress_var(--dur)_linear_forwards]"
-                          style={{ ['--dur' as string]: `${step.durationMs}ms` }}
-                        />
-                      </div>
-                    )}
+                    </span>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
           {phase === 'result' && (
-            <div className="mt-[1.4vmin] flex flex-col gap-[1vmin]">
-
-              <div
-                ref={insightRef}
-                className="kiosk-insight-card relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.5vmin] text-white/95 leading-relaxed"
-              >
-                <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
-                  <Sparkles className="w-[1.4vmin] h-[1.4vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
-                  <span>Insight</span>
-                </div>
-                <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
-                  {L.rationaleLabel}
-                </span>
-                {lang === 'pt' ? sku.argumentPt : sku.argumentEn}
-              </div>
-
-              <button
-                type="button"
-                onClick={reset}
-                className="mt-[0.4vmin] min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
-              >
-                {L.reset}
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={reset}
+              className="mt-[1.4vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+            >
+              {L.reset}
+            </button>
           )}
         </div>
       </div>
-
-      {line && (
-        <svg
-          className="pointer-events-none absolute inset-0 w-full h-full"
-          style={{ overflow: 'visible' }}
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient id="kiosk-forecast-connector" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#F4845F" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#F4845F" stopOpacity="0.9" />
-            </linearGradient>
-          </defs>
-          <path
-            d={`M ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`}
-            fill="none"
-            stroke="url(#kiosk-forecast-connector)"
-            strokeWidth={1.5}
-            strokeDasharray="6 6"
-            style={{ filter: 'drop-shadow(0 0 6px rgba(244,132,95,0.7))' }}
-            className="kiosk-connector-path"
-          />
-          <circle cx={line.x1} cy={line.y1} r={4} fill="#F4845F" className="kiosk-connector-dot" />
-          <circle cx={line.x2} cy={line.y2} r={4} fill="#F4845F" className="kiosk-connector-dot" />
-        </svg>
-      )}
 
       <style>{`
         @keyframes kiosk-progress { from { width: 0% } to { width: 100% } }
@@ -359,14 +321,11 @@ const DemandForecastDemo = ({ lang }: Props) => {
           animation: kiosk-insight-in .5s ease-out .6s both, kiosk-insight-glow 2.4s ease-in-out .6s infinite;
         }
         .kiosk-insight-sparkle { animation: kiosk-insight-sparkle 1.8s ease-in-out infinite; }
-        @keyframes kiosk-connector-flow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
-        @keyframes kiosk-connector-in { from { opacity: 0; } to { opacity: 1; } }
-        .kiosk-connector-path { animation: kiosk-connector-in .5s ease-out both, kiosk-connector-flow 1.2s linear infinite; }
-        .kiosk-connector-dot { animation: kiosk-connector-in .5s ease-out both; filter: drop-shadow(0 0 6px rgba(244,132,95,0.9)); }
       `}</style>
     </div>
   );
 };
+
 
 // ============================================================================
 // Filter chips
