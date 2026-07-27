@@ -4,7 +4,7 @@ import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PriceMarginDemo from './demos/PriceMarginDemo';
 import PriceTurnoverDemo from './demos/PriceTurnoverDemo';
-import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
+import PersonalizationSimulationLauncher from './PersonalizationSimulationLauncher';
 import DemandForecastDemo from './demos/DemandForecastDemo';
 import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
 import CommercialTargetsDemo from './demos/CommercialTargetsDemo';
@@ -35,7 +35,13 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
 
   // Interactive demo for Predictive Personalization + Smart Discovery combo
   if (solution.id === 'predictive-personalization' || solution.id === 'smart-discovery') {
-    return <PredictivePersonalizationDemo lang={lang} />;
+    return (
+      <PersonalizationSimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+      />
+    );
   }
 
   // Interactive demo for Demand Forecasting

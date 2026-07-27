@@ -51,6 +51,10 @@ export interface QuizContent {
     tieTitle: string;
     tieSubtitle: string;
     selectSolutionHint: string;
+    simulateButton: string;
+    closeSimulation: string;
+    matrixFashion: string;
+    matrixProducts: string;
     signalEyebrow: string;
     signalTitle: string;
     signalSubtitle: string;
@@ -216,6 +220,10 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tieTitle: 'Seu contexto combina duas soluções complementares.',
       tieSubtitle: 'Toque em uma solução para ver o exemplo de aplicação.',
       selectSolutionHint: 'Toque em uma solução acima',
+      simulateButton: 'Clique aqui para simular a solução',
+      closeSimulation: 'Fechar simulação',
+      matrixFashion: 'Moda',
+      matrixProducts: 'Bens de consumo',
       signalEyebrow: 'i6 Signal',
       signalTitle: 'Converse com a camada preditiva.',
       signalSubtitle:
@@ -377,6 +385,10 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tieTitle: 'Your context combines two complementary solutions.',
       tieSubtitle: 'Tap a solution to see the example.',
       selectSolutionHint: 'Tap a solution above',
+      simulateButton: 'Click here to simulate the solution',
+      closeSimulation: 'Close simulation',
+      matrixFashion: 'Fashion',
+      matrixProducts: 'Consumer goods',
       signalEyebrow: 'i6 Signal',
       signalTitle: 'Chat with the predictive layer.',
       signalSubtitle: 'Tap a question to see how infinity6 turns data into decisions.',
