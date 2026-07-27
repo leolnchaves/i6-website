@@ -670,24 +670,24 @@ const FilterRow = ({ label, children }: { label: string; children: React.ReactNo
   </div>
 );
 
-const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
+const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Derived }) => {
   const W = 620;
   const H = 200;
   const PAD = { l: 40, r: 16, t: 16, b: 32 };
   const iw = W - PAD.l - PAD.r;
   const ih = H - PAD.t - PAD.b;
 
-  const pMin = Math.min(sku.currentPrice, sku.rangeMin) - 3;
-  const pMax = Math.max(sku.rangeMax, sku.competitorPrice) + 3;
+  const pMin = Math.min(sku.currentPrice, derived.rangeMin) - 3;
+  const pMax = Math.max(derived.rangeMax, sku.competitorPrice) + 3;
 
   const x = (p: number) => PAD.l + ((p - pMin) / (pMax - pMin)) * iw;
 
-  // Concave curve peaking at optimalPrice
+  // Concave curve peaking at derived.optimalPrice
   const peakY = PAD.t + ih * 0.15;
   const baseY = PAD.t + ih * 0.9;
   const curveAt = (p: number) => {
     const spread = (pMax - pMin) / 2;
-    const dist = Math.abs(p - sku.optimalPrice) / spread;
+    const dist = Math.abs(p - derived.optimalPrice) / spread;
     return peakY + (baseY - peakY) * Math.min(1, dist * dist);
   };
 
@@ -724,8 +724,8 @@ const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
         {/* Recommended band */}
         <rect
-          x={x(sku.rangeMin)} y={PAD.t}
-          width={x(sku.rangeMax) - x(sku.rangeMin)} height={ih}
+          x={x(derived.rangeMin)} y={PAD.t}
+          width={x(derived.rangeMax) - x(derived.rangeMin)} height={ih}
           fill="rgba(244,132,95,0.12)"
         />
         {/* Curve */}
@@ -734,20 +734,21 @@ const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
 
         {/* Markers */}
         <Marker price={sku.currentPrice} label="Atual" color="rgba(255,255,255,0.6)" dashed />
-        <Marker price={sku.rangeMin} label="Mín" color="rgba(244,132,95,0.55)" dashed />
-        <Marker price={sku.rangeMax} label="Máx" color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={derived.rangeMin} label="Mín" color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={derived.rangeMax} label="Máx" color="rgba(244,132,95,0.55)" dashed />
         <Marker price={sku.competitorPrice} label="Concorr." color="rgba(120,180,255,0.75)" dashed />
 
         {/* Optimal — big pin */}
         <line
-          x1={x(sku.optimalPrice)} x2={x(sku.optimalPrice)}
+          x1={x(derived.optimalPrice)} x2={x(derived.optimalPrice)}
           y1={PAD.t} y2={H - PAD.b}
           stroke="#F4845F" strokeWidth={2}
         />
-        <circle cx={x(sku.optimalPrice)} cy={curveAt(sku.optimalPrice)} r={5} fill="#F4845F" stroke="#fff" strokeWidth={2} />
-        <text x={x(sku.optimalPrice)} y={PAD.t - 4} fontSize="10" fill="#F4845F" textAnchor="middle" fontWeight={700}>
+        <circle cx={x(derived.optimalPrice)} cy={curveAt(derived.optimalPrice)} r={5} fill="#F4845F" stroke="#fff" strokeWidth={2} />
+        <text x={x(derived.optimalPrice)} y={PAD.t - 4} fontSize="10" fill="#F4845F" textAnchor="middle" fontWeight={700}>
           Ótimo
         </text>
+
 
         {/* X axis labels */}
         <text x={PAD.l} y={H - 10} fontSize="10" fill="rgba(255,255,255,0.5)">
