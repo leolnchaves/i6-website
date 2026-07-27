@@ -1,5 +1,7 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode, type ComponentType, type SVGProps } from 'react';
 import { Sparkles, X } from 'lucide-react';
+
+type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 
 interface Labels {
@@ -20,6 +22,7 @@ interface Props {
   secondaryResolve?: string;
   secondaryEntrega?: string;
   secondaryImpacto?: string;
+  icon?: IconType;
   children: ReactNode;
 }
 
@@ -35,6 +38,7 @@ const SimulationLauncher = ({
   secondaryResolve,
   secondaryEntrega,
   secondaryImpacto,
+  icon: Icon = Sparkles,
   children,
 }: Props) => {
   const [open, setOpen] = useState(false);
@@ -66,7 +70,7 @@ const SimulationLauncher = ({
       <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[4vmin]">
         <div className="flex items-center gap-[2vmin] mb-[2.5vmin]">
           <span className="w-[6vmin] h-[6vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-            <Sparkles className="w-[3vmin] h-[3vmin] text-[#F4845F]" />
+            <Icon className="w-[3vmin] h-[3vmin] text-[#F4845F]" />
           </span>
           <div>
             <h3 className="text-[3.4vmin] font-bold leading-tight text-white">{solutionTitle}</h3>

@@ -1,4 +1,4 @@
-import { Sparkles } from 'lucide-react';
+import { Sparkles, UserRoundSearch, Megaphone } from 'lucide-react';
 import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/content';
 import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
@@ -56,6 +56,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
         entrega={join(solution.entrega, companion?.entrega)}
         impacto={join(solution.impacto, companion?.impacto)}
         labels={labels}
+        icon={UserRoundSearch}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>
@@ -77,6 +78,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
         entrega={solution.entrega}
         impacto={solution.impacto}
         labels={labels}
+        icon={Megaphone}
       >
         <PropensityCampaignDemo />
       </SimulationLauncher>
