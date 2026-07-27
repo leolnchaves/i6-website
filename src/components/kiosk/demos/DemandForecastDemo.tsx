@@ -468,7 +468,7 @@ const MainChart = ({
 
   return (
     <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.4vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full block" style={{ width: '100%', height: 164 }}>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full block" style={{ width: '100%', height: 131 }}>
         {ticks.map((t, i) => (
           <g key={i}>
             <line
