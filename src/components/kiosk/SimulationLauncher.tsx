@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Sparkles, X } from 'lucide-react';
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
-import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
 
 interface Props {
   lang: KioskLang;
   solutionTitle: string;
   solutionTagline?: string;
+  children: ReactNode;
 }
 
-const PersonalizationSimulationLauncher = ({ lang, solutionTitle, solutionTagline }: Props) => {
+const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, children }: Props) => {
   const [open, setOpen] = useState(false);
+  const [instanceKey, setInstanceKey] = useState(0);
   const t = kioskContent[lang].results;
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const PersonalizationSimulationLauncher = ({ lang, solutionTitle, solutionTaglin
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') close();
     };
     window.addEventListener('keydown', onKey);
     return () => {
@@ -26,6 +27,12 @@ const PersonalizationSimulationLauncher = ({ lang, solutionTitle, solutionTaglin
       window.removeEventListener('keydown', onKey);
     };
   }, [open]);
+
+  const close = () => {
+    setOpen(false);
+    // remount children next time so internal demo state resets
+    setInstanceKey((k) => k + 1);
+  };
 
   return (
     <>
@@ -58,7 +65,7 @@ const PersonalizationSimulationLauncher = ({ lang, solutionTitle, solutionTaglin
         >
           <button
             type="button"
-            onClick={() => setOpen(false)}
+            onClick={close}
             aria-label={t.closeSimulation}
             className="absolute top-[3vmin] right-[3vmin] w-[7vmin] h-[7vmin] rounded-full border border-white/25 bg-white/[0.06] flex items-center justify-center text-white/80 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.1] active:scale-95 transition"
           >
@@ -66,14 +73,14 @@ const PersonalizationSimulationLauncher = ({ lang, solutionTitle, solutionTaglin
           </button>
 
           <div className="w-[90vw] h-[90vh] max-w-[90vw] rounded-3xl bg-[#0B1224] border border-white/10 flex flex-col overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.6)]">
-            <div className="flex-1 overflow-y-auto p-[3vmin]">
-              <PredictivePersonalizationDemo lang={lang} />
+            <div key={instanceKey} className="flex-1 overflow-y-auto p-[3vmin]">
+              {children}
             </div>
 
             <div className="flex-shrink-0 border-t border-white/10 bg-[#0B1224] p-[2vmin] flex justify-center">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={close}
                 className="min-h-[8vmin] px-[4vmin] py-[1.8vmin] rounded-full border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] hover:bg-[#F4845F]/[0.16] hover:border-[#F4845F] active:scale-[0.98] transition text-white font-semibold text-[2vmin] inline-flex items-center gap-[1.5vmin]"
               >
                 <X className="w-[2.2vmin] h-[2.2vmin]" />
@@ -87,4 +94,4 @@ const PersonalizationSimulationLauncher = ({ lang, solutionTitle, solutionTaglin
   );
 };
 
-export default PersonalizationSimulationLauncher;
+export default SimulationLauncher;

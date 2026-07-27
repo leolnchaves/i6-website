@@ -4,7 +4,8 @@ import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PriceMarginDemo from './demos/PriceMarginDemo';
 import PriceTurnoverDemo from './demos/PriceTurnoverDemo';
-import PersonalizationSimulationLauncher from './PersonalizationSimulationLauncher';
+import SimulationLauncher from './SimulationLauncher';
+import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
 import DemandForecastDemo from './demos/DemandForecastDemo';
 import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
 import CommercialTargetsDemo from './demos/CommercialTargetsDemo';
@@ -36,11 +37,13 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
   // Interactive demo for Predictive Personalization + Smart Discovery combo
   if (solution.id === 'predictive-personalization' || solution.id === 'smart-discovery') {
     return (
-      <PersonalizationSimulationLauncher
+      <SimulationLauncher
         lang={lang}
         solutionTitle={solution.title}
         solutionTagline={solution.tagline}
-      />
+      >
+        <PredictivePersonalizationDemo lang={lang} />
+      </SimulationLauncher>
     );
   }
 
@@ -50,7 +53,15 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
   }
 
   if (solution.id === 'predictive-campaign-targeting') {
-    return <PropensityCampaignDemo />;
+    return (
+      <SimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+      >
+        <PropensityCampaignDemo />
+      </SimulationLauncher>
+    );
   }
 
   if (solution.id === 'predictive-commercial-targets') {
