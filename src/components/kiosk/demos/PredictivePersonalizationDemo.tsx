@@ -224,13 +224,18 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                               color: '#0B1224',
                               boxShadow: `0 0 0 1px ${accent}, 0 4px 14px -4px ${accent}80`,
                             }
-                          : { color: 'rgba(255,255,255,0.65)' }
+                          : {
+                              color: 'rgba(255,255,255,0.85)',
+                              backgroundColor: 'rgba(255,255,255,0.06)',
+                              boxShadow: `inset 0 0 0 1px ${accent}55`,
+                            }
                       }
                     >
                       {c.label}
                     </button>
                   );
                 })}
+
               </div>
             </div>
           );
