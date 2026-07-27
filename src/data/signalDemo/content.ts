@@ -233,6 +233,78 @@ export const signalDemoContent = {
           'Qual cluster tem maior migração positiva (upgrade de valor)?',
         ],
       },
+      targetsPotential: {
+        label: 'Potencial de Metas',
+        question: 'Onde está o maior potencial de crescimento de volume por região?',
+        title: 'Potencial preditivo de crescimento e distribuição de metas',
+        analysis: 'O modelo identificou potencial incremental de 186 mil unidades para o próximo trimestre. Desse volume, 64% está concentrado em três combinações de região, cliente e SKU que atualmente recebem metas abaixo de sua capacidade prevista. O Interior de São Paulo apresenta a maior oportunidade, impulsionada pelos SKUs A e C e por clientes com expansão de demanda ainda não refletida nas metas atuais.',
+        potentialTable: {
+          headers: ['Região', 'Vendedor', 'Cliente', 'SKU', 'Meta atual', 'Meta sugerida', 'Potencial'],
+          rows: [
+            ['Interior de SP', 'Carlos', 'Cliente A', 'SKU A', '12.000', '15.400', '16.100'],
+            ['Interior de SP', 'Carlos', 'Cliente B', 'SKU C', '8.500', '10.200', '10.700'],
+            ['Minas Gerais', 'Marina', 'Cliente D', 'SKU B', '9.800', '8.900', '9.200'],
+            ['Sul', 'Rafael', 'Cliente F', 'SKU A', '7.200', '8.600', '9.000'],
+          ],
+        },
+        reasoning: 'A meta do Cliente A foi elevada porque o modelo prevê aumento de demanda para o SKU A, maior capacidade de absorção e expansão da categoria na região. Já a meta do Cliente D foi reduzida porque o volume atual está acima do potencial previsto e exigiria esforço comercial desproporcional para ser atingido.',
+        actions: [
+          { bold: 'Adicionar 3.400 unidades à meta do Cliente A', text: 'para o SKU A, preservando uma faixa de segurança abaixo do potencial máximo.' },
+          { bold: 'Reduzir a meta do Cliente D em 900 unidades', text: 'evitando pressão comercial sem demanda correspondente.' },
+          { bold: 'Redistribuir metas', text: 'dos vendedores com territórios saturados para carteiras com maior potencial incremental.' },
+        ],
+        questions: [
+          'Quais vendedores estão com carteiras saturadas em relação ao potencial?',
+          'Como o potencial se distribui entre SKUs A, B e C nas próximas 12 semanas?',
+          'Qual o impacto financeiro de recalibrar as 3 combinações prioritárias?',
+        ],
+      },
+      targetsRisk: {
+        label: 'Risco de Meta',
+        question: 'Quais metas apresentam maior risco de não serem atingidas ou estão abaixo do potencial previsto?',
+        title: 'Risco preditivo de atingimento e recalibração de metas',
+        analysis: 'O modelo identificou 27 combinações de vendedor, cliente e SKU com metas desalinhadas para o próximo trimestre. Onze apresentam risco elevado de não atingimento, principalmente por desaceleração da demanda, queda de frequência de compra e redução da capacidade de absorção dos clientes. Outras 16 estão abaixo do potencial previsto e podem limitar o crescimento comercial mesmo com comportamento favorável de demanda.',
+        scatter: [
+          { probability: 94, delta: 3100, size: 15100, label: 'Carlos • Cliente A • SKU A', quadrant: 'below' },
+          { probability: 38, delta: -2200, size: 7600, label: 'Marina • Cliente D • SKU B', quadrant: 'above' },
+          { probability: 82, delta: 300, size: 8700, label: 'Rafael • Cliente F • SKU C', quadrant: 'match' },
+          { probability: 89, delta: 1400, size: 7900, label: 'Paula • Cliente H • SKU D', quadrant: 'below' },
+          { probability: 71, delta: 900, size: 6200, label: 'André • Cliente J • SKU A', quadrant: 'below' },
+          { probability: 44, delta: -1600, size: 5400, label: 'Lívia • Cliente K • SKU C', quadrant: 'above' },
+          { probability: 55, delta: -400, size: 4800, label: 'Bruno • Cliente L • SKU B', quadrant: 'uncertain' },
+          { probability: 63, delta: 200, size: 5600, label: 'Sofia • Cliente M • SKU D', quadrant: 'match' },
+        ],
+        riskTable: {
+          headers: ['Vendedor', 'Cliente', 'SKU', 'Meta atual', 'Volume projetado', 'Prob. atingimento', 'Diagnóstico'],
+          rows: [
+            ['Carlos', 'Cliente A', 'SKU A', '12.000', '15.100', '94%', 'Meta abaixo do potencial'],
+            ['Marina', 'Cliente D', 'SKU B', '9.800', '7.600', '38%', 'Meta acima do potencial'],
+            ['Rafael', 'Cliente F', 'SKU C', '8.400', '8.700', '82%', 'Meta compatível'],
+            ['Paula', 'Cliente H', 'SKU D', '6.500', '7.900', '89%', 'Oportunidade de expansão'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Sinal comportamental', 'Cliente A', 'Cliente D'],
+          rows: [
+            ['Frequência prevista de compra', '+18%', '−12%'],
+            ['Volume médio por pedido', '+9%', '−7%'],
+            ['Potencial de expansão de mix', 'Alto', 'Baixo'],
+            ['Demanda prevista do SKU', '+21%', '−14%'],
+            ['Probabilidade de recompra', '86%', '43%'],
+          ],
+        },
+        reasoning: 'A meta do Cliente A está abaixo do potencial porque o modelo prevê maior frequência de compra, crescimento do volume médio e expansão da demanda do SKU A. Mantê-la no nível atual pode limitar a captura de um comportamento de crescimento já identificado. Já a meta do Cliente D está acima do potencial previsto: o cliente apresenta desaceleração de compras, redução do volume por pedido e menor probabilidade de recompra do SKU B — manter a meta gera pressão sobre o vendedor sem demanda para sustentá-la.',
+        actions: [
+          { bold: 'Elevar metas com probabilidade > 85%', text: 'e potencial ainda não capturado, priorizando SKU A em clientes com sinais positivos.' },
+          { bold: 'Recalibrar metas com probabilidade < 50%', text: 'redistribuindo o volume para clientes e SKUs com comportamento mais favorável.' },
+          { bold: 'Revisar mensalmente metas de alta incerteza', text: 'incorporando mudanças de frequência, mix, demanda e recompra.' },
+        ],
+        questions: [
+          'Quais vendedores concentram o maior número de metas em risco?',
+          'Como priorizar recalibragens dentro do trimestre em curso?',
+          'Qual o ganho esperado ao redistribuir o volume das metas em risco?',
+        ],
+      },
     },
   },
   en: {
