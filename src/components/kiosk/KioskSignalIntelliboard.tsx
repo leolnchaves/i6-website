@@ -371,13 +371,39 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                 </>
               )}
 
-              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps' || activeScenario === 'marginSignals') && 'reasoning' in scenario && (
+              {activeScenario === 'turnoverRisk' && 'regionTable' in scenario && (
+                <>
+                  <TurnoverRiskTable
+                    data={(scenario as typeof t.scenarios.turnoverRisk).regionTable}
+                    lang={lang}
+                  />
+                  <TurnoverSignalsCompareTable
+                    data={(scenario as typeof t.scenarios.turnoverRisk).signalsTable}
+                    lang={lang}
+                  />
+                </>
+              )}
+              {activeScenario === 'turnoverMarkdown' && 'markdownRuler' in scenario && (
+                <>
+                  <TurnoverMarkdownRuler
+                    data={(scenario as typeof t.scenarios.turnoverMarkdown).markdownRuler}
+                    lang={lang}
+                  />
+                  <TurnoverMarkdownTable
+                    data={(scenario as typeof t.scenarios.turnoverMarkdown).skuTable}
+                    lang={lang}
+                  />
+                </>
+              )}
+
+              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps' || activeScenario === 'marginSignals' || activeScenario === 'turnoverRisk' || activeScenario === 'turnoverMarkdown') && 'reasoning' in scenario && (
                 <div className="mt-[2.5vmin] rounded-[1.4vmin] border border-orange-200 bg-orange-50/60 p-[2vmin]">
                   <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                     <Brain className="w-[2vmin] h-[2vmin] text-orange-500" />
                     <span className="text-orange-600 font-semibold text-[1.4vmin] uppercase tracking-wider">
                       {lang === 'pt' ? 'Argumentação preditiva' : 'Predictive reasoning'}
                     </span>
+
                   </div>
                   <p className="text-gray-700 text-[1.75vmin] leading-relaxed">
                     {(scenario as { reasoning: string }).reasoning}
