@@ -187,47 +187,56 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
       <span className="block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1.2vmin]">
         {lang === 'pt' ? 'SELECIONE UMA CATEGORIA E TIPO DE CLIENTE' : 'SELECT A CATEGORY AND CUSTOMER TYPE'}
       </span>
-      <div className="mb-[1.5vmin] grid grid-cols-2 gap-[1vmin]">
+      <div className="mb-[1.5vmin] grid grid-cols-2 gap-[1.2vmin]">
         {rows.map((r) => {
           const isFashion = r.v === 'fashion';
-          const rowClass = isFashion
-            ? 'border border-[#F4845F]/25 border-l-4 border-l-[#F4845F] bg-[#F4845F]/[0.06]'
-            : 'border border-sky-400/20 border-l-4 border-l-sky-400/70 bg-sky-400/[0.05]';
+          const accent = isFashion ? '#F4845F' : '#38BDF8';
           const labelClass = isFashion ? 'text-[#F4845F]' : 'text-sky-300';
           return (
             <div
               key={`row-${r.v}`}
-              className={`grid grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[0.8vmin] items-stretch rounded-xl px-[1.4vmin] py-[0.9vmin] ${rowClass}`}
+              className="flex items-center gap-[1.2vmin] rounded-2xl px-[1.4vmin] py-[0.9vmin] bg-white/[0.02] border border-white/5"
             >
-              <span className={`flex items-center text-[1.6vmin] tracking-[0.2em] uppercase font-bold ${labelClass}`}>
+              <span
+                className={`shrink-0 text-[1.35vmin] tracking-[0.22em] uppercase font-semibold ${labelClass}`}
+                style={{ minWidth: '11vmin' }}
+              >
                 {r.label}
               </span>
-              {cols.map((c) => {
-                const active = userMode === c.u && vertical === r.v;
-                return (
-                  <button
-                    key={`${r.v}-${c.u}`}
-                    type="button"
-                    onClick={() => startScenario(c.u, r.v)}
-                    className={`min-h-[5vmin] rounded-xl border-2 px-[1vmin] py-[0.5vmin] text-left transition-all active:scale-[0.98] ${
-                      active
-                        ? isFashion
-                          ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
-                          : 'border-sky-400 bg-sky-400/[0.14]'
-                        : isFashion
-                        ? 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
-                        : 'border-white/15 bg-white/[0.03] hover:border-sky-400/60 hover:bg-sky-400/[0.06]'
-                    }`}
-                  >
-                    <span className="text-[1.5vmin] font-normal text-white leading-tight">{c.label}</span>
-                  </button>
-
-                );
-              })}
+              <div
+                className="flex flex-1 rounded-full p-[0.35vmin] bg-black/30 border border-white/10"
+                role="tablist"
+              >
+                {cols.map((c) => {
+                  const active = userMode === c.u && vertical === r.v;
+                  return (
+                    <button
+                      key={`${r.v}-${c.u}`}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      onClick={() => startScenario(c.u, r.v)}
+                      className="flex-1 rounded-full px-[1.2vmin] py-[0.75vmin] text-[1.35vmin] font-medium tracking-wide transition-all duration-200 active:scale-[0.97]"
+                      style={
+                        active
+                          ? {
+                              backgroundColor: accent,
+                              color: '#0B1224',
+                              boxShadow: `0 0 0 1px ${accent}, 0 4px 14px -4px ${accent}80`,
+                            }
+                          : { color: 'rgba(255,255,255,0.65)' }
+                      }
+                    >
+                      {c.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
       </div>
+
 
 
 
