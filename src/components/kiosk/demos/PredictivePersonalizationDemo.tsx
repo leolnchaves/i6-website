@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
+import { ArrowLeft, Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 import {
   catalogs,
@@ -380,9 +380,10 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     <button
                       type="button"
                       onClick={backToCatalog}
-                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.8vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.7vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+                      className="group inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.8vmin] rounded-full bg-white/10 hover:bg-white/20 ring-1 ring-white/15 shadow-md text-[1.55vmin] font-semibold uppercase tracking-[0.14em] text-white active:scale-[0.98] transition"
                     >
-                      {t.backToCatalog}
+                      <ArrowLeft className="w-[1.8vmin] h-[1.8vmin] transition-transform group-hover:-translate-x-[0.3vmin]" strokeWidth={2.5} />
+                      {t.backToCatalog.replace(/^←\s*/, '')}
                     </button>
                     <MetricPill label={t.kpiTicketUplift} value={kpiPreset.uplift} highlight trend="up" />
                     <MetricPill label={t.kpiCrossSell} value={`${kpiPreset.crossSell}%`} />

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Check, Sparkles } from 'lucide-react';
+import { ArrowLeft, Check, Sparkles } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import { priceToMarginDemo, type DemoProduct } from '@/data/kiosk/demos/priceToMargin';
 
@@ -156,9 +156,10 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 <button
                   type="button"
                   onClick={reset}
-                  className="self-start inline-flex items-center gap-[1vmin] min-h-[8vmin] px-[3vmin] py-[2vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.8vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition mb-[2vmin]"
+                  className="group self-start inline-flex items-center gap-[1vmin] min-h-[8vmin] px-[3vmin] py-[2vmin] rounded-full bg-white/10 hover:bg-white/20 ring-1 ring-white/15 shadow-md text-[1.7vmin] font-semibold uppercase tracking-[0.14em] text-white active:scale-[0.98] transition mb-[2vmin]"
                 >
-                  {content.backToCatalog}
+                  <ArrowLeft className="w-[2vmin] h-[2vmin] transition-transform group-hover:-translate-x-[0.3vmin]" strokeWidth={2.5} />
+                  {content.backToCatalog.replace(/^←\s*/, '')}
                 </button>
 
 
