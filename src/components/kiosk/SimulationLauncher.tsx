@@ -70,7 +70,7 @@ const SimulationLauncher = ({
       <div className="rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[4vmin]">
         <div className="flex items-center gap-[2vmin] mb-[2.5vmin]">
           <span className="w-[6vmin] h-[6vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-            <Sparkles className="w-[3vmin] h-[3vmin] text-[#F4845F]" />
+            <Icon className="w-[3vmin] h-[3vmin] text-[#F4845F]" />
           </span>
           <div>
             <h3 className="text-[3.4vmin] font-bold leading-tight text-white">{solutionTitle}</h3>
