@@ -350,7 +350,7 @@ const QUADRANT_LABELS: Record<string, { pt: string; en: string }> = {
 type ScatterPoint = { probability: number; delta: number; size: number; label: string; quadrant: string };
 
 export const TargetsRiskScatter = ({ data, lang }: { data: ScatterPoint[]; lang: string }) => {
-  const quadrants: ScatterPoint['quadrant'][] = ['above', 'match', 'below', 'uncertain'];
+  const quadrants: string[] = ['above', 'match', 'below', 'uncertain'];
   return (
     <div className="my-4">
       <div className="h-[280px] w-full">
