@@ -619,6 +619,9 @@ export const uiLabels = {
     tapToExplore: 'Tap an item to run a new cycle',
     objectiveLabel: 'Objective',
     analyzing: 'Analyzing…',
+    kpiTicketUplift: 'Ticket uplift',
+    kpiCrossSell: 'Cross-sell propensity',
+    kpiConfidence: 'Confidence',
   },
 } as const;
 

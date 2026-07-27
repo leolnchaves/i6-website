@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Check, Sparkles, User, UserX } from 'lucide-react';
+import { Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import {
   catalogs,
@@ -392,6 +392,25 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                       </div>
                     )}
                   </>
+                )}
+
+                {phase === 'pdp' && (
+                  <div className="grid grid-cols-3 gap-[1vmin] mt-[1.5vmin] animate-fade-in">
+                    <MetricPill
+                      label={t.kpiTicketUplift}
+                      value={kpiPreset.uplift}
+                      highlight
+                      trend="up"
+                    />
+                    <MetricPill
+                      label={t.kpiCrossSell}
+                      value={`${kpiPreset.crossSell}%`}
+                    />
+                    <MetricPill
+                      label={t.kpiConfidence}
+                      value={`${kpiPreset.confidence}%`}
+                    />
+                  </div>
                 )}
               </div>
             )}
