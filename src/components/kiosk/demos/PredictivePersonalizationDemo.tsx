@@ -211,8 +211,12 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     onClick={() => startScenario(c.u, r.v)}
                     className={`min-h-[6vmin] rounded-xl border-2 px-[1.2vmin] py-[0.7vmin] text-left transition-all active:scale-[0.98] ${
                       active
-                        ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
-                        : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+                        ? isFashion
+                          ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
+                          : 'border-sky-400 bg-sky-400/[0.14]'
+                        : isFashion
+                        ? 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
+                        : 'border-white/15 bg-white/[0.03] hover:border-sky-400/60 hover:bg-sky-400/[0.06]'
                     }`}
                   >
                     <span className="flex items-center gap-[1vmin]">
