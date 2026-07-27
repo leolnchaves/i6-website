@@ -37,19 +37,25 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
 
   // Interactive demo for Predictive Personalization + Smart Discovery combo
   if (solution.id === 'predictive-personalization' || solution.id === 'smart-discovery') {
+    const isPT = lang === 'pt';
+    const unifiedTitle = isPT
+      ? 'Personalização e Descoberta Preditiva'
+      : 'Predictive Personalization and Discovery';
+    const unifiedTagline = isPT
+      ? 'Antecipe a próxima melhor oferta para cada cliente, inclusive anônimos.'
+      : 'Anticipate the next best offer for every customer, including anonymous ones.';
+
+    const join = (a?: string, b?: string) => [a, b].filter(Boolean).join('\n');
+
     return (
       <SimulationLauncher
         lang={lang}
-        solutionTitle={solution.title}
-        solutionTagline={solution.tagline}
-        resolve={solution.resolve}
-        entrega={solution.entrega}
-        impacto={solution.impacto}
+        solutionTitle={unifiedTitle}
+        solutionTagline={unifiedTagline}
+        resolve={join(solution.resolve, companion?.resolve)}
+        entrega={join(solution.entrega, companion?.entrega)}
+        impacto={join(solution.impacto, companion?.impacto)}
         labels={labels}
-        secondaryTitle={companion?.title}
-        secondaryResolve={companion?.resolve}
-        secondaryEntrega={companion?.entrega}
-        secondaryImpacto={companion?.impacto}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>
