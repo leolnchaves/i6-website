@@ -203,7 +203,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
       </div>
 
       {/* Intelliboard response panel */}
-      <div className="rounded-[2vmin] shadow-2xl border border-white/10 overflow-hidden">
+      <div className="rounded-[2vmin] shadow-2xl border border-white/10 overflow-hidden w-full min-w-0">
         {/* ── Intelliboard Header ── */}
         <div
           className="flex items-center justify-between px-[3vmin] py-[2vmin]"
@@ -228,7 +228,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
         </div>
 
         {/* Chat surface */}
-        <div className="bg-white p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto">
+        <div className="bg-white p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto overflow-x-hidden w-full min-w-0">
           {!activeScenario && (
             <div className="h-full min-h-[30vmin] flex items-center justify-center text-center">
               <div>
@@ -250,7 +250,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
           )}
 
           {activeScenario && showResponse && scenario && (
-            <div ref={responseRef} className="animate-fade-in">
+            <div ref={responseRef} className="animate-fade-in w-full min-w-0">
               <h3 className="text-gray-900 font-bold text-[2.4vmin] mb-[1.5vmin]">
                 {scenario.title}
               </h3>

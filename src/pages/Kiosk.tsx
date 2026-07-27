@@ -237,7 +237,7 @@ const Kiosk = () => {
                     </>
                   )}
 
-                  <div id="kiosk-solution-demo" className={`${isMigrated ? '' : 'mt-[6vmin]'} flex flex-col gap-[4vmin]`}>
+                  <div id="kiosk-solution-demo" className={`${isMigrated ? '' : 'mt-[6vmin]'} flex flex-col gap-[4vmin] w-full min-w-0`}>
                     {selectedSolution ? (
                       <>
                         <SolutionDemoBlock
