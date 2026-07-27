@@ -220,6 +220,10 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
       tieTitle: 'Seu contexto combina duas soluções complementares.',
       tieSubtitle: 'Toque em uma solução para ver o exemplo de aplicação.',
       selectSolutionHint: 'Toque em uma solução acima',
+      simulateButton: 'Clique aqui para simular a solução',
+      closeSimulation: 'Fechar simulação',
+      matrixFashion: 'Moda',
+      matrixProducts: 'Bens de consumo',
       signalEyebrow: 'i6 Signal',
       signalTitle: 'Converse com a camada preditiva.',
       signalSubtitle:
