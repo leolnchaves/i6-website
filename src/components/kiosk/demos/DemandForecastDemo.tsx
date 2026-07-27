@@ -852,19 +852,19 @@ const KpiCompare = ({
   const improved = delta > 0;
   const sign = improved ? (higherIsBetter ? '+' : '−') : higherIsBetter ? '−' : '+';
   return (
-    <div className="rounded-lg px-[1vmin] py-[0.6vmin] border bg-white/[0.03] border-[#F4845F]/30">
+    <div className="rounded-lg px-[1vmin] py-[0.5vmin] border bg-white/[0.03] border-[#F4845F]/30">
       <span className="block text-[1.05vmin] tracking-[0.18em] uppercase font-semibold text-[#F4845F] mb-[0.2vmin] leading-tight">
-        {label}{' '}
-        <span className={`font-bold ${improved ? 'text-emerald-400' : 'text-red-400'}`}>
-          [{sign}{Math.abs(delta).toFixed(0)}%]
-        </span>
+        {label}
       </span>
-      <div className="flex items-baseline gap-[0.5vmin]">
-        <span className="text-[1.35vmin] text-white/40 line-through leading-none">
+      <div className="flex items-baseline gap-[0.5vmin] whitespace-nowrap">
+        <span className="text-[1.2vmin] text-white/40 line-through leading-none">
           {oldValue.toFixed(1)}%
         </span>
-        <span className="text-[1.9vmin] font-bold text-[#F4845F] leading-none">
+        <span className="text-[1.7vmin] font-bold text-[#F4845F] leading-none">
           {newValue.toFixed(1)}%
+        </span>
+        <span className={`text-[1.1vmin] font-bold leading-none ${improved ? 'text-emerald-400' : 'text-red-400'}`}>
+          [{sign}{Math.abs(delta).toFixed(0)}%]
         </span>
       </div>
     </div>
