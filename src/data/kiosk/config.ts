@@ -58,7 +58,7 @@ export interface QuizContent {
   };
   ebook: {
     eyebrow: string;
-    title: (solutionTitle: string) => string;
+    title: (solutionTitle: string) => ReactNode;
     subtitle: string;
     cta: string;
     nameLabel: string;
