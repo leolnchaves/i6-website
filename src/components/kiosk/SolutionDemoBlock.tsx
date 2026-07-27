@@ -58,6 +58,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         impacto={join(solution.impacto, companion?.impacto)}
         labels={labels}
         icon={UserRoundSearch}
+        onSimulationClosed={onSimulationClosed}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>
