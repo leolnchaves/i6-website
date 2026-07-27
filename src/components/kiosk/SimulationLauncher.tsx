@@ -1,5 +1,7 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode, type ComponentType, type SVGProps } from 'react';
 import { Sparkles, X } from 'lucide-react';
+
+type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 
 interface Labels {
