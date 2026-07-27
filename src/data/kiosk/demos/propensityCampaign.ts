@@ -309,7 +309,7 @@ export const labels = {
   crm: {
     title: 'CRM · Nova campanha',
     subtitle: 'Configure a oferta e o público disponível',
-    product: 'Produto ou oferta',
+    product: 'ESCOLHA UM PRODUTO OU OFERTA',
     audience: 'Público disponível',
     period: 'Período da campanha',
     channels: 'Canais permitidos',
