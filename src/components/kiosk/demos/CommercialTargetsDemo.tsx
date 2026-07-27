@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Minus, Shuffle, Sparkles, X } from 'lucide-react';
+import type { KioskLang } from '@/data/kiosk/config';
 import {
   dimensions,
   fmtBR,
@@ -19,7 +20,11 @@ type Phase = 'setup' | 'running' | 'result';
 
 const DASH = '—';
 
-const CommercialTargetsDemo = () => {
+interface Props {
+  lang?: KioskLang;
+}
+
+const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
   const [dim, setDim] = useState<DimensionId>('region');
   const [phase, setPhase] = useState<Phase>('setup');
   const [progress, setProgress] = useState(0);
