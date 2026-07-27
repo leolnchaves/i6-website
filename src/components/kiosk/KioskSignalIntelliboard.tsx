@@ -35,6 +35,11 @@ import {
   TurnoverSignalsCompareTable,
   TurnoverMarkdownRuler,
   TurnoverMarkdownTable,
+  PersonalizationBehaviorMatrix,
+  PersonalizationSignalsTable,
+  RepurchaseCurveChart,
+  RepurchaseBehaviorTable,
+  RepurchaseCorrelationsTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
