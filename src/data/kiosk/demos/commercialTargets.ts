@@ -89,7 +89,7 @@ export const pipeline: { label: string; micro: string; durationMs: number }[] = 
 
 
 export const labels = {
-  objective: 'OBJETIVO: CRESCIMENTO E EFICIÊNCIA DE INVESTIMENTO COMERCIAL',
+  objective: 'OBJETIVO: CRESCIMENTO E EFICIÊNCIA COMERCIAL',
   setup: {
     title: 'Dashboard de metas comerciais',
     subtitle: 'Visão hierárquica por região, vendedor, cliente e SKU.',
