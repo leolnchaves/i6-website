@@ -205,7 +205,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 4.1,
     volumeImpactPct: -1.8,
     argument:
-      'Combo exclusivo, sem paralelo direto no mercado local, com margem de contribuição 12 pp acima da categoria. O comportamento dos últimos 3 lançamentos similares mostra baixa reação a variações de até +6%. R$ 94,80 fica dentro da faixa em que 82% das sessões evoluem para carrinho.',
+      'Combo com sensibilidade de preço contida (elasticidade −0,62) e sem par direto no mercado local. A projeção de demanda para o trimestre indica tendência de alta (+8,6%) impulsionada pela categoria noturna e sazonalidade favorável de inverno. Últimos 3 lançamentos comparáveis mostram baixa reação a variações de até +6%, e R$ 94,80 mantém 82% das sessões evoluindo para carrinho.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
