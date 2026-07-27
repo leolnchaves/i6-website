@@ -598,7 +598,7 @@ export const MixBehaviorTable = ({ data }: { data: { headers: string[]; rows: st
               if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
               if (ci === 2) return (
                 <td key={ci} className="py-2.5 px-3 text-right">
-                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border tabular-nums ${personalizationAdherenceTone(cell)}`}>{cell}</span>
+                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border tabular-nums ${adherenceTone(cell)}`}>{cell}</span>
                 </td>
               );
               if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${potentialTone(cell)}`}>{cell}</td>;
