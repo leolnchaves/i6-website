@@ -187,14 +187,14 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
       </div>
 
       {/* 2×2 scenario matrix */}
-      <div className="mb-[2vmin] rounded-2xl border border-white/10 bg-white/[0.02] p-[1.4vmin]">
-        <div className="grid grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[1vmin] items-center">
+      <div className="mb-[1.5vmin] rounded-2xl border border-white/10 bg-white/[0.02] p-[0.9vmin]">
+        <div className="grid grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[0.6vmin] items-center">
           {/* header row */}
           <span />
           {cols.map((c) => (
             <span
               key={`h-${c.u}`}
-              className="flex items-center gap-[1vmin] px-[1vmin] text-[1.35vmin] tracking-[0.22em] uppercase font-semibold text-white/60"
+              className="flex items-center gap-[0.8vmin] px-[0.8vmin] text-[1.2vmin] tracking-[0.2em] uppercase font-semibold text-white/60"
             >
               {c.icon}
               {c.label}
@@ -204,7 +204,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
             <>
               <span
                 key={`l-${r.v}`}
-                className="px-[1vmin] text-[1.55vmin] tracking-[0.2em] uppercase font-bold text-[#F4845F]"
+                className="px-[0.8vmin] text-[1.4vmin] tracking-[0.18em] uppercase font-bold text-[#F4845F]"
               >
                 {r.label}
               </span>
@@ -215,19 +215,19 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     key={`${r.v}-${c.u}`}
                     type="button"
                     onClick={() => startScenario(c.u, r.v)}
-                    className={`min-h-[9vmin] rounded-xl border-2 px-[1.6vmin] py-[1.2vmin] text-left transition-all active:scale-[0.98] ${
+                    className={`min-h-[6vmin] rounded-xl border-2 px-[1.2vmin] py-[0.7vmin] text-left transition-all active:scale-[0.98] ${
                       active
                         ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
                         : 'border-white/15 bg-white/[0.03] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]'
                     }`}
                   >
-                    <span className="flex items-center gap-[1.2vmin]">
-                      <span className="w-[4vmin] h-[4vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
+                    <span className="flex items-center gap-[1vmin]">
+                      <span className="w-[3vmin] h-[3vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
                         {c.icon}
                       </span>
                       <span className="flex-1 min-w-0">
-                        <span className="block text-[1.65vmin] font-bold text-white leading-tight">{c.label}</span>
-                        <span className="block text-[1.3vmin] text-white/55 leading-tight">{r.label}</span>
+                        <span className="block text-[1.5vmin] font-bold text-white leading-tight">{c.label}</span>
+                        <span className="block text-[1.15vmin] text-white/55 leading-tight">{r.label}</span>
                       </span>
                     </span>
                   </button>
@@ -237,6 +237,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
           ))}
         </div>
       </div>
+
 
       {/* STACKED: top = store, bottom = reasoning */}
       <div className="flex flex-col gap-[2vmin]">
