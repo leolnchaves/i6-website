@@ -1,7 +1,7 @@
 // Shared content + types for the i6 Signal Intelliboard demo.
 // Consumed by both /solutions (I6SignalDemo) and /kiosk (KioskSignalIntelliboard).
 
-export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk';
+export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps';
 export type Phase = 'idle' | 'typing' | 'responding';
 
 export const TYPING_SPEED = 30;
@@ -305,6 +305,92 @@ export const signalDemoContent = {
           'Qual o ganho esperado ao redistribuir o volume das metas em risco?',
         ],
       },
+      mixBehavior: {
+        label: 'Mix por PDV',
+        question: 'Como os PDVs desta região se comportam em relação ao mix ideal, e quais apresentam desvios relevantes ou oportunidades fora do padrão?',
+        title: 'Comportamento dos PDVs em relação ao mix ideal',
+        analysis: 'O modelo identificou três comportamentos predominantes entre os PDVs da região. A maior parte opera próxima ao mix esperado para seu perfil, mas 18% apresentam desvios relevantes. Alguns possuem variedade abaixo do potencial previsto, enquanto outros concentram produtos redundantes ou de baixo giro. O PDV 184 é o principal outlier positivo — mesmo com um mix 22% menor que a média regional, apresenta alta produtividade por SKU e potencial para absorver novas categorias. Já o PDV 327 possui um mix amplo, mas pouco aderente ao comportamento previsto de sua demanda, elevando o risco de estoque parado.',
+        scatter: [
+          { adherence: 68, productivity: 92, size: 116, label: 'PDV 184 • Alta produtividade', quadrant: 'positive' },
+          { adherence: 54, productivity: 41, size: 89, label: 'PDV 327 • Mix redundante', quadrant: 'negative' },
+          { adherence: 91, productivity: 74, size: 102, label: 'PDV 512 • Padrão regional', quadrant: 'aligned' },
+          { adherence: 63, productivity: 81, size: 113, label: 'PDV 690 • Demanda emergente', quadrant: 'emerging' },
+          { adherence: 84, productivity: 68, size: 95, label: 'PDV 231 • Aderente', quadrant: 'aligned' },
+          { adherence: 78, productivity: 63, size: 87, label: 'PDV 402 • Aderente', quadrant: 'aligned' },
+          { adherence: 47, productivity: 34, size: 74, label: 'PDV 118 • Baixa eficiência', quadrant: 'negative' },
+          { adherence: 72, productivity: 88, size: 108, label: 'PDV 559 • Emergente', quadrant: 'emerging' },
+        ],
+        pdvTable: {
+          headers: ['PDV', 'Perfil comportamental', 'Aderência ao mix ideal', 'Principal desvio', 'Potencial previsto'],
+          rows: [
+            ['PDV 184', 'Alta produtividade, mix restrito', '68%', 'Categorias relevantes ausentes', '+16% ticket'],
+            ['PDV 327', 'Mix amplo, baixa eficiência', '54%', 'Excesso de SKUs semelhantes', '−11% estoque improdutivo'],
+            ['PDV 512', 'Padrão regional equilibrado', '91%', 'Sem desvio relevante', '+3% ticket'],
+            ['PDV 690', 'Demanda emergente', '63%', 'Mix ainda baseado no comportamento anterior', '+13% ticket'],
+          ],
+        },
+        behaviorReading: [
+          'O PDV 184 não deve ser tratado como um ponto de baixa demanda. Seu comportamento indica alta recorrência, boa produtividade por SKU e concentração excessiva em poucas categorias. A inclusão seletiva de produtos complementares tende a ampliar o ticket sem comprometer o giro.',
+          'No PDV 327, o problema não é falta de variedade. O mix atual possui produtos com funções semelhantes e baixa diferenciação comportamental. A recomendação é reduzir sobreposição antes de adicionar novos itens.',
+        ],
+        actions: [
+          { bold: 'Expandir seletivamente o mix', text: 'dos PDVs com alta produtividade e baixa aderência, priorizando categorias complementares.' },
+          { bold: 'Revisar outliers com mix amplo e baixo giro', text: 'substituindo SKUs redundantes por produtos mais aderentes.' },
+          { bold: 'Criar estratégias distintas por cluster de PDVs', text: 'evitando aplicar o mesmo sortimento para toda a região.' },
+        ],
+        questions: [
+          'Como o comportamento se distribui entre clusters de PDVs urbanos e periféricos?',
+          'Quais categorias complementares elevariam o ticket do PDV 184?',
+          'Qual o impacto de eliminar SKUs redundantes no PDV 327?',
+        ],
+      },
+      mixGaps: {
+        label: 'Gaps de Mix',
+        question: 'Por região, quais produtos apresentam o maior gap no mix atual e o maior potencial de aumentar o ticket médio dos PDVs?',
+        title: 'Gaps de mix com maior potencial de ticket por região',
+        analysis: 'O modelo identificou 14 produtos sub-representados no mix atual, mas apenas cinco concentram a maior oportunidade de crescimento de ticket. No Interior de São Paulo, os SKUs A e C apresentam o maior potencial porque possuem alta aderência ao comportamento previsto dos PDVs, recorrência em estabelecimentos semelhantes e forte complementaridade com produtos já vendidos. A inclusão desses produtos nos PDVs elegíveis pode elevar o ticket médio regional em até 12%, sem ampliar significativamente o risco de estoque parado.',
+        heatmap: {
+          regions: ['Interior de SP', 'Minas Gerais', 'Sul', 'Nordeste', 'Norte'],
+          skus: ['SKU A', 'SKU B', 'SKU C', 'SKU D', 'SKU E'],
+          // intensity 0-100 (potencial de ticket relativo)
+          matrix: [
+            [92, 34, 88, 41, 22],
+            [48, 71, 39, 33, 28],
+            [55, 42, 47, 84, 31],
+            [36, 45, 43, 51, 78],
+            [29, 38, 34, 42, 46],
+          ],
+        },
+        gapsTable: {
+          headers: ['Região', 'Produto', 'Presença atual', 'Presença ideal', 'Gap', 'Potencial de ticket'],
+          rows: [
+            ['Interior de SP', 'SKU A', '34%', '72%', '38 p.p.', '+R$ 18,40'],
+            ['Interior de SP', 'SKU C', '21%', '51%', '30 p.p.', '+R$ 14,70'],
+            ['Minas Gerais', 'SKU B', '48%', '67%', '19 p.p.', '+R$ 9,80'],
+            ['Sul', 'SKU D', '29%', '55%', '26 p.p.', '+R$ 11,20'],
+            ['Nordeste', 'SKU E', '18%', '43%', '25 p.p.', '+R$ 8,60'],
+          ],
+        },
+        behaviorDetail: [
+          'Quais PDVs possuem maior aderência ao produto e à categoria.',
+          'Quais produtos são normalmente comprados em conjunto no mix atual.',
+          'Qual volume inicial é recomendado por PDV elegível.',
+          'Qual ticket incremental é projetado após a inclusão.',
+          'Quais PDVs semelhantes já apresentam comportamento compatível.',
+          'Qual o risco de baixo giro previsto para cada inclusão.',
+        ],
+        reasoning: 'O SKU A apresenta o maior gap no Interior de São Paulo porque está ausente em 38% dos PDVs que demonstram comportamento compatível com sua categoria. Esses estabelecimentos já vendem produtos complementares, possuem frequência de compra crescente e apresentam ticket inferior ao de PDVs semelhantes com o SKU presente. A oportunidade não está em distribuir o produto para toda a região — o modelo recomenda sua inclusão apenas nos 126 PDVs com maior aderência prevista.',
+        actions: [
+          { bold: 'Priorizar o SKU A nos 126 PDVs de maior aderência', text: 'no Interior de SP, usando volume inicial compatível com a demanda prevista.' },
+          { bold: 'Associar a inclusão do SKU C aos complementares', text: 'já presentes no mix, aumentando a probabilidade de crescimento do ticket.' },
+          { bold: 'Evitar distribuição regional indiscriminada', text: 'restringindo cada inclusão aos PDVs com potencial de giro e ticket comprovado pelo modelo.' },
+        ],
+        questions: [
+          'Quais PDVs entram na priorização inicial do SKU A no Interior de SP?',
+          'Como o ticket incremental se distribui entre os 5 SKUs prioritários?',
+          'Qual o risco de estoque parado projetado por cluster de PDV?',
+        ],
+      },
     },
   },
   en: {
@@ -602,6 +688,91 @@ export const signalDemoContent = {
           'Which reps concentrate the largest number of at-risk targets?',
           'How to prioritize recalibrations within the ongoing quarter?',
           'What is the expected gain from redistributing at-risk target volume?',
+        ],
+      },
+      mixBehavior: {
+        label: 'Mix by Store',
+        question: 'How do stores in this region behave relative to the ideal assortment, and which ones show meaningful deviations or non-standard opportunities?',
+        title: 'Store behavior versus ideal assortment',
+        analysis: 'The model identified three predominant behaviors among the region\u2019s stores. Most operate close to the assortment expected for their profile, but 18% show meaningful deviations. Some carry variety below predicted potential, while others concentrate redundant or low-turn products. Store 184 is the leading positive outlier — with an assortment 22% smaller than the regional average, it still shows high productivity per SKU and headroom to absorb new categories. Store 327, in turn, carries a broad assortment that poorly matches its predicted demand behavior, raising the risk of idle inventory.',
+        scatter: [
+          { adherence: 68, productivity: 92, size: 116, label: 'Store 184 • High productivity', quadrant: 'positive' },
+          { adherence: 54, productivity: 41, size: 89, label: 'Store 327 • Redundant assortment', quadrant: 'negative' },
+          { adherence: 91, productivity: 74, size: 102, label: 'Store 512 • Regional baseline', quadrant: 'aligned' },
+          { adherence: 63, productivity: 81, size: 113, label: 'Store 690 • Emerging demand', quadrant: 'emerging' },
+          { adherence: 84, productivity: 68, size: 95, label: 'Store 231 • Aligned', quadrant: 'aligned' },
+          { adherence: 78, productivity: 63, size: 87, label: 'Store 402 • Aligned', quadrant: 'aligned' },
+          { adherence: 47, productivity: 34, size: 74, label: 'Store 118 • Low efficiency', quadrant: 'negative' },
+          { adherence: 72, productivity: 88, size: 108, label: 'Store 559 • Emerging', quadrant: 'emerging' },
+        ],
+        pdvTable: {
+          headers: ['Store', 'Behavioral profile', 'Ideal-mix adherence', 'Main deviation', 'Predicted potential'],
+          rows: [
+            ['Store 184', 'High productivity, narrow mix', '68%', 'Relevant categories missing', '+16% basket'],
+            ['Store 327', 'Broad mix, low efficiency', '54%', 'Redundant similar SKUs', '−11% idle inventory'],
+            ['Store 512', 'Balanced regional pattern', '91%', 'No material deviation', '+3% basket'],
+            ['Store 690', 'Emerging demand', '63%', 'Mix still reflects prior behavior', '+13% basket'],
+          ],
+        },
+        behaviorReading: [
+          'Store 184 should not be treated as a low-demand outlet. Its behavior indicates high recurrence, solid productivity per SKU and excessive concentration in a few categories. Selectively adding complementary products should lift basket without hurting turn.',
+          'In Store 327 the problem is not lack of variety. The current assortment carries products with overlapping roles and low behavioral differentiation. The recommendation is to reduce overlap before adding new items.',
+        ],
+        actions: [
+          { bold: 'Selectively expand assortment', text: 'in stores with high productivity and low adherence, prioritizing complementary categories.' },
+          { bold: 'Review outliers with broad mix and low turn', text: 'replacing redundant SKUs with more adherent products.' },
+          { bold: 'Design distinct strategies per store cluster', text: 'avoiding one-size-fits-all assortments across the region.' },
+        ],
+        questions: [
+          'How does behavior split between urban and outskirt store clusters?',
+          'Which complementary categories would lift Store 184\u2019s basket?',
+          'What is the impact of removing redundant SKUs from Store 327?',
+        ],
+      },
+      mixGaps: {
+        label: 'Assortment Gaps',
+        question: 'By region, which products show the largest gap in the current assortment and the largest potential to lift average basket per store?',
+        title: 'Assortment gaps with highest basket potential by region',
+        analysis: 'The model identified 14 under-represented products in the current assortment, but only five concentrate the largest basket-growth opportunity. In São Paulo Countryside, SKUs A and C hold the highest potential due to strong adherence to store behavior, recurrence in similar outlets and complementarity with products already sold. Adding these products to eligible stores can lift regional average basket by up to 12% without materially increasing idle-inventory risk.',
+        heatmap: {
+          regions: ['São Paulo Countryside', 'Minas Gerais', 'South', 'Northeast', 'North'],
+          skus: ['SKU A', 'SKU B', 'SKU C', 'SKU D', 'SKU E'],
+          matrix: [
+            [92, 34, 88, 41, 22],
+            [48, 71, 39, 33, 28],
+            [55, 42, 47, 84, 31],
+            [36, 45, 43, 51, 78],
+            [29, 38, 34, 42, 46],
+          ],
+        },
+        gapsTable: {
+          headers: ['Region', 'Product', 'Current presence', 'Ideal presence', 'Gap', 'Basket potential'],
+          rows: [
+            ['São Paulo Countryside', 'SKU A', '34%', '72%', '38 pp', '+$ 18.40'],
+            ['São Paulo Countryside', 'SKU C', '21%', '51%', '30 pp', '+$ 14.70'],
+            ['Minas Gerais', 'SKU B', '48%', '67%', '19 pp', '+$ 9.80'],
+            ['South', 'SKU D', '29%', '55%', '26 pp', '+$ 11.20'],
+            ['Northeast', 'SKU E', '18%', '43%', '25 pp', '+$ 8.60'],
+          ],
+        },
+        behaviorDetail: [
+          'Which stores show the highest adherence to the product and its category.',
+          'Which products are typically bought together in the current assortment.',
+          'What initial volume is recommended per eligible store.',
+          'What incremental basket is projected after inclusion.',
+          'Which similar stores already show compatible behavior.',
+          'What low-turn risk is predicted for each inclusion.',
+        ],
+        reasoning: 'SKU A shows the largest gap in São Paulo Countryside because it is missing in 38% of stores that behave in line with its category. These outlets already sell complementary products, show rising purchase frequency and post a lower basket than similar stores that already carry the SKU. The opportunity is not to distribute it across the whole region — the model recommends including it only in the 126 stores with the highest predicted adherence.',
+        actions: [
+          { bold: 'Prioritize SKU A across the 126 highest-adherence stores', text: 'in São Paulo Countryside, using an initial volume aligned with predicted demand.' },
+          { bold: 'Pair SKU C inclusion with existing complementary products', text: 'already in the mix to raise the probability of basket growth.' },
+          { bold: 'Avoid indiscriminate regional rollout', text: 'restricting each inclusion to stores with model-proven turn and basket potential.' },
+        ],
+        questions: [
+          'Which stores enter the initial SKU A prioritization in São Paulo Countryside?',
+          'How does incremental basket split across the 5 priority SKUs?',
+          'What idle-inventory risk is projected per store cluster?',
         ],
       },
     },

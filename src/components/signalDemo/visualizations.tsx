@@ -484,3 +484,266 @@ export const TargetsSignalsTable = ({ data, lang }: { data: { headers: string[];
   </div>
 );
 
+// ============================================================================
+// Mix, Sortimento e Pedido Ideal
+// ============================================================================
+
+const MIX_QUADRANT_COLORS: Record<string, string> = {
+  positive: '#10b981',   // outlier positivo — verde
+  negative: '#ef4444',   // outlier negativo — vermelho
+  aligned:  '#3b82f6',   // padrão regional — azul
+  emerging: '#f59e0b',   // demanda emergente — âmbar
+};
+
+const MIX_QUADRANT_LABELS: Record<string, { pt: string; en: string }> = {
+  positive: { pt: 'Outlier positivo', en: 'Positive outlier' },
+  negative: { pt: 'Outlier negativo', en: 'Negative outlier' },
+  aligned:  { pt: 'Padrão regional', en: 'Regional baseline' },
+  emerging: { pt: 'Demanda emergente', en: 'Emerging demand' },
+};
+
+type MixScatterPoint = { adherence: number; productivity: number; size: number; label: string; quadrant: string };
+
+export const MixBehaviorScatter = ({ data, lang }: { data: MixScatterPoint[]; lang: string }) => {
+  const quadrants: string[] = ['positive', 'aligned', 'emerging', 'negative'];
+  return (
+    <div className="my-4">
+      <div className="h-[280px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <ScatterChart margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+            <XAxis
+              type="number"
+              dataKey="adherence"
+              domain={[0, 100]}
+              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tickFormatter={(v) => `${v}%`}
+              label={{ value: lang === 'pt' ? 'Aderência ao mix ideal' : 'Ideal-mix adherence', position: 'insideBottom', offset: -4, fill: '#6b7280', fontSize: 11 }}
+            />
+            <YAxis
+              type="number"
+              dataKey="productivity"
+              domain={[0, 100]}
+              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tickFormatter={(v) => `${v}`}
+              label={{ value: lang === 'pt' ? 'Produtividade por SKU' : 'Productivity per SKU', angle: -90, position: 'insideLeft', fill: '#6b7280', fontSize: 11 }}
+            />
+            <ZAxis type="number" dataKey="size" range={[120, 900]} />
+            <ReferenceLine x={75} stroke="#9ca3af" strokeDasharray="4 4" />
+            <ReferenceLine y={60} stroke="#9ca3af" strokeDasharray="4 4" />
+            <Tooltip
+              cursor={{ strokeDasharray: '3 3' }}
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+              formatter={(value: number, name: string) => {
+                if (name === 'adherence') return [`${value}%`, lang === 'pt' ? 'Aderência' : 'Adherence'];
+                if (name === 'productivity') return [`${value}`, lang === 'pt' ? 'Produtividade' : 'Productivity'];
+                if (name === 'size') return [value.toLocaleString(lang === 'pt' ? 'pt-BR' : 'en-US'), lang === 'pt' ? 'Potencial de ticket' : 'Basket potential'];
+                return [value, name];
+              }}
+              labelFormatter={(_, payload) => (payload?.[0]?.payload as MixScatterPoint | undefined)?.label ?? ''}
+            />
+            {quadrants.map((q) => (
+              <Scatter key={q} name={MIX_QUADRANT_LABELS[q][lang === 'pt' ? 'pt' : 'en']} data={data.filter((d) => d.quadrant === q)} fill={MIX_QUADRANT_COLORS[q]}>
+                {data.filter((d) => d.quadrant === q).map((_, i) => (
+                  <Cell key={i} fill={MIX_QUADRANT_COLORS[q]} fillOpacity={0.75} stroke={MIX_QUADRANT_COLORS[q]} />
+                ))}
+              </Scatter>
+            ))}
+            <Legend wrapperStyle={{ color: '#6b7280', fontSize: '11px', paddingTop: '8px' }} />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </div>
+      <p className="text-gray-400 text-xs mt-3 leading-relaxed">
+        {lang === 'pt'
+          ? 'Eixo X: aderência ao mix ideal. Eixo Y: produtividade por SKU. Tamanho da bolha: potencial de ticket.'
+          : 'X axis: adherence to ideal assortment. Y axis: productivity per SKU. Bubble size: basket potential.'}
+      </p>
+    </div>
+  );
+};
+
+const adherenceTone = (raw: string): string => {
+  const n = parseInt(raw);
+  if (!isNaN(n)) {
+    if (n >= 85) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+    if (n >= 65) return 'bg-blue-50 text-blue-700 border-blue-200';
+    if (n >= 50) return 'bg-amber-50 text-amber-700 border-amber-200';
+    return 'bg-red-50 text-red-700 border-red-200';
+  }
+  return 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
+const potentialTone = (raw: string): string => {
+  if (raw.startsWith('+')) return 'text-emerald-700 font-semibold';
+  if (raw.startsWith('−') || raw.startsWith('-')) return 'text-red-600 font-semibold';
+  return 'text-gray-800';
+};
+
+export const MixBehaviorTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
+  <div className="overflow-x-auto my-4">
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="border-b border-gray-200 bg-gray-50/60">
+          {data.headers.map((h, i) => (
+            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 2 || i === 4 ? 'text-right' : 'text-left'}`}>
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.rows.map((row, ri) => (
+          <tr key={ri} className="border-b border-gray-100">
+            {row.map((cell, ci) => {
+              if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+              if (ci === 2) return (
+                <td key={ci} className="py-2.5 px-3 text-right">
+                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border tabular-nums ${adherenceTone(cell)}`}>{cell}</span>
+                </td>
+              );
+              if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${potentialTone(cell)}`}>{cell}</td>;
+              return <td key={ci} className="py-2.5 px-3 text-left text-gray-800">{cell}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+export const MixBehaviorReading = ({ paragraphs, lang }: { paragraphs: string[]; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Leitura comportamental' : 'Behavioral reading'}
+    </p>
+    <div className="space-y-2">
+      {paragraphs.map((p, i) => (
+        <p key={i} className="text-gray-700 text-sm leading-relaxed">{p}</p>
+      ))}
+    </div>
+  </div>
+);
+
+type MixHeatmap = { regions: string[]; skus: string[]; matrix: number[][] };
+
+export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string }) => {
+  const max = Math.max(...data.matrix.flat(), 1);
+  return (
+    <div className="my-4 overflow-x-auto">
+      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+        {lang === 'pt' ? 'Oportunidade por região × SKU' : 'Opportunity by region × SKU'}
+      </p>
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr>
+            <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+              {lang === 'pt' ? 'Região' : 'Region'}
+            </th>
+            {data.skus.map((s, i) => (
+              <th key={i} className="py-2 px-2 text-center text-gray-700 font-medium text-xs uppercase tracking-wider">
+                {s}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.regions.map((region, ri) => (
+            <tr key={ri} className="border-b border-gray-100">
+              <td className="py-2 px-3 text-left font-medium text-gray-900 whitespace-nowrap">{region}</td>
+              {data.matrix[ri].map((value, ci) => {
+                const intensity = value / max;
+                const alpha = 0.08 + intensity * 0.85;
+                const textStrong = intensity > 0.6;
+                return (
+                  <td
+                    key={ci}
+                    className="py-2 px-2 text-center align-middle"
+                    title={`${region} • ${data.skus[ci]} — ${lang === 'pt' ? 'oportunidade' : 'opportunity'} ${value}`}
+                  >
+                    <div
+                      className="mx-auto flex items-center justify-center rounded-md tabular-nums"
+                      style={{
+                        backgroundColor: `rgba(244, 132, 95, ${alpha.toFixed(2)})`,
+                        color: textStrong ? '#7c2d12' : '#78350f',
+                        width: '100%',
+                        minWidth: '48px',
+                        height: '36px',
+                        fontWeight: textStrong ? 700 : 500,
+                        fontSize: '13px',
+                      }}
+                    >
+                      {value}
+                    </div>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="text-gray-400 text-xs mt-3 leading-relaxed">
+        {lang === 'pt'
+          ? 'Intensidade coral indica maior oportunidade de aumento de ticket via inclusão do SKU na região.'
+          : 'Coral intensity indicates larger basket-lift opportunity when adding the SKU to the region.'}
+      </p>
+    </div>
+  );
+};
+
+export const MixGapsTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
+  <div className="overflow-x-auto my-4">
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="border-b border-gray-200 bg-gray-50/60">
+          {data.headers.map((h, i) => (
+            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i >= 2 ? 'text-right' : 'text-left'}`}>
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.rows.map((row, ri) => (
+          <tr key={ri} className="border-b border-gray-100">
+            {row.map((cell, ci) => {
+              const isGap = ci === 4;
+              const isPot = ci === 5;
+              return (
+                <td
+                  key={ci}
+                  className={`py-2.5 px-3 ${ci >= 2 ? 'text-right tabular-nums' : 'text-left'} ${
+                    ci === 0 ? 'text-gray-900 font-semibold' :
+                    ci === 1 ? 'text-gray-800 font-medium' :
+                    isGap ? 'text-orange-600 font-bold' :
+                    isPot ? 'text-emerald-700 font-bold' :
+                    'text-gray-800'
+                  }`}
+                >
+                  {cell}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+export const MixGapsDetailList = ({ items, lang }: { items: string[]; lang: string }) => (
+  <div className="my-4">
+    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      {lang === 'pt' ? 'Detalhamento comportamental' : 'Behavioral detail'}
+    </p>
+    <ul className="space-y-1.5">
+      {items.map((it, i) => (
+        <li key={i} className="text-gray-700 text-sm leading-relaxed flex gap-2">
+          <span className="text-orange-500 mt-1 flex-shrink-0">•</span>
+          <span>{it}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+

@@ -1,43 +1,34 @@
-## Metas Comerciais Preditivas — duas novas perguntas no i6 Signal
+## Plano: Mix, Sortimento e Pedido Ideal — 2 novas perguntas no i6 Signal
 
-Hoje `predictive-commercial-targets` reaproveita os cenários `comercial` + `forecast`. Vamos criar duas perguntas dedicadas com respostas próprias.
+Segue o mesmo padrão usado em Metas Comerciais Preditivas (targetsPotential/targetsRisk): novos tipos de cenário + conteúdo PT/EN + componentes de visualização + wiring no Intelliboard.
 
-### 1. Novos scenario ids
-Em `src/data/signalDemo/content.ts`:
-- Adicionar ao `type Scenario`: `targetsPotential` e `targetsRisk`.
-- Adicionar os dois blocos em `pt.scenarios` e `en.scenarios` com os textos exatos fornecidos (título, análise, tabela(s), argumentação, ações, perguntas sugeridas).
+### 1. `src/data/signalDemo/content.ts`
+- Adicionar novos tipos: `mixBehavior` (Pergunta 1) e `mixGaps` (Pergunta 2) ao union `Scenario`.
+- Criar blocos PT e EN com:
+  - **mixBehavior**: `question`, `title`, `executive`, tabela de PDVs (`pdvTable`), dados do scatter (`scatter`: aderência × produtividade, tamanho = ticket, quadrantes outlier+/outlier-/padrão/emergente), `behaviorReading` (leitura comportamental, 2 parágrafos sobre PDV 184 e PDV 327), `actions`.
+  - **mixGaps**: `question`, `title`, `executive`, tabela de gaps (`gapsTable`), matriz de heatmap (`heatmap`: regiões × SKUs com intensidade), `behaviorDetail` (bullets de detalhamento comportamental), `reasoning` (argumentação preditiva), `actions`.
 
-Estruturas de dados:
-- `targetsPotential`: `{ label, question, title, analysis, potentialTable: { headers, rows }, reasoning, actions, questions }` — tabela hierárquica Região/Vendedor/Cliente/SKU/Meta atual/Meta sugerida/Potencial.
-- `targetsRisk`: `{ label, question, title, analysis, scatter: [{ probability, delta, size, vendor, client, sku, quadrant }], riskTable, signalsTable, reasoning, actions, questions }`.
+### 2. `src/data/kiosk/config.ts`
+- Remapear `mix-assortment-order` no `solutionSignalMap` de `['mix', 'forecast']` para `['mixBehavior', 'mixGaps']`.
+- Estender a assinatura do `Record` com os dois novos ids.
 
-### 2. Novas visualizações
-Em `src/components/signalDemo/visualizations.tsx`:
-- `TargetsPotentialTable` — tabela agrupada visualmente por Região (primeira coluna com rowspan/merge visual), com destaque coral em "Meta sugerida" e verde/vermelho em "Potencial" quando positivo/negativo.
-- `TargetsRiskScatter` — `ScatterChart` do Recharts (eixo X 0–100% probabilidade, eixo Y delta meta−projeção, `ZAxis` para tamanho da bolha, cor por quadrante). Legenda dos 4 quadrantes (Meta acima do potencial / Meta compatível / Meta abaixo do potencial / Alta incerteza) com linhas de referência (`ReferenceLine`) em x=60 e y=0. Bolha rotulada por vendedor/cliente/SKU no tooltip.
-- `TargetsRiskTables` — duas tabelas empilhadas: (a) Vendedor/Cliente/SKU/Meta atual/Volume projetado/Probabilidade/Diagnóstico com badge colorido no diagnóstico; (b) tabela de "Sinais que sustentam a previsão" comparando Cliente A vs Cliente D.
-- Bloco `reasoning` renderizado como quadro "Por que" (fundo cinza claro, ícone Brain, título "Argumentação preditiva" / "Predictive reasoning").
+### 3. `src/components/signalDemo/visualizations.tsx`
+Novos componentes:
+- `MixBehaviorScatter`: `ScatterChart` (aderência ao mix × giro/SKU, bubble = ticket) com destaque colorido para outliers +/− e legenda; reaproveita paleta usada em `TargetsRiskScatter`.
+- `MixBehaviorTable`: tabela dos PDVs (Perfil, Aderência, Desvio, Potencial) com badges tonais em Aderência (verde/âmbar/vermelho) e Potencial (verde/vermelho).
+- `MixGapsHeatmap`: grid Região × SKU pintado por intensidade da oportunidade (opacidade coral escalada por p.p. de gap), com tooltip nativo em cada célula.
+- `MixGapsTable`: tabela complementar (Presença atual, Presença ideal, Gap p.p., Potencial de ticket) com Gap destacado em coral e Potencial em verde.
+- `MixBehaviorReading` / `MixGapsDetailList`: blocos textuais estruturados (título coral + parágrafos ou lista de bullets) no mesmo tom dos quadros existentes.
 
-### 3. Wire no Intelliboard
-Em `src/components/kiosk/KioskSignalIntelliboard.tsx`:
-- Adicionar dois blocos condicionais após os cenários existentes:
-  - `activeScenario === 'targetsPotential'` → `TargetsPotentialTable` + bloco reasoning.
-  - `activeScenario === 'targetsRisk'` → `TargetsRiskScatter` + `TargetsRiskTables` + bloco reasoning.
+### 4. `src/components/kiosk/KioskSignalIntelliboard.tsx`
+- Importar os novos componentes.
+- Adicionar branches `activeScenario === 'mixBehavior'` e `=== 'mixGaps'` no bloco de renderização — antes do `h4 "Ações recomendadas"`.
+- No cenário `mixBehavior`: renderizar `MixBehaviorScatter` + `MixBehaviorTable` + quadro "Leitura comportamental".
+- No cenário `mixGaps`: renderizar `MixGapsHeatmap` + `MixGapsTable` + bloco "Detalhamento comportamental" + quadro "Argumentação preditiva" (reutilizando o mesmo container coral já usado em Metas).
 
-### 4. Remapear a solução
-Em `src/data/kiosk/config.ts`:
-- Ampliar o tipo do `solutionSignalMap` para incluir os novos ids.
-- Trocar `'predictive-commercial-targets': ['comercial', 'forecast']` por `['targetsPotential', 'targetsRisk']`.
-- Cenários `comercial`/`forecast` permanecem para as outras soluções.
+### Notas técnicas
+- Nenhum novo pacote — apenas `recharts` (já em uso) para o scatter; o heatmap é feito em CSS grid + Tailwind para performance e simplicidade.
+- Textos em EN traduzidos preservando terminologia já adotada (PDV → PoS/Store, mix → assortment, ticket → basket).
+- Sem alteração em `signals.ts`, no fluxo do quiz ou nos dados de outros cenários.
 
-### 5. Versão EN
-Traduzir integralmente os textos das duas perguntas mantendo estrutura e números (Meta → Target, Potencial → Potential, Vendedor → Rep, Interior de SP → São Paulo Countryside, Minas Gerais/Sul mantidos como nomes próprios). Manter unidades em unidades (não converter).
-
-### Detalhes técnicos
-- Arquivos afetados:
-  - `src/data/signalDemo/content.ts` — tipo Scenario, novos blocos PT/EN.
-  - `src/components/signalDemo/visualizations.tsx` — três novos componentes (Potential table, Risk scatter, Risk tables) + import de `ScatterChart, Scatter, ZAxis, ReferenceLine` do recharts.
-  - `src/components/kiosk/KioskSignalIntelliboard.tsx` — dois novos ramos de render + renderização do bloco `reasoning` quando existir (aplicar apenas nas novas cenas para não afetar as demais).
-  - `src/data/kiosk/config.ts` — tipo do map + entrada `predictive-commercial-targets`.
-- Também vou verificar `src/components/kiosk/KioskSignalDemo.tsx` (versão simples de signals sem chart) — ele usa `kioskSignals` de `signals.ts`, não `content.ts`, então não é afetado pelo Intelliboard. Nada a mudar lá.
-- Sem impacto em `I6SignalDemo` do /solutions: como o `solutionSignalMap` é global, `predictive-commercial-targets` passará a mostrar essas duas perguntas em ambos os surfaces (kiosk e /solutions). Aviso: se preferir manter comportamento antigo no /solutions, me diga que faço o remap escopado ao kiosk.
+Publicação de release patch após a validação visual.

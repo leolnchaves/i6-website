@@ -20,6 +20,12 @@ import {
   TargetsRiskScatter,
   TargetsRiskTable,
   TargetsSignalsTable,
+  MixBehaviorScatter,
+  MixBehaviorTable,
+  MixBehaviorReading,
+  MixGapsHeatmap,
+  MixGapsTable,
+  MixGapsDetailList,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
@@ -306,8 +312,34 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                   />
                 </>
               )}
+              {activeScenario === 'mixBehavior' && 'scatter' in scenario && 'pdvTable' in scenario && (
+                <>
+                  <MixBehaviorScatter
+                    data={(scenario as typeof t.scenarios.mixBehavior).scatter}
+                    lang={lang}
+                  />
+                  <MixBehaviorTable data={(scenario as typeof t.scenarios.mixBehavior).pdvTable} />
+                  <MixBehaviorReading
+                    paragraphs={(scenario as typeof t.scenarios.mixBehavior).behaviorReading}
+                    lang={lang}
+                  />
+                </>
+              )}
+              {activeScenario === 'mixGaps' && 'heatmap' in scenario && (
+                <>
+                  <MixGapsHeatmap
+                    data={(scenario as typeof t.scenarios.mixGaps).heatmap}
+                    lang={lang}
+                  />
+                  <MixGapsTable data={(scenario as typeof t.scenarios.mixGaps).gapsTable} />
+                  <MixGapsDetailList
+                    items={(scenario as typeof t.scenarios.mixGaps).behaviorDetail}
+                    lang={lang}
+                  />
+                </>
+              )}
 
-              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk') && 'reasoning' in scenario && (
+              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk' || activeScenario === 'mixGaps') && 'reasoning' in scenario && (
                 <div className="mt-[2.5vmin] rounded-[1.4vmin] border border-orange-200 bg-orange-50/60 p-[2vmin]">
                   <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                     <Brain className="w-[2vmin] h-[2vmin] text-orange-500" />
