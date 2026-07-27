@@ -111,9 +111,9 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
     return catalog.skus.find((s) => s.id === selectedId) ?? null;
   }, [catalog, selectedId]);
 
-  const latencyMs = useMemo(() => {
+  const latencySec = useMemo(() => {
     if (!selected) return '0.00';
-    return (18 + Math.random() * 22).toFixed(2);
+    return ((18 + Math.random() * 22) / 1000).toFixed(2);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId]);
 
@@ -424,8 +424,8 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
                       {t.rationaleLabel}
                     </span>
-                    <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
-                      {t.latencyLabel}: {latencyMs} ms
+                    <span className="ml-auto text-[1.15vmin] text-white/60 font-mono whitespace-nowrap">
+                      {t.latencyLabel}: {latencySec} s
                     </span>
                   </div>
                   <p className="text-[2vmin] leading-relaxed text-white/95">{argumentText}</p>
