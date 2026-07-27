@@ -177,7 +177,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 2.4,
     volumeImpactPct: -3.4,
     argument:
-      'Buscas cresceram 38% na semana e o estoque cobre apenas 22 dias no ritmo atual. Comparáveis sazonais praticaram média de R$ 97 em janelas equivalentes de calor. A faixa recomendada aproveita a janela de demanda antes que o competidor reaja, sem violar a banda máxima de posicionamento.',
+      'Sensibilidade alta (elasticidade −1,35), porém dominada pela sazonalidade: a projeção de demanda para as próximas 6 semanas cresce +38% (janela de calor confirmada) e o estoque cobre só 22 dias no ritmo atual. Comparáveis sazonais praticaram média de R$ 97 em janelas equivalentes. O modelo captura a janela de tendência antes que o competidor reaja, aceitando volume −3,4% em troca de margem adicional segura.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
