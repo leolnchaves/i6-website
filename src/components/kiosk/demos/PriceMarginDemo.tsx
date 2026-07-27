@@ -143,6 +143,11 @@ const PriceMarginDemo = () => {
     [filtered, selectedId],
   );
 
+  const derived = useMemo(
+    () => (selected ? computeOutcome(selected, strategy, minMargin, competitiveBand) : null),
+    [selected, strategy, minMargin, competitiveBand],
+  );
+
   // If filter removes selected SKU, drop selection
   useEffect(() => {
     if (selectedId && !filtered.find((s) => s.id === selectedId)) {
