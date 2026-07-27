@@ -316,9 +316,9 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                             key={s.id}
                             type="button"
                             onClick={() => pickProduct(s.id)}
-                            className="w-full flex items-center gap-[1.2vmin] rounded-lg p-[0.8vmin] transition-all hover:bg-white/[0.05] active:scale-[0.99] text-left"
+                            className="w-full flex items-center gap-[1.4vmin] rounded-lg p-[0.8vmin] transition-all hover:bg-white/[0.05] active:scale-[0.99] text-left"
                           >
-                            <div className="w-[7vmin] h-[7vmin] flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                            <div className="w-[11vmin] h-[11vmin] flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
                               <img src={s.image} alt="" className="w-full h-full object-cover" />
                             </div>
                             <span className="flex-1 min-w-0 text-[1.5vmin] leading-tight text-white/90 font-semibold truncate">
