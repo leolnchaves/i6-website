@@ -2,7 +2,7 @@ import { LineChart, Line, BarChart, Bar, ComposedChart, XAxis, YAxis, CartesianG
 
 export const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200">
           {data.headers.map((h, i) => (
@@ -75,7 +75,7 @@ export const ComercialChart = ({ data, lang }: { data: { territory: string; gap:
 
 export const MixComparison = ({ comparison }: { comparison: { category: string; current: string; recommended: string; direction: 'up' | 'down' | 'stable' }[] }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200">
           <th className="text-left py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Categoria</th>
@@ -205,7 +205,7 @@ export const BehaviorClustersTable = ({
 }) => (
   <div className="my-4">
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
             {table.headers.map((h, i) => (
@@ -239,7 +239,7 @@ export const BehaviorClustersTable = ({
       <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
         {lang === 'pt' ? 'Comportamento e abordagem por cluster' : 'Behavior and approach per cluster'}
       </p>
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
             <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
@@ -296,7 +296,7 @@ export const TargetsPotentialTable = ({
   const rows = data.rows;
   return (
     <div className="overflow-hidden my-4 w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -426,7 +426,7 @@ export const TargetsRiskScatter = ({ data, lang }: { data: ScatterPoint[]; lang:
 
 export const TargetsRiskTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
@@ -464,7 +464,7 @@ export const TargetsSignalsTable = ({ data, lang }: { data: { headers: string[];
     <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
       {lang === 'pt' ? 'Sinais que sustentam a previsão' : 'Signals supporting the prediction'}
     </p>
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
@@ -576,7 +576,7 @@ const potentialTone = (raw: string): string => {
 
 export const MixBehaviorTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
@@ -626,7 +626,7 @@ export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string 
       <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
         {lang === 'pt' ? 'Oportunidade por região × SKU' : 'Opportunity by region × SKU'}
       </p>
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr>
             <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
@@ -685,7 +685,7 @@ export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string 
 
 export const MixGapsTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
@@ -836,7 +836,7 @@ const incrementalMarginTone = (raw: string): string => {
 
 export const MarginOpportunitiesTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
@@ -954,7 +954,7 @@ const directionTone = (raw: string): string => {
 
 export const MarginSignalsTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
   <div className="overflow-hidden my-4 w-full min-w-0">
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
@@ -1010,7 +1010,7 @@ export const TurnoverRiskTable = ({ data, lang }: { data: { headers: string[]; r
       {lang === 'pt' ? 'Risco de envelhecimento por região' : 'Aging risk by region'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1056,7 +1056,7 @@ export const TurnoverSignalsCompareTable = ({ data, lang }: { data: { headers: s
       {lang === 'pt' ? 'Sinais comportamentais comparados' : 'Behavioral signals compared'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1101,7 +1101,7 @@ export const TurnoverMarkdownRuler = ({ data, lang }: { data: { headers: string[
       {lang === 'pt' ? 'Régua temporal de markdown' : 'Markdown timing ladder'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1141,7 +1141,7 @@ export const TurnoverMarkdownTable = ({ data, lang }: { data: { headers: string[
       {lang === 'pt' ? 'Detalhamento por SKU' : 'Detail by SKU'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1216,7 +1216,7 @@ export const PersonalizationBehaviorMatrix = ({ data, lang }: { data: { headers:
       {lang === 'pt' ? 'Matriz de comportamento por recomendação' : 'Behavior-to-recommendation matrix'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1252,7 +1252,7 @@ export const PersonalizationSignalsTable = ({ data, lang }: { data: { headers: s
       {lang === 'pt' ? 'Sinais que sustentam a recomendação' : 'Signals supporting the recommendation'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1348,7 +1348,7 @@ export const RepurchaseBehaviorTable = ({ data, lang }: { data: { headers: strin
       {lang === 'pt' ? 'Comportamentos previstos de recompra' : 'Predicted repurchase behaviors'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1382,7 +1382,7 @@ export const RepurchaseCorrelationsTable = ({ data, lang }: { data: { headers: s
       {lang === 'pt' ? 'Correlações comportamentais' : 'Behavioral correlations'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
@@ -1487,7 +1487,7 @@ export const PriceConversionContextTable = ({
   };
   return (
     <div className="my-4 overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
             {data.headers.map((h, i) => (
@@ -1527,7 +1527,7 @@ export const PriceConversionSignalsTable = ({
     <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
       {lang === 'pt' ? 'Sinais comportamentais' : 'Behavioral signals'}
     </p>
-    <table className="w-full text-sm border-collapse">
+    <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200">
           {data.headers.map((h, i) => (
@@ -1606,7 +1606,7 @@ export const PriceConversionIncentiveTable = ({
   };
   return (
     <div className="my-4 overflow-hidden w-full min-w-0">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
             {data.headers.map((h, i) => (
