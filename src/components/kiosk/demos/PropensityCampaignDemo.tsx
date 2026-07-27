@@ -202,7 +202,7 @@ const PropensityCampaignDemo = () => {
                         <span className="text-right text-white font-mono">{fmt(t.clients)}</span>
                         <span className="text-right text-white/90 font-mono">{t.propensityPct}%</span>
                       </div>
-                      {t.channels.map((split, j) => (
+                      {t.tier !== 'Oportunidade futura' && t.channels.map((split, j) => (
                         <div
                           key={j}
                           className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[0.8vmin] items-center text-[1.4vmin] border-t border-white/5 bg-white/[0.02]"
