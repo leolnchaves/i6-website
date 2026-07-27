@@ -1,4 +1,4 @@
-import { Sparkles, UserRoundSearch, Megaphone, LineChart } from 'lucide-react';
+import { Sparkles, UserRoundSearch, Megaphone, LineChart, Target } from 'lucide-react';
 import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/content';
 import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
