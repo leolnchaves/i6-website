@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Check, Sparkles, TrendingUp, TrendingDown, Layers } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
 import {
@@ -7,9 +7,106 @@ import {
   filterOptions,
   fmtBRL,
   type PriceMarginSku,
+  type AlternativeScenario,
 } from '@/data/kiosk/demos/priceMargin';
 
 type Phase = 'setup' | 'running' | 'result';
+
+// Derived outcome, reactive to strategy / minMargin / competitive band
+interface Derived {
+  optimalPrice: number;
+  rangeMin: number;
+  rangeMax: number;
+  confidencePct: number;
+  marginImpactPp: number;
+  volumeImpactPct: number;
+  alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario];
+}
+
+const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+
+const computeOutcome = (
+  s: PriceMarginSku,
+  strategy: string,
+  minMargin: string,
+  competitiveBand: string,
+): Derived => {
+  // Strategy shifts price ± and rebalances margin/volume impact
+  const strat =
+    strategy === 'margin'
+      ? { price: 1.018, margin: 1.4, volume: -1.6, conf: -3 }
+      : strategy === 'defense'
+      ? { price: 0.984, margin: -1.1, volume: 1.9, conf: 2 }
+      : { price: 1, margin: 0, volume: 0, conf: 0 };
+
+  // Competitive band controls range width and price ceiling vs. competitor
+  const band =
+    competitiveBand === 'strict'
+      ? { spread: 0.55, ceilingMult: 1.0 }
+      : competitiveBand === 'wide'
+      ? { spread: 1.4, ceilingMult: 1.06 }
+      : { spread: 1, ceilingMult: 1.03 };
+
+  // Minimum margin acts as a floor: raises price and margin, dents confidence and volume
+  const mm = parseInt(minMargin, 10);
+  const floor =
+    mm >= 45
+      ? { price: 1.014, margin: 1.1, volume: -0.9, conf: -6 }
+      : mm >= 40
+      ? { price: 1.007, margin: 0.6, volume: -0.4, conf: -3 }
+      : mm >= 35
+      ? { price: 1, margin: 0, volume: 0, conf: 0 }
+      : { price: 0.997, margin: -0.3, volume: 0.3, conf: 1 };
+
+  const rawOptimal = s.optimalPrice * strat.price * floor.price;
+  const ceiling = s.competitorPrice * band.ceilingMult;
+  const optimalPrice = Math.min(rawOptimal, ceiling);
+
+  const halfSpread = ((s.rangeMax - s.rangeMin) / 2) * band.spread;
+  const rangeMin = optimalPrice - halfSpread;
+  const rangeMax = Math.min(optimalPrice + halfSpread, ceiling + halfSpread * 0.3);
+
+  const marginImpactPp = s.marginImpactPp + strat.margin + floor.margin;
+  const volumeImpactPct = s.volumeImpactPct + strat.volume + floor.volume;
+  const confidencePct = clamp(s.confidencePct + strat.conf + floor.conf, 62, 97);
+
+  const round2 = (v: number) => Math.round(v * 100) / 100;
+  const round1 = (v: number) => Math.round(v * 10) / 10;
+
+  const alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario] = [
+    {
+      id: 'conservative',
+      label: 'Conservador',
+      price: round2(rangeMin),
+      margin: 'Maior',
+      volume: 'Queda mínima',
+    },
+    {
+      id: 'recommended',
+      label: 'Recomendado',
+      price: round2(optimalPrice),
+      margin: 'Ótima',
+      volume: 'Queda controlada',
+    },
+    {
+      id: 'aggressive',
+      label: 'Agressivo',
+      price: round2(rangeMax),
+      margin: 'Máxima',
+      volume: 'Maior risco de volume',
+    },
+  ];
+
+  return {
+    optimalPrice: round2(optimalPrice),
+    rangeMin: round2(rangeMin),
+    rangeMax: round2(rangeMax),
+    confidencePct: Math.round(confidencePct),
+    marginImpactPp: round1(marginImpactPp),
+    volumeImpactPct: round1(volumeImpactPct),
+    alternatives,
+  };
+};
 
 const DASH = '—';
 
@@ -46,6 +143,11 @@ const PriceMarginDemo = () => {
     [filtered, selectedId],
   );
 
+  const derived = useMemo(
+    () => (selected ? computeOutcome(selected, strategy, minMargin, competitiveBand) : null),
+    [selected, strategy, minMargin, competitiveBand],
+  );
+
   // If filter removes selected SKU, drop selection
   useEffect(() => {
     if (selectedId && !filtered.find((s) => s.id === selectedId)) {
@@ -67,10 +169,6 @@ const PriceMarginDemo = () => {
     return () => timers.forEach(clearTimeout);
   }, [phase]);
 
-  const latencyMs = useMemo(
-    () => (28 + Math.random() * 20).toFixed(2),
-    [selectedId, phase],
-  );
 
   const reset = () => {
     setPhase('setup');
@@ -120,7 +218,7 @@ const PriceMarginDemo = () => {
                 running={phase === 'running'}
               />
             ) : (
-              selected && <ResultView selected={selected} />
+              selected && derived && <ResultView selected={selected} derived={derived} />
             )}
           </div>
         </div>
@@ -207,21 +305,20 @@ const PriceMarginDemo = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-[1vmin]">
-                <MetricPill label="Latência do modelo" value={`${latencyMs} ms`} hint="média mercado ~180 ms" />
+              <div className="grid grid-cols-3 gap-[1vmin]">
                 <MetricPill
                   label="Confiança"
-                  value={`${selected.confidencePct}%`}
+                  value={`${(derived ?? selected).confidencePct}%`}
                 />
                 <MetricPill
                   label="Impacto na margem"
-                  value={`+${selected.marginImpactPp.toFixed(1)} pp`}
+                  value={`+${(derived ?? selected).marginImpactPp.toFixed(1)} pp`}
                   highlight
                   trend="up"
                 />
                 <MetricPill
                   label="Impacto no volume"
-                  value={`${selected.volumeImpactPct.toFixed(1)}%`}
+                  value={`${(derived ?? selected).volumeImpactPct.toFixed(1)}%`}
                   trend="down"
                 />
               </div>
@@ -307,17 +404,25 @@ const SetupView = ({
 }: SetupProps) => {
   return (
     <>
-      {/* Filters */}
-      <div className="grid grid-cols-3 gap-[1vmin]">
-        <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
-        <TouchSelect label="Região / Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
-        <TouchSelect label="Estratégia corporativa" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
-        <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
-        <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col justify-center px-[1.4vmin]">
-          <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/55">Portfólio</span>
-          <span className="text-[1.7vmin] font-semibold text-white">{filtered.length} SKUs</span>
-        </div>
+      {/* Filters — grouped in 3 rows: Filtros / Restrições / Objetivo */}
+      <div className="flex flex-col gap-[1.2vmin]">
+        <FilterRow label="Filtros">
+          <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
+          <TouchSelect label="Região / Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col justify-center px-[1.4vmin]">
+            <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/55">Portfólio</span>
+            <span className="text-[1.7vmin] font-semibold text-white">{filtered.length} SKUs</span>
+          </div>
+        </FilterRow>
+
+        <FilterRow label="Restrições">
+          <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
+          <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
+        </FilterRow>
+
+        <FilterRow label="Objetivo">
+          <TouchSelect label="Estratégia corporativa" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
+        </FilterRow>
       </div>
 
       {/* Portfolio table */}
@@ -492,7 +597,7 @@ const ScatterChart = ({
 // Result view: chart + KPI cards + alternatives table
 // ============================================================
 
-const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
+const ResultView = ({ selected, derived }: { selected: PriceMarginSku; derived: Derived }) => {
   return (
     <>
       <div className="flex items-baseline justify-between">
@@ -512,14 +617,14 @@ const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
         <KpiCard label="Preço atual" value={fmtBRL(selected.currentPrice)} />
         <KpiCard
           label="Faixa recomendada"
-          value={`${fmtBRL(selected.rangeMin)} – ${fmtBRL(selected.rangeMax)}`}
+          value={`${fmtBRL(derived.rangeMin)} – ${fmtBRL(derived.rangeMax)}`}
         />
-        <KpiCard label="Preço ótimo" value={fmtBRL(selected.optimalPrice)} highlight />
-        <KpiCard label="Confiança" value={`${selected.confidencePct}%`} />
+        <KpiCard label="Preço ótimo" value={fmtBRL(derived.optimalPrice)} highlight />
+        <KpiCard label="Confiança" value={`${derived.confidencePct}%`} />
       </div>
 
       {/* Chart */}
-      <PriceMarginCurve sku={selected} />
+      <PriceMarginCurve sku={selected} derived={derived} />
 
       {/* Alternatives table */}
       <div className="rounded-xl border border-white/10 overflow-hidden">
@@ -533,7 +638,7 @@ const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
           <span className="text-right">Margem</span>
           <span className="text-right">Volume</span>
         </div>
-        {selected.alternatives.map((a) => {
+        {derived.alternatives.map((a) => {
           const isReco = a.id === 'recommended';
           return (
             <div
@@ -556,24 +661,33 @@ const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
   );
 };
 
-const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
+const FilterRow = ({ label, children }: { label: string; children: ReactNode }) => (
+  <div className="rounded-xl border border-white/10 bg-white/[0.02] px-[1.2vmin] py-[1vmin]">
+    <span className="block text-[1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.7vmin]">
+      {label}
+    </span>
+    <div className="grid grid-cols-2 gap-[1vmin]">{children}</div>
+  </div>
+);
+
+const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Derived }) => {
   const W = 620;
   const H = 200;
   const PAD = { l: 40, r: 16, t: 16, b: 32 };
   const iw = W - PAD.l - PAD.r;
   const ih = H - PAD.t - PAD.b;
 
-  const pMin = Math.min(sku.currentPrice, sku.rangeMin) - 3;
-  const pMax = Math.max(sku.rangeMax, sku.competitorPrice) + 3;
+  const pMin = Math.min(sku.currentPrice, derived.rangeMin) - 3;
+  const pMax = Math.max(derived.rangeMax, sku.competitorPrice) + 3;
 
   const x = (p: number) => PAD.l + ((p - pMin) / (pMax - pMin)) * iw;
 
-  // Concave curve peaking at optimalPrice
+  // Concave curve peaking at derived.optimalPrice
   const peakY = PAD.t + ih * 0.15;
   const baseY = PAD.t + ih * 0.9;
   const curveAt = (p: number) => {
     const spread = (pMax - pMin) / 2;
-    const dist = Math.abs(p - sku.optimalPrice) / spread;
+    const dist = Math.abs(p - derived.optimalPrice) / spread;
     return peakY + (baseY - peakY) * Math.min(1, dist * dist);
   };
 
@@ -610,8 +724,8 @@ const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
         {/* Recommended band */}
         <rect
-          x={x(sku.rangeMin)} y={PAD.t}
-          width={x(sku.rangeMax) - x(sku.rangeMin)} height={ih}
+          x={x(derived.rangeMin)} y={PAD.t}
+          width={x(derived.rangeMax) - x(derived.rangeMin)} height={ih}
           fill="rgba(244,132,95,0.12)"
         />
         {/* Curve */}
@@ -620,20 +734,21 @@ const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
 
         {/* Markers */}
         <Marker price={sku.currentPrice} label="Atual" color="rgba(255,255,255,0.6)" dashed />
-        <Marker price={sku.rangeMin} label="Mín" color="rgba(244,132,95,0.55)" dashed />
-        <Marker price={sku.rangeMax} label="Máx" color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={derived.rangeMin} label="Mín" color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={derived.rangeMax} label="Máx" color="rgba(244,132,95,0.55)" dashed />
         <Marker price={sku.competitorPrice} label="Concorr." color="rgba(120,180,255,0.75)" dashed />
 
         {/* Optimal — big pin */}
         <line
-          x1={x(sku.optimalPrice)} x2={x(sku.optimalPrice)}
+          x1={x(derived.optimalPrice)} x2={x(derived.optimalPrice)}
           y1={PAD.t} y2={H - PAD.b}
           stroke="#F4845F" strokeWidth={2}
         />
-        <circle cx={x(sku.optimalPrice)} cy={curveAt(sku.optimalPrice)} r={5} fill="#F4845F" stroke="#fff" strokeWidth={2} />
-        <text x={x(sku.optimalPrice)} y={PAD.t - 4} fontSize="10" fill="#F4845F" textAnchor="middle" fontWeight={700}>
+        <circle cx={x(derived.optimalPrice)} cy={curveAt(derived.optimalPrice)} r={5} fill="#F4845F" stroke="#fff" strokeWidth={2} />
+        <text x={x(derived.optimalPrice)} y={PAD.t - 4} fontSize="10" fill="#F4845F" textAnchor="middle" fontWeight={700}>
           Ótimo
         </text>
+
 
         {/* X axis labels */}
         <text x={PAD.l} y={H - 10} fontSize="10" fill="rgba(255,255,255,0.5)">

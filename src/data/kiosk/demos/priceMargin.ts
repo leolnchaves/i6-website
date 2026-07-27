@@ -93,7 +93,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 3.2,
     volumeImpactPct: -1.4,
     argument:
-      'Nas últimas 8 semanas o SKU manteve giro estável mesmo após 3 reajustes de até +4%. Concorrentes diretos estão operando entre R$ 95 e R$ 99, e a base de clientes recorrentes (58% do volume) não migrou nos últimos ciclos. A faixa recomendada captura margem adicional sem sair da banda competitiva percebida no PDV.',
+      'Sensibilidade de preço baixa (elasticidade −0,42): cada +1% em preço projeta apenas −0,42% em volume dentro da faixa recomendada. A projeção de demanda para as próximas 6 semanas indica tendência de alta suave (+3,2% vs. ciclo anterior) puxada por reposição do canal, sem sazonalidade adversa no horizonte. Concorrentes operam entre R$ 95 e R$ 99 e a base recorrente (58% do volume) não migrou nos últimos 3 reajustes de até +4%, o que sustenta o reajuste dentro da banda competitiva.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
@@ -121,7 +121,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 2.8,
     volumeImpactPct: -2.6,
     argument:
-      'O produto tem alta frequência de recompra (a cada 34 dias em média) e histórico consistente de conversão mesmo em bandas superiores. Apesar da oportunidade, preços acima de R$ 96,20 elevam significativamente o risco de perda de volume dentro do cluster fiel — o modelo recomenda R$ 94,80 como melhor equilíbrio entre margem capturada e demanda preservada.',
+      'Elasticidade moderada (−0,95): a resposta de demanda começa a acelerar acima de R$ 96,20 — cada +1% em preço projeta ≈ −0,95% em volume nessa zona. A projeção de demanda para o próximo ciclo é estável (tendência +0,8% a/a) com sazonalidade neutra e cobertura de estoque de 74 dias, sem pressão para descontar. R$ 94,80 é o ponto em que a curva de margem esperada satura antes do risco de churn do cluster recorrente (recompra a cada 34 dias).',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
@@ -149,7 +149,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 3.6,
     volumeImpactPct: -1.1,
     argument:
-      'O SKU apresenta baixa sensibilidade dentro da faixa recomendada e está abaixo da banda observada para produtos comparáveis nos últimos 60 dias. O aumento proposto captura margem adicional com impacto controlado sobre o volume, respeitando margem mínima, posição competitiva e estratégia da categoria.',
+      'Baixa sensibilidade de preço (elasticidade −0,38) na faixa recomendada — o modelo projeta ≈ −0,38% de volume por +1% de preço, com intervalo de confiança estreito. A projeção de demanda para as próximas 8 semanas mostra tendência de alta (+5,4%) sustentada pela recompra do haircare e sem sazonalidade adversa. O SKU segue abaixo da banda observada nos últimos 60 dias, permitindo capturar margem adicional sem estressar posição competitiva.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
@@ -177,7 +177,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 2.4,
     volumeImpactPct: -3.4,
     argument:
-      'Buscas cresceram 38% na semana e o estoque cobre apenas 22 dias no ritmo atual. Comparáveis sazonais praticaram média de R$ 97 em janelas equivalentes de calor. A faixa recomendada aproveita a janela de demanda antes que o competidor reaja, sem violar a banda máxima de posicionamento.',
+      'Sensibilidade alta (elasticidade −1,35), porém dominada pela sazonalidade: a projeção de demanda para as próximas 6 semanas cresce +38% (janela de calor confirmada) e o estoque cobre só 22 dias no ritmo atual. Comparáveis sazonais praticaram média de R$ 97 em janelas equivalentes. O modelo captura a janela de tendência antes que o competidor reaja, aceitando volume −3,4% em troca de margem adicional segura.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
@@ -205,7 +205,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 4.1,
     volumeImpactPct: -1.8,
     argument:
-      'Combo exclusivo, sem paralelo direto no mercado local, com margem de contribuição 12 pp acima da categoria. O comportamento dos últimos 3 lançamentos similares mostra baixa reação a variações de até +6%. R$ 94,80 fica dentro da faixa em que 82% das sessões evoluem para carrinho.',
+      'Combo com sensibilidade de preço contida (elasticidade −0,62) e sem par direto no mercado local. A projeção de demanda para o trimestre indica tendência de alta (+8,6%) impulsionada pela categoria noturna e sazonalidade favorável de inverno. Últimos 3 lançamentos comparáveis mostram baixa reação a variações de até +6%, e R$ 94,80 mantém 82% das sessões evoluindo para carrinho.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
