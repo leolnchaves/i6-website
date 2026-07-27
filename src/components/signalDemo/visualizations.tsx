@@ -256,7 +256,7 @@ export const BehaviorClustersTable = ({
         <tbody>
           {detail.map((c, i) => (
             <tr key={i} className="border-b border-gray-100 align-top">
-              <td className="py-2.5 px-3 text-orange-600 font-semibold whitespace-nowrap">{c.name}</td>
+              <td className="py-2.5 px-3 text-orange-600 font-semibold break-words">{c.name}</td>
               <td className="py-2.5 px-3 text-gray-700 leading-relaxed">{c.description}</td>
               <td className="py-2.5 px-3 text-gray-700 leading-relaxed">{c.approach}</td>
             </tr>
@@ -642,7 +642,7 @@ export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string 
         <tbody>
           {data.regions.map((region, ri) => (
             <tr key={ri} className="border-b border-gray-100">
-              <td className="py-2 px-3 text-left font-medium text-gray-900 whitespace-nowrap">{region}</td>
+              <td className="py-2 px-3 text-left font-medium text-gray-900 break-words">{region}</td>
               {data.matrix[ri].map((value, ci) => {
                 const intensity = value / max;
                 const alpha = 0.08 + intensity * 0.85;
@@ -1444,7 +1444,7 @@ export const PriceConversionFrictionHeatmap = ({
           <tbody>
             {data.products.map((p, ri) => (
               <tr key={ri} className="border-b border-gray-100">
-                <td className="py-2 px-2 text-gray-900 font-semibold text-left whitespace-nowrap">{p}</td>
+                <td className="py-2 px-2 text-gray-900 font-semibold text-left break-words">{p}</td>
                 {data.matrix[ri].map((v, ci) => (
                   <td key={ci} className={`py-2 px-2 text-center tabular-nums ${frictionTextColor(v)}`}>
                     {v}
