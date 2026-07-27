@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { Check, Sparkles, MapPin } from 'lucide-react';
+import { Check, Sparkles } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
 import {
   pipeline,
@@ -9,6 +9,7 @@ import {
   fmtBRLk,
   type TurnoverCluster,
   type ClusterAction,
+  type SkuRow,
 } from '@/data/kiosk/demos/priceTurnover';
 
 type Phase = 'setup' | 'running' | 'result';
@@ -23,15 +24,15 @@ interface Derived {
   agedStockPct: number;
   marginPreservedPp: number;
   capitalUnlockedBRL: number;
+  skus: SkuRow[];
 }
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
-// Deterministic outcome sensitive to objective / horizon / minMargin
+// Deterministic outcome sensitive to objective / minMargin
 const computeOutcome = (
   c: TurnoverCluster,
   objective: string,
-  horizon: string,
   minMargin: string,
 ): Derived => {
   const obj =
@@ -40,16 +41,6 @@ const computeOutcome = (
       : objective === 'preserve'
       ? { markdown: 0.6, sellThrough: -4, margin: 2.4, capital: 0.7 }
       : { markdown: 1, sellThrough: 0, margin: 0, capital: 1 };
-
-  const hz = parseInt(horizon, 10);
-  const horizonAdj =
-    hz <= 14
-      ? { markdown: 1.2, sellThrough: -3, margin: -0.8, capital: 1.15 }
-      : hz <= 30
-      ? { markdown: 1, sellThrough: 0, margin: 0, capital: 1 }
-      : hz <= 45
-      ? { markdown: 0.85, sellThrough: 2, margin: 0.9, capital: 0.9 }
-      : { markdown: 0.7, sellThrough: 4, margin: 1.6, capital: 0.8 };
 
   const mm = parseInt(minMargin, 10);
   const floor =
@@ -61,11 +52,12 @@ const computeOutcome = (
       ? { markdown: 1, sellThrough: 0, margin: 0, capital: 1 }
       : { markdown: 1.15, sellThrough: 2, margin: -0.8, capital: 1.1 };
 
-  // Only 'markdown' clusters actually shift with these levers.
   const shift = c.action === 'markdown';
 
+  const factor = obj.markdown * floor.markdown;
+
   const markdownPct = shift
-    ? Math.round(c.recommendedMarkdownPct * obj.markdown * horizonAdj.markdown * floor.markdown)
+    ? Math.round(c.recommendedMarkdownPct * factor)
     : c.recommendedMarkdownPct;
 
   const recommendedPrice = shift
@@ -73,22 +65,28 @@ const computeOutcome = (
     : c.recommendedPrice;
 
   const sellThroughProjectedPct = clamp(
-    Math.round(c.sellThroughProjectedPct + obj.sellThrough + horizonAdj.sellThrough + floor.sellThrough),
+    Math.round(c.sellThroughProjectedPct + obj.sellThrough + floor.sellThrough),
     50,
     95,
   );
 
   const marginPreservedPp =
-    Math.round((c.marginPreservedPp + obj.margin + horizonAdj.margin + floor.margin) * 10) / 10;
+    Math.round((c.marginPreservedPp + obj.margin + floor.margin) * 10) / 10;
 
   const capitalUnlockedBRL = Math.round(
-    (c.capitalUnlockedBRL * obj.capital * horizonAdj.capital * floor.capital) / 1000,
+    (c.capitalUnlockedBRL * obj.capital * floor.capital) / 1000,
   ) * 1000;
 
   const nextAction =
-    c.action === 'markdown'
-      ? `Markdown de ${markdownPct}% agora`
-      : c.nextAction;
+    c.action === 'markdown' ? `Markdown de ${markdownPct}% agora` : c.nextAction;
+
+  // Recompute SKU-level prices based on cluster factor.
+  const skus: SkuRow[] = c.skus.map((s) => {
+    if (!shift || s.markdownPct === 0) return s;
+    const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
+    const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
+    return { ...s, markdownPct: mdPct, recommendedPrice: price };
+  });
 
   return {
     recommendedPrice,
@@ -100,6 +98,7 @@ const computeOutcome = (
     agedStockPct: c.agedStockPct,
     marginPreservedPp,
     capitalUnlockedBRL,
+    skus,
   };
 };
 
@@ -120,11 +119,9 @@ const PriceTurnoverDemo = () => {
   const [progress, setProgress] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>('interior-sp');
 
-  const [category, setCategory] = useState('all');
   const [product, setProduct] = useState('sku-1');
   const [region, setRegion] = useState('all');
   const [objective, setObjective] = useState('balanced');
-  const [horizon, setHorizon] = useState('30');
   const [minMargin, setMinMargin] = useState('30');
 
   const visibleClusters = useMemo(
@@ -139,9 +136,9 @@ const PriceTurnoverDemo = () => {
 
   const derivedByCluster = useMemo(() => {
     const map = new Map<string, Derived>();
-    visibleClusters.forEach((c) => map.set(c.id, computeOutcome(c, objective, horizon, minMargin)));
+    visibleClusters.forEach((c) => map.set(c.id, computeOutcome(c, objective, minMargin)));
     return map;
-  }, [visibleClusters, objective, horizon, minMargin]);
+  }, [visibleClusters, objective, minMargin]);
 
   const derived = selected ? derivedByCluster.get(selected.id) ?? null : null;
 
@@ -192,13 +189,12 @@ const PriceTurnoverDemo = () => {
             {phase !== 'result' ? (
               <SetupView
                 clusters={visibleClusters}
+                derivedByCluster={derivedByCluster}
                 selectedId={selected?.id ?? null}
                 onSelect={setSelectedId}
-                category={category} setCategory={setCategory}
                 product={product} setProduct={setProduct}
                 region={region} setRegion={setRegion}
                 objective={objective} setObjective={setObjective}
-                horizon={horizon} setHorizon={setHorizon}
                 minMargin={minMargin} setMinMargin={setMinMargin}
                 onCalculate={() => setPhase('running')}
                 running={phase === 'running'}
@@ -209,7 +205,8 @@ const PriceTurnoverDemo = () => {
                 <ResultLeft
                   clusters={visibleClusters}
                   derivedByCluster={derivedByCluster}
-                  selectedId={selected.id}
+                  selected={selected}
+                  derived={derived}
                   onSelect={setSelectedId}
                 />
               )
@@ -305,8 +302,6 @@ const PriceTurnoverDemo = () => {
                 <KpiPill label="Capital liberado" value={fmtBRLk(derived.capitalUnlockedBRL)} />
               </div>
 
-              <MarkdownRuler derived={derived} price={derived.recommendedPrice} />
-
               <div className="kiosk-insight-card relative rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.55vmin] text-white/95 leading-relaxed">
                 <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
                   <Sparkles className="w-[1.4vmin] h-[1.4vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
@@ -346,11 +341,79 @@ const PriceTurnoverDemo = () => {
         }
         .kiosk-insight-card { animation: kiosk-insight-in .5s ease-out .1s both, kiosk-insight-glow 2.4s ease-in-out .1s infinite; }
         .kiosk-insight-sparkle { animation: kiosk-insight-sparkle 1.8s ease-in-out infinite; }
-        @keyframes kiosk-pin-pulse {
-          0%, 100% { transform: scale(1);   opacity: 1; }
-          50%      { transform: scale(1.25); opacity: .85; }
-        }
       `}</style>
+    </div>
+  );
+};
+
+// ============================================================
+// Cluster list (shared setup + result)
+// ============================================================
+
+const ClusterList = ({
+  clusters,
+  derivedByCluster,
+  selectedId,
+  onSelect,
+  showPrice,
+}: {
+  clusters: TurnoverCluster[];
+  derivedByCluster: Map<string, Derived>;
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+  showPrice?: boolean;
+}) => {
+  return (
+    <div className="rounded-xl border border-white/10 overflow-hidden">
+      <div className={`grid ${showPrice ? 'grid-cols-[1.4fr_1fr_0.9fr_1.3fr]' : 'grid-cols-[1.4fr_1fr_1fr_1fr]'} px-[1.2vmin] py-[0.8vmin] bg-white/[0.05] text-[1.05vmin] uppercase tracking-[0.18em] font-semibold text-white/60`}>
+        <span>Cluster</span>
+        <span>Situação</span>
+        {showPrice ? (
+          <>
+            <span className="text-right">Preço</span>
+            <span className="text-right">Próxima ação</span>
+          </>
+        ) : (
+          <>
+            <span className="text-right">Estoque</span>
+            <span className="text-right">Velocidade</span>
+          </>
+        )}
+      </div>
+      {clusters.map((c) => {
+        const d = derivedByCluster.get(c.id);
+        const active = c.id === selectedId;
+        return (
+          <button
+            key={c.id}
+            type="button"
+            onClick={() => onSelect(c.id)}
+            className={`w-full grid ${showPrice ? 'grid-cols-[1.4fr_1fr_0.9fr_1.3fr]' : 'grid-cols-[1.4fr_1fr_1fr_1fr]'} items-center px-[1.2vmin] py-[1vmin] text-[1.3vmin] border-t border-white/10 text-left transition ${
+              active ? 'bg-[#F4845F]/15 ring-1 ring-[#F4845F]/60' : 'hover:bg-white/[0.04]'
+            }`}
+          >
+            <span className="flex items-center gap-[0.7vmin] text-white/90 font-semibold">
+              <span
+                className="w-[1.2vmin] h-[1.2vmin] rounded-full flex-shrink-0"
+                style={{ background: actionColor[c.action] }}
+              />
+              {c.name}
+            </span>
+            <span className="text-white/70">{c.situation}</span>
+            {showPrice && d ? (
+              <>
+                <span className="text-right text-white font-mono">{fmtBRL(d.recommendedPrice)}</span>
+                <span className="text-right text-white/85">{d.nextAction}</span>
+              </>
+            ) : (
+              <>
+                <span className="text-right text-white/85 font-mono">{c.stockUnits.toLocaleString('pt-BR')} un</span>
+                <span className="text-right text-white/85 font-mono">{c.sellVelocity} un/sem</span>
+              </>
+            )}
+          </button>
+        );
+      })}
     </div>
   );
 };
@@ -361,13 +424,12 @@ const PriceTurnoverDemo = () => {
 
 interface SetupProps {
   clusters: TurnoverCluster[];
+  derivedByCluster: Map<string, Derived>;
   selectedId: string | null;
   onSelect: (id: string) => void;
-  category: string; setCategory: (v: string) => void;
   product: string; setProduct: (v: string) => void;
   region: string; setRegion: (v: string) => void;
   objective: string; setObjective: (v: string) => void;
-  horizon: string; setHorizon: (v: string) => void;
   minMargin: string; setMinMargin: (v: string) => void;
   onCalculate: () => void;
   running: boolean;
@@ -375,58 +437,59 @@ interface SetupProps {
 }
 
 const SetupView = ({
-  clusters, selectedId, onSelect,
-  category, setCategory, product, setProduct, region, setRegion,
-  objective, setObjective, horizon, setHorizon, minMargin, setMinMargin,
+  clusters, derivedByCluster, selectedId, onSelect,
+  product, setProduct, region, setRegion,
+  objective, setObjective, minMargin, setMinMargin,
   onCalculate, running, canCalculate,
 }: SetupProps) => {
   const selected = clusters.find((c) => c.id === selectedId) ?? clusters[0] ?? null;
   return (
     <>
-      <div className="grid grid-cols-[1.15fr_1fr] gap-[1.2vmin]">
-        <BrazilMap clusters={clusters} selectedId={selected?.id ?? null} onSelect={onSelect} />
+      <ClusterList
+        clusters={clusters}
+        derivedByCluster={derivedByCluster}
+        selectedId={selected?.id ?? null}
+        onSelect={onSelect}
+      />
 
-        {selected && (
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-[1.4vmin] flex flex-col gap-[0.9vmin]">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-[0.8vmin]">
-                <span
-                  className="w-[1.4vmin] h-[1.4vmin] rounded-full"
-                  style={{ background: actionColor[selected.action] }}
-                />
-                <span className="text-[1.55vmin] font-bold text-white leading-tight">
-                  {selected.name}
-                </span>
-              </div>
-              <span className="text-[1.1vmin] uppercase tracking-[0.18em] font-semibold text-white/50">
-                {selected.stores} lojas
+      {selected && (
+        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-[1.4vmin] flex flex-col gap-[0.9vmin]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-[0.8vmin]">
+              <span
+                className="w-[1.4vmin] h-[1.4vmin] rounded-full"
+                style={{ background: actionColor[selected.action] }}
+              />
+              <span className="text-[1.55vmin] font-bold text-white leading-tight">
+                {selected.name}
               </span>
+              <span className="text-[1.2vmin] text-white/55">· {selected.region}</span>
             </div>
-            <span className="text-[1.2vmin] text-white/55">{selected.region}</span>
-
-            <div className="grid grid-cols-2 gap-[0.6vmin] mt-[0.4vmin]">
-              <StatCell label="Estoque" value={`${selected.stockUnits.toLocaleString('pt-BR')} un`} />
-              <StatCell label="Idade média" value={`${selected.avgStockAgeDays} d`} />
-              <StatCell label="Velocidade" value={`${selected.sellVelocity} un/sem`} />
-              <StatCell label="Média cat." value={`${selected.categoryAvgVelocity} un/sem`} />
-              <StatCell label="Markdown atual" value={`${selected.currentMarkdownPct}%`} />
-              <StatCell label="Margem restante" value={`${selected.remainingMarginPp} pp`} />
-            </div>
+            <span className="text-[1.1vmin] uppercase tracking-[0.18em] font-semibold text-white/50">
+              {selected.stores} lojas
+            </span>
           </div>
-        )}
-      </div>
+
+          <div className="grid grid-cols-3 gap-[0.6vmin]">
+            <StatCell label="Estoque" value={`${selected.stockUnits.toLocaleString('pt-BR')} un`} />
+            <StatCell label="Idade média" value={`${selected.avgStockAgeDays} d`} />
+            <StatCell label="Velocidade" value={`${selected.sellVelocity} un/sem`} />
+            <StatCell label="Média cat." value={`${selected.categoryAvgVelocity} un/sem`} />
+            <StatCell label="Markdown atual" value={`${selected.currentMarkdownPct}%`} />
+            <StatCell label="Margem restante" value={`${selected.remainingMarginPp} pp`} />
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col gap-[1vmin]">
-        <FilterRow label="Filtros">
-          <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
+        <FilterRow label="Filtros" cols={2}>
           <TouchSelect label="Produto" value={product} onChange={setProduct} options={filterOptions.product} />
           <TouchSelect label="Loja / Região / Cluster" value={region} onChange={setRegion} options={filterOptions.region} />
         </FilterRow>
-        <FilterRow label="Restrições">
-          <TouchSelect label="Prazo" value={horizon} onChange={setHorizon} options={filterOptions.horizon} />
+        <FilterRow label="Restrições" cols={1}>
           <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
         </FilterRow>
-        <FilterRow label="Objetivo">
+        <FilterRow label="Objetivo" cols={1}>
           <TouchSelect label="Objetivo de desova" value={objective} onChange={setObjective} options={filterOptions.objective} />
         </FilterRow>
       </div>
@@ -449,153 +512,72 @@ const SetupView = ({
 };
 
 // ============================================================
-// Result — left panel (map + table)
+// Result — left panel (list + SKU table + ruler)
 // ============================================================
 
 const ResultLeft = ({
   clusters,
   derivedByCluster,
-  selectedId,
+  selected,
+  derived,
   onSelect,
 }: {
   clusters: TurnoverCluster[];
   derivedByCluster: Map<string, Derived>;
-  selectedId: string;
+  selected: TurnoverCluster;
+  derived: Derived;
   onSelect: (id: string) => void;
 }) => {
   return (
     <>
-      <BrazilMap clusters={clusters} selectedId={selectedId} onSelect={onSelect} showBadges derivedByCluster={derivedByCluster} />
+      <ClusterList
+        clusters={clusters}
+        derivedByCluster={derivedByCluster}
+        selectedId={selected.id}
+        onSelect={onSelect}
+        showPrice
+      />
 
       <div className="rounded-xl border border-white/10 overflow-hidden">
-        <div className="grid grid-cols-[1.4fr_1fr_0.9fr_1.3fr] px-[1.2vmin] py-[0.8vmin] bg-white/[0.05] text-[1.05vmin] uppercase tracking-[0.18em] font-semibold text-white/60">
-          <span>Cluster</span>
-          <span>Situação</span>
-          <span className="text-right">Preço</span>
-          <span className="text-right">Próxima ação</span>
+        <div className="flex items-center justify-between px-[1.2vmin] py-[0.8vmin] bg-white/[0.05]">
+          <span className="text-[1.05vmin] uppercase tracking-[0.18em] font-semibold text-white/60">
+            Preços por SKU · {selected.name}
+          </span>
+          <span
+            className="text-[1.1vmin] font-semibold uppercase tracking-[0.15em]"
+            style={{ color: actionColor[selected.action] }}
+          >
+            {actionLabel[selected.action]}
+          </span>
         </div>
-        {clusters.map((c) => {
-          const d = derivedByCluster.get(c.id);
-          if (!d) return null;
-          const active = c.id === selectedId;
-          return (
-            <button
-              key={c.id}
-              type="button"
-              onClick={() => onSelect(c.id)}
-              className={`w-full grid grid-cols-[1.4fr_1fr_0.9fr_1.3fr] items-center px-[1.2vmin] py-[1vmin] text-[1.3vmin] border-t border-white/10 text-left transition ${
-                active ? 'bg-[#F4845F]/15 ring-1 ring-[#F4845F]/60' : 'hover:bg-white/[0.04]'
-              }`}
-            >
-              <span className="flex items-center gap-[0.7vmin] text-white/90 font-semibold">
-                <span
-                  className="w-[1.2vmin] h-[1.2vmin] rounded-full flex-shrink-0"
-                  style={{ background: actionColor[c.action] }}
-                />
-                {c.name}
-              </span>
-              <span className="text-white/70">{c.situation}</span>
-              <span className="text-right text-white font-mono">{fmtBRL(d.recommendedPrice)}</span>
-              <span className="text-right text-white/85">{d.nextAction}</span>
-            </button>
-          );
-        })}
+        <div className="grid grid-cols-[1.6fr_0.9fr_1fr_0.7fr_0.9fr] px-[1.2vmin] py-[0.6vmin] text-[1vmin] uppercase tracking-[0.16em] font-semibold text-white/55 border-t border-white/10">
+          <span>SKU</span>
+          <span className="text-right">Preço atual</span>
+          <span className="text-right">Recomendado</span>
+          <span className="text-right">Markdown</span>
+          <span className="text-right">Sell-through</span>
+        </div>
+        {derived.skus.map((s) => (
+          <div
+            key={s.sku}
+            className="grid grid-cols-[1.6fr_0.9fr_1fr_0.7fr_0.9fr] items-center px-[1.2vmin] py-[0.9vmin] text-[1.25vmin] border-t border-white/10"
+          >
+            <span className="text-white/90">
+              <span className="block font-semibold leading-tight">{s.name}</span>
+              <span className="block text-[1vmin] text-white/45 font-mono">{s.sku}</span>
+            </span>
+            <span className="text-right text-white/60 font-mono line-through">{fmtBRL(s.currentPrice)}</span>
+            <span className="text-right text-white font-mono font-semibold">{fmtBRL(s.recommendedPrice)}</span>
+            <span className="text-right font-mono" style={{ color: s.markdownPct > 0 ? '#F4845F' : 'rgba(255,255,255,0.55)' }}>
+              {s.markdownPct > 0 ? `−${s.markdownPct}%` : '—'}
+            </span>
+            <span className="text-right text-white/85 font-mono">{s.sellThroughProjectedPct}%</span>
+          </div>
+        ))}
       </div>
+
+      <MarkdownRuler derived={derived} price={derived.recommendedPrice} />
     </>
-  );
-};
-
-// ============================================================
-// Brazil-ish map (stylised SVG)
-// ============================================================
-
-const BrazilMap = ({
-  clusters,
-  selectedId,
-  onSelect,
-  showBadges,
-  derivedByCluster,
-}: {
-  clusters: TurnoverCluster[];
-  selectedId: string | null;
-  onSelect: (id: string) => void;
-  showBadges?: boolean;
-  derivedByCluster?: Map<string, Derived>;
-}) => {
-  const W = 400;
-  const H = 500;
-
-  // Simplified silhouette (approximate Brazil outline)
-  const outline =
-    'M 210 40 L 245 60 L 275 55 L 305 75 L 330 100 L 340 140 L 355 180 L 345 220 L 355 260 L 340 300 L 320 330 L 300 355 L 285 385 L 260 410 L 240 435 L 220 445 L 195 435 L 170 410 L 150 375 L 140 335 L 125 300 L 110 260 L 100 220 L 105 180 L 120 145 L 140 110 L 165 80 L 190 55 Z';
-
-  return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-[1vmin]">
-      <div className="flex items-center justify-between mb-[0.6vmin]">
-        <span className="flex items-center gap-[0.6vmin] text-[1.2vmin] tracking-[0.2em] uppercase font-semibold text-white/60">
-          <MapPin className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" />
-          Mapa de clusters
-        </span>
-        <div className="flex items-center gap-[1vmin] text-[1.05vmin] text-white/50">
-          <LegendDot color={actionColor.hold} label="Manter" />
-          <LegendDot color={actionColor.markdown} label="Markdown" />
-          <LegendDot color={actionColor.wait} label="Aguardar" />
-        </div>
-      </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
-        <defs>
-          <radialGradient id="brazil-fill" cx="50%" cy="50%" r="60%">
-            <stop offset="0%" stopColor="rgba(244,132,95,0.10)" />
-            <stop offset="100%" stopColor="rgba(244,132,95,0.02)" />
-          </radialGradient>
-        </defs>
-        <path d={outline} fill="url(#brazil-fill)" stroke="rgba(255,255,255,0.18)" strokeWidth={1.5} />
-
-        {clusters.map((c) => {
-          const active = c.id === selectedId;
-          const color = actionColor[c.action];
-          const derived = derivedByCluster?.get(c.id);
-          return (
-            <g
-              key={c.id}
-              transform={`translate(${c.x} ${c.y})`}
-              onClick={() => onSelect(c.id)}
-              style={{ cursor: 'pointer' }}
-            >
-              {active && <circle r={18} fill={color} opacity={0.18} />}
-              <circle
-                r={active ? 10 : 8}
-                fill={color}
-                stroke={active ? '#fff' : 'rgba(255,255,255,0.35)'}
-                strokeWidth={active ? 2 : 1.2}
-                style={active ? { transformOrigin: 'center', animation: 'kiosk-pin-pulse 1.6s ease-in-out infinite' } : undefined}
-              />
-              <text x={14} y={4} fontSize="11" fill={active ? '#fff' : 'rgba(255,255,255,0.75)'} fontWeight={active ? 700 : 500}>
-                {c.name}
-              </text>
-              {showBadges && derived && (
-                <g transform="translate(14, 10)">
-                  <rect
-                    x={0} y={0} rx={4} ry={4}
-                    width={c.action === 'markdown' ? 82 : 68}
-                    height={14}
-                    fill={color}
-                    opacity={0.9}
-                  />
-                  <text x={6} y={10} fontSize="9" fill="#fff" fontWeight={700}>
-                    {c.action === 'markdown'
-                      ? `Markdown ${derived.recommendedMarkdownPct}%`
-                      : c.action === 'wait'
-                      ? `Aguardar ${derived.actInDays}d`
-                      : 'Manter preço'}
-                  </text>
-                </g>
-              )}
-            </g>
-          );
-        })}
-      </svg>
-    </div>
   );
 };
 
@@ -617,7 +599,7 @@ const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) 
       ? 0
       : derived.action === 'wait'
       ? 0.44
-      : 0; // markdown = act now
+      : 0;
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-[1.2vmin]">
@@ -631,9 +613,7 @@ const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) 
         </span>
       </div>
       <div className="relative h-[3.6vmin]">
-        {/* base line */}
         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[0.35vmin] bg-white/10 rounded-full" />
-        {/* filled portion up to target */}
         <div
           className="absolute left-0 top-1/2 -translate-y-1/2 h-[0.35vmin] rounded-full"
           style={{
@@ -658,7 +638,6 @@ const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) 
             <span className="mt-[0.4vmin] text-[1vmin] text-white/55">{s.label}</span>
           </div>
         ))}
-        {/* target pin */}
         <div
           className="absolute -translate-x-1/2"
           style={{ left: `${targetT * 100}%`, top: '-0.6vmin' }}
@@ -676,12 +655,17 @@ const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) 
 // Small primitives
 // ============================================================
 
-const FilterRow = ({ label, children }: { label: string; children: ReactNode }) => (
+const FilterRow = ({ label, cols, children }: { label: string; cols: 1 | 2 | 3; children: ReactNode }) => (
   <div className="rounded-xl border border-white/10 bg-white/[0.02] px-[1.2vmin] py-[1vmin]">
     <span className="block text-[1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.7vmin]">
       {label}
     </span>
-    <div className="grid grid-cols-3 gap-[0.9vmin]">{children}</div>
+    <div
+      className="grid gap-[0.9vmin]"
+      style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+    >
+      {children}
+    </div>
   </div>
 );
 
@@ -694,13 +678,6 @@ const StatCell = ({ label, value }: { label: string; value: string }) => (
       {value}
     </span>
   </div>
-);
-
-const LegendDot = ({ color, label }: { color: string; label: string }) => (
-  <span className="inline-flex items-center gap-[0.4vmin]">
-    <span className="w-[1vmin] h-[1vmin] rounded-full" style={{ background: color }} />
-    {label}
-  </span>
 );
 
 const KpiPill = ({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) => (
