@@ -287,6 +287,39 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
                   lang={lang}
                 />
               )}
+              {activeScenario === 'targetsPotential' && 'potentialTable' in scenario && (
+                <TargetsPotentialTable
+                  data={(scenario as typeof t.scenarios.targetsPotential).potentialTable}
+                  lang={lang}
+                />
+              )}
+              {activeScenario === 'targetsRisk' && 'scatter' in scenario && (
+                <>
+                  <TargetsRiskScatter
+                    data={(scenario as typeof t.scenarios.targetsRisk).scatter}
+                    lang={lang}
+                  />
+                  <TargetsRiskTable data={(scenario as typeof t.scenarios.targetsRisk).riskTable} />
+                  <TargetsSignalsTable
+                    data={(scenario as typeof t.scenarios.targetsRisk).signalsTable}
+                    lang={lang}
+                  />
+                </>
+              )}
+
+              {(activeScenario === 'targetsPotential' || activeScenario === 'targetsRisk') && 'reasoning' in scenario && (
+                <div className="mt-[2.5vmin] rounded-[1.4vmin] border border-orange-200 bg-orange-50/60 p-[2vmin]">
+                  <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
+                    <Brain className="w-[2vmin] h-[2vmin] text-orange-500" />
+                    <span className="text-orange-600 font-semibold text-[1.4vmin] uppercase tracking-wider">
+                      {lang === 'pt' ? 'Argumentação preditiva' : 'Predictive reasoning'}
+                    </span>
+                  </div>
+                  <p className="text-gray-700 text-[1.75vmin] leading-relaxed">
+                    {(scenario as { reasoning: string }).reasoning}
+                  </p>
+                </div>
+              )}
 
               <h4 className="text-orange-500 font-semibold text-[1.6vmin] mt-[2.5vmin] mb-[1vmin] uppercase tracking-wider">
                 {t.recommendedActions}
