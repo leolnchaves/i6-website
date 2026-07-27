@@ -187,7 +187,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
       <span className="block text-[1.6vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[1.2vmin]">
         {lang === 'pt' ? 'SELECIONE UMA CATEGORIA E TIPO DE CLIENTE' : 'SELECT A CATEGORY AND CUSTOMER TYPE'}
       </span>
-      <div className="mb-[1.5vmin] flex flex-col gap-[1vmin]">
+      <div className="mb-[1.5vmin] grid grid-cols-2 gap-[1vmin]">
         {rows.map((r) => {
           const isFashion = r.v === 'fashion';
           const rowClass = isFashion
