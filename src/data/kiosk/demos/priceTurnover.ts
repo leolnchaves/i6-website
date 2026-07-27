@@ -136,6 +136,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 148000,
     argument:
       'Sell-through das últimas 4 semanas está 18% abaixo do necessário para zerar antes da próxima coleção. Elasticidade −1,3 nesta faixa: um corte cirúrgico de 8% projeta +22% em unidades e libera R$ 148 mil de capital antes que a idade do estoque (47d) ultrapasse a média da categoria. Preserva 6,2 pp a mais de margem que uma liquidação tardia típica de 25%.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 74 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 72 },
+      { sku: 'JQT-INV-005', name: 'Jaqueta acolchoada cinza G', currentPrice: 129.9, recommendedPrice: 115.9, markdownPct: 11, sellThroughProjectedPct: 69 },
+      { sku: 'JQT-INV-006', name: 'Jaqueta acolchoada verde P', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 71 },
+    ],
   },
   {
     id: 'minas-gerais',
