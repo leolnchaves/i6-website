@@ -22,6 +22,7 @@ interface Props {
   secondaryResolve?: string;
   secondaryEntrega?: string;
   secondaryImpacto?: string;
+  icon?: IconType;
   children: ReactNode;
 }
 
