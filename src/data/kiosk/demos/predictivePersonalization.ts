@@ -392,23 +392,23 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
     objective: { pt: 'Descoberta', en: 'Discovery' },
     features: [
       {
-        label: { pt: 'Cold start', en: 'Cold start' },
-        microMetric: { pt: 'geo · hora · canal · device', en: 'geo · hour · channel · device' },
+        label: { pt: 'Lendo os sinais desta sessão anônima', en: 'Reading the signals from this anonymous session' },
+        microMetric: { pt: 'Região, horário, canal de entrada e tipo de dispositivo para dar contexto ao modelo.', en: 'Region, time, entry channel and device type give context to the model.' },
         durationMs: 520,
       },
       {
-        label: { pt: 'Similaridade comportamental', en: 'Behavioral similarity' },
-        microMetric: { pt: 'embeddings de sessão · k=32', en: 'session embeddings · k=32' },
+        label: { pt: 'Encontrando clientes com comportamento parecido', en: 'Finding customers with similar behavior' },
+        microMetric: { pt: 'Embeddings de sessão aproximam esta visita a clusters de compradores similares.', en: 'Session embeddings bring this visit close to clusters of similar shoppers.' },
         durationMs: 560,
       },
       {
-        label: { pt: 'Aderência contextual', en: 'Contextual fit' },
-        microMetric: { pt: 'catálogo · estoque · trend', en: 'catalog · stock · trend' },
+        label: { pt: 'Filtrando por catálogo disponível e tendências do momento', en: 'Filtering by available catalog and current trends' },
+        microMetric: { pt: 'Só entram itens em estoque, com preço saudável e com tração recente.', en: 'Only in-stock items with healthy pricing and recent traction are kept.' },
         durationMs: 440,
       },
       {
-        label: { pt: 'Descoberta ranking', en: 'Discovery ranking' },
-        microMetric: { pt: 'i6RecSys · active learning', en: 'i6RecSys · active learning' },
+        label: { pt: 'Rankeando descobertas com maior chance de engajar', en: 'Ranking discoveries with the highest chance to engage' },
+        microMetric: { pt: 'Modelo i6RecSys aprende em tempo real quais produtos convertem melhor neste tipo de sessão.', en: 'The i6RecSys model learns in real time which products convert best in this session profile.' },
         durationMs: 520,
       },
     ],
