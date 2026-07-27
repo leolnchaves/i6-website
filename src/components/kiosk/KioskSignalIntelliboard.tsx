@@ -203,7 +203,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
       </div>
 
       {/* Intelliboard response panel */}
-      <div className="rounded-[2vmin] shadow-2xl border border-white/10 overflow-hidden">
+      <div className="rounded-[2vmin] shadow-2xl border border-white/10 overflow-hidden w-full min-w-0">
         {/* ── Intelliboard Header ── */}
         <div
           className="flex items-center justify-between px-[3vmin] py-[2vmin]"
