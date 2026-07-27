@@ -1,18 +1,51 @@
-## Problema
-Na conclusão de "Personalização + Descoberta Preditiva", quando o usuário escolhe **Moda**, o quadro de resultados (produto selecionado + Look) fica visivelmente mais alto que o quadro equivalente de **Bens de Consumo**.
+## Objetivo
 
-A causa está em `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`:
-- Fashion (linhas 273-325): card à esquerda usa imagem em `aspect-[3/4]` (retrato grande) → domina a altura; o card do Look à direita cresce por `items-stretch` para acompanhar.
-- Bens de Consumo (linhas 328-348): card único horizontal com miniatura `14vmin × 14vmin` → altura bem menor.
+Nas soluções que já usam o `SimulationLauncher` (Personalização + Descoberta Preditiva e Campanhas por Propensão), forçar o fluxo pelo botão "Simular": enquanto o usuário não abrir e fechar o modal, o `KioskSignalIntelliboard` e o `EbookCTA` ficam ocultos. Ao fechar o modal, ambos aparecem e a tela rola até o i6 Signal.
 
-## Ajuste
-Reescrever o bloco Moda para ter a mesma "moldura" compacta do CG, mantendo o Look ao lado:
+## Mudanças
 
-1. **Card do produto selecionado (Moda)**: trocar layout retrato por horizontal, espelhando o do CG — miniatura `14vmin × 14vmin`, categoria/nome/preço à direita. Remove o `aspect-[3/4]` que estava esticando a coluna.
-2. **Card do Look (direita)**: manter grid `0.85fr / 1.7fr` e `items-stretch`, mas como o card da esquerda passa a ter altura compacta, o Look encolhe junto. Reduzir também o número de itens visíveis para 3 (já é o caso) e diminuir a miniatura de `11vmin` para ~`9vmin` para não estourar a altura alvo.
-3. Garantir que a altura resultante do bloco Moda seja igual à do card horizontal do CG (aprox. `14vmin` + paddings), sem alterar o restante da tela (KPIs, timeline, etc.).
+### 1) `SimulationLauncher` expõe evento de "simulação concluída"
+`src/components/kiosk/SimulationLauncher.tsx`
+- Adicionar prop opcional `onSimulationClosed?: () => void`.
+- Chamar `onSimulationClosed()` dentro de `close()` (tanto pelo botão inferior "Fechar Simulação" quanto pela tecla Esc).
+- Remover o botão X do canto superior direito do modal (bloco `<button ... aria-label={t.closeSimulation}> <X/> </button>`). O fechamento passa a ser exclusivamente pelo botão inferior (e Esc, mantido).
 
-Nenhuma outra tela/demo é afetada.
+### 2) `SolutionDemoBlock` repassa o callback
+`src/components/kiosk/SolutionDemoBlock.tsx`
+- Adicionar prop `onSimulationClosed?: () => void` na interface `Props`.
+- Repassá-la ao `SimulationLauncher` nos ramos `predictive-personalization` / `smart-discovery` e `predictive-campaign-targeting`.
 
-## Arquivos
-- `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx` — reescrever apenas o ramo `vertical === 'fashion' && phase === 'pdp'` (linhas ~273-325).
+### 3) `Kiosk.tsx` controla a visibilidade condicional
+`src/pages/Kiosk.tsx`
+- Novo estado `simulationCompleted: Record<string, boolean>` (chave = `solutionId`), resetado em `reset()` e ao trocar de solução selecionada não é resetado (mantém progresso por solução dentro da mesma sessão).
+- Identificar soluções migradas (já existe a lista local `migratedIds`).
+- Renderização dentro do bloco `#kiosk-solution-demo`:
+  - `SolutionDemoBlock` sempre visível.
+  - Se `isMigrated` e `!simulationCompleted[selectedSolution.id]`: **ocultar** `KioskSignalIntelliboard` e `EbookCTA`.
+  - Se não migrada, comportamento atual permanece (sempre visíveis).
+- Passar `onSimulationClosed` ao `SolutionDemoBlock` apenas para migradas:
+  ```ts
+  () => {
+    setSimulationCompleted((s) => ({ ...s, [selectedSolution.id]: true }));
+    requestAnimationFrame(() => {
+      document.getElementById('kiosk-signal-intelliboard')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  ```
+
+### 4) Âncora de scroll no Signal
+`src/components/kiosk/KioskSignalIntelliboard.tsx`
+- Adicionar `id="kiosk-signal-intelliboard"` no elemento raiz (container externo) para o scroll suave após fechar o modal.
+
+## Fora de escopo
+
+- Demos que ainda não usam `SimulationLauncher` (Price*, Demand, Commercial Targets, Mix) permanecem inalteradas.
+- Sem mudanças de conteúdo, textos ou tracking.
+
+## Verificação
+
+- Fluxo Kiosk → resultado com Personalização (ou Campanhas): apenas o card da solução com botão "Simular" aparece; Signal e CTA não visíveis.
+- Abrir modal: apenas botão inferior "Fechar Simulação" (sem X no topo).
+- Fechar modal: Signal e CTA aparecem e a tela rola até o Signal.
+- Demais soluções (não migradas) continuam mostrando Signal e CTA imediatamente.
