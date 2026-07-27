@@ -16,6 +16,10 @@ import {
   PdvBarChart,
   PropensityByProductChart,
   BehaviorClustersTable,
+  TargetsPotentialTable,
+  TargetsRiskScatter,
+  TargetsRiskTable,
+  TargetsSignalsTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
 import { trackKioskEvent } from '@/lib/kioskTracker';
