@@ -305,7 +305,7 @@ export const signalDemoContent = {
       },
       mixBehavior: {
         label: 'Mix por PDV',
-        question: 'Como os PDVs desta região se comportam em relação ao mix ideal, e quais apresentam desvios relevantes ou oportunidades fora do padrão?',
+        question: 'Como os PDVs da região se comportam em relação ao mix ideal e mostre os desvios relevantes?',
         title: 'Comportamento dos PDVs em relação ao mix ideal',
         analysis: 'O modelo identificou três comportamentos predominantes entre os PDVs da região. A maior parte opera próxima ao mix esperado para seu perfil, mas 18% apresentam desvios relevantes. Alguns possuem variedade abaixo do potencial previsto, enquanto outros concentram produtos redundantes ou de baixo giro. O PDV 184 é o principal outlier positivo — mesmo com um mix 22% menor que a média regional, apresenta alta produtividade por SKU e potencial para absorver novas categorias. Já o PDV 327 possui um mix amplo, mas pouco aderente ao comportamento previsto de sua demanda, elevando o risco de estoque parado.',
         scatter: [
@@ -344,7 +344,7 @@ export const signalDemoContent = {
       },
       mixGaps: {
         label: 'Gaps de Mix',
-        question: 'Por região, quais produtos apresentam o maior gap no mix atual e o maior potencial de aumentar o ticket médio dos PDVs?',
+        question: 'Mostre quais produtos apresentam maior gap no mix ideal com maior potencial de aumento de ticket médio.',
         title: 'Gaps de mix com maior potencial de ticket por região',
         analysis: 'O modelo identificou 14 produtos sub-representados no mix atual, mas apenas cinco concentram a maior oportunidade de crescimento de ticket. No Interior de São Paulo, os SKUs A e C apresentam o maior potencial porque possuem alta aderência ao comportamento previsto dos PDVs, recorrência em estabelecimentos semelhantes e forte complementaridade com produtos já vendidos. A inclusão desses produtos nos PDVs elegíveis pode elevar o ticket médio regional em até 12%, sem ampliar significativamente o risco de estoque parado.\n\nO SKU A apresenta o maior gap no Interior de São Paulo porque está ausente em 38% dos PDVs que demonstram comportamento compatível com sua categoria. Esses estabelecimentos já vendem produtos complementares, possuem frequência de compra crescente e apresentam ticket inferior ao de PDVs semelhantes com o SKU presente. A oportunidade não está em distribuir o produto para toda a região — o modelo recomenda sua inclusão apenas nos 126 PDVs com maior aderência prevista.',
         heatmap: {
@@ -1015,7 +1015,7 @@ export const signalDemoContent = {
       },
       mixBehavior: {
         label: 'Mix by Store',
-        question: 'How do stores in this region behave relative to the ideal assortment, and which ones show meaningful deviations or non-standard opportunities?',
+        question: 'How do stores in the region behave relative to the ideal assortment and show meaningful deviations?',
         title: 'Store behavior versus ideal assortment',
         analysis: 'The model identified three predominant behaviors among the region\u2019s stores. Most operate close to the assortment expected for their profile, but 18% show meaningful deviations. Some carry variety below predicted potential, while others concentrate redundant or low-turn products. Store 184 is the leading positive outlier — with an assortment 22% smaller than the regional average, it still shows high productivity per SKU and headroom to absorb new categories. Store 327, in turn, carries a broad assortment that poorly matches its predicted demand behavior, raising the risk of idle inventory.',
         scatter: [
@@ -1054,7 +1054,7 @@ export const signalDemoContent = {
       },
       mixGaps: {
         label: 'Assortment Gaps',
-        question: 'By region, which products show the largest gap in the current assortment and the largest potential to lift average basket per store?',
+        question: 'Show which products have the largest gap in the ideal assortment with the highest potential to lift average basket.',
         title: 'Assortment gaps with highest basket potential by region',
         analysis: 'The model identified 14 under-represented products in the current assortment, but only five concentrate the largest basket-growth opportunity. In São Paulo Countryside, SKUs A and C hold the highest potential due to strong adherence to store behavior, recurrence in similar outlets and complementarity with products already sold. Adding these products to eligible stores can lift regional average basket by up to 12% without materially increasing idle-inventory risk.\n\nSKU A shows the largest gap in São Paulo Countryside because it is missing in 38% of stores that behave in line with its category. These outlets already sell complementary products, show rising purchase frequency and post a lower basket than similar stores that already carry the SKU. The opportunity is not to distribute it across the whole region — the model recommends including it only in the 126 stores with the highest predicted adherence.',
         heatmap: {
