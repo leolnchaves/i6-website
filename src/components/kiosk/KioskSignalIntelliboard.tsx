@@ -228,7 +228,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
         </div>
 
         {/* Chat surface */}
-        <div className="bg-white p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto">
+        <div className="bg-white p-[3vmin] min-h-[35vmin] max-h-[80vmin] overflow-y-auto overflow-x-hidden w-full min-w-0">
           {!activeScenario && (
             <div className="h-full min-h-[30vmin] flex items-center justify-center text-center">
               <div>
