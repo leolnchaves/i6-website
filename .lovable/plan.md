@@ -1,52 +1,74 @@
 
 ## Objetivo
 
-Remover, em 8 respostas do i6 Signal, os blocos que explicam como o modelo pensa (leitura comportamental / sinais / detalhamento / correlações / "o que o modelo observa em cada sessão"), pois já duplicam a "Análise Executiva" e as tabelas principais. Fazer também 2 ajustes visuais.
+Padronizar a exibição dos KPIs "após o cálculo do modelo" sempre no **lado esquerdo** da conclusão (abaixo do resultado), como já ocorre em Demand Forecast, Commercial Targets e Mix/Sortimento. Hoje as 3 telas de preços mostram esses KPIs na coluna direita (dentro do card "Como o modelo está pensando", acima do bloco "Por que…"). E a Personalização + Descoberta Preditiva não mostra KPIs — vamos adicionar.
 
-Escopo: apenas UI. Nada muda em dados, tracking, rotas, i18n. Sem tocar em KPIs, ações recomendadas ou gráficos principais (exceto o ajuste do gráfico do item 2).
+Escopo: apenas UI/apresentação. Sem mudanças em dados, tracking, i18n de textos existentes ou lógica de cálculo. Sem mudanças no i6 Signal.
 
-## Mudanças
+**Importante:** na coluna direita, **manter visíveis os passos do pipeline / treinamento do modelo** após o cálculo — eles não são escondidos. Só o bloco de KPIs sai da direita.
 
-Todas concentradas em `src/components/kiosk/KioskSignalIntelliboard.tsx` (remoção de renderizações) e em `src/components/signalDemo/visualizations.tsx` (ajuste do gráfico + limpeza de badges).
+## 1) Preços — mover KPIs para o lado esquerdo
 
-### Remoções em `KioskSignalIntelliboard.tsx`
+Arquivos:
+- `src/components/kiosk/demos/PriceMarginDemo.tsx`
+- `src/components/kiosk/demos/PriceTurnoverDemo.tsx`
+- `src/components/kiosk/demos/PriceToMarginDemo.tsx` (Preço → Conversão)
 
-| # | Cenário | Bloco removido | Componente |
-|---|---------|----------------|------------|
-| 1 | `targetsRisk` (Metas Comerciais, R2) | Sinais que sustentam a previsão | `TargetsSignalsTable` |
-| 2 | `mixBehavior` (Mix, R1) | Leitura comportamental | `MixBehaviorReading` |
-| 3 | `mixGaps` (Mix, R2) | Detalhamento comportamental | `MixGapsDetailList` |
-| 4 | `personalizationBehavior` (Personalização, R1) | Sinais que sustentam a recomendação | `PersonalizationSignalsTable` |
-| 5 | `personalizationRepurchase` (Personalização, R2) | Correlações comportamentais | `RepurchaseCorrelationsTable` |
-| 6 | `marginOpportunities` (Margem, R1) | Leitura comportamental | `MarginBehaviorReading` |
-| 7 | `priceConversionFriction` (Conversão, R1) | Sinais comportamentais | `PriceConversionSignalsTable` |
-| 8 | `priceConversionIncentiveNeed` (Conversão, R2) | O que o modelo observa em cada sessão | `PriceConversionDetailList` |
+Em cada um:
 
-Em cada bloco, remover apenas a tag do componente correspondente dentro do fragmento `<>...</>`, preservando os demais elementos (heatmap/scatter, tabela principal e ações recomendadas). Nenhum outro componente ou import se torna órfão em `KioskSignalIntelliboard.tsx` — os componentes continuam exportados por `visualizations.tsx` e podem ser mantidos por ora (limpeza opcional, ver abaixo).
+1. **Coluna esquerda (Result view)**: logo abaixo do resultado (tabela / gráfico / régua), inserir um bloco de KPIs no mesmo estilo dos demais demos, reusando o `MetricPill` já existente no próprio arquivo, com exatamente os mesmos valores hoje exibidos no card direito:
+   - PriceMargin: Confiança · Impacto na margem · Impacto no volume (3 pills, `grid grid-cols-3`).
+   - PriceTurnover: os 4 pills atuais do card direito (`grid grid-cols-4`).
+   - PriceToMargin (conversão): os 2–4 pills atuais.
+2. **Coluna direita (Conclusion card)**: remover **apenas** a grid de KPIs. Preservar:
+   - Pipeline de passos do modelo (permanece visível depois do cálculo, como hoje).
+   - Cabeçalho "{nome} · Recomendação pronta".
+   - Insight "Por que…".
+   - Botão "Nova simulação".
+3. Nada muda em `derived`, `selected` ou nos cálculos — só realocação de renderização.
 
-### Ajuste do gráfico — item 2 (Mix, R1)
+Layout depois:
 
-Em `MixBehaviorScatter` (barras horizontais empilhadas Aderente × Gap) as barras estão curtas demais no eixo X. Ajustes:
+```text
+┌──────────── LEFT ────────────┐  ┌──── RIGHT ────┐
+│ Resultado do modelo          │  │ Pipeline       │
+│ (tabela / gráfico / régua)   │  │ ▸ passo 1 ✓    │
+│                              │  │ ▸ passo 2 ✓    │
+│ [KPI] [KPI] [KPI] [KPI]      │  │ ▸ passo 3 ✓    │
+│                              │  │                │
+└──────────────────────────────┘  │ Card conclusão │
+                                  │  · nome        │
+                                  │  · Por que…    │
+                                  │  · Nova simul. │
+                                  └────────────────┘
+```
 
-- Fixar o domínio do XAxis em `[0, 100]` (percentuais somam 100), removendo o auto-fit que hoje comprime as barras.
-- Aumentar a altura do container e a largura das barras (`barCategoryGap` menor, `barSize` maior) para leitura confortável em portrait.
-- Manter cores, tooltip e legenda atuais.
+## 2) Personalização + Descoberta Preditiva — adicionar KPIs à esquerda
 
-### Ajuste dos badges — item 7 (Conversão, R1)
+Arquivo: `src/components/kiosk/demos/PredictivePersonalizationDemo.tsx`
 
-Nas tabelas de `priceConversionFriction` (`PriceConversionContextTable` e o que restar em tela), aplicar a mesma regra já adotada nas demais respostas: **sem badges, sem boxes coloridos** — apenas cor de fonte. Onde ainda houver `<span>` com `bg-*/border-*/rounded-*` para status/tom, converter para texto com apenas classe de cor (`text-*`), reutilizando o padrão dos helpers de tom já existentes no arquivo. Nenhum novo helper necessário.
+Ao final da fase `pdp` (após o "training"), inserir na coluna esquerda, abaixo do PDP/look recomendado, um bloco `grid grid-cols-3 gap-[1vmin]` usando o mesmo `MetricPill` das demais telas, com `animate-fade-in`. A coluna direita continua exibindo o pipeline de treinamento normalmente.
 
-## Limpeza opcional (não-bloqueante)
+### KPIs sugeridos (3 fixos, cobrem logado/anônimo × fashion/products)
 
-Como consequência, estes 8 componentes deixam de ser usados no intelliboard. Podemos:
-- (a) Manter no arquivo `visualizations.tsx` (sem custo em runtime; risco zero) — recomendado agora.
-- (b) Remover em uma release seguinte junto com os campos `signalsTable`, `behaviorReading`, `behaviorDetail`, `correlationsTable`, `detail` em `src/data/signalDemo/content.ts`.
+1. **Uplift de ticket médio** — aproveita o `mult` já presente no cenário (ex.: "+1,6×" ou "+62%"). Rótulo PT "Uplift no ticket" · EN "Ticket uplift". Destaque (`highlight`, `trend="up"`).
+2. **Propensão de cross-sell** — probabilidade de completar o look / adicionar acessório-periférico. Ex.: 72% (logado) / 58% (anônimo). Rótulo PT "Propensão cross-sell" · EN "Cross-sell propensity".
+3. **Confiança do modelo** — % (ex.: 92% logado / 78% anônimo, refletindo o modo). Rótulo PT "Confiança" · EN "Confidence".
 
-Recomendação: seguir com (a) nesta rodada para manter o diff pequeno e reversível.
+Se preferir 4 pills, dá para incluir uma quarta: "Aderência ao perfil" (logado) / "Intenção de sessão" (anônimo). Recomendo ficar em 3 para manter respiro visual.
 
-## Checagens antes de fechar
+### Sobre os dados
 
-- Cada uma das 8 respostas continua com: título, Análise Executiva, visualização principal (heatmap/scatter/gráfico/tabela) e Ações recomendadas.
-- Nenhum erro de TS por variável não usada (as remoções são só de JSX; os helpers seguem em `visualizations.tsx`).
-- Em Mix R1, as barras ocupam largura confortável e a leitura Aderente vs Gap fica clara em 0–100%.
-- Em Conversão R1, nenhuma célula de tabela mantém fundo/borda colorida — só cor de fonte.
+Se algum campo ainda não existir no cenário (`ticketUpliftLabel`, `crossSellPct`, `confidencePct`), adicionamos aos 4 objetos de `scenarios` em `src/data/kiosk/demos/predictivePersonalization.ts` com valores plausíveis coerentes com o resto do demo — sem alterar a lógica de recomendação.
+
+## Confirmações antes de fechar
+
+1. Os 3 KPIs sugeridos para Personalização estão bons? Prefere trocar/adicionar algum (ex.: "Aderência ao perfil", "Cobertura do look")?
+2. Confirmado: coluna direita das 3 telas de preços mantém o pipeline de treinamento visível; só a grid de KPIs sai.
+
+## Detalhes técnicos
+
+- Componentes `MetricPill` já existem em cada demo; reutilizar o do próprio arquivo (assinatura idêntica).
+- Sem mudanças em `KioskSignalIntelliboard`, `src/data/signalDemo/*`, tracker ou analytics.
+- Novos rótulos PT/EN de KPI em Personalização adicionados a `uiLabels`.
+- Sem impacto em rota, SEO ou build de conteúdo.
