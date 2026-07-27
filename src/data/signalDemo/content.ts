@@ -188,7 +188,7 @@ export const signalDemoContent = {
       },
       clusters: {
         label: 'Clusters de Comportamento',
-        question: 'Defina o melhor cluster de comportamento de compra para que eu crie uma régua de campanha.',
+        question: 'Defina o melhor cluster de comportamento de compra.',
         title: 'Clusters Comportamentais — Base Ativa para Régua de Campanha',
         analysis: 'A base ativa foi segmentada em 4 clusters comportamentais a partir de sinais preditivos de recência, frequência, ticket, sensibilidade a preço e resposta a canais. Cada cluster tem uma régua de campanha própria — ritmo, canal e oferta — para maximizar engajamento e conversão sem sobreposição de contato.',
         clustersTable: {
@@ -898,7 +898,7 @@ export const signalDemoContent = {
       },
       clusters: {
         label: 'Behavior Clusters',
-        question: 'Define the best purchase-behavior cluster so I can build a campaign cadence.',
+        question: 'Define the best purchase-behavior cluster.',
         title: 'Behavioral Clusters — Active Base for Campaign Cadence',
         analysis: 'The active base was segmented into 4 behavioral clusters using predictive signals: recency, frequency, ticket, price sensitivity and channel response. Each cluster has its own campaign cadence — rhythm, channel and offer — to maximize engagement and conversion without contact overlap.',
         clustersTable: {
