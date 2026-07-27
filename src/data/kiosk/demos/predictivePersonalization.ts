@@ -443,23 +443,23 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
     objective: { pt: 'Descoberta · Look', en: 'Discovery · Outfit' },
     features: [
       {
-        label: { pt: 'Cold start', en: 'Cold start' },
-        microMetric: { pt: 'geo · clima · hora · canal', en: 'geo · weather · hour · channel' },
+        label: { pt: 'Lendo os sinais desta visita anônima', en: 'Reading the signals from this anonymous visit' },
+        microMetric: { pt: 'Clima, região, horário e canal de entrada guiam a leitura da intenção.', en: 'Weather, region, time and entry channel guide the intent reading.' },
         durationMs: 520,
       },
       {
-        label: { pt: 'Similaridade comportamental', en: 'Behavioral similarity' },
-        microMetric: { pt: 'embeddings de sessão · k=24', en: 'session embeddings · k=24' },
+        label: { pt: 'Encontrando visitas parecidas para inferir preferências', en: 'Finding similar visits to infer preferences' },
+        microMetric: { pt: 'Embeddings de sessão aproximam esta visita de perfis de estilo similares.', en: 'Session embeddings bring this visit close to similar style profiles.' },
         durationMs: 560,
       },
       {
-        label: { pt: 'Estilo & paleta', en: 'Style & palette' },
-        microMetric: { pt: 'inferido da sessão · confiança 0.72', en: 'inferred from session · conf 0.72' },
+        label: { pt: 'Inferindo o estilo e a paleta prováveis desta sessão', en: 'Inferring the likely style and palette of this session' },
+        microMetric: { pt: 'Estilo inferido com confiança moderada, base para compor peças que combinam entre si.', en: 'Style inferred with moderate confidence, a base to compose pieces that match each other.' },
         durationMs: 480,
       },
       {
-        label: { pt: 'Outfit composer', en: 'Outfit composer' },
-        microMetric: { pt: 'i6RecSys · topo. loss', en: 'i6RecSys · topo. loss' },
+        label: { pt: 'Compondo um look coerente com o contexto atual', en: 'Composing an outfit consistent with the current context' },
+        microMetric: { pt: 'Outfit composer i6RecSys prioriza uma combinação alinhada ao clima, ao momento e ao item explorado.', en: 'The i6RecSys outfit composer prioritizes a combination aligned to weather, moment and the explored item.' },
         durationMs: 540,
       },
     ],
