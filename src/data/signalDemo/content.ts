@@ -1336,7 +1336,94 @@ export const signalDemoContent = {
           'What is the predicted financial impact if activation happens outside the window?',
         ],
       },
+      priceConversionFriction: {
+        label: 'Price Friction',
+        question: 'Which products, sessions and contexts show the current price is reducing conversion probability?',
+        title: 'Predictive price friction along the purchase journey',
+        analysis: 'The model identified that price is capping conversion in 14% of sessions with high purchase intent. The largest opportunity lies with users who returned to the product, compared alternatives and reached the cart, but found a price above the predicted highest-response band for that context.\n\nFriction does not occur uniformly. Product A shows the highest sensitivity in sessions from paid media, where users show heavier comparison, higher sensitivity and weaker brand affinity. Product B, on the other hand, keeps solid conversion among returning customers even without incentive, since intent is already high and predicted probability stays within the expected band.',
+        frictionHeatmap: {
+          contexts: ['Paid media', 'Returning customer', 'Organic search', 'Returning cart', 'First visit'],
+          products: ['Product A', 'Product B', 'Product C', 'Product D'],
+          matrix: [
+            [82, 24, 58, 71, 28],
+            [46, 18, 62, 55, 22],
+            [64, 32, 44, 68, 34],
+            [38, 20, 41, 47, 18],
+          ],
+        },
+        contextTable: {
+          headers: ['Product and context', 'Predicted intent', 'Price friction', 'Predicted conversion', 'Recommended direction'],
+          rows: [
+            ['Product A · paid media', 'High', 'High', '4.8%', 'Contextual incentive'],
+            ['Product A · returning customer', 'High', 'Low', '9.7%', 'Hold price'],
+            ['Product B · organic search', 'Medium', 'Medium', '5.9%', 'Moderate adjust'],
+            ['Product C · returning cart', 'Very high', 'High', '7.2%', 'Immediate action'],
+            ['Product D · first visit', 'Low', 'Low', '1.8%', 'Do not incentivize'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Predictive signal', 'Model reading'],
+          rows: [
+            ['Return to the same product', 'Rising intent'],
+            ['Frequent comparison of alternatives', 'Price sensitivity'],
+            ['Cart entry and exit', 'Decision friction'],
+            ['Coupon or promo search', 'Incentive expectation'],
+            ['Full-price purchase history', 'Low incentive need'],
+            ['Short, low-engagement session', 'Low intent regardless of price'],
+          ],
+        },
+        actions: [
+          { bold: 'Apply price actions only in sessions with high intent', text: 'and proven price friction.' },
+          { bold: 'Preserve price for customers with high probability', text: 'of spontaneous conversion.' },
+          { bold: 'Avoid incentives in low-intent sessions', text: 'where price is not the main obstacle.' },
+        ],
+        questions: [
+          'How does friction evolve across acquisition channels and session profiles?',
+          'Which contexts show the largest predicted lift when friction is removed?',
+          'How to validate the price recommendations with a controlled pilot?',
+        ],
+      },
+      priceConversionIncentiveNeed: {
+        label: 'Incentive Need',
+        question: 'Which users need a price incentive to convert, and which would buy without a discount?',
+        title: 'Predictive incentive need by behavior',
+        analysis: 'The model estimates 57% of high-intent sessions should convert without any incentive. Another 28% show enough sensitivity to respond to a moderate price action. In the remaining 15%, discount should not produce relevant incremental conversion.\n\nApplying the same incentive across the whole audience would destroy margin on customers who would already buy and burn budget on sessions with low response probability. The model distinguishes, for example, a user with high intent and a purchase history in the category — who should not receive a discount — from a session with recurring price comparison, coupon search and abandonment after seeing the final value — which responds to a moderate incentive within the allowed margin.',
+        distribution: [
+          { group: 'Spontaneous conversion', percentage: 57 },
+          { group: 'Incentive-dependent conversion', percentage: 28 },
+          { group: 'Low response even with incentive', percentage: 15 },
+        ],
+        incentiveTable: {
+          headers: ['Predicted behavior', 'Sessions', 'Current probability', 'Recommended action', 'Reason'],
+          rows: [
+            ['Would buy without incentive', '18,420', '82%', 'Hold price', 'Intent already consolidated'],
+            ['Responds to moderate incentive', '9,060', '54%', 'Controlled incentive', 'High sensitivity'],
+            ['Waits for a specific condition', '3,480', '47%', 'Targeted benefit', 'Looks for shipping or convenience'],
+            ['Currently low intent', '4,910', '16%', 'Do not discount', 'Low incremental gain'],
+          ],
+        },
+        detail: [
+          'Which signals indicate intent.',
+          'Predicted price sensitivity.',
+          'Spontaneous conversion probability.',
+          'Minimum sufficient incentive.',
+          'Available margin.',
+          'Best channel and timing.',
+          'Risk of granting a discount without generating incremental sale.',
+        ],
+        actions: [
+          { bold: 'Suppress discounts for users with high probability', text: 'of spontaneous conversion.' },
+          { bold: 'Offer the smallest incentive capable of changing the decision', text: 'in price-sensitive sessions.' },
+          { bold: 'Do not use price to recover low-intent sessions', text: 'prioritizing other journey or recommendation actions.' },
+        ],
+        questions: [
+          'How does the minimum incentive vary across category and basket?',
+          'What is the predicted margin impact of restricting discounts to the sensitive group?',
+          'How to monitor the incentive-dependent group over time?',
+        ],
+      },
     },
+
   },
 };
 
