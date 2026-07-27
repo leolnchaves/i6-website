@@ -731,7 +731,6 @@ const BreakdownCard = ({
   const parts = [
     { label: L.result.trend, value: point.trend ?? 0 },
     { label: L.result.season, value: point.season ?? 0 },
-    { label: L.result.sparsityFix, value: point.sparsityFix ?? 0 },
   ];
   const positive = parts.reduce((s, p) => s + Math.max(0, p.value), 0);
   const promoText = point.hasPromo ? (lang === 'pt' ? sku.promoNotePt : sku.promoNoteEn) : null;
