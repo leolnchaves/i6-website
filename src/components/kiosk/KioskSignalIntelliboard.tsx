@@ -250,7 +250,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
           )}
 
           {activeScenario && showResponse && scenario && (
-            <div ref={responseRef} className="animate-fade-in">
+            <div ref={responseRef} className="animate-fade-in w-full min-w-0">
               <h3 className="text-gray-900 font-bold text-[2.4vmin] mb-[1.5vmin]">
                 {scenario.title}
               </h3>
