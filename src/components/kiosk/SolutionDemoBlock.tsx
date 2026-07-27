@@ -56,6 +56,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
         entrega={join(solution.entrega, companion?.entrega)}
         impacto={join(solution.impacto, companion?.impacto)}
         labels={labels}
+        icon={UserRoundSearch}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>
