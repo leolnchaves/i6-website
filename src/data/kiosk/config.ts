@@ -51,6 +51,10 @@ export interface QuizContent {
     tieTitle: string;
     tieSubtitle: string;
     selectSolutionHint: string;
+    simulateButton: string;
+    closeSimulation: string;
+    matrixFashion: string;
+    matrixProducts: string;
     signalEyebrow: string;
     signalTitle: string;
     signalSubtitle: string;
