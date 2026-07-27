@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Check, Sparkles, TrendingUp, TrendingDown, Layers } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
 import {
