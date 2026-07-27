@@ -37,11 +37,13 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
   // Interactive demo for Predictive Personalization + Smart Discovery combo
   if (solution.id === 'predictive-personalization' || solution.id === 'smart-discovery') {
     return (
-      <PersonalizationSimulationLauncher
+      <SimulationLauncher
         lang={lang}
         solutionTitle={solution.title}
         solutionTagline={solution.tagline}
-      />
+      >
+        <PredictivePersonalizationDemo lang={lang} />
+      </SimulationLauncher>
     );
   }
 
