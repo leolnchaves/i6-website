@@ -404,17 +404,25 @@ const SetupView = ({
 }: SetupProps) => {
   return (
     <>
-      {/* Filters */}
-      <div className="grid grid-cols-3 gap-[1vmin]">
-        <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
-        <TouchSelect label="Região / Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
-        <TouchSelect label="Estratégia corporativa" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
-        <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
-        <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col justify-center px-[1.4vmin]">
-          <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/55">Portfólio</span>
-          <span className="text-[1.7vmin] font-semibold text-white">{filtered.length} SKUs</span>
-        </div>
+      {/* Filters — grouped in 3 rows: Filtros / Restrições / Objetivo */}
+      <div className="flex flex-col gap-[1.2vmin]">
+        <FilterRow label="Filtros">
+          <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
+          <TouchSelect label="Região / Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col justify-center px-[1.4vmin]">
+            <span className="text-[1.05vmin] tracking-[0.2em] uppercase font-semibold text-white/55">Portfólio</span>
+            <span className="text-[1.7vmin] font-semibold text-white">{filtered.length} SKUs</span>
+          </div>
+        </FilterRow>
+
+        <FilterRow label="Restrições">
+          <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
+          <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
+        </FilterRow>
+
+        <FilterRow label="Objetivo">
+          <TouchSelect label="Estratégia corporativa" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
+        </FilterRow>
       </div>
 
       {/* Portfolio table */}
