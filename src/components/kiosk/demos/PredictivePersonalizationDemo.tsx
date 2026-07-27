@@ -35,15 +35,15 @@ const MetricPill = ({
   trend?: 'up' | 'down';
 }) => (
   <div
-    className={`rounded-lg border px-[1.2vmin] py-[0.9vmin] ${
+    className={`rounded-lg border px-[1.8vmin] py-[1.5vmin] ${
       highlight ? 'border-[#F4845F]/50 bg-[#F4845F]/10' : 'border-white/10 bg-white/[0.03]'
     }`}
   >
-    <span className="block text-[1vmin] tracking-[0.2em] uppercase font-semibold text-white/55 mb-[0.2vmin]">
+    <span className="block text-[1.25vmin] tracking-[0.2em] uppercase font-semibold text-white/55 mb-[0.6vmin]">
       {label}
     </span>
-    <span className={`inline-flex items-center gap-[0.5vmin] text-[1.7vmin] font-bold ${highlight ? 'text-[#F4845F]' : 'text-white'}`}>
-      {trend === 'up' && <TrendingUp className="w-[1.5vmin] h-[1.5vmin]" />}
+    <span className={`inline-flex items-center gap-[0.5vmin] text-[2.4vmin] font-bold ${highlight ? 'text-[#F4845F]' : 'text-white'}`}>
+      {trend === 'up' && <TrendingUp className="w-[2vmin] h-[2vmin]" />}
       {value}
     </span>
   </div>
