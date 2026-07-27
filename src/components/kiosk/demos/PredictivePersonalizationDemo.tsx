@@ -277,16 +277,16 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
                 {vertical === 'fashion' && phase === 'pdp' ? (
                   <div className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)] gap-[1.2vmin] items-stretch animate-fade-in">
-                    <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin] flex items-center">
-                      <div className="flex gap-[1.5vmin] items-center w-full">
-                        <div className="w-[14vmin] h-[14vmin] flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
+                    <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[1.6vmin] flex flex-col">
+                      <div className="flex flex-col gap-[1vmin] items-center text-center w-full">
+                        <div className="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/[0.02]">
                           <img src={selected.image} alt="" className="w-full h-full object-cover" />
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <span className="block text-[1.2vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.2vmin]">
+                        <div className="w-full">
+                          <span className="block text-[1.2vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]">
                             {selected.category[lang]}
                           </span>
-                          <h5 className="text-[1.7vmin] leading-tight text-white font-bold mb-[0.4vmin]">
+                          <h5 className="text-[1.7vmin] leading-tight text-white font-bold mb-[0.5vmin]">
                             {selected.name[lang]}
                           </h5>
                           <span
