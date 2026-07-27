@@ -214,12 +214,6 @@ export const clusters: TurnoverCluster[] = [
 ];
 
 export const filterOptions = {
-  category: [
-    { value: 'all', label: 'Todas as categorias' },
-    { value: 'fashion', label: 'Moda · Coleção corrente' },
-    { value: 'sazonal', label: 'Sazonal · Inverno' },
-    { value: 'basico', label: 'Básicos · Fluxo contínuo' },
-  ],
   product: [
     { value: 'sku-1', label: 'Jaqueta acolchoada — coleção inverno' },
     { value: 'sku-2', label: 'Bota térmica premium' },
@@ -236,12 +230,6 @@ export const filterOptions = {
     { value: 'balanced', label: 'Equilibrado (giro × margem)' },
     { value: 'aggressive', label: 'Desova agressiva' },
     { value: 'preserve', label: 'Preservar margem' },
-  ],
-  horizon: [
-    { value: '14', label: 'Até 14 dias' },
-    { value: '30', label: 'Até 30 dias' },
-    { value: '45', label: 'Até 45 dias' },
-    { value: '60', label: 'Até 60 dias' },
   ],
   minMargin: [
     { value: '25', label: '≥ 25%' },
