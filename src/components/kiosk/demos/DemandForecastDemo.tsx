@@ -705,7 +705,7 @@ const CompositionChart = ({
       <div className="flex flex-wrap gap-[1.4vmin] mt-[0.8vmin] text-[1.2vmin] text-white/75">
         <LegendDot color={colors.trend} label={L.result.trend} />
         <LegendDot color={colors.season} dashed label={L.result.season} />
-        <LegendDot square color={colors.sparsityFix} label={L.result.sparsityFix} />
+        
         <span className="inline-flex items-center gap-[0.5vmin]">
           <span className="inline-block w-[1.4vmin] h-[1.4vmin] rounded-full" style={{ background: colors.promo, border: '1.5px solid #0B1224', boxShadow: '0 0 0 1px rgba(255,255,255,0.15)' }} />
           <span>{L.result.promo}</span>
