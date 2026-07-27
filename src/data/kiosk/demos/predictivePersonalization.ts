@@ -332,28 +332,28 @@ export const scenarios: Record<`${UserMode}-${Vertical}`, ScenarioContent> = {
     objective: { pt: 'Cross-sell · Look', en: 'Cross-sell · Outfit' },
     features: [
       {
-        label: { pt: 'Histórico de sessões', en: 'Session history' },
-        microMetric: { pt: '187 eventos · janela 30d', en: '187 events · 30d window' },
+        label: { pt: 'Lendo o histórico de estilo e navegação do cliente', en: 'Reading the customer’s style and browsing history' },
+        microMetric: { pt: 'Peças visualizadas e compradas nos últimos 30 dias no perfil identificado.', en: 'Items viewed and purchased in the last 30 days on the identified profile.' },
         durationMs: 520,
       },
       {
-        label: { pt: 'Estilo & paleta', en: 'Style & palette' },
-        microMetric: { pt: 'cluster: urban-minimal', en: 'cluster: urban-minimal' },
+        label: { pt: 'Inferindo estilo e paleta preferidos', en: 'Inferring preferred style and palette' },
+        microMetric: { pt: 'Cluster de estilo urban-minimal, com preferência por tons neutros e caimento reto.', en: 'Urban-minimal style cluster, favoring neutral tones and straight-fit cuts.' },
         durationMs: 480,
       },
       {
-        label: { pt: 'Co-visualização', en: 'Co-view graph' },
-        microMetric: { pt: 'grafo 2-hop · 96 nós', en: '2-hop graph · 96 nodes' },
+        label: { pt: 'Buscando peças que combinam com a âncora escolhida', en: 'Finding pieces that match the selected anchor' },
+        microMetric: { pt: 'Grafo de co-look identifica bottoms, calçados e sobreposições que fecham a composição.', en: 'Co-outfit graph identifies bottoms, footwear and layers that complete the look.' },
         durationMs: 500,
       },
       {
-        label: { pt: 'Aderência contextual', en: 'Contextual fit' },
-        microMetric: { pt: 'estação · geo · estoque', en: 'season · geo · stock' },
+        label: { pt: 'Ajustando o look ao contexto de estação, região e estoque', en: 'Adjusting the outfit to season, region and stock context' },
+        microMetric: { pt: 'Só permanecem peças coerentes com clima/geo e disponíveis para retirada rápida.', en: 'Only items aligned with weather/geo and available for fast fulfillment remain.' },
         durationMs: 420,
       },
       {
-        label: { pt: 'Outfit composer', en: 'Outfit composer' },
-        microMetric: { pt: 'i6RecSys · topo. loss', en: 'i6RecSys · topo. loss' },
+        label: { pt: 'Compondo o look final priorizando ticket médio', en: 'Composing the final outfit prioritizing average order value' },
+        microMetric: { pt: 'Outfit composer i6RecSys prioriza combinações que elevam o valor do carrinho sem quebrar o estilo.', en: 'The i6RecSys outfit composer prioritizes combos that lift AOV without breaking style.' },
         durationMs: 540,
       },
     ],
