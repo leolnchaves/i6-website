@@ -1,34 +1,35 @@
-## Plano: Mix, Sortimento e Pedido Ideal — 2 novas perguntas no i6 Signal
+## Plano: Preço Orientado à Margem — 2 novas perguntas no i6 Signal
 
-Segue o mesmo padrão usado em Metas Comerciais Preditivas (targetsPotential/targetsRisk): novos tipos de cenário + conteúdo PT/EN + componentes de visualização + wiring no Intelliboard.
+Segue o mesmo padrão de `mixBehavior`/`mixGaps` e `targetsPotential`/`targetsRisk`: novos tipos de cenário + conteúdo PT/EN + componentes de visualização + wiring no Intelliboard.
 
 ### 1. `src/data/signalDemo/content.ts`
-- Adicionar novos tipos: `mixBehavior` (Pergunta 1) e `mixGaps` (Pergunta 2) ao union `Scenario`.
-- Criar blocos PT e EN com:
-  - **mixBehavior**: `question`, `title`, `executive`, tabela de PDVs (`pdvTable`), dados do scatter (`scatter`: aderência × produtividade, tamanho = ticket, quadrantes outlier+/outlier-/padrão/emergente), `behaviorReading` (leitura comportamental, 2 parágrafos sobre PDV 184 e PDV 327), `actions`.
-  - **mixGaps**: `question`, `title`, `executive`, tabela de gaps (`gapsTable`), matriz de heatmap (`heatmap`: regiões × SKUs com intensidade), `behaviorDetail` (bullets de detalhamento comportamental), `reasoning` (argumentação preditiva), `actions`.
+- Adicionar `marginOpportunities` (Pergunta 1) e `marginSignals` (Pergunta 2) ao union `Scenario`.
+- Blocos PT e EN com:
+  - **marginOpportunities**: `question`, `title`, `executive`, `scatter` (sensibilidade × margem incremental, bolha = receita, destaque prioridade/risco), `skuTable` (SKU, Preço atual, Preço recomendado, Reação prevista do volume, Margem incremental, Confiança), `behaviorReading` (2 parágrafos SKU A / SKU D), `actions`.
+  - **marginSignals**: `question`, `title`, `executive`, `signalsChart` (contribuição por sinal: demanda prevista, sensibilidade, posição competitiva, estoque, margem atual, comportamento da categoria — barras divergentes por SKU), `signalsTable` (Espaço para margem, Principal sinal positivo, Principal restrição, Direção), `reasoning` (argumentação preditiva), `actions`.
 
 ### 2. `src/data/kiosk/config.ts`
-- Remapear `mix-assortment-order` no `solutionSignalMap` de `['mix', 'forecast']` para `['mixBehavior', 'mixGaps']`.
-- Estender a assinatura do `Record` com os dois novos ids.
+- Remapear `price-to-margin` em `solutionSignalMap` de `['pricing', 'mix']` para `['marginOpportunities', 'marginSignals']`.
+- Estender a assinatura do union com os dois novos ids.
 
 ### 3. `src/components/signalDemo/visualizations.tsx`
 Novos componentes:
-- `MixBehaviorScatter`: `ScatterChart` (aderência ao mix × giro/SKU, bubble = ticket) com destaque colorido para outliers +/− e legenda; reaproveita paleta usada em `TargetsRiskScatter`.
-- `MixBehaviorTable`: tabela dos PDVs (Perfil, Aderência, Desvio, Potencial) com badges tonais em Aderência (verde/âmbar/vermelho) e Potencial (verde/vermelho).
-- `MixGapsHeatmap`: grid Região × SKU pintado por intensidade da oportunidade (opacidade coral escalada por p.p. de gap), com tooltip nativo em cada célula.
-- `MixGapsTable`: tabela complementar (Presença atual, Presença ideal, Gap p.p., Potencial de ticket) com Gap destacado em coral e Potencial em verde.
-- `MixBehaviorReading` / `MixGapsDetailList`: blocos textuais estruturados (título coral + parágrafos ou lista de bullets) no mesmo tom dos quadros existentes.
+- `MarginOpportunitiesScatter`: `ScatterChart` recharts com eixo X = sensibilidade prevista, eixo Y = margem incremental potencial, bolha proporcional a receita; cores: coral para prioridade, âmbar para ajuste controlado, cinza para risco/manter. Reaproveita paleta de `TargetsRiskScatter`.
+- `MarginOpportunitiesTable`: tabela dos SKUs com badges tonais em Reação de volume (verde se ≤0, vermelho se >0 negativo material) e Margem incremental (verde/coral, "Sem oportunidade" em cinza), Confiança em coral suave.
+- `MarginSignalsChart`: gráfico de barras divergentes (positivo/negativo) por SKU × 6 sinais, em Recharts `BarChart` com layout horizontal empilhado — sinais positivos à direita, restrições à esquerda; legenda de sinais no topo.
+- `MarginSignalsTable`: Espaço para margem (badge Alto/Médio/Baixo/Negativo), Principal sinal positivo, Principal restrição, Direção (Aumentar/Ajuste controlado/Manter/Reduzir com cor).
+- `MarginBehaviorReading` / `MarginReasoningBlock`: blocos textuais no mesmo tom coral dos quadros existentes ("Leitura comportamental" e "Argumentação preditiva").
 
 ### 4. `src/components/kiosk/KioskSignalIntelliboard.tsx`
 - Importar os novos componentes.
-- Adicionar branches `activeScenario === 'mixBehavior'` e `=== 'mixGaps'` no bloco de renderização — antes do `h4 "Ações recomendadas"`.
-- No cenário `mixBehavior`: renderizar `MixBehaviorScatter` + `MixBehaviorTable` + quadro "Leitura comportamental".
-- No cenário `mixGaps`: renderizar `MixGapsHeatmap` + `MixGapsTable` + bloco "Detalhamento comportamental" + quadro "Argumentação preditiva" (reutilizando o mesmo container coral já usado em Metas).
+- Branches `activeScenario === 'marginOpportunities'` e `=== 'marginSignals'` antes do `h4 "Ações recomendadas"`.
+- `marginOpportunities`: `MarginOpportunitiesScatter` + `MarginOpportunitiesTable` + quadro "Leitura comportamental".
+- `marginSignals`: `MarginSignalsChart` + `MarginSignalsTable` + quadro "Argumentação preditiva" (mesmo container coral já usado em Metas/Mix).
 
 ### Notas técnicas
-- Nenhum novo pacote — apenas `recharts` (já em uso) para o scatter; o heatmap é feito em CSS grid + Tailwind para performance e simplicidade.
-- Textos em EN traduzidos preservando terminologia já adotada (PDV → PoS/Store, mix → assortment, ticket → basket).
-- Sem alteração em `signals.ts`, no fluxo do quiz ou nos dados de outros cenários.
+- Sem novos pacotes — `recharts` (já em uso) para scatter e barras divergentes.
+- Textos em EN preservando terminologia adotada (SKU permanece SKU; "banda competitiva" → "competitive band"; "margem incremental" → "incremental margin").
+- Valores em BRL nos exemplos (R$), como no briefing.
+- Sem alteração em `signals.ts`, no fluxo do quiz ou em outros cenários.
 
-Publicação de release patch após a validação visual.
+Publicação de release patch após validação visual.
