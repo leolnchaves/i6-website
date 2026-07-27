@@ -16,10 +16,27 @@ interface Props {
   entrega?: string;
   impacto?: string;
   labels?: Labels;
+  secondaryTitle?: string;
+  secondaryResolve?: string;
+  secondaryEntrega?: string;
+  secondaryImpacto?: string;
   children: ReactNode;
 }
 
-const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, resolve, entrega, impacto, labels, children }: Props) => {
+const SimulationLauncher = ({
+  lang,
+  solutionTitle,
+  solutionTagline,
+  resolve,
+  entrega,
+  impacto,
+  labels,
+  secondaryTitle,
+  secondaryResolve,
+  secondaryEntrega,
+  secondaryImpacto,
+  children,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const [instanceKey, setInstanceKey] = useState(0);
   const t = kioskContent[lang].results;
