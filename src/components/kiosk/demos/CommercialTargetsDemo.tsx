@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Minus, Shuffle, Sparkles, X } from 'lucide-react';
+import type { KioskLang } from '@/data/kiosk/config';
 import {
   dimensions,
   fmtBR,
@@ -19,7 +20,11 @@ type Phase = 'setup' | 'running' | 'result';
 
 const DASH = '—';
 
-const CommercialTargetsDemo = () => {
+interface Props {
+  lang?: KioskLang;
+}
+
+const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
   const [dim, setDim] = useState<DimensionId>('region');
   const [phase, setPhase] = useState<Phase>('setup');
   const [progress, setProgress] = useState(0);
@@ -71,9 +76,9 @@ const CommercialTargetsDemo = () => {
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      <div className="grid grid-cols-[1.3fr_1fr] gap-[3vmin] items-stretch">
-        {/* LEFT — tables + KPIs + highlights */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
+      <div className="flex flex-col gap-[2.4vmin]">
+        {/* TOP — dashboard / result */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col">
           <div className="flex items-baseline justify-between px-[2.5vmin] py-[1.6vmin] bg-white/[0.04] border-b border-white/10 gap-[1vmin]">
             <div>
               <h4 className="text-[2.2vmin] font-bold text-white leading-tight">
@@ -86,8 +91,8 @@ const CommercialTargetsDemo = () => {
             </span>
           </div>
 
-          <div className="p-[2.2vmin] flex-1 flex flex-col gap-[1.4vmin]">
-            {/* Dimension switcher — available in setup and after result */}
+          <div className="p-[2.2vmin] flex flex-col gap-[1.5vmin]">
+            {/* Dimension switcher */}
             <div className="flex flex-wrap gap-[0.6vmin]">
               {dimensions.map((d) => {
                 const active = d.id === dim;
@@ -116,7 +121,6 @@ const CommercialTargetsDemo = () => {
             <div className="rounded-xl border border-white/10 overflow-hidden">
               <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.15vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
                 <span>{dimensions.find((d) => d.id === dim)?.label}</span>
-
                 <span className="text-right">{L.result.tableCurrent}</span>
                 <span className="text-right">{L.result.tableSuggested}</span>
                 <span className="text-right">{L.result.tablePotential}</span>
@@ -225,50 +229,45 @@ const CommercialTargetsDemo = () => {
                     {showProjected ? <ActionBadge action={a.action} /> : <span className="text-white/40 text-[1.2vmin]">{DASH}</span>}
                   </span>
                 </div>
-
               ))}
             </div>
 
-            {/* KPIs + Highlights only after result */}
+            {/* KPIs after result */}
             {showProjected && (
-              <>
-                <div className="grid grid-cols-2 gap-[1vmin]">
-                  <ConclusionCard
-                    label={L.result.kpiVolume}
-                    value={`${fmtBR(result.kpis.incrementalVolume)} un.`}
-                    highlight
-                  />
-                  <ConclusionCard
-                    label={L.result.kpiTotalTarget}
-                    value={`${fmtBR(result.kpis.totalTarget)} un.`}
-                  />
-                  <ConclusionCard
-                    label={L.result.kpiInvestment}
-                    value={fmtBRL(result.kpis.suggestedInvestment)}
-                  />
-                  <ConclusionCard
-                    label={L.result.kpiCac}
-                    value={fmtCAC(result.kpis.projectedCac)}
-                  />
-                </div>
-
-
-              </>
+              <div className="grid grid-cols-4 gap-[1vmin]">
+                <ConclusionCard
+                  label={L.result.kpiVolume}
+                  value={`${fmtBR(result.kpis.incrementalVolume)} un.`}
+                  highlight
+                />
+                <ConclusionCard
+                  label={L.result.kpiTotalTarget}
+                  value={`${fmtBR(result.kpis.totalTarget)} un.`}
+                />
+                <ConclusionCard
+                  label={L.result.kpiInvestment}
+                  value={fmtBRL(result.kpis.suggestedInvestment)}
+                />
+                <ConclusionCard
+                  label={L.result.kpiCac}
+                  value={fmtCAC(result.kpis.projectedCac)}
+                />
+              </div>
             )}
 
-            {/* CTA to calculate (only in setup on the left side) */}
+            {/* CTA setup */}
             {phase === 'setup' && (
               <button
                 type="button"
                 onClick={() => setPhase('running')}
-                className="mt-auto self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
+                className="self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
               >
                 {L.setup.cta}
               </button>
             )}
 
             {phase === 'running' && (
-              <div className="mt-auto rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
+              <div className="rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
                 <span className="w-[1.8vmin] h-[1.8vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
                 <span className="text-[1.6vmin] text-white/90 font-semibold">{L.running}</span>
               </div>
@@ -276,99 +275,132 @@ const CommercialTargetsDemo = () => {
           </div>
         </div>
 
-        {/* RIGHT — reasoning steps (always) + POR QUE + Nova simulação */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
-          <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
-            <div className="flex-1">
-              <h4 className="text-[2vmin] font-bold text-white leading-tight">
-                {L.reasoningTitle}
-              </h4>
-              <p className="text-[1.4vmin] text-white/60">{L.reasoningSubtitle}</p>
+        {/* BOTTOM — reasoning: POR QUE + horizontal timeline */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin]">
+          <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
+            <div>
+              <h4 className="text-[1.9vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
+              <p className="text-[1.35vmin] text-white/60">{L.reasoningSubtitle}</p>
             </div>
           </div>
 
-          <div className="flex flex-col gap-[0.9vmin]">
-            {pipeline.map((step, i) => {
-              const state =
-                phase === 'setup'
-                  ? 'idle'
-                  : phase === 'result'
-                  ? 'done'
-                  : i < progress
-                  ? 'done'
-                  : i === progress
-                  ? 'active'
-                  : 'idle';
-              return (
-                <div
-                  key={i}
-                  className={`rounded-xl border p-[1.1vmin] transition-all ${
-                    state === 'active'
-                      ? 'border-[#F4845F] bg-[#F4845F]/10'
-                      : state === 'done'
-                      ? 'border-white/20 bg-white/[0.04]'
-                      : 'border-white/10 bg-white/[0.02] opacity-60'
-                  }`}
-                >
-                  <div className="flex items-center gap-[1.2vmin] mb-[0.4vmin]">
+          {/* POR QUE above timeline */}
+          {phase === 'result' && (
+            <div className="kiosk-insight-card mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.8vmin]">
+              <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
+                <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
+                <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                  {L.result.rationaleLabel}
+                </span>
+              </div>
+              <p className="text-[2vmin] leading-relaxed text-white/95">
+                {result.rationale.increase}
+              </p>
+            </div>
+          )}
+
+          {/* Micro-metric of active step */}
+          <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
+            {phase === 'running' && progress < pipeline.length && (
+              <span className="text-[1.2vmin] text-white/60 font-mono">
+                {pipeline[progress].micro}
+              </span>
+            )}
+          </div>
+
+          {/* Horizontal timeline */}
+          <div className="relative px-[2vmin] pb-[1vmin]">
+            <div className="absolute left-[3vmin] right-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-white/10" />
+            <div
+              className="absolute left-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-[#F4845F] transition-all duration-500"
+              style={{
+                width: `calc((100% - 6vmin) * ${
+                  pipeline.length > 1
+                    ? Math.min(progress, pipeline.length - 1) / (pipeline.length - 1)
+                    : 0
+                })`,
+              }}
+            />
+            <div
+              className="relative grid"
+              style={{ gridTemplateColumns: `repeat(${pipeline.length}, minmax(0,1fr))` }}
+            >
+              {pipeline.map((step, i) => {
+                const state =
+                  phase === 'setup'
+                    ? 'idle'
+                    : phase === 'running'
+                    ? i < progress
+                      ? 'done'
+                      : i === progress
+                      ? 'active'
+                      : 'idle'
+                    : 'done';
+                return (
+                  <div key={i} className="flex flex-col items-center gap-[0.8vmin] px-[0.5vmin]">
                     <span
-                      className={`flex-shrink-0 w-[2.2vmin] h-[2.2vmin] rounded-full flex items-center justify-center text-[1.2vmin] font-bold border-2 ${
+                      className={`flex-shrink-0 w-[3.8vmin] h-[3.8vmin] rounded-full flex items-center justify-center text-[1.5vmin] font-bold border-2 transition-all ${
                         state === 'done'
                           ? 'bg-[#F4845F] border-[#F4845F] text-white'
                           : state === 'active'
-                          ? 'border-[#F4845F] text-[#F4845F]'
-                          : 'border-white/30 text-white/50'
+                          ? 'border-[#F4845F] text-[#F4845F] bg-[#F4845F]/15 animate-pulse'
+                          : 'border-white/25 text-white/50 bg-[#0B1224]'
                       }`}
                     >
-                      {state === 'done' ? <Check className="w-[1.3vmin] h-[1.3vmin]" /> : i + 1}
+                      {state === 'done' ? <Check className="w-[1.8vmin] h-[1.8vmin]" /> : i + 1}
                     </span>
-                    <span className="text-[1.5vmin] leading-tight text-white/90 font-semibold">
+                    <span
+                      className={`text-center text-[1.3vmin] leading-tight font-semibold ${
+                        state === 'idle' ? 'text-white/45' : 'text-white/90'
+                      }`}
+                    >
                       {step.label}
                     </span>
-                  </div>
-                  <div className="pl-[3.4vmin]">
-                    <p className="text-[1.15vmin] text-white/60 font-mono mb-[0.4vmin]">
+                    <span
+                      className={`text-center text-[1.1vmin] leading-tight font-mono ${
+                        state === 'idle' ? 'text-white/30' : 'text-white/55'
+                      }`}
+                    >
                       {step.micro}
-                    </p>
-                    {state === 'active' && (
-                      <div className="h-[0.35vmin] rounded-full bg-white/10 overflow-hidden">
-                        <div
-                          className="h-full bg-[#F4845F] animate-[kiosk-progress_var(--dur)_linear_forwards]"
-                          style={{ ['--dur' as string]: `${step.durationMs}ms` }}
-                        />
-                      </div>
-                    )}
+                    </span>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
           {phase === 'result' && (
-            <>
-              <div className="relative mt-[1.4vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.35vmin] text-white/95 leading-relaxed">
-                <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.05vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
-                  <Sparkles className="w-[1.3vmin] h-[1.3vmin]" strokeWidth={2.5} />
-                  <span>Insight</span>
-                </div>
-                <span className="block text-[1.15vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.6vmin]">
-                  {L.result.mixTitle}
-                </span>
-                {result.rationale.increase}
-              </div>
-
-              <button
-                type="button"
-                onClick={reset}
-                className="mt-auto min-h-[5.4vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.45vmin] text-white/85 hover:text-white hover:border-white/50 active:scale-[0.98] transition"
-                style={{ marginTop: '1.4vmin' }}
-              >
-                {L.result.newSimulation}
-              </button>
-            </>
+            <button
+              type="button"
+              onClick={reset}
+              className="mt-[1.4vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+            >
+              {L.result.newSimulation}
+            </button>
           )}
         </div>
       </div>
+
+      <style>{`
+        @keyframes kiosk-progress { from { width: 0% } to { width: 100% } }
+        @keyframes kiosk-insight-in {
+          0%   { opacity: 0; transform: translateY(12px) scale(.94); }
+          100% { opacity: 1; transform: translateY(0)    scale(1);   }
+        }
+        @keyframes kiosk-insight-glow {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25); border-color: rgba(244,132,95,.55); }
+          50%      { box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.60); border-color: rgba(244,132,95,1); }
+        }
+        @keyframes kiosk-insight-sparkle {
+          0%, 100% { transform: scale(1)    rotate(0deg);   opacity: 1;   }
+          50%      { transform: scale(1.25) rotate(15deg);  opacity: .85; }
+        }
+        .kiosk-insight-card {
+          animation: kiosk-insight-in .5s ease-out .6s both, kiosk-insight-glow 2.4s ease-in-out .6s infinite;
+        }
+        .kiosk-insight-sparkle { animation: kiosk-insight-sparkle 1.8s ease-in-out infinite; }
+      `}</style>
+
 
       {/* Drill-down modal */}
       {drillRow && phase === 'result' && (
