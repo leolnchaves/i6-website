@@ -1,40 +1,43 @@
-## Ajustar Forecast Preditivo do i6 Signal para varejo/e-comm
+## Metas Comerciais Preditivas — duas novas perguntas no i6 Signal
 
-No fluxo `/kiosk` → solução **Forecast Preditivo** (`demand-forecasting`), o `KioskSignalIntelliboard` mostra dois cenários: `forecast` (Q1 "Sazonalidade") e `supply` (Q2 "Ruptura"). Ambos hoje respondem com medicamentos (Paracetamol 750mg, Dipirona/Omeprazol/Losartana...). Vamos trocar por produtos de varejo/e-comm e adicionar linha de vendas projetadas no gráfico do Q1.
+Hoje `predictive-commercial-targets` reaproveita os cenários `comercial` + `forecast`. Vamos criar duas perguntas dedicadas com respostas próprias.
 
-### 1. Q1 — Sazonalidade (cenário `forecast`)
-Trocar "Paracetamol 750mg (ID 28822)" por um produto de e-comm com pico de dezembro (Black Friday + Natal) coerente com a narrativa atual (+34% em Dez, tendência +8,2%/trimestre):
-- PT: **Smart TV 55'' 4K (SKU 28822)**
-- EN: **55'' 4K Smart TV (SKU 28822)**
+### 1. Novos scenario ids
+Em `src/data/signalDemo/content.ts`:
+- Adicionar ao `type Scenario`: `targetsPotential` e `targetsRisk`.
+- Adicionar os dois blocos em `pt.scenarios` e `en.scenarios` com os textos exatos fornecidos (título, análise, tabela(s), argumentação, ações, perguntas sugeridas).
 
-Atualizar `title`, `analysis` e `chartNote` para linguagem de varejo/e-comm (curva de fim de ano, categoria eletrônicos, expansão em marketplaces em vez de "farmácias independentes"). Ajustar `actions` e `questions` para o mesmo contexto (campanhas Black Friday, canais marketplace, categorias correlatas).
+Estruturas de dados:
+- `targetsPotential`: `{ label, question, title, analysis, potentialTable: { headers, rows }, reasoning, actions, questions }` — tabela hierárquica Região/Vendedor/Cliente/SKU/Meta atual/Meta sugerida/Potencial.
+- `targetsRisk`: `{ label, question, title, analysis, scatter: [{ probability, delta, size, vendor, client, sku, quadrant }], riskTable, signalsTable, reasoning, actions, questions }`.
 
-### 2. Gráfico do Q1 — adicionar linha de "Vendas Projetadas"
-Em `src/data/signalDemo/content.ts`, estender `chartData` para incluir um terceiro campo `projected` em cada mês (Out/Nov/Dez), representando a venda projetada final (fusão de sazonalidade + tendência com ajuste do modelo). Valores propostos:
-- Out: seasonality 12.400 / trend 11.800 / **projected 12.900**
-- Nov: seasonality 14.200 / trend 12.600 / **projected 15.100**
-- Dez: seasonality 18.900 / trend 13.400 / **projected 19.800**
+### 2. Novas visualizações
+Em `src/components/signalDemo/visualizations.tsx`:
+- `TargetsPotentialTable` — tabela agrupada visualmente por Região (primeira coluna com rowspan/merge visual), com destaque coral em "Meta sugerida" e verde/vermelho em "Potencial" quando positivo/negativo.
+- `TargetsRiskScatter` — `ScatterChart` do Recharts (eixo X 0–100% probabilidade, eixo Y delta meta−projeção, `ZAxis` para tamanho da bolha, cor por quadrante). Legenda dos 4 quadrantes (Meta acima do potencial / Meta compatível / Meta abaixo do potencial / Alta incerteza) com linhas de referência (`ReferenceLine`) em x=60 e y=0. Bolha rotulada por vendedor/cliente/SKU no tooltip.
+- `TargetsRiskTables` — duas tabelas empilhadas: (a) Vendedor/Cliente/SKU/Meta atual/Volume projetado/Probabilidade/Diagnóstico com badge colorido no diagnóstico; (b) tabela de "Sinais que sustentam a previsão" comparando Cliente A vs Cliente D.
+- Bloco `reasoning` renderizado como quadro "Por que" (fundo cinza claro, ícone Brain, título "Argumentação preditiva" / "Predictive reasoning").
 
-Em `src/components/signalDemo/visualizations.tsx`, adicionar em `ForecastChart` uma terceira `<Line>` (verde `#10b981`, `strokeDasharray="5 5"`, dot) com nome **"Vendas projetadas" / "Projected sales"**, aparecendo na legenda ao lado de Sazonalidade e Tendência.
+### 3. Wire no Intelliboard
+Em `src/components/kiosk/KioskSignalIntelliboard.tsx`:
+- Adicionar dois blocos condicionais após os cenários existentes:
+  - `activeScenario === 'targetsPotential'` → `TargetsPotentialTable` + bloco reasoning.
+  - `activeScenario === 'targetsRisk'` → `TargetsRiskScatter` + `TargetsRiskTables` + bloco reasoning.
 
-### 3. Q2 — Ruptura (cenário `supply`)
-Trocar os 5 SKUs farmacêuticos por SKUs de varejo/e-comm de alta demanda no Q4, mantendo estrutura e probabilidades:
-| SKU | PT | EN |
-|---|---|---|
-| 44210 | Fone Bluetooth Over-ear | Over-ear Bluetooth Headphones |
-| 31087 | Air Fryer 5L Digital | 5L Digital Air Fryer |
-| 28901 | Smartwatch Fitness GPS | Fitness GPS Smartwatch |
-| 55432 | Cafeteira Espresso Automática | Automatic Espresso Machine |
-| 19876 | Câmera de Segurança Wi-Fi | Wi-Fi Security Camera |
+### 4. Remapear a solução
+Em `src/data/kiosk/config.ts`:
+- Ampliar o tipo do `solutionSignalMap` para incluir os novos ids.
+- Trocar `'predictive-commercial-targets': ['comercial', 'forecast']` por `['targetsPotential', 'targetsRisk']`.
+- Cenários `comercial`/`forecast` permanecem para as outras soluções.
 
-Atualizar `analysis` (produto líder de risco = Fone Bluetooth, sazonalidade de fim de ano, lead time de importação) e as `actions` (`Renegociar contratos`, `Ajustar forecast`, `Revisar estoque de segurança`) para referenciarem os novos SKUs. Manter os valores de probabilidade/estoque e o impacto de R$ 510.000 / trimestre inalterados.
+### 5. Versão EN
+Traduzir integralmente os textos das duas perguntas mantendo estrutura e números (Meta → Target, Potencial → Potential, Vendedor → Rep, Interior de SP → São Paulo Countryside, Minas Gerais/Sul mantidos como nomes próprios). Manter unidades em unidades (não converter).
 
 ### Detalhes técnicos
-- Arquivos:
-  - `src/data/signalDemo/content.ts` — blocos `pt.scenarios.forecast`, `pt.scenarios.supply`, `en.scenarios.forecast`, `en.scenarios.supply` (título, análise, tabela, chartData com `projected`, chartNote, actions, questions).
-  - `src/components/signalDemo/visualizations.tsx` — `ForecastChart`: adicionar prop implícita `projected` no tipo do `data` e nova `<Line dataKey="projected" ...>` com rótulo bilíngue via prop `lang` já existente.
-- Nenhum outro consumidor de `ForecastChart` fora do Intelliboard, então a nova série é aditiva e retrocompatível.
-- Não altero a identidade global VIVARIS PHARMA nos demais cenários (`pricing`, `comercial`, `mix`, `pdv`, etc.) — o ajuste é escopado a **Forecast Preditivo**.
-
-### Observação
-A memória `mem://features/i6signal-demo/identity` diz que o demo age como VIVARIS PHARMA. Como este ajuste move o cenário Forecast Preditivo para varejo/e-comm, posso atualizar essa memória para refletir que o cenário `demand-forecasting` roda com narrativa de varejo enquanto os demais seguem pharma — me avise se preferir manter a memória como está.
+- Arquivos afetados:
+  - `src/data/signalDemo/content.ts` — tipo Scenario, novos blocos PT/EN.
+  - `src/components/signalDemo/visualizations.tsx` — três novos componentes (Potential table, Risk scatter, Risk tables) + import de `ScatterChart, Scatter, ZAxis, ReferenceLine` do recharts.
+  - `src/components/kiosk/KioskSignalIntelliboard.tsx` — dois novos ramos de render + renderização do bloco `reasoning` quando existir (aplicar apenas nas novas cenas para não afetar as demais).
+  - `src/data/kiosk/config.ts` — tipo do map + entrada `predictive-commercial-targets`.
+- Também vou verificar `src/components/kiosk/KioskSignalDemo.tsx` (versão simples de signals sem chart) — ele usa `kioskSignals` de `signals.ts`, não `content.ts`, então não é afetado pelo Intelliboard. Nada a mudar lá.
+- Sem impacto em `I6SignalDemo` do /solutions: como o `solutionSignalMap` é global, `predictive-commercial-targets` passará a mostrar essas duas perguntas em ambos os surfaces (kiosk e /solutions). Aviso: se preferir manter comportamento antigo no /solutions, me diga que faço o remap escopado ao kiosk.
