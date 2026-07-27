@@ -16,9 +16,10 @@ interface Props {
   labels: SolutionsV2Content['labels'];
   lang: KioskLang;
   companion?: LeanSolution | null;
+  onSimulationClosed?: () => void;
 }
 
-const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
+const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClosed }: Props) => {
   // Interactive pilot demo for Price-to-Conversion
   if (solution.id === 'price-to-conversion') {
     return <PriceToMarginDemo lang={lang} />;
