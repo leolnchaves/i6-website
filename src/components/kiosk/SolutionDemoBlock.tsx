@@ -3,6 +3,7 @@ import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/conten
 import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
 import PriceMarginDemo from './demos/PriceMarginDemo';
+import PriceTurnoverDemo from './demos/PriceTurnoverDemo';
 import PredictivePersonalizationDemo from './demos/PredictivePersonalizationDemo';
 import DemandForecastDemo from './demos/DemandForecastDemo';
 import PropensityCampaignDemo from './demos/PropensityCampaignDemo';
