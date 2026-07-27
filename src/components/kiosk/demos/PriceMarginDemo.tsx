@@ -169,10 +169,6 @@ const PriceMarginDemo = () => {
     return () => timers.forEach(clearTimeout);
   }, [phase]);
 
-  const latencyMs = useMemo(
-    () => (28 + Math.random() * 20).toFixed(2),
-    [selectedId, phase],
-  );
 
   const reset = () => {
     setPhase('setup');
