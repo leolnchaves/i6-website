@@ -275,13 +275,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
 
             {(phase === 'training' || phase === 'pdp') && selected && (
               <div className="flex flex-col animate-fade-in">
-                <button
-                  type="button"
-                  onClick={backToCatalog}
-                  className="self-start inline-flex items-center gap-[1vmin] min-h-[7vmin] px-[2.5vmin] py-[1.6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition mb-[1.5vmin]"
-                >
-                  {t.backToCatalog}
-                </button>
+
 
                 {vertical === 'fashion' && phase === 'pdp' ? (
                   <div className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)] gap-[1.2vmin] items-stretch animate-fade-in">
@@ -379,12 +373,20 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                 )}
 
                 {phase === 'pdp' && (
-                  <div className="grid grid-cols-3 gap-[1vmin] mt-[1.5vmin] animate-fade-in">
+                  <div className="grid grid-cols-4 gap-[1vmin] mt-[1.5vmin] animate-fade-in items-stretch">
+                    <button
+                      type="button"
+                      onClick={backToCatalog}
+                      className="inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.2vmin] rounded-xl border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+                    >
+                      {t.backToCatalog}
+                    </button>
                     <MetricPill label={t.kpiTicketUplift} value={kpiPreset.uplift} highlight trend="up" />
                     <MetricPill label={t.kpiCrossSell} value={`${kpiPreset.crossSell}%`} />
                     <MetricPill label={t.kpiConfidence} value={`${kpiPreset.confidence}%`} />
                   </div>
                 )}
+
               </div>
             )}
           </div>
@@ -414,6 +416,22 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
             </div>
           ) : (
             <>
+              {/* Compact POR QUE above timeline */}
+              {phase === 'pdp' && selected && (
+                <div className="mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[1.6vmin] py-[1.2vmin] animate-fade-in">
+                  <div className="flex items-center gap-[1vmin] mb-[0.5vmin]">
+                    <Sparkles className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" strokeWidth={2.5} />
+                    <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                      {t.rationaleLabel}
+                    </span>
+                    <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
+                      {t.latencyLabel}: {latencyMs} ms
+                    </span>
+                  </div>
+                  <p className="text-[1.5vmin] leading-snug text-white/95">{argumentText}</p>
+                </div>
+              )}
+
               {/* Micro-metric of active step */}
               <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
                 {progress < scenario.features.length && (
@@ -471,22 +489,6 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                   })}
                 </div>
               </div>
-
-              {/* Compact POR QUE below timeline */}
-              {phase === 'pdp' && selected && (
-                <div className="mt-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[1.6vmin] py-[1.2vmin] animate-fade-in">
-                  <div className="flex items-center gap-[1vmin] mb-[0.5vmin]">
-                    <Sparkles className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" strokeWidth={2.5} />
-                    <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
-                      {t.rationaleLabel}
-                    </span>
-                    <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
-                      {t.latencyLabel}: {latencyMs} ms
-                    </span>
-                  </div>
-                  <p className="text-[1.5vmin] leading-snug text-white/95">{argumentText}</p>
-                </div>
-              )}
             </>
           )}
         </div>
