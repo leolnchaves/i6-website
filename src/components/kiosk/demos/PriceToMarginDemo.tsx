@@ -238,9 +238,6 @@ const PriceToMarginDemo = ({ lang }: Props) => {
         {/* RIGHT — reasoning + conclusion */}
         <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
           <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
-            <span className="w-[4.2vmin] h-[4.2vmin] rounded-xl bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center">
-              <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F]" />
-            </span>
             <div>
               <h4 className="text-[2vmin] font-bold text-white leading-tight">{content.reasoningTitle}</h4>
               <p className="text-[1.4vmin] text-white/60">{content.reasoningSubtitle}</p>
