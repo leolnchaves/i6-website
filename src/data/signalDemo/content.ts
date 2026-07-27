@@ -1,7 +1,7 @@
 // Shared content + types for the i6 Signal Intelliboard demo.
 // Consumed by both /solutions (I6SignalDemo) and /kiosk (KioskSignalIntelliboard).
 
-export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps';
+export type Scenario = 'supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals';
 export type Phase = 'idle' | 'typing' | 'responding';
 
 export const TYPING_SPEED = 30;
@@ -389,6 +389,80 @@ export const signalDemoContent = {
           'Quais PDVs entram na priorização inicial do SKU A no Interior de SP?',
           'Como o ticket incremental se distribui entre os 5 SKUs prioritários?',
           'Qual o risco de estoque parado projetado por cluster de PDV?',
+        ],
+      },
+      marginOpportunities: {
+        label: 'Oportunidades de Margem',
+        question: 'Quais SKUs apresentam maior oportunidade de captura de margem sem perda relevante de volume?',
+        title: 'Oportunidades preditivas de margem por SKU',
+        analysis: 'O modelo identificou 16 SKUs com espaço para reposicionamento de preço nos próximos 90 dias. Os cinco principais concentram 71% da margem incremental potencial. O SKU A apresenta a melhor oportunidade — sua demanda prevista permanece estável dentro de uma faixa de aumento de até 5,4%, enquanto o preço atual está abaixo da banda competitiva e do ponto de maior geração de margem. Já o SKU D demonstra alta sensibilidade e não deve receber aumento neste momento.',
+        scatter: [
+          { sensitivity: 22, incrementalMargin: 420, size: 180, label: 'SKU A • Prioridade', quadrant: 'priority' },
+          { sensitivity: 31, incrementalMargin: 210, size: 140, label: 'SKU B • Prioridade', quadrant: 'priority' },
+          { sensitivity: 44, incrementalMargin: 174, size: 165, label: 'SKU C • Ajuste controlado', quadrant: 'controlled' },
+          { sensitivity: 78, incrementalMargin: 0, size: 120, label: 'SKU D • Manter', quadrant: 'hold' },
+          { sensitivity: 58, incrementalMargin: 118, size: 155, label: 'SKU E • Reduzir p/ volume', quadrant: 'volume' },
+          { sensitivity: 36, incrementalMargin: 92, size: 105, label: 'SKU F • Prioridade', quadrant: 'priority' },
+          { sensitivity: 68, incrementalMargin: -40, size: 90, label: 'SKU G • Risco', quadrant: 'risk' },
+          { sensitivity: 49, incrementalMargin: 74, size: 110, label: 'SKU H • Ajuste controlado', quadrant: 'controlled' },
+        ],
+        skuTable: {
+          headers: ['SKU', 'Preço atual', 'Preço recomendado', 'Reação prevista do volume', 'Margem incremental', 'Confiança'],
+          rows: [
+            ['SKU A', 'R$ 89,90', 'R$ 94,80', '−1,8%', '+R$ 420 mil', '92%'],
+            ['SKU B', 'R$ 64,90', 'R$ 67,40', '−0,9%', '+R$ 210 mil', '89%'],
+            ['SKU C', 'R$ 129,90', 'R$ 133,20', '−2,7%', '+R$ 174 mil', '86%'],
+            ['SKU D', 'R$ 49,90', 'R$ 49,90', '−8,4%', 'Sem oportunidade', '91%'],
+            ['SKU E', 'R$ 74,90', 'R$ 72,80', '+6,9%', '+R$ 118 mil', '84%'],
+          ],
+        },
+        behaviorReading: [
+          'O comportamento previsto do SKU A indica baixa sensibilidade dentro da faixa recomendada. O produto possui demanda consistente, estoque equilibrado e posicionamento de preço inferior ao de alternativas comparáveis.',
+          'No SKU D, pequenos aumentos devem produzir redução desproporcional de volume. Nesse caso, manter o preço preserva melhor o resultado total da categoria.',
+        ],
+        actions: [
+          { bold: 'Reposicionar os SKUs A, B e C', text: 'dentro das faixas recomendadas, priorizando os itens com maior confiança e menor impacto previsto no volume.' },
+          { bold: 'Manter o preço do SKU D', text: 'pois o ganho unitário não compensaria a perda projetada de demanda.' },
+          { bold: 'Testar a redução do SKU E', text: 'cuja resposta prevista de volume pode gerar mais margem total, mesmo com menor margem unitária.' },
+        ],
+        questions: [
+          'Como o ganho de margem se distribui entre categorias e canais?',
+          'Qual o impacto financeiro se o SKU D fosse ajustado mesmo assim?',
+          'Como validar as faixas recomendadas com um piloto controlado?',
+        ],
+      },
+      marginSignals: {
+        label: 'Sinais de Margem',
+        question: 'Quais sinais estão abrindo ou reduzindo espaço para captura de margem em cada SKU?',
+        title: 'Sinais preditivos que movimentam a margem',
+        analysis: 'O modelo identificou que o espaço para captura de margem está concentrado em SKUs com demanda prevista estável, menor sensibilidade a preço e posicionamento abaixo da banda competitiva. O SKU A apresenta a combinação mais favorável. Já o SKU D possui alta sensibilidade e desaceleração prevista de demanda, o que limita qualquer aumento de preço neste momento.',
+        signalsChart: [
+          { sku: 'SKU A', demand: 22, sensitivity: 18, competition: 24, stock: 10, currentMargin: 8, category: 12 },
+          { sku: 'SKU B', demand: 14, sensitivity: 12, competition: 22, stock: -6, currentMargin: 6, category: 8 },
+          { sku: 'SKU C', demand: 10, sensitivity: 4, competition: 6, stock: 2, currentMargin: 4, category: 14 },
+          { sku: 'SKU D', demand: -8, sensitivity: -28, competition: -4, stock: 2, currentMargin: 16, category: -6 },
+          { sku: 'SKU E', demand: 6, sensitivity: -10, competition: -8, stock: -22, currentMargin: -4, category: 6 },
+        ],
+        signalsTable: {
+          headers: ['SKU', 'Espaço para margem', 'Principal sinal positivo', 'Principal restrição', 'Direção recomendada'],
+          rows: [
+            ['SKU A', 'Alto', 'Demanda estável e baixa sensibilidade', 'Limite da categoria', 'Aumentar'],
+            ['SKU B', 'Alto', 'Preço abaixo da banda competitiva', 'Estoque moderado', 'Aumentar'],
+            ['SKU C', 'Médio', 'Crescimento previsto da categoria', 'Maior incerteza', 'Ajuste controlado'],
+            ['SKU D', 'Baixo', 'Margem unitária elevada', 'Alta sensibilidade', 'Manter'],
+            ['SKU E', 'Negativo', 'Potencial de ganho de volume', 'Estoque elevado', 'Reduzir'],
+          ],
+        },
+        reasoning: 'O SKU A possui espaço para captura de margem porque sua demanda deve permanecer estável, mesmo com um ajuste moderado de preço. Além disso, o produto está posicionado abaixo de alternativas comparáveis e possui estoque compatível com o ritmo previsto de venda. Já o SKU D não apresenta oportunidade de aumento neste momento — o modelo prevê maior sensibilidade ao preço e desaceleração da demanda, indicando que o ganho unitário seria insuficiente para compensar a perda de volume.',
+        actions: [
+          { bold: 'Priorizar os SKUs com demanda estável', text: 'baixa sensibilidade e preço abaixo da banda competitiva.' },
+          { bold: 'Manter os preços dos produtos', text: 'cujo comportamento previsto indique risco relevante de perda de volume.' },
+          { bold: 'Reavaliar os SKUs limitados', text: 'quando houver mudanças de demanda, estoque ou posicionamento competitivo.' },
+        ],
+        questions: [
+          'Como os sinais evoluem semana a semana em cada SKU?',
+          'Quais SKUs estão prestes a mudar de faixa de espaço para margem?',
+          'Como priorizar decisões quando dois sinais se contradizem?',
         ],
       },
     },
