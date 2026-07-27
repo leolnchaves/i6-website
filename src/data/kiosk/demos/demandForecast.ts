@@ -434,7 +434,7 @@ export const demoLabels = {
     regionOptions: { total: 'Total', sudeste: 'Southeast', sul: 'South', nordeste: 'Northeast' },
     horizonOptions: { 6: '6 months', 12: '12 months' },
     kpi: {
-      accuracy: 'Historical accuracy',
+      accuracy: 'Accuracy',
       meanError: 'Mean error',
       stockout: 'Stockout',
       excess: 'Excess',
