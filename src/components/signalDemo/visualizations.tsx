@@ -23,7 +23,7 @@ export const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[
   </div>
 );
 
-export const ForecastChart = ({ data, note, lang }: { data: { month: string; seasonality: number; trend: number }[]; note: string; lang: string }) => (
+export const ForecastChart = ({ data, note, lang }: { data: { month: string; seasonality: number; trend: number; projected?: number }[]; note: string; lang: string }) => (
   <div className="my-4">
     <div className="h-[220px] w-full">
       <ResponsiveContainer width="100%" height="100%">
@@ -38,6 +38,7 @@ export const ForecastChart = ({ data, note, lang }: { data: { month: string; sea
           <Legend wrapperStyle={{ color: '#6b7280', fontSize: '12px' }} />
           <Line type="monotone" dataKey="seasonality" name={lang === 'pt' ? 'Sazonalidade' : 'Seasonality'} stroke="#f97316" strokeWidth={2.5} dot={{ r: 4, fill: '#f97316' }} />
           <Line type="monotone" dataKey="trend" name={lang === 'pt' ? 'Tendência' : 'Trend'} stroke="#3b82f6" strokeWidth={2.5} dot={{ r: 4, fill: '#3b82f6' }} />
+          <Line type="monotone" dataKey="projected" name={lang === 'pt' ? 'Vendas projetadas' : 'Projected sales'} stroke="#10b981" strokeWidth={2.5} strokeDasharray="5 5" dot={{ r: 4, fill: '#10b981' }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
