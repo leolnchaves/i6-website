@@ -564,12 +564,10 @@ const CompositionChart = ({
 
   // Season: signed (can be negative)
   const seasonSigned = points.map((p) => p.season ?? 0);
-  const sparsityVals = points.map((p) => Math.max(0, p.sparsityFix ?? 0));
 
   const posMax = Math.max(
     ...trendDisplay,
     ...seasonSigned.map((v) => Math.max(0, v)),
-    ...sparsityVals,
     1,
   );
   const negMin = Math.min(
