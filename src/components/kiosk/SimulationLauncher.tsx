@@ -23,6 +23,7 @@ interface Props {
   secondaryEntrega?: string;
   secondaryImpacto?: string;
   icon?: IconType;
+  onSimulationClosed?: () => void;
   children: ReactNode;
 }
 
@@ -39,6 +40,7 @@ const SimulationLauncher = ({
   secondaryEntrega,
   secondaryImpacto,
   icon: Icon = Sparkles,
+  onSimulationClosed,
   children,
 }: Props) => {
   const [open, setOpen] = useState(false);
@@ -63,6 +65,7 @@ const SimulationLauncher = ({
     setOpen(false);
     // remount children next time so internal demo state resets
     setInstanceKey((k) => k + 1);
+    onSimulationClosed?.();
   };
 
   return (
@@ -114,14 +117,8 @@ const SimulationLauncher = ({
           aria-modal="true"
           className="fixed inset-0 z-50 bg-[#0B1224]/95 backdrop-blur-sm flex items-center justify-center p-[2vmin] animate-fade-in"
         >
-          <button
-            type="button"
-            onClick={close}
-            aria-label={t.closeSimulation}
-            className="absolute top-[3vmin] right-[3vmin] w-[7vmin] h-[7vmin] rounded-full border border-white/25 bg-white/[0.06] flex items-center justify-center text-white/80 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.1] active:scale-95 transition"
-          >
-            <X className="w-[3vmin] h-[3vmin]" />
-          </button>
+
+
 
           <div className="w-[90vw] h-[90vh] max-w-[90vw] rounded-3xl bg-[#0B1224] border border-white/10 flex flex-col overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.6)]">
             <div key={instanceKey} className="flex-1 overflow-y-auto p-[3vmin]">

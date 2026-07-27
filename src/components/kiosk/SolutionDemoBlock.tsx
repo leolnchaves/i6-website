@@ -16,9 +16,10 @@ interface Props {
   labels: SolutionsV2Content['labels'];
   lang: KioskLang;
   companion?: LeanSolution | null;
+  onSimulationClosed?: () => void;
 }
 
-const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
+const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClosed }: Props) => {
   // Interactive pilot demo for Price-to-Conversion
   if (solution.id === 'price-to-conversion') {
     return <PriceToMarginDemo lang={lang} />;
@@ -57,6 +58,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
         impacto={join(solution.impacto, companion?.impacto)}
         labels={labels}
         icon={UserRoundSearch}
+        onSimulationClosed={onSimulationClosed}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>
@@ -79,6 +81,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
         impacto={solution.impacto}
         labels={labels}
         icon={Megaphone}
+        onSimulationClosed={onSimulationClosed}
       >
         <PropensityCampaignDemo />
       </SimulationLauncher>
