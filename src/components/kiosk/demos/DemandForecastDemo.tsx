@@ -586,7 +586,6 @@ const CompositionChart = ({
   const colors = {
     trend: '#F4845F',
     season: 'rgba(255,255,255,0.85)',
-    sparsityFix: 'rgba(244,132,95,0.45)',
     promo: '#F4845F',
     zero: 'rgba(255,255,255,0.25)',
   };
