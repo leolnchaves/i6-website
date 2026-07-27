@@ -1277,7 +1277,7 @@ export const signalDemoContent = {
       },
       personalizationRepurchase: {
         label: 'Repurchase Window',
-        question: 'Which customers are entering a repurchase window and when is the best moment to activate them?',
+        question: 'Which customers are in a repurchase window in the next 30 days?',
         title: 'Predictive repurchase behavior',
         analysis: 'The model identified 18,420 customers with a relevant probability of a new purchase in the next 30 days. Of those, 46% are likely to repurchase the same product, 34% should migrate to a variation or substitute, and 20% show higher propensity to complement the previous purchase. The main opportunity is customers whose predicted repurchase window starts in the next seven days. Activating too early tends to yield low response. A late approach raises the risk of losing the repurchase to another channel or competitor.\n\nThis customer is entering their repurchase window because the interval since the last purchase approaches their predicted consumption cycle. Prior behavior indicates high recurrence on the same SKU, low propensity to switch and stronger response when activated between day 24 and day 28 after the purchase.\n\nFor a customer with a migration tendency, the next purchase should not repeat the previous item exactly. The model identified rising interest in a higher-tier version, behavior similar to customers who migrated products and higher adherence to the new option within the predicted repurchase window.',
         curveData: [
