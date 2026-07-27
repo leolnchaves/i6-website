@@ -15,9 +15,10 @@ interface Props {
   solution: LeanSolution;
   labels: SolutionsV2Content['labels'];
   lang: KioskLang;
+  companion?: LeanSolution | null;
 }
 
-const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
+const SolutionDemoBlock = ({ solution, labels, lang, companion }: Props) => {
   // Interactive pilot demo for Price-to-Conversion
   if (solution.id === 'price-to-conversion') {
     return <PriceToMarginDemo lang={lang} />;
@@ -45,6 +46,10 @@ const SolutionDemoBlock = ({ solution, labels, lang }: Props) => {
         entrega={solution.entrega}
         impacto={solution.impacto}
         labels={labels}
+        secondaryTitle={companion?.title}
+        secondaryResolve={companion?.resolve}
+        secondaryEntrega={companion?.entrega}
+        secondaryImpacto={companion?.impacto}
       >
         <PredictivePersonalizationDemo lang={lang} />
       </SimulationLauncher>

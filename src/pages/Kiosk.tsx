@@ -210,50 +210,67 @@ const Kiosk = () => {
               </h2>
             </div>
 
-            <SolutionsGrid
-              solutions={solutionsForResults}
-              labels={sContent.labels}
-              activeId={selectedSolutionId}
-              onSelect={handleSelectSolution}
-              highlightAll={isCombo}
-            />
+            {(() => {
+              const migratedIds = ['predictive-personalization', 'smart-discovery', 'predictive-campaign-targeting'];
+              const isMigrated = !!selectedSolution && migratedIds.includes(selectedSolution.id);
+              const companion =
+                selectedSolution?.id === 'predictive-personalization'
+                  ? solutionsForResults.find((s) => s.id === 'smart-discovery') ?? null
+                  : selectedSolution?.id === 'smart-discovery'
+                    ? solutionsForResults.find((s) => s.id === 'predictive-personalization') ?? null
+                    : null;
 
-            {!(selectedSolution && ['predictive-personalization', 'smart-discovery', 'predictive-campaign-targeting'].includes(selectedSolution.id)) && (
-              <p className="mt-[5vmin] text-center text-[2.2vmin] text-white/65">
-                {isCombo ? kContent.results.tieSubtitle : kContent.results.subtitle}
-              </p>
-            )}
-
-            <div id="kiosk-solution-demo" className="mt-[6vmin] flex flex-col gap-[4vmin]">
-              {selectedSolution ? (
+              return (
                 <>
-                  <SolutionDemoBlock
-                    key={selectedSolution.id}
-                    solution={selectedSolution}
-                    labels={sContent.labels}
-                    lang={lang}
-                  />
-                  <KioskSignalIntelliboard
-                    lang={lang}
-                    content={kContent}
-                    solutionId={selectedSolution.id}
-                  />
+                  {!isMigrated && (
+                    <>
+                      <SolutionsGrid
+                        solutions={solutionsForResults}
+                        labels={sContent.labels}
+                        activeId={selectedSolutionId}
+                        onSelect={handleSelectSolution}
+                        highlightAll={isCombo}
+                      />
+                      <p className="mt-[5vmin] text-center text-[2.2vmin] text-white/65">
+                        {isCombo ? kContent.results.tieSubtitle : kContent.results.subtitle}
+                      </p>
+                    </>
+                  )}
 
-                  <EbookCTA
-                    lang={lang}
-                    content={kContent}
-                    route={route}
-                    solutionId={selectedSolution.id}
-                    solutionTitle={selectedSolution.title}
-                    ebookTitle={ebookTitle}
-                  />
+                  <div id="kiosk-solution-demo" className={`${isMigrated ? '' : 'mt-[6vmin]'} flex flex-col gap-[4vmin]`}>
+                    {selectedSolution ? (
+                      <>
+                        <SolutionDemoBlock
+                          key={selectedSolution.id}
+                          solution={selectedSolution}
+                          labels={sContent.labels}
+                          lang={lang}
+                          companion={companion}
+                        />
+                        <KioskSignalIntelliboard
+                          lang={lang}
+                          content={kContent}
+                          solutionId={selectedSolution.id}
+                        />
+
+                        <EbookCTA
+                          lang={lang}
+                          content={kContent}
+                          route={route}
+                          solutionId={selectedSolution.id}
+                          solutionTitle={selectedSolution.title}
+                          ebookTitle={ebookTitle}
+                        />
+                      </>
+                    ) : (
+                      <p className="text-center text-[2.2vmin] text-white/50 py-[4vmin]">
+                        {kContent.results.selectSolutionHint}
+                      </p>
+                    )}
+                  </div>
                 </>
-              ) : (
-                <p className="text-center text-[2.2vmin] text-white/50 py-[4vmin]">
-                  {kContent.results.selectSolutionHint}
-                </p>
-              )}
-            </div>
+              );
+            })()}
 
             <p className="text-center text-[1.6vmin] tracking-[0.3em] uppercase text-white/40 mt-[6vmin]">
               {kContent.footer.tagline}

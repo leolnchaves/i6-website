@@ -16,10 +16,27 @@ interface Props {
   entrega?: string;
   impacto?: string;
   labels?: Labels;
+  secondaryTitle?: string;
+  secondaryResolve?: string;
+  secondaryEntrega?: string;
+  secondaryImpacto?: string;
   children: ReactNode;
 }
 
-const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, resolve, entrega, impacto, labels, children }: Props) => {
+const SimulationLauncher = ({
+  lang,
+  solutionTitle,
+  solutionTagline,
+  resolve,
+  entrega,
+  impacto,
+  labels,
+  secondaryTitle,
+  secondaryResolve,
+  secondaryEntrega,
+  secondaryImpacto,
+  children,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const [instanceKey, setInstanceKey] = useState(0);
   const t = kioskContent[lang].results;
@@ -62,6 +79,19 @@ const SimulationLauncher = ({ lang, solutionTitle, solutionTagline, resolve, ent
             {resolve && <SummaryRow label={labels.resolve} value={resolve} />}
             {entrega && <SummaryRow label={labels.entrega} value={entrega} />}
             {impacto && <SummaryRow label={labels.impacto} value={impacto} highlight />}
+          </div>
+        )}
+
+        {labels && secondaryTitle && (secondaryResolve || secondaryEntrega || secondaryImpacto) && (
+          <div className="mt-[1vmin] mb-[2.5vmin] pt-[2.5vmin] border-t border-white/10">
+            <h4 className="text-[2.6vmin] font-bold leading-tight text-[#F4845F] mb-[2vmin]">
+              {secondaryTitle}
+            </h4>
+            <div className="grid grid-cols-1 gap-[2vmin]">
+              {secondaryResolve && <SummaryRow label={labels.resolve} value={secondaryResolve} />}
+              {secondaryEntrega && <SummaryRow label={labels.entrega} value={secondaryEntrega} />}
+              {secondaryImpacto && <SummaryRow label={labels.impacto} value={secondaryImpacto} highlight />}
+            </div>
           </div>
         )}
 

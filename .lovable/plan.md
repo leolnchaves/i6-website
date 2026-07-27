@@ -1,27 +1,31 @@
-## Escopo
-Aplicar apenas nas duas demos já migradas para o novo padrão (modal 90%): **Campanhas por Propensão** e **Personalização + Descoberta Preditiva**. As demais (Price-to-Margin, Turnover, Forecast, Commercial Targets, Mix, Price-to-Conversion) permanecem inalteradas nesta iteração — quando forem migradas, seguirão o mesmo padrão unificado.
+## Contexto
+Após unificar o card da solução com o launcher, o `SolutionsGrid` (topo) ficou redundante para as demos já migradas. Personalização Preditiva + Descoberta Preditiva **sempre** aparecem juntas (combo fixo), então o card unificado precisa mostrar as duas.
 
 ## Mudanças
 
-### 1. `src/components/kiosk/SimulationLauncher.tsx`
-Aceitar novos props opcionais: `resolve`, `entrega`, `impacto`, `labels` (rótulos RESOLVE/ENTREGA/IMPACTO).
+### 1. `src/pages/Kiosk.tsx`
+Ocultar o `SolutionsGrid` inteiro quando a seleção atual pertence às demos já migradas: `predictive-personalization`, `smart-discovery`, `predictive-campaign-targeting`. Para as demais soluções (ainda não migradas), o grid segue como hoje.
 
-Dentro do card externo (o mesmo que já mostra ícone + título + tagline), inserir entre o header e o botão as três linhas RESOLVE / ENTREGA / IMPACTO no mesmo estilo do `Card` interno atual do `SolutionDemoBlock` (destaque coral no Impacto). O botão "Clique aqui para simular a solução" continua no mesmo card, abaixo do IMPACTO.
+Também identificar a "companheira" quando a selecionada for Personalização/Descoberta: pegar a outra solução do par em `solutionsForResults` e passar como `companion` para `SolutionDemoBlock`.
 
 ### 2. `src/components/kiosk/SolutionDemoBlock.tsx`
-Nos dois ramos que usam `SimulationLauncher` (`predictive-personalization` / `smart-discovery` e `predictive-campaign-targeting`), passar `resolve`, `entrega`, `impacto` e `labels` da solução. Os demais ramos ficam intactos.
+Adicionar prop opcional `companion?: LeanSolution`.
 
-### 3. `src/pages/Kiosk.tsx` (linhas 221–223)
-Ocultar condicionalmente o parágrafo "Explore o exemplo de aplicação abaixo." / `tieSubtitle` quando a solução selecionada for uma das duas migradas (Campanhas ou Personalização/Descoberta). Para as demais, mantém-se o texto atual até que sejam migradas.
+No ramo `predictive-personalization || smart-discovery`, passar ao `SimulationLauncher` os dados da segunda solução via novas props (título + resolve/entrega/impacto).
+
+### 3. `src/components/kiosk/SimulationLauncher.tsx`
+Aceitar props opcionais de uma segunda solução: `secondaryTitle`, `secondaryResolve`, `secondaryEntrega`, `secondaryImpacto`.
+
+Quando presentes, dentro do mesmo card, logo após o bloco principal RESOLVE/ENTREGA/IMPACTO, inserir:
+- Um separador sutil.
+- Subtítulo em coral com o nome da segunda solução (ex.: "Descoberta Preditiva").
+- Os três SummaryRow (RESOLVE/ENTREGA/IMPACTO) da segunda solução, mesmo estilo (IMPACTO em destaque coral).
+
+O botão "Clique aqui para simular a solução" continua único no final do card.
+
+## Resultado visual
+- **Campanhas por Propensão**: sem grid no topo; apenas o card unificado com Resolve/Entrega/Impacto + botão.
+- **Personalização Preditiva + Descoberta Preditiva**: sem os dois cards do grid; card unificado mostra Título "Personalização Preditiva" com seu Resolve/Entrega/Impacto, seguido do bloco "Descoberta Preditiva" com seu Resolve/Entrega/Impacto, e o botão único de simular ao final.
 
 ## Memória
-Salvar como requisito no memory do projeto: sempre que uma demo do Kiosk for migrada para o padrão modal 90%, o card da solução (Resolve/Entrega/Impacto) e o launcher devem ser unificados em um único card, e o subtítulo "Explore o exemplo de aplicação abaixo." deve ser omitido para essa solução.
-
-## Resultado visual (apenas para Campanhas e Personalização+Descoberta)
-Um único quadro com borda coral:
-- Ícone + Título + Tagline
-- RESOLVE
-- ENTREGA
-- IMPACTO (destaque coral)
-- Botão "Clique aqui para simular a solução"
-Sem o texto intermediário.
+Atualizar `mem://features/kiosk/unified-solution-launcher.md`: quando a demo migrada é o combo Personalização + Descoberta (sempre juntas), o card unificado renderiza ambos os blocos R/E/I com o botão único; e o `SolutionsGrid` do topo é ocultado para todas as demos migradas.
