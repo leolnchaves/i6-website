@@ -612,7 +612,7 @@ const CompositionChart = ({
 
   return (
     <div className="rounded-xl bg-white/[0.02] border border-white/10 p-[1.4vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 192 }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" style={{ maxHeight: 154 }}>
         {yTicks.map((t, i) => (
           <g key={i}>
             <line
