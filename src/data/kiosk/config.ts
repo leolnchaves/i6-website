@@ -460,4 +460,4 @@ export const territoryEbook: Record<RouteId, { pt: string; en: string }> = {
   },
 };
 
-export const KIOSK_INACTIVITY_MS = 90_000;
+export const KIOSK_INACTIVITY_MS = 180_000;
