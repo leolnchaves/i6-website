@@ -82,6 +82,19 @@ const SimulationLauncher = ({
           </div>
         )}
 
+        {labels && secondaryTitle && (secondaryResolve || secondaryEntrega || secondaryImpacto) && (
+          <div className="mt-[1vmin] mb-[2.5vmin] pt-[2.5vmin] border-t border-white/10">
+            <h4 className="text-[2.6vmin] font-bold leading-tight text-[#F4845F] mb-[2vmin]">
+              {secondaryTitle}
+            </h4>
+            <div className="grid grid-cols-1 gap-[2vmin]">
+              {secondaryResolve && <SummaryRow label={labels.resolve} value={secondaryResolve} />}
+              {secondaryEntrega && <SummaryRow label={labels.entrega} value={secondaryEntrega} />}
+              {secondaryImpacto && <SummaryRow label={labels.impacto} value={secondaryImpacto} highlight />}
+            </div>
+          </div>
+        )}
+
         <button
           type="button"
           onClick={() => setOpen(true)}
