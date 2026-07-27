@@ -2,33 +2,42 @@
 
 export type ClusterAction = 'hold' | 'markdown' | 'wait';
 
+export interface SkuRow {
+  sku: string;
+  name: string;
+  currentPrice: number;
+  recommendedPrice: number;
+  markdownPct: number;
+  sellThroughProjectedPct: number;
+}
+
 export interface TurnoverCluster {
   id: string;
   name: string;
   region: string;
-  // Coords in the SVG viewBox (0..400 x, 0..500 y) approximating Brazil
   x: number;
   y: number;
   stores: number;
   stockUnits: number;
   avgStockAgeDays: number;
-  sellVelocity: number; // un/sem
+  sellVelocity: number;
   categoryAvgVelocity: number;
   currentPrice: number;
   currentMarkdownPct: number;
-  remainingMarginPp: number; // pp
+  remainingMarginPp: number;
   elasticity: number;
   situation: string;
   action: ClusterAction;
   recommendedPrice: number;
-  recommendedMarkdownPct: number; // 0 when hold/wait
+  recommendedMarkdownPct: number;
   nextAction: string;
-  actInDays: number; // 0 today, 14 for wait
+  actInDays: number;
   sellThroughProjectedPct: number;
   agedStockPct: number;
   marginPreservedPp: number;
   capitalUnlockedBRL: number;
   argument: string;
+  skus: SkuRow[];
 }
 
 export interface PipelineStep {
@@ -93,6 +102,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 0,
     argument:
       'Velocidade de venda 34 un/sem, 42% acima da média da categoria (24 un/sem), com estoque de idade 22 dias contra 41 dias da categoria. Elasticidade −0,7 indica baixa sensibilidade nesta faixa: um markdown antecipado reduziria margem em 4,8 pp sem impacto material em giro — a demanda absorve o preço atual nas próximas 3 semanas dentro do sell-through projetado de 78%.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 82 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 79 },
+      { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+      { sku: 'JQT-INV-004', name: 'Jaqueta acolchoada bordô M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 77 },
+    ],
   },
   {
     id: 'interior-sp',
@@ -121,6 +136,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 148000,
     argument:
       'Sell-through das últimas 4 semanas está 18% abaixo do necessário para zerar antes da próxima coleção. Elasticidade −1,3 nesta faixa: um corte cirúrgico de 8% projeta +22% em unidades e libera R$ 148 mil de capital antes que a idade do estoque (47d) ultrapasse a média da categoria. Preserva 6,2 pp a mais de margem que uma liquidação tardia típica de 25%.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 74 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 72 },
+      { sku: 'JQT-INV-005', name: 'Jaqueta acolchoada cinza G', currentPrice: 129.9, recommendedPrice: 115.9, markdownPct: 11, sellThroughProjectedPct: 69 },
+      { sku: 'JQT-INV-006', name: 'Jaqueta acolchoada verde P', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 71 },
+    ],
   },
   {
     id: 'minas-gerais',
@@ -149,6 +170,12 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 216000,
     argument:
       'Idade média do estoque 63 dias, 37% acima da média da categoria (46d), com perda projetada de valor de 2,1 pp/semana caso mantido. Elasticidade −1,6 e coleção nova entrando em 21 dias: markdown de 15% agora captura demanda de fim de ciclo antes da transição e evita uma liquidação profunda típica desta janela (~30%), preservando 9,4 pp de margem em relação a esse cenário tardio.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 85 },
+      { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 104.9, markdownPct: 19, sellThroughProjectedPct: 82 },
+      { sku: 'JQT-INV-007', name: 'Jaqueta acolchoada marrom M', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 80 },
+      { sku: 'JQT-INV-008', name: 'Jaqueta acolchoada azul GG', currentPrice: 129.9, recommendedPrice: 99.9, markdownPct: 23, sellThroughProjectedPct: 78 },
+    ],
   },
   {
     id: 'sul',
@@ -177,16 +204,16 @@ export const clusters: TurnoverCluster[] = [
     capitalUnlockedBRL: 62000,
     argument:
       'Forecast sinaliza pico sazonal em 12–16 dias (entrada de frente fria + calendário regional de datas comemorativas), com elasticidade projetada caindo de −1,1 para −0,4 nesse período. Descontar agora antecipa margem que o próprio clima devolve — janela ótima de ação em 2 semanas, quando o modelo reprograma automaticamente a régua para R$ 124,90 caso o giro não acompanhe.',
+    skus: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 76 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+      { sku: 'JQT-INV-009', name: 'Jaqueta acolchoada vinho M', currentPrice: 129.9, recommendedPrice: 124.9, markdownPct: 4, sellThroughProjectedPct: 72 },
+      { sku: 'JQT-INV-010', name: 'Jaqueta acolchoada grafite G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 73 },
+    ],
   },
 ];
 
 export const filterOptions = {
-  category: [
-    { value: 'all', label: 'Todas as categorias' },
-    { value: 'fashion', label: 'Moda · Coleção corrente' },
-    { value: 'sazonal', label: 'Sazonal · Inverno' },
-    { value: 'basico', label: 'Básicos · Fluxo contínuo' },
-  ],
   product: [
     { value: 'sku-1', label: 'Jaqueta acolchoada — coleção inverno' },
     { value: 'sku-2', label: 'Bota térmica premium' },
@@ -203,12 +230,6 @@ export const filterOptions = {
     { value: 'balanced', label: 'Equilibrado (giro × margem)' },
     { value: 'aggressive', label: 'Desova agressiva' },
     { value: 'preserve', label: 'Preservar margem' },
-  ],
-  horizon: [
-    { value: '14', label: 'Até 14 dias' },
-    { value: '30', label: 'Até 30 dias' },
-    { value: '45', label: 'Até 45 dias' },
-    { value: '60', label: 'Até 60 dias' },
   ],
   minMargin: [
     { value: '25', label: '≥ 25%' },
