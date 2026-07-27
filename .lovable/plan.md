@@ -1,11 +1,8 @@
-## Ajuste no Forecast Preditivo
+## Reduzir altura dos gráficos no modal do Forecast
 
-Reordenar o catálogo de SKUs em `src/data/kiosk/demos/demandForecast.ts` para que **"Eletro portátil — linha A"** seja o primeiro item da lista.
+Ambos os gráficos do dashboard de forecast (`src/components/kiosk/demos/DemandForecastDemo.tsx`) usam `maxHeight` fixo no SVG. Vou reduzir em ~20% para liberar espaço vertical ao card "POR QUE":
 
-Como `DemandForecastDemo.tsx` já inicializa o estado com `skus[0].id`, o item passa a ficar selecionado por default automaticamente, sem necessidade de outras mudanças.
+- Linha 475 (gráfico de linhas — histórico × forecast): `maxHeight: 320` → `maxHeight: 256`
+- Linha 619 (gráfico de barras — composição/erro): `maxHeight: 300` → `maxHeight: 240`
 
-### Ordem final
-1. Eletro portátil — linha A
-2. Bebida sazonal — 2L
-3. Higiene recorrente — 400ml
-4. Moda rápida — cápsula
+Nenhuma outra alteração de layout — o restante da coluna (KPIs, filtros, promo card) permanece igual, e o espaço liberado é absorvido pela coluna direita onde vive o card "POR QUE".
