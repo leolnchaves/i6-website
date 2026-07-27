@@ -627,7 +627,95 @@ export const signalDemoContent = {
           'Qual o impacto financeiro previsto se a ativação ocorrer fora da janela?',
         ],
       },
+      priceConversionFriction: {
+        label: 'Fricção de Preço',
+        question: 'Em quais produtos, sessões e contextos o preço atual está reduzindo a probabilidade de conversão?',
+        title: 'Fricções preditivas de preço na jornada de compra',
+        analysis: 'O modelo identificou que o preço está limitando a conversão em 14% das sessões com alta intenção de compra. A maior oportunidade está nos usuários que retornaram ao produto, compararam alternativas e chegaram ao carrinho, mas encontraram um preço acima da faixa de maior resposta prevista para aquele contexto.\n\nA fricção não ocorre de forma uniforme. O Produto A apresenta maior sensibilidade em sessões originadas por mídia paga, onde os usuários demonstram alta comparação, maior sensibilidade e menor vínculo prévio com a marca. Já o Produto B mantém boa conversão entre clientes recorrentes mesmo sem incentivo, pois a intenção já é elevada e a probabilidade de conversão permanece dentro da faixa esperada.',
+        frictionHeatmap: {
+          contexts: ['Mídia paga', 'Cliente recorrente', 'Busca orgânica', 'Carrinho recorrente', 'Primeira visita'],
+          products: ['Produto A', 'Produto B', 'Produto C', 'Produto D'],
+          // fricção prevista de preço 0-100
+          matrix: [
+            [82, 24, 58, 71, 28],
+            [46, 18, 62, 55, 22],
+            [64, 32, 44, 68, 34],
+            [38, 20, 41, 47, 18],
+          ],
+        },
+        contextTable: {
+          headers: ['Produto e contexto', 'Intenção prevista', 'Fricção de preço', 'Conversão prevista', 'Direção recomendada'],
+          rows: [
+            ['Produto A · mídia paga', 'Alta', 'Alta', '4,8%', 'Incentivo contextual'],
+            ['Produto A · cliente recorrente', 'Alta', 'Baixa', '9,7%', 'Manter preço'],
+            ['Produto B · busca orgânica', 'Média', 'Média', '5,9%', 'Ajuste moderado'],
+            ['Produto C · carrinho recorrente', 'Muito alta', 'Alta', '7,2%', 'Ação imediata'],
+            ['Produto D · primeira visita', 'Baixa', 'Baixa', '1,8%', 'Não incentivar'],
+          ],
+        },
+        signalsTable: {
+          headers: ['Sinal preditivo', 'Leitura do modelo'],
+          rows: [
+            ['Retorno ao mesmo produto', 'Intenção crescente'],
+            ['Comparação frequente de alternativas', 'Sensibilidade a preço'],
+            ['Entrada e saída do carrinho', 'Fricção na decisão'],
+            ['Busca por cupom ou promoção', 'Expectativa de incentivo'],
+            ['Histórico de compra sem desconto', 'Baixa necessidade de incentivo'],
+            ['Sessão curta e pouco engajada', 'Baixa intenção, independentemente do preço'],
+          ],
+        },
+        actions: [
+          { bold: 'Aplicar ações de preço apenas nas sessões com alta intenção', text: 'e fricção comprovada de preço.' },
+          { bold: 'Preservar o preço para clientes com elevada probabilidade', text: 'de conversão espontânea.' },
+          { bold: 'Evitar incentivos em sessões de baixa intenção', text: 'nas quais o preço não é o principal obstáculo.' },
+        ],
+        questions: [
+          'Como a fricção evolui entre canais de aquisição e perfis de sessão?',
+          'Quais contextos apresentam maior ganho previsto ao remover fricção?',
+          'Como validar as recomendações de preço em piloto controlado?',
+        ],
+      },
+      priceConversionIncentiveNeed: {
+        label: 'Necessidade de Incentivo',
+        question: 'Quais usuários precisam de um incentivo de preço para converter, e quais comprariam sem desconto?',
+        title: 'Necessidade preditiva de incentivo por comportamento',
+        analysis: 'O modelo estima que 57% das sessões com alta intenção devem converter sem qualquer incentivo. Outros 28% apresentam sensibilidade suficiente para responder a uma ação moderada de preço. Nos 15% restantes, o desconto não deve produzir conversão incremental relevante.\n\nAplicar o mesmo incentivo para toda a audiência destruiria margem em clientes que já comprariam e consumiria verba em sessões com baixa probabilidade de resposta. O modelo diferencia, por exemplo, um usuário com alta intenção e histórico de compra na categoria — que não deve receber desconto — de uma sessão com comparação recorrente de preço, busca por promoção e abandono após visualizar o valor final — que responde a um incentivo moderado dentro da margem permitida.',
+        distribution: [
+          { group: 'Conversão espontânea', percentage: 57 },
+          { group: 'Conversão dependente de incentivo', percentage: 28 },
+          { group: 'Baixa resposta mesmo com incentivo', percentage: 15 },
+        ],
+        incentiveTable: {
+          headers: ['Comportamento previsto', 'Sessões', 'Probabilidade atual', 'Ação recomendada', 'Motivo'],
+          rows: [
+            ['Compraria sem incentivo', '18.420', '82%', 'Manter preço', 'Intenção já consolidada'],
+            ['Responde a incentivo moderado', '9.060', '54%', 'Incentivo controlado', 'Alta sensibilidade'],
+            ['Aguarda uma condição específica', '3.480', '47%', 'Benefício direcionado', 'Busca por conveniência ou frete'],
+            ['Baixa intenção atual', '4.910', '16%', 'Não oferecer desconto', 'Baixo ganho incremental'],
+          ],
+        },
+        detail: [
+          'Quais sinais indicam intenção.',
+          'Sensibilidade prevista ao preço.',
+          'Probabilidade de conversão espontânea.',
+          'Incentivo mínimo suficiente.',
+          'Margem disponível.',
+          'Canal e momento mais adequados.',
+          'Risco de conceder desconto sem gerar venda incremental.',
+        ],
+        actions: [
+          { bold: 'Suprimir descontos para usuários com alta probabilidade', text: 'de conversão espontânea.' },
+          { bold: 'Oferecer o menor incentivo capaz de alterar a decisão', text: 'nas sessões sensíveis a preço.' },
+          { bold: 'Não utilizar preço para recuperar sessões de baixa intenção', text: 'priorizando outras ações de jornada ou recomendação.' },
+        ],
+        questions: [
+          'Como o incentivo mínimo varia por categoria e ticket?',
+          'Qual o impacto de margem previsto ao restringir o desconto ao grupo sensível?',
+          'Como acompanhar o comportamento do grupo dependente de incentivo ao longo do tempo?',
+        ],
+      },
     },
+
 
   },
   en: {
