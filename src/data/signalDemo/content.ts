@@ -1054,7 +1054,7 @@ export const signalDemoContent = {
       },
       mixGaps: {
         label: 'Assortment Gaps',
-        question: 'By region, which products show the largest gap in the current assortment and the largest potential to lift average basket per store?',
+        question: 'Show which products have the largest gap in the ideal assortment with the highest potential to lift average basket.',
         title: 'Assortment gaps with highest basket potential by region',
         analysis: 'The model identified 14 under-represented products in the current assortment, but only five concentrate the largest basket-growth opportunity. In São Paulo Countryside, SKUs A and C hold the highest potential due to strong adherence to store behavior, recurrence in similar outlets and complementarity with products already sold. Adding these products to eligible stores can lift regional average basket by up to 12% without materially increasing idle-inventory risk.\n\nSKU A shows the largest gap in São Paulo Countryside because it is missing in 38% of stores that behave in line with its category. These outlets already sell complementary products, show rising purchase frequency and post a lower basket than similar stores that already carry the SKU. The opportunity is not to distribute it across the whole region — the model recommends including it only in the 126 stores with the highest predicted adherence.',
         heatmap: {
