@@ -248,21 +248,37 @@ const Kiosk = () => {
                           labels={sContent.labels}
                           lang={lang}
                           companion={companion}
+                          onSimulationClosed={
+                            isMigrated
+                              ? () => {
+                                  setSimulationCompleted((s) => ({ ...s, [selectedSolution.id]: true }));
+                                  requestAnimationFrame(() => {
+                                    document
+                                      .getElementById('kiosk-signal-intelliboard')
+                                      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                  });
+                                }
+                              : undefined
+                          }
                         />
-                        <KioskSignalIntelliboard
-                          lang={lang}
-                          content={kContent}
-                          solutionId={selectedSolution.id}
-                        />
+                        {(!isMigrated || simulationCompleted[selectedSolution.id]) && (
+                          <>
+                            <KioskSignalIntelliboard
+                              lang={lang}
+                              content={kContent}
+                              solutionId={selectedSolution.id}
+                            />
 
-                        <EbookCTA
-                          lang={lang}
-                          content={kContent}
-                          route={route}
-                          solutionId={selectedSolution.id}
-                          solutionTitle={selectedSolution.title}
-                          ebookTitle={ebookTitle}
-                        />
+                            <EbookCTA
+                              lang={lang}
+                              content={kContent}
+                              route={route}
+                              solutionId={selectedSolution.id}
+                              solutionTitle={selectedSolution.title}
+                              ebookTitle={ebookTitle}
+                            />
+                          </>
+                        )}
                       </>
                     ) : (
                       <p className="text-center text-[2.2vmin] text-white/50 py-[4vmin]">
