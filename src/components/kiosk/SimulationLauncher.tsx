@@ -100,7 +100,6 @@ const SimulationLauncher = ({
           onClick={() => setOpen(true)}
           className="w-full min-h-[10vmin] rounded-2xl bg-[#F4845F] hover:bg-[#F4845F]/90 active:scale-[0.99] transition text-white font-bold text-[2.4vmin] flex items-center justify-center gap-[1.5vmin] shadow-[0_0_40px_rgba(244,132,95,0.35)]"
         >
-          <Sparkles className="w-[3vmin] h-[3vmin]" />
           {t.simulateButton}
         </button>
       </div>
