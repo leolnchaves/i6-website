@@ -121,7 +121,7 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 2.8,
     volumeImpactPct: -2.6,
     argument:
-      'O produto tem alta frequência de recompra (a cada 34 dias em média) e histórico consistente de conversão mesmo em bandas superiores. Apesar da oportunidade, preços acima de R$ 96,20 elevam significativamente o risco de perda de volume dentro do cluster fiel — o modelo recomenda R$ 94,80 como melhor equilíbrio entre margem capturada e demanda preservada.',
+      'Elasticidade moderada (−0,95): a resposta de demanda começa a acelerar acima de R$ 96,20 — cada +1% em preço projeta ≈ −0,95% em volume nessa zona. A projeção de demanda para o próximo ciclo é estável (tendência +0,8% a/a) com sazonalidade neutra e cobertura de estoque de 74 dias, sem pressão para descontar. R$ 94,80 é o ponto em que a curva de margem esperada satura antes do risco de churn do cluster recorrente (recompra a cada 34 dias).',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
       { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
