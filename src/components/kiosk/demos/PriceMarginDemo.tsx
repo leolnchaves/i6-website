@@ -637,6 +637,25 @@ const ResultView = ({ selected, derived }: { selected: PriceMarginSku; derived: 
           );
         })}
       </div>
+
+      {/* Post-model KPIs (left column) */}
+      <div className="grid grid-cols-3 gap-[1vmin]">
+        <MetricPill
+          label="Confiança"
+          value={`${derived.confidencePct}%`}
+        />
+        <MetricPill
+          label="Impacto na margem"
+          value={`+${derived.marginImpactPp.toFixed(1)} pp`}
+          highlight
+          trend="up"
+        />
+        <MetricPill
+          label="Impacto no volume"
+          value={`${derived.volumeImpactPct.toFixed(1)}%`}
+          trend="down"
+        />
+      </div>
     </>
   );
 };
