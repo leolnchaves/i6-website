@@ -1,35 +1,48 @@
-## Plano: Preço Orientado à Margem — 2 novas perguntas no i6 Signal
+## Plano: Preço Orientado ao Giro — 2 novas perguntas no i6 Signal
 
-Segue o mesmo padrão de `mixBehavior`/`mixGaps` e `targetsPotential`/`targetsRisk`: novos tipos de cenário + conteúdo PT/EN + componentes de visualização + wiring no Intelliboard.
+Mesmo padrão de `marginOpportunities`/`marginSignals`: novos cenários no union, conteúdo PT/EN, componentes de visualização e wiring no Intelliboard.
 
 ### 1. `src/data/signalDemo/content.ts`
-- Adicionar `marginOpportunities` (Pergunta 1) e `marginSignals` (Pergunta 2) ao union `Scenario`.
-- Blocos PT e EN com:
-  - **marginOpportunities**: `question`, `title`, `executive`, `scatter` (sensibilidade × margem incremental, bolha = receita, destaque prioridade/risco), `skuTable` (SKU, Preço atual, Preço recomendado, Reação prevista do volume, Margem incremental, Confiança), `behaviorReading` (2 parágrafos SKU A / SKU D), `actions`.
-  - **marginSignals**: `question`, `title`, `executive`, `signalsChart` (contribuição por sinal: demanda prevista, sensibilidade, posição competitiva, estoque, margem atual, comportamento da categoria — barras divergentes por SKU), `signalsTable` (Espaço para margem, Principal sinal positivo, Principal restrição, Direção), `reasoning` (argumentação preditiva), `actions`.
+Adicionar dois novos cenários ao union `Scenario`:
+
+- **`turnoverRisk`** (Pergunta 1 — Risco preditivo de envelhecimento por região e cluster)
+  - `question`, `title`, `executive` (2 parágrafos: SKU A em 38 lojas, Interior de Minas / Sul Metropolitano vs São Paulo Premium)
+  - `regionTable`: Região/cluster, Estoque atual, Cobertura projetada, Sell-through previsto, Risco (badge Baixo/Médio/Alto)
+  - `signalsTable`: 5 sinais preditivos comparados entre Interior de Minas × São Paulo Premium (velocidade, sensibilidade, sazonalidade, idade estoque, pressão competitiva)
+  - `reasoning` (argumentação preditiva, 2 parágrafos)
+  - `actions` (3 ações)
+
+- **`turnoverMarkdown`** (Pergunta 2 — Markdown preditivo por SKU, região e ciclo de vida)
+  - `question`, `title`, `executive` (2 parágrafos: 7 SKUs em markdown, SKU A Interior de Minas 12%, SKU D São Paulo Premium manter 21 dias)
+  - `markdownRuler`: régua temporal 4 clusters × 4 janelas (Hoje / 7 dias / 14 dias / 21 dias) com valores tipo `-12%`, `Manter`, `Reavaliar`
+  - `skuTable`: SKU, Cluster prioritário, Preço atual, Preço recomendado, Sell-through projetado, Margem preservada
+  - `reasoning` (2 parágrafos)
+  - `actions` (3 ações)
+
+Blocos EN espelham PT com terminologia já adotada ("cluster", "sell-through", "markdown", "SKU").
 
 ### 2. `src/data/kiosk/config.ts`
-- Remapear `price-to-margin` em `solutionSignalMap` de `['pricing', 'mix']` para `['marginOpportunities', 'marginSignals']`.
-- Estender a assinatura do union com os dois novos ids.
+- Remapear `price-to-turnover` em `solutionSignalMap` de `['pricing', 'supply']` para `['turnoverRisk', 'turnoverMarkdown']`.
+- Estender assinatura do union com `turnoverRisk` e `turnoverMarkdown`.
 
 ### 3. `src/components/signalDemo/visualizations.tsx`
-Novos componentes:
-- `MarginOpportunitiesScatter`: `ScatterChart` recharts com eixo X = sensibilidade prevista, eixo Y = margem incremental potencial, bolha proporcional a receita; cores: coral para prioridade, âmbar para ajuste controlado, cinza para risco/manter. Reaproveita paleta de `TargetsRiskScatter`.
-- `MarginOpportunitiesTable`: tabela dos SKUs com badges tonais em Reação de volume (verde se ≤0, vermelho se >0 negativo material) e Margem incremental (verde/coral, "Sem oportunidade" em cinza), Confiança em coral suave.
-- `MarginSignalsChart`: gráfico de barras divergentes (positivo/negativo) por SKU × 6 sinais, em Recharts `BarChart` com layout horizontal empilhado — sinais positivos à direita, restrições à esquerda; legenda de sinais no topo.
-- `MarginSignalsTable`: Espaço para margem (badge Alto/Médio/Baixo/Negativo), Principal sinal positivo, Principal restrição, Direção (Aumentar/Ajuste controlado/Manter/Reduzir com cor).
-- `MarginBehaviorReading` / `MarginReasoningBlock`: blocos textuais no mesmo tom coral dos quadros existentes ("Leitura comportamental" e "Argumentação preditiva").
+Novos componentes (reaproveitando paleta e estilos existentes):
+
+- `TurnoverRiskTable`: tabela regional com badge tonal em Risco (verde Baixo, âmbar Médio, coral Alto) e coluna de sell-through com barra tonal.
+- `TurnoverSignalsCompareTable`: tabela comparativa 2 colunas (Interior de Minas × São Paulo Premium), com badges tonais Alta/Média/Baixa e deltas coloridos (+8% verde, -24% coral).
+- `TurnoverMarkdownRuler`: grid 4×5 (cluster × 4 janelas + label) com células coloridas conforme o valor (coral para descontos, cinza para Manter, âmbar para Reavaliar). Renderiza como tabela responsiva no mesmo estilo dos outros quadros escuros.
+- `TurnoverMarkdownTable`: tabela de SKUs com badge em Preço recomendado (coral se desconto, cinza "Manter") e formatação BRL.
+- Reaproveitar `MarginReasoningBlock` (renomear para bloco genérico `ReasoningBlock` já usado, ou duplicar com título "Argumentação preditiva") — verificar bloco existente antes de duplicar.
 
 ### 4. `src/components/kiosk/KioskSignalIntelliboard.tsx`
-- Importar os novos componentes.
-- Branches `activeScenario === 'marginOpportunities'` e `=== 'marginSignals'` antes do `h4 "Ações recomendadas"`.
-- `marginOpportunities`: `MarginOpportunitiesScatter` + `MarginOpportunitiesTable` + quadro "Leitura comportamental".
-- `marginSignals`: `MarginSignalsChart` + `MarginSignalsTable` + quadro "Argumentação preditiva" (mesmo container coral já usado em Metas/Mix).
+- Importar novos componentes.
+- Branches `activeScenario === 'turnoverRisk'` e `=== 'turnoverMarkdown'` antes do `h4 "Ações recomendadas"`.
+- `turnoverRisk`: `TurnoverRiskTable` + `TurnoverSignalsCompareTable` + quadro "Argumentação preditiva".
+- `turnoverMarkdown`: `TurnoverMarkdownRuler` + `TurnoverMarkdownTable` + quadro "Argumentação preditiva".
 
 ### Notas técnicas
-- Sem novos pacotes — `recharts` (já em uso) para scatter e barras divergentes.
-- Textos em EN preservando terminologia adotada (SKU permanece SKU; "banda competitiva" → "competitive band"; "margem incremental" → "incremental margin").
-- Valores em BRL nos exemplos (R$), como no briefing.
-- Sem alteração em `signals.ts`, no fluxo do quiz ou em outros cenários.
+- Sem novos pacotes — tudo em tabelas Tailwind + eventual heatmap simples via `div grid` (sem recharts nesses dois cenários, pois régua e tabela regional são tabulares).
+- Valores em BRL (R$). SKU permanece SKU em EN.
+- Sem alteração em `signals.ts`, no fluxo do quiz, ou em demos do Kiosk.
 
 Publicação de release patch após validação visual.
