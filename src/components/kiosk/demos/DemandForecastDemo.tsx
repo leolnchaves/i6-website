@@ -627,29 +627,8 @@ const CompositionChart = ({
           </g>
         ))}
 
-        {/* Sparsity bars — always above zero line */}
-        {points.map((p, i) => {
-          const sp = Math.max(0, p.sparsityFix ?? 0);
-          const barTop = y(sp);
-          const barH = yZero - barTop;
-          const cx = xAt(i);
-          const selected = selectedKey === p.key;
-          return (
-            <rect
-              key={`bar-${p.key}`}
-              x={cx - barW / 2}
-              y={barTop}
-              width={barW}
-              height={Math.max(0, barH)}
-              fill={colors.sparsityFix}
-              rx={2}
-              style={{
-                opacity: selectedKey && !selected ? 0.35 : 1,
-                pointerEvents: 'none',
-              }}
-            />
-          );
-        })}
+
+
 
         {/* Zero baseline redraw over bars */}
         <line x1={PAD_L} x2={W - PAD_R} y1={yZero} y2={yZero} stroke={colors.zero} strokeWidth={1} />
