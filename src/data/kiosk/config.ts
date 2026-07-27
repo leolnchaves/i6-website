@@ -408,7 +408,7 @@ export const kioskContent: Record<KioskLang, QuizContent> = {
 /**
  * Map from solutionId → i6Signal scenario keys to show for that solution.
  */
-export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown' | 'personalizationBehavior' | 'personalizationRepurchase')[]> = {
+export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing' | 'comercial' | 'mix' | 'pdv' | 'propensity' | 'clusters' | 'targetsPotential' | 'targetsRisk' | 'mixBehavior' | 'mixGaps' | 'marginOpportunities' | 'marginSignals' | 'turnoverRisk' | 'turnoverMarkdown' | 'personalizationBehavior' | 'personalizationRepurchase' | 'priceConversionFriction' | 'priceConversionIncentiveNeed')[]> = {
   'predictive-personalization': ['personalizationBehavior', 'personalizationRepurchase'],
   'smart-discovery': ['personalizationBehavior', 'personalizationRepurchase'],
   'predictive-campaign-targeting': ['propensity', 'clusters'],
@@ -417,7 +417,7 @@ export const solutionSignalMap: Record<string, ('supply' | 'forecast' | 'pricing
   'mix-assortment-order': ['mixBehavior', 'mixGaps'],
   'price-to-margin': ['marginOpportunities', 'marginSignals'],
   'price-to-turnover': ['turnoverRisk', 'turnoverMarkdown'],
-  'price-to-conversion': ['pricing', 'comercial'],
+  'price-to-conversion': ['priceConversionFriction', 'priceConversionIncentiveNeed'],
 };
 
 /**
