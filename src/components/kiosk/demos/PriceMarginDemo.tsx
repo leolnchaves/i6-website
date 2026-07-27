@@ -597,7 +597,7 @@ const ScatterChart = ({
 // Result view: chart + KPI cards + alternatives table
 // ============================================================
 
-const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
+const ResultView = ({ selected, derived }: { selected: PriceMarginSku; derived: Derived }) => {
   return (
     <>
       <div className="flex items-baseline justify-between">
@@ -617,14 +617,14 @@ const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
         <KpiCard label="Preço atual" value={fmtBRL(selected.currentPrice)} />
         <KpiCard
           label="Faixa recomendada"
-          value={`${fmtBRL(selected.rangeMin)} – ${fmtBRL(selected.rangeMax)}`}
+          value={`${fmtBRL(derived.rangeMin)} – ${fmtBRL(derived.rangeMax)}`}
         />
-        <KpiCard label="Preço ótimo" value={fmtBRL(selected.optimalPrice)} highlight />
-        <KpiCard label="Confiança" value={`${selected.confidencePct}%`} />
+        <KpiCard label="Preço ótimo" value={fmtBRL(derived.optimalPrice)} highlight />
+        <KpiCard label="Confiança" value={`${derived.confidencePct}%`} />
       </div>
 
       {/* Chart */}
-      <PriceMarginCurve sku={selected} />
+      <PriceMarginCurve sku={selected} derived={derived} />
 
       {/* Alternatives table */}
       <div className="rounded-xl border border-white/10 overflow-hidden">
@@ -638,7 +638,7 @@ const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
           <span className="text-right">Margem</span>
           <span className="text-right">Volume</span>
         </div>
-        {selected.alternatives.map((a) => {
+        {derived.alternatives.map((a) => {
           const isReco = a.id === 'recommended';
           return (
             <div
@@ -660,6 +660,15 @@ const ResultView = ({ selected }: { selected: PriceMarginSku }) => {
     </>
   );
 };
+
+const FilterRow = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div className="rounded-xl border border-white/10 bg-white/[0.02] px-[1.2vmin] py-[1vmin]">
+    <span className="block text-[1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.7vmin]">
+      {label}
+    </span>
+    <div className="grid grid-cols-2 gap-[1vmin]">{children}</div>
+  </div>
+);
 
 const PriceMarginCurve = ({ sku }: { sku: PriceMarginSku }) => {
   const W = 620;
