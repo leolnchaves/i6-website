@@ -439,8 +439,8 @@ export const territoryEbook: Record<RouteId, { pt: string; en: string }> = {
     en: 'Decision-Oriented Customer Intelligence',
   },
   planning: {
-    pt: 'Supply Preditivo',
-    en: 'Predictive Supply',
+    pt: 'Supply Orientado à Decisão',
+    en: 'Decision-Driven Supply',
   },
   pricing: {
     pt: 'Pricing Orientado a Resultados',
