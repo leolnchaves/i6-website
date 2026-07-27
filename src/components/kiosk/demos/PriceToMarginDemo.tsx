@@ -203,6 +203,32 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                       </div>
                     )}
                   </div>
+
+                  {done && (
+                    <div className="grid grid-cols-2 gap-[1vmin] mt-[1.5vmin] animate-fade-in">
+                      <MetricPill
+                        label={content.productLabels.recommended}
+                        value={currency(selected.recommendedPrice, lang)}
+                        highlight
+                      />
+                      <MetricPill
+                        label={content.productLabels.deltaConversion}
+                        value={`+${selected.deltaConversionPct.toFixed(1)}%`}
+                        highlight
+                      />
+                      <MetricPill
+                        label={content.productLabels.deltaRevenue}
+                        value={`+${selected.deltaRevenuePct.toFixed(1)}%`}
+                        highlight
+                      />
+                      <MetricPill
+                        label={content.productLabels.latency}
+                        value={`${latencyMs} ms`}
+                        hint={content.productLabels.latencyHint}
+                        highlight
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             )}
