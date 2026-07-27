@@ -209,7 +209,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     key={`${r.v}-${c.u}`}
                     type="button"
                     onClick={() => startScenario(c.u, r.v)}
-                    className={`min-h-[6vmin] rounded-xl border-2 px-[1.2vmin] py-[0.7vmin] text-left transition-all active:scale-[0.98] ${
+                    className={`min-h-[5vmin] rounded-xl border-2 px-[1vmin] py-[0.5vmin] text-left transition-all active:scale-[0.98] ${
                       active
                         ? isFashion
                           ? 'border-[#F4845F] bg-[#F4845F]/[0.14]'
@@ -219,13 +219,9 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                         : 'border-white/15 bg-white/[0.03] hover:border-sky-400/60 hover:bg-sky-400/[0.06]'
                     }`}
                   >
-                    <span className="flex items-center gap-[1vmin]">
-                      <span className="w-[3vmin] h-[3vmin] rounded-lg bg-[#F4845F]/15 border border-[#F4845F]/40 flex items-center justify-center flex-shrink-0">
-                        {c.icon}
-                      </span>
-                      <span className="text-[1.6vmin] font-bold text-white leading-tight">{c.label}</span>
-                    </span>
+                    <span className="text-[1.5vmin] font-normal text-white leading-tight">{c.label}</span>
                   </button>
+
                 );
               })}
             </div>
