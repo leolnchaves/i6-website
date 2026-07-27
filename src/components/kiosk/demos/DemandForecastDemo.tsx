@@ -83,44 +83,8 @@ const DemandForecastDemo = ({ lang }: Props) => {
     return () => timers.forEach(clearTimeout);
   }, [phase]);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mainChartRef = useRef<HTMLDivElement>(null);
-  const insightRef = useRef<HTMLDivElement>(null);
-  const [line, setLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
 
-  useLayoutEffect(() => {
-    if (phase !== 'result') {
-      setLine(null);
-      return;
-    }
-    const measure = () => {
-      const c = containerRef.current;
-      const m = mainChartRef.current;
-      const i = insightRef.current;
-      if (!c || !m || !i) return;
-      const cr = c.getBoundingClientRect();
-      const mr = m.getBoundingClientRect();
-      const ir = i.getBoundingClientRect();
-      setLine({
-        x1: mr.right - cr.left,
-        y1: mr.top + mr.height / 2 - cr.top,
-        x2: ir.left - cr.left,
-        y2: ir.top + ir.height / 2 - cr.top,
-      });
-    };
-    const t = setTimeout(measure, 700);
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (containerRef.current) ro.observe(containerRef.current);
-    if (mainChartRef.current) ro.observe(mainChartRef.current);
-    if (insightRef.current) ro.observe(insightRef.current);
-    window.addEventListener('resize', measure);
-    return () => {
-      clearTimeout(t);
-      ro.disconnect();
-      window.removeEventListener('resize', measure);
-    };
-  }, [phase, sku.id]);
+
 
   const reset = () => {
     setPhase('planning');
