@@ -416,6 +416,22 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
             </div>
           ) : (
             <>
+              {/* Compact POR QUE above timeline */}
+              {phase === 'pdp' && selected && (
+                <div className="mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[1.6vmin] py-[1.2vmin] animate-fade-in">
+                  <div className="flex items-center gap-[1vmin] mb-[0.5vmin]">
+                    <Sparkles className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" strokeWidth={2.5} />
+                    <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                      {t.rationaleLabel}
+                    </span>
+                    <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
+                      {t.latencyLabel}: {latencyMs} ms
+                    </span>
+                  </div>
+                  <p className="text-[1.5vmin] leading-snug text-white/95">{argumentText}</p>
+                </div>
+              )}
+
               {/* Micro-metric of active step */}
               <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
                 {progress < scenario.features.length && (
@@ -473,22 +489,6 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                   })}
                 </div>
               </div>
-
-              {/* Compact POR QUE below timeline */}
-              {phase === 'pdp' && selected && (
-                <div className="mt-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[1.6vmin] py-[1.2vmin] animate-fade-in">
-                  <div className="flex items-center gap-[1vmin] mb-[0.5vmin]">
-                    <Sparkles className="w-[1.6vmin] h-[1.6vmin] text-[#F4845F]" strokeWidth={2.5} />
-                    <span className="text-[1.25vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
-                      {t.rationaleLabel}
-                    </span>
-                    <span className="ml-auto text-[1.15vmin] text-white/60 font-mono">
-                      {t.latencyLabel}: {latencyMs} ms
-                    </span>
-                  </div>
-                  <p className="text-[1.5vmin] leading-snug text-white/95">{argumentText}</p>
-                </div>
-              )}
             </>
           )}
         </div>
