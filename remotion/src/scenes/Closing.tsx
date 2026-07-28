@@ -30,8 +30,19 @@ export const Closing: React.FC = () => {
         </div>
       </Reveal>
       <Reveal delay={44}>
-        <div style={{ fontFamily: FONT_BODY, fontSize: 32, color: MUTED, textAlign: 'center' }}>
-          infinity6.ai
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
+          <div
+            style={{
+              fontFamily: FONT_DISPLAY,
+              fontWeight: 700,
+              fontSize: 52,
+              letterSpacing: '-0.01em',
+              color: WHITE,
+            }}
+          >
+            www.<span style={{ color: CORAL }}>infinity6</span>.ai
+          </div>
+          <Rule delay={54} width={260} />
         </div>
       </Reveal>
       <Reveal delay={58}>
