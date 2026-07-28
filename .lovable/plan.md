@@ -1,84 +1,31 @@
-# Preço Orientado à Conversão — Migração para padrão unificado
+# Ativar gating de Preço Orientado à Conversão no Kiosk
 
-Objetivo: alinhar a jornada de `price-to-conversion` ao mesmo padrão já aplicado em **Preço Orientado a Giro** (referência mais recente) e **Preço Orientado a Margem**.
+## Diagnóstico
+A migração em si (v2.2.13) foi construída:
+- `src/components/kiosk/demos/PriceToMarginDemo.tsx` já está no padrão empilhado (filtros → tabela SKUs → gráfico de curva de conversão + KPIs → cenários alternativos → card POR QUE → timeline horizontal), com estado pré-cálculo em `—` e seleção automática do 1º SKU pós-simulação.
+- `src/data/kiosk/demos/priceToMargin.ts` já é o dataset focado em conversão (sessões, elasticidade, Δ Conversão, Δ Receita, cenários alternativos, argumentos POR QUE por SKU).
+- `src/components/kiosk/SolutionDemoBlock.tsx:24-40` já embrulha em `SimulationLauncher` com ícone `Target` e propaga `onSimulationClosed`.
 
-## 1. Navegação (igual às demais)
+O que faltou foi **uma linha** em `src/pages/Kiosk.tsx:222`: o id `'price-to-conversion'` não está na lista `migratedIds`. Sem isso:
+- `SolutionsGrid` antigo continua sendo renderizado acima do launcher.
+- O subtítulo "Explore o exemplo de aplicação abaixo" continua visível.
+- O gating de `KioskSignalIntelliboard` + `EbookCTA` (só aparecem após fechar o modal) não é aplicado.
+- O scroll automático até o Signal ao fechar a simulação não dispara.
 
-- Embrulhar `PriceToMarginDemo` (que hoje serve `price-to-conversion`) dentro do `SimulationLauncher` em `src/components/kiosk/SolutionDemoBlock.tsx`.
-  - Ícone: `Target` (ou `Sparkles`) do `lucide-react`, para diferenciar de Giro/Margem.
-  - Passar `solutionTitle`, `solutionTagline`, `resolve`, `entrega`, `impacto`, `labels`, `onSimulationClosed`.
-- Gating: enquanto o modal de simulação não for aberto/fechado, o `SolutionDemoBlock` já esconde Signal e CTA (comportamento herdado do launcher). Nada extra a fazer aqui além do wrapper.
-- Ao fechar a simulação: scroll automático para a seção do i6 Signal (comportamento já implementado no launcher via `onSimulationClosed`).
-- Remover o botão "X" no topo do modal (usar apenas "Fechar Simulação" no rodapé) — já é o padrão do `SimulationLauncher`; conferir se algum override na demo readiciona.
+## Mudança
+1. `src/pages/Kiosk.tsx` (linha 222): adicionar `'price-to-conversion'` ao array `migratedIds`.
 
-## 2. Layout da demo dentro do modal (retrato 27")
+Isso replica automaticamente, para essa solução, tudo o que já valia em Giro/Margem e demais migradas:
+- Oculta o `SolutionsGrid` e o subtítulo antigos.
+- Mantém somente o card unificado do `SimulationLauncher` (Resolve/Entrega/Impacto + botão "Clique aqui para simular a solução").
+- Signal + CTA de eBook só entram em cena após o `onSimulationClosed`.
+- Ao fechar o modal, faz scroll suave até `#kiosk-signal-intelliboard`.
 
-Refatorar `src/components/kiosk/demos/PriceToMarginDemo.tsx` para o mesmo esqueleto empilhado das demais:
+## Verificação
+- Abrir `/kiosk`, responder o quiz até cair em Preço Orientado à Conversão.
+- Confirmar que só aparece o card unificado (sem o grid antigo, sem o texto "Explore o exemplo…").
+- Clicar em "Clique aqui para simular a solução" → abrir modal, rodar simulação, "Fechar simulação".
+- Confirmar que Signal + eBook CTA aparecem só depois e a página rola até o Signal.
 
-```text
-┌───────────────────────────────────────────────┐
-│  Filtros (linha única, 3 combos)              │
-│  [ Produto ▾ ] [ Objetivo ▾ ] [ Restrição ▾ ] │
-│                    [ Calcular faixa ótima ]   │
-├───────────────────────────────────────────────┤
-│  Dashboard de resultados                      │
-│  ┌───────────────┐  ┌────────────────────┐    │
-│  │ Faixa ótima   │  │ Gráfico preço×conv │    │
-│  │ (min / ideal / │ │ (curva + banda)    │    │
-│  │  max)         │  │ Confiança no rodapé│    │
-│  └───────────────┘  └────────────────────┘    │
-│  Tabela de SKUs (Situação / Preço atual /     │
-│  Preço ideal / Δ Conversão / Δ Receita /      │
-│  Ação sugerida) — só surge após cálculo       │
-├───────────────────────────────────────────────┤
-│  Card "POR QUE" (prosa objetiva)              │
-├───────────────────────────────────────────────┤
-│  Timeline horizontal (pipeline do modelo)     │
-└───────────────────────────────────────────────┘
-```
-
-Detalhes de comportamento (espelham Giro/Margem):
-
-- Antes de clicar em "Calcular": todos os valores das tabelas mostram `—`; o gráfico fica vazio; card POR QUE oculto.
-- Botão "Calcular" habilita apenas quando os filtros obrigatórios estiverem preenchidos.
-- Pós-cálculo: seleciona automaticamente o primeiro SKU para exibir os detalhes; a partir daí o clique em outro SKU fica liberado.
-- Coluna "Ação sugerida" com cor da fonte apenas (sem badges/boxes coloridos), seguindo o padrão do Signal.
-- Card "POR QUE": um parágrafo curto e específico por combinação Produto × Objetivo, descrevendo o raciocínio (elasticidade estimada, faixa de aceitação, restrição ativa etc.).
-- KPIs no topo: rótulos padronizados em caixa alta ("FAIXA ÓTIMA", "PREÇO IDEAL", "Δ CONVERSÃO PROJETADA", "Δ RECEITA PROJETADA"). Sem sufixos de nome de modelo.
-- Latência em segundos com 2 casas (ex.: `0.03 s`), no rodapé compacto do card do gráfico, junto com "Confiança" (padrão Preço Margem).
-- Gráfico com `preserveAspectRatio="xMidYMid meet"` para não deformar.
-
-## 3. Dados — `src/data/kiosk/demos/priceToMargin.ts`
-
-- Introduzir `skuTemplatesByProduct` (mesmo padrão de `priceTurnover.ts`) para que a tabela de SKUs reaja à mudança do filtro "Produto" após o cálculo — hoje a tabela não muda quando o usuário troca o produto.
-- Cenários fixos por Produto × Objetivo com mix variado de ações: `raise` (aumentar preço, verde-esmeralda), `hold` (manter, neutro), `discount` (reduzir para converter, coral), evitando ordem repetitiva.
-- Overrides de argumento por combinação, alimentando o card "POR QUE" (curto, direto, sem jargão de modelo).
-- Manter o pipeline atual mas garantir durações somando ~1.5–2.0 s.
-
-## 4. Signal (perguntas relacionadas)
-
-Nenhuma alteração de conteúdo do Signal solicitada agora — manter as perguntas já mapeadas em `priceConversionFriction` e `priceConversionIncentiveNeed`. Se o usuário quiser ajustar textos, faremos numa rodada seguinte.
-
-## 5. Registros a preservar (memórias já capturadas em Giro/Margem)
-
-Reaplicar o mesmo checklist visual/comportamental ao migrar:
-- Navegação gated (Signal/CTA escondidos até o modal fechar).
-- Modal sem "X" no topo; apenas "Fechar Simulação" no rodapé com scroll ao Signal.
-- Card unificado no launcher (Resolve/Entrega/Impacto), subtítulo "Explore o exemplo…" oculto.
-- Latência em segundos, "Confiança" no rodapé do card do gráfico.
-- Sem badges/boxes coloridos; ações diferenciadas por cor de fonte.
-- Valores `—` antes do cálculo; tabelas só populam pós-simulação.
-- Empresa "VIVARIS COMÉRCIO E VAREJO" e email `leonardo.chaves@vivaris.com` (já consistentes).
-
-## 6. Entrega
-
-- Após validação visual: publicar release **v2.2.13** (patch), disparando o deploy via GitHub Actions.
-
-## Detalhes técnicos
-
-- Arquivos a alterar:
-  - `src/components/kiosk/SolutionDemoBlock.tsx` — embrulhar `PriceToMarginDemo` no `SimulationLauncher` para `price-to-conversion`.
-  - `src/components/kiosk/demos/PriceToMarginDemo.tsx` — reescrita do layout para o padrão Giro (filtros + dashboard + tabela + POR QUE + timeline horizontal); estados de "antes do cálculo" com `—`; seleção automática do 1º SKU.
-  - `src/data/kiosk/demos/priceToMargin.ts` — adicionar `skuTemplatesByProduct`, cenários por Produto × Objetivo, argumentos do POR QUE, rótulos PT/EN.
-- Nada de backend/RLS; site permanece 100% estático.
-- Sem mudanças em rotas, i18n global, header ou SEO.
+## Release
+Publicar **v2.2.14** após a alteração (dispara deploy automático em ~2 min).
