@@ -10,8 +10,8 @@ const ChipsBar: React.FC<{ activeChip: string }> = ({ activeChip }) => {
     <div
       style={{
         display: 'flex',
-        gap: 6,
-        padding: 6,
+        gap: 10,
+        padding: 8,
         borderRadius: 999,
         background: 'rgba(255,255,255,0.05)',
         border: '1px solid rgba(255,255,255,0.10)',
@@ -24,7 +24,7 @@ const ChipsBar: React.FC<{ activeChip: string }> = ({ activeChip }) => {
           <div
             key={c}
             style={{
-              padding: '10px 24px',
+              padding: '12px 28px',
               borderRadius: 999,
               fontFamily: FONT_BODY,
               fontSize: 20,
@@ -46,7 +46,7 @@ const Take: React.FC<{ index: number; scrollAmount: number }> = ({ index, scroll
   const scene = SCENES[index];
   return (
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 36 }}>
         <ChipsBar activeChip={scene.chipLabel} />
         <Intelliboard
           scene={scene}
@@ -75,7 +75,7 @@ export const Signal: React.FC = () => {
       <div
         style={{
           position: 'absolute',
-          top: 30,
+          top: 44,
           left: 0,
           right: 0,
           textAlign: 'center',
@@ -86,12 +86,12 @@ export const Signal: React.FC = () => {
         <div style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: 50, color: WHITE, letterSpacing: '-0.03em' }}>
           i6 <span style={{ color: CORAL }}>Signal</span>
         </div>
-        <div style={{ fontFamily: FONT_BODY, fontSize: 22, color: MUTED, marginTop: 8 }}>
+        <div style={{ fontFamily: FONT_BODY, fontSize: 22, color: MUTED, marginTop: 20 }}>
           {LABELS.sectionSubtitle}
         </div>
       </div>
 
-      <div style={{ position: 'absolute', inset: 0, paddingTop: 190 }}>
+      <div style={{ position: 'absolute', inset: 0, paddingTop: 240 }}>
         <Sequence from={0} durationInFrames={370}>
           <Take index={0} scrollAmount={330} />
         </Sequence>
