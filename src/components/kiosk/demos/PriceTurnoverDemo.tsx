@@ -8,6 +8,7 @@ import {
   fmtBRL,
   fmtBRLk,
   generalInsightFor,
+  skuTemplatesByProduct,
   type TurnoverCluster,
   type ClusterAction,
   type SkuRow,
