@@ -133,9 +133,14 @@ const PriceMarginDemo = () => {
       elapsed += step.durationMs;
       timers.push(setTimeout(() => setProgress(i + 1), elapsed));
     });
-    timers.push(setTimeout(() => setPhase('result'), elapsed + 260));
+    timers.push(
+      setTimeout(() => {
+        setSelectedId((prev) => prev ?? filtered[0]?.id ?? null);
+        setPhase('result');
+      }, elapsed + 260),
+    );
     return () => timers.forEach(clearTimeout);
-  }, [phase]);
+  }, [phase, filtered]);
 
   const reset = () => {
     setPhase('setup');
@@ -143,7 +148,7 @@ const PriceMarginDemo = () => {
   };
 
   const showResult = phase === 'result';
-  const canCalculate = !!selected;
+  const canCalculate = filtered.length > 0;
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
@@ -158,7 +163,7 @@ const PriceMarginDemo = () => {
               <p className="text-[1.4vmin] text-white/60">
                 {showResult
                   ? 'Faixa recomendada, impacto em margem e volume por SKU.'
-                  : 'Selecione um SKU e ajuste restrições para simular a faixa ótima de preço.'}
+                  : 'Selecione os filtros e ajuste restrições para simular a faixa ótima de preço por SKU.'}
               </p>
             </div>
             <span className="text-[1.4vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] text-right">
@@ -195,14 +200,20 @@ const PriceMarginDemo = () => {
                 </div>
               )}
               {filtered.map((s) => {
-                const active = s.id === selectedId;
+                const active = s.id === selectedId && showResult;
+                const rowDisabled = !showResult;
                 return (
                   <button
                     type="button"
                     key={s.id}
+                    disabled={rowDisabled}
                     onClick={() => setSelectedId(s.id)}
                     className={`w-full grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] items-center px-[1.4vmin] py-[1vmin] text-[1.35vmin] border-t border-white/10 text-left transition ${
-                      active ? 'bg-[#F4845F]/10' : 'hover:bg-white/[0.04]'
+                      active
+                        ? 'bg-[#F4845F]/10'
+                        : rowDisabled
+                        ? 'cursor-default'
+                        : 'hover:bg-white/[0.04]'
                     }`}
                   >
                     <span className="text-white/90 font-semibold leading-tight">
@@ -286,7 +297,7 @@ const PriceMarginDemo = () => {
                     : 'bg-white/[0.06] text-white/40 border border-white/10 cursor-not-allowed'
                 }`}
               >
-                {canCalculate ? 'Calcular faixa ótima de preço' : 'Selecione um SKU para simular'}
+                {canCalculate ? 'Calcular faixa ótima de preço' : 'Ajuste os filtros para simular'}
               </button>
             )}
 

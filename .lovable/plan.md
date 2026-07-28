@@ -1,22 +1,28 @@
-## Alvo
-Card do gráfico "Preço × margem" (`PriceMarginCurve`) e trio de KPIs à esquerda dentro do painel de resultado da demo "Preço Orientado à Margem" (`src/components/kiosk/demos/PriceMarginDemo.tsx`).
+## Ajuste do fluxo — Preço Orientado a Margem (Kiosk)
 
-## Ajustes
+Arquivo: `src/components/kiosk/demos/PriceMarginDemo.tsx`
 
-1. **Gráfico ocupa todo o espaço do quadro**
-   - Em `PriceMarginCurve` (linha ~511), remover `p-[1.2vmin]` do wrapper e manter só a borda + fundo, para que o SVG encoste nas bordas internas do card.
-   - Reduzir levemente `PAD` interno do SVG (paddings do desenho) para compensar a remoção do padding do wrapper e evitar que rótulos "Ótimo/Atual/Mín/Máx/Concorr." sejam cortados: `PAD = { l: 34, r: 12, t: 18, b: 30 }`.
+### Mudanças
 
-2. **Altura do gráfico −20%**
-   - Alterar `H` do viewBox de `200` para `160` (redução exata de 20%).
-   - Recalcular constantes derivadas (`ih` já é `H - PAD.t - PAD.b`, então é automático).
-   - Manter `preserveAspectRatio="none"` e `w-full h-auto` — a altura visível cai proporcionalmente.
+1. **Subtítulo do card do topo** (linha ~161)
+   - De: "Selecione um SKU e ajuste restrições para simular a faixa ótima de preço."
+   - Para: "Selecione os filtros e ajuste restrições para simular a faixa ótima de preço por SKU."
 
-3. **KPIs à esquerda alinhados à altura do gráfico**
-   - No container da coluna esquerda (linha 230), trocar `flex flex-col gap-[1vmin]` por `flex flex-col gap-[1vmin] h-full`.
-   - Em `ConclusionCard`, adicionar `flex-1 justify-center` para os 3 cards distribuírem a altura total igual à do card do gráfico à direita.
-   - Sem alteração no grid `grid-cols-[1fr_1.4fr]` — o grid já força stretch vertical entre as duas colunas.
+2. **Habilitar o botão de cálculo sem exigir SKU**
+   - `canCalculate` passa a exigir apenas `filtered.length > 0` (existir SKU na seleção de filtros), em vez de `!!selected`.
+   - Texto do botão desabilitado ajustado para o caso "sem SKUs na seleção" (ex.: "Ajuste os filtros para simular"). Quando houver SKUs, exibe "Calcular faixa ótima de preço".
 
-## Fora de escopo
-- Cores, textos, marcadores, tabela de alternativas, KPIs inferiores.
-- Layout do bloco "Explicabilidade" e da timeline.
+3. **Bloquear seleção de SKU antes do cálculo**
+   - Nas linhas da tabela de portfólio (setup), os `<button>` de linha ficam `disabled` enquanto `phase !== 'result'`, com `cursor-default` e sem hover em laranja. Continuam exibindo os dados normalmente (Preço atual, Elast., Posição, Cobertura, Preço concorrente), com "Ação sugerida" em "—".
+   - Após o cálculo (`phase === 'result'`), as linhas voltam a ser clicáveis e o destaque laranja do SKU ativo reaparece.
+
+4. **Auto-selecionar o primeiro SKU após o cálculo**
+   - No `useEffect` que dispara o pipeline, quando `phase` muda para `'result'` (via `setTimeout` final), setar `setSelectedId(filtered[0]?.id ?? null)` caso `selectedId` ainda esteja vazio.
+   - Se o usuário depois trocar filtros e o SKU selecionado sair da lista, o efeito existente já limpa o `selectedId` — combinar com um reset para `setup` (ou re-selecionar automaticamente o primeiro) para manter consistência: **manter o comportamento atual** de apenas limpar `selectedId`; o painel de resultado deixa de aparecer até novo cálculo.
+
+5. **Reset**
+   - `reset()` (usado ao mudar filtros/estratégia) continua voltando para `setup` e limpando `selectedId`, garantindo que o usuário refaça o cálculo se mudar restrições.
+
+### Fora do escopo
+- Nenhuma mudança em `priceMargin.ts` (dados/labels).
+- Nenhuma mudança no card "Explicabilidade" — ele já exibe o insight geral quando não há SKU selecionado e o argumento do SKU quando há.
