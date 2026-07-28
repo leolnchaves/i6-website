@@ -127,14 +127,10 @@ const PriceTurnoverDemo = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const [product, setProduct] = useState('sku-1');
-  const [region, setRegion] = useState('all');
   const [objective, setObjective] = useState('balanced');
   const [minMargin, setMinMargin] = useState('30');
 
-  const visibleClusters = useMemo(
-    () => (region === 'all' ? allClusters : allClusters.filter((c) => c.id === region)),
-    [region],
-  );
+  const visibleClusters = allClusters;
 
   const derivedByCluster = useMemo(() => {
     const map = new Map<string, Derived>();
@@ -151,11 +147,6 @@ const PriceTurnoverDemo = () => {
 
   const generalInsight = useMemo(() => generalInsightFor(visibleClusters), [visibleClusters]);
 
-  useEffect(() => {
-    if (selectedId && !visibleClusters.find((c) => c.id === selectedId)) {
-      setSelectedId(null);
-    }
-  }, [visibleClusters, selectedId]);
 
   useEffect(() => {
     if (phase !== 'running') return;
