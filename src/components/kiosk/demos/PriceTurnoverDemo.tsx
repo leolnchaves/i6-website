@@ -8,6 +8,7 @@ import {
   fmtBRL,
   fmtBRLk,
   generalInsightFor,
+  skuTemplatesByProduct,
   type TurnoverCluster,
   type ClusterAction,
   type SkuRow,
@@ -34,6 +35,7 @@ const computeOutcome = (
   c: TurnoverCluster,
   objective: string,
   minMargin: string,
+  productId: string,
 ): Derived => {
   const obj =
     objective === 'aggressive'
@@ -79,7 +81,8 @@ const computeOutcome = (
   const nextAction =
     c.action === 'markdown' ? 'Markdown agora' : c.nextAction;
 
-  const skus: SkuRow[] = c.skus.map((s) => {
+  const template = skuTemplatesByProduct[productId]?.[c.action] ?? c.skus;
+  const skus: SkuRow[] = template.map((s) => {
     if (!shift || s.markdownPct === 0) return s;
     const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
     const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
@@ -135,9 +138,9 @@ const PriceTurnoverDemo = () => {
 
   const derivedByCluster = useMemo(() => {
     const map = new Map<string, Derived>();
-    visibleClusters.forEach((c) => map.set(c.id, computeOutcome(c, objective, minMargin)));
+    visibleClusters.forEach((c) => map.set(c.id, computeOutcome(c, objective, minMargin, product)));
     return map;
-  }, [visibleClusters, objective, minMargin]);
+  }, [visibleClusters, objective, minMargin, product]);
 
   const selected = useMemo(
     () => visibleClusters.find((c) => c.id === selectedId) ?? null,
@@ -274,7 +277,7 @@ const PriceTurnoverDemo = () => {
                 {/* SKU table — 3 rows */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
                   <div className="grid grid-cols-[1.6fr_0.9fr_1fr_0.8fr_0.9fr] px-[1.4vmin] py-[0.7vmin] gap-x-[0.6vmin] bg-white/[0.05] text-[0.8vmin] uppercase tracking-[0.1em] font-semibold text-white/60 leading-tight">
-                    <span>SKU · {selected.name}</span>
+                    <span>SKU · {filterOptions.product.find((p) => p.value === product)?.label ?? selected.name}</span>
                     <span className="text-right">Preço<br/>atual</span>
                     <span className="text-right">Preço<br/>recomendado</span>
                     <span className="text-right">Markdown</span>
