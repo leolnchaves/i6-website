@@ -1,45 +1,84 @@
-# Remover Supabase / backend do projeto
+# Preço Orientado à Conversão — Migração para padrão unificado
 
-Objetivo: deixar o site **100% estático**, sem qualquer código, dependência ou config apontando para banco/backend. O tracking do kiosk já roda em `localStorage`, então nada da aplicação depende mais de Supabase.
+Objetivo: alinhar a jornada de `price-to-conversion` ao mesmo padrão já aplicado em **Preço Orientado a Giro** (referência mais recente) e **Preço Orientado a Margem**.
 
-## Impacto zero em GitHub / Actions / Pages
+## 1. Navegação (igual às demais)
 
-- `.github/workflows/deploy-gh-pages.yml` **não referencia nenhum secret ou env var de Supabase**. Os únicos secrets usados são `I6HUB_FEED_URL*` e `I6HUB_SYNC_TOKEN`, que continuam.
-- Build é `npm install` + `npm run build`. Como nenhum arquivo em `src/**` importa `@supabase/supabase-js` nem `@/integrations/supabase/client`, remover a dep e os arquivos auto-gerados não afeta o build.
-- Deploy no GitHub Pages continua servindo `dist/` estático. Trigger por tag `v*` e `repository_dispatch` do i6Hub permanecem inalterados.
+- Embrulhar `PriceToMarginDemo` (que hoje serve `price-to-conversion`) dentro do `SimulationLauncher` em `src/components/kiosk/SolutionDemoBlock.tsx`.
+  - Ícone: `Target` (ou `Sparkles`) do `lucide-react`, para diferenciar de Giro/Margem.
+  - Passar `solutionTitle`, `solutionTagline`, `resolve`, `entrega`, `impacto`, `labels`, `onSimulationClosed`.
+- Gating: enquanto o modal de simulação não for aberto/fechado, o `SolutionDemoBlock` já esconde Signal e CTA (comportamento herdado do launcher). Nada extra a fazer aqui além do wrapper.
+- Ao fechar a simulação: scroll automático para a seção do i6 Signal (comportamento já implementado no launcher via `onSimulationClosed`).
+- Remover o botão "X" no topo do modal (usar apenas "Fechar Simulação" no rodapé) — já é o padrão do `SimulationLauncher`; conferir se algum override na demo readiciona.
 
-## O que será removido
+## 2. Layout da demo dentro do modal (retrato 27")
 
-**Código auto-gerado (não é mais usado por nenhum import):**
-- `src/integrations/supabase/client.ts`
-- `src/integrations/supabase/types.ts`
-- pasta `src/integrations/supabase/` inteira
+Refatorar `src/components/kiosk/demos/PriceToMarginDemo.tsx` para o mesmo esqueleto empilhado das demais:
 
-**Configuração de backend do repo:**
-- `supabase/config.toml`
-- `supabase/migrations/` (histórico)
-- pasta `supabase/` inteira
+```text
+┌───────────────────────────────────────────────┐
+│  Filtros (linha única, 3 combos)              │
+│  [ Produto ▾ ] [ Objetivo ▾ ] [ Restrição ▾ ] │
+│                    [ Calcular faixa ótima ]   │
+├───────────────────────────────────────────────┤
+│  Dashboard de resultados                      │
+│  ┌───────────────┐  ┌────────────────────┐    │
+│  │ Faixa ótima   │  │ Gráfico preço×conv │    │
+│  │ (min / ideal / │ │ (curva + banda)    │    │
+│  │  max)         │  │ Confiança no rodapé│    │
+│  └───────────────┘  └────────────────────┘    │
+│  Tabela de SKUs (Situação / Preço atual /     │
+│  Preço ideal / Δ Conversão / Δ Receita /      │
+│  Ação sugerida) — só surge após cálculo       │
+├───────────────────────────────────────────────┤
+│  Card "POR QUE" (prosa objetiva)              │
+├───────────────────────────────────────────────┤
+│  Timeline horizontal (pipeline do modelo)     │
+└───────────────────────────────────────────────┘
+```
 
-**Dependência npm:**
-- `@supabase/supabase-js` removido do `package.json` e do lockfile
+Detalhes de comportamento (espelham Giro/Margem):
 
-**Variáveis de ambiente:**
-- Remover `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_SUPABASE_PROJECT_ID` do `.env`
+- Antes de clicar em "Calcular": todos os valores das tabelas mostram `—`; o gráfico fica vazio; card POR QUE oculto.
+- Botão "Calcular" habilita apenas quando os filtros obrigatórios estiverem preenchidos.
+- Pós-cálculo: seleciona automaticamente o primeiro SKU para exibir os detalhes; a partir daí o clique em outro SKU fica liberado.
+- Coluna "Ação sugerida" com cor da fonte apenas (sem badges/boxes coloridos), seguindo o padrão do Signal.
+- Card "POR QUE": um parágrafo curto e específico por combinação Produto × Objetivo, descrevendo o raciocínio (elasticidade estimada, faixa de aceitação, restrição ativa etc.).
+- KPIs no topo: rótulos padronizados em caixa alta ("FAIXA ÓTIMA", "PREÇO IDEAL", "Δ CONVERSÃO PROJETADA", "Δ RECEITA PROJETADA"). Sem sufixos de nome de modelo.
+- Latência em segundos com 2 casas (ex.: `0.03 s`), no rodapé compacto do card do gráfico, junto com "Confiança" (padrão Preço Margem).
+- Gráfico com `preserveAspectRatio="xMidYMid meet"` para não deformar.
 
-## O que NÃO muda
+## 3. Dados — `src/data/kiosk/demos/priceToMargin.ts`
 
-- `src/lib/kioskTracker.ts` — já usa apenas `localStorage`.
-- `src/pages/KioskMetrics.tsx` — já lê do `localStorage` e exporta CSV.
-- Formulários (contato / lead-gate) continuam via Google Apps Script (fire-and-forget iframe).
-- Sync do i6Hub CMS e todos os scripts em `scripts/` — não usam Supabase.
+- Introduzir `skuTemplatesByProduct` (mesmo padrão de `priceTurnover.ts`) para que a tabela de SKUs reaja à mudança do filtro "Produto" após o cálculo — hoje a tabela não muda quando o usuário troca o produto.
+- Cenários fixos por Produto × Objetivo com mix variado de ações: `raise` (aumentar preço, verde-esmeralda), `hold` (manter, neutro), `discount` (reduzir para converter, coral), evitando ordem repetitiva.
+- Overrides de argumento por combinação, alimentando o card "POR QUE" (curto, direto, sem jargão de modelo).
+- Manter o pipeline atual mas garantir durações somando ~1.5–2.0 s.
 
-## Verificação após a remoção
+## 4. Signal (perguntas relacionadas)
 
-1. `rg "supabase"` em `src/` deve retornar zero resultados.
-2. `npm run build` local passa sem erros.
-3. `/kiosk` grava eventos e `/kiosk-metrics/<token>` continua listando e exportando CSV.
-4. Publicar release patch **v2.2.12** disparando o deploy no GitHub Pages e validar site online.
+Nenhuma alteração de conteúdo do Signal solicitada agora — manter as perguntas já mapeadas em `priceConversionFriction` e `priceConversionIncentiveNeed`. Se o usuário quiser ajustar textos, faremos numa rodada seguinte.
 
-## Observação sobre Lovable Cloud
+## 5. Registros a preservar (memórias já capturadas em Giro/Margem)
 
-Isso desacopla o app do backend da Lovable Cloud **a nível de código**. A conexão Cloud continua existindo no workspace (não dá para "desconectar" pelo agente), mas nenhum arquivo do site referencia mais nada dela — o site pode ser servido de qualquer host estático.
+Reaplicar o mesmo checklist visual/comportamental ao migrar:
+- Navegação gated (Signal/CTA escondidos até o modal fechar).
+- Modal sem "X" no topo; apenas "Fechar Simulação" no rodapé com scroll ao Signal.
+- Card unificado no launcher (Resolve/Entrega/Impacto), subtítulo "Explore o exemplo…" oculto.
+- Latência em segundos, "Confiança" no rodapé do card do gráfico.
+- Sem badges/boxes coloridos; ações diferenciadas por cor de fonte.
+- Valores `—` antes do cálculo; tabelas só populam pós-simulação.
+- Empresa "VIVARIS COMÉRCIO E VAREJO" e email `leonardo.chaves@vivaris.com` (já consistentes).
+
+## 6. Entrega
+
+- Após validação visual: publicar release **v2.2.13** (patch), disparando o deploy via GitHub Actions.
+
+## Detalhes técnicos
+
+- Arquivos a alterar:
+  - `src/components/kiosk/SolutionDemoBlock.tsx` — embrulhar `PriceToMarginDemo` no `SimulationLauncher` para `price-to-conversion`.
+  - `src/components/kiosk/demos/PriceToMarginDemo.tsx` — reescrita do layout para o padrão Giro (filtros + dashboard + tabela + POR QUE + timeline horizontal); estados de "antes do cálculo" com `—`; seleção automática do 1º SKU.
+  - `src/data/kiosk/demos/priceToMargin.ts` — adicionar `skuTemplatesByProduct`, cenários por Produto × Objetivo, argumentos do POR QUE, rótulos PT/EN.
+- Nada de backend/RLS; site permanece 100% estático.
+- Sem mudanças em rotas, i18n global, header ou SEO.
