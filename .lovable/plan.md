@@ -1,54 +1,30 @@
-
 ## Objetivo
-Aplicar em **Mix, Sortimento e Pedido Ideal** (`mix-assortment-order`) o mesmo padrão que já foi consolidado em Personalização, Campanhas, Forecast e Metas Comerciais.
 
-## 1. Navegação (Kiosk.tsx)
-- Adicionar `'mix-assortment-order'` ao array `migratedIds` em `src/pages/Kiosk.tsx`.
-- Isso oculta o card RESOLVE/ENTREGA/IMPACTO do topo, unifica no launcher, esconde i6 Signal + EbookCTA até a simulação ser concluída e habilita o auto-scroll para o Signal ao fechar o modal.
+Reescrever o texto do card "POR QUE essa recomendação" da demo **Mix, Sortimento e Pedido Ideal** para descrever **o que o modelo aprendeu** (sinais observados no PDV, cluster e histórico) antes de sugerir o mix — em vez de listar apenas o resultado (X manutenções, Y inclusões, Z substituições).
 
-## 2. Launcher (SolutionDemoBlock.tsx)
-- Substituir o retorno atual de `mix-assortment-order` (que renderiza `<MixAssortmentOrderDemo />` direto) por um `SimulationLauncher` idêntico ao de Metas Comerciais/Forecast:
-  - `solutionTitle`, `solutionTagline`, `resolve/entrega/impacto`, `labels`, `onSimulationClosed`.
-  - Ícone: `LayoutGrid` (lucide) — mais coerente com sortimento/mix.
+Referência de estilo: os textos `reason` por SKU já estão excelentes (falam de giro no cluster, sell-out em aceleração, cobertura vs. ciclo, canibalização, margem líquida, capital liberado). O card geral deve seguir o mesmo tom: dados/sinais concretos → decisão.
 
-## 3. Layout do modal (MixAssortmentOrderDemo.tsx)
-Refatorar de layout lado-a-lado (grid 1.35fr / 1fr) para o padrão **empilhado** já usado nas outras jornadas migradas:
+## Escopo
 
-```text
-┌──────────────────────────────────────────────┐
-│ Dashboard (filtros + comparação + carrinho + │
-│ KPIs) — largura total                        │
-├──────────────────────────────────────────────┤
-│ POR QUE (card destaque coral, largura total) │
-├──────────────────────────────────────────────┤
-│ Timeline horizontal (pipeline em linha)      │
-└──────────────────────────────────────────────┘
-```
+Um único arquivo, uma única função:
 
-Detalhes:
-- Remover o `grid grid-cols-[1.35fr_1fr]` externo; blocos passam a ocupar `w-full`.
-- Extrair o card "Insight/POR QUE" (hoje na coluna direita, abaixo do pipeline) e movê-lo para **acima** da timeline, com o mesmo estilo destacado (`bg-[#F4845F]/15`, badge Sparkles) já usado em Forecast/Metas.
-- Converter o pipeline vertical em **timeline horizontal**: `flex flex-row` com steps em colunas iguais e conector entre bolinhas numeradas, idêntico ao de `CommercialTargetsDemo` / `DemandForecastDemo`.
-- Ajustar fontes/paddings (vmin) para caber tudo em 27" retrato sem scroll horizontal e minimizando scroll vertical.
+- `src/data/kiosk/demos/mixAssortmentOrder.ts` → `generalInsightFor(rows)` (linhas 323–330).
 
-## 4. Limpeza global de rotulagem de Explicabilidade
-Aplicar em todos os arquivos de dados de demo (para cumprir a regra já registrada nas outras jornadas):
-- `src/data/kiosk/demos/mixAssortmentOrder.ts`
-- `src/data/kiosk/demos/demandForecast.ts`
-- `src/data/kiosk/demos/predictivePersonalization.ts`
-- `src/data/kiosk/demos/propensityCampaign.ts`
-- `src/data/kiosk/demos/priceToMargin.ts`
+Tudo mais permanece intocado (KPIs, tabela do carrinho, timeline, reasons por SKU, textos em PT/EN de labels).
 
-Ações:
-- `reasoningTitle` → `Explicabilidade e raciocínio do modelo` (sem sufixo `• i6XXX`).
-- `reasoningSubtitle` → string vazia.
+## Como será o novo texto
 
-E nos componentes `PredictivePersonalizationDemo`, `PropensityCampaignDemo`, `DemandForecastDemo`, `PriceToMarginDemo`, `MixAssortmentOrderDemo`: manter o `subtitle` já condicional (`{L.reasoningSubtitle && <p>...</p>}`) para não renderizar linha vazia.
+O gerador continua dinâmico (depende do carrinho filtrado por PDV), mas o conteúdo passa a estruturar-se em três blocos curtos, no mesmo tom dos reasons por SKU:
 
-## 5. Verificação
-- Rodar typecheck.
-- Conferir visualmente no /kiosk que:
-  - card RESOLVE/ENTREGA/IMPACTO só aparece no launcher unificado;
-  - Signal + Ebook aparecem apenas após fechar simulação;
-  - modal usa layout empilhado com POR QUE acima da timeline horizontal;
-  - sem scroll horizontal e o subtítulo "Pipeline preditivo…" some em todas as demos.
+1. **Sinais aprendidos no cluster e no PDV** — cobertura vs. ciclo, giro médio, sell-out em aceleração/queda, complementaridade de cesta, presença de SKUs em PDVs pares.
+2. **Padrões que orientaram cada tipo de ação** — por que o modelo prioriza inclusões (SKUs presentes em X% dos PDVs pares com giro saudável), aumentos (sell-out acelerando + cobertura abaixo do ciclo), substituições (giro abaixo do piso + margem superior no substituto), reduções/remoções (cobertura excedente + capital realocável).
+3. **Restrições operacionais respeitadas** — limite financeiro do pedido, capacidade de estoque, embalagens mínimas, sem abrir buraco de sortimento.
+
+O texto continua parametrizado pelos contadores (`keep`, `include`, `substitute`, `remove`) do carrinho filtrado, para variar por PDV, mas os números aparecem como evidência do que o modelo aprendeu — não como o "resumo da entrega".
+
+## Detalhes técnicos
+
+- Manter a assinatura `generalInsightFor(rows: CartRow[]) => string` para não quebrar o consumo em `MixAssortmentOrderDemo.tsx:68`.
+- Manter uso dos contadores existentes (`keep`, `include`, `substitute`, `remove`) derivados de `rows`.
+- Manter tudo em português (o card é PT-only hoje).
+- Sem alterações em componentes, tipos, i18n ou outras demos.
