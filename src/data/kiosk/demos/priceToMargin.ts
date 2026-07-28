@@ -224,7 +224,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     pipeline: [
       { label: 'Lendo sessões, cliques e carrinhos abandonados', microMetric: '48.612 sessões · janela de 30 dias', durationMs: 1400 },
       { label: 'Segmentando clusters de intenção e sensibilidade', microMetric: '6 clusters ativos · cluster dominante: 42%', durationMs: 1400 },
-      { label: 'Simulando resposta de conversão em 10.000 cenários', microMetric: 'elasticidade de conversão estimada: -1.8', durationMs: 1800 },
+      { label: 'Simulando resposta de conversão em milhares de cenários', microMetric: 'elasticidade de conversão estimada: -1.8', durationMs: 1800 },
       { label: 'Otimizando para conversão com piso de margem', microMetric: 'restrições: margem mínima · sinal competitivo', durationMs: 1600 },
       { label: 'Recomendando preço ideal para converter', microMetric: 'confiança: 94%', durationMs: 1200 },
     ],
