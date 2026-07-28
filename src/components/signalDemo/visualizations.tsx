@@ -1620,7 +1620,7 @@ export const PriceConversionIncentiveTable = ({
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-medium text-gray-900">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-medium text-gray-900 text-xs leading-tight">{cell}</td>;
                 if (ci === 1) return <td key={ci} className="py-2.5 px-2 text-center tabular-nums text-gray-800">{cell}</td>;
                 if (ci === 2) return <td key={ci} className="py-2.5 px-2 text-center tabular-nums text-orange-600 font-semibold">{cell}</td>;
                 if (ci === 3) return <td key={ci} className={`py-2.5 px-2 text-center ${actionTone(cell)}`}>{cell}</td>;
