@@ -101,46 +101,11 @@ export const clusters: TurnoverCluster[] = [
     marginPreservedPp: 4.8,
     capitalUnlockedBRL: 0,
     argument:
-      'Velocidade de venda 34 un/sem, 42% acima da média da categoria (24 un/sem), com estoque de idade 22 dias contra 41 dias da categoria. Elasticidade −0,7 indica baixa sensibilidade nesta faixa: um markdown antecipado reduziria margem em 4,8 pp sem impacto material em giro — a demanda absorve o preço atual nas próximas 3 semanas dentro do sell-through projetado de 78%.',
+      'Velocidade 34 un/sem (+42% vs. categoria) e estoque com 22 dias contra 41 da média. Elasticidade −0,7 indica baixa sensibilidade: markdown antecipado corta 4,8 pp de margem sem ganho relevante de giro. A demanda absorve o preço nas próximas 3 semanas dentro do sell-through de 78%.',
     skus: [
       { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 82 },
       { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 79 },
       { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
-      { sku: 'JQT-INV-004', name: 'Jaqueta acolchoada bordô M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 77 },
-    ],
-  },
-  {
-    id: 'interior-sp',
-    name: 'Interior de SP',
-    region: 'Campinas · Ribeirão · Sorocaba',
-    x: 244,
-    y: 332,
-    stores: 38,
-    stockUnits: 2860,
-    avgStockAgeDays: 47,
-    sellVelocity: 18,
-    categoryAvgVelocity: 24,
-    currentPrice: 129.9,
-    currentMarkdownPct: 0,
-    remainingMarginPp: 44,
-    elasticity: -1.3,
-    situation: 'Giro abaixo',
-    action: 'markdown',
-    recommendedPrice: 119.9,
-    recommendedMarkdownPct: 8,
-    nextAction: 'Markdown de 8% agora',
-    actInDays: 0,
-    sellThroughProjectedPct: 71,
-    agedStockPct: 22,
-    marginPreservedPp: 6.2,
-    capitalUnlockedBRL: 148000,
-    argument:
-      'Sell-through das últimas 4 semanas está 18% abaixo do necessário para zerar antes da próxima coleção. Elasticidade −1,3 nesta faixa: um corte cirúrgico de 8% projeta +22% em unidades e libera R$ 148 mil de capital antes que a idade do estoque (47d) ultrapasse a média da categoria. Preserva 6,2 pp a mais de margem que uma liquidação tardia típica de 25%.',
-    skus: [
-      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 74 },
-      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 72 },
-      { sku: 'JQT-INV-005', name: 'Jaqueta acolchoada cinza G', currentPrice: 129.9, recommendedPrice: 115.9, markdownPct: 11, sellThroughProjectedPct: 69 },
-      { sku: 'JQT-INV-006', name: 'Jaqueta acolchoada verde P', currentPrice: 129.9, recommendedPrice: 119.9, markdownPct: 8, sellThroughProjectedPct: 71 },
     ],
   },
   {
@@ -169,11 +134,10 @@ export const clusters: TurnoverCluster[] = [
     marginPreservedPp: 9.4,
     capitalUnlockedBRL: 216000,
     argument:
-      'Idade média do estoque 63 dias, 37% acima da média da categoria (46d), com perda projetada de valor de 2,1 pp/semana caso mantido. Elasticidade −1,6 e coleção nova entrando em 21 dias: markdown de 15% agora captura demanda de fim de ciclo antes da transição e evita uma liquidação profunda típica desta janela (~30%), preservando 9,4 pp de margem em relação a esse cenário tardio.',
+      'Idade média 63 dias (+37% vs. categoria) com perda projetada de 2,1 pp/semana se mantido. Elasticidade −1,6 e coleção nova em 21 dias: markdown de 15% agora captura demanda de fim de ciclo e evita liquidação profunda (~30%), preservando 9,4 pp de margem.',
     skus: [
       { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 85 },
       { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 104.9, markdownPct: 19, sellThroughProjectedPct: 82 },
-      { sku: 'JQT-INV-007', name: 'Jaqueta acolchoada marrom M', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 80 },
       { sku: 'JQT-INV-008', name: 'Jaqueta acolchoada azul GG', currentPrice: 129.9, recommendedPrice: 99.9, markdownPct: 23, sellThroughProjectedPct: 78 },
     ],
   },
@@ -203,10 +167,9 @@ export const clusters: TurnoverCluster[] = [
     marginPreservedPp: 7.6,
     capitalUnlockedBRL: 62000,
     argument:
-      'Forecast sinaliza pico sazonal em 12–16 dias (entrada de frente fria + calendário regional de datas comemorativas), com elasticidade projetada caindo de −1,1 para −0,4 nesse período. Descontar agora antecipa margem que o próprio clima devolve — janela ótima de ação em 2 semanas, quando o modelo reprograma automaticamente a régua para R$ 124,90 caso o giro não acompanhe.',
+      'Forecast sinaliza pico sazonal em 12–16 dias (frente fria + calendário regional), com elasticidade caindo de −1,1 para −0,4 nesse período. Descontar agora antecipa margem que o clima devolve — janela ótima em 2 semanas, quando a régua reprograma automaticamente para R$ 124,90 se o giro não acompanhar.',
     skus: [
       { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 76 },
-      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
       { sku: 'JQT-INV-009', name: 'Jaqueta acolchoada vinho M', currentPrice: 129.9, recommendedPrice: 124.9, markdownPct: 4, sellThroughProjectedPct: 72 },
       { sku: 'JQT-INV-010', name: 'Jaqueta acolchoada grafite G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 73 },
     ],
@@ -222,12 +185,11 @@ export const filterOptions = {
   region: [
     { value: 'all', label: 'Todas as regiões' },
     { value: 'sp-premium', label: 'São Paulo Premium' },
-    { value: 'interior-sp', label: 'Interior de SP' },
     { value: 'minas-gerais', label: 'Minas Gerais' },
     { value: 'sul', label: 'Sul' },
   ],
   objective: [
-    { value: 'balanced', label: 'Equilibrado (giro × margem)' },
+    { value: 'balanced', label: 'Equilíbrio giro/margem' },
     { value: 'aggressive', label: 'Desova agressiva' },
     { value: 'preserve', label: 'Preservar margem' },
   ],
@@ -244,4 +206,17 @@ export const fmtBRLk = (n: number) => {
   if (n <= 0) return 'R$ 0';
   if (n >= 1000) return `R$ ${(n / 1000).toFixed(0)} mil`;
   return `R$ ${n.toFixed(0)}`;
+};
+
+// Short synthesis of what the model learned across visible clusters.
+export const generalInsightFor = (list: TurnoverCluster[]): string => {
+  if (list.length === 0) return 'Nenhum cluster no filtro atual.';
+  const hold = list.filter((c) => c.action === 'hold').length;
+  const md = list.filter((c) => c.action === 'markdown').length;
+  const wait = list.filter((c) => c.action === 'wait').length;
+  const parts: string[] = [];
+  if (hold) parts.push(`${hold} com giro acima da categoria e elasticidade baixa → manter`);
+  if (md)   parts.push(`${md} com estoque envelhecido e elasticidade alta → markdown cirúrgico agora`);
+  if (wait) parts.push(`${wait} com pico sazonal próximo → aguardar janela`);
+  return `O modelo lê, por cluster, velocidade vs. média da categoria, idade do estoque, elasticidade e janela sazonal, respeitando o piso de margem. ${parts.join('; ')}.`;
 };

@@ -219,7 +219,7 @@ const Kiosk = () => {
             </div>
 
             {(() => {
-              const migratedIds = ['predictive-personalization', 'smart-discovery', 'predictive-campaign-targeting', 'demand-forecasting', 'predictive-commercial-targets', 'mix-assortment-order', 'price-to-margin'];
+              const migratedIds = ['predictive-personalization', 'smart-discovery', 'predictive-campaign-targeting', 'demand-forecasting', 'predictive-commercial-targets', 'mix-assortment-order', 'price-to-margin', 'price-to-turnover'];
               const isMigrated = !!selectedSolution && migratedIds.includes(selectedSolution.id);
               const companion =
                 selectedSolution?.id === 'predictive-personalization'
