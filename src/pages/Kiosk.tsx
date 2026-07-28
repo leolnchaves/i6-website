@@ -98,20 +98,62 @@ const Kiosk = () => {
     setRecommendedIds(null);
     setSelectedSolutionId(null);
     setSimulationCompleted({});
+    try {
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch {
+      // ignore
+    }
   };
+
+  // Persiste o estado da jornada para sobreviver a um refresh acidental do totem.
+  useEffect(() => {
+    try {
+      if (stage === 'attract') {
+        sessionStorage.removeItem(SESSION_KEY);
+        return;
+      }
+      const payload: PersistedSession = {
+        lang,
+        stage,
+        route,
+        recommendedIds,
+        selectedSolutionId,
+        simulationCompleted,
+      };
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+    } catch {
+      // ignore
+    }
+  }, [lang, stage, route, recommendedIds, selectedSolutionId, simulationCompleted]);
+
+  // Reenvia leads que caíram na fila local por falha de rede.
+  useEffect(() => {
+    void flushLeadQueue();
+    const onOnline = () => void flushLeadQueue();
+    window.addEventListener('online', onOnline);
+    const timer = window.setInterval(() => void flushLeadQueue(), LEAD_FLUSH_INTERVAL_MS);
+    return () => {
+      window.removeEventListener('online', onOnline);
+      window.clearInterval(timer);
+    };
+  }, []);
 
   // Ao entrar em results, auto-seleciona a primeira solução recomendada
   // e scrolla até o demo.
   useEffect(() => {
     if (stage !== 'results') return;
     if (solutionsForResults.length > 0) {
-      setSelectedSolutionId(solutionsForResults[0].id);
+      const alreadyValid =
+        !!selectedSolutionId && solutionsForResults.some((s) => s.id === selectedSolutionId);
+      if (!alreadyValid) setSelectedSolutionId(solutionsForResults[0].id);
       requestAnimationFrame(() => {
         const el = document.getElementById('kiosk-solution-demo');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, solutionsForResults]);
+
 
   const handleStart = () => {
     trackEvent(TRACKER_EVENTS.KIOSK_SESSION_STARTED, { language: lang });
