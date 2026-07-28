@@ -1,5 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
+import { SceneContext } from './SceneContext';
 
 /**
  * Movimento de câmera contínuo. Cada cena recebe uma variante diferente
@@ -23,12 +24,15 @@ export const Camera: React.FC<{
   variant: number;
   /** 1 = conteúdo, valores menores = camadas de fundo (parallax real) */
   depth?: number;
+  /** duração da cena, usada pelas saídas ativas dos textos */
+  duration?: number;
   children: React.ReactNode;
-}> = ({ variant, depth = 1, children }) => {
+}> = ({ variant, depth = 1, duration, children }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
+  const span = duration ?? durationInFrames;
   const m = MOVES[variant % MOVES.length];
-  const t = interpolate(frame, [0, Math.max(durationInFrames - 1, 1)], [0, 1], {
+  const t = interpolate(frame, [0, Math.max(span - 1, 1)], [0, 1], {
     extrapolateRight: 'clamp',
   });
   // easing muito suave: nunca acelera, nunca para
@@ -41,7 +45,7 @@ export const Camera: React.FC<{
   const scale = 1 + m.z * e * depth;
   const rot = m.rot * e * depth;
 
-  return (
+  const inner = (
     <AbsoluteFill
       style={{
         transform: `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)}) rotate(${rot.toFixed(3)}deg)`,
@@ -52,4 +56,7 @@ export const Camera: React.FC<{
       {children}
     </AbsoluteFill>
   );
+
+  if (duration === undefined) return inner;
+  return <SceneContext.Provider value={{ duration }}>{inner}</SceneContext.Provider>;
 };
