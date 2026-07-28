@@ -16,6 +16,15 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
+const EBOOK_CONSUMER_INTELLIGENCE_IDS = [
+  'predictive-personalization',
+  'smart-discovery',
+  'predictive-campaign-targeting',
+];
+const EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION =
+  'insight:ebook-inteligencia-do-consumidor-orientada-a-decisao';
+const EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID = '03a13a3b-9b6b-4804-8c04-7418a04bd3c1';
+
 interface Props {
   lang: KioskLang;
   content: QuizContent;
