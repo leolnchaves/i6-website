@@ -1,4 +1,4 @@
-import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
+import { AbsoluteFill } from 'remotion';
 import { Body, Kicker, Reveal, SceneFrame, Title } from '../components/Type';
 import { CORAL, FONT_BODY, FONT_DISPLAY, LINE, MUTED, WHITE } from '../theme';
 
@@ -10,11 +10,7 @@ const steps = [
 ];
 
 export const HowItWorks: React.FC = () => {
-  const frame = useCurrentFrame();
-  const lineW = interpolate(frame - 44, [0, 60], [0, 100], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
+
 
   return (
     <AbsoluteFill>
@@ -31,16 +27,7 @@ export const HowItWorks: React.FC = () => {
           </Body>
 
           <div style={{ position: 'relative', marginTop: 62 }}>
-            <div
-              style={{
-                position: 'absolute',
-                top: 34,
-                left: 0,
-                height: 2,
-                width: `${lineW}%`,
-                background: `linear-gradient(90deg, ${CORAL}, rgba(244,132,95,0.25))`,
-              }}
-            />
+
             <div style={{ display: 'flex', gap: 34 }}>
               {steps.map((s, i) => (
                 <Reveal key={s.n} delay={50 + i * 16} distance={26} style={{ flex: 1 }}>

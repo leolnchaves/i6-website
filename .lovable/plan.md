@@ -1,40 +1,36 @@
-## Objetivo
+## Ajustes no vídeo Remotion (`remotion/src/`)
 
-No /kiosk hoje existem 3 estilos diferentes de botão de ação: sólido coral (`bg-[#F4845F]`), "outline fantasma" coral (`border-[#F4845F]/60 bg-[#F4845F]/[0.08]`) e "outline neutro" branco (`border-white/25 bg-white/[0.04]`). Isso faz o botão "Conversar com a camada preditiva de comportamento" (rodapé do modal de simulação) e os botões de voltar/refazer após o cálculo parecerem apagados frente aos demais.
+### 1. Faixa laranja mal posicionada — `scenes/HowItWorks.tsx`
+A "faixa" é a linha de progresso (`position: absolute; top: 34`) desenhada atrás dos 4 cards: como os cards têm `borderTop: 3px solid CORAL`, a linha cruza os cards na altura errada e vaza pelas laterais.
+- Remover essa linha absoluta. A leitura de sequência já é dada pela numeração 01–04 e pelo topo coral de cada card, que aparecem em cascata.
 
-A proposta é ter **um único estilo primário laranja sólido** para todos os botões de ação do kiosk.
+### 2. Espaçamento na cena i6 Signal — `scenes/Signal.tsx`
+Hoje: header em `top: 30`, subtítulo com `marginTop: 8`, conteúdo com `paddingTop: 190` e `gap: 18` entre a barra de chips e o Intelliboard.
+- Subtítulo: `marginTop` 8 → 20.
+- Header: `top` 30 → 44.
+- Conteúdo: `paddingTop` 190 → 240.
+- `gap` entre barra de chips e Intelliboard: 18 → 36.
+- Barra de chips: `padding` 6 → 8 e `gap` 6 → 10; chips com `padding: '12px 28px'`.
 
-## Novo padrão
+### 3. Ênfase no XAI com argumentos de e-commerce/varejo — `scenes/Engines.tsx`
+Transformar o rodapé "XAI for Business" (hoje uma faixa fina de uma linha) em um bloco de destaque:
+- Selo **XAI for Business** maior, em coral, com moldura mais forte e leve pulso coral (frame-based).
+- Frase principal em destaque: explicabilidade que vira argumento de venda.
+- Três exemplos curtos de argumento, em chips/colunas, com foco em e-commerce e varejo, no espírito de:
+  - "Recomendado porque o cliente comprou X há 21 dias e a recompra média é 25 dias"
+  - "Preço sugerido porque a elasticidade da categoria caiu 12% na região"
+  - "Reposição antecipada porque o giro do SKU no PDV subiu 3 semanas seguidas"
+- Para caber em 1080p: reduzir `minHeight` dos 3 cards de motores de 320 → ~270 e ajustar `marginTop`.
+- Estender a cena de 420 → 500 frames para dar tempo de leitura dos argumentos.
 
-Criar um helper de classes em `src/components/kiosk/ui/kioskButtonClass.ts` com duas variantes:
+### 4. Transição para o slide final e animação da logo — `scenes/Closing.tsx` + `MainVideo.tsx`
+Causa da sobreposição: o crossfade `fade()` entre Results e Closing renderiza a logo do Closing por cima do grid de cases (visível no anexo 4).
+- Trocar a transição Results → Closing por `slide({ direction: 'from-bottom' })`, que não sobrepõe conteúdos translúcidos.
+- Adicionalmente, atrasar a entrada da logo no Closing (spring começando após o fim da transição) para nunca aparecer sobre a cena anterior.
+- Animação da logo (visibilidade em TV acima do stand): entrada com spring e, em seguida, crescimento contínuo da largura de ~520px até ~900px ao longo da cena, com brilho coral suave por trás. Demais elementos (frase, URL, e-mail) reposicionados/reduzidos levemente para acomodar a logo maior.
+- Aumentar o Closing de 270 → 360 frames para a animação de crescimento respirar.
 
-- `primary` — `bg-[#F4845F] text-white font-bold hover:bg-[#F4845F]/90 active:scale-[0.99] shadow-[0_0_30px_rgba(244,132,95,0.35)]`, cantos arredondados (pill/2xl conforme o slot) e alvo de toque mínimo.
-- `disabled` — `bg-white/10 text-white/40` (mantém o comportamento atual do botão "Continuar" do quiz).
-
-Tamanho (altura, padding, fonte) continua sendo passado por cada chamada, já que as demos usam escala menor (`vmin`) que as telas cheias — só a **cor/fundo/peso** é unificada.
-
-## Botões que passam a usar o padrão laranja sólido
-
-| Arquivo | Botão |
-|---|---|
-| `SimulationLauncher.tsx` | "Conversar com a camada preditiva de comportamento" (fecha o modal) |
-| `PropensityCampaignDemo.tsx` | reset após o cálculo, "ver detalhamento" (drill), fechar drill |
-| `DemandForecastDemo.tsx` | reset após o cálculo |
-| `PriceMarginDemo.tsx` | reset após o cálculo |
-| `PriceTurnoverDemo.tsx` | reset após o cálculo |
-| `PriceToMarginDemo.tsx` | resets (topo e final) |
-| `CommercialTargetsDemo.tsx` | reset após o cálculo |
-| `MixAssortmentOrderDemo.tsx` | reset após o cálculo |
-| `PredictivePersonalizationDemo.tsx` | reset/voltar após o cálculo |
-
-Botões já sólidos (Simular no launcher, Continuar do quiz, Enviar do EbookCTA, CTAs "rodar simulação" nas demos) apenas passam a consumir o mesmo helper, sem mudança visual perceptível.
-
-## O que **não** muda
-
-- Cards de seleção/opção (quiz, matriz 2x2, chips de canal, linhas de tabela, TouchSelect): continuam com o tratamento de "selecionado" translúcido — são controles de entrada, não botões de ação; deixá-los laranja sólido tiraria a leitura de qual item está selecionado.
-- Botão "X" de fechar drill no canto (ícone circular pequeno) permanece neutro para não competir com o CTA principal.
-- Nenhuma lógica de negócio, dados ou tracking é alterada.
-
-## Verificação
-
-Abrir `/kiosk` no preview, percorrer quiz → resultado → modal de simulação → cálculo, e conferir por screenshot que o rodapé do modal e os botões de voltar aparecem com o mesmo laranja dos CTAs principais.
+### Técnico
+- Atualizar o comentário e a constante `TOTAL_FRAMES` em `MainVideo.tsx` (novos totais: 210+330+390+420+700+500+450+360 = 3360 − 7×24 = **3192 frames**, ~106s).
+- Conferência por stills (`bunx remotion still`) nos frames-chave: HowItWorks, Signal (header/chips), Engines (bloco XAI), transição Results→Closing e logo final ampliada.
+- Re-renderizar para `/mnt/documents/infinity6-institucional.mp4` via `node scripts/render-remotion.mjs`.
