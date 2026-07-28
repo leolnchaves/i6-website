@@ -326,8 +326,9 @@ export const generalInsightFor = (rows: CartRow[]) => {
   const include = rows.filter((r) => r.action === 'incluir').length;
   const substitute = rows.filter((r) => r.action === 'substituir').length;
   const remove = rows.filter((r) => r.action === 'remover').length;
-  return `O modelo consolidou ${keep} SKUs de manutenção, ${include} inclusões, ${substitute} substituições e ${remove} remoções priorizando os SKUs com maior potencial líquido no cluster. O pedido incremental sugerido respeita limite financeiro, capacidade de estoque e embalagens mínimas — e reduz o risco de ruptura sobre a base atual.`;
+  return `O modelo cruzou giro médio, cobertura vs. ciclo de 15 dias, curva de sell-out das últimas 8 semanas e presença de cada SKU nos PDVs pares do cluster para entender o que sustenta a cesta deste PDV. A partir daí, ${include} inclusões vieram de SKUs ausentes no mix atual mas presentes em >70% dos PDVs pares com giro saudável e alta complementaridade de cesta; os aumentos foram acionados onde o sell-out acelera e a cobertura caiu abaixo do ciclo; ${substitute} substituições saíram de itens com giro abaixo do piso de 1,2x/sem competindo pela mesma função de shelf com alternativas de margem líquida superior; e ${remove} remoções — junto às reduções — vieram de coberturas excedentes e queda estrutural de giro, liberando capital para os SKUs de maior retorno. As ${keep} manutenções são itens com giro dentro da faixa saudável do cluster e sem sinal relevante de canibalização. A recomendação respeita limite financeiro do pedido, capacidade de estoque e embalagens mínimas — sem abrir buraco de sortimento.`;
 };
+
 
 // --- Formatters ---
 export const fmtBR = (n: number) => n.toLocaleString('pt-BR');
