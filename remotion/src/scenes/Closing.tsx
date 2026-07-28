@@ -4,7 +4,7 @@ import { CORAL, FONT_BODY, FONT_DISPLAY, WHITE } from '../theme';
 
 // A logo só entra depois do fim da transição (24 frames) para nunca
 // aparecer sobreposta à cena de resultados.
-const LOGO_START = 26;
+const LOGO_START = 0;
 
 export const Closing: React.FC = () => {
   const frame = useCurrentFrame();

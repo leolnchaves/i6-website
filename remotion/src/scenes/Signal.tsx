@@ -46,7 +46,7 @@ const Take: React.FC<{ index: number; scrollAmount: number }> = ({ index, scroll
   const scene = SCENES[index];
   return (
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 34, paddingTop: 208 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 34, paddingTop: 176 }}>
         <ChipsBar activeChip={scene.chipLabel} />
         <Intelliboard
           scene={scene}
