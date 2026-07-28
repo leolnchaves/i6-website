@@ -12,13 +12,16 @@ import {
   LineChart,
   Line,
 } from 'recharts';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  getKioskEvents,
+  clearKioskEvents,
+  downloadKioskEventsCSV,
+  type KioskEvent,
+} from '@/lib/kioskTracker';
 import { kioskContent, type RouteId } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
 const DASHBOARD_TOKEN = 'i6k-x3f8n2vqp7wm4jt-metrics';
-
-type Row = { id: string; event_key: string; created_at: string };
 
 type Period = 'all' | 'hour' | 'today' | '24h' | '7d' | '30d';
 type Bucket = 'hour' | 'day' | 'week';
@@ -69,7 +72,6 @@ function bucketKey(iso: string, b: Bucket): string {
     d.setHours(0, 0, 0, 0);
     return d.toISOString();
   }
-  // week (ISO monday)
   const day = (d.getDay() + 6) % 7;
   d.setHours(0, 0, 0, 0);
   d.setDate(d.getDate() - day);
@@ -84,67 +86,31 @@ function formatBucket(iso: string, b: Bucket): string {
 
 const KioskMetrics = () => {
   const { token } = useParams();
-  const [rows, setRows] = useState<Row[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [rows, setRows] = useState<KioskEvent[]>([]);
   const [period, setPeriod] = useState<Period>('all');
   const [bucket, setBucket] = useState<Bucket>('day');
-
-
+  const [refreshTick, setRefreshTick] = useState(0);
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
-    let cancelled = false;
-    (async () => {
-      setLoading(true);
-      const all: Row[] = [];
-      const pageSize = 1000;
-      let from = 0;
-      // paginate
-      for (let i = 0; i < 20; i++) {
-        const { data, error } = await supabase
-          .from('kiosk_events')
-          .select('id, event_key, created_at')
-          .order('created_at', { ascending: false })
-          .range(from, from + pageSize - 1);
-        if (error || !data || data.length === 0) break;
-        all.push(...(data as Row[]));
-        if (data.length < pageSize) break;
-        from += pageSize;
-      }
-      if (!cancelled) {
-        setRows(all);
-        setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [token]);
+    setRows(getKioskEvents().slice().reverse()); // most recent first
+  }, [token, refreshTick]);
 
-  // Realtime subscription
+  // Refresh when other tabs on the same totem update storage
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
-    const channel = supabase
-      .channel('kiosk_events_dash')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'kiosk_events' },
-        (payload) => {
-          const r = payload.new as Row;
-          setRows((prev) => [r, ...prev]);
-        },
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'i6_kiosk_events' || e.key === null) setRefreshTick((t) => t + 1);
     };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
   }, [token]);
 
   const filtered = useMemo(() => {
     const start = periodStart(period);
     if (!start) return rows;
     const t0 = start.getTime();
-    return rows.filter((r) => new Date(r.created_at).getTime() >= t0);
+    return rows.filter((r) => new Date(r.ts).getTime() >= t0);
   }, [rows, period]);
 
   const countBy = useMemo(() => {
@@ -165,7 +131,6 @@ const KioskMetrics = () => {
     .reduce((a, [, v]) => a + v, 0);
   const convRate = totalStarts ? ((totalEbooks / totalStarts) * 100).toFixed(1) + '%' : '—';
 
-  // Lookups
   const kc = kioskContent.pt;
   const sc = solutionsContent.pt;
 
@@ -202,7 +167,7 @@ const KioskMetrics = () => {
   const timeline = useMemo(() => {
     const m = new Map<string, number>();
     filtered.forEach((r) => {
-      const k = bucketKey(r.created_at, bucket);
+      const k = bucketKey(r.ts, bucket);
       m.set(k, (m.get(k) ?? 0) + 1);
     });
     return [...m.entries()]
@@ -212,6 +177,13 @@ const KioskMetrics = () => {
 
   if (token !== DASHBOARD_TOKEN) return <Navigate to="/" replace />;
 
+  const handleClear = () => {
+    if (window.confirm('Apagar todos os eventos deste totem? Esta ação não pode ser desfeita.')) {
+      clearKioskEvents();
+      setRefreshTick((t) => t + 1);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B1224] text-white">
       <Helmet>
@@ -220,17 +192,17 @@ const KioskMetrics = () => {
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-6 py-10">
-        <header className="flex items-baseline justify-between mb-8 flex-wrap gap-4">
+        <header className="flex items-baseline justify-between mb-4 flex-wrap gap-4">
           <div>
             <p className="text-xs tracking-[0.3em] uppercase text-[#F4845F] font-semibold mb-1">
               infinity6 · kiosk metrics
             </p>
             <h1 className="text-3xl font-bold">Dashboard de eventos</h1>
             <p className="text-white/60 text-sm mt-1">
-              {loading ? 'Carregando…' : `${filtered.length} eventos no recorte · ${rows.length} totais · atualização em tempo real`}
+              {`${filtered.length} eventos no recorte · ${rows.length} totais neste totem`}
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value as Period)}
@@ -253,13 +225,27 @@ const KioskMetrics = () => {
                 </option>
               ))}
             </select>
+            <button
+              onClick={() => downloadKioskEventsCSV()}
+              className="rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition"
+            >
+              Exportar CSV
+            </button>
+            <button
+              onClick={handleClear}
+              className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition"
+            >
+              Limpar eventos
+            </button>
           </div>
         </header>
 
+        <div className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white/60">
+          Estes dados são <strong className="text-white/80">locais deste totem</strong> — ficam gravados apenas no
+          navegador desta máquina e não agregam entre totens. Para consolidar métricas de vários pontos, exporte o
+          CSV de cada totem.
+        </div>
 
-
-
-        {/* Summary cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           <StatCard label="Sessões iniciadas" value={totalStarts} />
           <StatCard label="Quizzes completos" value={totalQ2} />
