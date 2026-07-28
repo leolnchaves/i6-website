@@ -1,5 +1,7 @@
 // PT-only dataset for the "Preço Orientado à Margem" kiosk demo.
 
+export type PriceAction = 'aumentar' | 'manter' | 'reduzir';
+
 export interface CompetitorBand {
   min: number;
   max: number;
@@ -20,8 +22,9 @@ export interface PriceMarginSku {
   categoryId: string; // for filter matching
   channelId: string;
   regionId: string;
+  action: PriceAction;
   volume: number; // un/wk
-  elasticity: number; // e.g. -0.4 (low sensitivity) to -1.8 (high)
+  elasticity: number;
   competitivePosition: 'below' | 'inline' | 'above';
   stockCoverDays: number;
   currentPrice: number;
@@ -31,8 +34,8 @@ export interface PriceMarginSku {
   rangeMin: number;
   rangeMax: number;
   confidencePct: number;
-  marginImpactPp: number; // percentage points on margin
-  volumeImpactPct: number; // negative usually
+  marginImpactPp: number;
+  volumeImpactPct: number;
   argument: string;
   alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario];
 }
@@ -44,31 +47,11 @@ export interface PipelineStep {
 }
 
 export const pipeline: PipelineStep[] = [
-  {
-    label: 'Estimando a elasticidade de demanda do SKU',
-    micro: 'Medindo como volume e demanda responderam às variações históricas de preço.',
-    durationMs: 900,
-  },
-  {
-    label: 'Projetando demanda para diferentes preços',
-    micro: 'Combinando elasticidade, forecast, estoque e comportamento comercial.',
-    durationMs: 900,
-  },
-  {
-    label: 'Simulando cenários de preço, volume e margem',
-    micro: 'Calculando milhares de combinações possíveis para o SKU.',
-    durationMs: 950,
-  },
-  {
-    label: 'Aplicando restrições e governança corporativa',
-    micro: 'Margem mínima, estoque, banda competitiva, política comercial e posicionamento.',
-    durationMs: 850,
-  },
-  {
-    label: 'Selecionando preço ótimo e alternativas válidas',
-    micro: 'Gerando faixa recomendada, intervalo de confiança e cenários alternativos.',
-    durationMs: 800,
-  },
+  { label: 'Elasticidade',       micro: 'Volume × preço histórico',        durationMs: 900 },
+  { label: 'Projeção de demanda',micro: 'Forecast + estoque + comercial',  durationMs: 900 },
+  { label: 'Simulação de preço', micro: 'Milhares de cenários',            durationMs: 950 },
+  { label: 'Restrições',         micro: 'Margem, estoque, banda, política',durationMs: 850 },
+  { label: 'Preço ótimo',        micro: 'Faixa + confiança + alternativas',durationMs: 800 },
 ];
 
 export const skus: PriceMarginSku[] = [
@@ -79,6 +62,7 @@ export const skus: PriceMarginSku[] = [
     categoryId: 'skincare',
     channelId: 'b2b',
     regionId: 'sudeste',
+    action: 'aumentar',
     volume: 1840,
     elasticity: -0.42,
     competitivePosition: 'below',
@@ -93,11 +77,11 @@ export const skus: PriceMarginSku[] = [
     marginImpactPp: 3.2,
     volumeImpactPct: -1.4,
     argument:
-      'Sensibilidade de preço baixa (elasticidade −0,42): cada +1% em preço projeta apenas −0,42% em volume dentro da faixa recomendada. A projeção de demanda para as próximas 6 semanas indica tendência de alta suave (+3,2% vs. ciclo anterior) puxada por reposição do canal, sem sazonalidade adversa no horizonte. Concorrentes operam entre R$ 95 e R$ 99 e a base recorrente (58% do volume) não migrou nos últimos 3 reajustes de até +4%, o que sustenta o reajuste dentro da banda competitiva.',
+      'Elasticidade baixa (−0,42) e preço abaixo da banda concorrente (R$ 95–99). Base recorrente não migrou em 3 reajustes anteriores. Modelo indica captura de margem sem risco relevante de volume.',
     alternatives: [
       { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
-      { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
-      { id: 'aggressive', label: 'Agressivo', price: 96.2, margin: 'Máxima', volume: 'Maior risco de volume' },
+      { id: 'recommended',  label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
+      { id: 'aggressive',   label: 'Agressivo',   price: 96.2, margin: 'Máxima', volume: 'Maior risco de volume' },
     ],
   },
   {
@@ -107,109 +91,55 @@ export const skus: PriceMarginSku[] = [
     categoryId: 'nutricao',
     channelId: 'b2b',
     regionId: 'sul',
+    action: 'manter',
     volume: 3120,
     elasticity: -0.95,
     competitivePosition: 'inline',
     stockCoverDays: 74,
-    currentPrice: 89.9,
-    competitorPrice: 95.9,
-    competitorBand: { min: 94, max: 98 },
-    optimalPrice: 94.8,
-    rangeMin: 93.4,
-    rangeMax: 96.2,
+    currentPrice: 92.4,
+    competitorPrice: 92.9,
+    competitorBand: { min: 91, max: 95 },
+    optimalPrice: 92.6,
+    rangeMin: 91.8,
+    rangeMax: 93.6,
     confidencePct: 88,
-    marginImpactPp: 2.8,
-    volumeImpactPct: -2.6,
+    marginImpactPp: 0.4,
+    volumeImpactPct: -0.3,
     argument:
-      'Elasticidade moderada (−0,95): a resposta de demanda começa a acelerar acima de R$ 96,20 — cada +1% em preço projeta ≈ −0,95% em volume nessa zona. A projeção de demanda para o próximo ciclo é estável (tendência +0,8% a/a) com sazonalidade neutra e cobertura de estoque de 74 dias, sem pressão para descontar. R$ 94,80 é o ponto em que a curva de margem esperada satura antes do risco de churn do cluster recorrente (recompra a cada 34 dias).',
+      'Elasticidade moderada (−0,95) e posição alinhada ao concorrente dentro de banda estreita (R$ 91–95). Recompra do cluster recorrente a cada 34 dias. Manter preço preserva churn e sustenta margem atual.',
     alternatives: [
-      { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
-      { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
-      { id: 'aggressive', label: 'Agressivo', price: 96.2, margin: 'Máxima', volume: 'Maior risco de volume' },
+      { id: 'conservative', label: 'Conservador', price: 91.8, margin: 'Maior', volume: 'Queda mínima' },
+      { id: 'recommended',  label: 'Recomendado', price: 92.6, margin: 'Estável', volume: 'Estável' },
+      { id: 'aggressive',   label: 'Agressivo',   price: 93.6, margin: 'Máxima', volume: 'Maior risco de volume' },
     ],
   },
   {
     id: 'sku-3',
-    name: 'Shampoo Reparador 400ml',
-    category: 'Haircare',
-    categoryId: 'haircare',
-    channelId: 'b2b',
-    regionId: 'nordeste',
-    volume: 4680,
-    elasticity: -0.38,
-    competitivePosition: 'below',
-    stockCoverDays: 41,
-    currentPrice: 89.9,
-    competitorPrice: 97.2,
-    competitorBand: { min: 95, max: 99 },
-    optimalPrice: 94.8,
-    rangeMin: 93.4,
-    rangeMax: 96.2,
-    confidencePct: 93,
-    marginImpactPp: 3.6,
-    volumeImpactPct: -1.1,
-    argument:
-      'Baixa sensibilidade de preço (elasticidade −0,38) na faixa recomendada — o modelo projeta ≈ −0,38% de volume por +1% de preço, com intervalo de confiança estreito. A projeção de demanda para as próximas 8 semanas mostra tendência de alta (+5,4%) sustentada pela recompra do haircare e sem sazonalidade adversa. O SKU segue abaixo da banda observada nos últimos 60 dias, permitindo capturar margem adicional sem estressar posição competitiva.',
-    alternatives: [
-      { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
-      { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
-      { id: 'aggressive', label: 'Agressivo', price: 96.2, margin: 'Máxima', volume: 'Maior risco de volume' },
-    ],
-  },
-  {
-    id: 'sku-4',
     name: 'Protetor Solar FPS 60',
     category: 'Sazonal',
     categoryId: 'sazonal',
     channelId: 'b2b',
     regionId: 'sudeste',
+    action: 'reduzir',
     volume: 2400,
-    elasticity: -1.35,
-    competitivePosition: 'inline',
-    stockCoverDays: 22,
-    currentPrice: 89.9,
-    competitorPrice: 96.9,
-    competitorBand: { min: 93, max: 99 },
-    optimalPrice: 94.8,
-    rangeMin: 93.4,
-    rangeMax: 96.2,
-    confidencePct: 86,
-    marginImpactPp: 2.4,
-    volumeImpactPct: -3.4,
-    argument:
-      'Sensibilidade alta (elasticidade −1,35), porém dominada pela sazonalidade: a projeção de demanda para as próximas 6 semanas cresce +38% (janela de calor confirmada) e o estoque cobre só 22 dias no ritmo atual. Comparáveis sazonais praticaram média de R$ 97 em janelas equivalentes. O modelo captura a janela de tendência antes que o competidor reaja, aceitando volume −3,4% em troca de margem adicional segura.',
-    alternatives: [
-      { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
-      { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
-      { id: 'aggressive', label: 'Agressivo', price: 96.2, margin: 'Máxima', volume: 'Maior risco de volume' },
-    ],
-  },
-  {
-    id: 'sku-5',
-    name: 'Kit Skincare Noturno',
-    category: 'Combo',
-    categoryId: 'combo',
-    channelId: 'b2b',
-    regionId: 'sudeste',
-    volume: 960,
-    elasticity: -0.62,
+    elasticity: -1.55,
     competitivePosition: 'above',
-    stockCoverDays: 65,
-    currentPrice: 89.9,
-    competitorPrice: 92.0,
-    competitorBand: { min: 88, max: 96 },
-    optimalPrice: 94.8,
-    rangeMin: 93.4,
-    rangeMax: 96.2,
-    confidencePct: 89,
-    marginImpactPp: 4.1,
-    volumeImpactPct: -1.8,
+    stockCoverDays: 18,
+    currentPrice: 98.9,
+    competitorPrice: 92.5,
+    competitorBand: { min: 90, max: 94 },
+    optimalPrice: 93.6,
+    rangeMin: 92.2,
+    rangeMax: 94.4,
+    confidencePct: 84,
+    marginImpactPp: -1.2,
+    volumeImpactPct: 6.8,
     argument:
-      'Combo com sensibilidade de preço contida (elasticidade −0,62) e sem par direto no mercado local. A projeção de demanda para o trimestre indica tendência de alta (+8,6%) impulsionada pela categoria noturna e sazonalidade favorável de inverno. Últimos 3 lançamentos comparáveis mostram baixa reação a variações de até +6%, e R$ 94,80 mantém 82% das sessões evoluindo para carrinho.',
+      'Elasticidade alta (−1,55) e SKU acima da banda concorrente (R$ 90–94), com estoque em janela sazonal curta (18 dias). Modelo reduz preço para dentro da banda para defender giro e evitar sobra de estoque no fim da estação.',
     alternatives: [
-      { id: 'conservative', label: 'Conservador', price: 93.4, margin: 'Maior', volume: 'Queda mínima' },
-      { id: 'recommended', label: 'Recomendado', price: 94.8, margin: 'Ótima', volume: 'Queda controlada' },
-      { id: 'aggressive', label: 'Agressivo', price: 96.2, margin: 'Máxima', volume: 'Maior risco de volume' },
+      { id: 'conservative', label: 'Conservador', price: 94.4, margin: 'Maior', volume: 'Menor recuperação' },
+      { id: 'recommended',  label: 'Recomendado', price: 93.6, margin: 'Reduzida', volume: 'Recupera volume' },
+      { id: 'aggressive',   label: 'Agressivo',   price: 92.2, margin: 'Mínima', volume: 'Máxima recuperação' },
     ],
   },
 ];
@@ -219,9 +149,7 @@ export const filterOptions = {
     { value: 'all', label: 'Todas as categorias' },
     { value: 'skincare', label: 'Skincare' },
     { value: 'nutricao', label: 'Nutrição' },
-    { value: 'haircare', label: 'Haircare' },
     { value: 'sazonal', label: 'Sazonal' },
-    { value: 'combo', label: 'Combo' },
   ],
   channel: [
     { value: 'all', label: 'Todos os canais' },
@@ -248,3 +176,22 @@ export const filterOptions = {
 };
 
 export const fmtBRL = (n: number) => `R$ ${n.toFixed(2).replace('.', ',')}`;
+
+export const actionLabel: Record<PriceAction, string> = {
+  aumentar: 'Aumentar preço',
+  manter: 'Manter preço',
+  reduzir: 'Reduzir preço',
+};
+
+// Short synthesis of what the model learned across the visible portfolio.
+export const generalInsightFor = (list: PriceMarginSku[]): string => {
+  if (list.length === 0) return 'Nenhum SKU no filtro atual.';
+  const up = list.filter((s) => s.action === 'aumentar').length;
+  const keep = list.filter((s) => s.action === 'manter').length;
+  const down = list.filter((s) => s.action === 'reduzir').length;
+  const parts: string[] = [];
+  if (up)   parts.push(`${up} com elasticidade baixa e preço abaixo da banda → subir`);
+  if (keep) parts.push(`${keep} alinhado(s) à banda e com recompra estável → manter`);
+  if (down) parts.push(`${down} acima da banda em janela de estoque curta → reduzir`);
+  return `O modelo aprendeu, por SKU, elasticidade, posição vs. concorrente, piso de margem e cobertura de estoque. ${parts.join('; ')}.`;
+};
