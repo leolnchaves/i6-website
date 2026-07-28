@@ -310,9 +310,9 @@ const PriceTurnoverDemo = () => {
                       <span className="text-right text-white font-mono font-semibold">{fmtBRL(s.recommendedPrice)}</span>
                       <span
                         className="text-right font-mono"
-                        style={{ color: s.markdownPct > 0 ? '#F4845F' : 'rgba(255,255,255,0.55)' }}
+                        style={{ color: s.markdownPct > 0 ? '#F4845F' : s.markdownPct < 0 ? '#34d399' : 'rgba(255,255,255,0.55)' }}
                       >
-                        {s.markdownPct > 0 ? `−${s.markdownPct}%` : '—'}
+                        {s.markdownPct > 0 ? `−${s.markdownPct}%` : s.markdownPct < 0 ? `+${Math.abs(s.markdownPct)}%` : '—'}
                       </span>
                       <span className="text-right text-white/85 font-mono">{s.sellThroughProjectedPct}%</span>
                     </div>
