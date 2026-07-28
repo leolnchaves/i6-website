@@ -629,7 +629,7 @@ export const signalDemoContent = {
       },
       priceConversionFriction: {
         label: 'Fricção de Preço',
-        question: 'Em quais produtos, sessões e contextos o preço atual está reduzindo a probabilidade de conversão?',
+        question: 'Onde o preço atual está reduzindo a probabilidade de conversão?',
         title: 'Fricções preditivas de preço na jornada de compra',
         analysis: 'O modelo identificou que o preço está limitando a conversão em 14% das sessões com alta intenção de compra. A maior oportunidade está nos usuários que retornaram ao produto, compararam alternativas e chegaram ao carrinho, mas encontraram um preço acima da faixa de maior resposta prevista para aquele contexto.\n\nA fricção não ocorre de forma uniforme. O Produto A apresenta maior sensibilidade em sessões originadas por mídia paga, onde os usuários demonstram alta comparação, maior sensibilidade e menor vínculo prévio com a marca. Já o Produto B mantém boa conversão entre clientes recorrentes mesmo sem incentivo, pois a intenção já é elevada e a probabilidade de conversão permanece dentro da faixa esperada.',
         frictionHeatmap: {
@@ -1338,7 +1338,7 @@ export const signalDemoContent = {
       },
       priceConversionFriction: {
         label: 'Price Friction',
-        question: 'Which products, sessions and contexts show the current price is reducing conversion probability?',
+        question: 'Where is the current price reducing conversion probability?',
         title: 'Predictive price friction along the purchase journey',
         analysis: 'The model identified that price is capping conversion in 14% of sessions with high purchase intent. The largest opportunity lies with users who returned to the product, compared alternatives and reached the cart, but found a price above the predicted highest-response band for that context.\n\nFriction does not occur uniformly. Product A shows the highest sensitivity in sessions from paid media, where users show heavier comparison, higher sensitivity and weaker brand affinity. Product B, on the other hand, keeps solid conversion among returning customers even without incentive, since intent is already high and predicted probability stays within the expected band.',
         frictionHeatmap: {
