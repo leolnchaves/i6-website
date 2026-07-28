@@ -25,6 +25,14 @@ const EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION =
   'insight:ebook-inteligencia-do-consumidor-orientada-a-decisao';
 const EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID = '03a13a3b-9b6b-4804-8c04-7418a04bd3c1';
 
+const EBOOK_PRICING_IDS = [
+  'price-to-margin',
+  'price-to-conversion',
+  'price-to-turnover',
+];
+const EBOOK_PRICING_SUBSCRIPTION = 'insight:ebook-pricing-orientado-a-resultados';
+const EBOOK_PRICING_INSIGHT_ID = 'a4012048-aa04-465b-b89a-7c7104d6fc18';
+
 interface Props {
   lang: KioskLang;
   content: QuizContent;
@@ -81,6 +89,16 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
           formData.set('subscription', EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION);
           formData.set('reason', 'kiosk-demo');
           formData.set('insight_id', EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID);
+          formData.set('utm_source', 'kiosk');
+          formData.set('utm_medium', 'totem');
+          formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
+          formData.set('user_agent', 'kiosk-app/1.0');
+        }
+
+        if (EBOOK_PRICING_IDS.includes(solutionId)) {
+          formData.set('subscription', EBOOK_PRICING_SUBSCRIPTION);
+          formData.set('reason', 'kiosk-demo');
+          formData.set('insight_id', EBOOK_PRICING_INSIGHT_ID);
           formData.set('utm_source', 'kiosk');
           formData.set('utm_medium', 'totem');
           formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
