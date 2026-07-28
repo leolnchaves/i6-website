@@ -265,14 +265,14 @@ const PriceTurnoverDemo = () => {
                     <span className="flex items-center gap-[0.7vmin] text-white/90 font-semibold leading-tight">
                       <span
                         className="w-[1.1vmin] h-[1.1vmin] rounded-full flex-shrink-0"
-                        style={{ background: actionColor[c.action] }}
+                        style={{ background: actionColor[d?.action ?? c.action] }}
                       />
                       <span>
                         {c.name}
                         <span className="block text-[1.05vmin] font-normal text-white/50">{c.region}</span>
                       </span>
                     </span>
-                    <span className="text-white/70">{showResult ? c.situation : '—'}</span>
+                    <span className="text-white/70">{showResult && d ? d.action === 'markdown' ? 'Estoque envelhecido' : d.action === 'raise' ? 'Giro acima da média' : d.action === 'wait' ? 'Demanda sazonal futura' : 'Giro adequado' : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.stockUnits.toLocaleString('pt-BR')} un` : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.avgStockAgeDays} d` : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.sellVelocity}/${c.categoryAvgVelocity}` : '—'}</span>
