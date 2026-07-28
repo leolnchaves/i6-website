@@ -20,9 +20,23 @@ interface Props {
 }
 
 const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClosed }: Props) => {
-  // Interactive pilot demo for Price-to-Conversion
+  // Interactive demo for Price-to-Conversion
   if (solution.id === 'price-to-conversion') {
-    return <PriceToMarginDemo lang={lang} />;
+    return (
+      <SimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
+        icon={Target}
+        onSimulationClosed={onSimulationClosed}
+      >
+        <PriceToMarginDemo />
+      </SimulationLauncher>
+    );
   }
 
   // Interactive demo for Price-to-Margin
