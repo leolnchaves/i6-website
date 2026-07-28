@@ -277,6 +277,44 @@ const KioskMetrics = () => {
           CSV de cada totem.
         </div>
 
+        <section className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold text-white/90">Leads de eBook pendentes de envio</h2>
+              <p className="text-xs text-white/60 mt-1">
+                Leads capturados quando a internet falhou. Ficam neste navegador até serem reenviados ao i6 HUB.
+              </p>
+              {resendMsg && <p className="text-xs text-[#F4845F] mt-2">{resendMsg}</p>}
+            </div>
+            <div className="flex items-center gap-4 flex-wrap">
+              <p className="text-3xl font-bold text-[#F4845F]">{pendingLeads}</p>
+              <button
+                onClick={handleResendLeads}
+                disabled={resending || pendingLeads === 0}
+                className="rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition disabled:opacity-40"
+              >
+                {resending ? 'Reenviando…' : 'Reenviar pendentes'}
+              </button>
+              <button
+                onClick={() => downloadPendingLeadsCSV()}
+                disabled={pendingLeads === 0}
+                className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition disabled:opacity-40"
+              >
+                Exportar leads (CSV)
+              </button>
+              <button
+                onClick={handleClearLeads}
+                disabled={pendingLeads === 0}
+                className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition disabled:opacity-40"
+              >
+                Limpar fila
+              </button>
+            </div>
+          </div>
+        </section>
+
+
+
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           <StatCard label="Sessões iniciadas" value={totalStarts} />
           <StatCard label="Quizzes completos" value={totalQ2} />
