@@ -260,7 +260,7 @@ export const signalDemoContent = {
       },
       targetsRisk: {
         label: 'Risco de Meta',
-        question: 'Quais metas apresentam maior risco de não serem atingidas ou estão abaixo do potencial previsto?',
+        question: 'Quais metas apresentam maior risco de não serem atingidas?',
         title: 'Risco preditivo de atingimento e recalibração de metas',
         analysis: 'O modelo identificou 27 combinações de vendedor, cliente e SKU com metas desalinhadas para o próximo trimestre. Onze apresentam risco elevado de não atingimento, principalmente por desaceleração da demanda, queda de frequência de compra e redução da capacidade de absorção dos clientes. Outras 16 estão abaixo do potencial previsto e podem limitar o crescimento comercial mesmo com comportamento favorável de demanda.\n\nA meta do Cliente A está abaixo do potencial porque o modelo prevê maior frequência de compra, crescimento do volume médio e expansão da demanda do SKU A. Mantê-la no nível atual pode limitar a captura de um comportamento de crescimento já identificado. Já a meta do Cliente D está acima do potencial previsto: o cliente apresenta desaceleração de compras, redução do volume por pedido e menor probabilidade de recompra do SKU B — manter a meta gera pressão sobre o vendedor sem demanda para sustentá-la.',
         scatter: [
