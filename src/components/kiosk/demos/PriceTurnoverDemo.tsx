@@ -35,6 +35,7 @@ const computeOutcome = (
   c: TurnoverCluster,
   objective: string,
   minMargin: string,
+  productId: string,
 ): Derived => {
   const obj =
     objective === 'aggressive'
