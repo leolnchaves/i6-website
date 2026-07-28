@@ -1,417 +1,451 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, Check, Sparkles } from 'lucide-react';
-import type { KioskLang } from '@/data/kiosk/config';
-import { priceToMarginDemo, type DemoProduct } from '@/data/kiosk/demos/priceToMargin';
+import { useEffect, useMemo, useState } from 'react';
+import { Check, Sparkles } from 'lucide-react';
+import TouchSelect from '../ui/TouchSelect';
+import {
+  actionLabel,
+  filterOptions,
+  fmtBRL,
+  generalInsightFor,
+  pipeline,
+  skus,
+  type AlternativeScenario,
+  type PriceConversionSku,
+} from '@/data/kiosk/demos/priceToMargin';
 
-interface Props {
-  lang: KioskLang;
+type Phase = 'setup' | 'running' | 'result';
+
+interface Derived {
+  optimalPrice: number;
+  rangeMin: number;
+  rangeMax: number;
+  confidencePct: number;
+  deltaConversionPct: number;
+  deltaRevenuePct: number;
+  alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario];
 }
 
-const currency = (v: number, lang: KioskLang) =>
-  lang === 'pt'
-    ? `R$ ${v.toFixed(2).replace('.', ',')}`
-    : `$ ${v.toFixed(2)}`;
+const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+const round2 = (v: number) => Math.round(v * 100) / 100;
+const round1 = (v: number) => Math.round(v * 10) / 10;
 
-const PriceToMarginDemo = ({ lang }: Props) => {
-  const content = priceToMarginDemo[lang];
+const computeOutcome = (
+  s: PriceConversionSku,
+  strategy: string,
+  minMargin: string,
+  competitiveBand: string,
+): Derived => {
+  const strat =
+    strategy === 'conversion'
+      ? { price: 0.985, conv: 1.15, rev: -0.9, conf: -2 }
+      : strategy === 'revenue'
+      ? { price: 1.015, conv: -1.1, rev: 1.2, conf: 2 }
+      : { price: 1, conv: 0, rev: 0, conf: 0 };
+
+  const band =
+    competitiveBand === 'strict'
+      ? { spread: 0.55, ceilingMult: 1.0 }
+      : competitiveBand === 'wide'
+      ? { spread: 1.4, ceilingMult: 1.06 }
+      : { spread: 1, ceilingMult: 1.03 };
+
+  const mm = parseInt(minMargin, 10);
+  const floor =
+    mm >= 40 ? { price: 1.014, conv: -1.4, rev: 0.6, conf: -6 }
+    : mm >= 35 ? { price: 1.007, conv: -0.6, rev: 0.3, conf: -3 }
+    : mm >= 30 ? { price: 1, conv: 0, rev: 0, conf: 0 }
+    : { price: 0.995, conv: 0.4, rev: -0.2, conf: 1 };
+
+  const rawOptimal = s.optimalPrice * strat.price * floor.price;
+  const ceiling = s.competitorPrice * band.ceilingMult;
+  const optimalPrice = Math.min(rawOptimal, ceiling);
+
+  const halfSpread = ((s.rangeMax - s.rangeMin) / 2) * band.spread;
+  const rangeMin = optimalPrice - halfSpread;
+  const rangeMax = Math.min(optimalPrice + halfSpread, ceiling + halfSpread * 0.3);
+
+  return {
+    optimalPrice: round2(optimalPrice),
+    rangeMin: round2(rangeMin),
+    rangeMax: round2(rangeMax),
+    confidencePct: Math.round(clamp(s.confidencePct + strat.conf + floor.conf, 62, 97)),
+    deltaConversionPct: round1(s.deltaConversionPct + strat.conv + floor.conv),
+    deltaRevenuePct: round1(s.deltaRevenuePct + strat.rev + floor.rev),
+    alternatives: s.alternatives,
+  };
+};
+
+const competitivePositionLabel: Record<PriceConversionSku['competitivePosition'], string> = {
+  below: 'Abaixo',
+  inline: 'Alinhado',
+  above: 'Acima',
+};
+
+const actionToneClass: Record<PriceConversionSku['action'], string> = {
+  aumentar: 'text-[#4ade80]',
+  manter: 'text-white/85',
+  reduzir: 'text-[#F4845F]',
+};
+
+const PriceToMarginDemo = () => {
+  const [phase, setPhase] = useState<Phase>('setup');
+  const [progress, setProgress] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0); // 0..pipeline.length
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const priceRef = useRef<HTMLDivElement>(null);
-  const insightRef = useRef<HTMLDivElement>(null);
-  const [line, setLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
+  const [category, setCategory] = useState('all');
+  const [channel, setChannel] = useState('all');
+  const [strategy, setStrategy] = useState('balanced');
+  const [minMargin, setMinMargin] = useState('30');
+  const [competitiveBand, setCompetitiveBand] = useState('medium');
 
-  const selected = useMemo<DemoProduct | null>(
-    () => content.products.find((p) => p.id === selectedId) ?? null,
-    [content.products, selectedId],
+  const filtered = useMemo(
+    () =>
+      skus.filter((s) => {
+        if (category !== 'all' && s.categoryId !== category) return false;
+        if (channel !== 'all' && s.channelId !== channel) return false;
+        return true;
+      }),
+    [category, channel],
   );
 
-  // Latência fake por SKU — sempre abaixo da média de mercado (~180 ms)
-  const latencyMs = useMemo(() => {
-    if (!selectedId) return '0.00';
-    return (22 + Math.random() * 26).toFixed(2);
-  }, [selectedId]);
+  const selected = useMemo(
+    () => filtered.find((s) => s.id === selectedId) ?? null,
+    [filtered, selectedId],
+  );
 
+  const derived = useMemo(
+    () => (selected ? computeOutcome(selected, strategy, minMargin, competitiveBand) : null),
+    [selected, strategy, minMargin, competitiveBand],
+  );
+
+  const generalInsight = useMemo(() => generalInsightFor(filtered), [filtered]);
 
   useEffect(() => {
-    if (!selected) {
-      setProgress(0);
-      return;
-    }
+    if (selectedId && !filtered.find((s) => s.id === selectedId)) setSelectedId(null);
+  }, [filtered, selectedId]);
+
+  useEffect(() => {
+    if (phase !== 'running') return;
     setProgress(0);
     const timers: ReturnType<typeof setTimeout>[] = [];
     let elapsed = 0;
-    content.pipeline.forEach((step, i) => {
+    pipeline.forEach((step, i) => {
       elapsed += step.durationMs;
       timers.push(setTimeout(() => setProgress(i + 1), elapsed));
     });
+    timers.push(
+      setTimeout(() => {
+        setSelectedId((prev) => prev ?? filtered[0]?.id ?? null);
+        setPhase('result');
+      }, elapsed + 260),
+    );
     return () => timers.forEach(clearTimeout);
-  }, [selected, content.pipeline]);
-
-  const done = !!selected && progress >= content.pipeline.length;
+  }, [phase, filtered]);
 
   const reset = () => {
-    setSelectedId(null);
+    setPhase('setup');
     setProgress(0);
   };
 
-  // Measure connector line between price reveal and insight card
-  useLayoutEffect(() => {
-    if (!done) {
-      setLine(null);
-      return;
-    }
-    const measure = () => {
-      const container = containerRef.current;
-      const price = priceRef.current;
-      const insight = insightRef.current;
-      if (!container || !price || !insight) return;
-      const c = container.getBoundingClientRect();
-      const p = price.getBoundingClientRect();
-      const i = insight.getBoundingClientRect();
-      setLine({
-        x1: p.right - c.left,
-        y1: p.top + p.height / 2 - c.top,
-        x2: i.left - c.left,
-        y2: i.top + i.height / 2 - c.top,
-      });
-    };
-    // Wait for the insight fade-in/animation to settle
-    const t = setTimeout(measure, 700);
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (containerRef.current) ro.observe(containerRef.current);
-    if (insightRef.current) ro.observe(insightRef.current);
-    if (priceRef.current) ro.observe(priceRef.current);
-    window.addEventListener('resize', measure);
-    return () => {
-      clearTimeout(t);
-      ro.disconnect();
-      window.removeEventListener('resize', measure);
-    };
-  }, [done, selectedId]);
+  const showResult = phase === 'result';
+  const canCalculate = filtered.length > 0;
 
   return (
-    <div ref={containerRef} className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
-      <div className="grid grid-cols-2 gap-[3vmin] items-stretch">
-        {/* LEFT — scenario */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col h-full">
-          {/* Fake browser bar */}
-          <div className="flex items-center gap-[1vmin] px-[2vmin] py-[1.5vmin] bg-white/[0.04] border-b border-white/10">
-            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ff5f56]" />
-            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#ffbd2e]" />
-            <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#27c93f]" />
-            <span className="ml-[1.5vmin] text-[1.4vmin] text-white/50 font-mono">
-              vivashop.b2b / {content.catalogLabel.toLowerCase()}
+    <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
+      <div className="flex flex-col gap-[2.4vmin]">
+        {/* TOP — dashboard / result */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 overflow-hidden flex flex-col">
+          <div className="flex items-baseline justify-between px-[2.5vmin] py-[1.6vmin] bg-white/[0.04] border-b border-white/10 gap-[1vmin]">
+            <div>
+              <h4 className="text-[2.2vmin] font-bold text-white leading-tight">
+                {showResult ? 'Preço ideal e cenários de conversão' : 'Portfólio de conversão'}
+              </h4>
+              <p className="text-[1.4vmin] text-white/60">
+                {showResult
+                  ? 'Faixa recomendada, impacto em conversão e receita por SKU.'
+                  : 'Selecione os filtros e ajuste restrições para simular a faixa ótima de preço por SKU.'}
+              </p>
+            </div>
+            <span className="text-[1.4vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] text-right">
+              Objetivo: Conversão
             </span>
           </div>
 
-          <div className="p-[2.5vmin] flex-1 flex flex-col">
-            <div className="flex items-baseline justify-between mb-[1.5vmin]">
-              <div>
-                <h4 className="text-[2.4vmin] font-bold text-white">{content.scenarioTitle}</h4>
-                <p className="text-[1.6vmin] text-white/60">{content.scenarioSubtitle}</p>
-              </div>
-              <span className="text-[1.4vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F]">
-                {content.objectiveLabel}
-              </span>
+          <div className="p-[2.2vmin] flex flex-col gap-[1.4vmin]">
+            {/* Filters */}
+            <div className="grid grid-cols-2 gap-[1vmin]">
+              <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
+              <TouchSelect label="Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
+            </div>
+            <div className="grid grid-cols-[1.25fr_0.95fr_1fr] gap-[1vmin]">
+              <TouchSelect label="Estratégia" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
+              <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
+              <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
             </div>
 
-            {!selected ? (
+            {/* Portfolio table — 3 lines, headers in 2 lines */}
+            <div className="rounded-xl border border-white/10 overflow-hidden">
+              <div className="grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] px-[1.4vmin] py-[0.7vmin] gap-x-[0.6vmin] bg-white/[0.05] text-[0.8vmin] uppercase tracking-[0.1em] font-semibold text-white/60 leading-tight">
+                <span>SKU</span>
+                <span className="text-right">Ação<br/>sugerida</span>
+                <span className="text-right">Preço<br/>atual</span>
+                <span className="text-right">Elast.</span>
+                <span className="text-right">Posição<br/>concorr.</span>
+                <span className="text-right">Sessões<br/>/dia</span>
+                <span className="text-right">Preço<br/>concorrente</span>
+              </div>
+              {filtered.length === 0 && (
+                <div className="px-[1.4vmin] py-[1.6vmin] text-[1.4vmin] text-white/50">
+                  Nenhum SKU nesta seleção de filtros.
+                </div>
+              )}
+              {filtered.map((s) => {
+                const active = s.id === selectedId && showResult;
+                const rowDisabled = !showResult;
+                return (
+                  <button
+                    type="button"
+                    key={s.id}
+                    disabled={rowDisabled}
+                    onClick={() => setSelectedId(s.id)}
+                    className={`w-full grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] items-center px-[1.4vmin] py-[1vmin] text-[1.35vmin] border-t border-white/10 text-left transition ${
+                      active
+                        ? 'bg-[#F4845F]/10'
+                        : rowDisabled
+                        ? 'cursor-default'
+                        : 'hover:bg-white/[0.04]'
+                    }`}
+                  >
+                    <span className="text-white/90 font-semibold leading-tight">
+                      {s.name}
+                      <span className="block text-[1.05vmin] font-normal text-white/50">{s.category}</span>
+                    </span>
+                    <span className={`text-right font-semibold ${showResult ? actionToneClass[s.action] : 'text-white/40'}`}>
+                      {showResult ? actionLabel[s.action] : '—'}
+                    </span>
+                    <span className="text-right text-white/85 font-mono">{showResult ? fmtBRL(s.currentPrice) : '—'}</span>
+                    <span className="text-right text-white/85 font-mono">{showResult ? s.elasticity.toFixed(2) : '—'}</span>
+                    <span className="text-right text-white/85">{showResult ? competitivePositionLabel[s.competitivePosition] : '—'}</span>
+                    <span className="text-right text-white/70 font-mono">{showResult ? s.sessionsPerDay.toLocaleString('pt-BR') : '—'}</span>
+                    <span className="text-right text-white/70 font-mono">{showResult ? fmtBRL(s.competitorPrice) : '—'}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Result panel */}
+            {showResult && selected && derived && (
               <>
-                {/* Attention hint */}
-                <div className="mb-[1.5vmin] rounded-xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.4vmin] flex items-center gap-[1.2vmin] animate-pulse">
-                  <span className="w-[1.4vmin] h-[1.4vmin] rounded-full bg-[#F4845F]" />
-                  <span className="text-[1.6vmin] text-white/90 font-semibold">
-                    {content.pickHint}
-                  </span>
-                </div>
-
-                {/* Product grid — NO price/margin visible */}
-                <div className="grid grid-cols-2 gap-[1.5vmin]">
-                  {content.products.map((p) => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onClick={() => setSelectedId(p.id)}
-                      className="text-left rounded-xl border-2 p-[1.5vmin] transition-all bg-white/[0.03] border-white/10 hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.06]"
-                    >
-                      <div className="aspect-square rounded-lg overflow-hidden bg-white/5 mb-[1vmin]">
-                        <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                      </div>
-                      <span className="block text-[1.3vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.3vmin]">
-                        {p.category}
-                      </span>
-                      <span className="block text-[1.6vmin] leading-tight text-white/90 font-semibold min-h-[3.6vmin]">
-                        {p.name}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : (
-              /* Zoom view — single product */
-              <div className="flex flex-col animate-fade-in">
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="group self-start inline-flex items-center gap-[1vmin] min-h-[8vmin] px-[3vmin] py-[2vmin] rounded-full bg-white/10 hover:bg-white/20 ring-1 ring-white/15 shadow-md text-[1.7vmin] font-semibold uppercase tracking-[0.14em] text-white active:scale-[0.98] transition mb-[2vmin]"
-                >
-                  <ArrowLeft className="w-[2vmin] h-[2vmin] transition-transform group-hover:-translate-x-[0.3vmin]" strokeWidth={2.5} />
-                  {content.backToCatalog.replace(/^←\s*/, '')}
-                </button>
-
-
-                <div className="rounded-2xl border-2 border-[#F4845F]/40 bg-white/[0.03] p-[2vmin]">
-                  <div className="aspect-[4/3] rounded-xl overflow-hidden bg-white/5 mb-[1.5vmin]">
-                    <img
-                      src={selected.image}
-                      alt={selected.name}
-                      className="w-full h-full object-cover"
+                <div className="grid grid-cols-[1fr_1.4fr] gap-[1.2vmin]">
+                  {/* Left: KPIs */}
+                  <div className="flex flex-col gap-[1vmin] h-full">
+                    <ConclusionCard label="Preço ideal" value={fmtBRL(derived.optimalPrice)} highlight />
+                    <ConclusionCard
+                      label="Faixa recomendada"
+                      value={`${fmtBRL(derived.rangeMin)} – ${fmtBRL(derived.rangeMax)}`}
                     />
                   </div>
-                  <span className="block text-[1.4vmin] uppercase tracking-wider text-[#F4845F]/80 font-semibold mb-[0.4vmin]">
-                    {selected.category}
-                  </span>
-                  <h5 className="text-[2.4vmin] leading-tight text-white font-bold mb-[1.5vmin]">
-                    {selected.name}
-                  </h5>
 
-                  {/* Price reveal zone */}
-                  <div ref={priceRef} className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-[2vmin] min-h-[10vmin] flex items-center justify-center">
-                    {!done ? (
-                      <div className="flex items-center gap-[1.5vmin] text-white/60">
-                        <span className="w-[2vmin] h-[2vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
-                        <span className="text-[1.6vmin]">{content.analyzingLabel}</span>
-                      </div>
-                    ) : (
-                      <div className="w-full flex items-center justify-between animate-fade-in">
-                        <div>
-                          <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.4vmin]">
-                            {content.idealPriceBadge}
-                          </span>
-                          <span
-                            className="block text-[4.2vmin] font-bold text-white leading-none"
-                            style={{ textShadow: '0 0 24px rgba(244,132,95,0.5)' }}
-                          >
-                            {currency(selected.recommendedPrice, lang)}
-                          </span>
-                        </div>
-                        <span className="rounded-full bg-[#F4845F] text-white text-[1.4vmin] font-bold px-[1.6vmin] py-[0.8vmin] animate-pulse">
-                          ✓
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {done && (
-                    <div className="grid grid-cols-2 gap-[1vmin] mt-[1.5vmin] animate-fade-in">
-                      <MetricPill
-                        label={content.productLabels.recommended}
-                        value={currency(selected.recommendedPrice, lang)}
-                        highlight
-                      />
-                      <MetricPill
-                        label={content.productLabels.deltaConversion}
-                        value={`+${selected.deltaConversionPct.toFixed(1)}%`}
-                        highlight
-                      />
-                      <MetricPill
-                        label={content.productLabels.deltaRevenue}
-                        value={`+${selected.deltaRevenuePct.toFixed(1)}%`}
-                        highlight
-                      />
-                      <MetricPill
-                        label={content.productLabels.latency}
-                        value={`${latencyMs} ms`}
-                        hint={content.productLabels.latencyHint}
-                        highlight
-                      />
-                    </div>
-                  )}
+                  {/* Right: curve */}
+                  <PriceConversionCurve sku={selected} derived={derived} />
                 </div>
+
+                {/* Alternatives — 3 rows, headers in 2 lines, no coloured badges */}
+                <div className="rounded-xl border border-white/10 overflow-hidden">
+                  <div className="grid grid-cols-[1fr_0.9fr_1fr_1fr] px-[1.4vmin] py-[0.7vmin] bg-white/[0.05] text-[0.95vmin] uppercase tracking-[0.16em] font-semibold text-white/60 leading-tight">
+                    <span>Cenário</span>
+                    <span className="text-right">Preço</span>
+                    <span className="text-right">Δ Conversão</span>
+                    <span className="text-right">Δ Receita</span>
+                  </div>
+                  {derived.alternatives.map((a) => {
+                    const isReco = a.id === 'recommended';
+                    return (
+                      <div
+                        key={a.id}
+                        className="grid grid-cols-[1fr_0.9fr_1fr_1fr] px-[1.4vmin] py-[1vmin] items-center text-[1.35vmin] border-t border-white/10"
+                      >
+                        <span className={`font-semibold ${isReco ? 'text-[#F4845F]' : 'text-white/85'}`}>
+                          {a.label}
+                        </span>
+                        <span className="text-right text-white font-mono">{fmtBRL(a.price)}</span>
+                        <span className={`text-right ${isReco ? 'text-[#F4845F]' : 'text-white/80'}`}>{a.deltaConversion}</span>
+                        <span className={`text-right ${isReco ? 'text-[#F4845F]' : 'text-white/75'}`}>{a.deltaRevenue}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Bottom KPIs */}
+                <div className="grid grid-cols-3 gap-[1vmin]">
+                  <ConclusionCard label="Δ Conversão projetada" value={`${derived.deltaConversionPct > 0 ? '+' : ''}${derived.deltaConversionPct.toFixed(1)} pp`} highlight />
+                  <ConclusionCard label="Δ Receita projetada" value={`${derived.deltaRevenuePct > 0 ? '+' : ''}${derived.deltaRevenuePct.toFixed(1)}%`} />
+                  <ConclusionCard label="Confiança do modelo" value={`${derived.confidencePct}%`} />
+                </div>
+              </>
+            )}
+
+            {phase === 'setup' && (
+              <button
+                type="button"
+                disabled={!canCalculate}
+                onClick={() => setPhase('running')}
+                className={`self-stretch min-h-[7vmin] rounded-2xl font-bold text-[2vmin] tracking-wide transition-all ${
+                  canCalculate
+                    ? 'bg-[#F4845F] text-white hover:bg-[#F4845F]/90 active:scale-[0.99] shadow-[0_0_28px_rgba(244,132,95,0.35)]'
+                    : 'bg-white/[0.06] text-white/40 border border-white/10 cursor-not-allowed'
+                }`}
+              >
+                {canCalculate ? 'Calcular faixa ótima de preço' : 'Ajuste os filtros para simular'}
+              </button>
+            )}
+
+            {phase === 'running' && (
+              <div className="rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
+                <span className="w-[1.8vmin] h-[1.8vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
+                <span className="text-[1.6vmin] text-white/90 font-semibold">Calculando faixa ótima de preço…</span>
               </div>
             )}
           </div>
         </div>
 
-        {/* RIGHT — reasoning + conclusion */}
-        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin] flex flex-col h-full">
-          <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
+        {/* BOTTOM — POR QUE + horizontal timeline */}
+        <div className="rounded-2xl bg-[#0B1224] border border-white/10 p-[2vmin]">
+          <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
             <div>
-              <h4 className="text-[2vmin] font-bold text-white leading-tight">{content.reasoningTitle}</h4>
-              {content.reasoningSubtitle && <p className="text-[1.4vmin] text-white/60">{content.reasoningSubtitle}</p>}
+              <h4 className="text-[1.9vmin] font-bold text-white leading-tight">
+                Explicabilidade e raciocínio do modelo
+              </h4>
             </div>
           </div>
 
-          <div className="flex flex-col gap-[0.9vmin]">
-            {content.pipeline.map((step, i) => {
-              const state = !selected
-                ? 'idle'
-                : i < progress
-                ? 'done'
-                : i === progress
-                ? 'active'
-                : 'idle';
-              return (
-                <div
-                  key={i}
-                  className={`rounded-xl border p-[1.2vmin] transition-all ${
-                    state === 'active'
-                      ? 'border-[#F4845F] bg-[#F4845F]/10'
-                      : state === 'done'
-                      ? 'border-white/20 bg-white/[0.04]'
-                      : 'border-white/10 bg-white/[0.02] opacity-60'
-                  }`}
-                >
-                  <div className="flex items-center gap-[1.2vmin] mb-[0.5vmin]">
+          {showResult && (
+            <div className="kiosk-insight-card mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.8vmin]">
+              <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
+                <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
+                <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                  {selected ? 'Por que este preço' : 'O que o modelo aprendeu'}
+                </span>
+              </div>
+              {selected ? (
+                <>
+                  <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
+                    {selected.name}
+                  </span>
+                  <p className="text-[1.7vmin] leading-relaxed text-white/95">{selected.argument}</p>
+                </>
+              ) : (
+                <p className="text-[1.85vmin] leading-relaxed text-white/95">{generalInsight}</p>
+              )}
+            </div>
+          )}
+
+          {/* Micro-metric of active step */}
+          <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
+            {phase === 'running' && progress < pipeline.length && (
+              <span className="text-[1.2vmin] text-white/60 font-mono">
+                {pipeline[progress].micro}
+              </span>
+            )}
+          </div>
+
+          {/* Horizontal timeline */}
+          <div className="relative px-[2vmin] pb-[1vmin]">
+            <div className="absolute left-[3vmin] right-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-white/10" />
+            <div
+              className="absolute left-[3vmin] top-[1.9vmin] h-[0.3vmin] rounded-full bg-[#F4845F] transition-all duration-500"
+              style={{
+                width: `calc((100% - 6vmin) * ${
+                  pipeline.length > 1
+                    ? Math.min(progress, pipeline.length - 1) / (pipeline.length - 1)
+                    : 0
+                })`,
+              }}
+            />
+            <div
+              className="relative grid"
+              style={{ gridTemplateColumns: `repeat(${pipeline.length}, minmax(0,1fr))` }}
+            >
+              {pipeline.map((step, i) => {
+                const state =
+                  phase === 'setup'
+                    ? 'idle'
+                    : phase === 'running'
+                    ? i < progress
+                      ? 'done'
+                      : i === progress
+                      ? 'active'
+                      : 'idle'
+                    : 'done';
+                return (
+                  <div key={i} className="flex flex-col items-center gap-[0.8vmin] px-[0.5vmin]">
                     <span
-                      className={`flex-shrink-0 w-[2.2vmin] h-[2.2vmin] rounded-full flex items-center justify-center text-[1.2vmin] font-bold border-2 ${
+                      className={`flex-shrink-0 w-[3.8vmin] h-[3.8vmin] rounded-full flex items-center justify-center text-[1.5vmin] font-bold border-2 transition-all ${
                         state === 'done'
                           ? 'bg-[#F4845F] border-[#F4845F] text-white'
                           : state === 'active'
-                          ? 'border-[#F4845F] text-[#F4845F]'
-                          : 'border-white/30 text-white/50'
+                          ? 'border-[#F4845F] text-[#F4845F] bg-[#F4845F]/15 animate-pulse'
+                          : 'border-white/25 text-white/50 bg-[#0B1224]'
                       }`}
                     >
-                      {state === 'done' ? <Check className="w-[1.3vmin] h-[1.3vmin]" /> : i + 1}
+                      {state === 'done' ? <Check className="w-[1.8vmin] h-[1.8vmin]" /> : i + 1}
                     </span>
-                    <span className="text-[1.6vmin] leading-tight text-white/90 font-semibold">
+                    <span
+                      className={`text-center text-[1.3vmin] leading-tight font-semibold ${
+                        state === 'idle' ? 'text-white/45' : 'text-white/90'
+                      }`}
+                    >
                       {step.label}
                     </span>
+                    <span
+                      className={`text-center text-[1.1vmin] leading-tight font-mono ${
+                        state === 'idle' ? 'text-white/30' : 'text-white/55'
+                      }`}
+                    >
+                      {step.micro}
+                    </span>
                   </div>
-                  <div className="pl-[3.4vmin]">
-                    <p className="text-[1.25vmin] text-white/60 font-mono mb-[0.4vmin]">
-                      {step.microMetric}
-                    </p>
-                    {state === 'active' && (
-                      <div className="h-[0.35vmin] rounded-full bg-white/10 overflow-hidden">
-                        <div
-                          className="h-full bg-[#F4845F] animate-[kiosk-progress_var(--dur)_linear_forwards]"
-                          style={{ ['--dur' as string]: `${step.durationMs}ms` }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
-          {/* Conclusive panel — appears after pipeline is done */}
-          {done && selected && (
-            <div className="mt-[1.4vmin] rounded-2xl border border-[#F4845F]/50 bg-[#F4845F]/[0.08] p-[1.5vmin] animate-fade-in">
-              <div className="flex items-center justify-between mb-[1vmin]">
-                <span className="text-[1.5vmin] font-semibold text-white/90">{selected.name}</span>
-                <span className="flex items-center gap-[0.6vmin] text-[1.3vmin] font-semibold text-[#F4845F]">
-                  <Check className="w-[1.6vmin] h-[1.6vmin]" />
-                  {content.doneLabel}
-                </span>
-              </div>
-
-
-
-              <div
-                ref={insightRef}
-                className="kiosk-insight-card relative mt-[1.2vmin] rounded-xl bg-[#F4845F]/15 border-2 border-[#F4845F]/70 p-[1.6vmin] pr-[9vmin] text-[1.6vmin] text-white/95 leading-relaxed"
-              >
-                <div className="absolute top-[1.2vmin] right-[1.2vmin] flex items-center gap-[0.5vmin] px-[1vmin] py-[0.4vmin] rounded-full bg-[#F4845F] text-white text-[1.1vmin] font-bold uppercase tracking-[0.18em] shadow-[0_0_16px_rgba(244,132,95,0.6)]">
-                  <Sparkles className="w-[1.4vmin] h-[1.4vmin] kiosk-insight-sparkle" strokeWidth={2.5} />
-                  <span>Insight</span>
-                </div>
-                <span className="block text-[1.3vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
-                  {content.rationaleLabel}
-                </span>
-                {selected.insight}
-              </div>
-
-            </div>
+          {showResult && (
+            <button
+              type="button"
+              onClick={reset}
+              className="mt-[1.4vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+            >
+              Nova simulação
+            </button>
           )}
         </div>
       </div>
 
-      {/* Connector line: price → insight */}
-      {line && (
-        <svg
-          className="pointer-events-none absolute inset-0 w-full h-full"
-          style={{ overflow: 'visible' }}
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient id="kiosk-connector-grad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#F4845F" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#F4845F" stopOpacity="0.9" />
-            </linearGradient>
-          </defs>
-          <path
-            d={`M ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`}
-            fill="none"
-            stroke="url(#kiosk-connector-grad)"
-            strokeWidth={1.5}
-            strokeDasharray="6 6"
-            style={{ filter: 'drop-shadow(0 0 6px rgba(244,132,95,0.7))' }}
-            className="kiosk-connector-path"
-          />
-          <circle cx={line.x1} cy={line.y1} r={4} fill="#F4845F" className="kiosk-connector-dot" />
-          <circle cx={line.x2} cy={line.y2} r={4} fill="#F4845F" className="kiosk-connector-dot" />
-        </svg>
-      )}
-
       <style>{`
-        @keyframes kiosk-progress {
-          from { width: 0% }
-          to { width: 100% }
-        }
         @keyframes kiosk-insight-in {
           0%   { opacity: 0; transform: translateY(12px) scale(.94); }
           100% { opacity: 1; transform: translateY(0)    scale(1);   }
         }
         @keyframes kiosk-insight-glow {
-          0%, 100% {
-            box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25);
-            border-color: rgba(244,132,95,.55);
-          }
-          50% {
-            box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.60);
-            border-color: rgba(244,132,95,1);
-          }
+          0%, 100% { box-shadow: 0 0 0 0 rgba(244,132,95,.35), 0 0 24px rgba(244,132,95,.25); border-color: rgba(244,132,95,.55); }
+          50%      { box-shadow: 0 0 0 6px rgba(244,132,95,.10), 0 0 40px rgba(244,132,95,.60); border-color: rgba(244,132,95,1); }
         }
         @keyframes kiosk-insight-sparkle {
           0%, 100% { transform: scale(1)    rotate(0deg);   opacity: 1;   }
           50%      { transform: scale(1.25) rotate(15deg);  opacity: .85; }
         }
         .kiosk-insight-card {
-          animation:
-            kiosk-insight-in .5s ease-out .6s both,
-            kiosk-insight-glow 2.4s ease-in-out .6s infinite;
+          animation: kiosk-insight-in .5s ease-out .3s both, kiosk-insight-glow 2.4s ease-in-out .3s infinite;
         }
-        .kiosk-insight-sparkle {
-          animation: kiosk-insight-sparkle 1.8s ease-in-out infinite;
-        }
-        @keyframes kiosk-connector-flow {
-          from { stroke-dashoffset: 24; }
-          to   { stroke-dashoffset: 0; }
-        }
-        @keyframes kiosk-connector-in {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        .kiosk-connector-path {
-          animation:
-            kiosk-connector-in .5s ease-out both,
-            kiosk-connector-flow 1.2s linear infinite;
-        }
-        .kiosk-connector-dot {
-          animation: kiosk-connector-in .5s ease-out both;
-          filter: drop-shadow(0 0 6px rgba(244,132,95,0.9));
-        }
+        .kiosk-insight-sparkle { animation: kiosk-insight-sparkle 1.8s ease-in-out infinite; }
       `}</style>
     </div>
   );
 };
 
-const MetricPill = ({
+// --- Subcomponents ---
+
+const ConclusionCard = ({
   label,
   value,
   hint,
@@ -423,17 +457,111 @@ const MetricPill = ({
   highlight?: boolean;
 }) => (
   <div
-    className={`rounded-lg p-[1.2vmin] border bg-white/[0.03] border-white/10`}
+    className={`rounded-xl border p-[1.2vmin] flex flex-1 flex-col justify-center gap-[0.3vmin] ${
+      highlight ? 'border-[#F4845F]/60 bg-[#F4845F]/[0.08]' : 'border-white/10 bg-white/[0.03]'
+    }`}
   >
-    <span className="block text-[1.2vmin] tracking-[0.2em] uppercase font-semibold text-[#F4845F] mb-[0.3vmin]">
+    <span className="text-[0.9vmin] tracking-[0.18em] uppercase font-semibold text-white/55 leading-tight">
       {label}
     </span>
-    <span className="block text-[2vmin] font-bold text-[#F4845F] leading-none">{value}</span>
-    {hint && (
-      <span className="block mt-[0.6vmin] text-[1.1vmin] text-white/50 leading-none">{hint}</span>
-    )}
+    <span className={`text-[1.9vmin] font-bold leading-tight ${highlight ? 'text-[#F4845F]' : 'text-white'}`}>
+      {value}
+    </span>
+    {hint && <span className="text-[1.05vmin] text-white/55">{hint}</span>}
   </div>
 );
 
+const PriceConversionCurve = ({ sku, derived }: { sku: PriceConversionSku; derived: Derived }) => {
+  const W = 620;
+  const H = 160;
+  const PAD = { l: 34, r: 12, t: 18, b: 30 };
+  const iw = W - PAD.l - PAD.r;
+  const ih = H - PAD.t - PAD.b;
+
+  const pMin = Math.min(sku.currentPrice, derived.rangeMin) - 3;
+  const pMax = Math.max(derived.rangeMax, sku.competitorPrice) + 3;
+
+  const x = (p: number) => PAD.l + ((p - pMin) / (pMax - pMin)) * iw;
+
+  const peakY = PAD.t + ih * 0.15;
+  const baseY = PAD.t + ih * 0.9;
+  const curveAt = (p: number) => {
+    const spread = (pMax - pMin) / 2;
+    const dist = Math.abs(p - derived.optimalPrice) / spread;
+    return peakY + (baseY - peakY) * Math.min(1, dist * dist);
+  };
+
+  const samples = 60;
+  const pts: string[] = [];
+  for (let i = 0; i <= samples; i++) {
+    const p = pMin + ((pMax - pMin) * i) / samples;
+    pts.push(`${x(p).toFixed(1)},${curveAt(p).toFixed(1)}`);
+  }
+  const pathTop = `M ${pts.join(' L ')}`;
+  const pathFill = `${pathTop} L ${x(pMax)},${baseY} L ${x(pMin)},${baseY} Z`;
+
+  const Marker = ({
+    price, label, color, dashed,
+  }: { price: number; label: string; color: string; dashed?: boolean }) => (
+    <g>
+      <line
+        x1={x(price)} x2={x(price)}
+        y1={PAD.t} y2={H - PAD.b}
+        stroke={color} strokeWidth={1.5}
+        strokeDasharray={dashed ? '4 4' : undefined}
+      />
+      <text x={x(price)} y={PAD.t - 4} fontSize="10" fill={color} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+        <rect
+          x={x(derived.rangeMin)} y={PAD.t}
+          width={x(derived.rangeMax) - x(derived.rangeMin)} height={ih}
+          fill="rgba(244,132,95,0.12)"
+        />
+        <path d={pathFill} fill="rgba(244,132,95,0.18)" />
+        <path d={pathTop} fill="none" stroke="#F4845F" strokeWidth={2} />
+
+        <Marker price={sku.currentPrice} label="Atual" color="rgba(255,255,255,0.6)" dashed />
+        <Marker price={derived.rangeMin} label="Mín" color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={derived.rangeMax} label="Máx" color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={sku.competitorPrice} label="Concorr." color="rgba(120,180,255,0.75)" dashed />
+
+        <line
+          x1={x(derived.optimalPrice)} x2={x(derived.optimalPrice)}
+          y1={PAD.t} y2={H - PAD.b}
+          stroke="#F4845F" strokeWidth={2}
+        />
+        <circle cx={x(derived.optimalPrice)} cy={curveAt(derived.optimalPrice)} r={5} fill="#F4845F" stroke="#fff" strokeWidth={2} />
+        <text x={x(derived.optimalPrice)} y={PAD.t - 4} fontSize="10" fill="#F4845F" textAnchor="middle" fontWeight={700}>
+          Ideal
+        </text>
+
+        <text x={PAD.l} y={H - 10} fontSize="10" fill="rgba(255,255,255,0.5)">
+          {fmtBRL(pMin)}
+        </text>
+        <text x={W - PAD.r} y={H - 10} fontSize="10" fill="rgba(255,255,255,0.5)" textAnchor="end">
+          {fmtBRL(pMax)}
+        </text>
+        <text x={6} y={PAD.t + 8} fontSize="10" fill="rgba(255,255,255,0.5)">
+          conversão total
+        </text>
+      </svg>
+      <div className="flex items-center justify-between border-t border-white/10 px-[1.4vmin] py-[0.7vmin]">
+        <span className="text-[0.9vmin] tracking-[0.18em] uppercase font-semibold text-white/55">
+          Confiança
+        </span>
+        <span className="text-[1.4vmin] font-bold text-white font-mono">
+          {derived.confidencePct}%
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export default PriceToMarginDemo;
