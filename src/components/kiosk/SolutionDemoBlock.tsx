@@ -1,4 +1,4 @@
-import { Sparkles, UserRoundSearch, Megaphone, LineChart, Target } from 'lucide-react';
+import { Sparkles, UserRoundSearch, Megaphone, LineChart, Target, LayoutGrid } from 'lucide-react';
 import type { LeanSolution, SolutionsV2Content } from '@/data/solutionsV2/content';
 import type { KioskLang } from '@/data/kiosk/config';
 import PriceToMarginDemo from './demos/PriceToMarginDemo';
@@ -121,7 +121,21 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
   }
 
   if (solution.id === 'mix-assortment-order') {
-    return <MixAssortmentOrderDemo />;
+    return (
+      <SimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
+        icon={LayoutGrid}
+        onSimulationClosed={onSimulationClosed}
+      >
+        <MixAssortmentOrderDemo />
+      </SimulationLauncher>
+    );
   }
 
   return (
