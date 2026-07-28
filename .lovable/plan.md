@@ -1,31 +1,22 @@
-## Objetivo
-Corrigir o estouro horizontal em todas as tabelas exibidas nas respostas do i6 Signal (Kiosk e /solutions). Sintoma: com `table-fixed` + `text-xs uppercase tracking-wider` + `px-3`, cabeçalhos longos (ex.: "PROBABILIDADE", "META SUGERIDA", "SINAL PRINCIPAL") e células com valores compostos ultrapassam a largura da coluna e são cortados pelo `overflow-hidden` do wrapper.
+## Alvo
+Card do gráfico "Preço × margem" (`PriceMarginCurve`) e trio de KPIs à esquerda dentro do painel de resultado da demo "Preço Orientado à Margem" (`src/components/kiosk/demos/PriceMarginDemo.tsx`).
 
-## Escopo
-Todas as 18 tabelas em `src/components/signalDemo/visualizations.tsx`:
-- `SupplyTable`, `BehaviorClustersTable`, `TargetsPotentialTable`, `TargetsRiskTable`, `TargetsSignalsTable`, `MixBehaviorTable`, `MixGapsTable`, `MixGapsHeatmap`, `MarginOpportunitiesTable`, `MarginSignalsTable`, `TurnoverRiskTable`, `TurnoverSignalsCompareTable`, `TurnoverMarkdownTable`, `PersonalizationSignalsTable`, `RepurchaseBehaviorTable`, `RepurchaseCorrelationsTable`, `PriceConversionContextTable`, `PriceConversionSignalsTable`, `PriceConversionIncentiveTable`.
+## Ajustes
 
-## Ajustes (aplicados uniformemente a cada tabela)
-1. **Cabeçalhos (`<th>`)**
-   - `text-xs` → `text-[10px]`
-   - `tracking-wider` → `tracking-normal`
-   - `px-3` → `px-2`
-   - adicionar `whitespace-normal break-words leading-tight align-bottom`
-2. **Células (`<td>`)**
-   - `px-3` → `px-2`
-   - adicionar `whitespace-normal break-words leading-snug`
-   - manter `tabular-nums` nas colunas numéricas
-3. **Wrapper**
-   - trocar `overflow-hidden` por `overflow-x-auto` como salvaguarda residual (nada será cortado mesmo em edge cases extremos).
-4. **Sem mudanças** em: cores, negrito, alinhamento (left/right), dados, textos, notas de rodapé, ordem de colunas, gráficos e mapas de calor (apenas o `MixGapsHeatmap` também recebe o tratamento nos `<th>`).
+1. **Gráfico ocupa todo o espaço do quadro**
+   - Em `PriceMarginCurve` (linha ~511), remover `p-[1.2vmin]` do wrapper e manter só a borda + fundo, para que o SVG encoste nas bordas internas do card.
+   - Reduzir levemente `PAD` interno do SVG (paddings do desenho) para compensar a remoção do padding do wrapper e evitar que rótulos "Ótimo/Atual/Mín/Máx/Concorr." sejam cortados: `PAD = { l: 34, r: 12, t: 18, b: 30 }`.
 
-## Resultado esperado
-- Cabeçalhos quebram em até 2 linhas de forma controlada, sem estourar a largura da coluna.
-- Células com números/labels longos quebram no espaço em vez de vazar.
-- Layout retrato 27" do Kiosk e páginas /solutions continuam idênticos em cor e ritmo visual — apenas o tamanho de fonte dos títulos das tabelas fica ~15% menor e as bordas laterais das células ficam levemente mais estreitas.
+2. **Altura do gráfico −20%**
+   - Alterar `H` do viewBox de `200` para `160` (redução exata de 20%).
+   - Recalcular constantes derivadas (`ih` já é `H - PAD.t - PAD.b`, então é automático).
+   - Manter `preserveAspectRatio="none"` e `w-full h-auto` — a altura visível cai proporcionalmente.
 
-## Verificação
-Após o build, revisar visualmente as respostas de: Metas Comerciais Preditivas (r1 e r2), Mix/Sortimento (gaps), Preço Orientado a Margem (signals) e Forecast (supply) — as citadas historicamente com títulos mais longos.
+3. **KPIs à esquerda alinhados à altura do gráfico**
+   - No container da coluna esquerda (linha 230), trocar `flex flex-col gap-[1vmin]` por `flex flex-col gap-[1vmin] h-full`.
+   - Em `ConclusionCard`, adicionar `flex-1 justify-center` para os 3 cards distribuírem a altura total igual à do card do gráfico à direita.
+   - Sem alteração no grid `grid-cols-[1fr_1.4fr]` — o grid já força stretch vertical entre as duas colunas.
 
-## Versão
-Publicar release patch (v2.2.11) após validação.
+## Fora de escopo
+- Cores, textos, marcadores, tabela de alternativas, KPIs inferiores.
+- Layout do bloco "Explicabilidade" e da timeline.
