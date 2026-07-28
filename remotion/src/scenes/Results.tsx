@@ -85,9 +85,10 @@ export const Results: React.FC = () => (
         </Title>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 26, marginTop: 40 }}>
           {results.map((r, i) => (
-            <Card key={r.value + r.source} r={r} delay={34 + i * 22} />
+            <Card key={r.value + r.source} r={r} delay={[30, 39, 52, 68, 89, 116][i] ?? 30 + i * 22} />
           ))}
         </div>
+
         <Reveal delay={200} distance={16}>
           <div style={{ fontFamily: FONT_BODY, fontSize: 24, color: MUTED, marginTop: 26 }}>
             Resultados anonimizados de clientes infinity6
