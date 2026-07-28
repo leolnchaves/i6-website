@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2, CheckCircle2, Send } from 'lucide-react';
-import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+import { SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { trackKioskEvent } from '@/lib/kioskTracker';
+import { enqueueLead, postLead } from '@/lib/leadQueue';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 import type { KioskLang, QuizContent, RouteId } from '@/data/kiosk/config';
+
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
