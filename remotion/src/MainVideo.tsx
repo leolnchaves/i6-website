@@ -40,7 +40,7 @@ export const MainVideo: React.FC = () => (
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition presentation={fade()} timing={fadeT()} />
 
-      <TransitionSeries.Sequence durationInFrames={420}>
+      <TransitionSeries.Sequence durationInFrames={700}>
         <Signal />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition presentation={slide({ direction: 'from-right' })} timing={slideT()} />
@@ -62,5 +62,5 @@ export const MainVideo: React.FC = () => (
   </AbsoluteFill>
 );
 
-// 210+330+390+420+420+420+450+270 = 2910 ; menos 7 transições de 24 = 2742 frames (~91,4s)
-export const TOTAL_FRAMES = 2910 - 7 * 24;
+// 210+330+390+420+700+420+450+270 = 3190 ; menos 7 transições de 24 = 3022 frames (~100,7s)
+export const TOTAL_FRAMES = 3190 - 7 * 24;
