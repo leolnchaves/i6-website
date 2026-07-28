@@ -297,7 +297,7 @@ const PriceMarginDemo = () => {
                     : 'bg-white/[0.06] text-white/40 border border-white/10 cursor-not-allowed'
                 }`}
               >
-                {canCalculate ? 'Calcular faixa ótima de preço' : 'Selecione um SKU para simular'}
+                {canCalculate ? 'Calcular faixa ótima de preço' : 'Ajuste os filtros para simular'}
               </button>
             )}
 
