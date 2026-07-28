@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2, CheckCircle2, Send } from 'lucide-react';
-import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
+import { SHARED_FORM_TOKEN, HONEYPOT_FIELD } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { trackKioskEvent } from '@/lib/kioskTracker';
+import { enqueueLead, postLead } from '@/lib/leadQueue';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 import type { KioskLang, QuizContent, RouteId } from '@/data/kiosk/config';
+
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -76,36 +78,40 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
           formatLeadContextForMessage(ctx),
         ].join('\n');
 
-        const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('email', data.email);
-        formData.append('company', ebookTitle);
-        formData.append('message', message);
-        formData.append('subscription', 'i6-website');
-        formData.append('token', SHARED_FORM_TOKEN);
-        Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
+        const fields: Record<string, string> = {
+          name: data.name,
+          email: data.email,
+          company: ebookTitle,
+          message,
+          subscription: 'i6-website',
+          token: SHARED_FORM_TOKEN,
+          ...getLeadContextFields(),
+        };
 
         if (EBOOK_CONSUMER_INTELLIGENCE_IDS.includes(solutionId)) {
-          formData.set('subscription', EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION);
-          formData.set('reason', 'kiosk-demo');
-          formData.set('insight_id', EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID);
-          formData.set('utm_source', 'kiosk');
-          formData.set('utm_medium', 'totem');
-          formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
-          formData.set('user_agent', 'kiosk-app/1.0');
+          fields.subscription = EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION;
+          fields.reason = 'kiosk-demo';
+          fields.insight_id = EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID;
+          fields.utm_source = 'kiosk';
+          fields.utm_medium = 'totem';
+          fields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
+          fields.user_agent = 'kiosk-app/1.0';
         }
 
         if (EBOOK_PRICING_IDS.includes(solutionId)) {
-          formData.set('subscription', EBOOK_PRICING_SUBSCRIPTION);
-          formData.set('reason', 'kiosk-demo');
-          formData.set('insight_id', EBOOK_PRICING_INSIGHT_ID);
-          formData.set('utm_source', 'kiosk');
-          formData.set('utm_medium', 'totem');
-          formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
-          formData.set('user_agent', 'kiosk-app/1.0');
+          fields.subscription = EBOOK_PRICING_SUBSCRIPTION;
+          fields.reason = 'kiosk-demo';
+          fields.insight_id = EBOOK_PRICING_INSIGHT_ID;
+          fields.utm_source = 'kiosk';
+          fields.utm_medium = 'totem';
+          fields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
+          fields.user_agent = 'kiosk-app/1.0';
         }
 
-        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
+        // 1) Caminho principal: envio online, como sempre.
+        const sent = await postLead(fields);
+        // 2) Fallback: rede indisponível/lenta → grava local e reenvia depois.
+        if (!sent) enqueueLead(fields);
 
         trackEvent(TRACKER_EVENTS.KIOSK_EBOOK_REQUESTED, {
           solution_id: solutionId,
@@ -115,13 +121,15 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
 
         setSubmitted(true);
       } catch (e) {
-        setError(true);
+        // Nunca mostrar erro ao visitante do totem.
+        setSubmitted(true);
       } finally {
         setSubmitting(false);
       }
     },
     [ebookTitle, lang, route, solutionId, solutionTitle],
   );
+
 
   return (
     <div className="w-full rounded-3xl border-2 border-[#F4845F] bg-gradient-to-br from-[#F4845F]/20 to-[#F4845F]/5 p-[4vmin] shadow-[0_0_40px_rgba(244,132,95,0.25)]">

@@ -18,6 +18,13 @@ import {
   downloadKioskEventsCSV,
   type KioskEvent,
 } from '@/lib/kioskTracker';
+import {
+  getPendingLeadsCount,
+  flushLeadQueue,
+  downloadPendingLeadsCSV,
+  clearPendingLeads,
+} from '@/lib/leadQueue';
+
 import { kioskContent, type RouteId } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
@@ -90,11 +97,35 @@ const KioskMetrics = () => {
   const [period, setPeriod] = useState<Period>('all');
   const [bucket, setBucket] = useState<Bucket>('day');
   const [refreshTick, setRefreshTick] = useState(0);
+  const [pendingLeads, setPendingLeads] = useState(0);
+  const [resending, setResending] = useState(false);
+  const [resendMsg, setResendMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
     setRows(getKioskEvents().slice().reverse()); // most recent first
+    setPendingLeads(getPendingLeadsCount());
   }, [token, refreshTick]);
+
+  const handleResendLeads = async () => {
+    setResending(true);
+    setResendMsg(null);
+    try {
+      const { sent, remaining } = await flushLeadQueue();
+      setResendMsg(`${sent} enviado(s) · ${remaining} ainda pendente(s)`);
+    } finally {
+      setResending(false);
+      setRefreshTick((t) => t + 1);
+    }
+  };
+
+  const handleClearLeads = () => {
+    if (window.confirm('Apagar os leads pendentes deste totem? Exporte o CSV antes.')) {
+      clearPendingLeads();
+      setRefreshTick((t) => t + 1);
+    }
+  };
+
 
   // Refresh when other tabs on the same totem update storage
   useEffect(() => {
@@ -245,6 +276,44 @@ const KioskMetrics = () => {
           navegador desta máquina e não agregam entre totens. Para consolidar métricas de vários pontos, exporte o
           CSV de cada totem.
         </div>
+
+        <section className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold text-white/90">Leads de eBook pendentes de envio</h2>
+              <p className="text-xs text-white/60 mt-1">
+                Leads capturados quando a internet falhou. Ficam neste navegador até serem reenviados ao i6 HUB.
+              </p>
+              {resendMsg && <p className="text-xs text-[#F4845F] mt-2">{resendMsg}</p>}
+            </div>
+            <div className="flex items-center gap-4 flex-wrap">
+              <p className="text-3xl font-bold text-[#F4845F]">{pendingLeads}</p>
+              <button
+                onClick={handleResendLeads}
+                disabled={resending || pendingLeads === 0}
+                className="rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition disabled:opacity-40"
+              >
+                {resending ? 'Reenviando…' : 'Reenviar pendentes'}
+              </button>
+              <button
+                onClick={() => downloadPendingLeadsCSV()}
+                disabled={pendingLeads === 0}
+                className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition disabled:opacity-40"
+              >
+                Exportar leads (CSV)
+              </button>
+              <button
+                onClick={handleClearLeads}
+                disabled={pendingLeads === 0}
+                className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition disabled:opacity-40"
+              >
+                Limpar fila
+              </button>
+            </div>
+          </div>
+        </section>
+
+
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           <StatCard label="Sessões iniciadas" value={totalStarts} />

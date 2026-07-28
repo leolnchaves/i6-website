@@ -1,48 +1,50 @@
 ## Objetivo
 
-Adicionar um segundo grupo de soluções ao `EbookCTA` (Kiosk) que envia campos extras no POST, análogo ao grupo Consumer Intelligence já existente.
+Deixar o `/kiosk` resiliente a internet ruim **sem service worker**: depender da rede só na primeira carga, e depois rodar tudo a partir do que já está na memória / cache do navegador.
 
-Grupo Pricing (novo):
-- `price-to-margin`
-- `price-to-conversion`
-- `price-to-turnover`
+## O que já está a favor (verificado)
 
-## Mudanças
+- `Kiosk` é importado **eagerly** em `src/App.tsx` — não há chunk lazy para baixar no meio da demo.
+- Todos os dados do quiz, demos, i6 Signal e textos estão em arquivos TS **dentro do bundle** — nenhum `fetch` de Markdown ou API durante a experiência.
+- Métricas já vão para `localStorage`.
+- Os assets buildados têm hash no nome, então o cache HTTP do navegador os serve nas recargas seguintes.
+- Assets de imagem do kiosk são poucos: `avatar-ricardo.jpg` e o logo horizontal.
 
-Arquivo único: `src/components/kiosk/EbookCTA.tsx`
+Ou seja: uma vez carregada a página, a experiência inteira já roda sem rede. Os pontos frágeis são (a) recarregar/reabrir a aba, (b) imagens que só baixam no meio do fluxo, (c) o POST do CTA de eBook.
 
-1. Adicionar constantes ao lado das existentes:
-   ```
-   const EBOOK_PRICING_IDS = [
-     'price-to-margin',
-     'price-to-conversion',
-     'price-to-turnover',
-   ];
-   const EBOOK_PRICING_SUBSCRIPTION = 'insight:ebook-pricing-orientado-a-resultados';
-   const EBOOK_PRICING_INSIGHT_ID = 'a4012048-aa04-465b-b89a-7c7104d6fc18';
-   ```
+## O que será feito
 
-2. No `onSubmit`, após o bloco `EBOOK_CONSUMER_INTELLIGENCE_IDS`, adicionar bloco simétrico:
-   ```
-   if (EBOOK_PRICING_IDS.includes(solutionId)) {
-     formData.set('subscription', EBOOK_PRICING_SUBSCRIPTION);
-     formData.set('reason', 'kiosk-demo');
-     formData.set('insight_id', EBOOK_PRICING_INSIGHT_ID);
-     formData.set('utm_source', 'kiosk');
-     formData.set('utm_medium', 'totem');
-     formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
-     formData.set('user_agent', 'kiosk-app/1.0');
-   }
-   ```
+**1. Warm-up de assets na tela de atração**
+- Pré-carregar, ainda na `AttractScreen`, tudo que aparece depois: `avatar-ricardo.jpg`, logo e demais imagens usadas nas demos.
+- Assim, se a rede cair durante o uso, nada aparece quebrado no meio do fluxo.
 
-Os UTMs de evento são fixos e iguais aos do grupo Consumer Intelligence — apenas `subscription` e `insight_id` diferem.
+**2. CTA de eBook: envio online primeiro, fila só como fallback**
+- O comportamento padrão continua **exatamente como é hoje**: monta o `FormData` (com `subscription`, `insight_id`, UTMs, contexto) e faz o `POST` para o Apps Script.
+- Se o POST for bem-sucedido, nada muda — nada é gravado localmente.
+- Somente se o envio falhar (erro de rede, timeout, ou `navigator.onLine === false`), o lead é gravado em `localStorage` via um novo `src/lib/leadQueue.ts`.
+- Timeout curto no fetch (via `AbortSignal.timeout`) para que uma rede lenta não deixe o visitante esperando — passa para a fila e segue.
+- **O usuário nunca vê erro:** a tela de sucesso aparece nos dois casos.
+- Reenvio automático dos pendentes no load do kiosk, no evento `online` e periodicamente. Cada item tem `id` e só sai da fila após um POST sem exceção.
 
-## Fora de escopo
+**3. Recuperação de sessão em caso de recarga**
+- Persistir o estado do kiosk (idioma, rota do quiz, solução selecionada) em `sessionStorage`, para que um refresh acidental não jogue o visitante fora do fluxo.
 
-- Nenhuma mudança em outros formulários.
-- Nenhuma alteração no Apps Script.
-- Demais soluções (forecast, metas comerciais, mix/sortimento) continuam com o payload padrão.
+**4. Visibilidade em `/kiosk-metrics/<token>`**
+- Contagem de leads pendentes, botão "Reenviar pendentes" e "Exportar leads pendentes (CSV)" como rede de segurança se o evento acabar sem internet.
 
-## Confirmação
+**Fora do escopo:** a fonte local (Rubik continua vindo do Google Fonts como hoje).
 
-Os 3 solutionIds acima (`price-to-margin`, `price-to-conversion`, `price-to-turnover`) são os corretos para "Preço Orientado à Margem / Conversão / Giro"? Se sim, sigo com a implementação após aprovar.
+## Impacto e risco
+
+- **Lógica do kiosk (quiz, demos, Signal):** intocada.
+- **`EbookCTA.tsx`:** o caminho feliz (com internet) permanece idêntico ao atual; a fila só entra no caminho de erro, que hoje mostra mensagem de falha.
+- **Sem service worker**, então nenhum risco de HTML/chunk velho preso em cache após deploy.
+- Sem a fonte local, se a rede cair a tipografia pode cair no fallback do sistema em uma recarga — cosmético, sem quebra funcional.
+
+## Nota técnica
+
+O POST é `mode: 'no-cors'`, então a resposta é opaca: só é possível detectar falha de rede (exceção do `fetch`), não erro de aplicação no Apps Script. Isso já é verdade hoje; a fila apenas aproveita esse mesmo sinal.
+
+## Limite conhecido
+
+Sem service worker, **abrir a aba do zero com a internet totalmente fora não funciona** — o navegador precisa da rede (ou do cache HTTP ainda válido) para o HTML inicial. Recomendação operacional: carregar `/kiosk` com internet no início do dia e **não fechar a aba**.
