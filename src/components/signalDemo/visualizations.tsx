@@ -1,12 +1,12 @@
 import { LineChart, Line, BarChart, Bar, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis, ReferenceLine, ReferenceArea, ReferenceDot, Cell } from 'recharts';
 
 export const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200">
           {data.headers.map((h, i) => (
-            <th key={i} className="text-left py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider">{h}</th>
+            <th key={i} className="text-left py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">{h}</th>
           ))}
         </tr>
       </thead>
@@ -14,7 +14,7 @@ export const SupplyTable = ({ data }: { data: { headers: string[]; rows: string[
         {data.rows.map((row, ri) => (
           <tr key={ri} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
             {row.map((cell, ci) => (
-              <td key={ci} className={`py-2.5 px-3 ${ci === 0 ? 'text-gray-600 font-mono text-xs' : ci === 2 ? 'text-gray-800 font-bold' : 'text-gray-800'}`}>{cell}</td>
+              <td key={ci} className={`py-2.5 px-2 ${ci === 0 ? 'text-gray-600 font-mono text-xs' : ci === 2 ? 'text-gray-800 font-bold' : 'text-gray-800'}`}>{cell}</td>
             ))}
           </tr>
         ))}
@@ -74,23 +74,23 @@ export const ComercialChart = ({ data, lang }: { data: { territory: string; gap:
 );
 
 export const MixComparison = ({ comparison }: { comparison: { category: string; current: string; recommended: string; direction: 'up' | 'down' | 'stable' }[] }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200">
-          <th className="text-left py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Categoria</th>
-          <th className="text-center py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Atual</th>
-          <th className="text-center py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Recomendado</th>
-          <th className="text-center py-2 px-3 text-gray-900 font-medium text-xs uppercase tracking-wider">Tendência</th>
+          <th className="text-left py-2 px-2 text-gray-900 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">Categoria</th>
+          <th className="text-center py-2 px-2 text-gray-900 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">Atual</th>
+          <th className="text-center py-2 px-2 text-gray-900 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">Recomendado</th>
+          <th className="text-center py-2 px-2 text-gray-900 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">Tendência</th>
         </tr>
       </thead>
       <tbody>
         {comparison.map((c, i) => (
           <tr key={i} className="border-b border-gray-100">
-            <td className="py-2.5 px-3 text-gray-900">{c.category}</td>
-            <td className="py-2.5 px-3 text-center text-gray-900">{c.current}</td>
-            <td className="py-2.5 px-3 text-center text-gray-900 font-medium">{c.recommended}</td>
-            <td className="py-2.5 px-3 text-center text-gray-900 font-bold">
+            <td className="py-2.5 px-2 text-gray-900">{c.category}</td>
+            <td className="py-2.5 px-2 text-center text-gray-900">{c.current}</td>
+            <td className="py-2.5 px-2 text-center text-gray-900 font-medium">{c.recommended}</td>
+            <td className="py-2.5 px-2 text-center text-gray-900 font-bold">
               {c.direction === 'up' && '+'}
               {c.direction === 'down' && '−'}
               {c.direction === 'stable' && '='}
@@ -211,7 +211,7 @@ export const BehaviorClustersTable = ({
             {table.headers.map((h, i) => (
               <th
                 key={i}
-                className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}
+                className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-center'}`}
               >
                 {h}
               </th>
@@ -224,7 +224,7 @@ export const BehaviorClustersTable = ({
               {row.map((cell, ci) => (
                 <td
                   key={ci}
-                  className={`py-2.5 px-3 ${ci === 0 ? 'text-gray-900 font-semibold text-left' : 'text-gray-800 text-center'} ${ci === row.length - 1 ? 'font-bold text-orange-600' : ''}`}
+                  className={`py-2.5 px-2 ${ci === 0 ? 'text-gray-900 font-semibold text-left' : 'text-gray-800 text-center'} ${ci === row.length - 1 ? 'font-bold text-orange-600' : ''}`}
                 >
                   {cell}
                 </td>
@@ -236,19 +236,19 @@ export const BehaviorClustersTable = ({
     </div>
 
     <div className="mt-5 overflow-hidden w-full min-w-0">
-      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
         {lang === 'pt' ? 'Comportamento e abordagem por cluster' : 'Behavior and approach per cluster'}
       </p>
       <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+            <th className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
               {lang === 'pt' ? 'Cluster' : 'Cluster'}
             </th>
-            <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+            <th className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
               {lang === 'pt' ? 'Comportamento' : 'Behavior'}
             </th>
-            <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+            <th className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
               {lang === 'pt' ? 'Como abordar' : 'How to approach'}
             </th>
           </tr>
@@ -256,9 +256,9 @@ export const BehaviorClustersTable = ({
         <tbody>
           {detail.map((c, i) => (
             <tr key={i} className="border-b border-gray-100 align-top">
-              <td className="py-2.5 px-3 text-orange-600 font-semibold break-words">{c.name}</td>
-              <td className="py-2.5 px-3 text-gray-700 leading-relaxed">{c.description}</td>
-              <td className="py-2.5 px-3 text-gray-700 leading-relaxed">{c.approach}</td>
+              <td className="py-2.5 px-2 text-orange-600 font-semibold break-words">{c.name}</td>
+              <td className="py-2.5 px-2 text-gray-700 leading-relaxed">{c.description}</td>
+              <td className="py-2.5 px-2 text-gray-700 leading-relaxed">{c.approach}</td>
             </tr>
           ))}
         </tbody>
@@ -295,14 +295,14 @@ export const TargetsPotentialTable = ({
   // Group by region (first column) with merged visual
   const rows = data.rows;
   return (
-    <div className="overflow-hidden my-4 w-full min-w-0">
+    <div className="overflow-x-auto my-4 w-full min-w-0">
       <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
               <th
                 key={i}
-                className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i >= 4 ? 'text-right' : 'text-left'}`}
+                className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i >= 4 ? 'text-right' : 'text-left'}`}
               >
                 {h}
               </th>
@@ -321,7 +321,7 @@ export const TargetsPotentialTable = ({
                   return (
                     <td
                       key={ci}
-                      className={`py-2.5 px-3 ${ci >= 4 ? 'text-right tabular-nums' : 'text-left'} ${
+                      className={`py-2.5 px-2 ${ci >= 4 ? 'text-right tabular-nums' : 'text-left'} ${
                         isRegion
                           ? sameAsPrev
                             ? 'text-transparent'
@@ -425,12 +425,12 @@ export const TargetsRiskScatter = ({ data, lang }: { data: ScatterPoint[]; lang:
 };
 
 export const TargetsRiskTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
-            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i >= 3 && i <= 5 ? 'text-right' : 'text-left'}`}>
+            <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i >= 3 && i <= 5 ? 'text-right' : 'text-left'}`}>
               {h}
             </th>
           ))}
@@ -444,7 +444,7 @@ export const TargetsRiskTable = ({ data }: { data: { headers: string[]; rows: st
               return (
                 <td
                   key={ci}
-                  className={`py-2.5 px-3 ${ci >= 3 && ci <= 5 ? 'text-right tabular-nums' : 'text-left'} ${
+                  className={`py-2.5 px-2 ${ci >= 3 && ci <= 5 ? 'text-right tabular-nums' : 'text-left'} ${
                     isDiag ? diagnosisTone(cell) : 'text-gray-800'
                   }`}
                 >
@@ -460,15 +460,15 @@ export const TargetsRiskTable = ({ data }: { data: { headers: string[]; rows: st
 );
 
 export const TargetsSignalsTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Sinais que sustentam a previsão' : 'Signals supporting the prediction'}
     </p>
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
-            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+            <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-center'}`}>
               {h}
             </th>
           ))}
@@ -483,7 +483,7 @@ export const TargetsSignalsTable = ({ data, lang }: { data: { headers: string[];
               return (
                 <td
                   key={ci}
-                  className={`py-2.5 px-3 ${ci === 0 ? 'text-left text-gray-800 font-medium' : 'text-center font-semibold'} ${
+                  className={`py-2.5 px-2 ${ci === 0 ? 'text-left text-gray-800 font-medium' : 'text-center font-semibold'} ${
                     ci === 1 ? (positive ? 'text-emerald-700' : 'text-gray-800') : ''
                   } ${ci === 2 ? (negative ? 'text-red-600' : 'text-gray-800') : ''}`}
                 >
@@ -518,7 +518,7 @@ export const MixBehaviorScatter = ({ data, lang }: { data: MixScatterPoint[]; la
 
   return (
     <div className="my-4">
-      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
         {lang === 'pt' ? 'Aderência ao mix ideal por PDV' : 'Ideal-mix adherence per store'}
       </p>
       <div className="h-[380px] w-full">
@@ -575,12 +575,12 @@ const potentialTone = (raw: string): string => {
 };
 
 export const MixBehaviorTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
-            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 2 || i === 4 ? 'text-right' : 'text-left'}`}>
+            <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 2 || i === 4 ? 'text-right' : 'text-left'}`}>
               {h}
             </th>
           ))}
@@ -590,12 +590,12 @@ export const MixBehaviorTable = ({ data }: { data: { headers: string[]; rows: st
         {data.rows.map((row, ri) => (
           <tr key={ri} className="border-b border-gray-100">
             {row.map((cell, ci) => {
-              if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+              if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
               if (ci === 2) return (
-                <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${adherenceTone(cell)}`}>{cell}</td>
+                <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${adherenceTone(cell)}`}>{cell}</td>
               );
-              if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${potentialTone(cell)}`}>{cell}</td>;
-              return <td key={ci} className="py-2.5 px-3 text-left text-gray-800">{cell}</td>;
+              if (ci === 4) return <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${potentialTone(cell)}`}>{cell}</td>;
+              return <td key={ci} className="py-2.5 px-2 text-left text-gray-800">{cell}</td>;
             })}
           </tr>
         ))}
@@ -606,7 +606,7 @@ export const MixBehaviorTable = ({ data }: { data: { headers: string[]; rows: st
 
 export const MixBehaviorReading = ({ paragraphs, lang }: { paragraphs: string[]; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Leitura comportamental' : 'Behavioral reading'}
     </p>
     <div className="space-y-2">
@@ -622,18 +622,18 @@ type MixHeatmap = { regions: string[]; skus: string[]; matrix: number[][] };
 export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string }) => {
   const max = Math.max(...data.matrix.flat(), 1);
   return (
-    <div className="my-4 overflow-hidden w-full min-w-0">
-      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <div className="my-4 overflow-x-auto w-full min-w-0">
+      <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
         {lang === 'pt' ? 'Oportunidade por região × SKU' : 'Opportunity by region × SKU'}
       </p>
       <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr>
-            <th className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+            <th className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
               {lang === 'pt' ? 'Região' : 'Region'}
             </th>
             {data.skus.map((s, i) => (
-              <th key={i} className="py-2 px-2 text-center text-gray-700 font-medium text-xs uppercase tracking-wider">
+              <th key={i} className="py-2 px-2 text-center text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
                 {s}
               </th>
             ))}
@@ -642,7 +642,7 @@ export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string 
         <tbody>
           {data.regions.map((region, ri) => (
             <tr key={ri} className="border-b border-gray-100">
-              <td className="py-2 px-3 text-left font-medium text-gray-900 break-words">{region}</td>
+              <td className="py-2 px-2 text-left font-medium text-gray-900 break-words">{region}</td>
               {data.matrix[ri].map((value, ci) => {
                 const intensity = value / max;
                 const alpha = 0.08 + intensity * 0.85;
@@ -684,12 +684,12 @@ export const MixGapsHeatmap = ({ data, lang }: { data: MixHeatmap; lang: string 
 };
 
 export const MixGapsTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
-            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i >= 2 ? 'text-right' : 'text-left'}`}>
+            <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i >= 2 ? 'text-right' : 'text-left'}`}>
               {h}
             </th>
           ))}
@@ -704,7 +704,7 @@ export const MixGapsTable = ({ data }: { data: { headers: string[]; rows: string
               return (
                 <td
                   key={ci}
-                  className={`py-2.5 px-3 ${ci >= 2 ? 'text-right tabular-nums' : 'text-left'} ${
+                  className={`py-2.5 px-2 ${ci >= 2 ? 'text-right tabular-nums' : 'text-left'} ${
                     ci === 0 ? 'text-gray-900 font-semibold' :
                     ci === 1 ? 'text-gray-800 font-medium' :
                     isGap ? 'text-orange-600 font-bold' :
@@ -725,7 +725,7 @@ export const MixGapsTable = ({ data }: { data: { headers: string[]; rows: string
 
 export const MixGapsDetailList = ({ items, lang }: { items: string[]; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Detalhamento comportamental' : 'Behavioral detail'}
     </p>
     <ul className="space-y-1.5">
@@ -835,12 +835,12 @@ const incrementalMarginTone = (raw: string): string => {
 };
 
 export const MarginOpportunitiesTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
-            <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-right'}`}>
+            <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-right'}`}>
               {h}
             </th>
           ))}
@@ -850,11 +850,11 @@ export const MarginOpportunitiesTable = ({ data }: { data: { headers: string[]; 
         {data.rows.map((row, ri) => (
           <tr key={ri} className="border-b border-gray-100">
             {row.map((cell, ci) => {
-              if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
-              if (ci === 3) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${volumeReactionTone(cell)}`}>{cell}</td>;
-              if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${incrementalMarginTone(cell)}`}>{cell}</td>;
-              if (ci === 5) return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-orange-600 font-semibold">{cell}</td>;
-              return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-gray-800">{cell}</td>;
+              if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
+              if (ci === 3) return <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${volumeReactionTone(cell)}`}>{cell}</td>;
+              if (ci === 4) return <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${incrementalMarginTone(cell)}`}>{cell}</td>;
+              if (ci === 5) return <td key={ci} className="py-2.5 px-2 text-right tabular-nums text-orange-600 font-semibold">{cell}</td>;
+              return <td key={ci} className="py-2.5 px-2 text-right tabular-nums text-gray-800">{cell}</td>;
             })}
           </tr>
         ))}
@@ -865,7 +865,7 @@ export const MarginOpportunitiesTable = ({ data }: { data: { headers: string[]; 
 
 export const MarginBehaviorReading = ({ paragraphs, lang }: { paragraphs: string[]; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Leitura comportamental' : 'Behavioral reading'}
     </p>
     <div className="space-y-2">
@@ -897,7 +897,7 @@ const MARGIN_SIGNAL_KEYS: { key: keyof Omit<MarginSignalRow, 'sku'>; pt: string;
 
 export const MarginSignalsChart = ({ data, lang }: { data: MarginSignalRow[]; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Contribuição dos sinais por SKU' : 'Signal contribution by SKU'}
     </p>
     <div className="h-[300px] w-full">
@@ -953,12 +953,12 @@ const directionTone = (raw: string): string => {
 };
 
 export const MarginSignalsTable = ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-  <div className="overflow-hidden my-4 w-full min-w-0">
+  <div className="overflow-x-auto my-4 w-full min-w-0">
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200 bg-gray-50/60">
           {data.headers.map((h, i) => (
-            <th key={i} className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+            <th key={i} className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
               {h}
             </th>
           ))}
@@ -968,12 +968,12 @@ export const MarginSignalsTable = ({ data }: { data: { headers: string[]; rows: 
         {data.rows.map((row, ri) => (
           <tr key={ri} className="border-b border-gray-100">
             {row.map((cell, ci) => {
-              if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+              if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
               if (ci === 1) return (
-                <td key={ci} className={`py-2.5 px-3 text-left ${marginRoomTone(cell)}`}>{cell}</td>
+                <td key={ci} className={`py-2.5 px-2 text-left ${marginRoomTone(cell)}`}>{cell}</td>
               );
-              if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-left ${directionTone(cell)}`}>{cell}</td>;
-              return <td key={ci} className="py-2.5 px-3 text-left text-gray-800">{cell}</td>;
+              if (ci === 4) return <td key={ci} className={`py-2.5 px-2 text-left ${directionTone(cell)}`}>{cell}</td>;
+              return <td key={ci} className="py-2.5 px-2 text-left text-gray-800">{cell}</td>;
             })}
           </tr>
         ))}
@@ -1006,7 +1006,7 @@ const sellThroughTone = (raw: string): string => {
 
 export const TurnoverRiskTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Risco de envelhecimento por região' : 'Aging risk by region'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1014,7 +1014,7 @@ export const TurnoverRiskTable = ({ data, lang }: { data: { headers: string[]; r
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-right'}`}>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-right'}`}>
                 {h}
               </th>
             ))}
@@ -1024,12 +1024,12 @@ export const TurnoverRiskTable = ({ data, lang }: { data: { headers: string[]; r
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
-                if (ci === 3) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${sellThroughTone(cell)}`}>{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 3) return <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${sellThroughTone(cell)}`}>{cell}</td>;
                 if (ci === row.length - 1) return (
-                  <td key={ci} className={`py-2.5 px-3 text-right ${riskTone(cell)}`}>{cell}</td>
+                  <td key={ci} className={`py-2.5 px-2 text-right ${riskTone(cell)}`}>{cell}</td>
                 );
-                return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-gray-800">{cell}</td>;
+                return <td key={ci} className="py-2.5 px-2 text-right tabular-nums text-gray-800">{cell}</td>;
               })}
             </tr>
           ))}
@@ -1052,7 +1052,7 @@ const compareValueTone = (raw: string): string => {
 
 export const TurnoverSignalsCompareTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Sinais comportamentais comparados' : 'Behavioral signals compared'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1060,7 +1060,7 @@ export const TurnoverSignalsCompareTable = ({ data, lang }: { data: { headers: s
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-center'}`}>
                 {h}
               </th>
             ))}
@@ -1070,8 +1070,8 @@ export const TurnoverSignalsCompareTable = ({ data, lang }: { data: { headers: s
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
-                return <td key={ci} className={`py-2.5 px-3 text-center ${compareValueTone(cell)}`}>{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-medium text-gray-900">{cell}</td>;
+                return <td key={ci} className={`py-2.5 px-2 text-center ${compareValueTone(cell)}`}>{cell}</td>;
               })}
             </tr>
           ))}
@@ -1097,7 +1097,7 @@ const markdownCellTone = (raw: string): string => {
 
 export const TurnoverMarkdownRuler = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Régua temporal de markdown' : 'Markdown timing ladder'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1105,7 +1105,7 @@ export const TurnoverMarkdownRuler = ({ data, lang }: { data: { headers: string[
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-center'}`}>
                 {h}
               </th>
             ))}
@@ -1115,9 +1115,9 @@ export const TurnoverMarkdownRuler = ({ data, lang }: { data: { headers: string[
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
                 return (
-                  <td key={ci} className={`py-2.5 px-3 text-center tabular-nums ${markdownCellTone(cell)}`}>
+                  <td key={ci} className={`py-2.5 px-2 text-center tabular-nums ${markdownCellTone(cell)}`}>
                     {cell}
                   </td>
                 );
@@ -1137,7 +1137,7 @@ export const TurnoverMarkdownRuler = ({ data, lang }: { data: { headers: string[
 
 export const TurnoverMarkdownTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Detalhamento por SKU' : 'Detail by SKU'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1145,7 +1145,7 @@ export const TurnoverMarkdownTable = ({ data, lang }: { data: { headers: string[
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i <= 1 ? 'text-left' : 'text-right'}`}>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i <= 1 ? 'text-left' : 'text-right'}`}>
                 {h}
               </th>
             ))}
@@ -1155,22 +1155,22 @@ export const TurnoverMarkdownTable = ({ data, lang }: { data: { headers: string[
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
-                if (ci === 1) return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 1) return <td key={ci} className="py-2.5 px-2 text-left text-gray-700">{cell}</td>;
                 if (ci === 3) {
                   const hold = /manter|hold/i.test(cell);
                   return (
-                    <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${hold ? 'text-gray-500' : 'text-orange-600 font-semibold'}`}>
+                    <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${hold ? 'text-gray-500' : 'text-orange-600 font-semibold'}`}>
                       {cell}
                     </td>
                   );
                 }
-                if (ci === 4) return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${sellThroughTone(cell)}`}>{cell}</td>;
+                if (ci === 4) return <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${sellThroughTone(cell)}`}>{cell}</td>;
                 if (ci === 5) {
                   const nodisc = /sem desconto|no discount/i.test(cell);
-                  return <td key={ci} className={`py-2.5 px-3 text-right tabular-nums ${nodisc ? 'text-gray-500' : 'text-emerald-700 font-semibold'}`}>{cell}</td>;
+                  return <td key={ci} className={`py-2.5 px-2 text-right tabular-nums ${nodisc ? 'text-gray-500' : 'text-emerald-700 font-semibold'}`}>{cell}</td>;
                 }
-                return <td key={ci} className="py-2.5 px-3 text-right tabular-nums text-gray-800">{cell}</td>;
+                return <td key={ci} className="py-2.5 px-2 text-right tabular-nums text-gray-800">{cell}</td>;
               })}
             </tr>
           ))}
@@ -1212,7 +1212,7 @@ const effectTone = (raw: string): string => {
 
 export const PersonalizationBehaviorMatrix = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Matriz de comportamento por recomendação' : 'Behavior-to-recommendation matrix'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1220,7 +1220,7 @@ export const PersonalizationBehaviorMatrix = ({ data, lang }: { data: { headers:
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i >= 3 ? 'text-center' : 'text-left'}`}>{h}</th>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i >= 3 ? 'text-center' : 'text-left'}`}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -1228,15 +1228,15 @@ export const PersonalizationBehaviorMatrix = ({ data, lang }: { data: { headers:
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
-                if (ci === 1 || ci === 2) return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 1 || ci === 2) return <td key={ci} className="py-2.5 px-2 text-left text-gray-700">{cell}</td>;
                 if (ci === 3) return (
-                  <td key={ci} className={`py-2.5 px-3 text-center tabular-nums ${personalizationAdherenceTone(cell)}`}>{cell}</td>
+                  <td key={ci} className={`py-2.5 px-2 text-center tabular-nums ${personalizationAdherenceTone(cell)}`}>{cell}</td>
                 );
                 if (ci === 4) return (
-                  <td key={ci} className={`py-2.5 px-3 text-center ${OBJECTIVE_TONE[cell.toLowerCase()] ?? 'text-gray-700 font-semibold'}`}>{cell}</td>
+                  <td key={ci} className={`py-2.5 px-2 text-center ${OBJECTIVE_TONE[cell.toLowerCase()] ?? 'text-gray-700 font-semibold'}`}>{cell}</td>
                 );
-                return <td key={ci} className="py-2.5 px-3 text-gray-800">{cell}</td>;
+                return <td key={ci} className="py-2.5 px-2 text-gray-800">{cell}</td>;
               })}
             </tr>
           ))}
@@ -1248,7 +1248,7 @@ export const PersonalizationBehaviorMatrix = ({ data, lang }: { data: { headers:
 
 export const PersonalizationSignalsTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Sinais que sustentam a recomendação' : 'Signals supporting the recommendation'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1256,7 +1256,7 @@ export const PersonalizationSignalsTable = ({ data, lang }: { data: { headers: s
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>{h}</th>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-center'}`}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -1264,9 +1264,9 @@ export const PersonalizationSignalsTable = ({ data, lang }: { data: { headers: s
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-medium text-gray-900">{cell}</td>;
                 return (
-                  <td key={ci} className={`py-2.5 px-3 text-center ${effectTone(cell)}`}>{cell}</td>
+                  <td key={ci} className={`py-2.5 px-2 text-center ${effectTone(cell)}`}>{cell}</td>
                 );
               })}
             </tr>
@@ -1289,7 +1289,7 @@ export const RepurchaseCurveChart = ({
   lang: string;
 }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Curva temporal de recompra' : 'Repurchase time curve'}
     </p>
     <div className="h-[260px] w-full">
@@ -1344,7 +1344,7 @@ const propensityTone = (raw: string): string => {
 
 export const RepurchaseBehaviorTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Comportamentos previstos de recompra' : 'Predicted repurchase behaviors'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1352,7 +1352,7 @@ export const RepurchaseBehaviorTable = ({ data, lang }: { data: { headers: strin
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 1 || i === 3 ? 'text-center' : 'text-left'}`}>{h}</th>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 1 || i === 3 ? 'text-center' : 'text-left'}`}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -1360,13 +1360,13 @@ export const RepurchaseBehaviorTable = ({ data, lang }: { data: { headers: strin
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-semibold text-gray-900">{cell}</td>;
-                if (ci === 1) return <td key={ci} className="py-2.5 px-3 text-center tabular-nums text-gray-800 font-medium">{cell}</td>;
-                if (ci === 2) return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-semibold text-gray-900">{cell}</td>;
+                if (ci === 1) return <td key={ci} className="py-2.5 px-2 text-center tabular-nums text-gray-800 font-medium">{cell}</td>;
+                if (ci === 2) return <td key={ci} className="py-2.5 px-2 text-left text-gray-700">{cell}</td>;
                 if (ci === 3) return (
-                  <td key={ci} className={`py-2.5 px-3 text-center tabular-nums ${propensityTone(cell)}`}>{cell}</td>
+                  <td key={ci} className={`py-2.5 px-2 text-center tabular-nums ${propensityTone(cell)}`}>{cell}</td>
                 );
-                return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                return <td key={ci} className="py-2.5 px-2 text-left text-gray-700">{cell}</td>;
               })}
             </tr>
           ))}
@@ -1378,7 +1378,7 @@ export const RepurchaseBehaviorTable = ({ data, lang }: { data: { headers: strin
 
 export const RepurchaseCorrelationsTable = ({ data, lang }: { data: { headers: string[]; rows: string[][] }; lang: string }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Correlações comportamentais' : 'Behavioral correlations'}
     </p>
     <div className="overflow-hidden w-full min-w-0">
@@ -1386,15 +1386,15 @@ export const RepurchaseCorrelationsTable = ({ data, lang }: { data: { headers: s
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50/60">
             {data.headers.map((h, i) => (
-              <th key={i} className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">{h}</th>
+              <th key={i} className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
-              <td className="py-2.5 px-3 text-left font-medium text-gray-900">{row[0]}</td>
-              <td className="py-2.5 px-3 text-left text-gray-700">{row[1]}</td>
+              <td className="py-2.5 px-2 text-left font-medium text-gray-900">{row[0]}</td>
+              <td className="py-2.5 px-2 text-left text-gray-700">{row[1]}</td>
             </tr>
           ))}
         </tbody>
@@ -1424,7 +1424,7 @@ export const PriceConversionFrictionHeatmap = ({
   };
   return (
     <div className="my-4">
-      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
         {lang === 'pt' ? 'Fricção prevista de preço por produto e contexto' : 'Predicted price friction by product and context'}
       </p>
       <div className="overflow-hidden w-full min-w-0">
@@ -1486,12 +1486,12 @@ export const PriceConversionContextTable = ({
     return 'text-gray-700 font-semibold';
   };
   return (
-    <div className="my-4 overflow-hidden w-full min-w-0">
+    <div className="my-4 overflow-x-auto w-full min-w-0">
       <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-center'}`}>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 ? 'text-left' : 'text-center'}`}>
                 {h}
               </th>
             ))}
@@ -1501,11 +1501,11 @@ export const PriceConversionContextTable = ({
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
-                if (ci === 2) return <td key={ci} className={`py-2.5 px-3 text-center ${frictionTextTone(cell)}`}>{cell}</td>;
-                if (ci === 3) return <td key={ci} className="py-2.5 px-3 text-center text-orange-600 font-semibold tabular-nums">{cell}</td>;
-                if (ci === row.length - 1) return <td key={ci} className={`py-2.5 px-3 text-center ${directionTone(cell)}`}>{cell}</td>;
-                return <td key={ci} className="py-2.5 px-3 text-center text-gray-800">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-medium text-gray-900">{cell}</td>;
+                if (ci === 2) return <td key={ci} className={`py-2.5 px-2 text-center ${frictionTextTone(cell)}`}>{cell}</td>;
+                if (ci === 3) return <td key={ci} className="py-2.5 px-2 text-center text-orange-600 font-semibold tabular-nums">{cell}</td>;
+                if (ci === row.length - 1) return <td key={ci} className={`py-2.5 px-2 text-center ${directionTone(cell)}`}>{cell}</td>;
+                return <td key={ci} className="py-2.5 px-2 text-center text-gray-800">{cell}</td>;
               })}
             </tr>
           ))}
@@ -1523,15 +1523,15 @@ export const PriceConversionSignalsTable = ({
   data: { headers: string[]; rows: string[][] };
   lang: string;
 }) => (
-  <div className="my-4 overflow-hidden w-full min-w-0">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+  <div className="my-4 overflow-x-auto w-full min-w-0">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'Sinais comportamentais' : 'Behavioral signals'}
     </p>
     <table className="w-full text-sm border-collapse table-fixed">
       <thead>
         <tr className="border-b border-gray-200">
           {data.headers.map((h, i) => (
-            <th key={i} className="py-2 px-3 text-left text-gray-700 font-medium text-xs uppercase tracking-wider">
+            <th key={i} className="py-2 px-2 text-left text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight">
               {h}
             </th>
           ))}
@@ -1541,7 +1541,7 @@ export const PriceConversionSignalsTable = ({
         {data.rows.map((row, ri) => (
           <tr key={ri} className="border-b border-gray-100">
             {row.map((cell, ci) => (
-              <td key={ci} className={`py-2.5 px-3 text-left ${ci === 0 ? 'text-gray-900 font-medium' : 'text-gray-700'}`}>
+              <td key={ci} className={`py-2.5 px-2 text-left ${ci === 0 ? 'text-gray-900 font-medium' : 'text-gray-700'}`}>
                 {cell}
               </td>
             ))}
@@ -1563,7 +1563,7 @@ export const PriceConversionIncentiveDistribution = ({
   const palette = ['#10b981', '#F4845F', '#94a3b8'];
   return (
     <div className="my-4">
-      <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+      <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
         {lang === 'pt' ? 'Distribuição preditiva da audiência' : 'Predictive audience distribution'}
       </p>
       <div className="flex w-full h-8 rounded-md overflow-hidden">
@@ -1605,12 +1605,12 @@ export const PriceConversionIncentiveTable = ({
     return 'text-gray-700 font-semibold';
   };
   return (
-    <div className="my-4 overflow-hidden w-full min-w-0">
+    <div className="my-4 overflow-x-auto w-full min-w-0">
       <table className="w-full text-sm border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200">
             {data.headers.map((h, i) => (
-              <th key={i} className={`py-2 px-3 text-gray-700 font-medium text-xs uppercase tracking-wider ${i === 0 || i === data.headers.length - 1 ? 'text-left' : 'text-center'}`}>
+              <th key={i} className={`py-2 px-2 text-gray-700 font-medium text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight ${i === 0 || i === data.headers.length - 1 ? 'text-left' : 'text-center'}`}>
                 {h}
               </th>
             ))}
@@ -1620,11 +1620,11 @@ export const PriceConversionIncentiveTable = ({
           {data.rows.map((row, ri) => (
             <tr key={ri} className="border-b border-gray-100">
               {row.map((cell, ci) => {
-                if (ci === 0) return <td key={ci} className="py-2.5 px-3 text-left font-medium text-gray-900">{cell}</td>;
-                if (ci === 1) return <td key={ci} className="py-2.5 px-3 text-center tabular-nums text-gray-800">{cell}</td>;
-                if (ci === 2) return <td key={ci} className="py-2.5 px-3 text-center tabular-nums text-orange-600 font-semibold">{cell}</td>;
-                if (ci === 3) return <td key={ci} className={`py-2.5 px-3 text-center ${actionTone(cell)}`}>{cell}</td>;
-                return <td key={ci} className="py-2.5 px-3 text-left text-gray-700">{cell}</td>;
+                if (ci === 0) return <td key={ci} className="py-2.5 px-2 text-left font-medium text-gray-900">{cell}</td>;
+                if (ci === 1) return <td key={ci} className="py-2.5 px-2 text-center tabular-nums text-gray-800">{cell}</td>;
+                if (ci === 2) return <td key={ci} className="py-2.5 px-2 text-center tabular-nums text-orange-600 font-semibold">{cell}</td>;
+                if (ci === 3) return <td key={ci} className={`py-2.5 px-2 text-center ${actionTone(cell)}`}>{cell}</td>;
+                return <td key={ci} className="py-2.5 px-2 text-left text-gray-700">{cell}</td>;
               })}
             </tr>
           ))}
@@ -1643,7 +1643,7 @@ export const PriceConversionDetailList = ({
   lang: string;
 }) => (
   <div className="my-4">
-    <p className="text-orange-500 font-semibold text-xs uppercase tracking-wider mb-2">
+    <p className="text-orange-500 font-semibold text-[10px] uppercase tracking-normal whitespace-normal break-words leading-tight mb-2">
       {lang === 'pt' ? 'O que o modelo observa em cada sessão' : 'What the model observes in each session'}
     </p>
     <ul className="space-y-1.5">
