@@ -14,24 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      kiosk_events: {
-        Row: {
-          created_at: string
-          event_key: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          event_key: string
-          id?: string
-        }
-        Update: {
-          created_at?: string
-          event_key?: string
-          id?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
