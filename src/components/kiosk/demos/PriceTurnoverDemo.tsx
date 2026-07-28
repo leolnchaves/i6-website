@@ -7,8 +7,11 @@ import {
   filterOptions,
   fmtBRL,
   fmtBRLk,
-  generalInsightFor,
   skuTemplatesByProduct,
+  clusterActionByProduct,
+  clusterOverridesByAction,
+  argumentsByProductAndAction,
+  fallbackArgumentByAction,
   type TurnoverCluster,
   type ClusterAction,
   type SkuRow,
@@ -37,6 +40,10 @@ const computeOutcome = (
   minMargin: string,
   productId: string,
 ): Derived => {
+  const action: ClusterAction =
+    clusterActionByProduct[productId]?.[c.id] ?? c.action;
+  const ov = clusterOverridesByAction[action];
+
   const obj =
     objective === 'aggressive'
       ? { markdown: 1.35, sellThrough: 6, margin: -1.8, capital: 1.25 }
@@ -54,49 +61,51 @@ const computeOutcome = (
       ? { markdown: 1, sellThrough: 0, margin: 0, capital: 1 }
       : { markdown: 1.15, sellThrough: 2, margin: -0.8, capital: 1.1 };
 
-  const shift = c.action === 'markdown';
   const factor = obj.markdown * floor.markdown;
 
-  const markdownPct = shift
-    ? Math.round(c.recommendedMarkdownPct * factor)
-    : c.recommendedMarkdownPct;
-
-  const recommendedPrice = shift
-    ? Math.round(c.currentPrice * (1 - markdownPct / 100) * 10) / 10
-    : c.recommendedPrice;
+  let markdownPct = ov.recommendedMarkdownPct;
+  let recommendedPrice = c.currentPrice;
+  if (action === 'markdown') {
+    markdownPct = Math.round(ov.recommendedMarkdownPct * factor);
+    recommendedPrice = Math.round(c.currentPrice * (1 - markdownPct / 100) * 10) / 10;
+  } else if (action === 'raise') {
+    // markdownPct is negative for raise; objective/floor barely modulate
+    const risePct = Math.round(Math.abs(ov.recommendedMarkdownPct) * (0.9 + (factor - 1) * 0.15));
+    markdownPct = -risePct;
+    recommendedPrice = Math.round(c.currentPrice * (1 + risePct / 100) * 10) / 10;
+  }
 
   const sellThroughProjectedPct = clamp(
-    Math.round(c.sellThroughProjectedPct + obj.sellThrough + floor.sellThrough),
+    Math.round(ov.sellThroughProjectedPct + obj.sellThrough + floor.sellThrough),
     50,
     95,
   );
 
   const marginPreservedPp =
-    Math.round((c.marginPreservedPp + obj.margin + floor.margin) * 10) / 10;
+    Math.round((ov.marginPreservedPp + obj.margin + floor.margin) * 10) / 10;
 
   const capitalUnlockedBRL = Math.round(
-    (c.capitalUnlockedBRL * obj.capital * floor.capital) / 1000,
+    (ov.capitalUnlockedBRL * obj.capital * floor.capital) / 1000,
   ) * 1000;
 
-  const nextAction =
-    c.action === 'markdown' ? 'Markdown agora' : c.nextAction;
-
-  const template = skuTemplatesByProduct[productId]?.[c.action] ?? c.skus;
+  const template = skuTemplatesByProduct[productId]?.[action] ?? c.skus;
   const skus: SkuRow[] = template.map((s) => {
-    if (!shift || s.markdownPct === 0) return s;
-    const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
-    const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
-    return { ...s, markdownPct: mdPct, recommendedPrice: price };
+    if (action === 'markdown' && s.markdownPct > 0) {
+      const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
+      const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
+      return { ...s, markdownPct: mdPct, recommendedPrice: price };
+    }
+    return s;
   });
 
   return {
     recommendedPrice,
     recommendedMarkdownPct: markdownPct,
-    nextAction,
-    action: c.action,
-    actInDays: c.actInDays,
+    nextAction: ov.nextAction,
+    action,
+    actInDays: ov.actInDays,
     sellThroughProjectedPct,
-    agedStockPct: c.agedStockPct,
+    agedStockPct: ov.agedStockPct,
     marginPreservedPp,
     capitalUnlockedBRL,
     skus,
@@ -107,18 +116,21 @@ const actionColor: Record<ClusterAction, string> = {
   hold: '#22c55e',
   markdown: '#F4845F',
   wait: '#60a5fa',
+  raise: '#10b981',
 };
 
 const actionLabel: Record<ClusterAction, string> = {
   hold: 'Manter',
   markdown: 'Markdown',
   wait: 'Aguardar',
+  raise: 'Aumentar',
 };
 
 const actionToneClass: Record<ClusterAction, string> = {
   hold: 'text-[#4ade80]',
   markdown: 'text-[#F4845F]',
   wait: 'text-[#60a5fa]',
+  raise: 'text-[#34d399]',
 };
 
 const PriceTurnoverDemo = () => {
@@ -145,7 +157,21 @@ const PriceTurnoverDemo = () => {
 
   const derived = selected ? derivedByCluster.get(selected.id) ?? null : null;
 
-  const generalInsight = useMemo(() => generalInsightFor(visibleClusters), [visibleClusters]);
+  const generalInsight = useMemo(() => {
+    const actions = Array.from(derivedByCluster.values()).map((d) => d.action);
+    const counts = {
+      hold: actions.filter((a) => a === 'hold').length,
+      markdown: actions.filter((a) => a === 'markdown').length,
+      wait: actions.filter((a) => a === 'wait').length,
+      raise: actions.filter((a) => a === 'raise').length,
+    };
+    const parts: string[] = [];
+    if (counts.hold) parts.push(`${counts.hold} com giro acima da categoria e elasticidade baixa → manter`);
+    if (counts.markdown) parts.push(`${counts.markdown} com estoque envelhecido e elasticidade alta → markdown cirúrgico agora`);
+    if (counts.wait) parts.push(`${counts.wait} com pico sazonal próximo → aguardar janela`);
+    if (counts.raise) parts.push(`${counts.raise} com giro forte e elasticidade baixa → capturar valor com aumento controlado`);
+    return `O modelo lê, por cluster, velocidade vs. média da categoria, idade do estoque, elasticidade e janela sazonal, respeitando o piso de margem. ${parts.join('; ')}.`;
+  }, [derivedByCluster]);
 
 
   useEffect(() => {
@@ -239,14 +265,14 @@ const PriceTurnoverDemo = () => {
                     <span className="flex items-center gap-[0.7vmin] text-white/90 font-semibold leading-tight">
                       <span
                         className="w-[1.1vmin] h-[1.1vmin] rounded-full flex-shrink-0"
-                        style={{ background: actionColor[c.action] }}
+                        style={{ background: actionColor[d?.action ?? c.action] }}
                       />
                       <span>
                         {c.name}
                         <span className="block text-[1.05vmin] font-normal text-white/50">{c.region}</span>
                       </span>
                     </span>
-                    <span className="text-white/70">{showResult ? c.situation : '—'}</span>
+                    <span className="text-white/70">{showResult && d ? d.action === 'markdown' ? 'Estoque envelhecido' : d.action === 'raise' ? 'Giro acima da média' : d.action === 'wait' ? 'Demanda sazonal futura' : 'Giro adequado' : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.stockUnits.toLocaleString('pt-BR')} un` : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.avgStockAgeDays} d` : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.sellVelocity}/${c.categoryAvgVelocity}` : '—'}</span>
@@ -284,9 +310,9 @@ const PriceTurnoverDemo = () => {
                       <span className="text-right text-white font-mono font-semibold">{fmtBRL(s.recommendedPrice)}</span>
                       <span
                         className="text-right font-mono"
-                        style={{ color: s.markdownPct > 0 ? '#F4845F' : 'rgba(255,255,255,0.55)' }}
+                        style={{ color: s.markdownPct > 0 ? '#F4845F' : s.markdownPct < 0 ? '#34d399' : 'rgba(255,255,255,0.55)' }}
                       >
-                        {s.markdownPct > 0 ? `−${s.markdownPct}%` : '—'}
+                        {s.markdownPct > 0 ? `−${s.markdownPct}%` : s.markdownPct < 0 ? `+${Math.abs(s.markdownPct)}%` : '—'}
                       </span>
                       <span className="text-right text-white/85 font-mono">{s.sellThroughProjectedPct}%</span>
                     </div>
@@ -351,15 +377,19 @@ const PriceTurnoverDemo = () => {
               <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                 <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
                 <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
-                  {selected ? `Por que ${selected.action === 'hold' ? 'manter' : selected.action === 'wait' ? 'aguardar' : 'este markdown'}` : 'O que o modelo aprendeu'}
+                  {derived && selected
+                    ? `Por que ${derived.action === 'hold' ? 'manter' : derived.action === 'wait' ? 'aguardar' : derived.action === 'raise' ? 'subir preço' : 'este markdown'}`
+                    : 'O que o modelo aprendeu'}
                 </span>
               </div>
-              {selected ? (
+              {selected && derived ? (
                 <>
                   <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
-                    {selected.name} · {selected.situation}
+                    {selected.name} · {clusterOverridesByAction[derived.action].situation}
                   </span>
-                  <p className="text-[1.7vmin] leading-relaxed text-white/95">{selected.argument}</p>
+                  <p className="text-[1.7vmin] leading-relaxed text-white/95">
+                    {argumentsByProductAndAction[product]?.[selected.id] ?? fallbackArgumentByAction[derived.action]}
+                  </p>
                 </>
               ) : (
                 <p className="text-[1.85vmin] leading-relaxed text-white/95">{generalInsight}</p>
