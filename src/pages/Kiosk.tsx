@@ -18,18 +18,44 @@ import {
 import { solutionsContent } from '@/data/solutionsV2/content';
 import { trackEvent } from '@/lib/tracker';
 import { trackKioskEvent } from '@/lib/kioskTracker';
+import { flushLeadQueue } from '@/lib/leadQueue';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
 type Stage = 'attract' | 'quiz' | 'results';
 
 const TOTAL_STEPS = 2;
 
+const SESSION_KEY = 'i6_kiosk_session';
+const LEAD_FLUSH_INTERVAL_MS = 2 * 60 * 1000;
+
+type PersistedSession = {
+  lang: KioskLang;
+  stage: Stage;
+  route: RouteId | null;
+  recommendedIds: string[] | null;
+  selectedSolutionId: string | null;
+  simulationCompleted: Record<string, boolean>;
+};
+
+const readSession = (): PersistedSession | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as PersistedSession;
+    if (!parsed || (parsed.stage !== 'quiz' && parsed.stage !== 'results')) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+};
+
 const getInitialLang = (): KioskLang => {
   if (typeof window === 'undefined') return 'pt';
   const params = new URLSearchParams(window.location.search);
   const q = params.get('lang');
   if (q === 'en' || q === 'pt') return q;
-  return 'pt';
+  return readSession()?.lang ?? 'pt';
 };
 
 /**
@@ -37,12 +63,18 @@ const getInitialLang = (): KioskLang => {
  * Attract → Q1 (território) → Q2 (solução da branch) → Results
  */
 const Kiosk = () => {
+  const restored = useMemo(() => readSession(), []);
   const [lang, setLang] = useState<KioskLang>(getInitialLang);
-  const [stage, setStage] = useState<Stage>('attract');
-  const [route, setRoute] = useState<RouteId | null>(null);
-  const [recommendedIds, setRecommendedIds] = useState<string[] | null>(null);
-  const [selectedSolutionId, setSelectedSolutionId] = useState<string | null>(null);
-  const [simulationCompleted, setSimulationCompleted] = useState<Record<string, boolean>>({});
+  const [stage, setStage] = useState<Stage>(restored?.stage ?? 'attract');
+  const [route, setRoute] = useState<RouteId | null>(restored?.route ?? null);
+  const [recommendedIds, setRecommendedIds] = useState<string[] | null>(restored?.recommendedIds ?? null);
+  const [selectedSolutionId, setSelectedSolutionId] = useState<string | null>(
+    restored?.selectedSolutionId ?? null,
+  );
+  const [simulationCompleted, setSimulationCompleted] = useState<Record<string, boolean>>(
+    restored?.simulationCompleted ?? {},
+  );
+
 
   const kContent = kioskContent[lang];
   const sContent = solutionsContent[lang];
