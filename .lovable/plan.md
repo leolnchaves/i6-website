@@ -1,12 +1,14 @@
-## Ajuste
+## Objetivo
+Impedir que os textos da primeira coluna ("Comportamento previsto") da tabela da resposta 2 do i6 Signal em Price to Conversion quebrem em duas linhas, reduzindo a fonte.
 
-Alinhar o card **POR QUE** do `PriceToMarginDemo` ao comportamento das demais telas: só renderiza quando a timeline completa (`done`), sem mensagem genérica durante o running.
+## Alteração
+Arquivo: `src/components/signalDemo/visualizations.tsx` (componente `PriceConversionSessionSegmentsTable`, linhas ~1622–1623).
 
-## Mudança
+- Célula `ci === 0` (primeira coluna do corpo): trocar tamanho da fonte de `text-sm` (herdado) para `text-xs`, mantendo `font-medium text-gray-900`.
+- Opcionalmente também adicionar `leading-tight` para reduzir a altura da linha e evitar quebras estéticas.
 
-Em `src/components/kiosk/demos/PriceToMarginDemo.tsx`:
+Somente essa tabela específica é afetada (Resposta 2 — segmentação de sessões). As demais tabelas de outras respostas não são tocadas.
 
-- Trocar a condição do wrapper de `{selected && (...)}` para `{done && selected && (...)}`.
-- Remover o branch `else` com `ui.defaultWhy` e a chave `defaultWhy` do mapa `uiCopy` (PT/EN) — não é mais usada.
-
-Durante a seleção, o usuário vê apenas o produto ampliado + spinner "Analisando..." (top card) e a timeline avançando (bottom card). Quando termina, o POR QUE aparece com `selected.insight` e o preço recomendado.
+## Fora de escopo
+- Sem alterações nos textos/dados em `src/data/signalDemo/content.ts`.
+- Sem mudanças na versão EN dos dados (só CSS do componente).
