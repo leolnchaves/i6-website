@@ -244,7 +244,6 @@ const PriceMarginDemo = () => {
                       label="Faixa recomendada"
                       value={`${fmtBRL(derived.rangeMin)} – ${fmtBRL(derived.rangeMax)}`}
                     />
-                    <ConclusionCard label="Confiança" value={`${derived.confidencePct}%`} />
                   </div>
 
                   {/* Right: curve */}
@@ -519,8 +518,8 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
   );
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] h-full flex">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] flex flex-col">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
         <rect
           x={x(derived.rangeMin)} y={PAD.t}
           width={x(derived.rangeMax) - x(derived.rangeMin)} height={ih}
@@ -554,6 +553,14 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
           margem total
         </text>
       </svg>
+      <div className="flex items-center justify-between border-t border-white/10 px-[1.4vmin] py-[0.7vmin]">
+        <span className="text-[0.9vmin] tracking-[0.18em] uppercase font-semibold text-white/55">
+          Confiança
+        </span>
+        <span className="text-[1.4vmin] font-bold text-white font-mono">
+          {derived.confidencePct}%
+        </span>
+      </div>
     </div>
   );
 };

@@ -1,28 +1,23 @@
-## Ajuste do fluxo — Preço Orientado a Margem (Kiosk)
+## Objetivo
 
-Arquivo: `src/components/kiosk/demos/PriceMarginDemo.tsx`
+Na seção de resultado da demo Preço Orientado a Margem (`src/components/kiosk/demos/PriceMarginDemo.tsx`), fazer três ajustes visuais:
 
-### Mudanças
+1. Remover o card "Confiança" da coluna esquerda superior e passar a exibir a confiança dentro do próprio card do gráfico, no rodapé.
+2. Reduzir o "quadro" (padding/moldura) ao redor do gráfico, mantendo o SVG do gráfico com exatamente o mesmo tamanho.
+3. Alinhar a altura total dos dois cards restantes à esquerda ("Preço ótimo" e "Faixa recomendada") ao novo tamanho compactado do card do gráfico.
 
-1. **Subtítulo do card do topo** (linha ~161)
-   - De: "Selecione um SKU e ajuste restrições para simular a faixa ótima de preço."
-   - Para: "Selecione os filtros e ajuste restrições para simular a faixa ótima de preço por SKU."
+## Mudanças
 
-2. **Habilitar o botão de cálculo sem exigir SKU**
-   - `canCalculate` passa a exigir apenas `filtered.length > 0` (existir SKU na seleção de filtros), em vez de `!!selected`.
-   - Texto do botão desabilitado ajustado para o caso "sem SKUs na seleção" (ex.: "Ajuste os filtros para simular"). Quando houver SKUs, exibe "Calcular faixa ótima de preço".
+1. `PriceMarginDemo.tsx` (~linhas 239–252)
+   - Remover `<ConclusionCard label="Confiança" ... />` (linha 247).
+   - Manter os dois `ConclusionCard` restantes na coluna esquerda usando `flex-1` para que se distribuam ocupando a mesma altura total do card do gráfico à direita — assim ficam automaticamente alinhados ao novo tamanho.
 
-3. **Bloquear seleção de SKU antes do cálculo**
-   - Nas linhas da tabela de portfólio (setup), os `<button>` de linha ficam `disabled` enquanto `phase !== 'result'`, com `cursor-default` e sem hover em laranja. Continuam exibindo os dados normalmente (Preço atual, Elast., Posição, Cobertura, Preço concorrente), com "Ação sugerida" em "—".
-   - Após o cálculo (`phase === 'result'`), as linhas voltam a ser clicáveis e o destaque laranja do SKU ativo reaparece.
+2. `PriceMarginCurve` (~linha 476)
+   - Reduzir o padding externo do card (ex.: `p-[1.6vmin]` → algo como `p-[1vmin]`) e apertar espaçamentos verticais internos ao redor do SVG, sem alterar o `viewBox`, altura em `vmin`, `preserveAspectRatio`, nem qualquer atributo dimensional do SVG — o gráfico em si permanece com o mesmo tamanho visual.
+   - Adicionar, logo abaixo do SVG, uma linha rodapé compacta com "Confiança" à esquerda e `{derived.confidencePct}%` à direita, com fonte discreta e um separador sutil (`border-t border-white/10`). Como `confidencePct` já vem em `derived`, não é preciso alterar assinatura.
 
-4. **Auto-selecionar o primeiro SKU após o cálculo**
-   - No `useEffect` que dispara o pipeline, quando `phase` muda para `'result'` (via `setTimeout` final), setar `setSelectedId(filtered[0]?.id ?? null)` caso `selectedId` ainda esteja vazio.
-   - Se o usuário depois trocar filtros e o SKU selecionado sair da lista, o efeito existente já limpa o `selectedId` — combinar com um reset para `setup` (ou re-selecionar automaticamente o primeiro) para manter consistência: **manter o comportamento atual** de apenas limpar `selectedId`; o painel de resultado deixa de aparecer até novo cálculo.
+3. Bloco "Bottom KPIs" (linhas 281–285) permanece inalterado — o card "Confiança do modelo" ali continua existindo. A remoção é apenas do card duplicado na coluna superior esquerda.
 
-5. **Reset**
-   - `reset()` (usado ao mudar filtros/estratégia) continua voltando para `setup` e limpando `selectedId`, garantindo que o usuário refaça o cálculo se mudar restrições.
+## Fora de escopo
 
-### Fora do escopo
-- Nenhuma mudança em `priceMargin.ts` (dados/labels).
-- Nenhuma mudança no card "Explicabilidade" — ele já exibe o insight geral quando não há SKU selecionado e o argumento do SKU quando há.
+Tabelas, filtros, dados em `src/data/kiosk/demos/priceMargin.ts`, textos ("POR QUE") e demais demos.
