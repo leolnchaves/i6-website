@@ -358,8 +358,6 @@ const Answer: React.FC<{ scene: Scene; start: number }> = ({ scene, start }) => 
 /** ── Intelliboard completo ─────────────────────────────────── */
 export const Intelliboard: React.FC<{
   scene: Scene;
-  chipIndex: number;
-  chips: string[];
   /** frames */
   typeStart: number;
   typeEnd: number;
@@ -367,7 +365,7 @@ export const Intelliboard: React.FC<{
   scrollStart: number;
   scrollEnd: number;
   scrollAmount: number;
-}> = ({ scene, chipIndex, chips, typeStart, typeEnd, answerStart, scrollStart, scrollEnd, scrollAmount }) => {
+}> = ({ scene, typeStart, typeEnd, answerStart, scrollStart, scrollEnd, scrollAmount }) => {
   const frame = useCurrentFrame();
 
   const typedChars = Math.floor(
@@ -543,12 +541,6 @@ export const Intelliboard: React.FC<{
           </div>
         </div>
       </div>
-
-      {/* Chips (renderizados fora pelo caller) */}
-      <ChipsHidden chips={chips} chipIndex={chipIndex} />
     </div>
   );
 };
-
-/** Placeholder para manter a assinatura simples — os chips são desenhados na cena. */
-const ChipsHidden: React.FC<{ chips: string[]; chipIndex: number }> = () => null;
