@@ -1,6 +1,6 @@
 import { AbsoluteFill, Img, staticFile, useCurrentFrame, useVideoConfig, spring } from 'remotion';
-import { Reveal } from '../components/Type';
-import { CORAL, FONT_BODY, FONT_DISPLAY, WHITE, MUTED } from '../theme';
+import { Reveal, Rule } from '../components/Type';
+import { CORAL, FONT_BODY, FONT_DISPLAY, WHITE } from '../theme';
 
 export const Closing: React.FC = () => {
   const frame = useCurrentFrame();
