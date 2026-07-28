@@ -185,7 +185,7 @@ const PriceMarginDemo = () => {
 
             {/* Portfolio table — 3 lines, headers in 2 lines */}
             <div className="rounded-xl border border-white/10 overflow-hidden">
-              <div className="grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] px-[1.4vmin] py-[0.7vmin] bg-white/[0.05] text-[0.95vmin] uppercase tracking-[0.16em] font-semibold text-white/60 leading-tight">
+              <div className="grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] px-[1.4vmin] py-[0.7vmin] gap-x-[0.6vmin] bg-white/[0.05] text-[0.8vmin] uppercase tracking-[0.1em] font-semibold text-white/60 leading-tight">
                 <span>SKU</span>
                 <span className="text-right">Ação<br/>sugerida</span>
                 <span className="text-right">Preço<br/>atual</span>
