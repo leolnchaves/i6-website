@@ -262,7 +262,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     pipeline: [
       { label: 'Reading sessions, clicks and abandoned carts', microMetric: '48,612 sessions · 30-day window', durationMs: 1400 },
       { label: 'Segmenting intent and price-sensitivity clusters', microMetric: '6 active clusters · dominant cluster: 42%', durationMs: 1400 },
-      { label: 'Simulating conversion response across 10,000 scenarios', microMetric: 'estimated conversion elasticity: -1.8', durationMs: 1800 },
+      { label: 'Simulating conversion response across thousands of scenarios', microMetric: 'estimated conversion elasticity: -1.8', durationMs: 1800 },
       { label: 'Optimizing for conversion with a margin floor', microMetric: 'constraints: min margin · competitive signal', durationMs: 1600 },
       { label: 'Recommending the ideal price to convert', microMetric: 'confidence: 94%', durationMs: 1200 },
     ],
