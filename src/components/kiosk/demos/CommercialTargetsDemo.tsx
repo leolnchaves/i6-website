@@ -192,7 +192,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
                   {L.result.allocationTitle}
                 </span>
               </div>
-              <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr] px-[1.4vmin] py-[0.8vmin] bg-white/[0.02] text-[1.1vmin] uppercase tracking-[0.18em] font-semibold text-white/55 border-t border-white/10">
+              <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr] gap-[0.6vmin] px-[1.4vmin] py-[0.8vmin] bg-white/[0.02] text-[0.95vmin] uppercase tracking-[0.16em] font-semibold text-white/55 border-t border-white/10 leading-tight items-end min-h-[3vmin]">
                 <span>{dimensions.find((d) => d.id === dim)?.label}</span>
                 <span className="text-right">{L.result.allocationGrowth}</span>
                 <span className="text-right">{L.result.allocationCurrent}</span>
