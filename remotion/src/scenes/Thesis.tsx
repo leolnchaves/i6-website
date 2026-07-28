@@ -45,11 +45,6 @@ export const Thesis: React.FC = () => {
               );
             })}
           </div>
-          <Reveal delay={104} distance={16}>
-            <span style={{ fontFamily: FONT_BODY, fontSize: 26, color: MUTED }}>
-              Home · infinity6.ai
-            </span>
-          </Reveal>
         </div>
       </SceneFrame>
     </AbsoluteFill>

@@ -103,10 +103,7 @@ export const Rule: React.FC<{ delay?: number; width?: number }> = ({ delay = 0, 
   return <div style={{ height: 4, width: w, background: CORAL, borderRadius: 2 }} />;
 };
 
-export const SceneFrame: React.FC<{ label: string; children: React.ReactNode }> = ({
-  label,
-  children,
-}) => (
+export const SceneFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
     style={{
       position: 'absolute',
@@ -118,18 +115,5 @@ export const SceneFrame: React.FC<{ label: string; children: React.ReactNode }> 
     }}
   >
     {children}
-    <div
-      style={{
-        position: 'absolute',
-        left: 170,
-        bottom: 54,
-        fontFamily: FONT_BODY,
-        fontSize: 21,
-        letterSpacing: '0.24em',
-        color: FAINT,
-      }}
-    >
-      {label}
-    </div>
   </div>
 );
