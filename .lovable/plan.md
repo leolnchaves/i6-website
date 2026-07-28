@@ -1,16 +1,11 @@
-## Problema
-
-Em `PriceTurnoverDemo`, após o cálculo, mudar o filtro **Produto** não altera a tabela de SKUs porque `derived.skus` vem fixo de `clusters[i].skus` — todos hoje são variantes de "Jaqueta acolchoada". O filtro `product` existe no estado mas não é consumido em lugar nenhum da derivação.
-
 ## Correção
 
-1. Em `src/data/kiosk/demos/priceTurnover.ts`:
-   - Adicionar `skuTemplatesByProduct: Record<'sku-1' | 'sku-2' | 'sku-3', SkuRow[]>` com 3 SKUs por produto (Jaqueta acolchoada, Bota térmica premium, Blusa tricô oversized), cada um com `currentPrice`, `recommendedPrice`, `markdownPct`, `sellThroughProjectedPct` coerentes com a família.
-   - Manter os clusters como estão (dados macro por região); os SKUs deixam de ser lidos do cluster para o render.
+Em `src/components/kiosk/demos/PriceTurnoverDemo.tsx`:
 
-2. Em `src/components/kiosk/demos/PriceTurnoverDemo.tsx`:
-   - `computeOutcome` passa a receber também o `productId` e devolve `skus` derivados de `skuTemplatesByProduct[productId]`, aplicando o mesmo ajuste de markdown/preço em função de `objective`, `minMargin` e da `action` do cluster (mantendo a lógica atual de `factor`, `shift`, `mdPct`, `recommendedPrice`).
-   - `derivedByCluster` passa a depender de `product` também (recomputa quando o filtro muda).
-   - No cabeçalho da tabela de SKUs, trocar `SKU · {selected.name}` (nome do cluster) por `SKU · {rótulo do produto selecionado}` lido de `filterOptions.product`, para deixar claro que a lista responde ao filtro.
+1. Remover o estado `region` e o `TouchSelect` de "Região / Cluster".
+2. `visibleClusters` passa a ser sempre `allClusters` (sem filtro).
+3. O `useEffect` que reseta `selectedId` quando o cluster some deixa de ser necessário — remover.
+4. Reorganizar os 3 filtros restantes (Produto, Objetivo, Margem mínima) em uma única linha: `grid grid-cols-[1.3fr_1fr_0.9fr] gap-[1vmin]`, com Produto ocupando mais espaço por ter o rótulo mais longo.
+5. Opcional em `src/data/kiosk/demos/priceTurnover.ts`: remover `filterOptions.region` (não é usado em mais lugar nenhum).
 
-Escopo restrito à demo Preço Orientado ao Giro; nenhum outro componente é alterado.
+Nenhuma outra lógica muda; o cálculo continua exibindo os 3 clusters representativos.
