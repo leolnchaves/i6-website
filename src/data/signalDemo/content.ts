@@ -463,7 +463,7 @@ export const signalDemoContent = {
       },
       turnoverRisk: {
         label: 'Risco de Envelhecimento',
-        question: 'Em quais regiões, lojas ou clusters os produtos apresentam maior risco de estoque envelhecido?',
+        question: 'Quais regiões, lojas e produtos apresentam maior risco de estoque envelhecido?',
         title: 'Risco preditivo de envelhecimento por região e cluster',
         analysis: 'O modelo identificou risco elevado de envelhecimento para o SKU A em 38 lojas, concentradas principalmente nos clusters Interior de Minas e Sul Metropolitano. Nessas localidades, a velocidade prevista de venda está abaixo da necessária para consumir o estoque antes do fim do ciclo comercial. Em São Paulo Premium, o mesmo produto mantém demanda consistente e não apresenta necessidade de desconto.\n\nO risco no Interior de Minas é sustentado pela combinação de baixa velocidade prevista de venda, maior sensibilidade ao preço e estoque acima da demanda esperada. Mantido o preço atual, parte relevante das unidades deve permanecer em estoque após o encerramento do ciclo comercial. Em São Paulo Premium, o comportamento é diferente. A demanda permanece consistente, o estoque está equilibrado e um desconto antecipado reduziria margem sem produzir ganho relevante de giro.',
         regionTable: {
