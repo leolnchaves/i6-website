@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import type { QuizQuestion } from '@/data/kiosk/config';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Props {
   question: QuizQuestion;
@@ -81,11 +82,11 @@ const QuizScreen = ({
           type="button"
           onClick={submit}
           disabled={!selected}
-          className={`mt-[8vmin] w-full max-w-[70vw] mx-auto rounded-full px-[6vmin] py-[3.5vmin] text-[3vmin] font-bold transition-all min-h-[10vmin] ${
-            !selected
-              ? 'bg-white/10 text-white/40 cursor-not-allowed'
-              : 'bg-[#F4845F] text-white shadow-[0_0_40px_rgba(244,132,95,0.5)]'
-          }`}
+          className={kioskBtn(
+            'mt-[8vmin] w-full max-w-[70vw] mx-auto px-[6vmin] py-[3.5vmin] text-[3vmin] min-h-[10vmin]',
+            !selected,
+          )}
+
         >
           {continueCta}
         </button>

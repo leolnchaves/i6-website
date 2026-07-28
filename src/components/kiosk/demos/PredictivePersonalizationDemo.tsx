@@ -11,6 +11,7 @@ import {
   type UserMode,
   type Vertical,
 } from '@/data/kiosk/demos/predictivePersonalization';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Props {
   lang: KioskLang;
@@ -380,7 +381,7 @@ const PredictivePersonalizationDemo = ({ lang }: Props) => {
                     <button
                       type="button"
                       onClick={backToCatalog}
-                      className="group inline-flex items-center justify-center gap-[1vmin] px-[1.5vmin] py-[1.8vmin] rounded-full bg-white/10 hover:bg-white/20 ring-1 ring-white/15 shadow-md text-[1.55vmin] font-semibold uppercase tracking-[0.14em] text-white active:scale-[0.98] transition"
+                      className={kioskBtn('group gap-[1vmin] px-[1.5vmin] py-[1.8vmin] text-[1.55vmin] uppercase tracking-[0.14em]')}
                     >
                       <ArrowLeft className="w-[1.8vmin] h-[1.8vmin] transition-transform group-hover:-translate-x-[0.3vmin]" strokeWidth={2.5} />
                       {t.backToCatalog.replace(/^←\s*/, '')}

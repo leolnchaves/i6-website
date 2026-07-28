@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Check, Sparkles } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import { priceToMarginDemo, type DemoProduct } from '@/data/kiosk/demos/priceToMargin';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Props {
   lang: KioskLang;
@@ -128,7 +129,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
                 <button
                   type="button"
                   onClick={reset}
-                  className="group self-start inline-flex items-center gap-[1vmin] min-h-[6vmin] px-[2.4vmin] py-[1.4vmin] rounded-full bg-white/10 hover:bg-white/20 ring-1 ring-white/15 shadow-md text-[1.5vmin] font-semibold uppercase tracking-[0.14em] text-white active:scale-[0.98] transition mb-[1.6vmin]"
+                  className={kioskBtn('group self-start gap-[1vmin] min-h-[6vmin] px-[2.4vmin] py-[1.4vmin] text-[1.5vmin] uppercase tracking-[0.14em] mb-[1.6vmin]')}
                 >
                   <ArrowLeft className="w-[1.8vmin] h-[1.8vmin] transition-transform group-hover:-translate-x-[0.3vmin]" strokeWidth={2.5} />
                   {content.backToCatalog.replace(/^←\s*/, '')}
@@ -302,7 +303,7 @@ const PriceToMarginDemo = ({ lang }: Props) => {
             <button
               type="button"
               onClick={reset}
-              className="mt-[1.4vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+              className={kioskBtn('mt-[1.4vmin] w-full min-h-[6vmin] text-[1.6vmin]')}
             >
               {ui.newSim}
             </button>
