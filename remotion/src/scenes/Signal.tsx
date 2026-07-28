@@ -45,8 +45,8 @@ const ChipsBar: React.FC<{ activeChip: string }> = ({ activeChip }) => {
 const Take: React.FC<{ index: number; scrollAmount: number }> = ({ index, scrollAmount }) => {
   const scene = SCENES[index];
   return (
-    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 36 }}>
+    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 34 }}>
         <ChipsBar activeChip={scene.chipLabel} />
         <Intelliboard
           scene={scene}
@@ -91,7 +91,7 @@ export const Signal: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ position: 'absolute', inset: 0, paddingTop: 240 }}>
+      <div style={{ position: 'absolute', inset: 0, paddingTop: 214 }}>
         <Sequence from={0} durationInFrames={370}>
           <Take index={0} scrollAmount={330} />
         </Sequence>
