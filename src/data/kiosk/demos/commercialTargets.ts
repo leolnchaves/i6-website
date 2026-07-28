@@ -288,36 +288,95 @@ const computeRowMetrics = (r: Row, seed: string, pMult: number, budgetVal: numbe
   };
 };
 
+type DimBaseRow = {
+  label: string;
+  sublabel?: string;
+  volume: number;
+  currentTarget: number;
+  currentInvestment: number;
+  cac: number;
+  regionId?: Exclude<RegionId, 'all'>;
+  category?: Exclude<CategoryId, 'all'>;
+  rep?: string;
+  region?: string;
+};
+
+// Independent base data per dimension so the main table reflects different
+// volumes, targets and investments for each view (região, vendedor, cliente, SKU).
+const dimBase: Record<DimensionId, DimBaseRow[]> = {
+  region: [
+    { label: 'Sul', regionId: 'sul', volume: 4200, currentTarget: 2600, currentInvestment: 130, cac: 12.0 },
+    { label: 'Interior de SP', regionId: 'sp-interior', volume: 3100, currentTarget: 3050, currentInvestment: 110, cac: 15.2 },
+    { label: 'Minas Gerais', regionId: 'mg', volume: 1400, currentTarget: 2500, currentInvestment: 95, cac: 22.4 },
+  ],
+  rep: [
+    { label: 'Carlos', sublabel: 'Sul', region: 'Sul', volume: 1900, currentTarget: 1100, currentInvestment: 55, cac: 11.5 },
+    { label: 'Marina', sublabel: 'Interior de SP', region: 'Interior de SP', volume: 1250, currentTarget: 1180, currentInvestment: 48, cac: 14.6 },
+    { label: 'Rafael', sublabel: 'Minas Gerais', region: 'Minas Gerais', volume: 620, currentTarget: 1050, currentInvestment: 60, cac: 21.0 },
+  ],
+  client: [
+    { label: 'Cliente A', sublabel: 'Sul · Carlos', region: 'Sul', rep: 'Carlos', volume: 1400, currentTarget: 800, currentInvestment: 45, cac: 11.5 },
+    { label: 'Cliente B', sublabel: 'Interior de SP · Marina', region: 'Interior de SP', rep: 'Marina', volume: 900, currentTarget: 990, currentInvestment: 42, cac: 15.0 },
+    { label: 'Cliente C', sublabel: 'Minas Gerais · Rafael', region: 'Minas Gerais', rep: 'Rafael', volume: 450, currentTarget: 850, currentInvestment: 55, cac: 22.5 },
+  ],
+  sku: [
+    { label: 'SKU 01', sublabel: 'Categoria A', category: 'catA', volume: 2100, currentTarget: 1200, currentInvestment: 62, cac: 10.8 },
+    { label: 'SKU 04', sublabel: 'Categoria B', category: 'catB', volume: 1500, currentTarget: 1470, currentInvestment: 52, cac: 14.2 },
+    { label: 'SKU 07', sublabel: 'Categoria C', category: 'catC', volume: 720, currentTarget: 1300, currentInvestment: 68, cac: 20.5 },
+  ],
+};
+
 export const computeResult = (args: Args): CommercialResult => {
   const seed = `${args.period}|${args.region}|${args.rep}|${args.portfolio}|${args.category}|${args.budget}|${args.argIndex}`;
   const rows = filterRows(args);
   const pMult = periodMultiplier[args.period];
   const budgetVal = budgets.find((b) => b.id === args.budget)?.value ?? 500;
 
-  // Compute per-row metrics
+  // Compute per-row metrics (kept for backwards-compat downstream usage)
   const enriched = rows.map((r) => ({ r, m: computeRowMetrics(r, seed, pMult, budgetVal) }));
 
-  // Aggregate by region (fixed dimension for the main table view)
-  const byRegion = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number }>();
-  const byRep = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number }>();
-  const byClient = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number; region: string; rep: string }>();
-  const bySku = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number; category: string }>();
+  // Build per-dimension aggregates from independent base data
+  const buildDimMap = (dim: DimensionId) => {
+    const map = new Map<string, { rows: Row[]; current: number; suggested: number; potential: number; currentInvestment: number; region?: string; rep?: string; category?: string }>();
+    dimBase[dim].forEach((b) => {
+      const potentialUplift = rand(`${seed}|pot|${dim}|${b.label}`, 0.05, 0.35, 3);
+      const potential = Math.round(b.volume * (1 + potentialUplift) * pMult);
+      const captureBase = rand(`${seed}|cap|${dim}|${b.label}`, 0.85, 0.95, 3);
+      const budgetBoost = Math.min(0.04, (budgetVal - 300) / 10000);
+      const suggested = Math.round(potential * Math.min(0.98, captureBase + budgetBoost));
+      const current = Math.round(b.currentTarget * pMult);
+      const proxyRow: Row = {
+        region: b.region ?? b.label,
+        regionId: b.regionId ?? 'sp-interior',
+        rep: b.rep ?? b.label,
+        repId: 'carlos',
+        client: b.label,
+        clientTier: 'key',
+        sku: b.label,
+        category: b.category ?? 'catA',
+        volume: b.volume,
+        currentTarget: b.currentTarget,
+        currentInvestment: b.currentInvestment,
+        cac: b.cac,
+      };
+      map.set(b.label, {
+        rows: [proxyRow],
+        current,
+        suggested,
+        potential,
+        currentInvestment: b.currentInvestment,
+        region: b.region,
+        rep: b.rep,
+        category: b.category,
+      });
+    });
+    return map;
+  };
 
-  enriched.forEach(({ r, m }) => {
-    const add = (map: Map<string, any>, key: string, extra: Record<string, any> = {}) => {
-      const cur = map.get(key) ?? { rows: [], current: 0, suggested: 0, potential: 0, currentInvestment: 0, ...extra };
-      cur.rows.push(r);
-      cur.current += m.currentScaled;
-      cur.suggested += m.suggested;
-      cur.potential += m.potential;
-      cur.currentInvestment += r.currentInvestment;
-      map.set(key, cur);
-    };
-    add(byRegion, r.region);
-    add(byRep, r.rep);
-    add(byClient, r.client, { region: r.region, rep: r.rep });
-    add(bySku, r.sku, { category: r.category });
-  });
+  const byRegion = buildDimMap('region');
+  const byRep = buildDimMap('rep');
+  const byClient = buildDimMap('client');
+  const bySku = buildDimMap('sku');
 
   const toRows = (
     map: Map<string, any>,
@@ -332,6 +391,7 @@ export const computeResult = (args: Args): CommercialResult => {
         label,
         sublabel:
           kind === 'client' ? `${v.region} · ${v.rep}` :
+          kind === 'rep' ? v.region :
           kind === 'sku' ? categoryLabelStatic(v.category) :
           undefined,
         current: v.current,
@@ -349,6 +409,7 @@ export const computeResult = (args: Args): CommercialResult => {
     client: toRows(byClient, 'client'),
     sku: toRows(bySku, 'sku'),
   };
+
 
   // ---- Allocation (generic across dimensions) ----
   const totalInvestmentBase = budgetVal; // total budget available for the period (in thousands of BRL)
