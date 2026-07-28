@@ -1,44 +1,49 @@
-## Objetivo
+## Escopo
 
-Aplicar em **Metas Comerciais Preditivas** (`predictive-commercial-targets`) exatamente o padrão já consolidado em Personalização, Campanhas e Forecast:
+Aplicar 3 ajustes globais + refinos específicos no demo de **Metas Comerciais Preditivas**.
 
-1. Navegação com **SimulationLauncher** (card unificado RESOLVE/ENTREGA/IMPACTO + botão que abre modal a 90%).
-2. Signal e CTA de ebook **só aparecem depois de fechar a simulação**.
-3. Layout do modal empilhado: **resultados em cima**, **timeline horizontal de reasoning embaixo**, com **card "POR QUE"** logo acima da timeline.
-4. Fechar simulação pelo botão inferior "Conversar com a camada preditiva..." (sem X no topo).
+## 1. Cabeçalhos das tabelas (Metas Comerciais)
 
-## Alterações
+`src/components/kiosk/demos/CommercialTargetsDemo.tsx` — nas duas tabelas ("Meta atual × Meta preditiva" e "Alocação recomendada de investimento comercial"):
+- Reduzir a fonte do `<thead>` (ex.: `text-[1.15vmin]` → `text-[1vmin]`, uppercase mantido).
+- Permitir quebra em 2 linhas: remover `whitespace-nowrap` e aplicar `leading-tight` + `align-bottom` para alinhar o baseline entre colunas de 1 e 2 linhas.
+- Reservar altura mínima do header (`min-h-[3vmin]`) para não "pular" quando outros títulos ficarem em 1 linha.
+- Não altera larguras de coluna nem dados.
 
-### 1. `src/components/kiosk/SolutionDemoBlock.tsx`
-Substituir o branch atual:
-```
-if (solution.id === 'predictive-commercial-targets') {
-  return <CommercialTargetsDemo />;
-}
-```
-por wrapping em `SimulationLauncher`, passando `solution.title/tagline/resolve/entrega/impacto`, `labels`, `lang`, `onSimulationClosed` e um ícone coerente (ex.: `Target` do lucide). O `<CommercialTargetsDemo lang={lang} />` vira children.
+## 2. Reduzir para 3 linhas por dimensão + condições específicas
 
-### 2. `src/pages/Kiosk.tsx`
-Adicionar `'predictive-commercial-targets'` ao array `migratedIds`, para:
-- ocultar o `SolutionsGrid` do topo,
-- gating do Signal + EbookCTA atrás de `simulationCompleted`,
-- scroll para o Signal ao fechar a simulação.
+`src/data/kiosk/demos/commercialTargets.ts` — enxugar `baseRows` para que cada dimensão (Região, Vendedor, Cliente, SKU) agregue exatamente **3 linhas** com um caso didático de cada ação:
 
-### 3. `src/components/kiosk/demos/CommercialTargetsDemo.tsx` — refatorar layout para padrão "empilhado"
-- Aceitar prop `lang` (usado só se necessário; L continua vindo de `commercialTargets.ts`).
-- Remover grid `grid-cols-[1.3fr_1fr]`. Estrutura nova:
-  - **Bloco superior (dashboard):** tabela de metas + tabela de alocação + KPIs (grid 4 colunas, todos os 4 KPIs em uma linha só, como no Forecast). Botão "Calcular" quando `phase === 'setup'`; estado "running" com spinner.
-  - **Card "POR QUE" (insight):** aparece só em `result`, largura total, acima da timeline.
-  - **Timeline horizontal de reasoning:** `pipeline.map` em `grid-cols-<N>` (mesmo estilo compacto usado em `DemandForecastDemo`), estados idle/active/done preservados.
-  - Botão "Nova simulação" no rodapé do bloco de resultado (permanece).
-- Manter drill-down modal existente (fica dentro do container). Ajustar `absolute inset-0` para funcionar dentro do novo layout empilhado.
-- Latência/tempos: manter a lógica atual do `useEffect` de `pipeline`.
+- **Aumentar** → uma linha com alta demanda projetada e CAC baixo (delta positivo > +10%).
+- **Manter** → uma linha estável (delta entre -5% e +5%).
+- **Reduzir** → uma linha com meta atual acima do potencial (delta negativo, CAC alto).
 
-### 4. Ícone
-Importar `Target` (ou `Crosshair`) do `lucide-react` em `SolutionDemoBlock.tsx` e passar via prop `icon` do launcher — coerente com "metas".
+Como o motor `computeResult` deriva as tabelas via agrupamento (`byRegion`, `byRep`, `byClient`, `bySku`), enxugar de 16 SKUs para ~9 linhas balanceadas garante 3 grupos por dimensão com os três comportamentos. A tabela `Cliente` passa a mostrar 3 clientes; a tabela `SKU` passa a mostrar 3 SKUs. Nenhuma mudança na lógica de compute.
+
+## 3. Limpar títulos de explicabilidade em TODAS as telas
+
+Remover o sufixo do modelo e a linha de subtítulo nos seguintes arquivos:
+
+| Arquivo | Alteração |
+|---|---|
+| `src/data/kiosk/demos/commercialTargets.ts` | `reasoningTitle: 'Explicabilidade e raciocínio do modelo'`; `reasoningSubtitle: ''` |
+| `src/data/kiosk/demos/demandForecast.ts` (PT+EN) | idem (`'Explainability and model reasoning'` no EN) |
+| `src/data/kiosk/demos/predictivePersonalization.ts` (PT+EN) | idem |
+| `src/data/kiosk/demos/propensityCampaign.ts` | idem |
+| `src/data/kiosk/demos/priceToMargin.ts` (PT+EN) | idem |
+| `src/data/kiosk/demos/mixAssortmentOrder.ts` | idem |
+
+Nos componentes que renderizam esse cabeçalho (`CommercialTargetsDemo`, `DemandForecastDemo`, `PredictivePersonalizationDemo`, `PropensityCampaignDemo`, `PriceToMarginDemo`, `MixAssortmentOrderDemo`), envolver a `<p>` do subtitle em `{reasoningSubtitle && <p>...</p>}` para não deixar espaço em branco quando vazio.
+
+## 4. Renomear KPIs — Metas Comerciais
+
+`src/data/kiosk/demos/commercialTargets.ts` (labels.result):
+- `kpiVolume`: `"VOLUME INCREMENTAL POTENCIAL"` → **`"POTENCIAL INCREMENTAL"`**
+- `kpiInvestment`: `"INVESTIMENTO COMERCIAL SUGERIDO"` → **`"INVESTIMENTO SUGERIDO"`**
+- `kpiCac`: `"CAC INCREMENTAL PROJETADO"` → **`"CAC ADICIONAL PROJETADO"`**
+- `kpiTotalTarget` (Meta total recomendada) — não mencionado, mantido.
 
 ## Fora do escopo
 
-- Sem mudanças em textos, KPIs, dados ou fórmulas de `src/data/kiosk/demos/commercialTargets.ts`.
-- Sem mudanças em Mix/Sortimento (próximo passo).
-- Sem bump de versão até validação visual.
+- Sem bump de versão.
+- Sem mudanças em lógica de cálculo, animações ou navegação.
