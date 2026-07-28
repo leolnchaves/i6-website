@@ -1,274 +1,193 @@
-import type { KioskLang } from '@/data/kiosk/config';
-import p1 from '@/assets/kiosk/product-1.jpg';
-import p2 from '@/assets/kiosk/product-2.jpg';
-import p3 from '@/assets/kiosk/product-3.jpg';
-import p4 from '@/assets/kiosk/product-4.jpg';
+// PT-only dataset for the "Preço Orientado à Conversão" kiosk demo.
 
-export interface DemoProduct {
+export type ConversionAction = 'aumentar' | 'manter' | 'reduzir';
+
+export interface CompetitorBand {
+  min: number;
+  max: number;
+}
+
+export interface AlternativeScenario {
+  id: 'conservative' | 'recommended' | 'aggressive';
+  label: string;
+  price: number;
+  deltaConversion: string;
+  deltaRevenue: string;
+}
+
+export interface PriceConversionSku {
   id: string;
   name: string;
-  image: string;
-  category: string;
-  cost: number;
+  category: string; // display
+  categoryId: string; // for filter matching
+  channelId: string;
+  action: ConversionAction;
+  sessionsPerDay: number;
+  currentConversionPct: number;
+  elasticity: number;
+  competitivePosition: 'below' | 'inline' | 'above';
   currentPrice: number;
-  currentMargin: number; // %
-  turnover: string;
-  recommendedPrice: number;
-  recommendedMargin: number; // %
+  competitorPrice: number;
+  competitorBand: CompetitorBand;
+  optimalPrice: number;
+  rangeMin: number;
+  rangeMax: number;
+  confidencePct: number;
+  deltaConversionPct: number; // pp
   deltaRevenuePct: number; // %
-  deltaMarginPct: number; // % absolute points
-  deltaConversionPct: number; // % relative
-  insight: string;
+  argument: string;
+  alternatives: [AlternativeScenario, AlternativeScenario, AlternativeScenario];
 }
 
 export interface PipelineStep {
   label: string;
-  microMetric: string;
+  micro: string;
   durationMs: number;
 }
 
-export interface PriceToMarginDemoContent {
-  scenarioTitle: string;
-  scenarioSubtitle: string;
-  storeName: string;
-  catalogLabel: string;
-  pickHint: string;
-  zoomHint: string;
-  backToCatalog: string;
-  idealPriceBadge: string;
-  analyzingLabel: string;
-  productLabels: {
-    cost: string;
-    price: string;
-    margin: string;
-    turnover: string;
-    recommended: string;
-    deltaRevenue: string;
-    deltaMargin: string;
-    deltaConversion: string;
-    latency: string;
-    latencyHint: string;
-  };
+export const pipeline: PipelineStep[] = [
+  { label: 'Sessões e intenção',   micro: 'Cliques, buscas, carrinhos, tempo em página',       durationMs: 900 },
+  { label: 'Clusters de intenção', micro: 'Segmentando sensibilidade a preço e recorrência',   durationMs: 900 },
+  { label: 'Elasticidade de conversão', micro: 'Simulando resposta em milhares de cenários',   durationMs: 950 },
+  { label: 'Restrições comerciais', micro: 'Piso de margem, banda concorrente, política',      durationMs: 850 },
+  { label: 'Preço ideal para converter', micro: 'Faixa + confiança + alternativas',            durationMs: 800 },
+];
 
-  objectiveLabel: string;
-  reasoningTitle: string;
-  reasoningSubtitle: string;
-  pipeline: PipelineStep[];
-  ctaLabel: string;
-  rationaleLabel: string;
-  doneLabel: string;
-  products: DemoProduct[];
-}
-
-const productsPt: DemoProduct[] = [
+export const skus: PriceConversionSku[] = [
   {
     id: 'sku-1',
     name: 'Hidratante Facial 200ml',
-    image: p1,
     category: 'Skincare',
-    cost: 24.5,
+    categoryId: 'skincare',
+    channelId: 'b2c',
+    action: 'reduzir',
+    sessionsPerDay: 4820,
+    currentConversionPct: 2.1,
+    elasticity: -1.85,
+    competitivePosition: 'above',
     currentPrice: 49.9,
-    currentMargin: 50.9,
-    turnover: '18 un/sem',
-    recommendedPrice: 44.7,
-    recommendedMargin: 45.2,
-    deltaRevenuePct: 8.3,
-    deltaMarginPct: -5.7,
+    competitorPrice: 44.5,
+    competitorBand: { min: 42, max: 46 },
+    optimalPrice: 44.7,
+    rangeMin: 43.4,
+    rangeMax: 45.9,
+    confidencePct: 92,
     deltaConversionPct: 18.3,
-    insight: 'Abandono de carrinho >62% e sessões repetidas mostram hesitação. Pequeno corte destrava a conversão do cluster de fim de semana sem canibalizar o premium.',
+    deltaRevenuePct: 8.3,
+    argument:
+      'Elasticidade alta (−1,85) e SKU 12% acima da banda concorrente (R$ 42–46), com 62% de abandono de carrinho e 3+ visitas antes de converter. Ajustar para dentro da banda destrava o cluster de fim de semana sem canibalizar o premium, capturando +18,3 pp de conversão em 7 dias.',
+    alternatives: [
+      { id: 'conservative', label: 'Conservador', price: 45.9, deltaConversion: '+11,2 pp', deltaRevenue: '+5,4%' },
+      { id: 'recommended',  label: 'Recomendado', price: 44.7, deltaConversion: '+18,3 pp', deltaRevenue: '+8,3%' },
+      { id: 'aggressive',   label: 'Agressivo',   price: 43.4, deltaConversion: '+24,1 pp', deltaRevenue: '+6,8%' },
+    ],
   },
   {
     id: 'sku-2',
     name: 'Suplemento Vitamina D 60cps',
-    image: p2,
     category: 'Nutrição',
-    cost: 18.2,
+    categoryId: 'nutricao',
+    channelId: 'b2c',
+    action: 'reduzir',
+    sessionsPerDay: 3140,
+    currentConversionPct: 3.4,
+    elasticity: -1.35,
+    competitivePosition: 'above',
     currentPrice: 39.9,
-    currentMargin: 54.4,
-    turnover: '32 un/sem',
-    recommendedPrice: 37.3,
-    recommendedMargin: 51.2,
-    deltaRevenuePct: 6.1,
-    deltaMarginPct: -3.2,
+    competitorPrice: 36.9,
+    competitorBand: { min: 35, max: 38 },
+    optimalPrice: 37.3,
+    rangeMin: 36.4,
+    rangeMax: 38.2,
+    confidencePct: 89,
     deltaConversionPct: 11.7,
-    insight: '71% do drop-off está na 1ª compra da assinatura, com 3+ visitas antes de converter. O ajuste destrava o funil recorrente — LTV compensa já no 2º pedido.',
+    deltaRevenuePct: 6.1,
+    argument:
+      '71% do drop-off na primeira compra da assinatura, com 3+ visitas até converter. Elasticidade −1,35 e ticket acima da banda (R$ 35–38): reduzir para R$ 37,30 destrava o funil recorrente — LTV compensa o corte já no 2º pedido e captura +11,7 pp de conversão.',
+    alternatives: [
+      { id: 'conservative', label: 'Conservador', price: 38.2, deltaConversion: '+7,4 pp', deltaRevenue: '+4,2%' },
+      { id: 'recommended',  label: 'Recomendado', price: 37.3, deltaConversion: '+11,7 pp', deltaRevenue: '+6,1%' },
+      { id: 'aggressive',   label: 'Agressivo',   price: 36.4, deltaConversion: '+15,2 pp', deltaRevenue: '+4,8%' },
+    ],
   },
   {
     id: 'sku-3',
     name: 'Shampoo Reparador 400ml',
-    image: p3,
     category: 'Haircare',
-    cost: 12.8,
+    categoryId: 'haircare',
+    channelId: 'retail',
+    action: 'aumentar',
+    sessionsPerDay: 2380,
+    currentConversionPct: 5.2,
+    elasticity: -0.32,
+    competitivePosition: 'below',
     currentPrice: 28.9,
-    currentMargin: 55.7,
-    turnover: '46 un/sem',
-    recommendedPrice: 29.9,
-    recommendedMargin: 57.2,
+    competitorPrice: 31.5,
+    competitorBand: { min: 30, max: 33 },
+    optimalPrice: 30.4,
+    rangeMin: 29.6,
+    rangeMax: 31.4,
+    confidencePct: 90,
+    deltaConversionPct: -1.4,
     deltaRevenuePct: 4.2,
-    deltaMarginPct: 1.5,
-    deltaConversionPct: 9.4,
-    insight: 'Recorrentes (61% do volume) têm baixa sensibilidade a preço e checkout <90s. Elasticidade de −0,3 sustenta o reajuste sem afastar novos compradores.',
-  },
-  {
-    id: 'sku-4',
-    name: 'Protetor Solar FPS 60',
-    image: p4,
-    category: 'Sazonal',
-    cost: 21.4,
-    currentPrice: 54.9,
-    currentMargin: 61.0,
-    turnover: '24 un/sem',
-    recommendedPrice: 47.9,
-    recommendedMargin: 55.3,
-    deltaRevenuePct: 13.6,
-    deltaMarginPct: -5.7,
-    deltaConversionPct: 22.1,
-    insight: 'Buscas +38% e 3,2 abas por sessão indicam comprador indeciso. Reduzir o ticket agora captura a conversão na janela de 48h, antes da concorrência reagir.',
+    argument:
+      'Recorrentes representam 61% do volume, com baixa sensibilidade a preço (elasticidade −0,32) e checkout <90s. Preço 8% abaixo da banda (R$ 30–33): aumento controlado captura R$ 1,50 de ticket sem afastar novos compradores — queda esperada de conversão fica em −1,4 pp, com +4,2% em receita líquida.',
+    alternatives: [
+      { id: 'conservative', label: 'Conservador', price: 29.6, deltaConversion: '−0,4 pp', deltaRevenue: '+2,0%' },
+      { id: 'recommended',  label: 'Recomendado', price: 30.4, deltaConversion: '−1,4 pp', deltaRevenue: '+4,2%' },
+      { id: 'aggressive',   label: 'Agressivo',   price: 31.4, deltaConversion: '−2,8 pp', deltaRevenue: '+5,1%' },
+    ],
   },
 ];
 
-const productsEn: DemoProduct[] = [
-  {
-    id: 'sku-1',
-    name: 'Facial Moisturizer 200ml',
-    image: p1,
-    category: 'Skincare',
-    cost: 24.5,
-    currentPrice: 49.9,
-    currentMargin: 50.9,
-    turnover: '18 u/wk',
-    recommendedPrice: 44.7,
-    recommendedMargin: 45.2,
-    deltaRevenuePct: 8.3,
-    deltaMarginPct: -5.7,
-    deltaConversionPct: 18.3,
-    insight: 'Cart abandonment >62% and repeat sessions signal hesitation. A small cut unlocks weekend-cluster conversion without cannibalizing premium.',
-  },
-  {
-    id: 'sku-2',
-    name: 'Vitamin D Supplement 60ct',
-    image: p2,
-    category: 'Nutrition',
-    cost: 18.2,
-    currentPrice: 39.9,
-    currentMargin: 54.4,
-    turnover: '32 u/wk',
-    recommendedPrice: 37.3,
-    recommendedMargin: 51.2,
-    deltaRevenuePct: 6.1,
-    deltaMarginPct: -3.2,
-    deltaConversionPct: 11.7,
-    insight: '71% of drop-off sits on the first subscription order, with 3+ visits before converting. The move opens the recurring funnel — LTV offsets it from the 2nd order onward.',
-  },
-  {
-    id: 'sku-3',
-    name: 'Repair Shampoo 400ml',
-    image: p3,
-    category: 'Haircare',
-    cost: 12.8,
-    currentPrice: 28.9,
-    currentMargin: 55.7,
-    turnover: '46 u/wk',
-    recommendedPrice: 29.9,
-    recommendedMargin: 57.2,
-    deltaRevenuePct: 4.2,
-    deltaMarginPct: 1.5,
-    deltaConversionPct: 9.4,
-    insight: 'Returning buyers (61% of volume) show low price sensitivity and <90s checkout. Elasticity of −0.3 supports the raise without losing new buyers.',
-  },
-  {
-    id: 'sku-4',
-    name: 'Sunscreen SPF 60',
-    image: p4,
-    category: 'Seasonal',
-    cost: 21.4,
-    currentPrice: 54.9,
-    currentMargin: 61.0,
-    turnover: '24 u/wk',
-    recommendedPrice: 47.9,
-    recommendedMargin: 55.3,
-    deltaRevenuePct: 13.6,
-    deltaMarginPct: -5.7,
-    deltaConversionPct: 22.1,
-    insight: 'Searches +38% and 3.2 parallel tabs per session signal an undecided buyer. Cutting the ticket now captures conversion in the 48h window, before competitors react.',
-  },
-];
+export const filterOptions = {
+  category: [
+    { value: 'all', label: 'Todas as categorias' },
+    { value: 'skincare', label: 'Skincare' },
+    { value: 'nutricao', label: 'Nutrição' },
+    { value: 'haircare', label: 'Haircare' },
+  ],
+  channel: [
+    { value: 'all', label: 'Todos os canais' },
+    { value: 'b2b', label: 'B2B · Distribuidores' },
+    { value: 'b2c', label: 'B2C · E-commerce' },
+    { value: 'retail', label: 'Varejo físico' },
+  ],
+  strategy: [
+    { value: 'conversion', label: 'Maximizar conversão' },
+    { value: 'balanced', label: 'Equilíbrio conversão/receita' },
+    { value: 'revenue', label: 'Proteger receita' },
+  ],
+  minMargin: [
+    { value: '25', label: '≥ 25%' },
+    { value: '30', label: '≥ 30%' },
+    { value: '35', label: '≥ 35%' },
+    { value: '40', label: '≥ 40%' },
+  ],
+  competitiveBand: [
+    { value: 'strict', label: 'Alinhado' },
+    { value: 'medium', label: '±5% da banda' },
+    { value: 'wide', label: '±10% da banda' },
+  ],
+};
 
-export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
-  pt: {
-    scenarioTitle: 'VivaShop B2B',
-    scenarioSubtitle: 'Catálogo · Precificação orientada a conversão',
-    storeName: 'VivaShop B2B',
-    catalogLabel: 'Catálogo',
-    pickHint: 'Toque em um produto para descobrir o preço ideal de conversão',
-    zoomHint: 'Analisando o produto',
-    backToCatalog: '← Escolher outro produto',
-    idealPriceBadge: 'Preço ideal',
-    analyzingLabel: 'Aguarde · o modelo está pensando',
-    productLabels: {
-      cost: 'Custo',
-      price: 'Preço',
-      margin: 'Margem',
-      turnover: 'Giro',
-      recommended: 'Preço recomendado',
-      deltaRevenue: 'Δ Receita',
-      deltaMargin: 'Δ Margem',
-      deltaConversion: 'Δ Conversão',
-      latency: 'Latência do modelo',
-      latencyHint: 'média mercado ~180 ms',
-    },
+export const fmtBRL = (n: number) => `R$ ${n.toFixed(2).replace('.', ',')}`;
 
-    objectiveLabel: 'Objetivo: conversão',
-    reasoningTitle: 'Explicabilidade e raciocínio do modelo',
-    reasoningSubtitle: '',
-    pipeline: [
-      { label: 'Lendo sessões, cliques e carrinhos abandonados', microMetric: '48.612 sessões · janela de 30 dias', durationMs: 1400 },
-      { label: 'Segmentando clusters de intenção e sensibilidade', microMetric: '6 clusters ativos · cluster dominante: 42%', durationMs: 1400 },
-      { label: 'Simulando resposta de conversão em 10.000 cenários', microMetric: 'elasticidade de conversão estimada: -1.8', durationMs: 1800 },
-      { label: 'Otimizando para conversão com piso de margem', microMetric: 'restrições: margem mínima · sinal competitivo', durationMs: 1600 },
-      { label: 'Recomendando preço ideal para converter', microMetric: 'confiança: 94%', durationMs: 1200 },
-    ],
-    ctaLabel: 'Aplicar preço',
-    rationaleLabel: 'Por que este preço',
-    doneLabel: 'Recomendação pronta',
-    products: productsPt,
-  },
-  en: {
-    scenarioTitle: 'VivaShop B2B',
-    scenarioSubtitle: 'Catalog · Conversion-driven pricing',
-    storeName: 'VivaShop B2B',
-    catalogLabel: 'Catalog',
-    pickHint: 'Tap a product to reveal the ideal conversion price',
-    zoomHint: 'Analyzing product',
-    backToCatalog: '← Pick another product',
-    idealPriceBadge: 'Ideal price',
-    analyzingLabel: 'Please wait · the model is thinking',
-    productLabels: {
-      cost: 'Cost',
-      price: 'Price',
-      margin: 'Margin',
-      turnover: 'Turnover',
-      recommended: 'Recommended price',
-      deltaRevenue: 'Δ Revenue',
-      deltaMargin: 'Δ Margin',
-      deltaConversion: 'Δ Conversion',
-      latency: 'Model latency',
-      latencyHint: 'market avg ~180 ms',
-    },
+export const actionLabel: Record<ConversionAction, string> = {
+  aumentar: 'Aumentar preço',
+  manter: 'Manter preço',
+  reduzir: 'Reduzir preço',
+};
 
-    objectiveLabel: 'Objective: conversion',
-    reasoningTitle: 'Explainability and model reasoning',
-    reasoningSubtitle: '',
-    pipeline: [
-      { label: 'Reading sessions, clicks and abandoned carts', microMetric: '48,612 sessions · 30-day window', durationMs: 1400 },
-      { label: 'Segmenting intent and price-sensitivity clusters', microMetric: '6 active clusters · dominant cluster: 42%', durationMs: 1400 },
-      { label: 'Simulating conversion response across 10,000 scenarios', microMetric: 'estimated conversion elasticity: -1.8', durationMs: 1800 },
-      { label: 'Optimizing for conversion with a margin floor', microMetric: 'constraints: min margin · competitive signal', durationMs: 1600 },
-      { label: 'Recommending the ideal price to convert', microMetric: 'confidence: 94%', durationMs: 1200 },
-    ],
-    ctaLabel: 'Apply price',
-    rationaleLabel: 'Why this price',
-    doneLabel: 'Recommendation ready',
-    products: productsEn,
-  },
+// Short synthesis of what the model learned across the visible portfolio.
+export const generalInsightFor = (list: PriceConversionSku[]): string => {
+  if (list.length === 0) return 'Nenhum SKU no filtro atual.';
+  const up = list.filter((s) => s.action === 'aumentar').length;
+  const keep = list.filter((s) => s.action === 'manter').length;
+  const down = list.filter((s) => s.action === 'reduzir').length;
+  const parts: string[] = [];
+  if (up)   parts.push(`${up} com elasticidade baixa e preço abaixo da banda → subir para capturar receita`);
+  if (keep) parts.push(`${keep} alinhado(s) à banda e com conversão estável → manter`);
+  if (down) parts.push(`${down} acima da banda com elasticidade alta → reduzir para destravar conversão`);
+  return `O modelo aprendeu, por SKU, elasticidade de conversão, posição vs. concorrente, sinal de intenção (sessões, abandono, tempo) e piso de margem. ${parts.join('; ')}.`;
 };
