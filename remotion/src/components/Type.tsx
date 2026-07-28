@@ -7,8 +7,8 @@ import { useSceneDuration } from './SceneContext';
 const useExit = (lead = 0) => {
   const frame = useCurrentFrame();
   const duration = useSceneDuration();
-  const start = duration - 22 + lead;
-  return interpolate(frame, [start, duration - 4], [0, 1], {
+  const start = duration - 16 + lead;
+  return interpolate(frame, [start, duration - 2], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
