@@ -119,7 +119,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
 
             {/* Target table */}
             <div className="rounded-xl border border-white/10 overflow-hidden">
-              <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.15vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
+              <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr] gap-[0.6vmin] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1vmin] uppercase tracking-[0.18em] font-semibold text-white/60 leading-tight items-end min-h-[3vmin]">
                 <span>{dimensions.find((d) => d.id === dim)?.label}</span>
                 <span className="text-right">{L.result.tableCurrent}</span>
                 <span className="text-right">{L.result.tableSuggested}</span>
