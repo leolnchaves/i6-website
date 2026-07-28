@@ -1,49 +1,54 @@
-## Escopo
 
-Aplicar 3 ajustes globais + refinos específicos no demo de **Metas Comerciais Preditivas**.
+## Objetivo
+Aplicar em **Mix, Sortimento e Pedido Ideal** (`mix-assortment-order`) o mesmo padrão que já foi consolidado em Personalização, Campanhas, Forecast e Metas Comerciais.
 
-## 1. Cabeçalhos das tabelas (Metas Comerciais)
+## 1. Navegação (Kiosk.tsx)
+- Adicionar `'mix-assortment-order'` ao array `migratedIds` em `src/pages/Kiosk.tsx`.
+- Isso oculta o card RESOLVE/ENTREGA/IMPACTO do topo, unifica no launcher, esconde i6 Signal + EbookCTA até a simulação ser concluída e habilita o auto-scroll para o Signal ao fechar o modal.
 
-`src/components/kiosk/demos/CommercialTargetsDemo.tsx` — nas duas tabelas ("Meta atual × Meta preditiva" e "Alocação recomendada de investimento comercial"):
-- Reduzir a fonte do `<thead>` (ex.: `text-[1.15vmin]` → `text-[1vmin]`, uppercase mantido).
-- Permitir quebra em 2 linhas: remover `whitespace-nowrap` e aplicar `leading-tight` + `align-bottom` para alinhar o baseline entre colunas de 1 e 2 linhas.
-- Reservar altura mínima do header (`min-h-[3vmin]`) para não "pular" quando outros títulos ficarem em 1 linha.
-- Não altera larguras de coluna nem dados.
+## 2. Launcher (SolutionDemoBlock.tsx)
+- Substituir o retorno atual de `mix-assortment-order` (que renderiza `<MixAssortmentOrderDemo />` direto) por um `SimulationLauncher` idêntico ao de Metas Comerciais/Forecast:
+  - `solutionTitle`, `solutionTagline`, `resolve/entrega/impacto`, `labels`, `onSimulationClosed`.
+  - Ícone: `LayoutGrid` (lucide) — mais coerente com sortimento/mix.
 
-## 2. Reduzir para 3 linhas por dimensão + condições específicas
+## 3. Layout do modal (MixAssortmentOrderDemo.tsx)
+Refatorar de layout lado-a-lado (grid 1.35fr / 1fr) para o padrão **empilhado** já usado nas outras jornadas migradas:
 
-`src/data/kiosk/demos/commercialTargets.ts` — enxugar `baseRows` para que cada dimensão (Região, Vendedor, Cliente, SKU) agregue exatamente **3 linhas** com um caso didático de cada ação:
+```text
+┌──────────────────────────────────────────────┐
+│ Dashboard (filtros + comparação + carrinho + │
+│ KPIs) — largura total                        │
+├──────────────────────────────────────────────┤
+│ POR QUE (card destaque coral, largura total) │
+├──────────────────────────────────────────────┤
+│ Timeline horizontal (pipeline em linha)      │
+└──────────────────────────────────────────────┘
+```
 
-- **Aumentar** → uma linha com alta demanda projetada e CAC baixo (delta positivo > +10%).
-- **Manter** → uma linha estável (delta entre -5% e +5%).
-- **Reduzir** → uma linha com meta atual acima do potencial (delta negativo, CAC alto).
+Detalhes:
+- Remover o `grid grid-cols-[1.35fr_1fr]` externo; blocos passam a ocupar `w-full`.
+- Extrair o card "Insight/POR QUE" (hoje na coluna direita, abaixo do pipeline) e movê-lo para **acima** da timeline, com o mesmo estilo destacado (`bg-[#F4845F]/15`, badge Sparkles) já usado em Forecast/Metas.
+- Converter o pipeline vertical em **timeline horizontal**: `flex flex-row` com steps em colunas iguais e conector entre bolinhas numeradas, idêntico ao de `CommercialTargetsDemo` / `DemandForecastDemo`.
+- Ajustar fontes/paddings (vmin) para caber tudo em 27" retrato sem scroll horizontal e minimizando scroll vertical.
 
-Como o motor `computeResult` deriva as tabelas via agrupamento (`byRegion`, `byRep`, `byClient`, `bySku`), enxugar de 16 SKUs para ~9 linhas balanceadas garante 3 grupos por dimensão com os três comportamentos. A tabela `Cliente` passa a mostrar 3 clientes; a tabela `SKU` passa a mostrar 3 SKUs. Nenhuma mudança na lógica de compute.
+## 4. Limpeza global de rotulagem de Explicabilidade
+Aplicar em todos os arquivos de dados de demo (para cumprir a regra já registrada nas outras jornadas):
+- `src/data/kiosk/demos/mixAssortmentOrder.ts`
+- `src/data/kiosk/demos/demandForecast.ts`
+- `src/data/kiosk/demos/predictivePersonalization.ts`
+- `src/data/kiosk/demos/propensityCampaign.ts`
+- `src/data/kiosk/demos/priceToMargin.ts`
 
-## 3. Limpar títulos de explicabilidade em TODAS as telas
+Ações:
+- `reasoningTitle` → `Explicabilidade e raciocínio do modelo` (sem sufixo `• i6XXX`).
+- `reasoningSubtitle` → string vazia.
 
-Remover o sufixo do modelo e a linha de subtítulo nos seguintes arquivos:
+E nos componentes `PredictivePersonalizationDemo`, `PropensityCampaignDemo`, `DemandForecastDemo`, `PriceToMarginDemo`, `MixAssortmentOrderDemo`: manter o `subtitle` já condicional (`{L.reasoningSubtitle && <p>...</p>}`) para não renderizar linha vazia.
 
-| Arquivo | Alteração |
-|---|---|
-| `src/data/kiosk/demos/commercialTargets.ts` | `reasoningTitle: 'Explicabilidade e raciocínio do modelo'`; `reasoningSubtitle: ''` |
-| `src/data/kiosk/demos/demandForecast.ts` (PT+EN) | idem (`'Explainability and model reasoning'` no EN) |
-| `src/data/kiosk/demos/predictivePersonalization.ts` (PT+EN) | idem |
-| `src/data/kiosk/demos/propensityCampaign.ts` | idem |
-| `src/data/kiosk/demos/priceToMargin.ts` (PT+EN) | idem |
-| `src/data/kiosk/demos/mixAssortmentOrder.ts` | idem |
-
-Nos componentes que renderizam esse cabeçalho (`CommercialTargetsDemo`, `DemandForecastDemo`, `PredictivePersonalizationDemo`, `PropensityCampaignDemo`, `PriceToMarginDemo`, `MixAssortmentOrderDemo`), envolver a `<p>` do subtitle em `{reasoningSubtitle && <p>...</p>}` para não deixar espaço em branco quando vazio.
-
-## 4. Renomear KPIs — Metas Comerciais
-
-`src/data/kiosk/demos/commercialTargets.ts` (labels.result):
-- `kpiVolume`: `"VOLUME INCREMENTAL POTENCIAL"` → **`"POTENCIAL INCREMENTAL"`**
-- `kpiInvestment`: `"INVESTIMENTO COMERCIAL SUGERIDO"` → **`"INVESTIMENTO SUGERIDO"`**
-- `kpiCac`: `"CAC INCREMENTAL PROJETADO"` → **`"CAC ADICIONAL PROJETADO"`**
-- `kpiTotalTarget` (Meta total recomendada) — não mencionado, mantido.
-
-## Fora do escopo
-
-- Sem bump de versão.
-- Sem mudanças em lógica de cálculo, animações ou navegação.
+## 5. Verificação
+- Rodar typecheck.
+- Conferir visualmente no /kiosk que:
+  - card RESOLVE/ENTREGA/IMPACTO só aparece no launcher unificado;
+  - Signal + Ebook aparecem apenas após fechar simulação;
+  - modal usa layout empilhado com POR QUE acima da timeline horizontal;
+  - sem scroll horizontal e o subtítulo "Pipeline preditivo…" some em todas as demos.
