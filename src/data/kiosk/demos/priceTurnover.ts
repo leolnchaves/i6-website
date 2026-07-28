@@ -1,6 +1,6 @@
 // PT-only dataset for the "Preço Orientado ao Giro" kiosk demo.
 
-export type ClusterAction = 'hold' | 'markdown' | 'wait';
+export type ClusterAction = 'hold' | 'markdown' | 'wait' | 'raise';
 
 export interface SkuRow {
   sku: string;
