@@ -119,7 +119,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
 
             {/* Target table */}
             <div className="rounded-xl border border-white/10 overflow-hidden">
-              <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1.15vmin] uppercase tracking-[0.2em] font-semibold text-white/60">
+              <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr] gap-[0.6vmin] px-[1.4vmin] py-[1vmin] bg-white/[0.05] text-[1vmin] uppercase tracking-[0.18em] font-semibold text-white/60 leading-tight items-end min-h-[3vmin]">
                 <span>{dimensions.find((d) => d.id === dim)?.label}</span>
                 <span className="text-right">{L.result.tableCurrent}</span>
                 <span className="text-right">{L.result.tableSuggested}</span>
@@ -192,7 +192,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
                   {L.result.allocationTitle}
                 </span>
               </div>
-              <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr] px-[1.4vmin] py-[0.8vmin] bg-white/[0.02] text-[1.1vmin] uppercase tracking-[0.18em] font-semibold text-white/55 border-t border-white/10">
+              <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr] gap-[0.6vmin] px-[1.4vmin] py-[0.8vmin] bg-white/[0.02] text-[0.95vmin] uppercase tracking-[0.16em] font-semibold text-white/55 border-t border-white/10 leading-tight items-end min-h-[3vmin]">
                 <span>{dimensions.find((d) => d.id === dim)?.label}</span>
                 <span className="text-right">{L.result.allocationGrowth}</span>
                 <span className="text-right">{L.result.allocationCurrent}</span>
@@ -280,7 +280,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
           <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
             <div>
               <h4 className="text-[1.9vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
-              <p className="text-[1.35vmin] text-white/60">{L.reasoningSubtitle}</p>
+              {L.reasoningSubtitle && <p className="text-[1.35vmin] text-white/60">{L.reasoningSubtitle}</p>}
             </div>
           </div>
 

@@ -292,7 +292,7 @@ const MixAssortmentOrderDemo = () => {
           <div className="flex items-center gap-[1.2vmin] mb-[1.2vmin]">
             <div className="flex-1">
               <h4 className="text-[2vmin] font-bold text-white leading-tight">{L.reasoningTitle}</h4>
-              <p className="text-[1.4vmin] text-white/60">{L.reasoningSubtitle}</p>
+              {L.reasoningSubtitle && <p className="text-[1.4vmin] text-white/60">{L.reasoningSubtitle}</p>}
             </div>
           </div>
 

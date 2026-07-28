@@ -102,8 +102,8 @@ export const labels = {
     cta: 'Calcular metas e investimento ideal',
   },
   running: 'Calculando metas e alocando investimento...',
-  reasoningTitle: 'Explicabilidade e raciocínio do modelo • i6RecSys',
-  reasoningSubtitle: 'Pipeline preditivo de metas e investimento.',
+  reasoningTitle: 'Explicabilidade e raciocínio do modelo',
+  reasoningSubtitle: '',
   result: {
     title: 'Meta atual × Meta preditiva',
     subtitle: 'Navegue pela dimensão e clique em uma linha para ver a composição.',
@@ -120,10 +120,10 @@ export const labels = {
     reset: 'Nova simulação',
     newSimulation: 'Nova simulação',
     mixTitle: 'Por que esse mix / sortimento',
-    kpiVolume: 'Volume incremental potencial',
+    kpiVolume: 'Potencial incremental',
     kpiTotalTarget: 'Meta total recomendada',
-    kpiInvestment: 'Investimento comercial sugerido',
-    kpiCac: 'CAC incremental projetado',
+    kpiInvestment: 'Investimento sugerido',
+    kpiCac: 'CAC adicional projetado',
     highlightsTitle: 'Onde a IA aponta oportunidade',
     hRegions: 'Regiões subexploradas',
     hClients: 'Clientes com pressão excessiva',
@@ -177,28 +177,12 @@ const REGIONS: { id: Exclude<RegionId, 'all'>; label: string }[] = [
 
 // Static plausible catalog
 export const baseRows: Row[] = [
-  // Interior de SP — Carlos
-  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Carlos', repId: 'carlos', client: 'Cliente A', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 1420, currentTarget: 1200, currentInvestment: 62, cac: 11.8 },
-  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Carlos', repId: 'carlos', client: 'Cliente A', clientTier: 'key', sku: 'SKU 04', category: 'catB', volume: 880, currentTarget: 850, currentInvestment: 38, cac: 13.4 },
-  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Carlos', repId: 'carlos', client: 'Cliente B', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 960, currentTarget: 900, currentInvestment: 42, cac: 12.6 },
-  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Carlos', repId: 'carlos', client: 'Cliente B', clientTier: 'longtail', sku: 'SKU 07', category: 'catC', volume: 520, currentTarget: 600, currentInvestment: 38, cac: 18.9 },
-  // Interior de SP — Marina
-  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Marina', repId: 'marina', client: 'Cliente C', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 1180, currentTarget: 900, currentInvestment: 48, cac: 11.2 },
-  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Marina', repId: 'marina', client: 'Cliente C', clientTier: 'key', sku: 'SKU 04', category: 'catB', volume: 720, currentTarget: 700, currentInvestment: 32, cac: 14.0 },
-  // Minas Gerais — Rafael
-  { region: 'Minas Gerais', regionId: 'mg', rep: 'Rafael', repId: 'rafael', client: 'Cliente D', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 640, currentTarget: 700, currentInvestment: 55, cac: 22.4 },
-  { region: 'Minas Gerais', regionId: 'mg', rep: 'Rafael', repId: 'rafael', client: 'Cliente D', clientTier: 'longtail', sku: 'SKU 07', category: 'catC', volume: 590, currentTarget: 600, currentInvestment: 42, cac: 21.1 },
-  { region: 'Minas Gerais', regionId: 'mg', rep: 'Rafael', repId: 'rafael', client: 'Cliente E', clientTier: 'key', sku: 'SKU 04', category: 'catB', volume: 700, currentTarget: 720, currentInvestment: 40, cac: 20.6 },
-  { region: 'Minas Gerais', regionId: 'mg', rep: 'Rafael', repId: 'rafael', client: 'Cliente E', clientTier: 'longtail', sku: 'SKU 09', category: 'catC', volume: 380, currentTarget: 460, currentInvestment: 26, cac: 24.0 },
-  // Minas Gerais — Marina
-  { region: 'Minas Gerais', regionId: 'mg', rep: 'Marina', repId: 'marina', client: 'Cliente F', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 820, currentTarget: 780, currentInvestment: 38, cac: 19.4 },
-  // Sul — Carlos
-  { region: 'Sul', regionId: 'sul', rep: 'Carlos', repId: 'carlos', client: 'Cliente G', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 1060, currentTarget: 950, currentInvestment: 44, cac: 13.8 },
-  { region: 'Sul', regionId: 'sul', rep: 'Carlos', repId: 'carlos', client: 'Cliente G', clientTier: 'key', sku: 'SKU 04', category: 'catB', volume: 780, currentTarget: 720, currentInvestment: 34, cac: 15.1 },
-  // Sul — Rafael
-  { region: 'Sul', regionId: 'sul', rep: 'Rafael', repId: 'rafael', client: 'Cliente H', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 920, currentTarget: 800, currentInvestment: 40, cac: 14.6 },
-  { region: 'Sul', regionId: 'sul', rep: 'Rafael', repId: 'rafael', client: 'Cliente H', clientTier: 'longtail', sku: 'SKU 07', category: 'catC', volume: 460, currentTarget: 520, currentInvestment: 26, cac: 19.8 },
-  { region: 'Sul', regionId: 'sul', rep: 'Rafael', repId: 'rafael', client: 'Cliente I', clientTier: 'longtail', sku: 'SKU 09', category: 'catC', volume: 420, currentTarget: 480, currentInvestment: 22, cac: 20.5 },
+  // AUMENTAR — alto potencial, meta atual muito abaixo do volume, CAC baixo
+  { region: 'Sul', regionId: 'sul', rep: 'Carlos', repId: 'carlos', client: 'Cliente A', clientTier: 'key', sku: 'SKU 01', category: 'catA', volume: 1400, currentTarget: 800, currentInvestment: 45, cac: 11.5 },
+  // MANTER — meta atual próxima do potencial capturável
+  { region: 'Interior de SP', regionId: 'sp-interior', rep: 'Marina', repId: 'marina', client: 'Cliente B', clientTier: 'key', sku: 'SKU 04', category: 'catB', volume: 900, currentTarget: 990, currentInvestment: 42, cac: 15.0 },
+  // REDUZIR — meta atual acima do potencial real, CAC alto
+  { region: 'Minas Gerais', regionId: 'mg', rep: 'Rafael', repId: 'rafael', client: 'Cliente C', clientTier: 'longtail', sku: 'SKU 07', category: 'catC', volume: 450, currentTarget: 850, currentInvestment: 55, cac: 22.5 },
 ];
 
 // ---- Compute ----
