@@ -244,7 +244,6 @@ const PriceMarginDemo = () => {
                       label="Faixa recomendada"
                       value={`${fmtBRL(derived.rangeMin)} – ${fmtBRL(derived.rangeMax)}`}
                     />
-                    <ConclusionCard label="Confiança" value={`${derived.confidencePct}%`} />
                   </div>
 
                   {/* Right: curve */}
