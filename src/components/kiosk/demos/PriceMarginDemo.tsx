@@ -158,7 +158,7 @@ const PriceMarginDemo = () => {
               <p className="text-[1.4vmin] text-white/60">
                 {showResult
                   ? 'Faixa recomendada, impacto em margem e volume por SKU.'
-                  : 'Selecione um SKU e ajuste restrições para simular a faixa ótima de preço.'}
+                  : 'Selecione os filtros e ajuste restrições para simular a faixa ótima de preço por SKU.'}
               </p>
             </div>
             <span className="text-[1.4vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] text-right">
