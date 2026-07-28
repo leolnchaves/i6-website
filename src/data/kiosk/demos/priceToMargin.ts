@@ -219,8 +219,8 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     },
 
     objectiveLabel: 'Objetivo: conversão',
-    reasoningTitle: 'Explicabilidade e raciocínio do modelo • i6RecSys',
-    reasoningSubtitle: 'Pipeline preditivo · i6ElasticPrice',
+    reasoningTitle: 'Explicabilidade e raciocínio do modelo',
+    reasoningSubtitle: '',
     pipeline: [
       { label: 'Lendo sessões, cliques e carrinhos abandonados', microMetric: '48.612 sessões · janela de 30 dias', durationMs: 1400 },
       { label: 'Segmentando clusters de intenção e sensibilidade', microMetric: '6 clusters ativos · cluster dominante: 42%', durationMs: 1400 },
@@ -257,8 +257,8 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     },
 
     objectiveLabel: 'Objective: conversion',
-    reasoningTitle: 'Explainability and model reasoning • i6RecSys',
-    reasoningSubtitle: 'Predictive pipeline · i6ElasticPrice',
+    reasoningTitle: 'Explainability and model reasoning',
+    reasoningSubtitle: '',
     pipeline: [
       { label: 'Reading sessions, clicks and abandoned carts', microMetric: '48,612 sessions · 30-day window', durationMs: 1400 },
       { label: 'Segmenting intent and price-sensitivity clusters', microMetric: '6 active clusters · dominant cluster: 42%', durationMs: 1400 },

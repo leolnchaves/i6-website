@@ -363,8 +363,8 @@ export const demoLabels = {
     objective: 'OBJETIVO: EFICIÊNCIA DO SUPPLY',
     scenarioTitle: 'Dashboard de planejamento',
     scenarioSubtitle: 'Forecast atual · próximos 12 meses',
-    reasoningTitle: 'Explicabilidade e raciocínio do modelo • i6RecSys',
-    reasoningSubtitle: 'i6 Forecast — mecanismo preditivo',
+    reasoningTitle: 'Explicabilidade e raciocínio do modelo',
+    reasoningSubtitle: '',
     filters: {
       sku: 'Produto',
       channel: 'Canal',
@@ -420,8 +420,8 @@ export const demoLabels = {
     objective: 'OBJECTIVE: SUPPLY EFFICIENCY',
     scenarioTitle: 'Planning dashboard',
     scenarioSubtitle: 'Current forecast · next 12 months',
-    reasoningTitle: 'Explainability and model reasoning • i6RecSys',
-    reasoningSubtitle: 'i6 Forecast — predictive engine',
+    reasoningTitle: 'Explainability and model reasoning',
+    reasoningSubtitle: '',
     filters: {
       sku: 'Product',
       channel: 'Channel',
