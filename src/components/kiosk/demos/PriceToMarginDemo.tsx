@@ -16,16 +16,15 @@ const uiCopy = {
   pt: {
     explainTitle: 'Explicabilidade e raciocínio do modelo',
     whyEyebrow: 'Por que este preço',
-    defaultWhy: 'O modelo cruza intenção da sessão, elasticidade por SKU e piso de margem para achar o preço com maior probabilidade de conversão.',
     newSim: 'Nova simulação',
   },
   en: {
     explainTitle: 'Model reasoning & explainability',
     whyEyebrow: 'Why this price',
-    defaultWhy: 'The model blends session intent, per-SKU elasticity and margin floor to find the price with the highest conversion probability.',
     newSim: 'New simulation',
   },
 } as const;
+
 
 const PriceToMarginDemo = ({ lang }: Props) => {
   const content = priceToMarginDemo[lang];
