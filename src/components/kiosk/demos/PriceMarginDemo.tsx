@@ -200,14 +200,20 @@ const PriceMarginDemo = () => {
                 </div>
               )}
               {filtered.map((s) => {
-                const active = s.id === selectedId;
+                const active = s.id === selectedId && showResult;
+                const rowDisabled = !showResult;
                 return (
                   <button
                     type="button"
                     key={s.id}
+                    disabled={rowDisabled}
                     onClick={() => setSelectedId(s.id)}
                     className={`w-full grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] items-center px-[1.4vmin] py-[1vmin] text-[1.35vmin] border-t border-white/10 text-left transition ${
-                      active ? 'bg-[#F4845F]/10' : 'hover:bg-white/[0.04]'
+                      active
+                        ? 'bg-[#F4845F]/10'
+                        : rowDisabled
+                        ? 'cursor-default'
+                        : 'hover:bg-white/[0.04]'
                     }`}
                   >
                     <span className="text-white/90 font-semibold leading-tight">
