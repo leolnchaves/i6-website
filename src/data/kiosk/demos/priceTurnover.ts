@@ -244,6 +244,11 @@ export const skuTemplatesByProduct: Record<
       { sku: 'BTA-TRM-109', name: 'Bota térmica premium vinho 39', currentPrice: 289.9, recommendedPrice: 278.9, markdownPct: 4, sellThroughProjectedPct: 71 },
       { sku: 'BTA-TRM-110', name: 'Bota térmica premium grafite 40', currentPrice: 289.9, recommendedPrice: 289.9, markdownPct: 0, sellThroughProjectedPct: 72 },
     ],
+    raise: [
+      { sku: 'BTA-TRM-101', name: 'Bota térmica premium marrom 38', currentPrice: 289.9, recommendedPrice: 313.1, markdownPct: -8, sellThroughProjectedPct: 82 },
+      { sku: 'BTA-TRM-102', name: 'Bota térmica premium preta 39', currentPrice: 289.9, recommendedPrice: 307.3, markdownPct: -6, sellThroughProjectedPct: 80 },
+      { sku: 'BTA-TRM-105', name: 'Bota térmica premium camel 41', currentPrice: 289.9, recommendedPrice: 318.9, markdownPct: -10, sellThroughProjectedPct: 78 },
+    ],
   },
   'sku-3': {
     hold: [
