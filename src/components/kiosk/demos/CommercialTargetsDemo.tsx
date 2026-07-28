@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Minus, Shuffle, Sparkles, X } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   dimensions,
   fmtBR,
   fmtBRL,
@@ -15,6 +14,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type AggregatedRow,
   type DimensionId,
 } from '@/data/kiosk/demos/commercialTargets';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 
 type Phase = 'setup' | 'running' | 'result';

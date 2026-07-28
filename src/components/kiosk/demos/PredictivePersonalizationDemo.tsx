@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Check, Sparkles, TrendingUp, User, UserX } from 'lucide-react';
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   catalogs,
   scenarios,
   uiLabels,
@@ -12,6 +11,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type UserMode,
   type Vertical,
 } from '@/data/kiosk/demos/predictivePersonalization';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Props {
   lang: KioskLang;

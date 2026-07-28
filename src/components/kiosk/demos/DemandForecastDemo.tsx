@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   buildSeries,
   demoLabels,
   pipeline,
@@ -10,6 +9,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type MonthPoint,
   type SkuDef,
 } from '@/data/kiosk/demos/demandForecast';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Props {
   lang: KioskLang;

@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   pipeline,
   clusters as allClusters,
   filterOptions,
@@ -17,6 +16,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type ClusterAction,
   type SkuRow,
 } from '@/data/kiosk/demos/priceTurnover';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 type Phase = 'setup' | 'running' | 'result';
 

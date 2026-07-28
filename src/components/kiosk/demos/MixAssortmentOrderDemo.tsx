@@ -3,7 +3,6 @@ import TouchSelect from '@/components/kiosk/ui/TouchSelect';
 
 import { ArrowDown, ArrowUp, Check, Minus, Plus, Repeat, Sparkles, X } from 'lucide-react';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   actionMeta,
   cartFor,
   contextFor,
@@ -21,6 +20,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type PdvId,
   type RegionId,
 } from '@/data/kiosk/demos/mixAssortmentOrder';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 type Phase = 'setup' | 'running' | 'result';
 

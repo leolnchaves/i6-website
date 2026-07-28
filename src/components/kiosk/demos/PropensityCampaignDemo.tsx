@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles, X } from 'lucide-react';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   channels,
   channelLabel,
   segments,
@@ -14,6 +13,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type SegmentId,
   type PeriodId,
 } from '@/data/kiosk/demos/propensityCampaign';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 type Phase = 'setup' | 'running' | 'result';
 

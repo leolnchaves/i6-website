@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
 import {
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   actionLabel,
   filterOptions,
   fmtBRL,
@@ -12,6 +11,7 @@ import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   type AlternativeScenario,
   type PriceMarginSku,
 } from '@/data/kiosk/demos/priceMargin';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 type Phase = 'setup' | 'running' | 'result';
 

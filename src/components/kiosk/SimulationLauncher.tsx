@@ -1,9 +1,9 @@
 import { useEffect, useState, type ReactNode, type ComponentType, type SVGProps } from 'react';
 import { Sparkles, X } from 'lucide-react';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
-import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Labels {
   resolve: string;
