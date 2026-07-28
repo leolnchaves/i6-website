@@ -498,7 +498,7 @@ export const signalDemoContent = {
       },
       turnoverMarkdown: {
         label: 'Régua de Markdown',
-        question: 'Quais SKUs devem entrar em markdown agora e qual régua de redução de preço é recomendada para cada cluster?',
+        question: 'Quais SKUs devem manter preço ou entrar em markdown nesse momento?',
         title: 'Markdown preditivo por SKU, região e ciclo de vida',
         analysis: 'O modelo recomenda iniciar markdown imediato para sete SKUs e manter o preço de outros onze produtos. O SKU A exige ação antecipada no Interior de Minas, onde um desconto inicial de 12% apresenta maior probabilidade de recuperar o giro e evitar uma liquidação mais profunda no fim do ciclo. Para o mesmo produto em São Paulo Premium, a recomendação é manter o preço atual por pelo menos 21 dias.\n\nO markdown de 12% para o SKU A foi recomendado porque aumenta o sell-through projetado de 39% para 68% no Interior de Minas. A ação antecipada preserva mais margem do que aguardar o envelhecimento do estoque e aplicar um desconto superior a 25% no encerramento do ciclo. A régua não é replicada nacionalmente. Cada cluster recebe uma recomendação diferente de acordo com velocidade de giro, sensibilidade ao preço, estoque, sazonalidade e comportamento local da demanda.',
         markdownRuler: {
