@@ -40,6 +40,10 @@ const computeOutcome = (
   minMargin: string,
   productId: string,
 ): Derived => {
+  const action: ClusterAction =
+    clusterActionByProduct[productId]?.[c.id] ?? c.action;
+  const ov = clusterOverridesByAction[action];
+
   const obj =
     objective === 'aggressive'
       ? { markdown: 1.35, sellThrough: 6, margin: -1.8, capital: 1.25 }
@@ -57,49 +61,51 @@ const computeOutcome = (
       ? { markdown: 1, sellThrough: 0, margin: 0, capital: 1 }
       : { markdown: 1.15, sellThrough: 2, margin: -0.8, capital: 1.1 };
 
-  const shift = c.action === 'markdown';
   const factor = obj.markdown * floor.markdown;
 
-  const markdownPct = shift
-    ? Math.round(c.recommendedMarkdownPct * factor)
-    : c.recommendedMarkdownPct;
-
-  const recommendedPrice = shift
-    ? Math.round(c.currentPrice * (1 - markdownPct / 100) * 10) / 10
-    : c.recommendedPrice;
+  let markdownPct = ov.recommendedMarkdownPct;
+  let recommendedPrice = c.currentPrice;
+  if (action === 'markdown') {
+    markdownPct = Math.round(ov.recommendedMarkdownPct * factor);
+    recommendedPrice = Math.round(c.currentPrice * (1 - markdownPct / 100) * 10) / 10;
+  } else if (action === 'raise') {
+    // markdownPct is negative for raise; objective/floor barely modulate
+    const risePct = Math.round(Math.abs(ov.recommendedMarkdownPct) * (0.9 + (factor - 1) * 0.15));
+    markdownPct = -risePct;
+    recommendedPrice = Math.round(c.currentPrice * (1 + risePct / 100) * 10) / 10;
+  }
 
   const sellThroughProjectedPct = clamp(
-    Math.round(c.sellThroughProjectedPct + obj.sellThrough + floor.sellThrough),
+    Math.round(ov.sellThroughProjectedPct + obj.sellThrough + floor.sellThrough),
     50,
     95,
   );
 
   const marginPreservedPp =
-    Math.round((c.marginPreservedPp + obj.margin + floor.margin) * 10) / 10;
+    Math.round((ov.marginPreservedPp + obj.margin + floor.margin) * 10) / 10;
 
   const capitalUnlockedBRL = Math.round(
-    (c.capitalUnlockedBRL * obj.capital * floor.capital) / 1000,
+    (ov.capitalUnlockedBRL * obj.capital * floor.capital) / 1000,
   ) * 1000;
 
-  const nextAction =
-    c.action === 'markdown' ? 'Markdown agora' : c.nextAction;
-
-  const template = skuTemplatesByProduct[productId]?.[c.action] ?? c.skus;
+  const template = skuTemplatesByProduct[productId]?.[action] ?? c.skus;
   const skus: SkuRow[] = template.map((s) => {
-    if (!shift || s.markdownPct === 0) return s;
-    const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
-    const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
-    return { ...s, markdownPct: mdPct, recommendedPrice: price };
+    if (action === 'markdown' && s.markdownPct > 0) {
+      const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
+      const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
+      return { ...s, markdownPct: mdPct, recommendedPrice: price };
+    }
+    return s;
   });
 
   return {
     recommendedPrice,
     recommendedMarkdownPct: markdownPct,
-    nextAction,
-    action: c.action,
-    actInDays: c.actInDays,
+    nextAction: ov.nextAction,
+    action,
+    actInDays: ov.actInDays,
     sellThroughProjectedPct,
-    agedStockPct: c.agedStockPct,
+    agedStockPct: ov.agedStockPct,
     marginPreservedPp,
     capitalUnlockedBRL,
     skus,
@@ -110,18 +116,21 @@ const actionColor: Record<ClusterAction, string> = {
   hold: '#22c55e',
   markdown: '#F4845F',
   wait: '#60a5fa',
+  raise: '#10b981',
 };
 
 const actionLabel: Record<ClusterAction, string> = {
   hold: 'Manter',
   markdown: 'Markdown',
   wait: 'Aguardar',
+  raise: 'Aumentar',
 };
 
 const actionToneClass: Record<ClusterAction, string> = {
   hold: 'text-[#4ade80]',
   markdown: 'text-[#F4845F]',
   wait: 'text-[#60a5fa]',
+  raise: 'text-[#34d399]',
 };
 
 const PriceTurnoverDemo = () => {
