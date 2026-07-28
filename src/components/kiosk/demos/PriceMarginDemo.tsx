@@ -133,9 +133,14 @@ const PriceMarginDemo = () => {
       elapsed += step.durationMs;
       timers.push(setTimeout(() => setProgress(i + 1), elapsed));
     });
-    timers.push(setTimeout(() => setPhase('result'), elapsed + 260));
+    timers.push(
+      setTimeout(() => {
+        setSelectedId((prev) => prev ?? filtered[0]?.id ?? null);
+        setPhase('result');
+      }, elapsed + 260),
+    );
     return () => timers.forEach(clearTimeout);
-  }, [phase]);
+  }, [phase, filtered]);
 
   const reset = () => {
     setPhase('setup');
@@ -143,7 +148,7 @@ const PriceMarginDemo = () => {
   };
 
   const showResult = phase === 'result';
-  const canCalculate = !!selected;
+  const canCalculate = filtered.length > 0;
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
