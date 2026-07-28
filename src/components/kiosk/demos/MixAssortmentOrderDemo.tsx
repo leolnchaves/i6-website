@@ -451,7 +451,7 @@ const ContextTile = ({
       tone === 'warn' ? 'border-[#F4845F]/30 bg-[#F4845F]/[0.06]' : 'border-white/10 bg-white/[0.04]'
     }`}
   >
-    <span className="text-[1vmin] tracking-[0.18em] uppercase font-semibold text-white/50 leading-tight">
+    <span className="text-[0.85vmin] tracking-[0.15em] uppercase font-semibold text-white/50 leading-tight">
       {label}
     </span>
     <span
