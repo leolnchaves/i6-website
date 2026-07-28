@@ -377,15 +377,19 @@ const PriceTurnoverDemo = () => {
               <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                 <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
                 <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
-                  {selected ? `Por que ${selected.action === 'hold' ? 'manter' : selected.action === 'wait' ? 'aguardar' : 'este markdown'}` : 'O que o modelo aprendeu'}
+                  {derived && selected
+                    ? `Por que ${derived.action === 'hold' ? 'manter' : derived.action === 'wait' ? 'aguardar' : derived.action === 'raise' ? 'subir preço' : 'este markdown'}`
+                    : 'O que o modelo aprendeu'}
                 </span>
               </div>
-              {selected ? (
+              {selected && derived ? (
                 <>
                   <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
-                    {selected.name} · {selected.situation}
+                    {selected.name} · {clusterOverridesByAction[derived.action].situation}
                   </span>
-                  <p className="text-[1.7vmin] leading-relaxed text-white/95">{selected.argument}</p>
+                  <p className="text-[1.7vmin] leading-relaxed text-white/95">
+                    {argumentsByProductAndAction[product]?.[selected.id] ?? fallbackArgumentByAction[derived.action]}
+                  </p>
                 </>
               ) : (
                 <p className="text-[1.85vmin] leading-relaxed text-white/95">{generalInsight}</p>
