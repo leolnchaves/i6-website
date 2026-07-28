@@ -97,11 +97,35 @@ const KioskMetrics = () => {
   const [period, setPeriod] = useState<Period>('all');
   const [bucket, setBucket] = useState<Bucket>('day');
   const [refreshTick, setRefreshTick] = useState(0);
+  const [pendingLeads, setPendingLeads] = useState(0);
+  const [resending, setResending] = useState(false);
+  const [resendMsg, setResendMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
     setRows(getKioskEvents().slice().reverse()); // most recent first
+    setPendingLeads(getPendingLeadsCount());
   }, [token, refreshTick]);
+
+  const handleResendLeads = async () => {
+    setResending(true);
+    setResendMsg(null);
+    try {
+      const { sent, remaining } = await flushLeadQueue();
+      setResendMsg(`${sent} enviado(s) · ${remaining} ainda pendente(s)`);
+    } finally {
+      setResending(false);
+      setRefreshTick((t) => t + 1);
+    }
+  };
+
+  const handleClearLeads = () => {
+    if (window.confirm('Apagar os leads pendentes deste totem? Exporte o CSV antes.')) {
+      clearPendingLeads();
+      setRefreshTick((t) => t + 1);
+    }
+  };
+
 
   // Refresh when other tabs on the same totem update storage
   useEffect(() => {
