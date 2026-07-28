@@ -201,6 +201,64 @@ export const filterOptions = {
   ],
 };
 
+// SKUs por produto — sell-through/markdown por action (hold | markdown | wait).
+export const skuTemplatesByProduct: Record<
+  string,
+  Record<ClusterAction, SkuRow[]>
+> = {
+  'sku-1': {
+    hold: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 82 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 79 },
+      { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+    ],
+    markdown: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 109.9, markdownPct: 15, sellThroughProjectedPct: 85 },
+      { sku: 'JQT-INV-003', name: 'Jaqueta acolchoada caqui G', currentPrice: 129.9, recommendedPrice: 104.9, markdownPct: 19, sellThroughProjectedPct: 82 },
+      { sku: 'JQT-INV-008', name: 'Jaqueta acolchoada azul GG', currentPrice: 129.9, recommendedPrice: 99.9, markdownPct: 23, sellThroughProjectedPct: 78 },
+    ],
+    wait: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 76 },
+      { sku: 'JQT-INV-009', name: 'Jaqueta acolchoada vinho M', currentPrice: 129.9, recommendedPrice: 124.9, markdownPct: 4, sellThroughProjectedPct: 72 },
+      { sku: 'JQT-INV-010', name: 'Jaqueta acolchoada grafite G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 73 },
+    ],
+  },
+  'sku-2': {
+    hold: [
+      { sku: 'BTA-TRM-101', name: 'Bota térmica premium marrom 38', currentPrice: 289.9, recommendedPrice: 289.9, markdownPct: 0, sellThroughProjectedPct: 80 },
+      { sku: 'BTA-TRM-102', name: 'Bota térmica premium preta 39', currentPrice: 289.9, recommendedPrice: 289.9, markdownPct: 0, sellThroughProjectedPct: 77 },
+      { sku: 'BTA-TRM-103', name: 'Bota térmica premium caramelo 40', currentPrice: 289.9, recommendedPrice: 289.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+    ],
+    markdown: [
+      { sku: 'BTA-TRM-101', name: 'Bota térmica premium marrom 38', currentPrice: 289.9, recommendedPrice: 246.4, markdownPct: 15, sellThroughProjectedPct: 84 },
+      { sku: 'BTA-TRM-104', name: 'Bota térmica premium preta 41', currentPrice: 289.9, recommendedPrice: 234.8, markdownPct: 19, sellThroughProjectedPct: 81 },
+      { sku: 'BTA-TRM-108', name: 'Bota térmica premium off-white 42', currentPrice: 289.9, recommendedPrice: 223.2, markdownPct: 23, sellThroughProjectedPct: 77 },
+    ],
+    wait: [
+      { sku: 'BTA-TRM-101', name: 'Bota térmica premium marrom 38', currentPrice: 289.9, recommendedPrice: 289.9, markdownPct: 0, sellThroughProjectedPct: 75 },
+      { sku: 'BTA-TRM-109', name: 'Bota térmica premium vinho 39', currentPrice: 289.9, recommendedPrice: 278.9, markdownPct: 4, sellThroughProjectedPct: 71 },
+      { sku: 'BTA-TRM-110', name: 'Bota térmica premium grafite 40', currentPrice: 289.9, recommendedPrice: 289.9, markdownPct: 0, sellThroughProjectedPct: 72 },
+    ],
+  },
+  'sku-3': {
+    hold: [
+      { sku: 'BLS-TRC-201', name: 'Blusa tricô oversized cru P', currentPrice: 179.9, recommendedPrice: 179.9, markdownPct: 0, sellThroughProjectedPct: 81 },
+      { sku: 'BLS-TRC-202', name: 'Blusa tricô oversized preta M', currentPrice: 179.9, recommendedPrice: 179.9, markdownPct: 0, sellThroughProjectedPct: 78 },
+      { sku: 'BLS-TRC-203', name: 'Blusa tricô oversized mostarda G', currentPrice: 179.9, recommendedPrice: 179.9, markdownPct: 0, sellThroughProjectedPct: 74 },
+    ],
+    markdown: [
+      { sku: 'BLS-TRC-201', name: 'Blusa tricô oversized cru P', currentPrice: 179.9, recommendedPrice: 152.9, markdownPct: 15, sellThroughProjectedPct: 84 },
+      { sku: 'BLS-TRC-203', name: 'Blusa tricô oversized mostarda G', currentPrice: 179.9, recommendedPrice: 145.7, markdownPct: 19, sellThroughProjectedPct: 81 },
+      { sku: 'BLS-TRC-208', name: 'Blusa tricô oversized verde GG', currentPrice: 179.9, recommendedPrice: 138.5, markdownPct: 23, sellThroughProjectedPct: 77 },
+    ],
+    wait: [
+      { sku: 'BLS-TRC-201', name: 'Blusa tricô oversized cru P', currentPrice: 179.9, recommendedPrice: 179.9, markdownPct: 0, sellThroughProjectedPct: 75 },
+      { sku: 'BLS-TRC-209', name: 'Blusa tricô oversized vinho M', currentPrice: 179.9, recommendedPrice: 172.9, markdownPct: 4, sellThroughProjectedPct: 71 },
+      { sku: 'BLS-TRC-210', name: 'Blusa tricô oversized grafite G', currentPrice: 179.9, recommendedPrice: 179.9, markdownPct: 0, sellThroughProjectedPct: 72 },
+    ],
+  },
+};
+
 export const fmtBRL = (n: number) => `R$ ${n.toFixed(2).replace('.', ',')}`;
 export const fmtBRLk = (n: number) => {
   if (n <= 0) return 'R$ 0';
