@@ -18,6 +18,13 @@ import {
   downloadKioskEventsCSV,
   type KioskEvent,
 } from '@/lib/kioskTracker';
+import {
+  getPendingLeadsCount,
+  flushLeadQueue,
+  downloadPendingLeadsCSV,
+  clearPendingLeads,
+} from '@/lib/leadQueue';
+
 import { kioskContent, type RouteId } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 
