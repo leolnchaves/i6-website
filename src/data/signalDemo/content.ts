@@ -677,7 +677,7 @@ export const signalDemoContent = {
       },
       priceConversionIncentiveNeed: {
         label: 'Necessidade de Incentivo',
-        question: 'Quais usuários precisam de um incentivo de preço para converter, e quais comprariam sem desconto?',
+        question: 'Quais sessões precisam de incentivos para converter?',
         title: 'Necessidade preditiva de incentivo por comportamento',
         analysis: 'O modelo estima que 57% das sessões com alta intenção devem converter sem qualquer incentivo. Outros 28% apresentam sensibilidade suficiente para responder a uma ação moderada de preço. Nos 15% restantes, o desconto não deve produzir conversão incremental relevante.\n\nAplicar o mesmo incentivo para toda a audiência destruiria margem em clientes que já comprariam e consumiria verba em sessões com baixa probabilidade de resposta. O modelo diferencia, por exemplo, um usuário com alta intenção e histórico de compra na categoria — que não deve receber desconto — de uma sessão com comparação recorrente de preço, busca por promoção e abandono após visualizar o valor final — que responde a um incentivo moderado dentro da margem permitida.',
         distribution: [
@@ -1385,7 +1385,7 @@ export const signalDemoContent = {
       },
       priceConversionIncentiveNeed: {
         label: 'Incentive Need',
-        question: 'Which users need a price incentive to convert, and which would buy without a discount?',
+        question: 'Which sessions need incentives to convert?',
         title: 'Predictive incentive need by behavior',
         analysis: 'The model estimates 57% of high-intent sessions should convert without any incentive. Another 28% show enough sensitivity to respond to a moderate price action. In the remaining 15%, discount should not produce relevant incremental conversion.\n\nApplying the same incentive across the whole audience would destroy margin on customers who would already buy and burn budget on sessions with low response probability. The model distinguishes, for example, a user with high intent and a purchase history in the category — who should not receive a discount — from a session with recurring price comparison, coupon search and abandonment after seeing the final value — which responds to a moderate incentive within the allowed margin.',
         distribution: [
