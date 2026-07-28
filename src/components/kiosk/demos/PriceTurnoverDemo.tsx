@@ -270,23 +270,6 @@ const PriceTurnoverDemo = () => {
             {/* Result panel */}
             {showResult && selected && derived && (
               <>
-                <div className="grid grid-cols-2 gap-[1.2vmin]">
-                  <ConclusionCard
-                    label="Preço recomendado"
-                    value={fmtBRL(derived.recommendedPrice)}
-                    highlight
-                  />
-                  <ConclusionCard
-                    label={derived.action === 'wait' ? 'Aguardar' : 'Markdown'}
-                    value={
-                      derived.action === 'wait'
-                        ? `${derived.actInDays} dias`
-                        : derived.recommendedMarkdownPct > 0
-                        ? `−${derived.recommendedMarkdownPct}%`
-                        : '—'
-                    }
-                  />
-                </div>
 
                 {/* SKU table — 3 rows */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
