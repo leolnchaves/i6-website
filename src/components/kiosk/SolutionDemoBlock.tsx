@@ -27,7 +27,21 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
 
   // Interactive demo for Price-to-Margin
   if (solution.id === 'price-to-margin') {
-    return <PriceMarginDemo />;
+    return (
+      <SimulationLauncher
+        lang={lang}
+        solutionTitle={solution.title}
+        solutionTagline={solution.tagline}
+        resolve={solution.resolve}
+        entrega={solution.entrega}
+        impacto={solution.impacto}
+        labels={labels}
+        icon={TrendingUp}
+        onSimulationClosed={onSimulationClosed}
+      >
+        <PriceMarginDemo />
+      </SimulationLauncher>
+    );
   }
 
   if (solution.id === 'price-to-turnover') {
