@@ -178,7 +178,7 @@ export const clusters: TurnoverCluster[] = [
 
 export const filterOptions = {
   product: [
-    { value: 'sku-1', label: 'Jaqueta acolchoada — coleção inverno' },
+    { value: 'sku-1', label: 'Jaqueta acolchoada' },
     { value: 'sku-2', label: 'Bota térmica premium' },
     { value: 'sku-3', label: 'Blusa tricô oversized' },
   ],
