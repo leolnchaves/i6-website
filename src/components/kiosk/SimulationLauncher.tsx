@@ -3,6 +3,7 @@ import { Sparkles, X } from 'lucide-react';
 
 type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 import { kioskContent, type KioskLang } from '@/data/kiosk/config';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 interface Labels {
   resolve: string;
@@ -105,7 +106,7 @@ const SimulationLauncher = ({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="w-full min-h-[10vmin] rounded-2xl bg-[#F4845F] hover:bg-[#F4845F]/90 active:scale-[0.99] transition text-white font-bold text-[2.4vmin] flex items-center justify-center gap-[1.5vmin] shadow-[0_0_40px_rgba(244,132,95,0.35)]"
+          className={kioskBtn('w-full min-h-[10vmin] text-[2.4vmin] gap-[1.5vmin]')}
         >
           {t.simulateButton}
         </button>
@@ -129,7 +130,7 @@ const SimulationLauncher = ({
               <button
                 type="button"
                 onClick={close}
-                className="min-h-[8vmin] px-[4vmin] py-[1.8vmin] rounded-full border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] hover:bg-[#F4845F]/[0.16] hover:border-[#F4845F] active:scale-[0.98] transition text-white font-semibold text-[2vmin] inline-flex items-center gap-[1.5vmin]"
+                className={kioskBtn('min-h-[8vmin] px-[4vmin] py-[1.8vmin] text-[2vmin] gap-[1.5vmin]')}
               >
                 <X className="w-[2.2vmin] h-[2.2vmin]" />
                 {t.closeSimulation}

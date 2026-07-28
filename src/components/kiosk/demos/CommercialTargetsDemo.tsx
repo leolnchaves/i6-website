@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Minus, Shuffle, Sparkles, X } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import {
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   dimensions,
   fmtBR,
   fmtBRL,
@@ -373,7 +374,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
             <button
               type="button"
               onClick={reset}
-              className="mt-[1.4vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+              className={kioskBtn('mt-[1.4vmin] w-full min-h-[6vmin] text-[1.6vmin]')}
             >
               {L.result.newSimulation}
             </button>

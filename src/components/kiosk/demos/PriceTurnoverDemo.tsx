@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
 import {
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   pipeline,
   clusters as allClusters,
   filterOptions,
@@ -471,7 +472,7 @@ const PriceTurnoverDemo = () => {
             <button
               type="button"
               onClick={reset}
-              className="mt-[1.4vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.6vmin] text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition"
+              className={kioskBtn('mt-[1.4vmin] w-full min-h-[6vmin] text-[1.6vmin]')}
             >
               Nova simulação
             </button>

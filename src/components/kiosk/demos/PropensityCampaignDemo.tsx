@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles, X } from 'lucide-react';
 import {
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
   channels,
   channelLabel,
   segments,
@@ -149,7 +150,7 @@ const PropensityCampaignDemo = () => {
                   <button
                     type="button"
                     onClick={() => setPhase('running')}
-                    className="self-stretch min-h-[7vmin] rounded-2xl bg-[#F4845F] text-white font-bold text-[2vmin] tracking-wide hover:bg-[#F4845F]/90 active:scale-[0.99] transition-all shadow-[0_0_28px_rgba(244,132,95,0.35)]"
+                    className={kioskBtn('self-stretch min-h-[7vmin] text-[2vmin] tracking-wide')}
                   >
                     {L.crm.cta}
                   </button>
@@ -224,7 +225,7 @@ const PropensityCampaignDemo = () => {
                   <button
                     type="button"
                     onClick={reset}
-                    className="rounded-xl border border-white/25 bg-white/[0.04] text-[1.5vmin] font-semibold text-white/85 hover:text-white hover:border-[#F4845F]/70 hover:bg-[#F4845F]/[0.08] active:scale-[0.98] transition px-[1.4vmin] py-[1.2vmin]"
+                    className={kioskBtn('text-[1.5vmin] px-[1.4vmin] py-[1.2vmin]')}
                   >
                     {L.result.reset}
                   </button>
@@ -247,7 +248,7 @@ const PropensityCampaignDemo = () => {
                 <button
                   type="button"
                   onClick={() => setDrillOpen(true)}
-                  className="w-full min-h-[6vmin] rounded-full border border-[#F4845F]/60 bg-[#F4845F]/[0.08] text-[1.55vmin] text-white font-semibold hover:bg-[#F4845F]/[0.16] active:scale-[0.98] transition"
+                  className={kioskBtn('w-full min-h-[6vmin] text-[1.55vmin]')}
                 >
                   {L.result.drillCta}
                 </button>
@@ -402,7 +403,7 @@ const PropensityCampaignDemo = () => {
             <button
               type="button"
               onClick={() => setDrillOpen(false)}
-              className="mt-[1.8vmin] w-full min-h-[6vmin] rounded-full border border-white/25 bg-white/[0.04] text-[1.55vmin] text-white/85 hover:text-white hover:border-white/50 transition"
+              className={kioskBtn('mt-[1.8vmin] w-full min-h-[6vmin] text-[1.55vmin]')}
             >
               {L.result.drillClose}
             </button>
