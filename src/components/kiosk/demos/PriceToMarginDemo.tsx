@@ -218,24 +218,27 @@ const PriceToMarginDemo = ({ lang }: Props) => {
             )}
           </div>
 
-          <div className="kiosk-insight-card mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.8vmin]">
-            <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
-              <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
-              <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
-                {ui.whyEyebrow}
-              </span>
-            </div>
-            {done && selected ? (
-              <>
-                <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
-                  {selected.name} · {currency(selected.recommendedPrice, lang)}
+          {selected && (
+            <div className="kiosk-insight-card mb-[1.4vmin] rounded-xl border-2 border-[#F4845F]/60 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.8vmin]">
+              <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
+                <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
+                <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
+                  {ui.whyEyebrow}
                 </span>
-                <p className="text-[1.7vmin] leading-relaxed text-white/95">{selected.insight}</p>
-              </>
-            ) : (
-              <p className="text-[1.7vmin] leading-relaxed text-white/95">{ui.defaultWhy}</p>
-            )}
-          </div>
+              </div>
+              {done ? (
+                <>
+                  <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
+                    {selected.name} · {currency(selected.recommendedPrice, lang)}
+                  </span>
+                  <p className="text-[1.7vmin] leading-relaxed text-white/95">{selected.insight}</p>
+                </>
+              ) : (
+                <p className="text-[1.7vmin] leading-relaxed text-white/95">{ui.defaultWhy}</p>
+              )}
+            </div>
+          )}
+
 
           {/* Micro-metric of active step */}
           <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
