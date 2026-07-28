@@ -12,7 +12,7 @@ export const Engines: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <SceneFrame label="Nossa IA">
+      <SceneFrame>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <Kicker>Proprietary AI</Kicker>
           <Title delay={8} size={76}>

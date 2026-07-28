@@ -22,7 +22,7 @@ const territories = [
 
 export const Territories: React.FC = () => (
   <AbsoluteFill>
-    <SceneFrame label="Soluções">
+    <SceneFrame>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
         <Kicker>Onde a predição vira resultado</Kicker>
         <Title delay={8} size={78}>

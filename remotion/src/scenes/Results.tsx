@@ -68,7 +68,7 @@ const Card: React.FC<{ r: (typeof results)[number]; delay: number }> = ({ r, del
 
 export const Results: React.FC = () => (
   <AbsoluteFill>
-    <SceneFrame label="Cases de sucesso">
+    <SceneFrame>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <Kicker>Resultados reais</Kicker>
         <Title delay={8} size={74}>

@@ -27,7 +27,7 @@ const Typed: React.FC<{ text: string; start: number }> = ({ text, start }) => {
 
 export const Signal: React.FC = () => (
   <AbsoluteFill>
-    <SceneFrame label="i6 Signal">
+    <SceneFrame>
       <div style={{ display: 'flex', gap: 70, alignItems: 'center' }}>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 22 }}>
           <Kicker>Camada transversal</Kicker>
