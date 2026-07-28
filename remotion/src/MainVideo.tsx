@@ -45,7 +45,7 @@ export const MainVideo: React.FC = () => (
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition presentation={slide({ direction: 'from-right' })} timing={slideT()} />
 
-      <TransitionSeries.Sequence durationInFrames={420}>
+      <TransitionSeries.Sequence durationInFrames={500}>
         <Engines />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition presentation={slide({ direction: 'from-bottom' })} timing={slideT()} />
@@ -53,14 +53,14 @@ export const MainVideo: React.FC = () => (
       <TransitionSeries.Sequence durationInFrames={450}>
         <Results />
       </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={fadeT()} />
+      <TransitionSeries.Transition presentation={slide({ direction: 'from-bottom' })} timing={slideT()} />
 
-      <TransitionSeries.Sequence durationInFrames={270}>
+      <TransitionSeries.Sequence durationInFrames={360}>
         <Closing />
       </TransitionSeries.Sequence>
     </TransitionSeries>
   </AbsoluteFill>
 );
 
-// 210+330+390+420+700+420+450+270 = 3190 ; menos 7 transições de 24 = 3022 frames (~100,7s)
-export const TOTAL_FRAMES = 3190 - 7 * 24;
+// 210+330+390+420+700+500+450+360 = 3360 ; menos 7 transições de 24 = 3192 frames (~106,4s)
+export const TOTAL_FRAMES = 3360 - 7 * 24;
