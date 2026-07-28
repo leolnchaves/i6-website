@@ -344,7 +344,7 @@ export const signalDemoContent = {
       },
       mixGaps: {
         label: 'Gaps de Mix',
-        question: 'Mostre quais produtos apresentam maior gap no mix ideal com maior potencial de aumento de ticket médio.',
+        question: 'Mostre os gaps do mix ideal e potencial de aumento de ticket médio.',
         title: 'Gaps de mix com maior potencial de ticket por região',
         analysis: 'O modelo identificou 14 produtos sub-representados no mix atual, mas apenas cinco concentram a maior oportunidade de crescimento de ticket. No Interior de São Paulo, os SKUs A e C apresentam o maior potencial porque possuem alta aderência ao comportamento previsto dos PDVs, recorrência em estabelecimentos semelhantes e forte complementaridade com produtos já vendidos. A inclusão desses produtos nos PDVs elegíveis pode elevar o ticket médio regional em até 12%, sem ampliar significativamente o risco de estoque parado.\n\nO SKU A apresenta o maior gap no Interior de São Paulo porque está ausente em 38% dos PDVs que demonstram comportamento compatível com sua categoria. Esses estabelecimentos já vendem produtos complementares, possuem frequência de compra crescente e apresentam ticket inferior ao de PDVs semelhantes com o SKU presente. A oportunidade não está em distribuir o produto para toda a região — o modelo recomenda sua inclusão apenas nos 126 PDVs com maior aderência prevista.',
         heatmap: {
