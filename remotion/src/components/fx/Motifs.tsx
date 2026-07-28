@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
-import { CORAL } from '../theme';
+import { CORAL } from '../../theme';
 
 /**
  * Fio condutor: uma linha coral que atravessa a tela e uma grade de pontos
