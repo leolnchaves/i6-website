@@ -1,31 +1,45 @@
-## Contexto
+# Remover Supabase / backend do projeto
 
-O tracking do kiosk migra do Supabase para **localStorage no próprio totem**, mantendo o site 100% estático. Nenhum evento sai da máquina; a exportação é manual, sob demanda, via CSV. Isso elimina a tabela `kiosk_events` e resolve o finding `SUPA_rls_policy_always_true` pela raiz.
+Objetivo: deixar o site **100% estático**, sem qualquer código, dependência ou config apontando para banco/backend. O tracking do kiosk já roda em `localStorage`, então nada da aplicação depende mais de Supabase.
 
-## Plano
+## Impacto zero em GitHub / Actions / Pages
 
-1. **Reescrever `src/lib/kioskTracker.ts`** para gravar em `localStorage` no lugar do Supabase:
-   - Chave: `i6_kiosk_events`
-   - Cada evento: `{ id, event_key, ts }` (ISO timestamp)
-   - Buffer FIFO com teto (5.000 eventos) para não estourar quota
-   - `trackKioskEvent(eventKey)` continua com a mesma assinatura — nenhuma call-site precisa mudar (`Kiosk.tsx`, `KioskSignalIntelliboard.tsx`, `EbookCTA.tsx`)
-   - Novas helpers: `getKioskEvents()`, `clearKioskEvents()`, `downloadKioskEventsCSV()`
-2. **Substituir `src/pages/KioskMetrics.tsx`** para ler do localStorage em vez do Supabase:
-   - Mesma URL `/kiosk-metrics` (protegida pelo padrão atual)
-   - Mostra contagem por `event_key` e total, igual hoje
-   - Botões: "Exportar CSV" e "Limpar eventos deste totem"
-   - Aviso claro: "dados locais deste totem, não agregam entre máquinas"
-3. **Migration** para remover o backend residual:
-   - `DROP TABLE public.kiosk_events` (leva policies + trigger de rate limit)
-   - `DROP FUNCTION public.kiosk_events_rate_limit()`
-4. **Marcar finding** `SUPA_rls_policy_always_true` como resolvido (tabela removida) e atualizar a memória de segurança: projeto 100% estático, sem tabelas no schema `public`; qualquer tabela futura precisa de RLS restritivo com validação de payload.
-5. Não editar `src/integrations/supabase/client.ts` nem `.env` (auto-gerados). Client fica ocioso, sem impacto.
-6. Publicar release patch (v1.2.x+1) para disparar o deploy.
+- `.github/workflows/deploy-gh-pages.yml` **não referencia nenhum secret ou env var de Supabase**. Os únicos secrets usados são `I6HUB_FEED_URL*` e `I6HUB_SYNC_TOKEN`, que continuam.
+- Build é `npm install` + `npm run build`. Como nenhum arquivo em `src/**` importa `@supabase/supabase-js` nem `@/integrations/supabase/client`, remover a dep e os arquivos auto-gerados não afeta o build.
+- Deploy no GitHub Pages continua servindo `dist/` estático. Trigger por tag `v*` e `repository_dispatch` do i6Hub permanecem inalterados.
 
-## Detalhes técnicos
+## O que será removido
 
-Formato do CSV exportado: `id,event_key,ts` com cabeçalho, uma linha por evento, download via `Blob` + `<a download>`.
+**Código auto-gerado (não é mais usado por nenhum import):**
+- `src/integrations/supabase/client.ts`
+- `src/integrations/supabase/types.ts`
+- pasta `src/integrations/supabase/` inteira
 
-Comportamento offline: 100% suportado — não faz mais nenhuma request para o backend.
+**Configuração de backend do repo:**
+- `supabase/config.toml`
+- `supabase/migrations/` (histórico)
+- pasta `supabase/` inteira
 
-Trade-off aceito: cada totem tem seu próprio histórico; agregação entre máquinas exige coletar os CSVs manualmente. Foi a escolha explícita para manter o site estático.
+**Dependência npm:**
+- `@supabase/supabase-js` removido do `package.json` e do lockfile
+
+**Variáveis de ambiente:**
+- Remover `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_SUPABASE_PROJECT_ID` do `.env`
+
+## O que NÃO muda
+
+- `src/lib/kioskTracker.ts` — já usa apenas `localStorage`.
+- `src/pages/KioskMetrics.tsx` — já lê do `localStorage` e exporta CSV.
+- Formulários (contato / lead-gate) continuam via Google Apps Script (fire-and-forget iframe).
+- Sync do i6Hub CMS e todos os scripts em `scripts/` — não usam Supabase.
+
+## Verificação após a remoção
+
+1. `rg "supabase"` em `src/` deve retornar zero resultados.
+2. `npm run build` local passa sem erros.
+3. `/kiosk` grava eventos e `/kiosk-metrics/<token>` continua listando e exportando CSV.
+4. Publicar release patch **v2.2.12** disparando o deploy no GitHub Pages e validar site online.
+
+## Observação sobre Lovable Cloud
+
+Isso desacopla o app do backend da Lovable Cloud **a nível de código**. A conexão Cloud continua existindo no workspace (não dá para "desconectar" pelo agente), mas nenhum arquivo do site referencia mais nada dela — o site pode ser servido de qualquer host estático.
