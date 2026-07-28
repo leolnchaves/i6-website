@@ -390,7 +390,7 @@ export const signalDemoContent = {
       },
       marginOpportunities: {
         label: 'Oportunidades de Margem',
-        question: 'Quais SKUs apresentam maior oportunidade de captura de margem sem perda relevante de volume?',
+        question: 'Quais as oportunidades de captura de margem sem impactar volume?',
         title: 'Oportunidades preditivas de margem por SKU',
         analysis: 'O modelo identificou 16 SKUs com espaço para reposicionamento de preço nos próximos 90 dias. Os cinco principais concentram 71% da margem incremental potencial. O SKU A apresenta a melhor oportunidade — sua demanda prevista permanece estável dentro de uma faixa de aumento de até 5,4%, enquanto o preço atual está abaixo da banda competitiva e do ponto de maior geração de margem. Já o SKU D demonstra alta sensibilidade e não deve receber aumento neste momento.',
         scatter: [
