@@ -197,11 +197,8 @@ const PriceTurnoverDemo = () => {
 
           <div className="p-[2.2vmin] flex flex-col gap-[1.4vmin]">
             {/* Filters */}
-            <div className="grid grid-cols-[1.25fr_0.75fr] gap-[1vmin]">
+            <div className="grid grid-cols-[1.3fr_1fr_0.9fr] gap-[1vmin]">
               <TouchSelect label="Produto" value={product} onChange={setProduct} options={filterOptions.product} />
-              <TouchSelect label="Região / Cluster" value={region} onChange={setRegion} options={filterOptions.region} />
-            </div>
-            <div className="grid grid-cols-[1.25fr_0.75fr] gap-[1vmin]">
               <TouchSelect label="Objetivo" value={objective} onChange={setObjective} options={filterOptions.objective} />
               <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
             </div>
