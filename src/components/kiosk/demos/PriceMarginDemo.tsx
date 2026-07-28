@@ -177,7 +177,7 @@ const PriceMarginDemo = () => {
               <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
               <TouchSelect label="Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
             </div>
-            <div className="grid grid-cols-[1.5fr_0.7fr_1fr] gap-[1vmin]">
+            <div className="grid grid-cols-[1.25fr_0.95fr_1fr] gap-[1vmin]">
               <TouchSelect label="Estratégia" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
               <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
               <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
