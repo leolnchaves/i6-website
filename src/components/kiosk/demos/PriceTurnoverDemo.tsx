@@ -255,10 +255,10 @@ const PriceTurnoverDemo = () => {
                         <span className="block text-[1.05vmin] font-normal text-white/50">{c.region}</span>
                       </span>
                     </span>
-                    <span className="text-white/70">{c.situation}</span>
-                    <span className="text-right text-white/85 font-mono">{c.stockUnits.toLocaleString('pt-BR')} un</span>
-                    <span className="text-right text-white/85 font-mono">{c.avgStockAgeDays} d</span>
-                    <span className="text-right text-white/85 font-mono">{c.sellVelocity}/{c.categoryAvgVelocity}</span>
+                    <span className="text-white/70">{showResult ? c.situation : '—'}</span>
+                    <span className="text-right text-white/85 font-mono">{showResult ? `${c.stockUnits.toLocaleString('pt-BR')} un` : '—'}</span>
+                    <span className="text-right text-white/85 font-mono">{showResult ? `${c.avgStockAgeDays} d` : '—'}</span>
+                    <span className="text-right text-white/85 font-mono">{showResult ? `${c.sellVelocity}/${c.categoryAvgVelocity}` : '—'}</span>
                     <span className={`text-right font-semibold ${showResult && d ? actionToneClass[d.action] : 'text-white/40'}`}>
                       {showResult && d ? d.nextAction : '—'}
                     </span>
