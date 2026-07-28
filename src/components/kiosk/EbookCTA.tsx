@@ -95,6 +95,16 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
           formData.set('user_agent', 'kiosk-app/1.0');
         }
 
+        if (EBOOK_PRICING_IDS.includes(solutionId)) {
+          formData.set('subscription', EBOOK_PRICING_SUBSCRIPTION);
+          formData.set('reason', 'kiosk-demo');
+          formData.set('insight_id', EBOOK_PRICING_INSIGHT_ID);
+          formData.set('utm_source', 'kiosk');
+          formData.set('utm_medium', 'totem');
+          formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
+          formData.set('user_agent', 'kiosk-app/1.0');
+        }
+
         await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
         trackEvent(TRACKER_EVENTS.KIOSK_EBOOK_REQUESTED, {
