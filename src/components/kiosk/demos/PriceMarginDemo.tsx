@@ -209,8 +209,8 @@ const PriceMarginDemo = () => {
                       {s.name}
                       <span className="block text-[1.05vmin] font-normal text-white/50">{s.category}</span>
                     </span>
-                    <span className={`text-right font-semibold ${actionToneClass[s.action]}`}>
-                      {actionLabel[s.action]}
+                    <span className={`text-right font-semibold ${showResult ? actionToneClass[s.action] : 'text-white/40'}`}>
+                      {showResult ? actionLabel[s.action] : '—'}
                     </span>
                     <span className="text-right text-white/85 font-mono">{fmtBRL(s.currentPrice)}</span>
                     <span className="text-right text-white/85 font-mono">{s.elasticity.toFixed(2)}</span>
