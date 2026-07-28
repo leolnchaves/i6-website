@@ -227,7 +227,7 @@ const PriceMarginDemo = () => {
               <>
                 <div className="grid grid-cols-[1fr_1.4fr] gap-[1.2vmin]">
                   {/* Left: KPIs */}
-                  <div className="flex flex-col gap-[1vmin]">
+                  <div className="flex flex-col gap-[1vmin] h-full">
                     <ConclusionCard label="Preço ótimo" value={fmtBRL(derived.optimalPrice)} highlight />
                     <ConclusionCard
                       label="Faixa recomendada"
@@ -448,7 +448,7 @@ const ConclusionCard = ({
   highlight?: boolean;
 }) => (
   <div
-    className={`rounded-xl border p-[1.2vmin] flex flex-col gap-[0.3vmin] ${
+    className={`rounded-xl border p-[1.2vmin] flex flex-1 flex-col justify-center gap-[0.3vmin] ${
       highlight ? 'border-[#F4845F]/60 bg-[#F4845F]/[0.08]' : 'border-white/10 bg-white/[0.03]'
     }`}
   >
@@ -464,8 +464,8 @@ const ConclusionCard = ({
 
 const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Derived }) => {
   const W = 620;
-  const H = 200;
-  const PAD = { l: 40, r: 16, t: 16, b: 32 };
+  const H = 160;
+  const PAD = { l: 34, r: 12, t: 18, b: 30 };
   const iw = W - PAD.l - PAD.r;
   const ih = H - PAD.t - PAD.b;
 
@@ -508,8 +508,8 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
   );
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-[1.2vmin]">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="none">
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] h-full flex">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full" preserveAspectRatio="none">
         <rect
           x={x(derived.rangeMin)} y={PAD.t}
           width={x(derived.rangeMax) - x(derived.rangeMin)} height={ih}
