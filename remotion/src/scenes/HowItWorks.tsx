@@ -18,7 +18,7 @@ export const HowItWorks: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <SceneFrame label="Como funcionamos">
+      <SceneFrame>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           <Kicker>Do sinal à decisão</Kicker>
           <Title delay={8} size={74}>

@@ -1,6 +1,6 @@
 import { AbsoluteFill, Img, staticFile, useCurrentFrame, useVideoConfig, spring } from 'remotion';
-import { Reveal } from '../components/Type';
-import { CORAL, FONT_BODY, FONT_DISPLAY, WHITE, MUTED } from '../theme';
+import { Reveal, Rule } from '../components/Type';
+import { CORAL, FONT_BODY, FONT_DISPLAY, WHITE } from '../theme';
 
 export const Closing: React.FC = () => {
   const frame = useCurrentFrame();
@@ -30,8 +30,19 @@ export const Closing: React.FC = () => {
         </div>
       </Reveal>
       <Reveal delay={44}>
-        <div style={{ fontFamily: FONT_BODY, fontSize: 32, color: MUTED, textAlign: 'center' }}>
-          infinity6.ai
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
+          <div
+            style={{
+              fontFamily: FONT_DISPLAY,
+              fontWeight: 700,
+              fontSize: 52,
+              letterSpacing: '-0.01em',
+              color: WHITE,
+            }}
+          >
+            www.<span style={{ color: CORAL }}>infinity6</span>.ai
+          </div>
+          <Rule delay={54} width={260} />
         </div>
       </Reveal>
       <Reveal delay={58}>

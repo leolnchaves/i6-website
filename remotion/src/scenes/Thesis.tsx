@@ -8,7 +8,7 @@ export const Thesis: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <SceneFrame label="infinity6">
+      <SceneFrame>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
           <Kicker>A tese</Kicker>
           <Title delay={10} size={96}>
@@ -45,11 +45,6 @@ export const Thesis: React.FC = () => {
               );
             })}
           </div>
-          <Reveal delay={104} distance={16}>
-            <span style={{ fontFamily: FONT_BODY, fontSize: 26, color: MUTED }}>
-              Home · infinity6.ai
-            </span>
-          </Reveal>
         </div>
       </SceneFrame>
     </AbsoluteFill>

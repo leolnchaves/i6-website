@@ -1,94 +1,104 @@
-import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
-import { Kicker, Reveal, SceneFrame, Title } from '../components/Type';
-import { CORAL, FONT_BODY, FONT_DISPLAY, LINE, MUTED, WHITE } from '../theme';
+import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from 'remotion';
+import { Intelliboard } from '../components/signal/Intelliboard';
+import { CHIPS, LABELS, SCENES } from '../components/signal/data';
+import { CORAL, FONT_BODY, FONT_DISPLAY, MUTED, WHITE } from '../theme';
 
-const questions = [
-  'Onde o preço atual está reduzindo a probabilidade de conversão?',
-  'Quais sessões precisam de incentivos para converter?',
-  'Onde há risco de ruptura nas próximas semanas?',
-];
-
-const Typed: React.FC<{ text: string; start: number }> = ({ text, start }) => {
+const ChipsBar: React.FC<{ activeChip: string }> = ({ activeChip }) => {
   const frame = useCurrentFrame();
-  const chars = Math.floor(
-    interpolate(frame - start, [0, text.length * 1.1], [0, text.length], {
-      extrapolateLeft: 'clamp',
-      extrapolateRight: 'clamp',
-    }),
-  );
-  const caret = frame > start && chars < text.length;
+  const s = interpolate(frame, [4, 22], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   return (
-    <span style={{ fontFamily: FONT_BODY, fontSize: 30, color: WHITE, lineHeight: 1.4 }}>
-      {text.slice(0, chars)}
-      {caret ? <span style={{ color: CORAL }}>|</span> : null}
-    </span>
+    <div
+      style={{
+        display: 'flex',
+        gap: 6,
+        padding: 6,
+        borderRadius: 999,
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(255,255,255,0.10)',
+        opacity: s,
+      }}
+    >
+      {CHIPS.map((c) => {
+        const active = c === activeChip;
+        return (
+          <div
+            key={c}
+            style={{
+              padding: '10px 24px',
+              borderRadius: 999,
+              fontFamily: FONT_BODY,
+              fontSize: 20,
+              fontWeight: 500,
+              color: active ? WHITE : 'rgba(255,255,255,0.6)',
+              background: active ? 'rgba(249,115,22,0.85)' : 'transparent',
+              boxShadow: active ? '0 8px 26px rgba(249,115,22,0.35)' : 'none',
+            }}
+          >
+            {c}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
-export const Signal: React.FC = () => (
-  <AbsoluteFill>
-    <SceneFrame label="i6 Signal">
-      <div style={{ display: 'flex', gap: 70, alignItems: 'center' }}>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 22 }}>
-          <Kicker>Camada transversal</Kicker>
-          <Title delay={8} size={82}>
-            i6 <span style={{ color: CORAL }}>Signal</span>
-          </Title>
-          <Reveal delay={20}>
-            <div style={{ fontFamily: FONT_DISPLAY, fontSize: 38, color: WHITE, lineHeight: 1.2 }}>
-              A camada conversacional que transforma predição em decisão
-            </div>
-          </Reveal>
-          <Reveal delay={32}>
-            <div style={{ fontFamily: FONT_BODY, fontSize: 27, color: MUTED, lineHeight: 1.45, maxWidth: 620 }}>
-              Conecta os sinais preditivos dos modelos aos times de negócio: onde agir, por que agir
-              e qual impacto esperar
-            </div>
-          </Reveal>
-        </div>
+const Take: React.FC<{ index: number; scrollAmount: number }> = ({ index, scrollAmount }) => {
+  const scene = SCENES[index];
+  return (
+    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
+        <ChipsBar activeChip={scene.chipLabel} />
+        <Intelliboard
+          scene={scene}
+          typeStart={18}
+          typeEnd={18 + Math.round(scene.question.length * 0.85)}
+          answerStart={18 + Math.round(scene.question.length * 0.85) + 26}
+          scrollStart={18 + Math.round(scene.question.length * 0.85) + 130}
+          scrollEnd={330}
+          scrollAmount={scrollAmount}
+        />
+      </div>
+    </AbsoluteFill>
+  );
+};
 
-        <div
-          style={{
-            flex: 1,
-            background: 'rgba(255,255,255,0.045)',
-            border: `1px solid ${LINE}`,
-            borderRadius: 28,
-            padding: '38px 36px',
-            minHeight: 470,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: FONT_BODY,
-              fontSize: 20,
-              letterSpacing: '0.26em',
-              textTransform: 'uppercase',
-              color: CORAL,
-              marginBottom: 30,
-            }}
-          >
-            Exemplos de sinais
-          </div>
-          {questions.map((q, i) => (
-            <div
-              key={q}
-              style={{
-                display: 'flex',
-                gap: 18,
-                alignItems: 'flex-start',
-                paddingBottom: 26,
-                marginBottom: 26,
-                borderBottom: i < questions.length - 1 ? `1px solid ${LINE}` : 'none',
-              }}
-            >
-              <span style={{ color: CORAL, fontSize: 30, fontFamily: FONT_DISPLAY, lineHeight: 1.3 }}>
-                ›
-              </span>
-              <Typed text={q} start={46 + i * 78} />
-            </div>
-          ))}
+export const Signal: React.FC = () => {
+  const frame = useCurrentFrame();
+  const headOpacity = interpolate(frame, [0, 18], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
+  return (
+    <AbsoluteFill>
+      {/* Cabeçalho da seção */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 30,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          opacity: headOpacity,
+          zIndex: 2,
+        }}
+      >
+        <div style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: 50, color: WHITE, letterSpacing: '-0.03em' }}>
+          i6 <span style={{ color: CORAL }}>Signal</span>
+        </div>
+        <div style={{ fontFamily: FONT_BODY, fontSize: 22, color: MUTED, marginTop: 8 }}>
+          {LABELS.sectionSubtitle}
         </div>
       </div>
-    </SceneFrame>
-  </AbsoluteFill>
-);
+
+      <div style={{ position: 'absolute', inset: 0, paddingTop: 190 }}>
+        <Sequence from={0} durationInFrames={370}>
+          <Take index={0} scrollAmount={330} />
+        </Sequence>
+        <Sequence from={370} durationInFrames={330}>
+          <Take index={1} scrollAmount={300} />
+        </Sequence>
+      </div>
+    </AbsoluteFill>
+  );
+};
