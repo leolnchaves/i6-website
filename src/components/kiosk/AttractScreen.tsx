@@ -1,12 +1,29 @@
+import { useEffect } from 'react';
 import type { QuizContent } from '@/data/kiosk/config';
 import symbolWhite from '@/assets/infinity6-logo-white-horiz.png.asset.json';
+import avatarRicardo from '@/assets/images/avatar-ricardo.jpg';
 
 interface Props {
   content: QuizContent;
   onStart: () => void;
 }
 
+/**
+ * Assets que aparecem depois da tela de atração. Pré-carregados aqui para que
+ * uma queda de rede no meio da jornada não deixe imagem quebrada.
+ */
+const WARMUP_ASSETS = [symbolWhite.url, avatarRicardo];
+
 const AttractScreen = ({ content, onStart }: Props) => {
+  useEffect(() => {
+    WARMUP_ASSETS.forEach((src) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+    });
+  }, []);
+
+
   return (
     <button
       type="button"
