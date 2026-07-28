@@ -266,6 +266,11 @@ export const skuTemplatesByProduct: Record<
       { sku: 'BLS-TRC-209', name: 'Blusa tricô oversized vinho M', currentPrice: 179.9, recommendedPrice: 172.9, markdownPct: 4, sellThroughProjectedPct: 71 },
       { sku: 'BLS-TRC-210', name: 'Blusa tricô oversized grafite G', currentPrice: 179.9, recommendedPrice: 179.9, markdownPct: 0, sellThroughProjectedPct: 72 },
     ],
+    raise: [
+      { sku: 'BLS-TRC-201', name: 'Blusa tricô oversized cru P', currentPrice: 179.9, recommendedPrice: 190.7, markdownPct: -6, sellThroughProjectedPct: 82 },
+      { sku: 'BLS-TRC-202', name: 'Blusa tricô oversized preta M', currentPrice: 179.9, recommendedPrice: 188.9, markdownPct: -5, sellThroughProjectedPct: 80 },
+      { sku: 'BLS-TRC-204', name: 'Blusa tricô oversized rosé G', currentPrice: 179.9, recommendedPrice: 193.3, markdownPct: -7, sellThroughProjectedPct: 78 },
+    ],
   },
 };
 
