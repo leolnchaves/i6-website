@@ -159,7 +159,7 @@ export const filterOptions = {
   ],
   strategy: [
     { value: 'margin', label: 'Maximizar margem' },
-    { value: 'balanced', label: 'Equilíbrio margem × volume' },
+    { value: 'balanced', label: 'Equilíbrio margem/volume' },
     { value: 'defense', label: 'Defesa de mercado' },
   ],
   minMargin: [
@@ -169,9 +169,9 @@ export const filterOptions = {
     { value: '45', label: '≥ 45%' },
   ],
   competitiveBand: [
-    { value: 'strict', label: 'Alinhado ao concorrente' },
-    { value: 'medium', label: 'Até ±5% da banda' },
-    { value: 'wide', label: 'Até ±10% da banda' },
+    { value: 'strict', label: 'Alinhado' },
+    { value: 'medium', label: '±5% da banda' },
+    { value: 'wide', label: '±10% da banda' },
   ],
 };
 
