@@ -16,6 +16,15 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
+const EBOOK_CONSUMER_INTELLIGENCE_IDS = [
+  'predictive-personalization',
+  'smart-discovery',
+  'predictive-campaign-targeting',
+];
+const EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION =
+  'insight:ebook-inteligencia-do-consumidor-orientada-a-decisao';
+const EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID = '03a13a3b-9b6b-4804-8c04-7418a04bd3c1';
+
 interface Props {
   lang: KioskLang;
   content: QuizContent;
@@ -67,6 +76,16 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
         formData.append('subscription', 'i6-website');
         formData.append('token', SHARED_FORM_TOKEN);
         Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
+
+        if (EBOOK_CONSUMER_INTELLIGENCE_IDS.includes(solutionId)) {
+          formData.set('subscription', EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION);
+          formData.set('reason', 'kiosk-demo');
+          formData.set('insight_id', EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID);
+          formData.set('utm_source', 'kiosk');
+          formData.set('utm_medium', 'totem');
+          formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
+          formData.set('user_agent', 'kiosk-app/1.0');
+        }
 
         await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 

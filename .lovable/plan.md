@@ -1,14 +1,43 @@
 ## Objetivo
-Impedir que os textos da primeira coluna ("Comportamento previsto") da tabela da resposta 2 do i6 Signal em Price to Conversion quebrem em duas linhas, reduzindo a fonte.
 
-## Alteração
-Arquivo: `src/components/signalDemo/visualizations.tsx` (componente `PriceConversionSessionSegmentsTable`, linhas ~1622–1623).
+Enriquecer o POST do `EbookCTA` (Kiosk) com campos extras — **apenas** quando a solução ativa for uma destas três:
 
-- Célula `ci === 0` (primeira coluna do corpo): trocar tamanho da fonte de `text-sm` (herdado) para `text-xs`, mantendo `font-medium text-gray-900`.
-- Opcionalmente também adicionar `leading-tight` para reduzir a altura da linha e evitar quebras estéticas.
+- `predictive-personalization` (Personalização)
+- `smart-discovery` (Descoberta Preditiva)
+- `predictive-campaign-targeting` (Campanha por Propensão)
 
-Somente essa tabela específica é afetada (Resposta 2 — segmentação de sessões). As demais tabelas de outras respostas não são tocadas.
+Para as demais soluções, o payload continua exatamente como hoje.
+
+## Mudanças
+
+Arquivo único: `src/components/kiosk/EbookCTA.tsx`
+
+1. Definir a lista de solutionIds elegíveis:
+   ```
+   const EBOOK_CONSUMER_INTELLIGENCE_IDS = [
+     'predictive-personalization',
+     'smart-discovery',
+     'predictive-campaign-targeting',
+   ];
+   ```
+2. Dentro do `onSubmit`, verificar `EBOOK_CONSUMER_INTELLIGENCE_IDS.includes(solutionId)`.
+3. Quando verdadeiro, **sobrescrever/adicionar** no `FormData`:
+   - `subscription` = `insight:ebook-inteligencia-do-consumidor-orientada-a-decisao` (substitui o atual `i6-website`)
+   - `reason` = `kiosk-demo`
+   - `insight_id` = `03a13a3b-9b6b-4804-8c04-7418a04bd3c1`
+   - `utm_source` = `kiosk`
+   - `utm_medium` = `totem`
+   - `utm_campaign` = `evento-forum-ecommerce-brasil-2026`
+   - `user_agent` = `kiosk-app/1.0`
+
+   Esses `append` devem acontecer **depois** do bloco `Object.entries(getLeadContextFields()).forEach(...)` para garantir que os UTMs fixos do evento sobrescrevam qualquer UTM detectado pelo tracker (usar `set`-equivalente: como `FormData` não tem "replace", faremos `append` depois — o Apps Script atual lê o último valor; confirmar isso é o único ponto de atenção).
+
+## Ponto de confirmação
+
+- **Subscription:** hoje é sempre `i6-website`. Para essas 3 soluções, você quer **substituir** por `insight:ebook-...` (não coexistir), certo? O plano assume que sim.
+- Nada muda para as outras 6 soluções.
 
 ## Fora de escopo
-- Sem alterações nos textos/dados em `src/data/signalDemo/content.ts`.
-- Sem mudanças na versão EN dos dados (só CSS do componente).
+
+- Nenhuma alteração em outros formulários (Contact, Insights gate, Article CTA).
+- Nenhuma alteração no Apps Script — assumindo que ele já aceita os novos campos (`reason`, `insight_id`, UTMs, `user_agent`) como o restante do HUB.
