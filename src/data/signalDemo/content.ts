@@ -305,7 +305,7 @@ export const signalDemoContent = {
       },
       mixBehavior: {
         label: 'Mix por PDV',
-        question: 'Como os PDVs da região se comportam em relação ao mix ideal e mostre os desvios relevantes?',
+        question: 'Quais os comportamentos e desvios relevantes dos PDVs da região?',
         title: 'Comportamento dos PDVs em relação ao mix ideal',
         analysis: 'O modelo identificou três comportamentos predominantes entre os PDVs da região. A maior parte opera próxima ao mix esperado para seu perfil, mas 18% apresentam desvios relevantes. Alguns possuem variedade abaixo do potencial previsto, enquanto outros concentram produtos redundantes ou de baixo giro. O PDV 184 é o principal outlier positivo — mesmo com um mix 22% menor que a média regional, apresenta alta produtividade por SKU e potencial para absorver novas categorias. Já o PDV 327 possui um mix amplo, mas pouco aderente ao comportamento previsto de sua demanda, elevando o risco de estoque parado.',
         scatter: [
