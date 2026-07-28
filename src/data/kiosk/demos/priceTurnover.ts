@@ -222,6 +222,11 @@ export const skuTemplatesByProduct: Record<
       { sku: 'JQT-INV-009', name: 'Jaqueta acolchoada vinho M', currentPrice: 129.9, recommendedPrice: 124.9, markdownPct: 4, sellThroughProjectedPct: 72 },
       { sku: 'JQT-INV-010', name: 'Jaqueta acolchoada grafite G', currentPrice: 129.9, recommendedPrice: 129.9, markdownPct: 0, sellThroughProjectedPct: 73 },
     ],
+    raise: [
+      { sku: 'JQT-INV-001', name: 'Jaqueta acolchoada preta P', currentPrice: 129.9, recommendedPrice: 139.9, markdownPct: -8, sellThroughProjectedPct: 81 },
+      { sku: 'JQT-INV-002', name: 'Jaqueta acolchoada preta M', currentPrice: 129.9, recommendedPrice: 137.9, markdownPct: -6, sellThroughProjectedPct: 79 },
+      { sku: 'JQT-INV-004', name: 'Jaqueta acolchoada verde G', currentPrice: 129.9, recommendedPrice: 141.9, markdownPct: -9, sellThroughProjectedPct: 77 },
+    ],
   },
   'sku-2': {
     hold: [
