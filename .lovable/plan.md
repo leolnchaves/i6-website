@@ -1,13 +1,12 @@
 ## Ajuste
 
-No `PriceToMarginDemo`, esconder o card **POR QUE** enquanto nenhum produto estiver selecionado — igual às demais telas, onde o insight só aparece durante/depois da simulação.
+Alinhar o card **POR QUE** do `PriceToMarginDemo` ao comportamento das demais telas: só renderiza quando a timeline completa (`done`), sem mensagem genérica durante o running.
 
 ## Mudança
 
-Em `src/components/kiosk/demos/PriceToMarginDemo.tsx`, envolver o bloco `.kiosk-insight-card` com uma condição `selected && (...)`. Assim:
+Em `src/components/kiosk/demos/PriceToMarginDemo.tsx`:
 
-- **Sem produto selecionado**: card POR QUE não renderiza. A timeline horizontal (bottom card) continua visível em estado `idle`, junto com o título "Explicabilidade e raciocínio do modelo".
-- **Produto selecionado, running**: card POR QUE aparece com o texto genérico (`ui.defaultWhy`).
-- **Produto selecionado, done**: card POR QUE mostra `selected.insight` + preço recomendado (comportamento atual).
+- Trocar a condição do wrapper de `{selected && (...)}` para `{done && selected && (...)}`.
+- Remover o branch `else` com `ui.defaultWhy` e a chave `defaultWhy` do mapa `uiCopy` (PT/EN) — não é mais usada.
 
-Nenhuma outra alteração — dados, estados, timeline e KPIs permanecem intactos.
+Durante a seleção, o usuário vê apenas o produto ampliado + spinner "Analisando..." (top card) e a timeline avançando (bottom card). Quando termina, o POR QUE aparece com `selected.insight` e o preço recomendado.
