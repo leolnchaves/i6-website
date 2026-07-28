@@ -1,43 +1,48 @@
 ## Objetivo
 
-Enriquecer o POST do `EbookCTA` (Kiosk) com campos extras — **apenas** quando a solução ativa for uma destas três:
+Adicionar um segundo grupo de soluções ao `EbookCTA` (Kiosk) que envia campos extras no POST, análogo ao grupo Consumer Intelligence já existente.
 
-- `predictive-personalization` (Personalização)
-- `smart-discovery` (Descoberta Preditiva)
-- `predictive-campaign-targeting` (Campanha por Propensão)
-
-Para as demais soluções, o payload continua exatamente como hoje.
+Grupo Pricing (novo):
+- `price-to-margin`
+- `price-to-conversion`
+- `price-to-turnover`
 
 ## Mudanças
 
 Arquivo único: `src/components/kiosk/EbookCTA.tsx`
 
-1. Definir a lista de solutionIds elegíveis:
+1. Adicionar constantes ao lado das existentes:
    ```
-   const EBOOK_CONSUMER_INTELLIGENCE_IDS = [
-     'predictive-personalization',
-     'smart-discovery',
-     'predictive-campaign-targeting',
+   const EBOOK_PRICING_IDS = [
+     'price-to-margin',
+     'price-to-conversion',
+     'price-to-turnover',
    ];
+   const EBOOK_PRICING_SUBSCRIPTION = 'insight:ebook-pricing-orientado-a-resultados';
+   const EBOOK_PRICING_INSIGHT_ID = 'a4012048-aa04-465b-b89a-7c7104d6fc18';
    ```
-2. Dentro do `onSubmit`, verificar `EBOOK_CONSUMER_INTELLIGENCE_IDS.includes(solutionId)`.
-3. Quando verdadeiro, **sobrescrever/adicionar** no `FormData`:
-   - `subscription` = `insight:ebook-inteligencia-do-consumidor-orientada-a-decisao` (substitui o atual `i6-website`)
-   - `reason` = `kiosk-demo`
-   - `insight_id` = `03a13a3b-9b6b-4804-8c04-7418a04bd3c1`
-   - `utm_source` = `kiosk`
-   - `utm_medium` = `totem`
-   - `utm_campaign` = `evento-forum-ecommerce-brasil-2026`
-   - `user_agent` = `kiosk-app/1.0`
 
-   Esses `append` devem acontecer **depois** do bloco `Object.entries(getLeadContextFields()).forEach(...)` para garantir que os UTMs fixos do evento sobrescrevam qualquer UTM detectado pelo tracker (usar `set`-equivalente: como `FormData` não tem "replace", faremos `append` depois — o Apps Script atual lê o último valor; confirmar isso é o único ponto de atenção).
+2. No `onSubmit`, após o bloco `EBOOK_CONSUMER_INTELLIGENCE_IDS`, adicionar bloco simétrico:
+   ```
+   if (EBOOK_PRICING_IDS.includes(solutionId)) {
+     formData.set('subscription', EBOOK_PRICING_SUBSCRIPTION);
+     formData.set('reason', 'kiosk-demo');
+     formData.set('insight_id', EBOOK_PRICING_INSIGHT_ID);
+     formData.set('utm_source', 'kiosk');
+     formData.set('utm_medium', 'totem');
+     formData.set('utm_campaign', 'evento-forum-ecommerce-brasil-2026');
+     formData.set('user_agent', 'kiosk-app/1.0');
+   }
+   ```
 
-## Ponto de confirmação
-
-- **Subscription:** hoje é sempre `i6-website`. Para essas 3 soluções, você quer **substituir** por `insight:ebook-...` (não coexistir), certo? O plano assume que sim.
-- Nada muda para as outras 6 soluções.
+Os UTMs de evento são fixos e iguais aos do grupo Consumer Intelligence — apenas `subscription` e `insight_id` diferem.
 
 ## Fora de escopo
 
-- Nenhuma alteração em outros formulários (Contact, Insights gate, Article CTA).
-- Nenhuma alteração no Apps Script — assumindo que ele já aceita os novos campos (`reason`, `insight_id`, UTMs, `user_agent`) como o restante do HUB.
+- Nenhuma mudança em outros formulários.
+- Nenhuma alteração no Apps Script.
+- Demais soluções (forecast, metas comerciais, mix/sortimento) continuam com o payload padrão.
+
+## Confirmação
+
+Os 3 solutionIds acima (`price-to-margin`, `price-to-conversion`, `price-to-turnover`) são os corretos para "Preço Orientado à Margem / Conversão / Giro"? Se sim, sigo com a implementação após aprovar.
