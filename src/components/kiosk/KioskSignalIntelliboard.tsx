@@ -215,7 +215,7 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
           </div>
           <div className="flex items-center gap-[1.5vmin]">
             <div className="text-right">
-              <p className="text-orange-400 text-[1.3vmin] font-semibold uppercase tracking-wide">VIVARIS PHARMA S.A.</p>
+              <p className="text-orange-400 text-[1.3vmin] font-semibold uppercase tracking-wide">VIVARIS COMÉRCIO E VAREJO</p>
               <p className="text-white text-[1.5vmin] font-medium">Leonardo Chaves</p>
               <p className="text-white/50 text-[1.3vmin]">leonardo.chaves@vivarispharma.com</p>
             </div>
