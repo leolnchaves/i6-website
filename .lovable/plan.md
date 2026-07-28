@@ -1,42 +1,61 @@
 ## Objetivo
 
-Gerar um arquivo **MP4 1920x1080, PT-BR, ~2 minutos, sem áudio**, com o conteúdo das páginas Home, Soluções, Nossa IA e Cases em formato de motion design editorial — pronto para copiar num pendrive e rodar em loop numa TV.
+Três ajustes no vídeo institucional (`remotion/`), com novo render do MP4.
 
-## Direção visual
+## 1. Remover textos de rodapé
 
-Segue a identidade do site:
-- Fundo navy `#0B1224` com gradientes sutis e as "ondas" laterais coral já usadas no site
-- Acento coral `#F4845F`, textos em branco / branco 60%
-- Tipografia: uma display + uma de texto, sem pontos finais em títulos (regra da marca)
-- Marca sempre em minúsculo: **infinity6**
-- Movimento: entradas por spring suave + revelação por máscara; transições consistentes entre cenas (sem fade-para-preto)
+Hoje `SceneFrame` (em `remotion/src/components/Type.tsx`) desenha um rótulo fixo no canto inferior esquerdo de cada cena ("Como funcionamos", "Nossa IA", "i6 Signal", etc.).
 
-## Roteiro (~120s, 8 blocos)
+- Remover esse bloco de rodapé do `SceneFrame`, mantendo apenas o conteúdo central.
+- Limpar a prop `label` das chamadas nas cenas (Thesis, HowItWorks, Territories, Signal, Engines, Results).
 
-1. **Abertura** (8s) — símbolo infinity6 + frase de posicionamento
-2. **Home / Tese** (16s) — "Decisões antecipadas" e o que a infinity6 faz
-3. **Como funcionamos** (16s) — os sinais → predição → decisão
-4. **Soluções: territórios** (18s) — Growth, Planejamento, Preço
-5. **i6 Signal** (14s) — camada conversacional sobre a saída preditiva dos motores
-6. **Nossa IA** (18s) — motores i6 RecSys / i6 Previsio / i6 ElasticPrice + XAI for Business
-7. **Resultados e cases** (22s) — números reais por segmento (Farma, Varejo, Financeiro, Fashion), animados
-8. **Encerramento** (8s) — logo + infinity6.ai + performance@infinity6.ai
+## 2. Tratamento do "infinity6.ai"
 
-Todo o texto vem do conteúdo já existente no projeto (`realResults`, `solutionsV2/content`, `ourAIContent`, seção de resultados da home). **Nenhum número novo é inventado.**
+- `Thesis.tsx`: existe um texto solto "Home · infinity6.ai" — remover.
+- `Closing.tsx`: o "infinity6.ai" hoje é texto neutro cinza. Trocar por **www.infinity6.ai** com destaque: tipografia display, corpo maior, "infinity6" em coral, letter-spacing controlado e régua coral animada abaixo (motivo já usado na peça). O chip com `performance@infinity6.ai` permanece.
 
-## Como será produzido (detalhes técnicos)
+## 3. Nova cena i6 Signal — mesmo design de /solutions
 
-- Projeto Remotion em `remotion/` (versionado, permite re-renderizar e editar depois)
-- 1920x1080, 30fps, ~3600 frames, `muted: true`
-- Cenas separadas em `remotion/src/scenes/`, encadeadas com `TransitionSeries`
-- Camadas persistentes (gradiente + ondas laterais) atravessando o vídeo inteiro
-- Render em 3 lotes de frames (o sandbox tem limite de 10 min por comando) e concatenação final com ffmpeg
-- Checagem de frames-chave com `remotion still` antes do render completo
-- Saída: `/mnt/documents/infinity6-tv-pt-1080p.mp4` — download direto pelo chat, depois é só copiar para o pendrive
+Substituir a cena atual (só título + lista de perguntas) por uma réplica **visualmente fiel** do demo i6 Intelliboard de `/solutions` (`src/components/solutions/I6SignalDemo.tsx`), animada quadro a quadro.
 
-## Observações
+```text
+       i6 Signal — título + subtítulo centralizados (como na página)
+              [ chips de cenário em barra arredondada ]
+┌───────────────────────────────────────────────────────┐
+│ i6 Intelliboard          VIVARIS · Leonardo · avatar  │ header gradiente navy→azul
+├────────┬───┬──────────────────────────────────────────┤
+│ ÂNGULO │ ♡ │   ● bolha do usuário (pergunta)          │
+│ menu   │ ✦ │   ● resposta i6: texto + tabela/gráfico  │
+│ branco │   │                                          │
+│ footer │   │   [ input + botão enviar coral ]         │
+└────────┴───┴──────────────────────────────────────────┘
+```
 
-- Sem áudio, como pedido — a peça é legível "no mudo"
-- O vídeo não altera nada do site atual; é uma pasta nova no projeto
-- Para loop na TV: a maioria dos players USB tem "repetir" — o último frame conecta visualmente com o primeiro para o loop ficar limpo
-- Se quiser depois uma versão EN ou 4K, é só re-render do mesmo projeto
+Fidelidade ao design da página, item a item:
+- Cabeçalho da seção: título + subtítulo centralizados em branco/branco-60.
+- Barra de cenários: pílula translúcida `bg-white/5` com borda, item ativo em laranja com sombra.
+- Container do demo: cantos arredondados, borda branca 10%, sombra forte.
+- Header do Intelliboard: gradiente `#0F1F36 → #1E4A94 → #0F1F36`, "i6" coral + "Intelliboard" branco, bloco VIVARIS/Leonardo e avatar circular com anel.
+- Sidebar clara (branca, 208px) com dropdown ÂNGULO/Forecast, itens de menu com ícone e item ativo em degradê laranja→azul com barra lateral coral; rodapé com Billing Analytics / Analytics / Settings.
+- Barra de favoritos estreita com ícones wizard e corações coral.
+- Área de chat branca: bolha do usuário em degradê laranja/azul à direita, resposta com texto cinza-escuro, cartões de visualização (tabela/gráfico de barras) no mesmo estilo do site.
+- Campo de input inferior com placeholder e botão de envio coral.
+
+Coreografia (cena longa, ~22–25s no lugar dos 14s atuais):
+1. Interface monta (header → sidebar → chat).
+2. Chip do cenário ativo acende.
+3. Pergunta é digitada caractere a caractere no input; botão enviar pulsa.
+4. Pergunta sobe como bolha do usuário; três pontinhos de "pensando".
+5. Resposta revela em blocos escalonados: leitura do cenário + visualização (tabela/gráfico) + recomendação prescritiva.
+6. Corte interno para um segundo cenário (mesma mecânica, mais rápida) mostrando amplitude.
+
+Conteúdo (perguntas, respostas, dados de tabelas/gráficos) vem de `src/data/signalDemo/content.ts` — os mesmos cenários do site, em PT.
+
+## Detalhes técnicos
+
+- O componente do site não pode ser importado no Remotion (depende de LanguageContext, Tailwind do app e animações CSS do lucide). A UI será reconstruída em `remotion/src/scenes/Signal.tsx` + `remotion/src/components/signal/*` com estilos inline equivalentes (mesmas cores, raios, sombras e tamanhos) e toda a animação convertida para `interpolate()`/`spring()`.
+- Ícones recriados como SVG inline simples, sem dependência de lucide no bundle do vídeo.
+- Avatar: copiar `src/assets/images/avatar-ricardo.jpg` para `remotion/public/images/`.
+- Duração: cena Signal passa de 420 para ~700 frames; atualizar `TOTAL_FRAMES` e o `durationInFrames` da composição.
+- Conferência por frames (`bunx remotion still`) nos pontos-chave antes do render final.
+- Render final para `/mnt/documents/infinity6-institucional.mp4` (1920×1080, 30fps, mudo).
