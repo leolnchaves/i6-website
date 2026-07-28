@@ -34,7 +34,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         icon={Target}
         onSimulationClosed={onSimulationClosed}
       >
-        <PriceToMarginDemo />
+        <PriceToMarginDemo lang={lang} />
       </SimulationLauncher>
     );
   }
