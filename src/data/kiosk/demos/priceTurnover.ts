@@ -127,7 +127,7 @@ export const clusters: TurnoverCluster[] = [
     action: 'markdown',
     recommendedPrice: 109.9,
     recommendedMarkdownPct: 15,
-    nextAction: 'Markdown de 15% agora',
+    nextAction: 'Markdown agora',
     actInDays: 0,
     sellThroughProjectedPct: 82,
     agedStockPct: 41,

@@ -77,7 +77,7 @@ const computeOutcome = (
   ) * 1000;
 
   const nextAction =
-    c.action === 'markdown' ? `Markdown de ${markdownPct}% agora` : c.nextAction;
+    c.action === 'markdown' ? 'Markdown agora' : c.nextAction;
 
   const skus: SkuRow[] = c.skus.map((s) => {
     if (!shift || s.markdownPct === 0) return s;
