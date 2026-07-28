@@ -1,5 +1,5 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring } from 'remotion';
-import { Kicker, Reveal, SceneFrame, Title } from '../components/Type';
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from 'remotion';
+import { Counter, Kicker, Reveal, SceneFrame, Title } from '../components/Type';
 import { CORAL, FONT_BODY, FONT_DISPLAY, LINE, MUTED, WHITE } from '../theme';
 
 const results = [
