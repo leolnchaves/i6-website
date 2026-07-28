@@ -75,7 +75,7 @@ export const Signal: React.FC = () => {
       <div
         style={{
           position: 'absolute',
-          top: 44,
+          top: 30,
           left: 0,
           right: 0,
           textAlign: 'center',
@@ -83,15 +83,15 @@ export const Signal: React.FC = () => {
           zIndex: 2,
         }}
       >
-        <div style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: 54, color: WHITE, letterSpacing: '-0.03em' }}>
+        <div style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: 50, color: WHITE, letterSpacing: '-0.03em' }}>
           i6 <span style={{ color: CORAL }}>Signal</span>
         </div>
-        <div style={{ fontFamily: FONT_BODY, fontSize: 24, color: MUTED, marginTop: 10 }}>
+        <div style={{ fontFamily: FONT_BODY, fontSize: 22, color: MUTED, marginTop: 8 }}>
           {LABELS.sectionSubtitle}
         </div>
       </div>
 
-      <div style={{ position: 'absolute', inset: 0, paddingTop: 96 }}>
+      <div style={{ position: 'absolute', inset: 0, paddingTop: 190 }}>
         <Sequence from={0} durationInFrames={370}>
           <Take index={0} scrollAmount={330} />
         </Sequence>
