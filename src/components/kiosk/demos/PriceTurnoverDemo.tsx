@@ -157,7 +157,21 @@ const PriceTurnoverDemo = () => {
 
   const derived = selected ? derivedByCluster.get(selected.id) ?? null : null;
 
-  const generalInsight = useMemo(() => generalInsightFor(visibleClusters), [visibleClusters]);
+  const generalInsight = useMemo(() => {
+    const actions = Array.from(derivedByCluster.values()).map((d) => d.action);
+    const counts = {
+      hold: actions.filter((a) => a === 'hold').length,
+      markdown: actions.filter((a) => a === 'markdown').length,
+      wait: actions.filter((a) => a === 'wait').length,
+      raise: actions.filter((a) => a === 'raise').length,
+    };
+    const parts: string[] = [];
+    if (counts.hold) parts.push(`${counts.hold} com giro acima da categoria e elasticidade baixa → manter`);
+    if (counts.markdown) parts.push(`${counts.markdown} com estoque envelhecido e elasticidade alta → markdown cirúrgico agora`);
+    if (counts.wait) parts.push(`${counts.wait} com pico sazonal próximo → aguardar janela`);
+    if (counts.raise) parts.push(`${counts.raise} com giro forte e elasticidade baixa → capturar valor com aumento controlado`);
+    return `O modelo lê, por cluster, velocidade vs. média da categoria, idade do estoque, elasticidade e janela sazonal, respeitando o piso de margem. ${parts.join('; ')}.`;
+  }, [derivedByCluster]);
 
 
   useEffect(() => {
