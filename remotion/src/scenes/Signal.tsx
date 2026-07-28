@@ -46,7 +46,7 @@ const Take: React.FC<{ index: number; scrollAmount: number }> = ({ index, scroll
   const scene = SCENES[index];
   return (
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 34 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 34, paddingTop: 208 }}>
         <ChipsBar activeChip={scene.chipLabel} />
         <Intelliboard
           scene={scene}
@@ -91,7 +91,7 @@ export const Signal: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ position: 'absolute', inset: 0, paddingTop: 214 }}>
+      <div style={{ position: 'absolute', inset: 0 }}>
         <Sequence from={0} durationInFrames={370}>
           <Take index={0} scrollAmount={330} />
         </Sequence>
