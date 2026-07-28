@@ -443,6 +443,15 @@ export const Intelliboard: React.FC<{
           {/* Chat */}
           <div style={{ flex: 1, overflow: 'hidden', padding: '26px 60px 0' }}>
             <div style={{ transform: `translateY(${scrollY}px)` }}>
+              {/* Estado vazio */}
+              {frame < typeEnd + 4 && (
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 150 }}>
+                  <span style={{ fontFamily: FONT_BODY, fontSize: 26, color: '#d1d5db', fontWeight: 300, letterSpacing: '0.02em' }}>
+                    Qual insight preditivo vamos descobrir hoje?
+                  </span>
+                </div>
+              )}
+
               {/* Bolha do usuário */}
               {frame >= typeEnd + 4 && (
                 <In delay={typeEnd + 4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
