@@ -81,7 +81,8 @@ const computeOutcome = (
   const nextAction =
     c.action === 'markdown' ? 'Markdown agora' : c.nextAction;
 
-  const skus: SkuRow[] = c.skus.map((s) => {
+  const template = skuTemplatesByProduct[productId]?.[c.action] ?? c.skus;
+  const skus: SkuRow[] = template.map((s) => {
     if (!shift || s.markdownPct === 0) return s;
     const mdPct = Math.max(0, Math.round(s.markdownPct * factor));
     const price = Math.round(s.currentPrice * (1 - mdPct / 100) * 10) / 10;
