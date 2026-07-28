@@ -138,9 +138,9 @@ const PriceTurnoverDemo = () => {
 
   const derivedByCluster = useMemo(() => {
     const map = new Map<string, Derived>();
-    visibleClusters.forEach((c) => map.set(c.id, computeOutcome(c, objective, minMargin)));
+    visibleClusters.forEach((c) => map.set(c.id, computeOutcome(c, objective, minMargin, product)));
     return map;
-  }, [visibleClusters, objective, minMargin]);
+  }, [visibleClusters, objective, minMargin, product]);
 
   const selected = useMemo(
     () => visibleClusters.find((c) => c.id === selectedId) ?? null,
