@@ -207,7 +207,7 @@ const I6SignalDemo = memo(() => {
               <div className="text-right">
                 <p className="text-orange-400 text-[10px] font-semibold uppercase tracking-wide">VIVARIS COMÉRCIO E VAREJO</p>
                 <p className="text-white text-xs font-medium">Leonardo Chaves</p>
-                <p className="text-white/50 text-[10px]">leonardo.chaves@vivarispharma.com</p>
+                <p className="text-white/50 text-[10px]">leonardo.chaves@vivaris.com</p>
               </div>
               <img src={avatarRicardo} alt="Leonardo Chaves" className="h-9 w-9 rounded-full ring-2 ring-white/40 object-cover" />
             </div>
