@@ -9,6 +9,7 @@ import { trackKioskEvent } from '@/lib/kioskTracker';
 import { enqueueLead, postLead } from '@/lib/leadQueue';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 import type { KioskLang, QuizContent, RouteId } from '@/data/kiosk/config';
+import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
 
 const schema = z.object({
@@ -193,7 +194,7 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
               type="submit"
               disabled={submitting}
               aria-label={t.submit}
-              className="flex-shrink-0 h-[8vmin] px-[4vmin] rounded-full text-[2.2vmin] font-bold bg-[#F4845F] text-white shadow-[0_0_30px_rgba(244,132,95,0.5)] disabled:opacity-60 flex items-center justify-center gap-[1.5vmin]"
+              className={kioskBtn('flex-shrink-0 h-[8vmin] px-[4vmin] text-[2.2vmin] disabled:opacity-60 gap-[1.5vmin]')}
             >
               {submitting ? (
                 <Loader2 className="w-[3vmin] h-[3vmin] animate-spin" />
