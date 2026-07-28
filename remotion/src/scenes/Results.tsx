@@ -15,26 +15,36 @@ const Card: React.FC<{ r: (typeof results)[number]; delay: number }> = ({ r, del
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const s = spring({ frame: frame - delay, fps, config: { damping: 14, stiffness: 110 }, durationInFrames: 34 });
+  // flash coral no instante em que o contador trava
+  const lock = delay + 40;
+  const flash = interpolate(frame, [lock - 2, lock + 2, lock + 16], [0, 1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
   return (
     <div
       style={{
         flex: '1 1 30%',
         opacity: s,
         transform: `translateY(${(1 - s) * 40}px) scale(${0.94 + s * 0.06})`,
-        background: 'linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))',
+        background: `linear-gradient(160deg, rgba(255,255,255,${(0.07 + flash * 0.06).toFixed(3)}), rgba(255,255,255,0.02))`,
         border: `1px solid ${LINE}`,
         borderLeft: `4px solid ${CORAL}`,
         borderRadius: 22,
         padding: '30px 30px 26px',
         minHeight: 250,
+        boxShadow: flash > 0.01 ? `0 0 ${(40 * flash).toFixed(0)}px rgba(244,132,95,${(0.3 * flash).toFixed(3)})` : 'none',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
       }}
     >
       <div>
-        <div
+        <Counter
+          value={r.value}
+          delay={delay}
           style={{
+            display: 'block',
             fontFamily: FONT_DISPLAY,
             fontWeight: 700,
             fontSize: 68,
@@ -43,9 +53,8 @@ const Card: React.FC<{ r: (typeof results)[number]; delay: number }> = ({ r, del
             lineHeight: 1,
             marginBottom: 16,
           }}
-        >
-          {r.value}
-        </div>
+        />
+
         <div style={{ fontFamily: FONT_BODY, fontSize: 25, color: WHITE, lineHeight: 1.35 }}>
           {r.label}
         </div>
