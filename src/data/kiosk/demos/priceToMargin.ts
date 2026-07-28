@@ -224,7 +224,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     pipeline: [
       { label: 'Lendo sessões, cliques e carrinhos abandonados', microMetric: '48.612 sessões · janela de 30 dias', durationMs: 1400 },
       { label: 'Segmentando clusters de intenção e sensibilidade', microMetric: '6 clusters ativos · cluster dominante: 42%', durationMs: 1400 },
-      { label: 'Simulando resposta de conversão em 10.000 cenários', microMetric: 'elasticidade de conversão estimada: -1.8', durationMs: 1800 },
+      { label: 'Simulando resposta de conversão em milhares de cenários', microMetric: 'elasticidade de conversão estimada: -1.8', durationMs: 1800 },
       { label: 'Otimizando para conversão com piso de margem', microMetric: 'restrições: margem mínima · sinal competitivo', durationMs: 1600 },
       { label: 'Recomendando preço ideal para converter', microMetric: 'confiança: 94%', durationMs: 1200 },
     ],
@@ -262,7 +262,7 @@ export const priceToMarginDemo: Record<KioskLang, PriceToMarginDemoContent> = {
     pipeline: [
       { label: 'Reading sessions, clicks and abandoned carts', microMetric: '48,612 sessions · 30-day window', durationMs: 1400 },
       { label: 'Segmenting intent and price-sensitivity clusters', microMetric: '6 active clusters · dominant cluster: 42%', durationMs: 1400 },
-      { label: 'Simulating conversion response across 10,000 scenarios', microMetric: 'estimated conversion elasticity: -1.8', durationMs: 1800 },
+      { label: 'Simulating conversion response across thousands of scenarios', microMetric: 'estimated conversion elasticity: -1.8', durationMs: 1800 },
       { label: 'Optimizing for conversion with a margin floor', microMetric: 'constraints: min margin · competitive signal', durationMs: 1600 },
       { label: 'Recommending the ideal price to convert', microMetric: 'confidence: 94%', durationMs: 1200 },
     ],
