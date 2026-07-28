@@ -23,10 +23,10 @@ export const Glitch: React.FC<{
 
   return (
     <AbsoluteFill>
-      <GlitchLayer color="rgba(255,0,60,0.55)" dx={-off} frame={frame} k={k}>
+      <GlitchLayer hue={-45} dx={-off} k={k}>
         {children}
       </GlitchLayer>
-      <GlitchLayer color="rgba(0,220,255,0.5)" dx={off} frame={frame + 7} k={k}>
+      <GlitchLayer hue={150} dx={off} k={k}>
         {children}
       </GlitchLayer>
       <AbsoluteFill style={{ transform: `translateX(${(off * 0.3).toFixed(2)}px)` }}>
@@ -38,23 +38,23 @@ export const Glitch: React.FC<{
 };
 
 const GlitchLayer: React.FC<{
-  color: string;
+  hue: number;
   dx: number;
-  frame: number;
   k: number;
   children: React.ReactNode;
-}> = ({ color, dx, frame, k, children }) => (
+}> = ({ hue, dx, k, children }) => (
   <AbsoluteFill
     style={{
       transform: `translateX(${dx.toFixed(2)}px)`,
       mixBlendMode: 'screen',
-      opacity: 0.55 * k,
+      opacity: 0.45 * k,
+      filter: `hue-rotate(${hue}deg) saturate(4)`,
     }}
   >
-    <AbsoluteFill>{children}</AbsoluteFill>
-    <AbsoluteFill style={{ background: color, mixBlendMode: 'multiply' }} />
+    {children}
   </AbsoluteFill>
 );
+
 
 const Slices: React.FC<{ frame: number; k: number }> = ({ frame, k }) => {
   const n = 4;
