@@ -124,9 +124,8 @@ export const SceneFrame: React.FC<{ label: string; children: React.ReactNode }> 
         left: 170,
         bottom: 54,
         fontFamily: FONT_BODY,
-        fontSize: 19,
-        letterSpacing: '0.3em',
-        textTransform: 'uppercase',
+        fontSize: 21,
+        letterSpacing: '0.24em',
         color: FAINT,
       }}
     >
