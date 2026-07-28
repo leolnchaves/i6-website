@@ -520,7 +520,7 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] h-full flex">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full" preserveAspectRatio="none">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full" preserveAspectRatio="xMidYMid meet">
         <rect
           x={x(derived.rangeMin)} y={PAD.t}
           width={x(derived.rangeMax) - x(derived.rangeMin)} height={ih}
