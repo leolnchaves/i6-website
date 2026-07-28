@@ -1,4 +1,4 @@
-import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
+import { AbsoluteFill } from 'remotion';
 import { Body, Kicker, Reveal, SceneFrame, Title } from '../components/Type';
 import { CORAL, FONT_BODY, FONT_DISPLAY, LINE, MUTED, WHITE } from '../theme';
 
@@ -10,11 +10,7 @@ const steps = [
 ];
 
 export const HowItWorks: React.FC = () => {
-  const frame = useCurrentFrame();
-  const lineW = interpolate(frame - 44, [0, 60], [0, 100], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
+
 
   return (
     <AbsoluteFill>
