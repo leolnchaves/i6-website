@@ -17,7 +17,6 @@ import {
 } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 import { trackEvent } from '@/lib/tracker';
-import { trackKioskEvent, initKioskTracking } from '@/lib/kioskTracker';
 import { flushLeadQueue } from '@/lib/leadQueue';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
@@ -154,16 +153,9 @@ const Kiosk = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, solutionsForResults]);
 
-  // Boot do tracking: reconcilia localStorage x IndexedDB, liga a fila de
-  // envio e dispara o export automático diário do CSV.
-  useEffect(() => {
-    initKioskTracking();
-  }, []);
-
 
   const handleStart = () => {
     trackEvent(TRACKER_EVENTS.KIOSK_SESSION_STARTED, { language: lang });
-    trackKioskEvent('kiosk:start');
     setStage('quiz');
     setRoute(null);
     setRecommendedIds(null);
@@ -181,7 +173,6 @@ const Kiosk = () => {
         option_id: optionId,
         route: opt.route,
       });
-      trackKioskEvent(`q1:${optionId}`);
       setRoute(opt.route);
       return;
     }
@@ -195,13 +186,11 @@ const Kiosk = () => {
       option_id: optionId,
       route,
     });
-    trackKioskEvent(`q2:${optionId}`);
     trackEvent(TRACKER_EVENTS.KIOSK_QUIZ_COMPLETED, {
       language: lang,
       route,
       solutions: opt.solutionIds.join(','),
     });
-    opt.solutionIds.forEach((sid) => trackKioskEvent(`results:${sid}`));
     setRecommendedIds(opt.solutionIds);
     setStage('results');
   };
