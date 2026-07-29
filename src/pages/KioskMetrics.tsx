@@ -13,11 +13,19 @@ import {
   Line,
 } from 'recharts';
 import {
-  getKioskEvents,
+  getKioskEventsMerged,
   clearKioskEvents,
   downloadKioskEventsCSV,
+  downloadKioskEventsCSVForDay,
+  initKioskTracking,
+  getDeviceId,
+  getLastAutoExportAt,
+  getPendingSyncCount,
+  getLastSyncAt,
+  flushEventQueue,
   type KioskEvent,
 } from '@/lib/kioskTracker';
+import { REMOTE_SYNC_ENABLED } from '@/lib/kioskEventSync';
 import {
   getPendingLeadsCount,
   flushLeadQueue,
