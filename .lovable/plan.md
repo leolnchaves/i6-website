@@ -1,36 +1,65 @@
-## Ajustes no vídeo Remotion (`remotion/src/`)
+## Redesenho do vídeo: de "slides" para peça de motion
 
-### 1. Faixa laranja mal posicionada — `scenes/HowItWorks.tsx`
-A "faixa" é a linha de progresso (`position: absolute; top: 34`) desenhada atrás dos 4 cards: como os cards têm `borderTop: 3px solid CORAL`, a linha cruza os cards na altura errada e vaza pelas laterais.
-- Remover essa linha absoluta. A leitura de sequência já é dada pela numeração 01–04 e pelo topo coral de cada card, que aparecem em cascata.
+Mantemos texto, ordem das cenas e identidade (navy #0B1224 + coral #F4845F, Rubik/Inter). O que muda é a **linguagem de movimento**: hoje cada cena é um bloco estático que entra com `Reveal` e sai numa transição de biblioteca — é isso que dá cara de apresentação. A ideia é substituir por um sistema contínuo de câmera, moldura e ruído.
 
-### 2. Espaçamento na cena i6 Signal — `scenes/Signal.tsx`
-Hoje: header em `top: 30`, subtítulo com `marginTop: 8`, conteúdo com `paddingTop: 190` e `gap: 18` entre a barra de chips e o Intelliboard.
-- Subtítulo: `marginTop` 8 → 20.
-- Header: `top` 30 → 44.
-- Conteúdo: `paddingTop` 190 → 240.
-- `gap` entre barra de chips e Intelliboard: 18 → 36.
-- Barra de chips: `padding` 6 → 8 e `gap` 6 → 10; chips com `padding: '12px 28px'`.
+Não substitua o video antigo, crie um novo arquivo. 
 
-### 3. Ênfase no XAI com argumentos de e-commerce/varejo — `scenes/Engines.tsx`
-Transformar o rodapé "XAI for Business" (hoje uma faixa fina de uma linha) em um bloco de destaque:
-- Selo **XAI for Business** maior, em coral, com moldura mais forte e leve pulso coral (frame-based).
-- Frase principal em destaque: explicabilidade que vira argumento de venda.
-- Três exemplos curtos de argumento, em chips/colunas, com foco em e-commerce e varejo, no espírito de:
-  - "Recomendado porque o cliente comprou X há 21 dias e a recompra média é 25 dias"
-  - "Preço sugerido porque a elasticidade da categoria caiu 12% na região"
-  - "Reposição antecipada porque o giro do SKU no PDV subiu 3 semanas seguidas"
-- Para caber em 1080p: reduzir `minHeight` dos 3 cards de motores de 320 → ~270 e ajustar `marginTop`.
-- Estender a cena de 420 → 500 frames para dar tempo de leitura dos argumentos.
+### 1. Sistema de câmera contínua (`components/Camera.tsx` — novo)
 
-### 4. Transição para o slide final e animação da logo — `scenes/Closing.tsx` + `MainVideo.tsx`
-Causa da sobreposição: o crossfade `fade()` entre Results e Closing renderiza a logo do Closing por cima do grid de cases (visível no anexo 4).
-- Trocar a transição Results → Closing por `slide({ direction: 'from-bottom' })`, que não sobrepõe conteúdos translúcidos.
-- Adicionalmente, atrasar a entrada da logo no Closing (spring começando após o fim da transição) para nunca aparecer sobre a cena anterior.
-- Animação da logo (visibilidade em TV acima do stand): entrada com spring e, em seguida, crescimento contínuo da largura de ~520px até ~900px ao longo da cena, com brilho coral suave por trás. Demais elementos (frase, URL, e-mail) reposicionados/reduzidos levemente para acomodar a logo maior.
-- Aumentar o Closing de 270 → 360 frames para a animação de crescimento respirar.
+Wrapper que aplica a cada cena um movimento lento e permanente derivado de `useCurrentFrame()`:
+
+- drift/parallax sutil (translate 0–30px), micro-zoom (scale 1.00 → 1.05) e rotação < 0.4°;
+- direção alternada por cena (uma puxa da esquerda, a próxima empurra pra cima) para que nunca haja dois movimentos iguais seguidos;
+- camadas com velocidades diferentes: fundo mais lento que o conteúdo (parallax real).
+
+Resultado: nenhum frame parado, mesmo durante o tempo de leitura.
+
+### 2. Transições que "cortam", não que "passam"
+
+Trocar `fade`/`slide` genéricos do `@remotion/transitions` por transições autorais em `MainVideo.tsx`:
+
+- **Wipe de moldura**: uma barra coral fina varre a tela e revela a cena seguinte atrás dela;
+- **Whip-pan**: pan rápido (6–8 frames) com motion blur por `filter: blur()` no eixo do movimento;
+- **Corte seco com glitch** nos momentos de mais energia (entrada de Engines, entrada de Results);
+- **Match cut** de elemento: o rule coral da cena A vira a borda do card da cena B.
+
+Regra: no máximo 3 tipos, repetidos com ritmo — variedade demais volta a parecer slideshow.
+
+### 3. Efeitos de vídeo (moldura, glitch, grão)
+
+Novos componentes em `remotion/src/components/fx/`:
+
+- `Frame.tsx` — moldura viva: cantos em L coral que desenham/apagam por `strokeDashoffset`, marcas de "viewfinder", régua fina com timecode discreto. Aparece e recolhe conforme a cena.
+- `Glitch.tsx` — deslocamento RGB (3 camadas com `mix-blend-mode: screen` em offsets de 1–4px), slices horizontais e queda de scanline. Usado em rajadas de 3–6 frames, no máximo 5 vezes no vídeo inteiro.
+- `Grain.tsx` — grão/ruído animado por SVG `feTurbulence` com seed dependente do frame + vinheta suave. Camada global, opacidade ~4%.
+- `Scanlines.tsx` — linhas horizontais bem discretas só nas cenas de produto (Signal, Engines), reforçando o tom "tela/telemetria".
+
+### 4. Coreografia dentro das cenas
+
+Substituir o `Reveal` único por um vocabulário mais rico em `components/Type.tsx`:
+
+- **Kinetic type**: título revelado por máscara `clip-path` linha a linha, com char-stagger no destaque coral;
+- **Contadores**: os números de `Results.tsx` sobem de 0 ao valor com easing (e o card recebe um flash coral ao travar);
+- **Stagger irregular**: delays não-lineares (5, 9, 16, 26 frames) em vez de intervalos iguais;
+- **Saída ativa**: elementos saem com blur + deslocamento antes do corte, em vez de esperarem o crossfade.
+
+### 5. Motivos gráficos recorrentes
+
+- Grade de pontos/linhas que se desenha e apaga entre blocos;
+- "Sinal" coral (linha que atravessa a tela) usado como fio condutor — sai de uma cena e entra na próxima;
+- Barras de progresso finas no topo, marcando o avanço da narrativa sem virar rodapé.
+
+### 6. Ritmo
+
+Recalibrar durações para variação real: beats curtos de 60–90 frames intercalados com respiros de 300+ (Signal continua a cena longa). Hoje as cenas ficam entre 210 e 700 frames com pouca variação percebida porque o movimento interno é constante — o ritmo vem tanto do corte quanto da densidade de eventos por segundo.
 
 ### Técnico
-- Atualizar o comentário e a constante `TOTAL_FRAMES` em `MainVideo.tsx` (novos totais: 210+330+390+420+700+500+450+360 = 3360 − 7×24 = **3192 frames**, ~106s).
-- Conferência por stills (`bunx remotion still`) nos frames-chave: HowItWorks, Signal (header/chips), Engines (bloco XAI), transição Results→Closing e logo final ampliada.
-- Re-renderizar para `/mnt/documents/infinity6-institucional.mp4` via `node scripts/render-remotion.mjs`.
+
+- Tudo frame-based (`useCurrentFrame`/`interpolate`/`spring`), sem CSS animation.
+- Sem `backdropFilter` (crash no render do sandbox); glitch e grão via `filter`, `mix-blend-mode` e SVG.
+- Verificação por stills (`bunx remotion still`) nos frames de transição e nas rajadas de glitch antes do render completo.
+- Render final para `/mnt/documents/infinity6-institucional.mp4` via `node scripts/render-remotion.mjs`, recalculando `TOTAL_FRAMES` em `MainVideo.tsx`.
+
+### Fora de escopo
+
+Reescrita de copy, mudança de paleta/fontes e áudio (o render continua mudo).
