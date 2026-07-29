@@ -117,6 +117,16 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
           fields.user_agent = 'kiosk-app/1.0';
         }
 
+        if (EBOOK_PLANNING_IDS.includes(solutionId)) {
+          fields.subscription = EBOOK_PLANNING_SUBSCRIPTION;
+          fields.reason = 'kiosk-demo';
+          fields.insight_id = EBOOK_PLANNING_INSIGHT_ID;
+          fields.utm_source = 'kiosk';
+          fields.utm_medium = 'totem';
+          fields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
+          fields.user_agent = 'kiosk-app/1.0';
+        }
+
         // 1) Caminho principal: envio online, como sempre.
         const sent = await postLead(fields);
         // 2) Fallback: rede indisponível/lenta → grava local e reenvia depois.
