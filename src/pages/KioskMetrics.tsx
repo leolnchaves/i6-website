@@ -108,11 +108,39 @@ const KioskMetrics = () => {
   const [pendingLeads, setPendingLeads] = useState(0);
   const [resending, setResending] = useState(false);
   const [resendMsg, setResendMsg] = useState<string | null>(null);
+  const [pendingSync, setPendingSync] = useState(0);
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [lastExport, setLastExport] = useState<string | null>(null);
+  const [lsCount, setLsCount] = useState(0);
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
-    setRows(getKioskEvents().slice().reverse()); // most recent first
+    initKioskTracking();
+    let alive = true;
+    (async () => {
+      const merged = await getKioskEventsMerged();
+      if (!alive) return;
+      setRows(merged.slice().reverse()); // most recent first
+      setLsCount(
+        (() => {
+          try {
+            const raw = localStorage.getItem('i6_kiosk_events');
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed.length : 0;
+          } catch {
+            return 0;
+          }
+        })(),
+      );
+    })();
     setPendingLeads(getPendingLeadsCount());
+    setPendingSync(getPendingSyncCount());
+    setLastSync(getLastSyncAt());
+    setLastExport(getLastAutoExportAt());
+    return () => {
+      alive = false;
+    };
   }, [token, refreshTick]);
 
   const handleResendLeads = async () => {
@@ -125,6 +153,13 @@ const KioskMetrics = () => {
       setResending(false);
       setRefreshTick((t) => t + 1);
     }
+  };
+
+  const handleForceSync = async () => {
+    setSyncMsg(null);
+    const { sent, remaining } = await flushEventQueue();
+    setSyncMsg(`${sent} evento(s) enviado(s) · ${remaining} pendente(s)`);
+    setRefreshTick((t) => t + 1);
   };
 
   const handleClearLeads = () => {
