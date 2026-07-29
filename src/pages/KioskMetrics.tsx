@@ -143,7 +143,7 @@ const KioskMetrics = () => {
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
-    initKioskTracking();
+    // Coleta de métricas temporariamente desativada — sem boot do tracking.
     let alive = true;
     (async () => {
       const merged = await getKioskEventsMerged();
