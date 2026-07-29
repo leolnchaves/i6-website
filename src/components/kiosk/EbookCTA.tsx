@@ -36,6 +36,14 @@ const EBOOK_PRICING_IDS = [
 const EBOOK_PRICING_SUBSCRIPTION = 'insight:ebook-pricing-orientado-a-resultados';
 const EBOOK_PRICING_INSIGHT_ID = 'a4012048-aa04-465b-b89a-7c7104d6fc18';
 
+const EBOOK_PLANNING_IDS = [
+  'demand-forecasting',
+  'predictive-commercial-targets',
+  'mix-assortment-order',
+];
+const EBOOK_PLANNING_SUBSCRIPTION = 'insight:ebook-planejamento-preditivo-decisao';
+const EBOOK_PLANNING_INSIGHT_ID = 'b098418a-7472-4d58-be7e-9c8e9e31dec8';
+
 interface Props {
   lang: KioskLang;
   content: QuizContent;
