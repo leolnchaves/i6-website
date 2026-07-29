@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const out = process.argv[2] ?? '/mnt/documents/infinity6-institucional.mp4';
+const range = process.argv[3] ? process.argv[3].split('-').map(Number) : null;
+
 
 const bundled = await bundle({
   entryPoint: path.resolve(__dirname, '../src/index.ts'),
