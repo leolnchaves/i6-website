@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const out = process.argv[2] ?? '/mnt/documents/infinity6-institucional.mp4';
+const range = process.argv[3] ? process.argv[3].split('-').map(Number) : null;
+
 
 const bundled = await bundle({
   entryPoint: path.resolve(__dirname, '../src/index.ts'),
@@ -27,9 +29,11 @@ await renderMedia({
   puppeteerInstance: browser,
   muted: true,
   concurrency: 2,
+  ...(range ? { frameRange: [range[0], range[1]] } : {}),
   onProgress: ({ progress }) => {
     if (Math.round(progress * 100) % 10 === 0) console.log('progress', Math.round(progress * 100));
   },
+
 });
 
 await browser.close({ silent: false });
