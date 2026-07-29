@@ -99,6 +99,33 @@ function formatBucket(iso: string, b: Bucket): string {
   return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 }
 
+function fmtWhen(iso: string | null): string {
+  if (!iso) return 'nunca';
+  try {
+    return new Date(iso).toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return 'nunca';
+  }
+}
+
+function isStale(iso: string | null): boolean {
+  if (!iso) return true;
+  const t = new Date(iso).getTime();
+  return Number.isNaN(t) || Date.now() - t > 24 * 60 * 60 * 1000;
+}
+
+const HealthItem = ({ label, value }: { label: string; value: string }) => (
+  <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+    <p className="text-[10px] uppercase tracking-wider text-white/45">{label}</p>
+    <p className="text-white/85 font-semibold mt-1 break-all">{value}</p>
+  </div>
+);
+
 const KioskMetrics = () => {
   const { token } = useParams();
   const [rows, setRows] = useState<KioskEvent[]>([]);
