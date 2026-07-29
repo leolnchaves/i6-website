@@ -9,6 +9,8 @@ const outDir = process.argv[2] ?? '/tmp/vid2';
 const start = Number(process.argv[3] ?? 0);
 const end = Number(process.argv[4] ?? 3363);
 const step = Number(process.argv[5] ?? 210);
+const concurrency = Number(process.argv[6] ?? 3);
+const timeoutInMilliseconds = Number(process.argv[7] ?? 120000);
 
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -20,10 +22,11 @@ const bundled = await bundle({
 for (let s = start; s <= end; s += step) {
   const e = Math.min(s + step - 1, end);
   const out = path.join(outDir, `part-${String(s).padStart(5, '0')}.mp4`);
-  if (fs.existsSync(out)) {
+  if (fs.existsSync(out) && fs.statSync(out).size > 0) {
     console.log('skip', out);
     continue;
   }
+  if (fs.existsSync(out)) fs.rmSync(out);
   const browser = await openBrowser('chrome', {
     browserExecutable: process.env.PUPPETEER_EXECUTABLE_PATH ?? '/bin/chromium',
     chromiumOptions: { args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'] },
@@ -39,8 +42,8 @@ for (let s = start; s <= end; s += step) {
       outputLocation: out,
       puppeteerInstance: browser,
       muted: true,
-      concurrency: 3,
-      timeoutInMilliseconds: 120000,
+      concurrency,
+      timeoutInMilliseconds,
       frameRange: [s, e],
       onProgress: ({ renderedFrames }) => {
         if (renderedFrames % 30 === 0) console.log('frames', renderedFrames, '/', e - s + 1);
@@ -49,6 +52,7 @@ for (let s = start; s <= end; s += step) {
     console.log('OK', s, e, new Date().toISOString());
   } catch (err) {
     console.log('ERR', s, e, String(err).slice(0, 500));
+    if (fs.existsSync(out) && fs.statSync(out).size === 0) fs.rmSync(out);
   }
   await browser.close({ silent: false });
 }
