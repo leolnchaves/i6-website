@@ -85,8 +85,9 @@ const Slot: React.FC<{ c: (typeof clients)[number]; i: number; sweep: number }> 
           maxWidth: '100%',
           maxHeight: '100%',
           objectFit: 'contain',
-          filter: 'grayscale(1) brightness(1.9) contrast(1.05)',
-          opacity: 0.78 + glow * 0.22,
+          filter: 'grayscale(1) brightness(2.3) contrast(1.02)',
+          opacity: 0.88 + glow * 0.12,
+
         }}
       />
     </div>
