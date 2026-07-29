@@ -17,7 +17,7 @@ import {
 } from '@/data/kiosk/config';
 import { solutionsContent } from '@/data/solutionsV2/content';
 import { trackEvent } from '@/lib/tracker';
-import { trackKioskEvent } from '@/lib/kioskTracker';
+import { trackKioskEvent, initKioskTracking } from '@/lib/kioskTracker';
 import { flushLeadQueue } from '@/lib/leadQueue';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
@@ -153,6 +153,12 @@ const Kiosk = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, solutionsForResults]);
+
+  // Boot do tracking: reconcilia localStorage x IndexedDB, liga a fila de
+  // envio e dispara o export automático diário do CSV.
+  useEffect(() => {
+    initKioskTracking();
+  }, []);
 
 
   const handleStart = () => {
