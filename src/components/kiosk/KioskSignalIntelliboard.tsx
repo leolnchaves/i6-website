@@ -40,7 +40,6 @@ import {
   PriceConversionIncentiveTable,
 } from '@/components/signalDemo/visualizations';
 import { solutionSignalMap, type KioskLang, type QuizContent } from '@/data/kiosk/config';
-import { trackKioskEvent } from '@/lib/kioskTracker';
 
 type Props = {
   lang: KioskLang;
@@ -120,7 +119,6 @@ const KioskSignalIntelliboard = memo(({ lang, content, solutionId }: Props) => {
 
   const handleQuestionClick = (sc: Scenario) => {
     if (isFillingInput || (sc === activeScenario && phase === 'responding')) return;
-    trackKioskEvent(`signal:${sc}`);
     setActiveScenario(sc);
     setPhase('idle');
     setShowResponse(false);

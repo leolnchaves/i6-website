@@ -1,45 +1,41 @@
+## 1. Corrigir o erro 404 no Fully Kiosk
 
-# Métricas do /kiosk não podem mais se perder (100% estático)
+Causa confirmada contra o site publicado:
 
-Nada de banco, backend, edge function ou Lovable Cloud. Tudo roda no navegador do totem; o único destino externo é o **Apps Script/planilha que o site já usa hoje** para os leads do Kiosk — o mesmo padrão estático já aprovado.
+```text
+GET https://infinity6.ai/            -> 200
+GET https://infinity6.ai/kiosk       -> 404
+GET https://infinity6.ai/kiosk-metrics/<token> -> 404
+```
 
-## O que aconteceu (confirmado no código)
+O GitHub Pages só responde 200 para caminhos que existem como arquivo. Como é uma SPA, só existe `dist/index.html`; as demais rotas caem no `404.html` (cópia do index). O conteúdo carrega, mas o **status HTTP é 404** — o Chrome ignora, o Fully Kiosk mostra a tela de erro.
 
-`src/lib/kioskTracker.ts` grava os eventos **apenas** em `localStorage` (chave `i6_kiosk_events`). Não há cópia remota nem backup. O Fully Kiosk tem opções como "Clear Cache / Clear WebStorage on Restart" — quando qualquer uma dispara (ou o app é atualizado/reinstalado), todo o histórico do dia some. `/kiosk-metrics/<token>` lê essa mesma chave, então mostra vazio.
+Correção no build: gerar arquivos estáticos reais, cópias do `index.html` final (já com os stubs de SEO aplicados):
 
-## Estratégia: três camadas independentes
+- `dist/kiosk/index.html`
+- `dist/kiosk-metrics/<token>/index.html`
 
-Se uma falhar, as outras preservam o dado.
+Passa a responder 200 e o Fully Kiosk abre normalmente. Nenhuma mudança no roteamento do app.
 
-### 1. Persistência local redundante
-- Manter `localStorage` (leitura rápida do dashboard) **e** espelhar tudo em **IndexedDB** (`i6-kiosk` / store `events`), que não tem o limite de ~5MB e sobrevive a limpezas parciais.
-- Na inicialização, reconciliar as duas fontes: o que existir em qualquer uma repopula a outra (união por `id`).
-- `device_id` estável gerado uma vez e guardado nas duas camadas.
+## 2. Deixar o /kiosk limpo (sem tracking por enquanto)
 
-### 2. Export automático diário para arquivo
-- Uma vez por dia (primeiro carregamento após virar o dia), o kiosk dispara automaticamente o download do CSV do dia para a pasta de downloads do dispositivo — arquivo físico, imune à limpeza de webstorage.
-- Nome: `kiosk-events-<device_id>-<AAAA-MM-DD>.csv`.
+Remover as chamadas de tracking dos pontos de uso, mantendo a UX idêntica:
 
-### 3. Cópia remota em lote (opcional, mesmo canal dos leads)
-- Cada evento também é enfileirado e enviado em lote ao `APPS_SCRIPT_URL` já configurado, reaproveitando o padrão de `leadQueue.ts` (POST `no-cors`, timeout curto, retry, fila offline).
-- Lotes de até 50 eventos a cada ~20s, mais flush em `online`, no load e em `pagehide` — não gera requisição por toque.
-- Payload: `type=kiosk_event`, `device_id`, `events` (JSON), `app_version`.
-- Offline o totem continua funcionando normalmente; a fila reenvia quando a rede volta.
-- Se você preferir zero tráfego externo novo, essa camada 3 fica desligada por uma flag e as camadas 1 e 2 já resolvem a perda.
+- `src/pages/Kiosk.tsx`: remover `initKioskTracking()` e os 4 `trackKioskEvent` (`kiosk:start`, `q1:*`, `q2:*`, `results:*`).
+- `src/components/kiosk/KioskSignalIntelliboard.tsx`: remover `trackKioskEvent('signal:*')`.
+- `src/components/kiosk/EbookCTA.tsx`: remover `trackKioskEvent('ebook:*')` — o envio do lead em si continua igual, sem alteração no FormData.
 
-## Visibilidade em /kiosk-metrics
+Sem export automático de CSV, sem gravação em localStorage/IndexedDB, sem fila de sync: o totem volta a rodar sem nenhum efeito colateral de storage.
 
-- Bloco de saúde no topo: `device_id`, total local, pendentes de envio, último envio remoto e último export automático.
-- Botões "Forçar envio agora" e "Exportar CSV do dia".
-- Aviso destacado quando o `localStorage` estiver vazio mas houver histórico no IndexedDB (sinal de limpeza), ou quando o último export tiver mais de 24h.
+## 3. Manter a página de métricas para depois
 
-## Configuração do Fully Kiosk (fora do código)
-
-Após o deploy, desmarcar "Clear Cache on Restart", "Clear WebStorage on Restart" e "Clear Cookies". Isso reduz a chance de zerar a camada local — e, mesmo que zere, o CSV diário e a cópia remota preservam o dia.
+- A rota `/kiosk-metrics/:token` e o `src/pages/KioskMetrics.tsx` continuam existindo, apenas sem inicializar o tracking (o boot deixa de gravar/reconciliar).
+- Como não há mais coleta, a tela exibe um aviso curto de "coleta de métricas temporariamente desativada" no topo, preservando gráficos e tabela para quando religarmos.
+- As bibliotecas `src/lib/kioskTracker.ts`, `kioskEventStore.ts`, `kioskEventSync.ts` e `kioskDevice.ts` ficam no projeto, intactas e sem uso, prontas para reativação.
+- A fila offline de **leads** (`leadQueue.ts`) e seus botões no dashboard continuam funcionando normalmente — isso não é métrica.
 
 ## Detalhes técnicos
 
-- Alterados: `src/lib/kioskTracker.ts` (fachada sobre as 3 camadas), `src/pages/KioskMetrics.tsx` (bloco de saúde + ações).
-- Novos: `src/lib/kioskEventStore.ts` (IndexedDB + reconciliação), `src/lib/kioskEventSync.ts` (fila/lote), `src/lib/kioskDevice.ts` (`device_id`).
-- A API `trackKioskEvent(eventKey)` não muda — os 6 pontos de chamada em `Kiosk.tsx`, `KioskSignalIntelliboard.tsx` e `EbookCTA.tsx` ficam intactos.
-- Sem dependências novas: IndexedDB é API nativa do navegador.
+- `scripts/prerender-seo-stubs.mjs`: escrever as cópias do `index.html` nas rotas do kiosk (token em constante compartilhada com o app).
+- Edições pontuais em `src/pages/Kiosk.tsx`, `src/components/kiosk/KioskSignalIntelliboard.tsx`, `src/components/kiosk/EbookCTA.tsx` e `src/pages/KioskMetrics.tsx`.
+- Nenhuma dependência nova; segue 100% estático.
