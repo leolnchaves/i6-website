@@ -16,6 +16,7 @@ import { Territories } from './scenes/Territories';
 import { Signal } from './scenes/Signal';
 import { Engines } from './scenes/Engines';
 import { Results } from './scenes/Results';
+import { Clients } from './scenes/Clients';
 import { Closing } from './scenes/Closing';
 
 /* ---------------- ritmo ---------------- */
@@ -26,14 +27,16 @@ const D = {
   territories: 400,
   signal: 700,
   engines: 500,
+  clients: 230,
   results: 430,
   closing: 360,
 };
 const T = { wipe: 20, whip: 10, cut: 8 };
 const SCENES_TOTAL = Object.values(D).reduce((a, b) => a + b, 0);
-const TRANS_TOTAL = T.wipe * 3 + T.whip * 2 + T.cut * 2;
+const TRANS_TOTAL = T.wipe * 4 + T.whip * 2 + T.cut * 2;
 
 export const TOTAL_FRAMES = SCENES_TOTAL - TRANS_TOTAL;
+
 
 /* ---------------- wrapper de cena ---------------- */
 const Scene: React.FC<{
