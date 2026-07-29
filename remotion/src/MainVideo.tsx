@@ -132,12 +132,22 @@ export const MainVideo: React.FC = () => (
         </Scene>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
+        presentation={frameWipe({ direction: 'right' })}
+        timing={linearTiming({ durationInFrames: T.wipe })}
+      />
+
+      <TransitionSeries.Sequence durationInFrames={D.clients}>
+        <Scene i={6} duration={D.clients}>
+          <Clients />
+        </Scene>
+      </TransitionSeries.Sequence>
+      <TransitionSeries.Transition
         presentation={glitchCut()}
         timing={linearTiming({ durationInFrames: T.cut })}
       />
 
       <TransitionSeries.Sequence durationInFrames={D.results}>
-        <Scene i={6} duration={D.results}>
+        <Scene i={7} duration={D.results}>
           <Results />
         </Scene>
       </TransitionSeries.Sequence>
@@ -147,10 +157,11 @@ export const MainVideo: React.FC = () => (
       />
 
       <TransitionSeries.Sequence durationInFrames={D.closing}>
-        <Scene i={7} duration={D.closing}>
+        <Scene i={8} duration={D.closing}>
           <Closing />
         </Scene>
       </TransitionSeries.Sequence>
+
     </TransitionSeries>
 
     <Overlay />
