@@ -13,11 +13,19 @@ import {
   Line,
 } from 'recharts';
 import {
-  getKioskEvents,
+  getKioskEventsMerged,
   clearKioskEvents,
   downloadKioskEventsCSV,
+  downloadKioskEventsCSVForDay,
+  initKioskTracking,
+  getDeviceId,
+  getLastAutoExportAt,
+  getPendingSyncCount,
+  getLastSyncAt,
+  flushEventQueue,
   type KioskEvent,
 } from '@/lib/kioskTracker';
+import { REMOTE_SYNC_ENABLED } from '@/lib/kioskEventSync';
 import {
   getPendingLeadsCount,
   flushLeadQueue,
@@ -91,6 +99,33 @@ function formatBucket(iso: string, b: Bucket): string {
   return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 }
 
+function fmtWhen(iso: string | null): string {
+  if (!iso) return 'nunca';
+  try {
+    return new Date(iso).toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return 'nunca';
+  }
+}
+
+function isStale(iso: string | null): boolean {
+  if (!iso) return true;
+  const t = new Date(iso).getTime();
+  return Number.isNaN(t) || Date.now() - t > 24 * 60 * 60 * 1000;
+}
+
+const HealthItem = ({ label, value }: { label: string; value: string }) => (
+  <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+    <p className="text-[10px] uppercase tracking-wider text-white/45">{label}</p>
+    <p className="text-white/85 font-semibold mt-1 break-all">{value}</p>
+  </div>
+);
+
 const KioskMetrics = () => {
   const { token } = useParams();
   const [rows, setRows] = useState<KioskEvent[]>([]);
@@ -100,11 +135,39 @@ const KioskMetrics = () => {
   const [pendingLeads, setPendingLeads] = useState(0);
   const [resending, setResending] = useState(false);
   const [resendMsg, setResendMsg] = useState<string | null>(null);
+  const [pendingSync, setPendingSync] = useState(0);
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [lastExport, setLastExport] = useState<string | null>(null);
+  const [lsCount, setLsCount] = useState(0);
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (token !== DASHBOARD_TOKEN) return;
-    setRows(getKioskEvents().slice().reverse()); // most recent first
+    initKioskTracking();
+    let alive = true;
+    (async () => {
+      const merged = await getKioskEventsMerged();
+      if (!alive) return;
+      setRows(merged.slice().reverse()); // most recent first
+      setLsCount(
+        (() => {
+          try {
+            const raw = localStorage.getItem('i6_kiosk_events');
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed.length : 0;
+          } catch {
+            return 0;
+          }
+        })(),
+      );
+    })();
     setPendingLeads(getPendingLeadsCount());
+    setPendingSync(getPendingSyncCount());
+    setLastSync(getLastSyncAt());
+    setLastExport(getLastAutoExportAt());
+    return () => {
+      alive = false;
+    };
   }, [token, refreshTick]);
 
   const handleResendLeads = async () => {
@@ -117,6 +180,13 @@ const KioskMetrics = () => {
       setResending(false);
       setRefreshTick((t) => t + 1);
     }
+  };
+
+  const handleForceSync = async () => {
+    setSyncMsg(null);
+    const { sent, remaining } = await flushEventQueue();
+    setSyncMsg(`${sent} evento(s) enviado(s) · ${remaining} pendente(s)`);
+    setRefreshTick((t) => t + 1);
   };
 
   const handleClearLeads = () => {
@@ -257,10 +327,16 @@ const KioskMetrics = () => {
               ))}
             </select>
             <button
-              onClick={() => downloadKioskEventsCSV()}
+              onClick={() => void downloadKioskEventsCSV()}
               className="rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition"
             >
               Exportar CSV
+            </button>
+            <button
+              onClick={() => void downloadKioskEventsCSVForDay()}
+              className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition"
+            >
+              Exportar CSV do dia
             </button>
             <button
               onClick={handleClear}
@@ -271,11 +347,52 @@ const KioskMetrics = () => {
           </div>
         </header>
 
-        <div className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white/60">
-          Estes dados são <strong className="text-white/80">locais deste totem</strong> — ficam gravados apenas no
-          navegador desta máquina e não agregam entre totens. Para consolidar métricas de vários pontos, exporte o
-          CSV de cada totem.
-        </div>
+        <section className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="flex flex-wrap items-start justify-between gap-6">
+            <div>
+              <h2 className="text-lg font-semibold text-white/90">Saúde do armazenamento</h2>
+              <p className="text-xs text-white/60 mt-1 max-w-xl">
+                Os eventos são gravados em duas cópias locais independentes (localStorage e IndexedDB) e exportados
+                automaticamente em CSV uma vez por dia. Nenhum banco de dados envolvido.
+              </p>
+              {syncMsg && <p className="text-xs text-[#F4845F] mt-2">{syncMsg}</p>}
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+              <HealthItem label="Totem" value={getDeviceId()} />
+              <HealthItem label="Eventos (união)" value={String(rows.length)} />
+              <HealthItem label="Último export automático" value={fmtWhen(lastExport)} />
+              <HealthItem
+                label="Cópia remota"
+                value={
+                  REMOTE_SYNC_ENABLED
+                    ? `${pendingSync} pendente(s) · ${fmtWhen(lastSync)}`
+                    : 'desligada'
+                }
+              />
+            </div>
+          </div>
+
+          {rows.length > 0 && lsCount === 0 && (
+            <p className="mt-4 rounded-lg border border-[#F4845F]/40 bg-[#F4845F]/10 px-3 py-2 text-xs text-[#F4845F]">
+              O localStorage deste navegador foi apagado — os eventos foram recuperados do IndexedDB. Desmarque
+              &ldquo;Clear Cache / Clear WebStorage on Restart&rdquo; no Fully Kiosk.
+            </p>
+          )}
+          {isStale(lastExport) && rows.length > 0 && (
+            <p className="mt-3 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/70">
+              O export automático não roda há mais de 24h. Exporte o CSV do dia manualmente por segurança.
+            </p>
+          )}
+          {REMOTE_SYNC_ENABLED && (
+            <button
+              onClick={handleForceSync}
+              className="mt-4 rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition"
+            >
+              Forçar envio agora
+            </button>
+          )}
+        </section>
+
 
         <section className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
