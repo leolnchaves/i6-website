@@ -300,10 +300,16 @@ const KioskMetrics = () => {
               ))}
             </select>
             <button
-              onClick={() => downloadKioskEventsCSV()}
+              onClick={() => void downloadKioskEventsCSV()}
               className="rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition"
             >
               Exportar CSV
+            </button>
+            <button
+              onClick={() => void downloadKioskEventsCSVForDay()}
+              className="rounded-lg px-3 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 transition"
+            >
+              Exportar CSV do dia
             </button>
             <button
               onClick={handleClear}
@@ -314,11 +320,52 @@ const KioskMetrics = () => {
           </div>
         </header>
 
-        <div className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white/60">
-          Estes dados são <strong className="text-white/80">locais deste totem</strong> — ficam gravados apenas no
-          navegador desta máquina e não agregam entre totens. Para consolidar métricas de vários pontos, exporte o
-          CSV de cada totem.
-        </div>
+        <section className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="flex flex-wrap items-start justify-between gap-6">
+            <div>
+              <h2 className="text-lg font-semibold text-white/90">Saúde do armazenamento</h2>
+              <p className="text-xs text-white/60 mt-1 max-w-xl">
+                Os eventos são gravados em duas cópias locais independentes (localStorage e IndexedDB) e exportados
+                automaticamente em CSV uma vez por dia. Nenhum banco de dados envolvido.
+              </p>
+              {syncMsg && <p className="text-xs text-[#F4845F] mt-2">{syncMsg}</p>}
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+              <HealthItem label="Totem" value={getDeviceId()} />
+              <HealthItem label="Eventos (união)" value={String(rows.length)} />
+              <HealthItem label="Último export automático" value={fmtWhen(lastExport)} />
+              <HealthItem
+                label="Cópia remota"
+                value={
+                  REMOTE_SYNC_ENABLED
+                    ? `${pendingSync} pendente(s) · ${fmtWhen(lastSync)}`
+                    : 'desligada'
+                }
+              />
+            </div>
+          </div>
+
+          {rows.length > 0 && lsCount === 0 && (
+            <p className="mt-4 rounded-lg border border-[#F4845F]/40 bg-[#F4845F]/10 px-3 py-2 text-xs text-[#F4845F]">
+              O localStorage deste navegador foi apagado — os eventos foram recuperados do IndexedDB. Desmarque
+              &ldquo;Clear Cache / Clear WebStorage on Restart&rdquo; no Fully Kiosk.
+            </p>
+          )}
+          {isStale(lastExport) && rows.length > 0 && (
+            <p className="mt-3 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/70">
+              O export automático não roda há mais de 24h. Exporte o CSV do dia manualmente por segurança.
+            </p>
+          )}
+          {REMOTE_SYNC_ENABLED && (
+            <button
+              onClick={handleForceSync}
+              className="mt-4 rounded-lg px-3 py-2 text-sm bg-[#F4845F] text-[#0B1224] font-semibold hover:brightness-110 transition"
+            >
+              Forçar envio agora
+            </button>
+          )}
+        </section>
+
 
         <section className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
