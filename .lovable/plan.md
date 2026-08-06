@@ -1,36 +1,48 @@
-# 1 preenchimento no site = 3 leads no HUB
+# Fazer POST e GET entregarem o mesmo lead
 
-## O que está confirmado
+Objetivo: os dois caminhos (push do `doPost` e pull do `doGet` lido pelo `sync-website-leads`) passam a produzir **o mesmo payload, com a mesma chave de idempotência**. Assim o HUB pode reconhecer que é o mesmo lead e os rótulos (`channel`, `reason`) saem iguais nos dois lados.
 
-**O site envia uma única vez.** O CTA do blog (`ArticleCTAForm`) faz um `fetch` POST para o Apps Script e nada mais. Não há retry, nem segunda rota, nem fila (a fila offline existe só no Kiosk). Logo, a multiplicação acontece depois do site.
+## Peça central: um único montador de payload
 
-**O Apps Script entrega o mesmo lead ao HUB por dois caminhos independentes:**
+Criar no Apps Script uma função nova, `buildHubPayload_(f)`, que é a **única** fonte do formato enviado/exposto ao HUB. Ela é usada em três lugares: no `doPost` (antes do `dispatchToHub_`), no `doGet` (no lugar do objeto montado hoje dentro do loop) e no `reenviarUltimoLead`.
 
-1. **Push** — dentro do `doPost`, o `dispatchToHub_` chama `ingest-insight-lead` na hora. Esse é o registro com `Reason: Insight` (traz o insight) e é o que o HUB rotula como `Channel: Website`.
-2. **Pull** — o `doGet` do mesmo script expõe as linhas da planilha (`leads` + `next_cursor`) para o HUB buscar por cursor. Esses registros chegam com `source = i6-website:<subscription>`, que é exatamente o `Channel: i6-website` e `Reason: Contact` das outras duas linhas.
+Campos padronizados:
 
-Ou seja: o HUB recebe o lead empurrado pelo script **e** puxa a mesma linha da planilha. As duas linhas `Contact` diferindo em `Message` (uma com texto, outra vazia) são leituras do pull em ciclos/versões diferentes de mapeamento.
+- `lead_uid` — chave de idempotência (o site já manda; no `doGet` vem da coluna `lead_uid`). É o que permite ao HUB colapsar push + pull no mesmo lead.
+- `insight_id` — incluído **somente** se `uuidOk_()`; caso contrário o campo é omitido (não vai vazio).
+- `source` — mesma regra nos dois: `i6-website:<subscription>` truncado em 50 caracteres. Quando há `insight_id` válido, o `subscription` já é o do insight, então o HUB consegue derivar `reason: Insight` também no pull.
+- `email`, `name`, `company`, `message` — sempre presentes, string (nunca `null`), inclusive `message` no pull (hoje uma leitura vem com mensagem e outra vazia).
+- `metadata` — `utm_source`, `utm_medium`, `utm_campaign`, `referrer`, `user_agent`, `language`, com o mesmo fallback `first_touch_* || last_touch_*` que o `reenviarUltimoLead` já usa.
 
-Os rótulos errados são consequência disso, não causa separada: `Channel` e `Reason` são definidos pelo HUB a partir da rota/`source` de cada entrada — por isso o push acerta o motivo e erra o canal, e o pull acerta o canal e erra o motivo.
+## Alterações no `Code.gs`
 
-## O que precisa ser feito (o mínimo)
+1. **Adicionar `buildHubPayload_`** logo depois do helper `uuidOk_` (bloco novo, não altera nada existente).
+2. **`doPost`** — no ponto onde hoje o payload é montado e passado ao `dispatchToHub_`, trocar o objeto literal pela chamada `buildHubPayload_({...})`, incluindo `lead_uid` (a variável já existe, lida no bloco de dedupe).
+3. **`doGet`** — dentro do loop, substituir o `leads.push({ ... })` por `leads.push(buildHubPayload_({ ...valores da linha... }))`, lendo também as colunas `lead_uid` e `message`. O `next_cursor` e a lógica de cursor/limite ficam intactos.
+4. **`reenviarUltimoLead`** — trocar o payload local pela mesma chamada, para o reenvio manual sair idêntico.
+5. **`COLUMN_MAP`** — acrescentar `lead_uid: 'lead_uid'` (a coluna já existe na planilha), para o `doGet` conseguir ler o índice.
 
-**Escolher um único caminho de entrada.** Recomendação: manter o **push** (instantâneo, entrega o PDF na hora) e desligar o **pull**.
+Nada é removido: `SHARED_TOKEN`, honeypot, dedupe por `lead_uid`, `appendRow`, ordem das colunas, `dispatchToHub_`, `logDispatch_` e o formato de resposta do `doGet` (`{leads, next_cursor}`) continuam como estão.
 
-1. **No HUB:** desativar o job/cron que consome o `doGet` do Apps Script (o sync por cursor). É a mudança que elimina as 2 linhas duplicadas. Nada no Apps Script precisa mudar para isso.
-2. **No HUB:** ajustar os rótulos da rota de push para o que você espera — `Channel` = o canal do site e `Reason` = `Insight` quando vem `insight_id`, `Contact` quando não vem.
-3. **Na planilha:** apagar as 2 linhas duplicadas já criadas no HUB (manter a que tem `Reason: Insight`).
+## Do lado do HUB
 
-O `doGet` pode continuar existindo no script como fallback manual — só não deve ser consumido automaticamente.
+Com os dois caminhos entregando `lead_uid` e o mesmo `source`:
 
-## Alternativa (se preferir manter o pull)
+- `sync-website-leads` e `ingest-insight-lead` devem **deduplicar por `lead_uid`** (upsert por essa chave) — é o que elimina de fato as linhas repetidas.
+- `channel` e `reason` derivados do mesmo par (`source`, presença de `insight_id`) nas duas rotas.
 
-Se o sync por cursor for a via oficial do HUB, o inverso: remover a chamada `dispatchToHub_` de dentro do `doPost` e deixar o HUB puxar. Perde-se a entrega instantânea do PDF.
+## O que falta para eu te dar os trechos exatos
+
+O `Code.gs` que você colou veio truncado justamente no meio do `doPost` (do bloco de dedupe até o `dispatchToHub_`) e no início do `doGet`. Me mande esses dois trechos e eu devolvo o passo a passo com o **código original** e, dentro dele, marcado, exatamente o que entra e o que sai — sem reescrever o resto.
+
+## Ordem de execução
+
+1. Você me envia os dois trechos faltantes.
+2. Eu devolvo as 5 alterações marcadas no código original.
+3. Você salva e cria **Nova versão** em Gerenciar implantações (mesma URL).
+4. Teste: 1 CTA de blog → 1 lead no HUB, `channel` e `reason` corretos; conferir que o pull não cria linha extra.
+5. Limpar no HUB as 2 linhas duplicadas do teste anterior.
 
 ## Site
 
-Nada a alterar no site.
-
-## Antes de mexer no Code.gs
-
-Se a decisão exigir alteração no script (alternativa acima), me mande o trecho do `doPost` a partir do comentário do dispatch até o fim da função — o conteúdo colado veio truncado nessa parte, e sem ele eu não marco a linha exata a mudar.
+Nada muda no site: ele já envia `lead_uid`, `source` curto e omite `insight_id` vazio.
