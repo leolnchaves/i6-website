@@ -13,8 +13,8 @@ Ou seja: o formulário gated usa exatamente o mesmo endpoint, token, honeypot, `
 Três divergências reais entre esse caminho e o do blog:
 
 1. `reason` no CTA do blog vai no plural (`article-cta-insights`) e no gate de insight também (`lead-gate-insights`), enquanto `source` é singular. É inconsistência de rótulo, não quebra o envio, mas atrapalha a classificação no HUB.
-2. `subscription` do research vai como `research:<slug>`; todos os outros caminhos usam o prefixo `insight:` (inclusive o kiosk). Se o HUB casa a inscrição por prefixo `insight:`, o lead de research entra sem vínculo.
-3. `insight_id` vem do frontmatter. Conteúdo sincronizado do HUB traz o id real (UUID), mas conteúdo criado manualmente no repo traz um id em formato de slug (ex.: `ruptura-gondola-ia-preditiva`), que o HUB rejeita como UUID inválido — hoje o Apps Script descarta o campo (`uuidOk_`), então o lead entra sem vínculo com o insight, silenciosamente.
+2. `subscription`: o research manda `research:<slug>` (correto) e o /i6-blog manda `insight:<slug>`, que não identifica o blog como origem.
+3. `insight_id` vem do frontmatter e chega preenchido em todo conteúdo gated (sempre provido pelo HUB) — nada a corrigir aqui.
 
 ## O que fazer
 
