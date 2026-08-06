@@ -136,17 +136,25 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
           formatLeadContextForMessage(ctx),
         ].join('\n');
 
+        const fields = normalizeLeadFields(
+          {
+            name: data.name,
+            email: data.email,
+            company: title,
+            message,
+            subscription: `${kind}:${slug}`,
+            insight_id: id || '',
+            reason: origin,
+            token: SHARED_FORM_TOKEN,
+            // Anexa todos os campos de tracking planos (anonymous_id,
+            // session_id, first/last touch, journey, language, user_agent).
+            ...getLeadContextFields(),
+          },
+          kind === 'research' ? 'lead-gate-research' : 'lead-gate-insight',
+        );
+
         const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('email', data.email);
-        formData.append('company', title);
-        formData.append('message', message);
-        formData.append('subscription', `${kind}:${slug}`);
-        formData.append('insight_id', id || '');
-        formData.append('token', SHARED_FORM_TOKEN);
-        // Anexa todos os campos de tracking planos (anonymous_id, session_id,
-        // first/last touch, journey, language, user_agent, etc.)
-        Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
+        Object.entries(fields).forEach(([k, v]) => formData.append(k, v));
 
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
