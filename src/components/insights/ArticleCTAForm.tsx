@@ -99,7 +99,7 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
         const ctx = getLeadContext();
         const tag = kind === 'research' ? '[Lead Research CTA]' : '[Lead Insights CTA]';
         const idLabel = kind === 'research' ? 'Research' : 'Insight';
-        const origin = kind === 'research' ? 'article-cta-research' : 'article-cta-insights';
+        const origin = kind === 'research' ? 'article-cta-research' : 'article-cta-insight';
         const message = [
           tag,
           `${idLabel}: ${title}`,
@@ -118,7 +118,7 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
             email: data.email,
             company: title,
             message,
-            subscription: `${kind}:${slug}`,
+            subscription: kind === 'research' ? `research:${slug}` : `blog:${slug}`,
             insight_id: id || '',
             reason: origin,
             token: SHARED_FORM_TOKEN,
