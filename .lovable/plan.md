@@ -1,56 +1,38 @@
+# Investigar lead que gravou na planilha mas não chegou ao HUB
 
-# Lead da Victoria Baumann — por que o HUB recusou
+O lead entrou na aba `ContactForm`, mas não há linha em `_dispatch_log`. Ausência de log significa que o `dispatchToHub_` provavelmente **não foi chamado** (ou lançou exceção antes de logar). Isso não é diagnosticado ainda — o site enviou os campos corretamente, então a causa está no Apps Script implantado.
 
-## Diagnóstico (confirmado pelo log)
+Nada muda no site nesta etapa.
 
-O reenvio manual da linha 12 gerou:
+## Passo 1 — Ler o log de execuções do Apps Script
 
-```
-{"insight_id":"","email":"v.baumann.invest@gmail.com","name":"Victoria Baumann",
- "company":"","source":"i6-website:partnership", ...}
-dispatchToHub_ response 400 {"error":"invalid_payload","details":{}}
-```
+No editor do Apps Script: **Execuções** (ícone de relógio) → localizar a execução `doPost` do horário do teste.
 
-O `uuidOk_` removeu o `insight_id` vazio antes do envio, e mesmo assim o HUB recusou. O endpoint usado (`ingest-insight-lead`) existe para entregar um insight/ebook a um lead — ele valida `insight_id` como UUID obrigatório. Sem insight, não há o que entregar e o payload é sempre inválido.
+Três cenários possíveis, cada um com correção diferente:
 
-Ou seja: **não é um bug do site nem do Apps Script**. Esse lead veio do formulário de parceria (`subscription: partnership`), que por definição não tem insight. Ele está corretamente gravado na planilha; o que não existe é uma rota no HUB para ingerir lead sem insight.
+- **Execução com erro (Failed)** → a mensagem aponta a linha exata; provável exceção depois do `appendRow` (ex.: bloco novo do `lead_uid`, ou `dispatchToHub_` quebrando antes de gravar o log).
+- **Execução "Completed" sem log no `_dispatch_log`** → o `doPost` retornou antes de chamar o `dispatchToHub_`. Candidatos: o bloco de dedupe encontrando o `lead_uid` e saindo com `duplicate:true`, ou um `if` que só dispara para leads com `insight_id`.
+- **Nenhuma execução `doPost` no horário** → o site postou para uma URL de implantação antiga (versão não atualizada) e outra cópia do script gravou a linha.
 
-Isso também redefine o "lead perdido": leads de parceria/contato nunca aparecerão no HUB por essa rota. Só leads com `insight_id` deveriam ser cobrados.
+## Passo 2 — Confirmar qual versão está no ar
 
-## Opções
+Em **Gerenciar implantações**, verificar se a implantação ativa aponta para a versão mais recente (a que inclui dedupe + `lead_uid` + truncamento de `source`). Se estiver em versão antiga, criar **Nova versão** na mesma implantação (mantém a URL).
 
-### A. Registrar esse lead à mão no HUB (imediato)
+## Passo 3 — Confirmar a hipótese com um teste controlado
 
-Cadastrar o contato da Victoria diretamente no HUB, como lead de parceria. Resolve o caso pontual, sem mexer em código.
+Rodar a função utilitária `reenviarUltimoLead()` pelo editor. Ela chama o `dispatchToHub_` direto:
 
-### B. Criar no HUB uma rota para leads sem insight (definitivo)
+- Se o HUB responder **200** e aparecer linha em `_dispatch_log` → o dispatch funciona; o problema é o caminho dentro do `doPost` (dedupe/condicional) → corrigir o `doPost`.
+- Se responder **erro** → o problema é o payload ou o token → corrigir a montagem do payload.
 
-Adicionar no HUB um endpoint tipo `ingest-contact-lead` que aceite lead sem `insight_id` (nome, e-mail, empresa, mensagem, source, metadata). Depois, no Apps Script, o `doPost` passa a rotear:
+## Passo 4 — Aplicar a correção pontual
 
-```text
-insight_id UUID válido  -> ingest-insight-lead   (fluxo atual, entrega o PDF)
-sem insight_id          -> ingest-contact-lead   (novo, só registra o contato)
-```
+Conforme o resultado, um destes ajustes cirúrgicos (sem reescrever o `doPost`):
 
-Isso exige trabalho no projeto do HUB (não neste repositório do site) mais um pequeno ajuste no Apps Script.
+- Dedupe disparando errado: retornar `duplicate` **somente** quando o `lead_uid` já existir em linha anterior (ignorando a linha que o próprio request acabou de gravar) — hoje a ordem de gravação pode fazer o próprio lead ser visto como duplicado.
+- Chamada ao HUB condicionada a `insight_id`: remover a condição para que leads de contato/parceria também sejam despachados.
+- Exceção no `dispatchToHub_`: envolver em `try/catch` e sempre gravar em `_dispatch_log` (inclusive erro), para nunca mais ficar sem rastro.
 
-### C. Manter como está
+## O que eu preciso de você
 
-Leads de parceria/contato vivem só na planilha; o HUB recebe apenas leads de insight. Nenhuma mudança.
-
-## Ajuste que vale fazer de qualquer forma
-
-No `dispatchToHub_`, quando o `insight_id` for removido por ser inválido, não vale chamar o HUB — é uma chamada garantidamente 400 que ainda polui o `_dispatch_log`. Registrar como ignorado:
-
-```js
-if (payload && !uuidOk_(payload.insight_id)) {
-  logDispatch_('SKIP', 'sem insight_id valido — HUB exige insight', payload);
-  return;
-}
-```
-
-O `doPost` já só chama o dispatch quando existe `insight_id`, então isso só afeta reenvios manuais e valores malformados.
-
-## Decisão necessária
-
-Qual caminho seguir para leads sem insight: A (manual agora), B (nova rota no HUB) ou C (deixar só na planilha).
+Cole aqui o conteúdo da execução `doPost` em **Execuções** (mensagem completa) — com isso eu identifico o cenário e te passo o trecho exato para colar.
