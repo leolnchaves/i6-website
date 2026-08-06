@@ -112,15 +112,23 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
           formatLeadContextForMessage(ctx),
         ].join('\n');
 
+        const fields = normalizeLeadFields(
+          {
+            name: data.name,
+            email: data.email,
+            company: title,
+            message,
+            subscription: `${kind}:${slug}`,
+            insight_id: id || '',
+            reason: origin,
+            token: SHARED_FORM_TOKEN,
+            ...getLeadContextFields(),
+          },
+          kind === 'research' ? 'article-cta-research' : 'article-cta-insight',
+        );
+
         const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('email', data.email);
-        formData.append('company', title);
-        formData.append('message', message);
-        formData.append('subscription', `${kind}:${slug}`);
-        formData.append('insight_id', id || '');
-        formData.append('token', SHARED_FORM_TOKEN);
-        Object.entries(getLeadContextFields()).forEach(([k, v]) => formData.append(k, v));
+        Object.entries(fields).forEach(([k, v]) => formData.append(k, v));
 
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
