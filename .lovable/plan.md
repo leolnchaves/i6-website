@@ -1,26 +1,41 @@
-# Fechamento: validação ponta a ponta da captura de leads
+# Revisão do Apps Script — gravação do lead_uid
 
-## Status dos 3 itens que você listou
+## Veredito
 
-1. **Reautorizar o Apps Script** — resolvido. Quando a função de teste conseguiu sair para a rede (o log mostrou tentativa de DNS e depois HTTP 400 do HUB), ficou provado que o `UrlFetchApp` está autorizado.
-2. **Revalidar o token do HUB** — resolvido. O HUB respondeu `400 invalid_payload` (e não `401`), o que só acontece depois de autenticar: `INGEST_INSIGHT_LEAD_SECRET` no header `x-webhook-secret` é o par correto.
-3. **Trechos do `doPost`** — entregues e implantados por você (guard do `e`, dedupe por `lead_uid`, `uuidOk_` no `dispatchToHub_`). Release do site **v2.2.20** já publicada.
+O código está pronto para implantar no que diz respeito ao `lead_uid`:
 
-## O que ainda falta
+- `var lead_uid = (e.parameter.lead_uid || '').toString().slice(0, 64);` é lido antes do dedupe e continua no escopo na hora do `appendRow`.
+- `lead_uid` é o último item do array do `appendRow`, coerente com a coluna criada como última do cabeçalho.
+- O dedupe localiza a coluna pelo nome no cabeçalho e é fail-open (nunca bloqueia um lead legítimo se algo falhar).
+- O guard `if (!e || !e.parameter)` evita o erro de execução manual.
+- O `uuidOk_` remove `insight_id` inválido/vazio antes de enviar ao HUB.
 
-### A. Coluna `lead_uid` na planilha (pré-requisito do dedupe)
-O bloco de dedupe é fail-open: se o cabeçalho da aba `ContactForm` não tiver a coluna `lead_uid`, ele não faz nada e as duplicatas voltam a acontecer. Acrescentar `lead_uid` como última coluna do cabeçalho e garantir que a linha gravada no `appendRow` inclua esse valor na mesma posição.
+Nenhum bloco extra pós-`appendRow` é necessário. Se ele ainda existir no arquivo, deve ser removido.
 
-### B. Teste ponta a ponta (3 casos)
-1. **Lead normal pelo site** (`/contact` ou CTA de artigo aberto) → 1 linha na planilha, `lead_uid` preenchido, chegada no HUB.
-2. **Lead sem insight** (contato genérico) → deve chegar no HUB sem `invalid_payload`, já que o `insight_id` é omitido quando não é UUID.
-3. **Lead do /kiosk com rede oscilando** (desligar o Wi-Fi durante o envio e religar) → a fila reenvia, mas a planilha fica com **1 linha só** e a resposta do segundo POST é `{"result":"ok","duplicate":true}`.
+## Um ajuste recomendado antes de implantar
 
-### C. Limpeza da planilha atual
-Remover as linhas duplicadas históricas e reprocessar manualmente os leads que nunca chegaram ao HUB (Victoria Baumann e outros do mesmo período), enviando-os pela função de teste do Apps Script com o payload correto.
+O HUB rejeita `source` acima de 50 caracteres. Hoje o valor é montado sem limite:
 
-## Detalhes técnicos
+```js
+source: subscription ? ('i6-website:' + subscription) : 'i6-website',
+```
 
-- Verificação rápida do dedupe: nos logs de execução do Apps Script, um POST repetido deve encerrar antes do `dispatchToHub_`, sem linha nova.
-- Se aparecer `FAIL_401` no `logDispatch_` depois do deploy, é sinal de que a propriedade `INGEST_INSIGHT_LEAD_SECRET` foi alterada no HUB — nesse caso é só atualizar a Script Property, sem mexer em código.
-- Para identificar os leads perdidos, filtrar na planilha as linhas cujo `logDispatch_` registrou `FAIL_400` / `EXCEPTION`.
+Com assinaturas longas (ex.: `insight:ebook-planejamento-preditivo-decisao`) o resultado passa de 50 caracteres e o lead entra na planilha mas é recusado pelo HUB — exatamente o padrão dos leads que não chegaram.
+
+Correção: truncar na montagem do payload dentro do `doPost`.
+
+```js
+source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
+```
+
+## Observações menores (sem ação necessária)
+
+- A constante global `HUB_INGEST_URL` ficou sem uso, já que `dispatchToHub_` lê a URL das Script Properties. Não causa problema; pode ser deixada como está.
+- `doGet` usa `SpreadsheetApp.getActiveSpreadsheet()` enquanto o `doPost` usa `openById`. Funciona porque o script é vinculado à planilha. Não mexer agora.
+- O lock do dedupe é liberado antes do `appendRow`, então duas requisições disparadas no mesmo instante ainda poderiam passar. Na prática o retry do site espera segundos entre tentativas, então o dedupe cobre o caso real.
+
+## Passos para você
+
+1. Aplicar o `.slice(0, 50)` na linha do `source`.
+2. Salvar e criar Nova versão em Gerenciar implantações (mantendo a mesma URL).
+3. Teste ponta a ponta: um lead com insight (deve gravar linha, preencher `lead_uid` e registrar `OK` em `_dispatch_log`), um lead sem insight (grava linha, sem dispatch) e um reenvio do mesmo `lead_uid` (deve responder `duplicate` e não criar linha nova).
