@@ -1,72 +1,56 @@
 
-# Reenviar manualmente o último lead ao i6 HUB
+# Lead da Victoria Baumann — por que o HUB recusou
 
-## Objetivo
+## Diagnóstico (confirmado pelo log)
 
-Forçar a entrega ao HUB de um lead que já está gravado na planilha mas não chegou lá (dispatch falhou ou o lead veio de antes das correções), sem alterar o site e sem criar linha duplicada na planilha.
+O reenvio manual da linha 12 gerou:
 
-## Como funciona
+```
+{"insight_id":"","email":"v.baumann.invest@gmail.com","name":"Victoria Baumann",
+ "company":"","source":"i6-website:partnership", ...}
+dispatchToHub_ response 400 {"error":"invalid_payload","details":{}}
+```
 
-Adicionar ao Apps Script uma função utilitária avulsa, executada manualmente pelo editor (nunca chamada pelo `doPost`). Ela lê a última linha da aba `ContactForm`, monta o mesmo payload que o `doPost` monta e chama o `dispatchToHub_` já existente. O resultado aparece no log de execução e na aba `_dispatch_log`.
+O `uuidOk_` removeu o `insight_id` vazio antes do envio, e mesmo assim o HUB recusou. O endpoint usado (`ingest-insight-lead`) existe para entregar um insight/ebook a um lead — ele valida `insight_id` como UUID obrigatório. Sem insight, não há o que entregar e o payload é sempre inválido.
 
-Nada do fluxo atual é alterado: nenhuma mudança em `doPost`, `doGet`, `COLUMN_MAP` ou na estrutura da planilha.
+Ou seja: **não é um bug do site nem do Apps Script**. Esse lead veio do formulário de parceria (`subscription: partnership`), que por definição não tem insight. Ele está corretamente gravado na planilha; o que não existe é uma rota no HUB para ingerir lead sem insight.
 
-## Código a adicionar (no final do Code.gs)
+Isso também redefine o "lead perdido": leads de parceria/contato nunca aparecerão no HUB por essa rota. Só leads com `insight_id` deveriam ser cobrados.
+
+## Opções
+
+### A. Registrar esse lead à mão no HUB (imediato)
+
+Cadastrar o contato da Victoria diretamente no HUB, como lead de parceria. Resolve o caso pontual, sem mexer em código.
+
+### B. Criar no HUB uma rota para leads sem insight (definitivo)
+
+Adicionar no HUB um endpoint tipo `ingest-contact-lead` que aceite lead sem `insight_id` (nome, e-mail, empresa, mensagem, source, metadata). Depois, no Apps Script, o `doPost` passa a rotear:
+
+```text
+insight_id UUID válido  -> ingest-insight-lead   (fluxo atual, entrega o PDF)
+sem insight_id          -> ingest-contact-lead   (novo, só registra o contato)
+```
+
+Isso exige trabalho no projeto do HUB (não neste repositório do site) mais um pequeno ajuste no Apps Script.
+
+### C. Manter como está
+
+Leads de parceria/contato vivem só na planilha; o HUB recebe apenas leads de insight. Nenhuma mudança.
+
+## Ajuste que vale fazer de qualquer forma
+
+No `dispatchToHub_`, quando o `insight_id` for removido por ser inválido, não vale chamar o HUB — é uma chamada garantidamente 400 que ainda polui o `_dispatch_log`. Registrar como ignorado:
 
 ```js
-// Utilitário manual: reenvia ao HUB a última linha da planilha.
-// Execute pelo editor do Apps Script. Não é chamado pelo doPost.
-function reenviarUltimoLead() {
-  var sh = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
-  var last = sh.getLastRow();
-  if (last < 2) { console.log('planilha vazia'); return; }
-
-  var hdr = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0]
-    .map(function (h) { return String(h).toLowerCase().trim(); });
-  var row = sh.getRange(last, 1, 1, sh.getLastColumn()).getValues()[0];
-  function val(nome) { var i = hdr.indexOf(nome); return i >= 0 ? String(row[i] || '').trim() : ''; }
-
-  var subscription = val('subscription');
-  var payload = {
-    insight_id: val('insight_id'),
-    email: val('email'),
-    name: val('name'),
-    company: val('company'),
-    source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
-    metadata: {
-      utm_source:   val('first_touch_source')   || val('last_touch_source')   || null,
-      utm_medium:   val('first_touch_medium')   || val('last_touch_medium')   || null,
-      utm_campaign: val('first_touch_campaign') || val('last_touch_campaign') || null,
-      referrer:     val('first_touch_referrer') || null,
-      user_agent:   val('user_agent')           || null,
-    },
-  };
-
-  console.log('linha ' + last, JSON.stringify(payload));
-  dispatchToHub_(payload);
+if (payload && !uuidOk_(payload.insight_id)) {
+  logDispatch_('SKIP', 'sem insight_id valido — HUB exige insight', payload);
+  return;
 }
 ```
 
-## Passos para você
+O `doPost` já só chama o dispatch quando existe `insight_id`, então isso só afeta reenvios manuais e valores malformados.
 
-1. Colar a função no final do `Code.gs` e salvar.
-2. Selecionar `reenviarUltimoLead` no seletor de funções e clicar em Executar. Não é preciso criar nova versão da implantação — funções manuais rodam na versão salva do editor.
-3. Conferir o log de execução: deve aparecer o payload e depois `dispatchToHub_ response 200`.
-4. Confirmar na aba `_dispatch_log` a linha com status `OK` e no HUB que o lead apareceu.
+## Decisão necessária
 
-## Se der `FAIL_400`
-
-O corpo da resposta no log dirá o campo recusado. Casos prováveis:
-
-- `insight_id` vazio ou não-UUID na planilha: nesse caso o HUB não tem como associar o insight; o lead precisaria ser lançado no HUB com o insight correto informado à mão no payload (troque `insight_id: val('insight_id')` pelo UUID correto e rode de novo).
-- `source` longo: já tratado pelo `.slice(0, 50)` acima.
-
-## Reenviar outra linha, não a última
-
-Se o lead faltante não for o último, use uma variante com o número da linha:
-
-```js
-function reenviarLead(numeroDaLinha) { /* mesmo corpo, com last = numeroDaLinha */ }
-```
-
-Nesse caso me diga o número da linha (ou o e-mail) e eu passo a versão ajustada.
+Qual caminho seguir para leads sem insight: A (manual agora), B (nova rota no HUB) ou C (deixar só na planilha).
