@@ -86,7 +86,7 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
           formatLeadContextForMessage(ctx),
         ].join('\n');
 
-        const fields: Record<string, string> = {
+        const rawFields: Record<string, string> = {
           name: data.name,
           email: data.email,
           company: ebookTitle,
@@ -97,34 +97,38 @@ const EbookCTA = ({ lang, content, route, solutionId, solutionTitle, ebookTitle 
         };
 
         if (EBOOK_CONSUMER_INTELLIGENCE_IDS.includes(solutionId)) {
-          fields.subscription = EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION;
-          fields.reason = 'kiosk-demo';
-          fields.insight_id = EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID;
-          fields.utm_source = 'kiosk';
-          fields.utm_medium = 'totem';
-          fields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
-          fields.user_agent = 'kiosk-app/1.0';
+          rawFields.subscription = EBOOK_CONSUMER_INTELLIGENCE_SUBSCRIPTION;
+          rawFields.reason = 'kiosk-demo';
+          rawFields.insight_id = EBOOK_CONSUMER_INTELLIGENCE_INSIGHT_ID;
+          rawFields.utm_source = 'kiosk';
+          rawFields.utm_medium = 'totem';
+          rawFields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
+          rawFields.user_agent = 'kiosk-app/1.0';
         }
 
         if (EBOOK_PRICING_IDS.includes(solutionId)) {
-          fields.subscription = EBOOK_PRICING_SUBSCRIPTION;
-          fields.reason = 'kiosk-demo';
-          fields.insight_id = EBOOK_PRICING_INSIGHT_ID;
-          fields.utm_source = 'kiosk';
-          fields.utm_medium = 'totem';
-          fields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
-          fields.user_agent = 'kiosk-app/1.0';
+          rawFields.subscription = EBOOK_PRICING_SUBSCRIPTION;
+          rawFields.reason = 'kiosk-demo';
+          rawFields.insight_id = EBOOK_PRICING_INSIGHT_ID;
+          rawFields.utm_source = 'kiosk';
+          rawFields.utm_medium = 'totem';
+          rawFields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
+          rawFields.user_agent = 'kiosk-app/1.0';
         }
 
         if (EBOOK_PLANNING_IDS.includes(solutionId)) {
-          fields.subscription = EBOOK_PLANNING_SUBSCRIPTION;
-          fields.reason = 'kiosk-demo';
-          fields.insight_id = EBOOK_PLANNING_INSIGHT_ID;
-          fields.utm_source = 'kiosk';
-          fields.utm_medium = 'totem';
-          fields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
-          fields.user_agent = 'kiosk-app/1.0';
+          rawFields.subscription = EBOOK_PLANNING_SUBSCRIPTION;
+          rawFields.reason = 'kiosk-demo';
+          rawFields.insight_id = EBOOK_PLANNING_INSIGHT_ID;
+          rawFields.utm_source = 'kiosk';
+          rawFields.utm_medium = 'totem';
+          rawFields.utm_campaign = 'evento-forum-ecommerce-brasil-2026';
+          rawFields.user_agent = 'kiosk-app/1.0';
         }
+
+        // Idempotência: o mesmo lead_uid vai em todas as retentativas da fila,
+        // permitindo que o Apps Script descarte POSTs repetidos.
+        const fields = normalizeLeadFields(rawFields, 'kiosk-demo');
 
         // 1) Caminho principal: envio online, como sempre.
         const sent = await postLead(fields);
