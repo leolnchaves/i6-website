@@ -1,76 +1,131 @@
-# Igualar o que o POST e o GET entregam ao HUB
+# Ajustes no Code.gs — POST e GET entregando o mesmo lead
 
-Causa raiz confirmada pelos dois trechos: nenhuma das duas rotas envia `channel` e `reason` explicitamente (o HUB deduz pela rota de entrada, e por isso erra), e o `doGet` ainda não expõe `lead_uid`, manda `insight_id` como string vazia, não trunca `source` em 50 e não manda `metadata`.
+Li o `.gs` atualizado. O que já está certo: o dedupe por `lead_uid`, o `uuidOk_`, o `lead_uid` no `appendRow` e o dispatch já sem a trava de `insight_id`.
 
-Correção: as duas funções passam a enviar **o mesmo conjunto de campos**, com `channel` e `reason` explícitos.
+O que ainda falta (é o que causa canal/motivo errados e linhas duplicadas no HUB):
 
-Contrato único (idêntico nas duas rotas):
+- Nenhuma das duas rotas envia `channel` e `reason` — o HUB deduz pela rota e por isso erra.
+- O `doPost` não manda `message`, `subscription` nem `lead_uid` ao HUB.
+- O `doGet` não manda `lead_uid` (o HUB não reconhece que é o mesmo lead do push), não trunca `source` em 50, manda `insight_id` vazio e não manda `metadata`.
+- `COLUMN_MAP` não tem `lead_uid`, então o `doGet` nem consegue ler a coluna.
 
-| campo | valor |
-|---|---|
-| `channel` | sempre `i6-website` |
-| `reason` | o `reason` enviado pelo site; se vazio → `insight` quando há `insight_id` válido, senão `contact` |
-| `source` | `i6-website:<subscription>` truncado em 50 |
-| `lead_uid` | chave de idempotência |
-| `insight_id` | só quando é UUID válido (`uuidOk_`) |
-| `email`, `name`, `company`, `message`, `subscription` | string, sempre presentes |
-| `metadata` | `utm_source`, `utm_medium`, `utm_campaign`, `referrer`, `user_agent` |
+São 5 inserções. Nada é removido, exceto duas linhas substituídas no `doGet` (indicadas).
 
-São 4 alterações.
+---
 
-## Alteração 1 — `COLUMN_MAP`: acrescentar as colunas que faltam
+## Ajuste 1 — `COLUMN_MAP`: adicionar `lead_uid`
 
-No objeto `COLUMN_MAP` (topo do arquivo), acrescentar as chaves abaixo, mantendo o estilo das existentes. Os valores são os nomes das colunas em minúsculas, como estão no cabeçalho da planilha:
+Código original (final do objeto, linhas 32-33):
 
 ```js
-const COLUMN_MAP = {
-  // ... chaves existentes (timestamp, subscription, company, email, name, message, insight_id) ...
-
-  // ===== ADICIONAR =====
-  lead_uid:             'lead_uid',
-  first_touch_source:   'first_touch_source',
-  first_touch_medium:   'first_touch_medium',
-  first_touch_campaign: 'first_touch_campaign',
-  first_touch_referrer: 'first_touch_referrer',
-  last_touch_source:    'last_touch_source',
-  last_touch_medium:    'last_touch_medium',
-  last_touch_campaign:  'last_touch_campaign',
-  user_agent:           'user_agent',
-  // ===== FIM =====
+  user_agent:               'user_agent',
 };
 ```
 
-Observação: se a planilha ainda não tiver a coluna `reason`, o `doGet` cai no fallback (`insight`/`contact`) — nada quebra.
+// INSERÇÃO: adicionar a coluna lead_uid ao mapa, para o doGet poder lê-la
 
-## Alteração 2 — helpers, antes do `doGet`
-
-Bloco novo, colado imediatamente **antes** de `function doGet(e) {`:
+Código a ser inserido (substitui o trecho acima):
 
 ```js
-// ===== ADICIONAR =====
-function cell_(row, idx, key) {
-  return idx[key] >= 0 ? String(row[idx[key]] || '').trim() : '';
-}
+  user_agent:               'user_agent',
+  lead_uid:                 'lead_uid',
+};
+```
 
+---
+
+## Ajuste 2 — dois helpers novos, logo abaixo do `uuidOk_`
+
+Código original (linhas 35-38):
+
+```js
+function uuidOk_(v) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    .test(String(v == null ? '' : v).trim());
+}
+```
+
+// INSERÇÃO: canal fixo do site + regra única de reason, usados pelo doPost e pelo doGet
+
+Código a ser inserido (logo abaixo do bloco acima):
+
+```js
 // canal fixo do site — mesmo valor nas duas rotas
 const HUB_CHANNEL = 'i6-website';
 
 // reason: respeita o que o site mandou; senão deriva do insight_id
 function hubReason_(reason, insightId) {
-  const r = String(reason || '').trim();
+  var r = String(reason == null ? '' : reason).trim();
   if (r) return r.slice(0, 50);
   return uuidOk_(insightId) ? 'insight' : 'contact';
 }
-// ===== FIM =====
+
+// leitura limpa de célula pelo índice do COLUMN_MAP
+function cell_(row, idx, key) {
+  return idx[key] >= 0 ? String(row[idx[key]] || '').trim() : '';
+}
 ```
 
-## Alteração 3 — o `leads.push` do `doGet`
+---
 
-Trecho original:
+## Ajuste 3 — `doPost`: capturar o parâmetro `reason`
+
+O site já envia `reason`; o script hoje ignora.
+
+Código original (linha 113, fim do bloco de tracking):
 
 ```js
-      const subscription = idx.subscription >= 0 ? String(row[idx.subscription] || '').trim() : '';
+  var user_agent                = (e.parameter.user_agent || '').toString().slice(0, 500);
+```
 
+// INSERÇÃO: capturar o reason enviado pelo site
+
+Código a ser inserido (logo abaixo da linha acima):
+
+```js
+  var reason                    = (e.parameter.reason || '').toString().slice(0, 50);
+```
+
+---
+
+## Ajuste 4 — `doPost`: completar o payload do dispatch
+
+Código original (linhas 127-132):
+
+```js
+      dispatchToHub_({
+        insight_id: insight_id,
+        email: email,
+        name: name,
+        company: company,
+        source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
+```
+
+// INSERÇÃO: message, subscription, channel, reason e lead_uid — mesmos campos que o doGet passará a enviar
+
+Código a ser inserido (substitui o trecho acima; o bloco `metadata:` seguinte fica intacto):
+
+```js
+      dispatchToHub_({
+        insight_id: insight_id,
+        email: email,
+        name: name,
+        company: company,
+        message: message,
+        subscription: subscription,
+        channel: HUB_CHANNEL,
+        reason: hubReason_(reason, insight_id),
+        lead_uid: lead_uid,
+        source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
+```
+
+---
+
+## Ajuste 5 — `doGet`: montar o mesmo payload do `doPost`
+
+Código original (linhas 238-248):
+
+```js
       leads.push({
         timestamp: ts.toISOString(),
         email: email,
@@ -84,12 +139,11 @@ Trecho original:
       });
 ```
 
-Substituir **apenas o `leads.push({...})`** por (a linha do `subscription` continua igual):
+// INSERÇÃO: mesmo contrato do doPost — channel, reason, lead_uid, metadata, source truncado e insight_id só se for UUID
+
+Código a ser inserido (substitui todo o `leads.push({...})` acima; a linha do `const subscription` acima dele permanece):
 
 ```js
-      const subscription = idx.subscription >= 0 ? String(row[idx.subscription] || '').trim() : '';
-
-      // ===== SUBSTITUIR o leads.push antigo por este =====
       const rawInsightId = cell_(row, idx, 'insight_id');
 
       const lead = {
@@ -99,12 +153,9 @@ Substituir **apenas o `leads.push({...})`** por (a linha do `subscription` conti
         company: cell_(row, idx, 'company'),
         message: cell_(row, idx, 'message'),
         subscription: subscription,
-        // mesma regra do doPost: truncado em 50 chars
         source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
         channel: HUB_CHANNEL,
         reason: hubReason_(cell_(row, idx, 'reason'), rawInsightId),
-        // chave de idempotência: permite ao HUB reconhecer que o lead do pull
-        // é o mesmo já entregue pelo push
         lead_uid: cell_(row, idx, 'lead_uid'),
         metadata: {
           utm_source:   cell_(row, idx, 'first_touch_source')   || cell_(row, idx, 'last_touch_source')   || null,
@@ -120,77 +171,27 @@ Substituir **apenas o `leads.push({...})`** por (a linha do `subscription` conti
       if (uuidOk_(rawInsightId)) lead.insight_id = rawInsightId;
 
       leads.push(lead);
-      // ===== FIM =====
 ```
 
-Token do sync, cursor (`since` / `next_cursor`), limite, filtro por e-mail e o formato da resposta (`{leads, next_cursor}`) continuam idênticos.
+Token do sync, `since`/`next_cursor`, `limit` e o formato `{leads, next_cursor}` continuam idênticos. A planilha não tem coluna `reason` — `cell_` devolve `''` e o fallback (`insight`/`contact`) assume; nada quebra.
 
-## Alteração 4 — o payload do `doPost`
+---
 
-Trecho original:
+## Passo a passo de aplicação
 
-```js
-var language                  = (e.parameter.language || '').toString().slice(0, 5);
-var user_agent                = (e.parameter.user_agent || '').toString().slice(0, 500);
-```
-
-Acrescentar uma linha logo abaixo (o site já manda esse parâmetro, o script hoje o ignora):
-
-```js
-var user_agent                = (e.parameter.user_agent || '').toString().slice(0, 500);
-// ===== ADICIONAR =====
-var reason                    = (e.parameter.reason || '').toString().slice(0, 50);
-// ===== FIM =====
-```
-
-Trecho original do dispatch:
-
-```js
-      dispatchToHub_({
-        insight_id: insight_id,
-        email: email,
-        name: name,
-        company: company,
-        source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
-        metadata: {
-```
-
-Substituir por (o bloco `metadata` continua igual):
-
-```js
-      dispatchToHub_({
-        insight_id: insight_id,
-        email: email,
-        name: name,
-        company: company,
-        // ===== ADICIONAR: mesmos campos do doGet =====
-        message: message,
-        subscription: subscription,
-        channel: HUB_CHANNEL,
-        reason: hubReason_(reason, insight_id),
-        lead_uid: lead_uid,
-        // ===== FIM =====
-        source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
-        metadata: {
-```
-
-O `if (insight_id)` que envolve o dispatch, o `appendRow`, o dedupe e o `logDispatch_` ficam como estão.
-
-## Passo a passo
-
-1. Aplicar as 4 alterações no `Code.gs`.
-2. Salvar.
-3. Gerenciar implantações → Editar → **Nova versão** (a URL não muda).
+1. Aplicar os 5 ajustes no `Code.gs`.
+2. Salvar (Ctrl+S).
+3. **Implantar → Gerenciar implantações → Editar (lápis) → Versão: Nova versão → Implantar** (a URL não muda).
 4. Preencher 1 CTA de blog no site.
-5. Conferir no HUB: **1 único lead**, `channel = i6-website`, `reason = insight`, e `_dispatch_log` com o registro do push.
+5. Conferir: na planilha, 1 linha com `lead_uid` preenchido; na aba `_dispatch_log`, 1 registro `OK`; no HUB, `channel = i6-website` e `reason = insight`.
 
-## Do lado do HUB (necessário para acabar com as duplicatas)
+## Do lado do HUB (para as duplicatas realmente sumirem)
 
-O script passa a entregar `channel`, `reason` e `lead_uid` nos dois caminhos, mas quem colapsa os registros é o HUB:
+O script passa a entregar `channel`, `reason` e `lead_uid` idênticos nos dois caminhos, mas quem colapsa os registros é o HUB:
 
-- `ingest-insight-lead` e `sync-website-leads` devem fazer **upsert por `lead_uid`** (quando presente), em vez de inserir.
-- Ambas devem usar o `channel` e o `reason` recebidos no payload, em vez de inferir pela rota de entrada.
+- `ingest-insight-lead` e `sync-website-leads` devem fazer **upsert por `lead_uid`** quando ele estiver presente, em vez de inserir.
+- Ambas devem usar o `channel` e o `reason` do payload, em vez de inferir pela rota de entrada.
 
 ## Site
 
-Nada muda: já envia `lead_uid`, `reason`, `source` ≤ 50 e omite `insight_id` vazio.
+Nenhuma mudança: já envia `lead_uid`, `reason`, `source` ≤ 50 e omite `insight_id` vazio.
