@@ -1,41 +1,72 @@
-# Revisão do Apps Script — gravação do lead_uid
 
-## Veredito
+# Reenviar manualmente o último lead ao i6 HUB
 
-O código está pronto para implantar no que diz respeito ao `lead_uid`:
+## Objetivo
 
-- `var lead_uid = (e.parameter.lead_uid || '').toString().slice(0, 64);` é lido antes do dedupe e continua no escopo na hora do `appendRow`.
-- `lead_uid` é o último item do array do `appendRow`, coerente com a coluna criada como última do cabeçalho.
-- O dedupe localiza a coluna pelo nome no cabeçalho e é fail-open (nunca bloqueia um lead legítimo se algo falhar).
-- O guard `if (!e || !e.parameter)` evita o erro de execução manual.
-- O `uuidOk_` remove `insight_id` inválido/vazio antes de enviar ao HUB.
+Forçar a entrega ao HUB de um lead que já está gravado na planilha mas não chegou lá (dispatch falhou ou o lead veio de antes das correções), sem alterar o site e sem criar linha duplicada na planilha.
 
-Nenhum bloco extra pós-`appendRow` é necessário. Se ele ainda existir no arquivo, deve ser removido.
+## Como funciona
 
-## Um ajuste recomendado antes de implantar
+Adicionar ao Apps Script uma função utilitária avulsa, executada manualmente pelo editor (nunca chamada pelo `doPost`). Ela lê a última linha da aba `ContactForm`, monta o mesmo payload que o `doPost` monta e chama o `dispatchToHub_` já existente. O resultado aparece no log de execução e na aba `_dispatch_log`.
 
-O HUB rejeita `source` acima de 50 caracteres. Hoje o valor é montado sem limite:
+Nada do fluxo atual é alterado: nenhuma mudança em `doPost`, `doGet`, `COLUMN_MAP` ou na estrutura da planilha.
+
+## Código a adicionar (no final do Code.gs)
 
 ```js
-source: subscription ? ('i6-website:' + subscription) : 'i6-website',
+// Utilitário manual: reenvia ao HUB a última linha da planilha.
+// Execute pelo editor do Apps Script. Não é chamado pelo doPost.
+function reenviarUltimoLead() {
+  var sh = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  var last = sh.getLastRow();
+  if (last < 2) { console.log('planilha vazia'); return; }
+
+  var hdr = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0]
+    .map(function (h) { return String(h).toLowerCase().trim(); });
+  var row = sh.getRange(last, 1, 1, sh.getLastColumn()).getValues()[0];
+  function val(nome) { var i = hdr.indexOf(nome); return i >= 0 ? String(row[i] || '').trim() : ''; }
+
+  var subscription = val('subscription');
+  var payload = {
+    insight_id: val('insight_id'),
+    email: val('email'),
+    name: val('name'),
+    company: val('company'),
+    source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
+    metadata: {
+      utm_source:   val('first_touch_source')   || val('last_touch_source')   || null,
+      utm_medium:   val('first_touch_medium')   || val('last_touch_medium')   || null,
+      utm_campaign: val('first_touch_campaign') || val('last_touch_campaign') || null,
+      referrer:     val('first_touch_referrer') || null,
+      user_agent:   val('user_agent')           || null,
+    },
+  };
+
+  console.log('linha ' + last, JSON.stringify(payload));
+  dispatchToHub_(payload);
+}
 ```
-
-Com assinaturas longas (ex.: `insight:ebook-planejamento-preditivo-decisao`) o resultado passa de 50 caracteres e o lead entra na planilha mas é recusado pelo HUB — exatamente o padrão dos leads que não chegaram.
-
-Correção: truncar na montagem do payload dentro do `doPost`.
-
-```js
-source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
-```
-
-## Observações menores (sem ação necessária)
-
-- A constante global `HUB_INGEST_URL` ficou sem uso, já que `dispatchToHub_` lê a URL das Script Properties. Não causa problema; pode ser deixada como está.
-- `doGet` usa `SpreadsheetApp.getActiveSpreadsheet()` enquanto o `doPost` usa `openById`. Funciona porque o script é vinculado à planilha. Não mexer agora.
-- O lock do dedupe é liberado antes do `appendRow`, então duas requisições disparadas no mesmo instante ainda poderiam passar. Na prática o retry do site espera segundos entre tentativas, então o dedupe cobre o caso real.
 
 ## Passos para você
 
-1. Aplicar o `.slice(0, 50)` na linha do `source`.
-2. Salvar e criar Nova versão em Gerenciar implantações (mantendo a mesma URL).
-3. Teste ponta a ponta: um lead com insight (deve gravar linha, preencher `lead_uid` e registrar `OK` em `_dispatch_log`), um lead sem insight (grava linha, sem dispatch) e um reenvio do mesmo `lead_uid` (deve responder `duplicate` e não criar linha nova).
+1. Colar a função no final do `Code.gs` e salvar.
+2. Selecionar `reenviarUltimoLead` no seletor de funções e clicar em Executar. Não é preciso criar nova versão da implantação — funções manuais rodam na versão salva do editor.
+3. Conferir o log de execução: deve aparecer o payload e depois `dispatchToHub_ response 200`.
+4. Confirmar na aba `_dispatch_log` a linha com status `OK` e no HUB que o lead apareceu.
+
+## Se der `FAIL_400`
+
+O corpo da resposta no log dirá o campo recusado. Casos prováveis:
+
+- `insight_id` vazio ou não-UUID na planilha: nesse caso o HUB não tem como associar o insight; o lead precisaria ser lançado no HUB com o insight correto informado à mão no payload (troque `insight_id: val('insight_id')` pelo UUID correto e rode de novo).
+- `source` longo: já tratado pelo `.slice(0, 50)` acima.
+
+## Reenviar outra linha, não a última
+
+Se o lead faltante não for o último, use uma variante com o número da linha:
+
+```js
+function reenviarLead(numeroDaLinha) { /* mesmo corpo, com last = numeroDaLinha */ }
+```
+
+Nesse caso me diga o número da linha (ou o e-mail) e eu passo a versão ajustada.
