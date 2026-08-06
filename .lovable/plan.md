@@ -1,50 +1,36 @@
-# Correção da captura de leads (duplicados + leads não chegando no i6 HUB)
+# Corrigir duplicatas e leads perdidos (Apps Script + site)
 
-## Diagnóstico (confirmado na planilha e no código)
+O arquivo que você colou não tem um `const payload = { ... }` — o envio ao HUB está montado direto dentro do `doPost`. Como esse trecho veio truncado, o plano substitui o `doPost` inteiro por uma versão nova, em vez de fazer edições cirúrgicas em linhas que não consigo ver.
 
-**1. Duplicados — causa: fila de reenvio do Kiosk**
+## O que muda
 
-Os 15 registros da Thais entram a cada ~2 minutos (17:10, 17:12, 17:16 … 17:48). Esse intervalo é exatamente o `LEAD_FLUSH_INTERVAL_MS = 2 min` de `src/pages/Kiosk.tsx`.
+1. **Apps Script (você cola)** — novo `doPost` com:
+   - guard do `e` (não estoura mais `Cannot read properties of undefined`)
+   - dedupe por `lead_uid` (coluna nova na planilha) + `LockService` → mesma pessoa nunca gera 2 linhas
+   - envio ao HUB com header `x-webhook-secret` usando `INGEST_INSIGHT_LEAD_SECRET`
+   - `insight_id` só entra no payload se for UUID válido (senão é omitido — era a causa do `invalid_payload` do lead da Victoria)
+   - campos sempre string (nunca `null`) e `source` truncado em 50 chars
+   - resposta com `{"result":"ok","duplicate":true|false}`
 
-O envio usa `fetch(..., mode: 'no-cors')` com timeout de 6s (`src/lib/leadQueue.ts`). Com `no-cors` a resposta é opaca: não há como saber se o servidor aceitou. No Wi-Fi do evento o POST chegava no Apps Script, mas o `AbortController` cortava antes de resolver → o lead era considerado "falha", ia para a fila local e era reenviado indefinidamente. Não existe limite de tentativas nem chave de idempotência.
+2. **Planilha** — adicionar a coluna `lead_uid` no cabeçalho da aba `ContactForm` (qualquer posição; o script acha pelo nome).
 
-**2. Leads não chegando no i6 HUB — causa: payload rejeitado no encaminhamento**
+3. **Site (eu aplico)** — patch v2.2.20 com as correções de idempotência já preparadas:
+   - `src/lib/leadFormConfig.ts`: `LEAD_UID_FIELD` + `normalizeLeadFields` (strings garantidas, `source` ≤ 50, `insight_id` removido quando vazio)
+   - `src/lib/leadQueue.ts`: timeout 20s, máximo 3 tentativas com backoff, dedupe por `lead_uid`
+   - `ContactForm.tsx`, `ArticleCTAForm.tsx`, `LeadGateForm.tsx`, `EbookCTA.tsx` passando pela normalização
 
-A aba de log da planilha mostra as falhas do Apps Script ao chamar o HUB:
-- `EXCEPTION` — falta de permissão `UrlFetchApp.fetch` (autorização do script)
-- `FAIL_401 {"error":"unauthorized"}` — token do HUB
-- `FAIL_400 {"metadata":["Expected string, received null", x3]}`
-- `FAIL_400 {"source":["String must contain at most 50 character(s)"]}`
+## Ordem de execução
 
-O registro da Victoria Baumann veio do formulário de contato (`/en/contact`, subscription `partnership`). Esse formulário (`src/components/contact/ContactForm.tsx`) não envia `insight_id`, `reason` nem os campos de UTM — daí os três campos nulos de `metadata` rejeitados pelo HUB. E o campo usado como `source` em alguns envios é um texto longo (título do conteúdo), estourando o limite de 50 caracteres.
+1. Adicionar a coluna `lead_uid` na planilha.
+2. Colar o novo `doPost` no Apps Script → salvar → **Nova versão → Implantar** (executar como "Eu", acesso "Qualquer pessoa").
+3. Eu publico a release v2.2.20 do site.
+4. Teste ponta a ponta: um lead pelo site e um pelo /kiosk com Wi-Fi oscilando → deve gerar 1 linha só e chegar no HUB.
 
-## O que será feito no site
+## Detalhes técnicos
 
-**A. Idempotência em todos os formulários**
-- Novo helper em `src/lib/leadFormConfig.ts`: `newLeadUid()` (UUID) e um campo padrão `lead_uid`.
-- Passa a ser enviado por `ContactForm`, `LeadGateForm`, `ArticleCTAForm` e `EbookCTA` (Kiosk). O UID é gerado **uma vez por submissão** e reaproveitado em qualquer retentativa da fila — é a chave que permite o Apps Script descartar duplicados.
+- `lead_uid` é gerado no cliente (uuid por submissão) e reenviado igual em todas as tentativas da fila offline; o Apps Script varre a coluna `lead_uid` antes de gravar e, se já existir, responde `ok` sem inserir nem reenviar ao HUB.
+- `LockService.getScriptLock()` com espera de 10s evita corrida entre duas tentativas simultâneas do mesmo `lead_uid`.
+- O envio ao HUB fica em `try/catch` isolado: falha no HUB não impede a gravação na planilha, e a linha recebe o status do POST (`hub_status`) para auditoria.
+- `doGet` (sync do HUB) fica inalterado, apenas passa a expor `lead_uid` junto dos demais campos.
 
-**B. Fila de reenvio segura (`src/lib/leadQueue.ts`)**
-- Timeout do POST de 6s → 20s (evento com rede lenta não é falha).
-- Máximo de 3 tentativas por lead; ao estourar, o item sai da fila e é marcado como "não confirmado" (permanece exportável em CSV) em vez de reenviar para sempre.
-- `enqueueLead` passa a deduplicar por `lead_uid`, então o mesmo lead nunca ocupa dois lugares na fila.
-- Reenvio com `Retry-After` progressivo (2min → 5min → 15min) em vez de fixo a cada 2min.
-
-**C. Payload sempre completo (fim dos nulos e do `source` longo)**
-- Todos os formulários passam a enviar sempre, como string (vazia quando não se aplica): `reason`, `insight_id`, `subscription`, `utm_source`, `utm_medium`, `utm_campaign`, `user_agent`.
-- Novo campo curto `source` (máx. 50 caracteres), derivado da origem e não do título: `contact-form`, `lead-gate-insight`, `lead-gate-research`, `article-cta-insight`, `article-cta-research`, `kiosk-demo`. O título continua indo em `company`/`message`, como hoje.
-- No formulário de contato, `subscription` continua sendo o assunto (`general` / `demo` / `partnership` / `support`) e passa a ir junto `reason: "contact-form"`.
-
-## Trecho para colar no Apps Script
-
-Depois de aprovado, entrego um trecho pronto para o `doPost` que:
-- lê `lead_uid` e ignora o POST se esse UID já existir na planilha (dedupe definitivo, inclusive contra retentativas de rede);
-- normaliza qualquer campo ausente para string vazia antes de montar o payload do HUB;
-- trunca `source` em 50 caracteres;
-- registra na aba de log o `lead_uid` junto do status, para rastrear caso a caso.
-
-Também preciso que você reautorize o script (o `EXCEPTION` de `UrlFetchApp.fetch` significa que a autorização de requisição externa foi perdida) e revalide o token do HUB (`FAIL_401`) — sem isso, nenhum lead é encaminhado, independente do que o site envie.
-
-## Fora de escopo
-
-Limpeza das linhas duplicadas já existentes na planilha (você cuida disso).
+Depois de aprovado, eu te entrego o `doPost` completo pronto para colar e publico o patch do site.
