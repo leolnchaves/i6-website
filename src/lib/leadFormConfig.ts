@@ -55,10 +55,13 @@ export const LEAD_SOURCE_MAX_LEN = 50;
  * Campos que o i6 HUB exige como string. Ausentes viravam `null` no payload
  * do Apps Script e o HUB rejeitava com `invalid_payload`. Sempre enviamos
  * todos, com string vazia quando não se aplicam.
+ *
+ * `insight_id` NÃO entra aqui: o HUB valida esse campo como UUID e rejeita
+ * string vazia (`insight_id: ["Invalid uuid"]`), derrubando o lead inteiro.
+ * Ele só é enviado quando existe de fato um insight — caso contrário é omitido.
  */
 export const REQUIRED_LEAD_FIELDS = [
   'reason',
-  'insight_id',
   'subscription',
   'utm_source',
   'utm_medium',
@@ -69,7 +72,8 @@ export const REQUIRED_LEAD_FIELDS = [
 
 /**
  * Normaliza o payload antes do envio: garante `lead_uid`, garante que todos os
- * campos obrigatórios existam como string e trunca `source`.
+ * campos obrigatórios existam como string, trunca `source` e remove
+ * `insight_id` vazio (que o HUB rejeita por não ser UUID).
  */
 export function normalizeLeadFields(
   fields: Record<string, string | undefined>,
@@ -83,6 +87,8 @@ export function normalizeLeadFields(
   REQUIRED_LEAD_FIELDS.forEach((k) => {
     if (typeof out[k] !== 'string') out[k] = '';
   });
+  if (!out.insight_id) delete out.insight_id;
+
   if (!out[LEAD_UID_FIELD]) out[LEAD_UID_FIELD] = newLeadUid();
   return out;
 }
