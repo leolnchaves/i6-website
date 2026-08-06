@@ -1,48 +1,120 @@
-# Fazer POST e GET entregarem o mesmo lead
+# Igualar o que o POST e o GET entregam ao HUB
 
-Objetivo: os dois caminhos (push do `doPost` e pull do `doGet` lido pelo `sync-website-leads`) passam a produzir **o mesmo payload, com a mesma chave de idempotência**. Assim o HUB pode reconhecer que é o mesmo lead e os rótulos (`channel`, `reason`) saem iguais nos dois lados.
+Causa raiz confirmada pelos dois trechos: o `doGet` **não expõe `lead_uid`** (então o HUB não tem como saber que o lead do pull é o mesmo do push), manda `insight_id` como string vazia em alguns casos, não trunca `source` em 50 e não manda `metadata`. Resultado: linhas repetidas e rótulos divergentes.
 
-## Peça central: um único montador de payload
+São 3 alterações, todas dentro do `doGet` + `COLUMN_MAP`. O `doPost` fica intacto.
 
-Criar no Apps Script uma função nova, `buildHubPayload_(f)`, que é a **única** fonte do formato enviado/exposto ao HUB. Ela é usada em três lugares: no `doPost` (antes do `dispatchToHub_`), no `doGet` (no lugar do objeto montado hoje dentro do loop) e no `reenviarUltimoLead`.
+## Alteração 1 — `COLUMN_MAP`: acrescentar as colunas que faltam
 
-Campos padronizados:
+No objeto `COLUMN_MAP` (topo do arquivo), acrescentar as chaves abaixo, mantendo o estilo das existentes. Os valores são os nomes das colunas em minúsculas, como estão no cabeçalho da planilha:
 
-- `lead_uid` — chave de idempotência (o site já manda; no `doGet` vem da coluna `lead_uid`). É o que permite ao HUB colapsar push + pull no mesmo lead.
-- `insight_id` — incluído **somente** se `uuidOk_()`; caso contrário o campo é omitido (não vai vazio).
-- `source` — mesma regra nos dois: `i6-website:<subscription>` truncado em 50 caracteres. Quando há `insight_id` válido, o `subscription` já é o do insight, então o HUB consegue derivar `reason: Insight` também no pull.
-- `email`, `name`, `company`, `message` — sempre presentes, string (nunca `null`), inclusive `message` no pull (hoje uma leitura vem com mensagem e outra vazia).
-- `metadata` — `utm_source`, `utm_medium`, `utm_campaign`, `referrer`, `user_agent`, `language`, com o mesmo fallback `first_touch_* || last_touch_*` que o `reenviarUltimoLead` já usa.
+```js
+const COLUMN_MAP = {
+  // ... chaves existentes (timestamp, subscription, company, email, name, message, insight_id) ...
 
-## Alterações no `Code.gs`
+  // ===== ADICIONAR =====
+  lead_uid:             'lead_uid',
+  first_touch_source:   'first_touch_source',
+  first_touch_medium:   'first_touch_medium',
+  first_touch_campaign: 'first_touch_campaign',
+  first_touch_referrer: 'first_touch_referrer',
+  last_touch_source:    'last_touch_source',
+  last_touch_medium:    'last_touch_medium',
+  last_touch_campaign:  'last_touch_campaign',
+  user_agent:           'user_agent',
+  // ===== FIM =====
+};
+```
 
-1. **Adicionar `buildHubPayload_`** logo depois do helper `uuidOk_` (bloco novo, não altera nada existente).
-2. **`doPost`** — no ponto onde hoje o payload é montado e passado ao `dispatchToHub_`, trocar o objeto literal pela chamada `buildHubPayload_({...})`, incluindo `lead_uid` (a variável já existe, lida no bloco de dedupe).
-3. **`doGet`** — dentro do loop, substituir o `leads.push({ ... })` por `leads.push(buildHubPayload_({ ...valores da linha... }))`, lendo também as colunas `lead_uid` e `message`. O `next_cursor` e a lógica de cursor/limite ficam intactos.
-4. **`reenviarUltimoLead`** — trocar o payload local pela mesma chamada, para o reenvio manual sair idêntico.
-5. **`COLUMN_MAP`** — acrescentar `lead_uid: 'lead_uid'` (a coluna já existe na planilha), para o `doGet` conseguir ler o índice.
+## Alteração 2 — helper de leitura de célula, antes do `doGet`
 
-Nada é removido: `SHARED_TOKEN`, honeypot, dedupe por `lead_uid`, `appendRow`, ordem das colunas, `dispatchToHub_`, `logDispatch_` e o formato de resposta do `doGet` (`{leads, next_cursor}`) continuam como estão.
+Bloco novo, colado imediatamente **antes** de `function doGet(e) {`:
 
-## Do lado do HUB
+```js
+// ===== ADICIONAR =====
+function cell_(row, idx, key) {
+  return idx[key] >= 0 ? String(row[idx[key]] || '').trim() : '';
+}
+// ===== FIM =====
+```
 
-Com os dois caminhos entregando `lead_uid` e o mesmo `source`:
+## Alteração 3 — o `leads.push` do `doGet`
 
-- `sync-website-leads` e `ingest-insight-lead` devem **deduplicar por `lead_uid`** (upsert por essa chave) — é o que elimina de fato as linhas repetidas.
-- `channel` e `reason` derivados do mesmo par (`source`, presença de `insight_id`) nas duas rotas.
+Trecho original:
 
-## O que falta para eu te dar os trechos exatos
+```js
+      const subscription = idx.subscription >= 0 ? String(row[idx.subscription] || '').trim() : '';
 
-O `Code.gs` que você colou veio truncado justamente no meio do `doPost` (do bloco de dedupe até o `dispatchToHub_`) e no início do `doGet`. Me mande esses dois trechos e eu devolvo o passo a passo com o **código original** e, dentro dele, marcado, exatamente o que entra e o que sai — sem reescrever o resto.
+      leads.push({
+        timestamp: ts.toISOString(),
+        email: email,
+        name:    idx.name    >= 0 ? String(row[idx.name]    || '') : '',
+        company: idx.company >= 0 ? String(row[idx.company] || '') : '',
+        message: idx.message >= 0 ? String(row[idx.message] || '') : '',
+        insight_id: idx.insight_id >= 0 ? String(row[idx.insight_id] || '').trim() : '',
+        subscription: subscription,
+        source: subscription ? `i6-website:${subscription}` : 'i6-website',
+        row: i + 1,
+      });
+```
 
-## Ordem de execução
+Substituir **apenas o `leads.push({...})`** por (a linha do `subscription` acima continua igual):
 
-1. Você me envia os dois trechos faltantes.
-2. Eu devolvo as 5 alterações marcadas no código original.
-3. Você salva e cria **Nova versão** em Gerenciar implantações (mesma URL).
-4. Teste: 1 CTA de blog → 1 lead no HUB, `channel` e `reason` corretos; conferir que o pull não cria linha extra.
-5. Limpar no HUB as 2 linhas duplicadas do teste anterior.
+```js
+      const subscription = idx.subscription >= 0 ? String(row[idx.subscription] || '').trim() : '';
+
+      // ===== SUBSTITUIR o leads.push antigo por este =====
+      const rawInsightId = cell_(row, idx, 'insight_id');
+
+      const lead = {
+        timestamp: ts.toISOString(),
+        email: email,
+        name:    cell_(row, idx, 'name'),
+        company: cell_(row, idx, 'company'),
+        message: cell_(row, idx, 'message'),
+        subscription: subscription,
+        // mesma regra do doPost: truncado em 50 chars
+        source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
+        // chave de idempotência: é isso que permite ao HUB reconhecer
+        // que o lead do pull é o mesmo já entregue pelo push
+        lead_uid: cell_(row, idx, 'lead_uid'),
+        // mesmo formato de metadata que o doPost envia
+        metadata: {
+          utm_source:   cell_(row, idx, 'first_touch_source')   || cell_(row, idx, 'last_touch_source')   || null,
+          utm_medium:   cell_(row, idx, 'first_touch_medium')   || cell_(row, idx, 'last_touch_medium')   || null,
+          utm_campaign: cell_(row, idx, 'first_touch_campaign') || cell_(row, idx, 'last_touch_campaign') || null,
+          referrer:     cell_(row, idx, 'first_touch_referrer') || null,
+          user_agent:   cell_(row, idx, 'user_agent')           || null,
+        },
+        row: i + 1,
+      };
+
+      // igual ao dispatchToHub_: só manda insight_id se for UUID válido
+      if (uuidOk_(rawInsightId)) lead.insight_id = rawInsightId;
+
+      leads.push(lead);
+      // ===== FIM =====
+```
+
+Nada mais muda: token do sync, cursor (`since` / `next_cursor`), limite, filtro por e-mail e o formato da resposta (`{leads, next_cursor}`) continuam idênticos.
+
+## Passo a passo
+
+1. Aplicar as 3 alterações no `Code.gs`.
+2. Salvar.
+3. Gerenciar implantações → Editar → **Nova versão** (a URL não muda).
+4. Preencher 1 CTA de blog no site.
+5. Conferir no HUB: **1 único lead**, com `channel` e `reason` corretos, e `_dispatch_log` com o registro do push.
+
+## Do lado do HUB (necessário para acabar com as duplicatas)
+
+O script agora entrega `lead_uid` nos dois caminhos, mas quem colapsa os registros é o HUB:
+
+- `ingest-insight-lead` e `sync-website-leads` devem fazer **upsert por `lead_uid`** (quando presente), em vez de inserir.
+- `channel` e `reason` devem ser derivados dos mesmos campos nas duas rotas: `source` (`i6-website:<subscription>`) define o canal; presença de `insight_id` define `reason = Insight`, ausência define `Contact`.
+
+Sem esse upsert, os rótulos ficam consistentes, mas o HUB ainda pode criar linha extra ao ler o pull.
 
 ## Site
 
-Nada muda no site: ele já envia `lead_uid`, `source` curto e omite `insight_id` vazio.
+Nada muda: já envia `lead_uid`, `source` ≤ 50 e omite `insight_id` vazio.
