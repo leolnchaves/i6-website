@@ -1,38 +1,36 @@
-# Investigar lead que gravou na planilha mas não chegou ao HUB
+# Investigar: lead chegou ao HUB com nome errado e sem linha em `_dispatch_log`
 
-O lead entrou na aba `ContactForm`, mas não há linha em `_dispatch_log`. Ausência de log significa que o `dispatchToHub_` provavelmente **não foi chamado** (ou lançou exceção antes de logar). Isso não é diagnosticado ainda — o site enviou os campos corretamente, então a causa está no Apps Script implantado.
+Dois sintomas na mesma execução, sem erro no log de execuções:
 
-Nada muda no site nesta etapa.
+1. O nome que chegou ao HUB é diferente do digitado em **Full name** na tela.
+2. Não há linha correspondente em `_dispatch_log`.
 
-## Passo 1 — Ler o log de execuções do Apps Script
+Os dois apontam para o mesmo tipo de causa: **o payload enviado ao HUB não é montado com as variáveis do request, e o log não é gravado no caminho que rodou**. Nada disso está confirmado ainda — o site enviou os campos corretos (o `appendRow` gravou certo na planilha), então a divergência nasce dentro do Apps Script.
 
-No editor do Apps Script: **Execuções** (ícone de relógio) → localizar a execução `doPost` do horário do teste.
+Nenhuma alteração no site nesta etapa.
 
-Três cenários possíveis, cada um com correção diferente:
+## Hipóteses a verificar (em ordem)
 
-- **Execução com erro (Failed)** → a mensagem aponta a linha exata; provável exceção depois do `appendRow` (ex.: bloco novo do `lead_uid`, ou `dispatchToHub_` quebrando antes de gravar o log).
-- **Execução "Completed" sem log no `_dispatch_log`** → o `doPost` retornou antes de chamar o `dispatchToHub_`. Candidatos: o bloco de dedupe encontrando o `lead_uid` e saindo com `duplicate:true`, ou um `if` que só dispara para leads com `insight_id`.
-- **Nenhuma execução `doPost` no horário** → o site postou para uma URL de implantação antiga (versão não atualizada) e outra cópia do script gravou a linha.
+- **Payload lendo a planilha em vez do request.** Se o `dispatchToHub_` (ou quem monta o payload) buscar valores por linha/coluna da planilha — em vez de usar as variáveis já extraídas no `doPost` — um deslocamento de índice depois da criação da coluna `lead_uid` explicaria pegar o valor de outra célula/linha (nome de um lead anterior).
+- **Ordem dos argumentos.** Se o payload é montado por posição (ex.: `dispatchToHub_(name, email, company, ...)`), um argumento fora de ordem manda `company`/`subscription` no lugar de `name`.
+- **`logDispatch_` não chamado nesse caminho.** Se o log só é gravado em um dos ramos (sucesso ou erro), ou se ele grava em aba/índice que mudou, a ausência de linha é consequência — não prova de que o dispatch não rodou. Como o lead chegou ao HUB, o dispatch **rodou**; então o problema é especificamente no log.
 
-## Passo 2 — Confirmar qual versão está no ar
+## Correções previstas (cirúrgicas, sem reescrever o `doPost`)
 
-Em **Gerenciar implantações**, verificar se a implantação ativa aponta para a versão mais recente (a que inclui dedupe + `lead_uid` + truncamento de `source`). Se estiver em versão antiga, criar **Nova versão** na mesma implantação (mantém a URL).
+- Montar o payload do HUB **exclusivamente** a partir das variáveis já extraídas do request (`name`, `email`, `company`, `subscription`, `message`, `lead_uid`, UTMs), nunca por leitura de célula.
+- Garantir `logDispatch_` em `try/finally`, gravando **sempre** uma linha (status HTTP, corpo da resposta, `lead_uid`), tanto em sucesso quanto em erro.
+- Se o log for gravado por posição de coluna, passar a localizar as colunas pelo cabeçalho de `_dispatch_log`, para ficar imune a novas colunas.
 
-## Passo 3 — Confirmar a hipótese com um teste controlado
+## Validação
 
-Rodar a função utilitária `reenviarUltimoLead()` pelo editor. Ela chama o `dispatchToHub_` direto:
-
-- Se o HUB responder **200** e aparecer linha em `_dispatch_log` → o dispatch funciona; o problema é o caminho dentro do `doPost` (dedupe/condicional) → corrigir o `doPost`.
-- Se responder **erro** → o problema é o payload ou o token → corrigir a montagem do payload.
-
-## Passo 4 — Aplicar a correção pontual
-
-Conforme o resultado, um destes ajustes cirúrgicos (sem reescrever o `doPost`):
-
-- Dedupe disparando errado: retornar `duplicate` **somente** quando o `lead_uid` já existir em linha anterior (ignorando a linha que o próprio request acabou de gravar) — hoje a ordem de gravação pode fazer o próprio lead ser visto como duplicado.
-- Chamada ao HUB condicionada a `insight_id`: remover a condição para que leads de contato/parceria também sejam despachados.
-- Exceção no `dispatchToHub_`: envolver em `try/catch` e sempre gravar em `_dispatch_log` (inclusive erro), para nunca mais ficar sem rastro.
+Após implantar **Nova versão** (mesma implantação, mesma URL): enviar 1 contato pelo site e confirmar, na mesma ordem — linha em `ContactForm` com `lead_uid`, linha em `_dispatch_log` com status 200, e no HUB o nome idêntico ao digitado.
 
 ## O que eu preciso de você
 
-Cole aqui o conteúdo da execução `doPost` em **Execuções** (mensagem completa) — com isso eu identifico o cenário e te passo o trecho exato para colar.
+Cole aqui os trechos atuais de:
+
+- `dispatchToHub_` (completo, incluindo a montagem do `payload`)
+- `logDispatch_` (completo)
+- a chamada do `doPost` para essas duas funções
+
+Com isso eu identifico a hipótese correta e te devolvo o trecho exato para colar.
