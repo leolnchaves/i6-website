@@ -1,36 +1,41 @@
-# Corrigir duplicatas e leads perdidos (Apps Script + site)
+# Corrigir duplicatas e leads perdidos (Apps Script + site) — modo conservador
 
-O arquivo que você colou não tem um `const payload = { ... }` — o envio ao HUB está montado direto dentro do `doPost`. Como esse trecho veio truncado, o plano substitui o `doPost` inteiro por uma versão nova, em vez de fazer edições cirúrgicas em linhas que não consigo ver.
+Você tem razão: esse Apps Script tem várias integrações penduradas (planilha, HUB ingest, `doGet` de sync do HUB, tokens). Então o plano **não reescreve o `doPost`**. São 3 inserções pontuais, cada uma isolada e reversível, sem tocar em nada do que já funciona.
 
-## O que muda
+## Princípios de segurança das alterações
 
-1. **Apps Script (você cola)** — novo `doPost` com:
-   - guard do `e` (não estoura mais `Cannot read properties of undefined`)
-   - dedupe por `lead_uid` (coluna nova na planilha) + `LockService` → mesma pessoa nunca gera 2 linhas
-   - envio ao HUB com header `x-webhook-secret` usando `INGEST_INSIGHT_LEAD_SECRET`
-   - `insight_id` só entra no payload se for UUID válido (senão é omitido — era a causa do `invalid_payload` do lead da Victoria)
-   - campos sempre string (nunca `null`) e `source` truncado em 50 chars
-   - resposta com `{"result":"ok","duplicate":true|false}`
+- Nada é removido ou renomeado: `SHARED_TOKEN`, `COLUMN_MAP`, `SHEET_NAME`, honeypot, ordem das colunas e o `doGet` de sync ficam **idênticos**.
+- Cada mudança é adicionada como bloco novo (ou 1 linha), fácil de comentar e desfazer.
+- Antes de salvar: **Implantações → nova versão** (a versão anterior continua existindo para rollback imediato).
+- Nenhuma mudança de layout da planilha exigida além de **acrescentar** uma coluna no fim do cabeçalho (colunas existentes não se movem).
 
-2. **Planilha** — adicionar a coluna `lead_uid` no cabeçalho da aba `ContactForm` (qualquer posição; o script acha pelo nome).
+## As 3 alterações no Apps Script
 
-3. **Site (eu aplico)** — patch v2.2.20 com as correções de idempotência já preparadas:
-   - `src/lib/leadFormConfig.ts`: `LEAD_UID_FIELD` + `normalizeLeadFields` (strings garantidas, `source` ≤ 50, `insight_id` removido quando vazio)
-   - `src/lib/leadQueue.ts`: timeout 20s, máximo 3 tentativas com backoff, dedupe por `lead_uid`
-   - `ContactForm.tsx`, `ArticleCTAForm.tsx`, `LeadGateForm.tsx`, `EbookCTA.tsx` passando pela normalização
+1. **Guard do `e`** — 1 linha no início do `doPost`: se `e` ou `e.parameter` vier vazio, responde `ok` e sai. Elimina o `Cannot read properties of undefined` das execuções manuais e de chamadas malformadas.
+
+2. **Dedupe por `lead_uid`** — bloco novo logo depois da checagem do token: lê `e.parameter.lead_uid`; se já existir na coluna `lead_uid`, responde `{"result":"ok","duplicate":true}` e sai antes de gravar/reenviar. Envolvido em `LockService.getScriptLock()`. Se a coluna não existir na planilha, o bloco simplesmente não faz nada (fail-open) — ou seja, não quebra nada se você adiar a criação da coluna.
+
+3. **Sanitização do `insight_id` antes do POST ao HUB** — no ponto onde o `insight_id` é usado no envio, passa por um helper `uuidOk()`: se não for UUID válido, o campo é omitido do envio (em vez de ir vazio). Era isso que gerava `invalid_payload` e perdia leads como o da Victoria Baumann. O valor continua sendo gravado na planilha como hoje.
+
+Nada do header/secret muda: se o envio hoje já usa `x-webhook-secret` com `INGEST_INSIGHT_LEAD_SECRET`, fica como está — eu só confirmo com você o trecho exato antes de mexer.
+
+## Planilha
+
+Acrescentar `lead_uid` como **última** coluna do cabeçalho da aba `ContactForm`. Sem isso, o item 2 fica inativo (site segue funcionando).
+
+## Site (eu aplico) — patch v2.2.20
+
+- `src/lib/leadFormConfig.ts`: `LEAD_UID_FIELD` + `normalizeLeadFields` (campos sempre string, `source` ≤ 50 chars, `insight_id` removido quando vazio).
+- `src/lib/leadQueue.ts`: timeout 20s, máximo 3 tentativas com backoff, dedupe local por `lead_uid` (fim do reenvio infinito com Wi-Fi oscilando).
+- `ContactForm.tsx`, `ArticleCTAForm.tsx`, `LeadGateForm.tsx`, `EbookCTA.tsx` passando pela normalização.
 
 ## Ordem de execução
 
 1. Adicionar a coluna `lead_uid` na planilha.
-2. Colar o novo `doPost` no Apps Script → salvar → **Nova versão → Implantar** (executar como "Eu", acesso "Qualquer pessoa").
+2. Eu te mando os 3 trechos exatos para colar (com marcadores de onde entram) — você salva e implanta nova versão.
 3. Eu publico a release v2.2.20 do site.
-4. Teste ponta a ponta: um lead pelo site e um pelo /kiosk com Wi-Fi oscilando → deve gerar 1 linha só e chegar no HUB.
+4. Teste: 1 lead pelo site + 1 pelo /kiosk com rede oscilando → 1 linha por lead, ambos chegando no HUB.
 
-## Detalhes técnicos
+## Rollback
 
-- `lead_uid` é gerado no cliente (uuid por submissão) e reenviado igual em todas as tentativas da fila offline; o Apps Script varre a coluna `lead_uid` antes de gravar e, se já existir, responde `ok` sem inserir nem reenviar ao HUB.
-- `LockService.getScriptLock()` com espera de 10s evita corrida entre duas tentativas simultâneas do mesmo `lead_uid`.
-- O envio ao HUB fica em `try/catch` isolado: falha no HUB não impede a gravação na planilha, e a linha recebe o status do POST (`hub_status`) para auditoria.
-- `doGet` (sync do HUB) fica inalterado, apenas passa a expor `lead_uid` junto dos demais campos.
-
-Depois de aprovado, eu te entrego o `doPost` completo pronto para colar e publico o patch do site.
+Se algo sair torto: reverter para a versão anterior da implantação no Apps Script (site continua enviando normalmente) e reverter a release do site pelo histórico.
