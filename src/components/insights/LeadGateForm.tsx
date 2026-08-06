@@ -123,7 +123,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
         const ctx = getLeadContext();
         const tag = kind === 'research' ? '[Lead Research]' : '[Lead Insights]';
         const idLabel = kind === 'research' ? 'Research' : 'Insight';
-        const origin = kind === 'research' ? 'lead-gate-research' : 'lead-gate-insights';
+        const origin = kind === 'research' ? 'lead-gate-research' : 'lead-gate-insight';
         const message = [
           tag,
           `${idLabel}: ${title}`,
