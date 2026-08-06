@@ -1,82 +1,36 @@
-# Fazer o lead de contato chegar ao HUB e aparecer no `_dispatch_log`
+# 1 preenchimento no site = 3 leads no HUB
 
-## Causa
+## O que está confirmado
 
-No `doPost`, o envio ao HUB está dentro de `if (insight_id)`. O formulário de contato não tem `insight_id`, então o `dispatchToHub_` nunca roda — e como o log só é escrito dentro dele, `_dispatch_log` fica vazio.
+**O site envia uma única vez.** O CTA do blog (`ArticleCTAForm`) faz um `fetch` POST para o Apps Script e nada mais. Não há retry, nem segunda rota, nem fila (a fila offline existe só no Kiosk). Logo, a multiplicação acontece depois do site.
 
-Uma única mudança resolve: tirar esse `if`.
+**O Apps Script entrega o mesmo lead ao HUB por dois caminhos independentes:**
 
-## Mudança no `Code.gs`
+1. **Push** — dentro do `doPost`, o `dispatchToHub_` chama `ingest-insight-lead` na hora. Esse é o registro com `Reason: Insight` (traz o insight) e é o que o HUB rotula como `Channel: Website`.
+2. **Pull** — o `doGet` do mesmo script expõe as linhas da planilha (`leads` + `next_cursor`) para o HUB buscar por cursor. Esses registros chegam com `source = i6-website:<subscription>`, que é exatamente o `Channel: i6-website` e `Reason: Contact` das outras duas linhas.
 
-Localize este trecho (está no `doPost`, logo depois do `sheet.appendRow([...])`):
+Ou seja: o HUB recebe o lead empurrado pelo script **e** puxa a mesma linha da planilha. As duas linhas `Contact` diferindo em `Message` (uma com texto, outra vazia) são leituras do pull em ciclos/versões diferentes de mapeamento.
 
-### Código original
+Os rótulos errados são consequência disso, não causa separada: `Channel` e `Reason` são definidos pelo HUB a partir da rota/`source` de cada entrada — por isso o push acerta o motivo e erra o canal, e o pull acerta o canal e erra o motivo.
 
-```js
-// === Dispatch instantâneo para o HUB (só quando há insight_id) ===
-// Não bloqueia a resposta ao site: erros são silenciosos e o cron faz fallback.
-if (insight_id) {
-  try {
-    dispatchToHub_({
-      insight_id: insight_id,
-      email: email,
-      name: name,
-      company: company,
-      source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
-      metadata: {
-        utm_source:   first_touch_source   || last_touch_source   || null,
-        utm_medium:   first_touch_medium   || last_touch_medium   || null,
-        utm_campaign: first_touch_campaign || last_touch_campaign || null,
-        referrer:     first_touch_referrer || null,
-        user_agent:   user_agent           || null,
-      },
-    });
-  } catch (err) {
-    // não falha o doPost se o HUB estiver fora — o cron pega no próximo ciclo
-    console.warn('dispatchToHub failed', err);
-  }
-}
-```
+## O que precisa ser feito (o mínimo)
 
-### Como fica (as linhas marcadas com `// <<<` são as alteradas)
+**Escolher um único caminho de entrada.** Recomendação: manter o **push** (instantâneo, entrega o PDF na hora) e desligar o **pull**.
 
-```js
-// === Dispatch instantâneo para o HUB (todos os leads) ===
-// Não bloqueia a resposta ao site: erros são silenciosos e o cron faz fallback.
-try {                                                                    // <<< era: if (insight_id) { try {
-  dispatchToHub_({
-    insight_id: insight_id,
-    email: email,
-    name: name,
-    company: company,
-    message: message,                                                    // <<< incluído
-    lead_uid: lead_uid,                                                  // <<< incluído
-    source: (subscription ? ('i6-website:' + subscription) : 'i6-website').slice(0, 50),
-    metadata: {
-      utm_source:   first_touch_source   || last_touch_source   || null,
-      utm_medium:   first_touch_medium   || last_touch_medium   || null,
-      utm_campaign: first_touch_campaign || last_touch_campaign || null,
-      referrer:     first_touch_referrer || null,
-      user_agent:   user_agent           || null,
-    },
-  });
-} catch (err) {
-  // não falha o doPost se o HUB estiver fora — o cron pega no próximo ciclo
-  console.warn('dispatchToHub failed', err);
-}                                                                        // <<< removida a chave } extra do if
-```
+1. **No HUB:** desativar o job/cron que consome o `doGet` do Apps Script (o sync por cursor). É a mudança que elimina as 2 linhas duplicadas. Nada no Apps Script precisa mudar para isso.
+2. **No HUB:** ajustar os rótulos da rota de push para o que você espera — `Channel` = o canal do site e `Reason` = `Insight` quando vem `insight_id`, `Contact` quando não vem.
+3. **Na planilha:** apagar as 2 linhas duplicadas já criadas no HUB (manter a que tem `Reason: Insight`).
 
-Resumo do que muda: `if (insight_id) {` sai, a chave `}` que fechava esse `if` (a última do bloco) sai, e entram duas linhas no payload (`message`, `lead_uid`). Nada mais no arquivo é tocado.
+O `doGet` pode continuar existindo no script como fallback manual — só não deve ser consumido automaticamente.
 
-## Passo a passo
+## Alternativa (se preferir manter o pull)
 
-1. Abrir o `Code.gs`, aplicar a alteração acima e salvar.
-2. **Implantar → Gerenciar implantações → lápis (editar) → Versão: Nova versão → Implantar** (mantém a mesma URL usada pelo site).
-3. Enviar 1 contato pelo site em `/pt/contact`, com um nome único.
-4. Conferir: linha nova em `ContactForm`, linha nova em `_dispatch_log` com status `OK`, e o registro no HUB.
-
-Se o `_dispatch_log` registrar `FAIL_400`, a mensagem gravada na coluna `message` mostra qual campo o HUB recusou — daí ajustamos só esse campo.
+Se o sync por cursor for a via oficial do HUB, o inverso: remover a chamada `dispatchToHub_` de dentro do `doPost` e deixar o HUB puxar. Perde-se a entrega instantânea do PDF.
 
 ## Site
 
 Nada a alterar no site.
+
+## Antes de mexer no Code.gs
+
+Se a decisão exigir alteração no script (alternativa acima), me mande o trecho do `doPost` a partir do comentário do dispatch até o fim da função — o conteúdo colado veio truncado nessa parte, e sem ele eu não marco a linha exata a mudar.
