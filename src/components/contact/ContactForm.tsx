@@ -97,20 +97,24 @@ const ContactForm = memo(() => {
       const ctx = getLeadContext();
       const enrichedMessage = [data.message, '', formatLeadContextForMessage(ctx)].join('\n');
 
-      const fields = [
-        { name: 'name', value: data.name },
-        { name: 'email', value: data.email },
-        { name: 'company', value: data.company || '' },
-        { name: 'message', value: enrichedMessage },
-        { name: 'subscription', value: data.subject },
-        { name: 'token', value: SHARED_FORM_TOKEN }
-      ];
+      // Todos os campos exigidos pelo i6 HUB vão sempre como string (vazia
+      // quando não se aplicam) — campos ausentes viravam null no payload do
+      // Apps Script e o HUB rejeitava com invalid_payload.
+      const normalized = normalizeLeadFields(
+        {
+          name: data.name,
+          email: data.email,
+          company: data.company || '',
+          message: enrichedMessage,
+          subscription: data.subject,
+          reason: 'contact-form',
+          token: SHARED_FORM_TOKEN,
+          ...getLeadContextFields(),
+        },
+        'contact-form',
+      );
 
-      // Anexa todos os campos de tracking planos (anonymous_id, session_id,
-      // first/last touch, journey, language, user_agent, etc.)
-      Object.entries(getLeadContextFields()).forEach(([name, value]) => {
-        fields.push({ name, value });
-      });
+      const fields = Object.entries(normalized).map(([name, value]) => ({ name, value }));
 
       fields.forEach(field => {
         const input = document.createElement('input');
