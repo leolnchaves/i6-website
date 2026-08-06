@@ -99,7 +99,7 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
         const ctx = getLeadContext();
         const tag = kind === 'research' ? '[Lead Research CTA]' : '[Lead Insights CTA]';
         const idLabel = kind === 'research' ? 'Research' : 'Insight';
-        const origin = kind === 'research' ? 'article-cta-research' : 'article-cta-insights';
+        const origin = kind === 'research' ? 'article-cta-research' : 'article-cta-insight';
         const message = [
           tag,
           `${idLabel}: ${title}`,
