@@ -1,50 +1,59 @@
+import type { KioskLang } from '@/data/kiosk/config';
+
 export type ChannelId = 'whatsapp' | 'email' | 'push' | 'sms' | 'phone';
 export type SegmentId = 'active90' | 'recurring' | 'crossSell' | 'full';
 export type PeriodId = '7d' | '14d' | '30d';
 
 export interface ProductDef {
   id: string;
-  name: string;
-  category: string;
+  namePt: string;
+  nameEn: string;
+  categoryPt: string;
+  categoryEn: string;
   audienceTotal: number; // clientes elegíveis
   baseConversion: number; // %
   bestChannel: ChannelId;
-  arguments: string[];
+  argumentsPt: string[];
+  argumentsEn: string[];
 }
 
-export const channels: { id: ChannelId; label: string; short: string }[] = [
-  { id: 'whatsapp', label: 'WhatsApp', short: 'WA' },
-  { id: 'email', label: 'E-mail', short: 'E' },
-  { id: 'push', label: 'Push', short: 'P' },
-  { id: 'sms', label: 'SMS', short: 'S' },
-  { id: 'phone', label: 'Telefone', short: 'T' },
+export const channels: { id: ChannelId; labelPt: string; labelEn: string; short: string }[] = [
+  { id: 'whatsapp', labelPt: 'WhatsApp', labelEn: 'WhatsApp', short: 'WA' },
+  { id: 'email', labelPt: 'E-mail', labelEn: 'Email', short: 'E' },
+  { id: 'push', labelPt: 'Push', labelEn: 'Push', short: 'P' },
+  { id: 'sms', labelPt: 'SMS', labelEn: 'SMS', short: 'S' },
+  { id: 'phone', labelPt: 'Telefone', labelEn: 'Phone', short: 'T' },
 ];
 
-export const channelLabel = (id: ChannelId) =>
-  channels.find((c) => c.id === id)?.label ?? id;
+export const channelLabel = (id: ChannelId, lang: KioskLang) =>
+  (lang === 'pt'
+    ? channels.find((c) => c.id === id)?.labelPt
+    : channels.find((c) => c.id === id)?.labelEn) ?? id;
 
-export const segments: { id: SegmentId; label: string }[] = [
-  { id: 'active90', label: 'Ativos 90 dias' },
-  { id: 'recurring', label: 'Recorrentes da categoria' },
-  { id: 'crossSell', label: 'Base cross-sell' },
-  { id: 'full', label: 'Base completa' },
+export const segments: { id: SegmentId; labelPt: string; labelEn: string }[] = [
+  { id: 'active90', labelPt: 'Ativos 90 dias', labelEn: 'Active last 90 days' },
+  { id: 'recurring', labelPt: 'Recorrentes da categoria', labelEn: 'Category repeat buyers' },
+  { id: 'crossSell', labelPt: 'Base cross-sell', labelEn: 'Cross-sell base' },
+  { id: 'full', labelPt: 'Base completa', labelEn: 'Full base' },
 ];
 
-export const periods: { id: PeriodId; label: string }[] = [
-  { id: '7d', label: '7 dias' },
-  { id: '14d', label: '14 dias' },
-  { id: '30d', label: '30 dias' },
+export const periods: { id: PeriodId; labelPt: string; labelEn: string }[] = [
+  { id: '7d', labelPt: '7 dias', labelEn: '7 days' },
+  { id: '14d', labelPt: '14 dias', labelEn: '14 days' },
+  { id: '30d', labelPt: '30 dias', labelEn: '30 days' },
 ];
 
 export const products: ProductDef[] = [
   {
     id: 'kit-cuidados',
-    name: 'Kit Cuidados Premium',
-    category: 'Higiene & Beleza',
+    namePt: 'Kit Cuidados Premium',
+    nameEn: 'Premium Care Kit',
+    categoryPt: 'Higiene & Beleza',
+    categoryEn: 'Personal Care & Beauty',
     audienceTotal: 62_400,
     baseConversion: 8.4,
     bestChannel: 'whatsapp',
-    arguments: [
+    argumentsPt: [
       'Clientes com aumento de 42% na frequência de compra da categoria nos últimos 30 dias e 3× mais engajamento com push segmentado.',
       'Base com recompra de dermocosméticos crescendo 38% no último trimestre e resposta 2,4× maior a WhatsApp que a média da loja.',
       'Clientes parecidos com quem converteu no último lançamento — 74% deles compraram na primeira semana da campanha.',
@@ -52,109 +61,172 @@ export const products: ProductDef[] = [
       'Recorte exclui quem foi impactado nos últimos 14 dias — reforça só quem responde bem a WhatsApp sem saturação.',
       'Regiões com maior densidade de compradoras da categoria e picos de tráfego em lojas premium nos fins de semana.',
     ],
+    argumentsEn: [
+      'Customers with a 42% increase in category purchase frequency over the last 30 days and 3× more engagement with segmented push.',
+      'Base with dermocosmetics repurchase growing 38% last quarter and 2.4× higher response to WhatsApp than the store average.',
+      'Customers similar to those who converted in the last launch — 74% of them purchased in the campaign\'s first week.',
+      'Audience concentrated in stores with the highest category turnover and a history of fast response to trade-up offers.',
+      'Selection excludes anyone contacted in the last 14 days — reinforces only those who respond well to WhatsApp without saturation.',
+      'Regions with the highest density of category buyers and traffic peaks in premium stores on weekends.',
+    ],
   },
   {
     id: 'bebidas-sazonais',
-    name: 'Linha de Bebidas Sazonais',
-    category: 'Varejo Alimentar',
+    namePt: 'Linha de Bebidas Sazonais',
+    nameEn: 'Seasonal Beverage Line',
+    categoryPt: 'Varejo Alimentar',
+    categoryEn: 'Grocery Retail',
     audienceTotal: 84_900,
     baseConversion: 6.1,
     bestChannel: 'push',
-    arguments: [
+    argumentsPt: [
       'Regiões com previsão de calor acima da média nos próximos 7 dias concentram 61% do consumo histórico da categoria — janela alinhada ao clima.',
       'PDVs com estoque saudável e giro semanal crescente nas últimas 4 semanas — sem risco de ruptura após a ativação.',
       'Clientes com compra da categoria em janela inferior a 14 dias respondem 2,6× mais a push que a base geral.',
       'Base parecida com quem converteu em campanhas sazonais anteriores — mesmo perfil de frequência e ticket em bebidas.',
       'Feriado prolongado na próxima semana em regiões-chave — histórico mostra aumento de 1,8× nas compras de combos.',
     ],
+    argumentsEn: [
+      'Regions with above-average heat forecast for the next 7 days account for 61% of the category\'s historical consumption — a window aligned with the weather.',
+      'Stores with healthy stock and growing weekly turnover over the last 4 weeks — no stockout risk after the activation.',
+      'Customers who bought in the category within the last 14 days respond 2.6× more to push than the general base.',
+      'Base similar to those who converted in previous seasonal campaigns — same frequency and ticket profile in beverages.',
+      'Extended holiday next week in key regions — history shows a 1.8× increase in combo purchases.',
+    ],
   },
   {
     id: 'eletroportatil',
-    name: 'Eletroportátil de Cozinha',
-    category: 'Bens Duráveis',
+    namePt: 'Eletroportátil de Cozinha',
+    nameEn: 'Kitchen Small Appliance',
+    categoryPt: 'Bens Duráveis',
+    categoryEn: 'Durable Goods',
     audienceTotal: 41_200,
     baseConversion: 4.7,
     bestChannel: 'email',
-    arguments: [
+    argumentsPt: [
       'Compradores de utensílios de cozinha nos últimos 60 dias com abertura de e-mail 3,1× acima da média — comportamento típico de quem está completando a cozinha.',
       'Clientes com ticket médio 2,1× superior à base geral e histórico de compra de bens duráveis com parcelamento.',
       'Base parecida com quem comprou eletroportátil na última safra — mesma faixa de renda, mesma resposta a e-mail com prova social.',
       'Público com visitas recentes à vitrine de "casa & cozinha" e listas de desejos ativas há menos de 30 dias.',
       'Regiões metropolitanas com maior densidade de mudanças recentes — perfil clássico de reposição de eletroportáteis.',
     ],
+    argumentsEn: [
+      'Buyers of kitchenware in the last 60 days with email open rates 3.1× above average — typical behavior of someone completing their kitchen.',
+      'Customers with average ticket 2.1× higher than the general base and a history of financed durable-goods purchases.',
+      'Base similar to those who bought a small appliance last season — same income bracket, same response to email with social proof.',
+      'Audience with recent visits to the "home & kitchen" showcase and active wish lists less than 30 days old.',
+      'Metro regions with a higher density of recent moves — a classic profile for appliance replacement.',
+    ],
   },
   {
     id: 'colecao-moda',
-    name: 'Coleção Moda Nova Temporada',
-    category: 'Moda & Vestuário',
+    namePt: 'Coleção Moda Nova Temporada',
+    nameEn: 'New Season Fashion Collection',
+    categoryPt: 'Moda & Vestuário',
+    categoryEn: 'Fashion & Apparel',
     audienceTotal: 96_700,
     baseConversion: 7.2,
     bestChannel: 'push',
-    arguments: [
+    argumentsPt: [
       'Clientes parecidos com quem comprou na última coleção — mesmo estilo, mesma frequência — 71% converteram na campanha anterior.',
       'Base com compras em moda a cada 45 dias em média e engajamento crescente com conteúdo de novidades no app.',
       'Mudança de estação nas próximas 2 semanas em regiões-alvo — histórico mostra pico de 2,2× nas compras de coleção nova.',
       'Público com alta resposta a push nos últimos 30 dias e adesão frequente a combos completos (peças por pedido +1,6×).',
       'Recorte exclui clientes com devolução recente e reforça lojas com maior conversão em lançamentos anteriores.',
     ],
+    argumentsEn: [
+      'Customers similar to those who bought in the last collection — same style, same frequency — 71% converted in the previous campaign.',
+      'Base with fashion purchases every 45 days on average and growing engagement with new-arrival content in the app.',
+      'Season change in the next 2 weeks in target regions — history shows a 2.2× spike in new-collection purchases.',
+      'Audience with high push response in the last 30 days and frequent adoption of full combos (items per order +1.6×).',
+      'Selection excludes customers with recent returns and reinforces stores with higher conversion in previous launches.',
+    ],
   },
   {
     id: 'cartao-fidelidade',
-    name: 'Cartão Fidelidade Premium',
-    category: 'Financeiro / Loyalty',
+    namePt: 'Cartão Fidelidade Premium',
+    nameEn: 'Premium Loyalty Card',
+    categoryPt: 'Financeiro / Loyalty',
+    categoryEn: 'Financial / Loyalty',
     audienceTotal: 28_500,
     baseConversion: 5.3,
     bestChannel: 'whatsapp',
-    arguments: [
+    argumentsPt: [
       'Base que já usa o programa de pontos 2× por mês e concentra compras nas lojas com maior ticket — perfil natural de upgrade.',
       'Clientes com engajamento crescente em benefícios exclusivos nos últimos 90 dias e alta resposta a WhatsApp que push.',
       'Público parecido com quem fez upgrade de cartão na safra anterior — mesma frequência de compra e mesma faixa de gasto mensal.',
       'Regiões com maior densidade de clientes fiéis e histórico positivo de resposta a ofertas de benefícios ancorados.',
       'Recorte prioriza quem responde a WhatsApp em janela de 48h — comportamento típico de decisão rápida em ofertas de valor.',
     ],
+    argumentsEn: [
+      'Base that already uses the points program 2× a month and concentrates purchases in the highest-ticket stores — a natural upgrade profile.',
+      'Customers with growing engagement in exclusive benefits over the last 90 days and higher response to WhatsApp than push.',
+      'Audience similar to those who upgraded their card last season — same purchase frequency and same monthly spend range.',
+      'Regions with a higher density of loyal customers and a positive history of response to benefit-anchored offers.',
+      'Selection prioritizes those who respond to WhatsApp within a 48h window — typical fast-decision behavior on value offers.',
+    ],
   },
   {
     id: 'seguro-garantia',
-    name: 'Seguro Extensão de Garantia',
-    category: 'Financeiro / Cross-sell',
+    namePt: 'Seguro Extensão de Garantia',
+    nameEn: 'Extended Warranty Insurance',
+    categoryPt: 'Financeiro / Cross-sell',
+    categoryEn: 'Financial / Cross-sell',
     audienceTotal: 33_800,
     baseConversion: 9.6,
     bestChannel: 'phone',
-    arguments: [
+    argumentsPt: [
       'Clientes que compraram eletroportátil ou eletrônico nos últimos 30 dias — janela em que a decisão de proteger o produto é 4× mais aceita.',
       'Base com histórico de atender chamadas comerciais e conversão alta em produtos financeiros ancorados a uma compra recente.',
       'Público parecido com quem contratou garantia na safra anterior — mesmo perfil de ticket e mesma janela pós-compra.',
       'Compradores em regiões com maior sinistralidade histórica de eletroportáteis — sensibilidade natural à proteção do produto.',
       'Recorte prioriza clientes sem contato comercial nos últimos 14 dias — pressão baixa aumenta 1,9× a taxa de atendimento.',
     ],
+    argumentsEn: [
+      'Customers who bought a small appliance or electronics in the last 30 days — a window in which the decision to protect the product is 4× more accepted.',
+      'Base with a history of answering sales calls and high conversion on financial products anchored to a recent purchase.',
+      'Audience similar to those who bought a warranty last season — same ticket profile and same post-purchase window.',
+      'Buyers in regions with higher historical claim rates for small appliances — natural sensitivity to product protection.',
+      'Selection prioritizes customers with no sales contact in the last 14 days — low pressure increases the answer rate by 1.9×.',
+    ],
   },
 ];
 
 
-export const pipeline: { label: string; micro: string; durationMs: number }[] = [
+export const pipeline: { labelPt: string; labelEn: string; microPt: string; microEn: string; durationMs: number }[] = [
   {
-    label: 'Lendo comportamento e histórico dos clientes',
-    micro: 'Compras, interações, recência, frequência e resposta a campanhas.',
+    labelPt: 'Lendo comportamento e histórico dos clientes',
+    labelEn: 'Reading customer behavior and history',
+    microPt: 'Compras, interações, recência, frequência e resposta a campanhas.',
+    microEn: 'Purchases, interactions, recency, frequency and campaign response.',
     durationMs: 620,
   },
   {
-    label: 'Calculando propensão por cliente e produto',
-    micro: 'Estimando a probabilidade de cada cliente contratar a oferta selecionada.',
+    labelPt: 'Calculando propensão por cliente e produto',
+    labelEn: 'Calculating propensity per customer and product',
+    microPt: 'Estimando a probabilidade de cada cliente contratar a oferta selecionada.',
+    microEn: 'Estimating the probability of each customer taking the selected offer.',
     durationMs: 780,
   },
   {
-    label: 'Identificando o canal de maior resposta',
-    micro: 'Comparando WhatsApp, e-mail, push, SMS e telefone.',
+    labelPt: 'Identificando o canal de maior resposta',
+    labelEn: 'Identifying the highest-response channel',
+    microPt: 'Comparando WhatsApp, e-mail, push, SMS e telefone.',
+    microEn: 'Comparing WhatsApp, email, push, SMS and phone.',
     durationMs: 540,
   },
   {
-    label: 'Aplicando elegibilidade e pressão comercial',
-    micro: 'Consentimento, frequência de contato, restrições e campanhas recentes.',
+    labelPt: 'Aplicando elegibilidade e pressão comercial',
+    labelEn: 'Applying eligibility and contact pressure rules',
+    microPt: 'Consentimento, frequência de contato, restrições e campanhas recentes.',
+    microEn: 'Consent, contact frequency, restrictions and recent campaigns.',
     durationMs: 660,
   },
   {
-    label: 'Priorizando audiência e régua de ativação',
-    micro: 'Ordenando clientes por potencial de conversão e eficiência de abordagem.',
+    labelPt: 'Priorizando audiência e régua de ativação',
+    labelEn: 'Prioritizing audience and activation cadence',
+    microPt: 'Ordenando clientes por potencial de conversão e eficiência de abordagem.',
+    microEn: 'Ranking customers by conversion potential and outreach efficiency.',
     durationMs: 520,
   },
 ];
@@ -164,8 +236,10 @@ export interface AudienceTierSplit {
   clients: number;
 }
 
+export type TierId = 'high' | 'medium' | 'future';
+
 export interface AudienceTier {
-  tier: 'Prioridade alta' | 'Prioridade média' | 'Oportunidade futura';
+  tier: TierId;
   clients: number;
   propensityPct: number;
   channels: AudienceTierSplit[];
@@ -176,18 +250,24 @@ export interface ComputedResult {
   recommendedAudience: number;
   conversionPct: number;
   primaryChannel: ChannelId;
-  pressure: string;
-  argument: string;
+  pressurePt: string;
+  pressureEn: string;
+  argumentPt: string;
+  argumentEn: string;
   drill: DrillCustomer;
 }
 
 export interface DrillCustomer {
   id: string;
-  name: string;
-  topProduct: string;
+  namePt: string;
+  nameEn: string;
+  topProductPt: string;
+  topProductEn: string;
   channel: ChannelId;
-  moment: string;
-  factors: string[];
+  momentPt: string;
+  momentEn: string;
+  factorsPt: string[];
+  factorsEn: string[];
 }
 
 const segmentMultiplier: Record<SegmentId, number> = {
@@ -213,8 +293,6 @@ const buildPriority = (product: ProductDef, allowed: ChannelId[]): ChannelId[] =
   if (!list.length) push(product.bestChannel);
   return list;
 };
-
-const pick = (arr: ChannelId[], i: number): ChannelId => arr[Math.min(i, arr.length - 1)];
 
 export const computeResult = (
   product: ProductDef,
@@ -255,19 +333,19 @@ export const computeResult = (
 
   const tiers: AudienceTier[] = [
     {
-      tier: 'Prioridade alta',
+      tier: 'high',
       clients: highTotal,
       propensityPct: rand(83, 92, 11),
       channels: splitAcross(highTotal, priority),
     },
     {
-      tier: 'Prioridade média',
+      tier: 'medium',
       clients: midTotal,
       propensityPct: rand(55, 68, 23),
       channels: splitAcross(midTotal, priority),
     },
     {
-      tier: 'Oportunidade futura',
+      tier: 'future',
       clients: futureTotal,
       propensityPct: rand(28, 40, 37),
       channels: splitAcross(futureTotal, priority),
@@ -281,15 +359,25 @@ export const computeResult = (
 
   const primary = priority[0];
 
+  const momentPt = period === '7d' ? 'Próximas 48h' : period === '14d' ? 'Próximos 5 dias' : 'Próximos 10 dias';
+  const momentEn = period === '7d' ? 'Next 48h' : period === '14d' ? 'Next 5 days' : 'Next 10 days';
+
   const drill: DrillCustomer = {
     id: 'CLI-' + (100000 + Math.floor(argIndex * 137 + product.baseConversion * 11)),
-    name: 'Cliente exemplo',
-    topProduct: product.name,
+    namePt: 'Cliente exemplo',
+    nameEn: 'Sample customer',
+    topProductPt: product.namePt,
+    topProductEn: product.nameEn,
     channel: primary,
-    moment: period === '7d' ? 'Próximas 48h' : period === '14d' ? 'Próximos 5 dias' : 'Próximos 10 dias',
-    factors: [
-      `Recência de compra em ${product.category.toLowerCase()} abaixo de 21 dias`,
-      `Engajamento 3× acima da média com ofertas no canal ${channelLabel(primary)}`,
+    momentPt,
+    momentEn,
+    factorsPt: [
+      `Recência de compra em ${product.categoryPt.toLowerCase()} abaixo de 21 dias`,
+      `Engajamento 3× acima da média com ofertas no canal ${channelLabel(primary, 'pt')}`,
+    ],
+    factorsEn: [
+      `Purchase recency in ${product.categoryEn.toLowerCase()} under 21 days`,
+      `Engagement 3× above average with offers on the ${channelLabel(primary, 'en')} channel`,
     ],
   };
 
@@ -298,49 +386,149 @@ export const computeResult = (
     recommendedAudience,
     conversionPct,
     primaryChannel: primary,
-    pressure: '2 contatos em 7 dias',
-    argument: product.arguments[argIndex % product.arguments.length],
+    pressurePt: '2 contatos em 7 dias',
+    pressureEn: '2 contacts in 7 days',
+    argumentPt: product.argumentsPt[argIndex % product.argumentsPt.length],
+    argumentEn: product.argumentsEn[argIndex % product.argumentsEn.length],
     drill,
   };
 };
 
-export const labels = {
-  objective: 'OBJETIVO: ENGAJAMENTO E CONVERSÃO',
+export const demoLabels: Record<KioskLang, {
+  objective: string;
   crm: {
-    title: 'CRM · Nova campanha',
-    subtitle: 'Configure a oferta e o público disponível',
-    product: 'ESCOLHA UM PRODUTO OU OFERTA',
-    audience: 'Público disponível',
-    period: 'Período da campanha',
-    channels: 'SELECIONE OS CANAIS DESEJADOS',
-    cta: 'Calcular melhor audiência',
-    channelsHint: 'Selecione um ou mais canais',
-  },
-  running: 'Calculando audiência…',
+    title: string;
+    subtitle: string;
+    product: string;
+    audience: string;
+    period: string;
+    channels: string;
+    cta: string;
+    channelsHint: string;
+    eligible: string;
+  };
+  running: string;
   result: {
-    title: 'Audiência priorizada',
-    subtitle: 'Ordenada por potencial de conversão',
-    tableTier: 'Faixa',
-    tableClients: 'Clientes',
-    tablePropensity: 'Propensão',
-    tableChannel: 'Canal recomendado',
-    audience: 'Audiência recomendada',
-    audienceHint: 'clientes',
-    conversion: 'Conversão potencial',
-    channel: 'Canal prioritário',
-    pressure: 'Pressão recomendada',
-    drillCta: 'EXPLORAR GRANULARIDADE POR CLIENTE',
-    drillTitle: 'Cliente priorizado',
-    drillTopProduct: 'Produto com maior propensão',
-    drillChannel: 'Canal recomendado',
-    drillMoment: 'Momento sugerido',
-    drillFactors: 'Fatores que sustentam o score',
-    drillClose: 'Fechar',
-    reset: 'Nova simulação',
+    title: string;
+    subtitle: string;
+    tableTier: string;
+    tableClients: string;
+    tablePropensity: string;
+    tableChannel: string;
+    audience: string;
+    audienceHint: string;
+    conversion: string;
+    channel: string;
+    pressure: string;
+    drillCta: string;
+    drillTitle: string;
+    drillTopProduct: string;
+    drillChannel: string;
+    drillMoment: string;
+    drillFactors: string;
+    drillClose: string;
+    reset: string;
+    selectedProduct: string;
+  };
+  tierLabels: Record<TierId, string>;
+  reasoningTitle: string;
+  reasoningSubtitle: string;
+  rationaleLabel: string;
+  latency: string;
+  latencyHint: string;
+}> = {
+  pt: {
+    objective: 'OBJETIVO: ENGAJAMENTO E CONVERSÃO',
+    crm: {
+      title: 'CRM · Nova campanha',
+      subtitle: 'Configure a oferta e o público disponível',
+      product: 'ESCOLHA UM PRODUTO OU OFERTA',
+      audience: 'Público disponível',
+      period: 'Período da campanha',
+      channels: 'SELECIONE OS CANAIS DESEJADOS',
+      cta: 'Calcular melhor audiência',
+      channelsHint: 'Selecione um ou mais canais',
+      eligible: 'elegíveis',
+    },
+    running: 'Calculando audiência…',
+    result: {
+      title: 'Audiência priorizada',
+      subtitle: 'Ordenada por potencial de conversão',
+      tableTier: 'Faixa',
+      tableClients: 'Clientes',
+      tablePropensity: 'Propensão',
+      tableChannel: 'Canal recomendado',
+      audience: 'Audiência recomendada',
+      audienceHint: 'clientes',
+      conversion: 'Conversão potencial',
+      channel: 'Canal prioritário',
+      pressure: 'Pressão recomendada',
+      drillCta: 'EXPLORAR GRANULARIDADE POR CLIENTE',
+      drillTitle: 'Cliente priorizado',
+      drillTopProduct: 'Produto com maior propensão',
+      drillChannel: 'Canal recomendado',
+      drillMoment: 'Momento sugerido',
+      drillFactors: 'Fatores que sustentam o score',
+      drillClose: 'Fechar',
+      reset: 'Nova simulação',
+      selectedProduct: 'Produto selecionado',
+    },
+    tierLabels: {
+      high: 'Prioridade alta',
+      medium: 'Prioridade média',
+      future: 'Oportunidade futura',
+    },
+    reasoningTitle: 'Explicabilidade e raciocínio do modelo',
+    reasoningSubtitle: '',
+    rationaleLabel: 'Por que recomendamos esta audiência',
+    latency: 'Latência',
+    latencyHint: 'abaixo da média de mercado (~200 ms)',
   },
-  reasoningTitle: 'Explicabilidade e raciocínio do modelo',
-  reasoningSubtitle: '',
-  rationaleLabel: 'Por que recomendamos esta audiência',
-  latency: 'Latência',
-  latencyHint: 'abaixo da média de mercado (~200 ms)',
+  en: {
+    objective: 'OBJECTIVE: ENGAGEMENT AND CONVERSION',
+    crm: {
+      title: 'CRM · New campaign',
+      subtitle: 'Set up the offer and the available audience',
+      product: 'CHOOSE A PRODUCT OR OFFER',
+      audience: 'Available audience',
+      period: 'Campaign period',
+      channels: 'SELECT THE DESIRED CHANNELS',
+      cta: 'Calculate best audience',
+      channelsHint: 'Select one or more channels',
+      eligible: 'eligible',
+    },
+    running: 'Calculating audience…',
+    result: {
+      title: 'Prioritized audience',
+      subtitle: 'Ranked by conversion potential',
+      tableTier: 'Tier',
+      tableClients: 'Customers',
+      tablePropensity: 'Propensity',
+      tableChannel: 'Recommended channel',
+      audience: 'Recommended audience',
+      audienceHint: 'customers',
+      conversion: 'Potential conversion',
+      channel: 'Primary channel',
+      pressure: 'Recommended pressure',
+      drillCta: 'EXPLORE CUSTOMER-LEVEL GRANULARITY',
+      drillTitle: 'Prioritized customer',
+      drillTopProduct: 'Highest-propensity product',
+      drillChannel: 'Recommended channel',
+      drillMoment: 'Suggested moment',
+      drillFactors: 'Factors behind the score',
+      drillClose: 'Close',
+      reset: 'New simulation',
+      selectedProduct: 'Selected product',
+    },
+    tierLabels: {
+      high: 'High priority',
+      medium: 'Medium priority',
+      future: 'Future opportunity',
+    },
+    reasoningTitle: 'Explainability and model reasoning',
+    reasoningSubtitle: '',
+    rationaleLabel: 'Why we recommend this audience',
+    latency: 'Latency',
+    latencyHint: 'below market average (~200 ms)',
+  },
 };
