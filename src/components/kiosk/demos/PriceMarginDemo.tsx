@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 import TouchSelect from '../ui/TouchSelect';
+import type { KioskLang } from '@/data/kiosk/config';
 import {
   actionLabel,
+  demoLabels,
   filterOptions,
   fmtBRL,
   generalInsightFor,
@@ -12,6 +14,10 @@ import {
   type PriceMarginSku,
 } from '@/data/kiosk/demos/priceMargin';
 import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
+
+interface Props {
+  lang?: KioskLang;
+}
 
 type Phase = 'setup' | 'running' | 'result';
 
@@ -76,19 +82,15 @@ const computeOutcome = (
   };
 };
 
-const competitivePositionLabel: Record<PriceMarginSku['competitivePosition'], string> = {
-  below: 'Abaixo',
-  inline: 'Alinhado',
-  above: 'Acima',
-};
-
 const actionToneClass: Record<PriceMarginSku['action'], string> = {
   aumentar: 'text-[#4ade80]',
   manter: 'text-white/85',
   reduzir: 'text-[#F4845F]',
 };
 
-const PriceMarginDemo = () => {
+const PriceMarginDemo = ({ lang = 'pt' }: Props) => {
+  const L = demoLabels[lang];
+
   const [phase, setPhase] = useState<Phase>('setup');
   const [progress, setProgress] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -119,7 +121,7 @@ const PriceMarginDemo = () => {
     [selected, strategy, minMargin, competitiveBand],
   );
 
-  const generalInsight = useMemo(() => generalInsightFor(filtered), [filtered]);
+  const generalInsight = useMemo(() => generalInsightFor(filtered, lang), [filtered, lang]);
 
   useEffect(() => {
     if (selectedId && !filtered.find((s) => s.id === selectedId)) setSelectedId(null);
@@ -159,45 +161,43 @@ const PriceMarginDemo = () => {
           <div className="flex items-baseline justify-between px-[2.5vmin] py-[1.6vmin] bg-white/[0.04] border-b border-white/10 gap-[1vmin]">
             <div>
               <h4 className="text-[2.2vmin] font-bold text-white leading-tight">
-                {showResult ? 'Preço ótimo e cenários alternativos' : 'Portfólio de precificação'}
+                {showResult ? L.headerTitleResult : L.headerTitleSetup}
               </h4>
               <p className="text-[1.4vmin] text-white/60">
-                {showResult
-                  ? 'Faixa recomendada, impacto em margem e volume por SKU.'
-                  : 'Selecione os filtros e ajuste restrições para simular a faixa ótima de preço por SKU.'}
+                {showResult ? L.headerSubtitleResult : L.headerSubtitleSetup}
               </p>
             </div>
             <span className="text-[1.4vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] text-right">
-              Objetivo: Margem
+              {L.objective}
             </span>
           </div>
 
           <div className="p-[2.2vmin] flex flex-col gap-[1.4vmin]">
             {/* Filters */}
             <div className="grid grid-cols-2 gap-[1vmin]">
-              <TouchSelect label="Categoria" value={category} onChange={setCategory} options={filterOptions.category} />
-              <TouchSelect label="Canal" value={channel} onChange={setChannel} options={filterOptions.channel} />
+              <TouchSelect label={L.filters.category} value={category} onChange={setCategory} options={filterOptions.category[lang]} />
+              <TouchSelect label={L.filters.channel} value={channel} onChange={setChannel} options={filterOptions.channel[lang]} />
             </div>
             <div className="grid grid-cols-[1.25fr_0.95fr_1fr] gap-[1vmin]">
-              <TouchSelect label="Estratégia" value={strategy} onChange={setStrategy} options={filterOptions.strategy} />
-              <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
-              <TouchSelect label="Banda competitiva" value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand} />
+              <TouchSelect label={L.filters.strategy} value={strategy} onChange={setStrategy} options={filterOptions.strategy[lang]} />
+              <TouchSelect label={L.filters.minMargin} value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin[lang]} />
+              <TouchSelect label={L.filters.competitiveBand} value={competitiveBand} onChange={setCompetitiveBand} options={filterOptions.competitiveBand[lang]} />
             </div>
 
             {/* Portfolio table — 3 lines, headers in 2 lines */}
             <div className="rounded-xl border border-white/10 overflow-hidden">
               <div className="grid grid-cols-[1.6fr_0.9fr_0.9fr_0.8fr_0.9fr_0.9fr_1fr] px-[1.4vmin] py-[0.7vmin] gap-x-[0.6vmin] bg-white/[0.05] text-[0.8vmin] uppercase tracking-[0.1em] font-semibold text-white/60 leading-tight">
-                <span>SKU</span>
-                <span className="text-right">Ação<br/>sugerida</span>
-                <span className="text-right">Preço<br/>atual</span>
-                <span className="text-right">Elast.</span>
-                <span className="text-right">Posição<br/>concorr.</span>
-                <span className="text-right">Cobertura<br/>estoque</span>
-                <span className="text-right">Preço<br/>concorrente</span>
+                <span>{L.table.sku}</span>
+                <span className="text-right whitespace-pre-line">{L.table.actionSuggested}</span>
+                <span className="text-right whitespace-pre-line">{L.table.currentPrice}</span>
+                <span className="text-right">{L.table.elasticity}</span>
+                <span className="text-right whitespace-pre-line">{L.table.competitivePosition}</span>
+                <span className="text-right whitespace-pre-line">{L.table.stockCover}</span>
+                <span className="text-right whitespace-pre-line">{L.table.competitorPrice}</span>
               </div>
               {filtered.length === 0 && (
                 <div className="px-[1.4vmin] py-[1.6vmin] text-[1.4vmin] text-white/50">
-                  Nenhum SKU nesta seleção de filtros.
+                  {L.table.empty}
                 </div>
               )}
               {filtered.map((s) => {
@@ -218,15 +218,15 @@ const PriceMarginDemo = () => {
                     }`}
                   >
                     <span className="text-white/90 font-semibold leading-tight">
-                      {s.name}
-                      <span className="block text-[1.05vmin] font-normal text-white/50">{s.category}</span>
+                      {lang === 'pt' ? s.namePt : s.nameEn}
+                      <span className="block text-[1.05vmin] font-normal text-white/50">{lang === 'pt' ? s.categoryPt : s.categoryEn}</span>
                     </span>
                     <span className={`text-right font-semibold ${showResult ? actionToneClass[s.action] : 'text-white/40'}`}>
-                      {showResult ? actionLabel[s.action] : '—'}
+                      {showResult ? actionLabel[lang][s.action] : DASH}
                     </span>
                     <span className="text-right text-white/85 font-mono">{fmtBRL(s.currentPrice)}</span>
                     <span className="text-right text-white/85 font-mono">{s.elasticity.toFixed(2)}</span>
-                    <span className="text-right text-white/85">{competitivePositionLabel[s.competitivePosition]}</span>
+                    <span className="text-right text-white/85">{L.competitivePositionLabel[s.competitivePosition]}</span>
                     <span className="text-right text-white/70 font-mono">{s.stockCoverDays} d</span>
                     <span className="text-right text-white/70 font-mono">{fmtBRL(s.competitorPrice)}</span>
                   </button>
@@ -240,24 +240,24 @@ const PriceMarginDemo = () => {
                 <div className="grid grid-cols-[1fr_1.4fr] gap-[1.2vmin]">
                   {/* Left: KPIs */}
                   <div className="flex flex-col gap-[1vmin] h-full">
-                    <ConclusionCard label="Preço ótimo" value={fmtBRL(derived.optimalPrice)} highlight />
+                    <ConclusionCard label={L.optimalPrice} value={fmtBRL(derived.optimalPrice)} highlight />
                     <ConclusionCard
-                      label="Faixa recomendada"
+                      label={L.recommendedRange}
                       value={`${fmtBRL(derived.rangeMin)} – ${fmtBRL(derived.rangeMax)}`}
                     />
                   </div>
 
                   {/* Right: curve */}
-                  <PriceMarginCurve sku={selected} derived={derived} />
+                  <PriceMarginCurve sku={selected} derived={derived} lang={lang} L={L} />
                 </div>
 
                 {/* Alternatives — 3 rows, headers in 2 lines, no coloured badges */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
                   <div className="grid grid-cols-[1fr_0.9fr_0.9fr_1.1fr] px-[1.4vmin] py-[0.7vmin] bg-white/[0.05] text-[0.95vmin] uppercase tracking-[0.16em] font-semibold text-white/60 leading-tight">
-                    <span>Cenário</span>
-                    <span className="text-right">Preço</span>
-                    <span className="text-right">Margem</span>
-                    <span className="text-right">Volume</span>
+                    <span>{L.alternatives.scenario}</span>
+                    <span className="text-right">{L.alternatives.price}</span>
+                    <span className="text-right">{L.alternatives.margin}</span>
+                    <span className="text-right">{L.alternatives.volume}</span>
                   </div>
                   {derived.alternatives.map((a) => {
                     const isReco = a.id === 'recommended';
@@ -267,11 +267,11 @@ const PriceMarginDemo = () => {
                         className="grid grid-cols-[1fr_0.9fr_0.9fr_1.1fr] px-[1.4vmin] py-[1vmin] items-center text-[1.35vmin] border-t border-white/10"
                       >
                         <span className={`font-semibold ${isReco ? 'text-[#F4845F]' : 'text-white/85'}`}>
-                          {a.label}
+                          {lang === 'pt' ? a.labelPt : a.labelEn}
                         </span>
                         <span className="text-right text-white font-mono">{fmtBRL(a.price)}</span>
-                        <span className={`text-right ${isReco ? 'text-[#F4845F]' : 'text-white/80'}`}>{a.margin}</span>
-                        <span className="text-right text-white/75">{a.volume}</span>
+                        <span className={`text-right ${isReco ? 'text-[#F4845F]' : 'text-white/80'}`}>{lang === 'pt' ? a.marginPt : a.marginEn}</span>
+                        <span className="text-right text-white/75">{lang === 'pt' ? a.volumePt : a.volumeEn}</span>
                       </div>
                     );
                   })}
@@ -279,9 +279,9 @@ const PriceMarginDemo = () => {
 
                 {/* Bottom KPIs */}
                 <div className="grid grid-cols-3 gap-[1vmin]">
-                  <ConclusionCard label="Impacto na margem" value={`${derived.marginImpactPp > 0 ? '+' : ''}${derived.marginImpactPp.toFixed(1)} pp`} highlight />
-                  <ConclusionCard label="Impacto no volume" value={`${derived.volumeImpactPct > 0 ? '+' : ''}${derived.volumeImpactPct.toFixed(1)}%`} />
-                  <ConclusionCard label="Confiança do modelo" value={`${derived.confidencePct}%`} />
+                  <ConclusionCard label={L.marginImpact} value={`${derived.marginImpactPp > 0 ? '+' : ''}${derived.marginImpactPp.toFixed(1)} pp`} highlight />
+                  <ConclusionCard label={L.volumeImpact} value={`${derived.volumeImpactPct > 0 ? '+' : ''}${derived.volumeImpactPct.toFixed(1)}%`} />
+                  <ConclusionCard label={L.confidence} value={`${derived.confidencePct}%`} />
                 </div>
               </>
             )}
@@ -297,14 +297,14 @@ const PriceMarginDemo = () => {
                     : 'bg-white/[0.06] text-white/40 border border-white/10 cursor-not-allowed'
                 }`}
               >
-                {canCalculate ? 'Calcular faixa ótima de preço' : 'Ajuste os filtros para simular'}
+                {canCalculate ? L.ctaCalculate : L.ctaAdjustFilters}
               </button>
             )}
 
             {phase === 'running' && (
               <div className="rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
                 <span className="w-[1.8vmin] h-[1.8vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
-                <span className="text-[1.6vmin] text-white/90 font-semibold">Calculando faixa ótima…</span>
+                <span className="text-[1.6vmin] text-white/90 font-semibold">{L.running}</span>
               </div>
             )}
           </div>
@@ -315,7 +315,7 @@ const PriceMarginDemo = () => {
           <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
             <div>
               <h4 className="text-[1.9vmin] font-bold text-white leading-tight">
-                Explicabilidade e raciocínio do modelo
+                {L.reasoningTitle}
               </h4>
             </div>
           </div>
@@ -325,15 +325,15 @@ const PriceMarginDemo = () => {
               <div className="flex items-center gap-[1vmin] mb-[0.8vmin]">
                 <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
                 <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
-                  {selected ? 'Por que este preço' : 'O que o modelo aprendeu'}
+                  {selected ? L.whyThisPrice : L.whatModelLearned}
                 </span>
               </div>
               {selected ? (
                 <>
                   <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
-                    {selected.name}
+                    {lang === 'pt' ? selected.namePt : selected.nameEn}
                   </span>
-                  <p className="text-[1.7vmin] leading-relaxed text-white/95">{selected.argument}</p>
+                  <p className="text-[1.7vmin] leading-relaxed text-white/95">{lang === 'pt' ? selected.argumentPt : selected.argumentEn}</p>
                 </>
               ) : (
                 <p className="text-[1.85vmin] leading-relaxed text-white/95">{generalInsight}</p>
@@ -345,7 +345,7 @@ const PriceMarginDemo = () => {
           <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
             {phase === 'running' && progress < pipeline.length && (
               <span className="text-[1.2vmin] text-white/60 font-mono">
-                {pipeline[progress].micro}
+                {lang === 'pt' ? pipeline[progress].microPt : pipeline[progress].microEn}
               </span>
             )}
           </div>
@@ -396,14 +396,14 @@ const PriceMarginDemo = () => {
                         state === 'idle' ? 'text-white/45' : 'text-white/90'
                       }`}
                     >
-                      {step.label}
+                      {lang === 'pt' ? step.labelPt : step.labelEn}
                     </span>
                     <span
                       className={`text-center text-[1.1vmin] leading-tight font-mono ${
                         state === 'idle' ? 'text-white/30' : 'text-white/55'
                       }`}
                     >
-                      {step.micro}
+                      {lang === 'pt' ? step.microPt : step.microEn}
                     </span>
                   </div>
                 );
@@ -417,7 +417,7 @@ const PriceMarginDemo = () => {
               onClick={reset}
               className={kioskBtn('mt-[1.4vmin] w-full min-h-[6vmin] text-[1.6vmin]')}
             >
-              Nova simulação
+              {L.newSimulation}
             </button>
           )}
         </div>
@@ -473,7 +473,14 @@ const ConclusionCard = ({
   </div>
 );
 
-const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Derived }) => {
+const PriceMarginCurve = ({
+  sku, derived, lang, L,
+}: {
+  sku: PriceMarginSku;
+  derived: Derived;
+  lang: KioskLang;
+  L: typeof demoLabels['pt'];
+}) => {
   const W = 620;
   const H = 160;
   const PAD = { l: 34, r: 12, t: 18, b: 30 };
@@ -529,10 +536,10 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
         <path d={pathFill} fill="rgba(244,132,95,0.18)" />
         <path d={pathTop} fill="none" stroke="#F4845F" strokeWidth={2} />
 
-        <Marker price={sku.currentPrice} label="Atual" color="rgba(255,255,255,0.6)" dashed />
-        <Marker price={derived.rangeMin} label="Mín" color="rgba(244,132,95,0.55)" dashed />
-        <Marker price={derived.rangeMax} label="Máx" color="rgba(244,132,95,0.55)" dashed />
-        <Marker price={sku.competitorPrice} label="Concorr." color="rgba(120,180,255,0.75)" dashed />
+        <Marker price={sku.currentPrice} label={L.chart.current} color="rgba(255,255,255,0.6)" dashed />
+        <Marker price={derived.rangeMin} label={L.chart.min} color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={derived.rangeMax} label={L.chart.max} color="rgba(244,132,95,0.55)" dashed />
+        <Marker price={sku.competitorPrice} label={L.chart.competitor} color="rgba(120,180,255,0.75)" dashed />
 
         <line
           x1={x(derived.optimalPrice)} x2={x(derived.optimalPrice)}
@@ -541,7 +548,7 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
         />
         <circle cx={x(derived.optimalPrice)} cy={curveAt(derived.optimalPrice)} r={5} fill="#F4845F" stroke="#fff" strokeWidth={2} />
         <text x={x(derived.optimalPrice)} y={PAD.t - 4} fontSize="10" fill="#F4845F" textAnchor="middle" fontWeight={700}>
-          Ótimo
+          {L.chart.optimal}
         </text>
 
         <text x={PAD.l} y={H - 10} fontSize="10" fill="rgba(255,255,255,0.5)">
@@ -551,12 +558,12 @@ const PriceMarginCurve = ({ sku, derived }: { sku: PriceMarginSku; derived: Deri
           {fmtBRL(pMax)}
         </text>
         <text x={6} y={PAD.t + 8} fontSize="10" fill="rgba(255,255,255,0.5)">
-          margem total
+          {L.chart.totalMargin}
         </text>
       </svg>
       <div className="flex items-center justify-between border-t border-white/10 px-[1.4vmin] py-[0.7vmin]">
         <span className="text-[0.9vmin] tracking-[0.18em] uppercase font-semibold text-white/55">
-          Confiança
+          {L.confidenceShort}
         </span>
         <span className="text-[1.4vmin] font-bold text-white font-mono">
           {derived.confidencePct}%

@@ -313,6 +313,7 @@ export const demoLabels: Record<KioskLang, {
   marginImpact: string;
   volumeImpact: string;
   confidence: string;
+  confidenceShort: string;
   ctaCalculate: string;
   ctaAdjustFilters: string;
   running: string;
@@ -368,6 +369,7 @@ export const demoLabels: Record<KioskLang, {
     marginImpact: 'Impacto na margem',
     volumeImpact: 'Impacto no volume',
     confidence: 'Confiança do modelo',
+    confidenceShort: 'Confiança',
     ctaCalculate: 'Calcular faixa ótima de preço',
     ctaAdjustFilters: 'Ajuste os filtros para simular',
     running: 'Calculando faixa ótima…',
@@ -423,6 +425,7 @@ export const demoLabels: Record<KioskLang, {
     marginImpact: 'Margin impact',
     volumeImpact: 'Volume impact',
     confidence: 'Model confidence',
+    confidenceShort: 'Confidence',
     ctaCalculate: 'Calculate optimal price range',
     ctaAdjustFilters: 'Adjust filters to simulate',
     running: 'Calculating optimal range…',
