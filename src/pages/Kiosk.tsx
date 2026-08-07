@@ -51,13 +51,7 @@ const readSession = (): PersistedSession | null => {
   }
 };
 
-const getInitialLang = (): KioskLang => {
-  if (typeof window === 'undefined') return 'pt';
-  const params = new URLSearchParams(window.location.search);
-  const q = params.get('lang');
-  if (q === 'en' || q === 'pt') return q;
-  return readSession()?.lang ?? 'pt';
-};
+const isKioskLang = (v: unknown): v is KioskLang => v === 'pt' || v === 'en';
 
 /**
  * Kiosk / totem experience:
@@ -65,7 +59,19 @@ const getInitialLang = (): KioskLang => {
  */
 const Kiosk = () => {
   const restored = useMemo(() => readSession(), []);
-  const [lang, setLang] = useState<KioskLang>(getInitialLang);
+  const { lang: langParam } = useParams();
+  const navigate = useNavigate();
+  const lang: KioskLang = isKioskLang(langParam) ? langParam : 'pt';
+
+  // /demo sem prefixo válido → normaliza a URL para o idioma padrão.
+  useEffect(() => {
+    if (!isKioskLang(langParam)) navigate('/pt/demo', { replace: true });
+  }, [langParam, navigate]);
+
+  const changeLang = (next: KioskLang) => {
+    if (next !== lang) navigate(`/${next}/demo`, { replace: true });
+  };
+
   const [stage, setStage] = useState<Stage>(restored?.stage ?? 'attract');
   const [route, setRoute] = useState<RouteId | null>(restored?.route ?? null);
   const [recommendedIds, setRecommendedIds] = useState<string[] | null>(restored?.recommendedIds ?? null);
@@ -75,6 +81,7 @@ const Kiosk = () => {
   const [simulationCompleted, setSimulationCompleted] = useState<Record<string, boolean>>(
     restored?.simulationCompleted ?? {},
   );
+
 
 
   const kContent = kioskContent[lang];
