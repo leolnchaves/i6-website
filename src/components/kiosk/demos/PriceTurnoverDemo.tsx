@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles } from 'lucide-react';
+import type { KioskLang } from '@/data/kiosk/config';
 import TouchSelect from '../ui/TouchSelect';
 import {
   pipeline,
@@ -7,6 +8,7 @@ import {
   filterOptions,
   fmtBRL,
   fmtBRLk,
+  demoLabels,
   skuTemplatesByProduct,
   clusterActionByProduct,
   clusterOverridesByAction,
@@ -18,12 +20,17 @@ import {
 } from '@/data/kiosk/demos/priceTurnover';
 import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
+interface Props {
+  lang?: KioskLang;
+}
+
 type Phase = 'setup' | 'running' | 'result';
 
 interface Derived {
   recommendedPrice: number;
   recommendedMarkdownPct: number;
-  nextAction: string;
+  nextActionPt: string;
+  nextActionEn: string;
   action: ClusterAction;
   actInDays: number;
   sellThroughProjectedPct: number;
@@ -102,7 +109,8 @@ const computeOutcome = (
   return {
     recommendedPrice,
     recommendedMarkdownPct: markdownPct,
-    nextAction: ov.nextAction,
+    nextActionPt: ov.nextActionPt,
+    nextActionEn: ov.nextActionEn,
     action,
     actInDays: ov.actInDays,
     sellThroughProjectedPct,
@@ -120,13 +128,6 @@ const actionColor: Record<ClusterAction, string> = {
   raise: '#10b981',
 };
 
-const actionLabel: Record<ClusterAction, string> = {
-  hold: 'Manter',
-  markdown: 'Markdown',
-  wait: 'Aguardar',
-  raise: 'Aumentar',
-};
-
 const actionToneClass: Record<ClusterAction, string> = {
   hold: 'text-[#4ade80]',
   markdown: 'text-[#F4845F]',
@@ -134,7 +135,10 @@ const actionToneClass: Record<ClusterAction, string> = {
   raise: 'text-[#34d399]',
 };
 
-const PriceTurnoverDemo = () => {
+const PriceTurnoverDemo = ({ lang = 'pt' }: Props) => {
+  const L = demoLabels[lang];
+  const isPt = lang === 'pt';
+
   const [phase, setPhase] = useState<Phase>('setup');
   const [progress, setProgress] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -144,6 +148,19 @@ const PriceTurnoverDemo = () => {
   const [minMargin, setMinMargin] = useState('30');
 
   const visibleClusters = allClusters;
+
+  const productOptions = useMemo(
+    () => filterOptions.product.map((o) => ({ value: o.value, label: isPt ? o.labelPt : o.labelEn })),
+    [isPt],
+  );
+  const objectiveOptions = useMemo(
+    () => filterOptions.objective.map((o) => ({ value: o.value, label: isPt ? o.labelPt : o.labelEn })),
+    [isPt],
+  );
+  const minMarginOptions = useMemo(
+    () => filterOptions.minMargin.map((o) => ({ value: o.value, label: isPt ? o.labelPt : o.labelEn })),
+    [isPt],
+  );
 
   const derivedByCluster = useMemo(() => {
     const map = new Map<string, Derived>();
@@ -167,12 +184,19 @@ const PriceTurnoverDemo = () => {
       raise: actions.filter((a) => a === 'raise').length,
     };
     const parts: string[] = [];
-    if (counts.hold) parts.push(`${counts.hold} com giro acima da categoria e elasticidade baixa → manter`);
-    if (counts.markdown) parts.push(`${counts.markdown} com estoque envelhecido e elasticidade alta → markdown cirúrgico agora`);
-    if (counts.wait) parts.push(`${counts.wait} com pico sazonal próximo → aguardar janela`);
-    if (counts.raise) parts.push(`${counts.raise} com giro forte e elasticidade baixa → capturar valor com aumento controlado`);
-    return `O modelo lê, por cluster, velocidade vs. média da categoria, idade do estoque, elasticidade e janela sazonal, respeitando o piso de margem. ${parts.join('; ')}.`;
-  }, [derivedByCluster]);
+    if (isPt) {
+      if (counts.hold) parts.push(`${counts.hold} com giro acima da categoria e elasticidade baixa → manter`);
+      if (counts.markdown) parts.push(`${counts.markdown} com estoque envelhecido e elasticidade alta → markdown cirúrgico agora`);
+      if (counts.wait) parts.push(`${counts.wait} com pico sazonal próximo → aguardar janela`);
+      if (counts.raise) parts.push(`${counts.raise} com giro forte e elasticidade baixa → capturar valor com aumento controlado`);
+      return `O modelo lê, por cluster, velocidade vs. média da categoria, idade do estoque, elasticidade e janela sazonal, respeitando o piso de margem. ${parts.join('; ')}.`;
+    }
+    if (counts.hold) parts.push(`${counts.hold} with turnover above category and low elasticity → hold`);
+    if (counts.markdown) parts.push(`${counts.markdown} with aged inventory and high elasticity → surgical markdown now`);
+    if (counts.wait) parts.push(`${counts.wait} with an upcoming seasonal peak → wait for the window`);
+    if (counts.raise) parts.push(`${counts.raise} with strong turnover and low elasticity → capture value with a controlled increase`);
+    return `The model reads, per cluster, velocity vs. category average, stock age, elasticity and seasonal window, respecting the margin floor. ${parts.join('; ')}.`;
+  }, [derivedByCluster, isPt]);
 
 
   useEffect(() => {
@@ -209,40 +233,38 @@ const PriceTurnoverDemo = () => {
           <div className="flex items-baseline justify-between px-[2.5vmin] py-[1.6vmin] bg-white/[0.04] border-b border-white/10 gap-[1vmin]">
             <div>
               <h4 className="text-[2.2vmin] font-bold text-white leading-tight">
-                {showResult ? 'Preço e markdown recomendados por cluster' : 'Clusters e giro atual'}
+                {showResult ? L.dashboardTitleResult : L.dashboardTitle}
               </h4>
               <p className="text-[1.4vmin] text-white/60">
-                {showResult
-                  ? 'Ação sugerida, sell-through e capital liberado por cluster.'
-                  : 'Selecione os filtros e ajuste restrições para simular a ação ideal por cluster.'}
+                {showResult ? L.dashboardSubtitleResult : L.dashboardSubtitle}
               </p>
             </div>
             <span className="text-[1.4vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] text-right">
-              Objetivo: Giro
+              {L.objective}
             </span>
           </div>
 
           <div className="p-[2.2vmin] flex flex-col gap-[1.4vmin]">
             {/* Filters */}
             <div className="grid grid-cols-[1.3fr_1fr_0.9fr] gap-[1vmin]">
-              <TouchSelect label="Produto" value={product} onChange={setProduct} options={filterOptions.product} />
-              <TouchSelect label="Objetivo" value={objective} onChange={setObjective} options={filterOptions.objective} />
-              <TouchSelect label="Margem mínima" value={minMargin} onChange={setMinMargin} options={filterOptions.minMargin} />
+              <TouchSelect label={L.filters.product} value={product} onChange={setProduct} options={productOptions} />
+              <TouchSelect label={L.filters.objective} value={objective} onChange={setObjective} options={objectiveOptions} />
+              <TouchSelect label={L.filters.minMargin} value={minMargin} onChange={setMinMargin} options={minMarginOptions} />
             </div>
 
             {/* Cluster table */}
             <div className="rounded-xl border border-white/10 overflow-hidden">
               <div className="grid grid-cols-[1.4fr_1fr_0.9fr_0.9fr_0.9fr_1.1fr] px-[1.4vmin] py-[0.7vmin] gap-x-[0.6vmin] bg-white/[0.05] text-[0.8vmin] uppercase tracking-[0.1em] font-semibold text-white/60 leading-tight">
-                <span>Cluster</span>
-                <span>Situação</span>
-                <span className="text-right">Estoque</span>
-                <span className="text-right">Idade<br/>média</span>
-                <span className="text-right">Veloc.<br/>vs. cat.</span>
-                <span className="text-right">Ação<br/>sugerida</span>
+                <span>{L.tableHeaders.cluster}</span>
+                <span>{L.tableHeaders.situation}</span>
+                <span className="text-right">{L.tableHeaders.stock}</span>
+                <span className="text-right whitespace-pre-line">{L.tableHeaders.avgAge}</span>
+                <span className="text-right whitespace-pre-line">{L.tableHeaders.velocityVsCategory}</span>
+                <span className="text-right whitespace-pre-line">{L.tableHeaders.suggestedAction}</span>
               </div>
               {visibleClusters.length === 0 && (
                 <div className="px-[1.4vmin] py-[1.6vmin] text-[1.4vmin] text-white/50">
-                  Nenhum cluster nesta seleção de filtros.
+                  {L.noClusters}
                 </div>
               )}
               {visibleClusters.map((c) => {
@@ -269,16 +291,20 @@ const PriceTurnoverDemo = () => {
                         style={{ background: actionColor[d?.action ?? c.action] }}
                       />
                       <span>
-                        {c.name}
-                        <span className="block text-[1.05vmin] font-normal text-white/50">{c.region}</span>
+                        {isPt ? c.namePt : c.nameEn}
+                        <span className="block text-[1.05vmin] font-normal text-white/50">{isPt ? c.regionPt : c.regionEn}</span>
                       </span>
                     </span>
-                    <span className="text-white/70">{showResult && d ? d.action === 'markdown' ? 'Estoque envelhecido' : d.action === 'raise' ? 'Giro acima da média' : d.action === 'wait' ? 'Demanda sazonal futura' : 'Giro adequado' : '—'}</span>
-                    <span className="text-right text-white/85 font-mono">{showResult ? `${c.stockUnits.toLocaleString('pt-BR')} un` : '—'}</span>
+                    <span className="text-white/70">
+                      {showResult && d
+                        ? clusterOverridesByAction[d.action][isPt ? 'situationPt' : 'situationEn']
+                        : '—'}
+                    </span>
+                    <span className="text-right text-white/85 font-mono">{showResult ? `${c.stockUnits.toLocaleString(isPt ? 'pt-BR' : 'en-US')} un` : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.avgStockAgeDays} d` : '—'}</span>
                     <span className="text-right text-white/85 font-mono">{showResult ? `${c.sellVelocity}/${c.categoryAvgVelocity}` : '—'}</span>
                     <span className={`text-right font-semibold ${showResult && d ? actionToneClass[d.action] : 'text-white/40'}`}>
-                      {showResult && d ? d.nextAction : '—'}
+                      {showResult && d ? (isPt ? d.nextActionPt : d.nextActionEn) : '—'}
                     </span>
                   </button>
                 );
@@ -292,11 +318,11 @@ const PriceTurnoverDemo = () => {
                 {/* SKU table — 3 rows */}
                 <div className="rounded-xl border border-white/10 overflow-hidden">
                   <div className="grid grid-cols-[1.6fr_0.9fr_1fr_0.8fr_0.9fr] px-[1.4vmin] py-[0.7vmin] gap-x-[0.6vmin] bg-white/[0.05] text-[0.8vmin] uppercase tracking-[0.1em] font-semibold text-white/60 leading-tight">
-                    <span>SKU · {filterOptions.product.find((p) => p.value === product)?.label ?? selected.name}</span>
-                    <span className="text-right">Preço<br/>atual</span>
-                    <span className="text-right">Preço<br/>recomendado</span>
-                    <span className="text-right">Markdown</span>
-                    <span className="text-right">Sell-<br/>through</span>
+                    <span>{L.skuTableHeaderPrefix} · {productOptions.find((p) => p.value === product)?.label ?? (isPt ? selected.namePt : selected.nameEn)}</span>
+                    <span className="text-right whitespace-pre-line">{L.skuHeaders.currentPrice}</span>
+                    <span className="text-right whitespace-pre-line">{L.skuHeaders.recommendedPrice}</span>
+                    <span className="text-right">{L.skuHeaders.markdown}</span>
+                    <span className="text-right whitespace-pre-line">{L.skuHeaders.sellThrough}</span>
                   </div>
                   {derived.skus.map((s) => (
                     <div
@@ -304,7 +330,7 @@ const PriceTurnoverDemo = () => {
                       className="grid grid-cols-[1.6fr_0.9fr_1fr_0.8fr_0.9fr] items-center px-[1.4vmin] py-[1vmin] text-[1.35vmin] border-t border-white/10"
                     >
                       <span className="text-white/90 leading-tight">
-                        <span className="block font-semibold">{s.name}</span>
+                        <span className="block font-semibold">{isPt ? s.namePt : s.nameEn}</span>
                         <span className="block text-[1.05vmin] font-normal text-white/45 font-mono">{s.sku}</span>
                       </span>
                       <span className="text-right text-white/60 font-mono line-through">{fmtBRL(s.currentPrice)}</span>
@@ -323,17 +349,17 @@ const PriceTurnoverDemo = () => {
                 {/* Bottom KPIs */}
                 <div className="grid grid-cols-3 gap-[1vmin]">
                   <ConclusionCard
-                    label="Sell-through projetado"
+                    label={L.kpi.sellThrough}
                     value={`${derived.sellThroughProjectedPct}%`}
                     highlight
                   />
                   <ConclusionCard
-                    label="Margem preservada"
+                    label={L.kpi.marginPreserved}
                     value={`+${derived.marginPreservedPp.toFixed(1)} pp`}
                   />
                   <ConclusionCard
-                    label="Capital liberado"
-                    value={fmtBRLk(derived.capitalUnlockedBRL)}
+                    label={L.kpi.capitalUnlocked}
+                    value={fmtBRLk(derived.capitalUnlockedBRL, lang)}
                   />
                 </div>
               </>
@@ -350,14 +376,14 @@ const PriceTurnoverDemo = () => {
                     : 'bg-white/[0.06] text-white/40 border border-white/10 cursor-not-allowed'
                 }`}
               >
-                {canCalculate ? 'Otimizar preço e markdown' : 'Ajuste os filtros para simular'}
+                {canCalculate ? L.cta : L.ctaDisabled}
               </button>
             )}
 
             {phase === 'running' && (
               <div className="rounded-2xl border border-[#F4845F]/40 bg-[#F4845F]/[0.08] px-[2vmin] py-[1.5vmin] flex items-center gap-[1.2vmin] animate-pulse">
                 <span className="w-[1.8vmin] h-[1.8vmin] rounded-full border-2 border-[#F4845F] border-t-transparent animate-spin" />
-                <span className="text-[1.6vmin] text-white/90 font-semibold">Calculando ação ideal…</span>
+                <span className="text-[1.6vmin] text-white/90 font-semibold">{L.running}</span>
               </div>
             )}
           </div>
@@ -368,7 +394,7 @@ const PriceTurnoverDemo = () => {
           <div className="flex items-center gap-[1.2vmin] mb-[1.4vmin]">
             <div>
               <h4 className="text-[1.9vmin] font-bold text-white leading-tight">
-                Explicabilidade e raciocínio do modelo
+                {L.reasoningTitle}
               </h4>
             </div>
           </div>
@@ -379,17 +405,17 @@ const PriceTurnoverDemo = () => {
                 <Sparkles className="w-[2.2vmin] h-[2.2vmin] text-[#F4845F] kiosk-insight-sparkle" strokeWidth={2.5} />
                 <span className="text-[1.7vmin] tracking-[0.25em] uppercase font-bold text-[#F4845F]">
                   {derived && selected
-                    ? `Por que ${derived.action === 'hold' ? 'manter' : derived.action === 'wait' ? 'aguardar' : derived.action === 'raise' ? 'subir preço' : 'este markdown'}`
-                    : 'O que o modelo aprendeu'}
+                    ? `${L.whyPrefix} ${derived.action === 'hold' ? L.whyHold : derived.action === 'wait' ? L.whyWait : derived.action === 'raise' ? L.whyRaise : L.whyMarkdown}`
+                    : L.whatModelLearned}
                 </span>
               </div>
               {selected && derived ? (
                 <>
                   <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
-                    {selected.name} · {clusterOverridesByAction[derived.action].situation}
+                    {isPt ? selected.namePt : selected.nameEn} · {clusterOverridesByAction[derived.action][isPt ? 'situationPt' : 'situationEn']}
                   </span>
                   <p className="text-[1.7vmin] leading-relaxed text-white/95">
-                    {argumentsByProductAndAction[product]?.[selected.id] ?? fallbackArgumentByAction[derived.action]}
+                    {(argumentsByProductAndAction[product]?.[selected.id]?.[isPt ? 'pt' : 'en']) ?? fallbackArgumentByAction[derived.action][isPt ? 'pt' : 'en']}
                   </p>
                 </>
               ) : (
@@ -402,7 +428,7 @@ const PriceTurnoverDemo = () => {
           <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
             {phase === 'running' && progress < pipeline.length && (
               <span className="text-[1.2vmin] text-white/60 font-mono">
-                {pipeline[progress].micro}
+                {isPt ? pipeline[progress].microPt : pipeline[progress].microEn}
               </span>
             )}
           </div>
@@ -453,14 +479,14 @@ const PriceTurnoverDemo = () => {
                         state === 'idle' ? 'text-white/45' : 'text-white/90'
                       }`}
                     >
-                      {step.label}
+                      {isPt ? step.labelPt : step.labelEn}
                     </span>
                     <span
                       className={`text-center text-[1.1vmin] leading-tight font-mono ${
                         state === 'idle' ? 'text-white/30' : 'text-white/55'
                       }`}
                     >
-                      {step.micro}
+                      {isPt ? step.microPt : step.microEn}
                     </span>
                   </div>
                 );
@@ -474,7 +500,7 @@ const PriceTurnoverDemo = () => {
               onClick={reset}
               className={kioskBtn('mt-[1.4vmin] w-full min-h-[6vmin] text-[1.6vmin]')}
             >
-              Nova simulação
+              {L.newSimulation}
             </button>
           )}
         </div>
@@ -530,13 +556,14 @@ const ConclusionCard = ({
   </div>
 );
 
-const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) => {
+const MarkdownRuler = ({ derived, price, lang = 'pt' }: { derived: Derived; price: number; lang?: KioskLang }) => {
+  const L = demoLabels[lang];
   const stops = [
-    { t: 0, label: 'Hoje' },
-    { t: 0.22, label: '7 dias' },
-    { t: 0.44, label: '14 dias' },
-    { t: 0.7, label: '21 dias' },
-    { t: 1, label: 'Liquidação' },
+    { t: 0, label: L.ruler.today },
+    { t: 0.22, label: L.ruler.days7 },
+    { t: 0.44, label: L.ruler.days14 },
+    { t: 0.7, label: L.ruler.days21 },
+    { t: 1, label: L.ruler.clearance },
   ];
 
   const targetT =
@@ -550,11 +577,11 @@ const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) 
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-[1.2vmin] flex flex-col">
       <div className="flex items-center justify-between mb-[0.8vmin]">
         <span className="text-[0.9vmin] tracking-[0.18em] uppercase font-semibold text-white/55">
-          Régua progressiva de markdown
+          {L.ruler.title}
         </span>
         <span className="text-[1.2vmin] text-white/70">
-          Ação em <span className="text-[#F4845F] font-semibold">{derived.actInDays === 0 ? 'agora' : `${derived.actInDays} dias`}</span>
-          {' · '}Preço {fmtBRL(price)}
+          {L.ruler.actIn} <span className="text-[#F4845F] font-semibold">{derived.actInDays === 0 ? L.ruler.actNow : `${derived.actInDays} ${L.ruler.actInDaysSuffix}`}</span>
+          {' · '}{L.ruler.price} {fmtBRL(price)}
         </span>
       </div>
       <div className="relative h-[4vmin] flex-1">
@@ -588,7 +615,7 @@ const MarkdownRuler = ({ derived, price }: { derived: Derived; price: number }) 
           style={{ left: `${targetT * 100}%`, top: '-0.4vmin' }}
         >
           <span className="block px-[0.8vmin] py-[0.2vmin] rounded-full bg-[#F4845F] text-white text-[1vmin] font-bold uppercase tracking-[0.15em] whitespace-nowrap shadow-[0_0_12px_rgba(244,132,95,0.6)]">
-            {actionLabel[derived.action]}
+            {L.actionLabel[derived.action]}
           </span>
         </div>
       </div>

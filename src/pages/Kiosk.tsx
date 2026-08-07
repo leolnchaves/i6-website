@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RotateCcw } from 'lucide-react';
 import KioskShell from '@/components/kiosk/KioskShell';
 import AttractScreen from '@/components/kiosk/AttractScreen';
@@ -8,6 +9,7 @@ import SolutionsGrid from '@/components/kiosk/SolutionsGrid';
 import SolutionDemoBlock from '@/components/kiosk/SolutionDemoBlock';
 import KioskSignalIntelliboard from '@/components/kiosk/KioskSignalIntelliboard';
 import EbookCTA from '@/components/kiosk/EbookCTA';
+import KioskLanguageToggle from '@/components/kiosk/KioskLanguageToggle';
 import {
   kioskContent,
   KIOSK_INACTIVITY_MS,
@@ -49,13 +51,7 @@ const readSession = (): PersistedSession | null => {
   }
 };
 
-const getInitialLang = (): KioskLang => {
-  if (typeof window === 'undefined') return 'pt';
-  const params = new URLSearchParams(window.location.search);
-  const q = params.get('lang');
-  if (q === 'en' || q === 'pt') return q;
-  return readSession()?.lang ?? 'pt';
-};
+const isKioskLang = (v: unknown): v is KioskLang => v === 'pt' || v === 'en';
 
 /**
  * Kiosk / totem experience:
@@ -63,7 +59,19 @@ const getInitialLang = (): KioskLang => {
  */
 const Kiosk = () => {
   const restored = useMemo(() => readSession(), []);
-  const [lang, setLang] = useState<KioskLang>(getInitialLang);
+  const { lang: langParam } = useParams();
+  const navigate = useNavigate();
+  const lang: KioskLang = isKioskLang(langParam) ? langParam : 'pt';
+
+  // /demo sem prefixo válido → normaliza a URL para o idioma padrão.
+  useEffect(() => {
+    if (!isKioskLang(langParam)) navigate('/pt/demo', { replace: true });
+  }, [langParam, navigate]);
+
+  const changeLang = (next: KioskLang) => {
+    if (next !== lang) navigate(`/${next}/demo`, { replace: true });
+  };
+
   const [stage, setStage] = useState<Stage>(restored?.stage ?? 'attract');
   const [route, setRoute] = useState<RouteId | null>(restored?.route ?? null);
   const [recommendedIds, setRecommendedIds] = useState<string[] | null>(restored?.recommendedIds ?? null);
@@ -73,6 +81,7 @@ const Kiosk = () => {
   const [simulationCompleted, setSimulationCompleted] = useState<Record<string, boolean>>(
     restored?.simulationCompleted ?? {},
   );
+
 
 
   const kContent = kioskContent[lang];
@@ -226,41 +235,28 @@ const Kiosk = () => {
         onInactive={reset}
         active={stage !== 'attract'}
       >
-        {false && stage === 'attract' && (
-          <div className="absolute top-[3vmin] right-[3vmin] z-20 flex gap-[1vmin]">
-            {(['pt', 'en'] as const).map((l) => (
-              <button
-                key={l}
-                type="button"
-                onClick={() => setLang(l)}
-                className={`px-[2.5vmin] py-[1.5vmin] rounded-full text-[1.8vmin] font-semibold border-2 ${
-                  lang === l
-                    ? 'bg-[#F4845F] border-[#F4845F] text-white'
-                    : 'bg-white/5 border-white/20 text-white/70'
-                }`}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {stage !== 'attract' && (
-          <div className="fixed top-[2vmin] right-[2vmin] z-20">
+        <div className="fixed top-[2vmin] right-[2vmin] z-20">
+          <div className="relative flex items-center gap-[1.5vmin]">
             <div
               aria-hidden
               className="absolute -inset-y-[0.8vmin] -inset-x-[1.2vmin] rounded-full bg-[#0B1224]/85 backdrop-blur-md ring-1 ring-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
             />
-            <button
-              type="button"
-              onClick={reset}
-              className="relative flex items-center gap-[1.2vmin] px-[2.4vmin] py-[1.2vmin] rounded-full bg-transparent border border-white/25 text-[1.8vmin] font-semibold text-white/90 min-h-[6vmin]"
-            >
-              <RotateCcw className="w-[2vmin] h-[2vmin]" />
-              {kContent.footer.resetLabel}
-            </button>
+            <div className="relative">
+              <KioskLanguageToggle lang={lang} onChange={changeLang} />
+            </div>
+            {stage !== 'attract' && (
+              <button
+                type="button"
+                onClick={reset}
+                className="relative flex items-center gap-[1.2vmin] px-[2.4vmin] py-[1.2vmin] rounded-full bg-transparent border border-white/25 text-[1.8vmin] font-semibold text-white/90 min-h-[6vmin]"
+              >
+                <RotateCcw className="w-[2vmin] h-[2vmin]" />
+                {kContent.footer.resetLabel}
+              </button>
+            )}
           </div>
-        )}
+        </div>
+
 
         {stage === 'attract' && <AttractScreen content={kContent} onStart={handleStart} />}
 

@@ -53,7 +53,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         icon={TrendingUp}
         onSimulationClosed={onSimulationClosed}
       >
-        <PriceMarginDemo />
+        <PriceMarginDemo lang={lang} />
       </SimulationLauncher>
     );
   }
@@ -71,7 +71,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         icon={Gauge}
         onSimulationClosed={onSimulationClosed}
       >
-        <PriceTurnoverDemo />
+        <PriceTurnoverDemo lang={lang} />
       </SimulationLauncher>
     );
   }
@@ -139,7 +139,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         icon={Megaphone}
         onSimulationClosed={onSimulationClosed}
       >
-        <PropensityCampaignDemo />
+        <PropensityCampaignDemo lang={lang} />
       </SimulationLauncher>
     );
   }
@@ -175,7 +175,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         icon={LayoutGrid}
         onSimulationClosed={onSimulationClosed}
       >
-        <MixAssortmentOrderDemo />
+        <MixAssortmentOrderDemo lang={lang} />
       </SimulationLauncher>
     );
   }

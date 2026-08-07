@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Check, Sparkles, X } from 'lucide-react';
+import type { KioskLang } from '@/data/kiosk/config';
 import {
   channels,
   channelLabel,
@@ -8,18 +9,23 @@ import {
   products,
   pipeline,
   computeResult,
-  labels as L,
+  demoLabels,
   type ChannelId,
   type SegmentId,
   type PeriodId,
 } from '@/data/kiosk/demos/propensityCampaign';
 import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
 
+interface Props {
+  lang: KioskLang;
+}
+
 type Phase = 'setup' | 'running' | 'result';
 
-const fmt = (v: number) => v.toLocaleString('pt-BR');
+const fmt = (v: number, lang: KioskLang) => v.toLocaleString(lang === 'pt' ? 'pt-BR' : 'en-US');
 
-const PropensityCampaignDemo = () => {
+const PropensityCampaignDemo = ({ lang }: Props) => {
+  const L = demoLabels[lang];
   const [productId, setProductId] = useState<string>(products[0].id);
   const [segment, setSegment] = useState<SegmentId>('active90');
   const [period, setPeriod] = useState<PeriodId>('14d');
@@ -98,6 +104,8 @@ const PropensityCampaignDemo = () => {
                   <div className="grid grid-cols-2 gap-[0.8vmin]">
                     {products.map((p) => {
                       const active = p.id === productId;
+                      const name = lang === 'pt' ? p.namePt : p.nameEn;
+                      const category = lang === 'pt' ? p.categoryPt : p.categoryEn;
                       return (
                         <button
                           key={p.id}
@@ -111,10 +119,10 @@ const PropensityCampaignDemo = () => {
                           }`}
                         >
                           <div className="text-[1.55vmin] font-semibold text-white leading-tight">
-                            {p.name}
+                            {name}
                           </div>
                           <div className="text-[1.2vmin] text-white/55 mt-[0.3vmin]">
-                            {p.category} · {fmt(p.audienceTotal)} elegíveis
+                            {category} · {fmt(p.audienceTotal, lang)} {L.crm.eligible}
                           </div>
                         </button>
                       );
@@ -139,7 +147,7 @@ const PropensityCampaignDemo = () => {
                               : 'border-white/20 bg-white/[0.03] text-white/70 hover:border-white/40'
                           }`}
                         >
-                          {c.label}
+                          {lang === 'pt' ? c.labelPt : c.labelEn}
                         </button>
                       );
                     })}
@@ -170,11 +178,13 @@ const PropensityCampaignDemo = () => {
                 {/* Selected product */}
                 <div className="rounded-xl border border-[#F4845F]/40 bg-[#F4845F]/[0.06] px-[1.6vmin] py-[1.2vmin]">
                   <div className="text-[1.15vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.3vmin]">
-                    Produto selecionado
+                    {L.result.selectedProduct}
                   </div>
-                  <div className="text-[1.9vmin] font-bold text-white leading-tight">{product.name}</div>
+                  <div className="text-[1.9vmin] font-bold text-white leading-tight">
+                    {lang === 'pt' ? product.namePt : product.nameEn}
+                  </div>
                   <div className="text-[1.3vmin] text-white/60 mt-[0.2vmin]">
-                    {product.category} · {fmt(product.audienceTotal)} elegíveis
+                    {(lang === 'pt' ? product.categoryPt : product.categoryEn)} · {fmt(product.audienceTotal, lang)} {L.crm.eligible}
                   </div>
                 </div>
 
@@ -198,21 +208,21 @@ const PropensityCampaignDemo = () => {
                                 : 'bg-white/40'
                             }`}
                           />
-                          <span className="text-white/90 font-semibold">{t.tier}</span>
+                          <span className="text-white/90 font-semibold">{L.tierLabels[t.tier]}</span>
                         </span>
-                        <span className="text-right text-white font-mono">{fmt(t.clients)}</span>
+                        <span className="text-right text-white font-mono">{fmt(t.clients, lang)}</span>
                         <span className="text-right text-white/90 font-mono">{t.propensityPct}%</span>
                       </div>
-                      {t.tier !== 'Oportunidade futura' && t.channels.map((split, j) => (
+                      {t.tier !== 'future' && t.channels.map((split, j) => (
                         <div
                           key={j}
                           className="grid grid-cols-[1.6fr_1fr_0.9fr] px-[1.4vmin] py-[0.8vmin] items-center text-[1.4vmin] border-t border-white/5 bg-white/[0.02]"
                         >
                           <span className="flex items-center gap-[0.6vmin] pl-[1.8vmin] text-white/70">
                             <span className="text-white/50">↳</span>
-                            <span>{channelLabel(split.channel)}</span>
+                            <span>{channelLabel(split.channel, lang)}</span>
                           </span>
-                          <span className="text-right text-white/80 font-mono">{fmt(split.clients)}</span>
+                          <span className="text-right text-white/80 font-mono">{fmt(split.clients, lang)}</span>
                           <span />
                         </div>
                       ))}
@@ -231,7 +241,7 @@ const PropensityCampaignDemo = () => {
                   </button>
                   <ConclusionCard
                     label={L.result.audience}
-                    value={fmt(result.recommendedAudience)}
+                    value={fmt(result.recommendedAudience, lang)}
                     hint={L.result.audienceHint}
                     highlight
                   />
@@ -241,7 +251,7 @@ const PropensityCampaignDemo = () => {
                   />
                   <ConclusionCard
                     label={L.result.channel}
-                    value={channelLabel(result.primaryChannel)}
+                    value={channelLabel(result.primaryChannel, lang)}
                   />
                 </div>
 
@@ -278,7 +288,9 @@ const PropensityCampaignDemo = () => {
                   {L.latency}: {latencyMs} ms
                 </span>
               </div>
-              <p className="text-[2vmin] leading-relaxed text-white/95">{result.argument}</p>
+              <p className="text-[2vmin] leading-relaxed text-white/95">
+                {lang === 'pt' ? result.argumentPt : result.argumentEn}
+              </p>
             </div>
           )}
 
@@ -286,7 +298,7 @@ const PropensityCampaignDemo = () => {
           <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
             {phase === 'running' && progress < pipeline.length && (
               <span className="text-[1.2vmin] text-white/60 font-mono">
-                {pipeline[progress].micro}
+                {lang === 'pt' ? pipeline[progress].microPt : pipeline[progress].microEn}
               </span>
             )}
           </div>
@@ -337,14 +349,14 @@ const PropensityCampaignDemo = () => {
                         state === 'idle' ? 'text-white/45' : 'text-white/90'
                       }`}
                     >
-                      {step.label}
+                      {lang === 'pt' ? step.labelPt : step.labelEn}
                     </span>
                     <span
                       className={`text-center text-[1.1vmin] leading-tight font-mono ${
                         state === 'idle' ? 'text-white/30' : 'text-white/55'
                       }`}
                     >
-                      {step.micro}
+                      {lang === 'pt' ? step.microPt : step.microEn}
                     </span>
                   </div>
                 );
@@ -379,15 +391,15 @@ const PropensityCampaignDemo = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-[1vmin]">
-              <DrillRow label={L.result.drillTopProduct} value={result.drill.topProduct} />
-              <DrillRow label={L.result.drillChannel} value={channelLabel(result.drill.channel)} />
-              <DrillRow label={L.result.drillMoment} value={result.drill.moment} />
+              <DrillRow label={L.result.drillTopProduct} value={lang === 'pt' ? result.drill.topProductPt : result.drill.topProductEn} />
+              <DrillRow label={L.result.drillChannel} value={channelLabel(result.drill.channel, lang)} />
+              <DrillRow label={L.result.drillMoment} value={lang === 'pt' ? result.drill.momentPt : result.drill.momentEn} />
               <div className="rounded-xl bg-white/[0.04] border border-white/10 p-[1.4vmin]">
                 <span className="block text-[1.2vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.8vmin]">
                   {L.result.drillFactors}
                 </span>
                 <ul className="flex flex-col gap-[0.6vmin]">
-                  {result.drill.factors.map((f, i) => (
+                  {(lang === 'pt' ? result.drill.factorsPt : result.drill.factorsEn).map((f, i) => (
                     <li
                       key={i}
                       className="flex items-start gap-[0.8vmin] text-[1.5vmin] text-white/85 leading-snug"
@@ -431,39 +443,6 @@ const Section = ({
       {hint && <span className="text-[1.15vmin] text-white/45">{hint}</span>}
     </div>
     {children}
-  </div>
-);
-
-const PillRow = ({
-  options,
-  value,
-  onChange,
-  disabled,
-}: {
-  options: { id: string; label: string }[];
-  value: string;
-  onChange: (id: string) => void;
-  disabled?: boolean;
-}) => (
-  <div className="flex flex-wrap gap-[0.6vmin]">
-    {options.map((o) => {
-      const active = o.id === value;
-      return (
-        <button
-          key={o.id}
-          type="button"
-          disabled={disabled}
-          onClick={() => onChange(o.id)}
-          className={`min-h-[4.4vmin] px-[1.4vmin] rounded-full border text-[1.4vmin] font-semibold transition-all ${
-            active
-              ? 'border-[#F4845F] bg-[#F4845F]/15 text-white'
-              : 'border-white/20 bg-white/[0.03] text-white/70 hover:border-white/40'
-          }`}
-        >
-          {o.label}
-        </button>
-      );
-    })}
   </div>
 );
 
