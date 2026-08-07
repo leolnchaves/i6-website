@@ -293,7 +293,7 @@ const KioskMetrics = () => {
 
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="mb-6 rounded-xl border border-[#F4845F]/40 bg-[#F4845F]/10 px-4 py-3 text-sm text-white/80">
-          Coleta de métricas temporariamente desativada no /kiosk. O painel segue disponível para quando religarmos o tracking.
+          Coleta de métricas temporariamente desativada no /demo. O painel segue disponível para quando religarmos o tracking.
         </div>
         <header className="flex items-baseline justify-between mb-4 flex-wrap gap-4">
           <div>
