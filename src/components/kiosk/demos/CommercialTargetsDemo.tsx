@@ -2,14 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Minus, Shuffle, Sparkles, X } from 'lucide-react';
 import type { KioskLang } from '@/data/kiosk/config';
 import {
-  dimensions,
+  demoLabels,
   fmtBR,
   fmtBRL,
   fmtCAC,
   getAllocation,
+  getDimensions,
   getDimRows,
-  labels as L,
-  pipeline,
+  getPipeline,
   computeResult,
   type AggregatedRow,
   type DimensionId,
@@ -22,10 +22,80 @@ type Phase = 'setup' | 'running' | 'result';
 const DASH = '—';
 
 interface Props {
-  lang?: KioskLang;
+  lang: KioskLang;
 }
 
-const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
+const UI: Record<KioskLang, {
+  actionUp: string;
+  actionDown: string;
+  actionRedistribute: string;
+  whyUp: string;
+  whyDown: string;
+  whyHold: string;
+  holdRationale: string;
+  factorsUp: string[];
+  factorsDown: string[];
+  factorsHold: string[];
+}> = {
+  pt: {
+    actionUp: 'Aumentar',
+    actionDown: 'Reduzir',
+    actionRedistribute: 'Redistribuir',
+    whyUp: 'Por que aumentar',
+    whyDown: 'Por que reduzir',
+    whyHold: 'Por que manter',
+    holdRationale: 'A meta atual já está alinhada ao potencial projetado. A recomendação é manter o esforço comercial e monitorar a captura ao longo do período.',
+    factorsUp: [
+      'Volume histórico consistente e frequência de compra crescente na dimensão selecionada.',
+      'Capacidade incremental de aproximadamente {delta} unidades acima da meta atual.',
+      'Folga de potencial ainda não capturada: {headroom} unidades.',
+      'Investimento incremental necessário permanece dentro do limite de CAC definido.',
+    ],
+    factorsDown: [
+      'Meta atual acima do potencial projetado — exigiria aumento desproporcional de investimento.',
+      'Redução libera {freed} unidades de pressão comercial.',
+      'Vendedor ou canal opera próximo do teto de cobertura razoável.',
+      'Recursos podem ser redirecionados para clientes/SKUs com maior capacidade de crescimento.',
+    ],
+    factorsHold: [
+      'Meta atual alinhada ao potencial projetado dentro do horizonte do período.',
+      'Cobertura e investimento sustentam a captura sem estressar o CAC.',
+      'Monitorar aceleração ou desaceleração de frequência de compra ao longo do ciclo.',
+    ],
+  },
+  en: {
+    actionUp: 'Increase',
+    actionDown: 'Reduce',
+    actionRedistribute: 'Redistribute',
+    whyUp: 'Why increase',
+    whyDown: 'Why reduce',
+    whyHold: 'Why hold',
+    holdRationale: 'The current target is already aligned with the projected potential. The recommendation is to maintain commercial effort and monitor capture throughout the period.',
+    factorsUp: [
+      'Consistent historical volume and growing purchase frequency in the selected dimension.',
+      'Incremental capacity of roughly {delta} units above the current target.',
+      'Untapped potential headroom: {headroom} units.',
+      'The required incremental investment stays within the defined CAC limit.',
+    ],
+    factorsDown: [
+      'The current target is above the projected potential — it would require a disproportionate increase in investment.',
+      'The reduction frees up {freed} units of commercial pressure.',
+      'The rep or channel is operating near a reasonable coverage ceiling.',
+      'Resources can be redirected to clients/SKUs with greater growth capacity.',
+    ],
+    factorsHold: [
+      'Current target aligned with the projected potential within the period horizon.',
+      'Coverage and investment sustain capture without straining CAC.',
+      'Monitor acceleration or deceleration of purchase frequency throughout the cycle.',
+    ],
+  },
+};
+
+const CommercialTargetsDemo = ({ lang }: Props) => {
+  const L = demoLabels[lang];
+  const dimensions = useMemo(() => getDimensions(lang), [lang]);
+  const pipeline = useMemo(() => getPipeline(lang), [lang]);
+  const ui = UI[lang];
   const [dim, setDim] = useState<DimensionId>('region');
   const [phase, setPhase] = useState<Phase>('setup');
   const [progress, setProgress] = useState(0);
@@ -35,6 +105,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
   const result = useMemo(
     () =>
       computeResult({
+        lang,
         period: 'quarter',
         region: 'all',
         rep: 'all',
@@ -43,7 +114,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
         budget: 'b500',
         argIndex,
       }),
-    [argIndex],
+    [argIndex, lang],
   );
 
   const dimRows = useMemo(() => getDimRows(result), [result]);
@@ -227,7 +298,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
                     {showProjected ? fmtCAC(a.cac) : DASH}
                   </span>
                   <span className="text-right">
-                    {showProjected ? <ActionBadge action={a.action} /> : <span className="text-white/40 text-[1.2vmin]">{DASH}</span>}
+                    {showProjected ? <ActionBadge action={a.action} lang={lang} /> : <span className="text-white/40 text-[1.2vmin]">{DASH}</span>}
                   </span>
                 </div>
               ))}
@@ -444,7 +515,7 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
                 {L.result.drillFactors}
               </span>
               <ul className="flex flex-col gap-[0.6vmin]">
-                {buildFactors(drillRow).map((f, i) => (
+                {buildFactors(drillRow, lang).map((f, i) => (
                   <li
                     key={i}
                     className="flex items-start gap-[0.8vmin] text-[1.45vmin] text-white/85 leading-snug"
@@ -458,13 +529,13 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
 
             <div className="rounded-xl bg-[#F4845F]/12 border border-[#F4845F]/40 p-[1.4vmin] text-[1.35vmin] text-white/95 leading-relaxed">
               <span className="block text-[1.1vmin] tracking-[0.25em] uppercase font-semibold text-[#F4845F] mb-[0.5vmin]">
-                {drillRow.action === 'down' ? 'Por que reduzir' : drillRow.action === 'up' ? 'Por que aumentar' : 'Por que manter'}
+                {drillRow.action === 'down' ? ui.whyDown : drillRow.action === 'up' ? ui.whyUp : ui.whyHold}
               </span>
               {drillRow.action === 'down'
                 ? result.rationale.decrease
                 : drillRow.action === 'up'
                 ? result.rationale.target
-                : 'A meta atual já está alinhada ao potencial projetado. A recomendação é manter o esforço comercial e monitorar a captura ao longo do período.'}
+                : ui.holdRationale}
             </div>
 
             <button
@@ -481,26 +552,15 @@ const CommercialTargetsDemo = ({ lang: _lang }: Props = {}) => {
   );
 };
 
-const buildFactors = (r: AggregatedRow): string[] => {
-  const delta = Math.round(r.suggested - r.current);
-  const headroom = Math.round(r.potential - r.suggested);
-  const base: string[] = [];
-  if (r.action === 'up') {
-    base.push(`Volume histórico consistente e frequência de compra crescente na dimensão selecionada.`);
-    base.push(`Capacidade incremental de aproximadamente ${fmtBR(Math.max(0, delta))} unidades acima da meta atual.`);
-    base.push(`Folga de potencial ainda não capturada: ${fmtBR(Math.max(0, headroom))} unidades.`);
-    base.push(`Investimento incremental necessário permanece dentro do limite de CAC definido.`);
-  } else if (r.action === 'down') {
-    base.push(`Meta atual acima do potencial projetado — exigiria aumento desproporcional de investimento.`);
-    base.push(`Redução libera ${fmtBR(Math.max(0, r.current - r.suggested))} unidades de pressão comercial.`);
-    base.push(`Vendedor ou canal opera próximo do teto de cobertura razoável.`);
-    base.push(`Recursos podem ser redirecionados para clientes/SKUs com maior capacidade de crescimento.`);
-  } else {
-    base.push(`Meta atual alinhada ao potencial projetado dentro do horizonte do período.`);
-    base.push(`Cobertura e investimento sustentam a captura sem estressar o CAC.`);
-    base.push(`Monitorar aceleração ou desaceleração de frequência de compra ao longo do ciclo.`);
-  }
-  return base;
+const buildFactors = (r: AggregatedRow, lang: KioskLang): string[] => {
+  const ui = UI[lang];
+  const delta = fmtBR(Math.max(0, Math.round(r.suggested - r.current)));
+  const headroom = fmtBR(Math.max(0, Math.round(r.potential - r.suggested)));
+  const freed = fmtBR(Math.max(0, Math.round(r.current - r.suggested)));
+  const templates = r.action === 'up' ? ui.factorsUp : r.action === 'down' ? ui.factorsDown : ui.factorsHold;
+  return templates.map((tpl) =>
+    tpl.replace('{delta}', delta).replace('{headroom}', headroom).replace('{freed}', freed),
+  );
 };
 
 const ConclusionCard = ({
@@ -554,22 +614,23 @@ const HighlightLine = ({
   </div>
 );
 
-const ActionBadge = ({ action }: { action: 'up' | 'down' | 'redistribute' }) => {
+const ActionBadge = ({ action, lang }: { action: 'up' | 'down' | 'redistribute'; lang: KioskLang }) => {
+  const ui = UI[lang];
   if (action === 'up')
     return (
       <span className="inline-flex items-center gap-[0.4vmin] px-[0.9vmin] py-[0.3vmin] rounded-full text-[1.1vmin] font-bold bg-[#4ade80]/15 text-[#4ade80] border border-[#4ade80]/40">
-        <ArrowUp className="w-[1.3vmin] h-[1.3vmin]" /> Aumentar
+        <ArrowUp className="w-[1.3vmin] h-[1.3vmin]" /> {ui.actionUp}
       </span>
     );
   if (action === 'down')
     return (
       <span className="inline-flex items-center gap-[0.4vmin] px-[0.9vmin] py-[0.3vmin] rounded-full text-[1.1vmin] font-bold bg-[#F4845F]/15 text-[#F4845F] border border-[#F4845F]/40">
-        <ArrowDown className="w-[1.3vmin] h-[1.3vmin]" /> Reduzir
+        <ArrowDown className="w-[1.3vmin] h-[1.3vmin]" /> {ui.actionDown}
       </span>
     );
   return (
     <span className="inline-flex items-center gap-[0.4vmin] px-[0.9vmin] py-[0.3vmin] rounded-full text-[1.1vmin] font-bold bg-white/[0.06] text-white/85 border border-white/25">
-      <Shuffle className="w-[1.3vmin] h-[1.3vmin]" /> Redistribuir
+      <Shuffle className="w-[1.3vmin] h-[1.3vmin]" /> {ui.actionRedistribute}
     </span>
   );
 };
