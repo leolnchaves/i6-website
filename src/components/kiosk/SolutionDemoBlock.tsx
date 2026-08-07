@@ -175,7 +175,7 @@ const SolutionDemoBlock = ({ solution, labels, lang, companion, onSimulationClos
         icon={LayoutGrid}
         onSimulationClosed={onSimulationClosed}
       >
-        <MixAssortmentOrderDemo />
+        <MixAssortmentOrderDemo lang={lang} />
       </SimulationLauncher>
     );
   }

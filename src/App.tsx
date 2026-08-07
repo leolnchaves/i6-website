@@ -114,8 +114,9 @@ const App = () => {
                 <ScrollToTop />
                 <Routes>
 
-                  {/* Standalone demo / totem experience (no header/footer, no lang prefix) */}
-                  <Route path="/demo" element={<Kiosk />} />
+                  {/* Standalone demo / totem experience (no header/footer) */}
+                  <Route path="/:lang/demo" element={<Kiosk />} />
+                  <Route path="/demo" element={<RootLangRedirect />} />
                   <Route path="/demo-metrics/:token" element={<KioskMetrics />} />
 
                   {/* Localized site */}
