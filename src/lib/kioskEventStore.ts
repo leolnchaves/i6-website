@@ -168,7 +168,7 @@ export type ReconcileResult = {
 
 /**
  * Une as duas fontes e regrava a união em ambas.
- * Chamado no boot do /kiosk e do /kiosk-metrics.
+ * Chamado no boot do /demo e do /demo-metrics.
  */
 export async function reconcile(): Promise<ReconcileResult> {
   const ls = lsReadAll();

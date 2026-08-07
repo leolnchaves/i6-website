@@ -1,5 +1,5 @@
 /**
- * Tracker do /kiosk — 100% client-side, sem backend e sem banco.
+ * Tracker do /demo — 100% client-side, sem backend e sem banco.
  *
  * Três camadas independentes de proteção contra perda de métricas:
  *  1. Persistência local redundante: localStorage + IndexedDB (kioskEventStore)
@@ -151,7 +151,7 @@ async function runDailyAutoExport(): Promise<void> {
 
 let booted = false;
 
-/** Chamado no boot do /kiosk e do /kiosk-metrics. Idempotente. */
+/** Chamado no boot do /demo e do /demo-metrics. Idempotente. */
 export function initKioskTracking(): void {
   if (booted || typeof window === 'undefined') return;
   booted = true;
