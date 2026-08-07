@@ -228,41 +228,28 @@ const Kiosk = () => {
         onInactive={reset}
         active={stage !== 'attract'}
       >
-        {false && stage === 'attract' && (
-          <div className="absolute top-[3vmin] right-[3vmin] z-20 flex gap-[1vmin]">
-            {(['pt', 'en'] as const).map((l) => (
-              <button
-                key={l}
-                type="button"
-                onClick={() => setLang(l)}
-                className={`px-[2.5vmin] py-[1.5vmin] rounded-full text-[1.8vmin] font-semibold border-2 ${
-                  lang === l
-                    ? 'bg-[#F4845F] border-[#F4845F] text-white'
-                    : 'bg-white/5 border-white/20 text-white/70'
-                }`}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {stage !== 'attract' && (
-          <div className="fixed top-[2vmin] right-[2vmin] z-20">
+        <div className="fixed top-[2vmin] right-[2vmin] z-20">
+          <div className="relative flex items-center gap-[1.5vmin]">
             <div
               aria-hidden
               className="absolute -inset-y-[0.8vmin] -inset-x-[1.2vmin] rounded-full bg-[#0B1224]/85 backdrop-blur-md ring-1 ring-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
             />
-            <button
-              type="button"
-              onClick={reset}
-              className="relative flex items-center gap-[1.2vmin] px-[2.4vmin] py-[1.2vmin] rounded-full bg-transparent border border-white/25 text-[1.8vmin] font-semibold text-white/90 min-h-[6vmin]"
-            >
-              <RotateCcw className="w-[2vmin] h-[2vmin]" />
-              {kContent.footer.resetLabel}
-            </button>
+            <div className="relative">
+              <KioskLanguageToggle lang={lang} onChange={changeLang} />
+            </div>
+            {stage !== 'attract' && (
+              <button
+                type="button"
+                onClick={reset}
+                className="relative flex items-center gap-[1.2vmin] px-[2.4vmin] py-[1.2vmin] rounded-full bg-transparent border border-white/25 text-[1.8vmin] font-semibold text-white/90 min-h-[6vmin]"
+              >
+                <RotateCcw className="w-[2vmin] h-[2vmin]" />
+                {kContent.footer.resetLabel}
+              </button>
+            )}
           </div>
-        )}
+        </div>
+
 
         {stage === 'attract' && <AttractScreen content={kContent} onStart={handleStart} />}
 
