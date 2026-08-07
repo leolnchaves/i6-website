@@ -644,7 +644,7 @@ console.log(`✅ Prerendered ${count} SEO stubs into dist/`);
 
 // ---- Demo routes: real 200 files (Fully Kiosk shows an error page on HTTP 404) ----
 const KIOSK_METRICS_TOKEN = 'i6k-x3f8n2vqp7wm4jt-metrics';
-for (const p of ['demo', `demo-metrics/${KIOSK_METRICS_TOKEN}`]) {
+for (const p of ['demo', 'pt/demo', 'en/demo', `demo-metrics/${KIOSK_METRICS_TOKEN}`]) {
   const out = join(DIST, p, 'index.html');
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, template, 'utf8');
