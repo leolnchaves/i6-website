@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RotateCcw } from 'lucide-react';
 import KioskShell from '@/components/kiosk/KioskShell';
 import AttractScreen from '@/components/kiosk/AttractScreen';
@@ -8,6 +9,7 @@ import SolutionsGrid from '@/components/kiosk/SolutionsGrid';
 import SolutionDemoBlock from '@/components/kiosk/SolutionDemoBlock';
 import KioskSignalIntelliboard from '@/components/kiosk/KioskSignalIntelliboard';
 import EbookCTA from '@/components/kiosk/EbookCTA';
+import KioskLanguageToggle from '@/components/kiosk/KioskLanguageToggle';
 import {
   kioskContent,
   KIOSK_INACTIVITY_MS,
