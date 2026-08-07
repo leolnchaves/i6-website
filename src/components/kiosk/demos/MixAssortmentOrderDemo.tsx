@@ -2,15 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import TouchSelect from '@/components/kiosk/ui/TouchSelect';
 
 import { ArrowDown, ArrowUp, Check, Minus, Plus, Repeat, Sparkles, X } from 'lucide-react';
+import type { KioskLang } from '@/data/kiosk/config';
 import {
   actionMeta,
   cartFor,
   contextFor,
+  demoLabels,
   fmtBR,
   fmtBRL,
   generalInsightFor,
   kpisFor,
-  labels as L,
   pdvs,
   pipeline,
   recommendedFor,
@@ -21,6 +22,10 @@ import {
   type RegionId,
 } from '@/data/kiosk/demos/mixAssortmentOrder';
 import { kioskBtn } from '@/components/kiosk/ui/kioskButtonClass';
+
+interface Props {
+  lang: KioskLang;
+}
 
 type Phase = 'setup' | 'running' | 'result';
 
@@ -35,7 +40,9 @@ const actionIcon: Record<Action, JSX.Element> = {
   remover: <X className="w-[1.3vmin] h-[1.3vmin]" />,
 };
 
-const MixAssortmentOrderDemo = () => {
+const MixAssortmentOrderDemo = ({ lang }: Props) => {
+  const L = demoLabels[lang];
+
   const [pdv, setPdv] = useState<PdvId>('all');
   const [region, setRegion] = useState<RegionId>('all');
   const [phase, setPhase] = useState<Phase>('setup');
@@ -66,7 +73,7 @@ const MixAssortmentOrderDemo = () => {
   const filteredCart = useMemo(() => cartFor(pdv, region), [pdv, region]);
   const recommended = useMemo(() => recommendedFor(filteredCart), [filteredCart]);
   const kpis = useMemo(() => kpisFor(filteredCart, context), [filteredCart, context]);
-  const generalInsight = useMemo(() => generalInsightFor(filteredCart), [filteredCart]);
+  const generalInsight = useMemo(() => generalInsightFor(filteredCart, lang), [filteredCart, lang]);
 
   // If the SKU is filtered out by a filter change, drop selection
   useEffect(() => {
@@ -74,6 +81,9 @@ const MixAssortmentOrderDemo = () => {
       setSelectedSku(null);
     }
   }, [filteredCart, selectedSku]);
+
+  const pdvOptions = pdvs.map((p) => ({ value: p.id, label: lang === 'pt' ? p.labelPt : p.labelEn }));
+  const regionOptions = regionsOptions.map((r) => ({ value: r.id, label: lang === 'pt' ? r.labelPt : r.labelEn }));
 
   return (
     <div className="relative rounded-3xl bg-gradient-to-br from-white/8 to-[#F4845F]/8 border border-[#F4845F]/30 p-[3vmin]">
@@ -103,13 +113,13 @@ const MixAssortmentOrderDemo = () => {
                     label={L.setup.pdv}
                     value={pdv}
                     onChange={(v) => setPdv(v as PdvId)}
-                    options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
+                    options={pdvOptions}
                   />
                   <TouchSelect
                     label={L.setup.region}
                     value={region}
                     onChange={(v) => setRegion(v as RegionId)}
-                    options={regionsOptions.map((r) => ({ value: r.id, label: r.label }))}
+                    options={regionOptions}
                   />
                 </div>
 
@@ -120,12 +130,12 @@ const MixAssortmentOrderDemo = () => {
                   </span>
                   <div className="grid grid-cols-6 gap-[0.8vmin]">
                     <ContextTile label={L.setup.contextMix} value={`${context.skus} SKUs`} />
-                    <ContextTile label={L.setup.contextStock} value={`${fmtBR(context.stockUnits)} un.`} />
-                    <ContextTile label={L.setup.contextSales} value={`${fmtBR(context.recentSales30d)} un.`} />
+                    <ContextTile label={L.setup.contextStock} value={`${fmtBR(context.stockUnits, lang)} un.`} />
+                    <ContextTile label={L.setup.contextSales} value={`${fmtBR(context.recentSales30d, lang)} un.`} />
                     <ContextTile
                       label={L.setup.contextLast}
                       value={fmtBRL(context.lastOrder.value)}
-                      hint={`${fmtBR(context.lastOrder.units)} un.`}
+                      hint={`${fmtBR(context.lastOrder.units, lang)} un.`}
                     />
                     <ContextTile label={L.setup.contextNotPos} value={`${context.notPositivated}`} tone="warn" />
                     <ContextTile label={L.setup.contextRupture} value={`${context.atRisk}`} tone="warn" />
@@ -146,13 +156,13 @@ const MixAssortmentOrderDemo = () => {
                       label={L.setup.pdv}
                       value={pdv}
                       onChange={(v) => setPdv(v as PdvId)}
-                      options={pdvs.map((p) => ({ value: p.id, label: p.label }))}
+                      options={pdvOptions}
                     />
                     <TouchSelect
                       label={L.setup.region}
                       value={region}
                       onChange={(v) => setRegion(v as RegionId)}
-                      options={regionsOptions.map((r) => ({ value: r.id, label: r.label }))}
+                      options={regionOptions}
                     />
                   </div>
                 </div>
@@ -221,9 +231,9 @@ const MixAssortmentOrderDemo = () => {
                             }`}
                           >
                             <span className="text-white/90 font-semibold leading-tight">
-                              {row.name}
+                              {lang === 'pt' ? row.namePt : row.nameEn}
                               <span className="block text-[1.05vmin] font-normal text-white/45">
-                                {row.sku} · {row.category}
+                                {row.sku} · {lang === 'pt' ? row.categoryPt : row.categoryEn}
                               </span>
                             </span>
                             <span className="flex justify-center">
@@ -231,7 +241,7 @@ const MixAssortmentOrderDemo = () => {
                                 className={`inline-flex items-center gap-[0.5vmin] px-[1vmin] py-[0.35vmin] rounded-full border text-[1.1vmin] font-semibold ${meta.tone}`}
                               >
                                 {actionIcon[row.action]}
-                                {meta.label}
+                                {lang === 'pt' ? meta.labelPt : meta.labelEn}
                               </span>
                             </span>
                             <span className="text-right text-white font-mono font-semibold">
@@ -259,7 +269,7 @@ const MixAssortmentOrderDemo = () => {
                   <ConclusionCard
                     label={L.result.kpiNewPos}
                     value={`${kpis.newPositivated}`}
-                    hint="novos SKUs"
+                    hint={L.result.kpiNewPosHint}
                   />
                   <ConclusionCard
                     label={L.result.kpiRupture}
@@ -309,16 +319,16 @@ const MixAssortmentOrderDemo = () => {
               {selectedSku ? (
                 <>
                   <span className="block text-[1.7vmin] font-semibold text-white mb-[0.6vmin] leading-tight">
-                    {selectedSku.name}
+                    {lang === 'pt' ? selectedSku.namePt : selectedSku.nameEn}
                   </span>
                   <p className="text-[1.7vmin] leading-relaxed text-white/95 mb-[1vmin]">
-                    {selectedSku.reason}
+                    {lang === 'pt' ? selectedSku.reasonPt : selectedSku.reasonEn}
                   </p>
                   <div className="grid grid-cols-4 gap-[0.8vmin]">
                     <MiniStat label={L.result.drillTurn} value={selectedSku.turn} />
-                    <MiniStat label={L.result.drillCoverage} value={selectedSku.coverage} />
-                    <MiniStat label={L.result.drillCluster} value={selectedSku.cluster} />
-                    <MiniStat label={L.result.drillPotential} value={selectedSku.potential} />
+                    <MiniStat label={L.result.drillCoverage} value={lang === 'pt' ? selectedSku.coveragePt : selectedSku.coverageEn} />
+                    <MiniStat label={L.result.drillCluster} value={lang === 'pt' ? selectedSku.clusterPt : selectedSku.clusterEn} />
+                    <MiniStat label={L.result.drillPotential} value={lang === 'pt' ? selectedSku.potentialPt : selectedSku.potentialEn} />
                   </div>
                 </>
               ) : (
@@ -331,7 +341,7 @@ const MixAssortmentOrderDemo = () => {
           <div className="h-[2vmin] mb-[1vmin] flex items-center justify-center">
             {phase === 'running' && progress < pipeline.length && (
               <span className="text-[1.2vmin] text-white/60 font-mono">
-                {pipeline[progress].micro}
+                {lang === 'pt' ? pipeline[progress].microPt : pipeline[progress].microEn}
               </span>
             )}
           </div>
@@ -382,14 +392,14 @@ const MixAssortmentOrderDemo = () => {
                         state === 'idle' ? 'text-white/45' : 'text-white/90'
                       }`}
                     >
-                      {step.label}
+                      {lang === 'pt' ? step.labelPt : step.labelEn}
                     </span>
                     <span
                       className={`text-center text-[1.1vmin] leading-tight font-mono ${
                         state === 'idle' ? 'text-white/30' : 'text-white/55'
                       }`}
                     >
-                      {step.micro}
+                      {lang === 'pt' ? step.microPt : step.microEn}
                     </span>
                   </div>
                 );
