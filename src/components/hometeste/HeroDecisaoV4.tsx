@@ -3,20 +3,17 @@ import { useEffect, useState } from 'react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroVideoMp4 from '@/assets/hero-video-pt-v2.mp4.asset.json';
-import heroVideoWebm from '@/assets/hero-video-pt-v2.webm.asset.json';
-import heroVideoPoster from '@/assets/hero-video-pt-v2-poster.jpg.asset.json';
+import heroVideoMp4 from '@/assets/hero-video-pt-v3.mp4.asset.json';
+import heroVideoWebm from '@/assets/hero-video-pt-v3.webm.asset.json';
+import heroVideoPoster from '@/assets/hero-video-pt-v3-poster.jpg.asset.json';
 
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
-const EDGE_MASK =
-  'radial-gradient(ellipse 58% 58% at 50% 50%, #000 22%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.48) 57%, rgba(0,0,0,0.12) 70%, transparent 82%)';
-
 const VIDEO_TREATMENT = {
-  filter: 'saturate(0.78) brightness(0.96) contrast(1.05)',
-  mixBlendMode: 'lighten' as const,
+  filter: 'brightness(0.7) saturate(0.85) contrast(1.05)',
 };
+
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
