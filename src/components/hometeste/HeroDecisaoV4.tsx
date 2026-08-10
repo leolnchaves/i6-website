@@ -33,20 +33,23 @@ const HeroDecisaoV4 = () => {
                 'radial-gradient(40% 42% at 50% 58%, rgba(244,132,95,0.13) 0%, rgba(244,132,95,0.05) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
-          <img
-            src={heroNeonPt.url}
-            alt=""
-            loading="eager"
-            decoding="async"
-            className="absolute inset-x-[-8%] md:inset-x-0 top-[19vh] md:top-[21vh] w-auto h-[60vh] md:h-[58vh] object-contain select-none"
-            style={{
-              opacity: 0.92,
-              WebkitMaskImage:
-                'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
-              maskImage:
-                'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
-            }}
-          />
+          <div className="absolute inset-x-[-10%] md:inset-x-[-2%] top-[18vh] md:top-[20vh] h-[62vh] md:h-[60vh]">
+            <img
+              src={heroNeonPt.url}
+              alt=""
+              loading="eager"
+              decoding="async"
+              className="w-full h-full object-contain select-none"
+              style={{
+                opacity: 0.92,
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
+                maskImage:
+                  'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
+              }}
+            />
+          </div>
+
 
           {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
           <div
