@@ -11,7 +11,7 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_TREATMENT = {
-  filter: 'brightness(0.7) saturate(0.85) contrast(1.05)',
+  filter: 'brightness(0.92) saturate(0.95) contrast(1.03)',
 };
 
 
