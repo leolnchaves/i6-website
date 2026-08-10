@@ -76,15 +76,12 @@ const HeroDecisaoV4 = () => {
             )}
           </div>
 
-          {/* quadro neutro: navy translúcido + blur leve para tirar o excesso de cor */}
+          {/* véu navy plano — apenas atenua o tom, sem desfoque */}
           <div
             className="absolute inset-0"
-            style={{
-              backgroundColor: 'rgba(11,18,36,0.12)',
-              backdropFilter: 'blur(1.5px)',
-              WebkitBackdropFilter: 'blur(1.5px)',
-            }}
+            style={{ backgroundColor: 'rgba(11,18,36,0.18)' }}
           />
+
 
 
           {/* glow coral difuso no núcleo */}
