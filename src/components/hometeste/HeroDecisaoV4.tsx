@@ -22,6 +22,42 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
+      {/* ARTE DE FUNDO (PT) — camada ambiente, sem bordas perceptíveis */}
+      {isPt && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          {/* glow coral difuso no núcleo */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(42% 48% at 50% 52%, rgba(244,132,95,0.14) 0%, rgba(244,132,95,0.05) 48%, rgba(244,132,95,0) 78%)',
+            }}
+          />
+          <img
+            src={heroNeonPt.url}
+            alt=""
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover object-center select-none animate-fade-in scale-[1.35] md:scale-100"
+            style={{
+              opacity: 0.9,
+              WebkitMaskImage:
+                'radial-gradient(ellipse 68% 58% at 50% 52%, #000 22%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.3) 72%, rgba(0,0,0,0) 92%)',
+              maskImage:
+                'radial-gradient(ellipse 68% 58% at 50% 52%, #000 22%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.3) 72%, rgba(0,0,0,0) 92%)',
+            }}
+          />
+          {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0) 26%), linear-gradient(to left, #0B1224 0%, rgba(11,18,36,0) 26%), linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0) 24%), linear-gradient(to top, #0B1224 0%, rgba(11,18,36,0) 24%)',
+            }}
+          />
+        </div>
+      )}
+
       {/* 1. TÍTULO */}
       <div className="relative z-10 flex-shrink-0 pt-[8vh] md:pt-[11vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
@@ -32,35 +68,10 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
+      {/* 2. ESPAÇO CENTRAL — arte de fundo (PT) ou imagem dedicada (EN) */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
-        <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
-          {/* Glow coral difuso atrás do núcleo, amarra a arte ao fundo navy */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(38% 55% at 50% 50%, rgba(244,132,95,0.16) 0%, rgba(244,132,95,0.06) 45%, rgba(244,132,95,0) 75%)',
-            }}
-          />
-          {isPt ? (
-            <img
-              src={heroNeonPt.url}
-              alt=""
-              aria-hidden
-              loading="eager"
-              decoding="async"
-              className="relative w-[96%] md:w-[92%] max-h-[52vh] md:max-h-[50vh] h-auto object-contain select-none animate-fade-in"
-              style={{
-                mixBlendMode: 'screen',
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 78% 82% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 78%, transparent 100%)',
-                maskImage:
-                  'radial-gradient(ellipse 78% 82% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 78%, transparent 100%)',
-              }}
-            />
-          ) : (
+        {!isPt && (
+          <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
             <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
               <source media="(min-width: 768px)" srcSet={heroPanoramaEn.url} />
               <img
@@ -71,10 +82,10 @@ const HeroDecisaoV4 = () => {
                 style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
               />
             </picture>
-          )}
-        </div>
-
+          </div>
+        )}
       </div>
+
 
 
       {/* 3. DESCRIÇÃO + CTA */}
