@@ -1,15 +1,36 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroNeonPt from '@/assets/hero-decisao-neon-pt-v1.png.asset.json';
+import heroVideoMp4 from '@/assets/hero-video-pt-v1.mp4.asset.json';
+import heroVideoWebm from '@/assets/hero-video-pt-v1.webm.asset.json';
+import heroVideoPoster from '@/assets/hero-video-pt-v1-poster.jpg.asset.json';
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
+
+const EDGE_MASK =
+  'radial-gradient(ellipse 74% 72% at 50% 50%, #000 32%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.35) 80%, rgba(0,0,0,0) 97%)';
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
   const { language } = useLanguage();
   const isPt = language === 'pt';
+
+  // vídeo só no desktop e sem prefers-reduced-motion; caso contrário fica o poster
+  const [playVideo, setPlayVideo] = useState(false);
+  useEffect(() => {
+    const mqDesktop = window.matchMedia('(min-width: 768px)');
+    const mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setPlayVideo(mqDesktop.matches && !mqMotion.matches);
+    update();
+    mqDesktop.addEventListener('change', update);
+    mqMotion.addEventListener('change', update);
+    return () => {
+      mqDesktop.removeEventListener('change', update);
+      mqMotion.removeEventListener('change', update);
+    };
+  }, []);
 
   const description = isPt
     ? 'Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.'
@@ -22,34 +43,57 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* ARTE DE FUNDO (PT) — camada ambiente, sem bordas perceptíveis */}
+      {/* FUNDO EM VÍDEO (PT) — camada ambiente, sem bordas perceptíveis */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <div
+            className="absolute inset-0"
+            style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
+          >
+            {playVideo ? (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={heroVideoPoster.url}
+                className="w-full h-full object-cover select-none"
+                style={{ filter: 'saturate(0.7) brightness(0.82) contrast(0.95)' }}
+              >
+                <source src={heroVideoWebm.url} type="video/webm" />
+                <source src={heroVideoMp4.url} type="video/mp4" />
+              </video>
+            ) : (
+              <img
+                src={heroVideoPoster.url}
+                alt=""
+                loading="eager"
+                decoding="async"
+                className="w-full h-full object-cover select-none"
+                style={{ filter: 'saturate(0.7) brightness(0.82) contrast(0.95)' }}
+              />
+            )}
+          </div>
+
+          {/* quadro neutro: navy translúcido + blur leve para tirar o excesso de cor */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundColor: 'rgba(11,18,36,0.42)',
+              backdropFilter: 'blur(7px)',
+              WebkitBackdropFilter: 'blur(7px)',
+            }}
+          />
+
           {/* glow coral difuso no núcleo */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(40% 42% at 50% 58%, rgba(244,132,95,0.13) 0%, rgba(244,132,95,0.05) 50%, rgba(244,132,95,0) 78%)',
+                'radial-gradient(40% 42% at 50% 55%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
-          <div className="absolute inset-x-[-10%] md:inset-x-[-2%] top-[18vh] md:top-[20vh] h-[62vh] md:h-[60vh]">
-            <img
-              src={heroNeonPt.url}
-              alt=""
-              loading="eager"
-              decoding="async"
-              className="w-full h-full object-contain select-none"
-              style={{
-                opacity: 0.92,
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
-                maskImage:
-                  'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
-              }}
-            />
-          </div>
-
 
           {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
           <div
@@ -60,8 +104,8 @@ const HeroDecisaoV4 = () => {
             }}
           />
         </div>
-
       )}
+
 
       {/* 1. TÍTULO */}
       <div className="relative z-10 flex-shrink-0 pt-[8vh] md:pt-[11vh] px-6">
