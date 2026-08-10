@@ -3,20 +3,17 @@ import { useEffect, useState } from 'react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroVideoMp4 from '@/assets/hero-video-pt-v2.mp4.asset.json';
-import heroVideoWebm from '@/assets/hero-video-pt-v2.webm.asset.json';
-import heroVideoPoster from '@/assets/hero-video-pt-v2-poster.jpg.asset.json';
+import heroVideoMp4 from '@/assets/hero-video-pt-v3.mp4.asset.json';
+import heroVideoWebm from '@/assets/hero-video-pt-v3.webm.asset.json';
+import heroVideoPoster from '@/assets/hero-video-pt-v3-poster.jpg.asset.json';
 
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
-const EDGE_MASK =
-  'radial-gradient(ellipse 58% 58% at 50% 50%, #000 22%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.48) 57%, rgba(0,0,0,0.12) 70%, transparent 82%)';
-
 const VIDEO_TREATMENT = {
-  filter: 'saturate(0.78) brightness(0.96) contrast(1.05)',
-  mixBlendMode: 'lighten' as const,
+  filter: 'brightness(0.7) saturate(0.85) contrast(1.05)',
 };
+
 
 const HeroDecisaoV4 = () => {
   const localized = useLocalizedPath();
@@ -52,37 +49,35 @@ const HeroDecisaoV4 = () => {
       {/* FUNDO EM VÍDEO (PT) — camada ambiente, sem bordas perceptíveis */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <div
-            className="absolute inset-x-[-8%] md:inset-x-[-4%] top-[17vh] md:top-[16vh] h-[70vh] md:h-[72vh]"
-            style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
-          >
-            {playVideo ? (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster={heroVideoPoster.url}
-                className="w-full h-full object-contain select-none"
-                style={VIDEO_TREATMENT}
-              >
-                <source src={heroVideoWebm.url} type="video/webm" />
-                <source src={heroVideoMp4.url} type="video/mp4" />
-              </video>
-            ) : (
-              <img
-                src={heroVideoPoster.url}
-                alt=""
-                loading="eager"
-                decoding="async"
-                className="w-full h-full object-contain select-none"
-                style={VIDEO_TREATMENT}
-              />
-            )}
-          </div>
+          {playVideo ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={heroVideoPoster.url}
+              className="absolute inset-0 w-full h-full object-cover select-none"
+              style={VIDEO_TREATMENT}
+            >
+              <source src={heroVideoWebm.url} type="video/webm" />
+              <source src={heroVideoMp4.url} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={heroVideoPoster.url}
+              alt=""
+              loading="eager"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover select-none"
+              style={VIDEO_TREATMENT}
+            />
+          )}
 
-
+          {/* integração com o navy — mesmo padrão da capa de success stories */}
+          <div className="absolute inset-0 bg-[#0B1224]/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-[#0B1224]/15 to-[#0B1224]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent to-[#0B1224]" />
 
 
           {/* glow coral difuso no núcleo */}
@@ -93,17 +88,8 @@ const HeroDecisaoV4 = () => {
                 'radial-gradient(40% 42% at 50% 55%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
-
-          {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0) 18%), linear-gradient(to left, #0B1224 0%, rgba(11,18,36,0) 18%), linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0) 22%), linear-gradient(to top, #0B1224 0%, rgba(11,18,36,0) 20%)',
-            }}
-          />
-
         </div>
+
       )}
 
 
