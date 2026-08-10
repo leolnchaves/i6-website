@@ -74,20 +74,32 @@ const HeroDecisaoV4 = () => {
 
           {/* integração com o navy — mesma técnica dos success stories */}
           <div className="absolute inset-0 bg-[#0B1224]/10" />
+
+          {/* mobile: fade suave apenas no topo/base da faixa */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 md:hidden"
+            style={{
+              background:
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 10%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.35) 90%, #0B1224 100%)',
+            }}
+          />
+
+          {/* desktop: fade vertical + laterais */}
+          <div
+            className="absolute inset-0 hidden md:block"
             style={{
               background:
                 'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 88%, #0B1224 100%)',
             }}
           />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 hidden md:block"
             style={{
               background:
                 'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 18%, rgba(11,18,36,0) 82%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
             }}
           />
+
 
           {/* glow coral difuso no núcleo */}
           <div
