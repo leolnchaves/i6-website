@@ -34,20 +34,48 @@ const HeroDecisaoV4 = () => {
 
       {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
-        <div className="container mx-auto px-6 h-full flex items-center justify-center">
-          <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
-            <source media="(min-width: 768px)" srcSet={isPt ? heroPanoramaPt.url : heroPanoramaEn.url} />
+        <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
+          {/* Glow coral difuso atrás do núcleo, amarra a arte ao fundo navy */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(38% 55% at 50% 50%, rgba(244,132,95,0.16) 0%, rgba(244,132,95,0.06) 45%, rgba(244,132,95,0) 75%)',
+            }}
+          />
+          {isPt ? (
             <img
-              src={isPt ? heroMobilePt.url : heroMobileEn.url}
+              src={heroNeonPt.url}
               alt=""
               aria-hidden
-              className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-              style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
+              loading="eager"
+              decoding="async"
+              className="relative w-[96%] md:w-[92%] max-h-[52vh] md:max-h-[50vh] h-auto object-contain select-none animate-fade-in"
+              style={{
+                mixBlendMode: 'screen',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 78% 82% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 78%, transparent 100%)',
+                maskImage:
+                  'radial-gradient(ellipse 78% 82% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 78%, transparent 100%)',
+              }}
             />
-          </picture>
+          ) : (
+            <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
+              <source media="(min-width: 768px)" srcSet={heroPanoramaEn.url} />
+              <img
+                src={heroMobileEn.url}
+                alt=""
+                aria-hidden
+                className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+                style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
+              />
+            </picture>
+          )}
         </div>
 
       </div>
+
 
       {/* 3. DESCRIÇÃO + CTA */}
       <div className="relative z-10 flex-shrink-0 pb-[2vh] md:pb-[3vh] px-6">
