@@ -47,7 +47,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div
-            className="absolute inset-x-[-8%] md:inset-x-[-2%] top-[16vh] md:top-[18vh] h-[66vh] md:h-[64vh]"
+            className="absolute inset-x-[-8%] md:inset-x-[-2%] top-[24vh] md:top-[26vh] h-[66vh] md:h-[64vh]"
             style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
           >
             {playVideo ? (
@@ -80,9 +80,9 @@ const HeroDecisaoV4 = () => {
           <div
             className="absolute inset-0"
             style={{
-              backgroundColor: 'rgba(11,18,36,0.22)',
-              backdropFilter: 'blur(4px)',
-              WebkitBackdropFilter: 'blur(4px)',
+              backgroundColor: 'rgba(11,18,36,0.12)',
+              backdropFilter: 'blur(1.5px)',
+              WebkitBackdropFilter: 'blur(1.5px)',
             }}
           />
 
