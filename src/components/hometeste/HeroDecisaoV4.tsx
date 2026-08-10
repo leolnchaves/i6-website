@@ -80,9 +80,9 @@ const HeroDecisaoV4 = () => {
           <div
             className="absolute inset-0"
             style={{
-              backgroundColor: 'rgba(11,18,36,0.22)',
-              backdropFilter: 'blur(4px)',
-              WebkitBackdropFilter: 'blur(4px)',
+              backgroundColor: 'rgba(11,18,36,0.12)',
+              backdropFilter: 'blur(1.5px)',
+              WebkitBackdropFilter: 'blur(1.5px)',
             }}
           />
 
