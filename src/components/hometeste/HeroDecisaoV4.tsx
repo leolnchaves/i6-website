@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroVideoMp4 from '@/assets/hero-video-pt-v1.mp4.asset.json';
-import heroVideoWebm from '@/assets/hero-video-pt-v1.webm.asset.json';
-import heroVideoPoster from '@/assets/hero-video-pt-v1-poster.jpg.asset.json';
+import heroVideoMp4 from '@/assets/hero-video-pt-v2.mp4.asset.json';
+import heroVideoWebm from '@/assets/hero-video-pt-v2.webm.asset.json';
+import heroVideoPoster from '@/assets/hero-video-pt-v2-poster.jpg.asset.json';
+
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
