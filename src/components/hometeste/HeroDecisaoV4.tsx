@@ -10,9 +10,13 @@ import heroVideoPoster from '@/assets/hero-video-pt-v3-poster.jpg.asset.json';
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
+const SOFT_EDGE =
+  'radial-gradient(ellipse 72% 72% at 50% 50%, #000 45%, rgba(0,0,0,0.75) 65%, rgba(0,0,0,0.25) 82%, transparent 96%)';
+
 const VIDEO_TREATMENT = {
-  filter: 'brightness(0.7) saturate(0.85) contrast(1.05)',
+  filter: 'brightness(0.92) saturate(0.95) contrast(1.03)',
 };
+
 
 
 const HeroDecisaoV4 = () => {
@@ -20,20 +24,16 @@ const HeroDecisaoV4 = () => {
   const { language } = useLanguage();
   const isPt = language === 'pt';
 
-  // vídeo só no desktop e sem prefers-reduced-motion; caso contrário fica o poster
+  // vídeo em qualquer tamanho de tela; poster quando prefers-reduced-motion
   const [playVideo, setPlayVideo] = useState(false);
   useEffect(() => {
-    const mqDesktop = window.matchMedia('(min-width: 768px)');
     const mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setPlayVideo(mqDesktop.matches && !mqMotion.matches);
+    const update = () => setPlayVideo(!mqMotion.matches);
     update();
-    mqDesktop.addEventListener('change', update);
     mqMotion.addEventListener('change', update);
-    return () => {
-      mqDesktop.removeEventListener('change', update);
-      mqMotion.removeEventListener('change', update);
-    };
+    return () => mqMotion.removeEventListener('change', update);
   }, []);
+
 
   const description = isPt
     ? 'Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.'
@@ -49,35 +49,41 @@ const HeroDecisaoV4 = () => {
       {/* FUNDO EM VÍDEO (PT) — camada ambiente, sem bordas perceptíveis */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          {playVideo ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={heroVideoPoster.url}
-              className="absolute inset-0 w-full h-full object-cover select-none"
-              style={VIDEO_TREATMENT}
-            >
-              <source src={heroVideoWebm.url} type="video/webm" />
-              <source src={heroVideoMp4.url} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={heroVideoPoster.url}
-              alt=""
-              loading="eager"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover select-none"
-              style={VIDEO_TREATMENT}
-            />
-          )}
+          <div
+            className="absolute inset-x-0 top-[16vh] h-[58vh] sm:top-[17vh] sm:h-[60vh] md:top-[15vh] md:h-[66vh] flex items-center justify-center px-4 sm:px-8 md:px-16"
+            style={{ WebkitMaskImage: SOFT_EDGE, maskImage: SOFT_EDGE }}
+          >
+            {playVideo ? (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={heroVideoPoster.url}
+                className="w-full h-full max-w-[1200px] object-contain select-none"
+                style={VIDEO_TREATMENT}
+              >
+                <source src={heroVideoWebm.url} type="video/webm" />
+                <source src={heroVideoMp4.url} type="video/mp4" />
+              </video>
+            ) : (
+              <img
+                src={heroVideoPoster.url}
+                alt=""
+                loading="eager"
+                decoding="async"
+                className="w-full h-full max-w-[1200px] object-contain select-none"
+                style={VIDEO_TREATMENT}
+              />
+            )}
+          </div>
 
           {/* integração com o navy — mesmo padrão da capa de success stories */}
-          <div className="absolute inset-0 bg-[#0B1224]/20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-[#0B1224]/15 to-[#0B1224]" />
+          <div className="absolute inset-0 bg-[#0B1224]/10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-transparent to-[#0B1224]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent to-[#0B1224]" />
+
 
 
           {/* glow coral difuso no núcleo */}
