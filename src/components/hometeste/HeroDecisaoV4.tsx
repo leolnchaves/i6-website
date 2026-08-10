@@ -38,7 +38,7 @@ const HeroDecisaoV4 = () => {
             alt=""
             loading="eager"
             decoding="async"
-            className="absolute left-1/2 -translate-x-1/2 top-[19vh] md:top-[22vh] w-[112%] md:w-[100%] max-w-none h-[62vh] md:h-[60vh] object-contain select-none animate-fade-in"
+            className="absolute inset-x-[-8%] md:inset-x-0 top-[19vh] md:top-[21vh] w-auto h-[60vh] md:h-[58vh] object-contain select-none"
             style={{
               opacity: 0.92,
               WebkitMaskImage:
@@ -47,6 +47,7 @@ const HeroDecisaoV4 = () => {
                 'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
             }}
           />
+
           {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
           <div
             className="absolute inset-0"
