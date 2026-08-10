@@ -22,6 +22,47 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
+      {/* ARTE DE FUNDO (PT) — camada ambiente, sem bordas perceptíveis */}
+      {isPt && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          {/* glow coral difuso no núcleo */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(40% 42% at 50% 58%, rgba(244,132,95,0.13) 0%, rgba(244,132,95,0.05) 50%, rgba(244,132,95,0) 78%)',
+            }}
+          />
+          <div className="absolute inset-x-[-10%] md:inset-x-[-2%] top-[18vh] md:top-[20vh] h-[62vh] md:h-[60vh]">
+            <img
+              src={heroNeonPt.url}
+              alt=""
+              loading="eager"
+              decoding="async"
+              className="w-full h-full object-contain select-none"
+              style={{
+                opacity: 0.92,
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
+                maskImage:
+                  'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
+              }}
+            />
+          </div>
+
+
+          {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0) 18%), linear-gradient(to left, #0B1224 0%, rgba(11,18,36,0) 18%), linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0) 22%), linear-gradient(to top, #0B1224 0%, rgba(11,18,36,0) 20%)',
+            }}
+          />
+        </div>
+
+      )}
+
       {/* 1. TÍTULO */}
       <div className="relative z-10 flex-shrink-0 pt-[8vh] md:pt-[11vh] px-6">
         <div className="text-center max-w-4xl mx-auto">
@@ -32,35 +73,10 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* 2. GUARDRAIL — imagem preenche o máximo do espaço sem esticar */}
+      {/* 2. ESPAÇO CENTRAL — arte de fundo (PT) ou imagem dedicada (EN) */}
       <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
-        <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
-          {/* Glow coral difuso atrás do núcleo, amarra a arte ao fundo navy */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(38% 55% at 50% 50%, rgba(244,132,95,0.16) 0%, rgba(244,132,95,0.06) 45%, rgba(244,132,95,0) 75%)',
-            }}
-          />
-          {isPt ? (
-            <img
-              src={heroNeonPt.url}
-              alt=""
-              aria-hidden
-              loading="eager"
-              decoding="async"
-              className="relative w-[96%] md:w-[92%] max-h-[52vh] md:max-h-[50vh] h-auto object-contain select-none animate-fade-in"
-              style={{
-                mixBlendMode: 'screen',
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 78% 82% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 78%, transparent 100%)',
-                maskImage:
-                  'radial-gradient(ellipse 78% 82% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 78%, transparent 100%)',
-              }}
-            />
-          ) : (
+        {!isPt && (
+          <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
             <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
               <source media="(min-width: 768px)" srcSet={heroPanoramaEn.url} />
               <img
@@ -71,10 +87,10 @@ const HeroDecisaoV4 = () => {
                 style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
               />
             </picture>
-          )}
-        </div>
-
+          </div>
+        )}
       </div>
+
 
 
       {/* 3. DESCRIÇÃO + CTA */}
