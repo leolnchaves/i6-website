@@ -30,13 +30,13 @@ O arquivo enviado tem 1280x720, 24 fps, 8,04 s, ~1,95 Mbps, sem áudio (1,9 MB).
 
 
 
-4. **Performance e acessibilidade**
+5. **Performance e acessibilidade**
    - `preload="metadata"` (não baixa o vídeo inteiro antes do primeiro paint) e o poster aparece imediatamente.
    - Em `prefers-reduced-motion: reduce`, exibe apenas o poster — sem vídeo.
    - No mobile (`< 768px`), exibe apenas o poster por padrão, evitando tráfego e consumo de bateria; o vídeo roda no desktop.
    - `aria-hidden`, `pointer-events-none`, sem áudio.
 
-5. **Verificação**
+6. **Verificação**
    - Screenshot do preview PT (desktop) confirmando ausência de bordas retas e legibilidade do título/CTA.
    - EN permanece com os assets atuais. Sem release/deploy nesta etapa.
 
