@@ -11,10 +11,10 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const EDGE_MASK =
-  'radial-gradient(ellipse 68% 64% at 50% 50%, #000 28%, rgba(0,0,0,0.9) 48%, rgba(0,0,0,0.48) 67%, rgba(0,0,0,0.12) 82%, transparent 96%)';
+  'radial-gradient(ellipse 58% 58% at 50% 50%, #000 22%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.48) 57%, rgba(0,0,0,0.12) 70%, transparent 82%)';
 
 const VIDEO_TREATMENT = {
-  filter: 'saturate(0.72) brightness(0.9) contrast(1.03)',
+  filter: 'saturate(0.78) brightness(0.96) contrast(1.05)',
   mixBlendMode: 'lighten' as const,
 };
 
@@ -53,7 +53,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div
-            className="absolute inset-x-[-2%] md:inset-x-[2%] top-[23vh] md:top-[23vh] h-[56vh] md:h-[58vh]"
+            className="absolute inset-x-[-8%] md:inset-x-[-4%] top-[17vh] md:top-[16vh] h-[70vh] md:h-[72vh]"
             style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
           >
             {playVideo ? (
@@ -104,7 +104,7 @@ const HeroDecisaoV4 = () => {
           />
 
           {/* Véu fino sem blur: reduz o brilho sem afetar a nitidez */}
-          <div className="absolute inset-0 bg-[#0B1224]/10" />
+          <div className="absolute inset-0 bg-[#0B1224]/[0.04]" />
         </div>
       )}
 
