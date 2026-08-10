@@ -47,7 +47,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div
-            className="absolute inset-x-[-8%] md:inset-x-[-2%] top-[20vh] md:top-[21vh] h-[66vh] md:h-[64vh]"
+            className="absolute inset-x-[-2%] md:inset-x-[2%] top-[23vh] md:top-[23vh] h-[56vh] md:h-[58vh]"
             style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
           >
             {playVideo ? (
@@ -59,7 +59,7 @@ const HeroDecisaoV4 = () => {
                 preload="metadata"
                 poster={heroVideoPoster.url}
                 className="w-full h-full object-contain select-none"
-                style={{ filter: 'saturate(0.62) brightness(0.74) contrast(0.98)' }}
+                style={{ filter: 'saturate(0.7) brightness(0.85) contrast(1.05)', mixBlendMode: 'screen' }}
               >
                 <source src={heroVideoWebm.url} type="video/webm" />
                 <source src={heroVideoMp4.url} type="video/mp4" />
@@ -71,16 +71,11 @@ const HeroDecisaoV4 = () => {
                 loading="eager"
                 decoding="async"
                 className="w-full h-full object-contain select-none"
-                style={{ filter: 'saturate(0.62) brightness(0.74) contrast(0.98)' }}
+                style={{ filter: 'saturate(0.7) brightness(0.85) contrast(1.05)', mixBlendMode: 'screen' }}
               />
             )}
           </div>
 
-          {/* véu navy plano — apenas atenua o tom, sem desfoque */}
-          <div
-            className="absolute inset-0"
-            style={{ backgroundColor: 'rgba(11,18,36,0.12)' }}
-          />
 
 
 
