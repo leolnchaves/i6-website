@@ -71,7 +71,7 @@ const HeroDecisaoV4 = () => {
                 loading="eager"
                 decoding="async"
                 className="w-full h-full object-contain select-none"
-                style={{ filter: 'saturate(0.8) brightness(0.95) contrast(0.95)' }}
+                style={{ filter: 'saturate(0.5) brightness(0.6) contrast(0.95)' }}
               />
             )}
           </div>
