@@ -132,8 +132,9 @@ const HeroDecisaoV4 = () => {
 
 
       {/* 3. DESCRIÇÃO + CTA */}
-      <div className="relative z-10 flex-shrink-0 pb-[2vh] md:pb-[3vh] px-6">
-        <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
+      <div className="relative z-10 flex-shrink-0 pb-[4vh] sm:pb-[2vh] md:pb-[3vh] px-5 sm:px-6">
+        <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5">
+
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
             {description}
           </p>
