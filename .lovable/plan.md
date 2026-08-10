@@ -22,13 +22,21 @@ O arquivo enviado tem 1280x720, 24 fps, 8,04 s, ~1,95 Mbps, sem áudio (1,9 MB).
    - Conteúdo do hero segue em `z-10`.
    - Remover o uso da imagem `hero-decisao-neon-pt-v1` nesse componente (o pointer do asset permanece no repo, sem custo).
 
-4. **Performance e acessibilidade**
+4. **Camada neutra por cima do vídeo (suavizar as cores)**
+   - Overlay navy translúcido (`#0B1224` a ~35–45% de opacidade) cobrindo todo o vídeo, para reduzir a saturação e o brilho.
+   - `backdrop-filter: blur(...)` leve (≈6–10 px) nessa mesma camada, deixando o vídeo com aparência difusa/ambiente em vez de nítido e vibrante.
+   - Leve dessaturação e redução de contraste no próprio vídeo (`filter: saturate(0.75) brightness(0.85) contrast(0.95)`), para o resultado ficar neutro mesmo onde o blur não é suportado.
+   - Ajuste fino dos valores validado por screenshot, garantindo contraste do título branco e do CTA coral.
+
+
+
+5. **Performance e acessibilidade**
    - `preload="metadata"` (não baixa o vídeo inteiro antes do primeiro paint) e o poster aparece imediatamente.
    - Em `prefers-reduced-motion: reduce`, exibe apenas o poster — sem vídeo.
    - No mobile (`< 768px`), exibe apenas o poster por padrão, evitando tráfego e consumo de bateria; o vídeo roda no desktop.
    - `aria-hidden`, `pointer-events-none`, sem áudio.
 
-5. **Verificação**
+6. **Verificação**
    - Screenshot do preview PT (desktop) confirmando ausência de bordas retas e legibilidade do título/CTA.
    - EN permanece com os assets atuais. Sem release/deploy nesta etapa.
 
