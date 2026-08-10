@@ -11,7 +11,7 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-cover select-none filter brightness-[0.7] saturate-[0.85] contrast-[1.05]';
+  'absolute inset-0 w-full h-full object-cover object-[50%_40%] md:object-center select-none filter brightness-[0.95] saturate-100 contrast-[1.02]';
 
 
 
@@ -42,7 +42,7 @@ const HeroDecisaoV4 = () => {
   const heroImageWidth = 'w-[72%]';
 
   return (
-    <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
+    <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
       {/* FUNDO EM VÍDEO (PT) — tela cheia, integrado ao navy por gradientes */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
@@ -70,9 +70,21 @@ const HeroDecisaoV4 = () => {
           )}
 
           {/* integração com o navy — mesma técnica dos success stories */}
-          <div className="absolute inset-0 bg-[#0B1224]/35" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/40 to-[#0B1224]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224]/50 via-transparent to-[#0B1224]/50" />
+          <div className="absolute inset-0 bg-[#0B1224]/10" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 88%, #0B1224 100%)',
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 18%, rgba(11,18,36,0) 82%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
+            }}
+          />
 
           {/* glow coral difuso no núcleo */}
           <div
@@ -89,17 +101,18 @@ const HeroDecisaoV4 = () => {
 
 
       {/* 1. TÍTULO */}
-      <div className="relative z-10 flex-shrink-0 pt-[8vh] md:pt-[11vh] px-6">
+      <div className="relative z-10 flex-shrink-0 pt-[10vh] sm:pt-[9vh] md:pt-[11vh] px-5 sm:px-6">
         <div className="text-center max-w-4xl mx-auto">
           <h1
-            className="text-5xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
             dangerouslySetInnerHTML={{ __html: `The Platform for<br/><span style="color:#F4845F">Decision Advantage</span>` }}
           />
         </div>
       </div>
 
       {/* 2. ESPAÇO CENTRAL — arte de fundo (PT) ou imagem dedicada (EN) */}
-      <div className="relative flex-1 min-h-0 w-full overflow-hidden flex items-center justify-center -my-[2vh] md:-my-[3vh]">
+      <div className="relative flex-1 min-h-[18vh] sm:min-h-0 w-full overflow-hidden flex items-center justify-center -my-[1vh] sm:-my-[2vh] md:-my-[3vh]">
+
         {!isPt && (
           <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
             <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
@@ -119,8 +132,9 @@ const HeroDecisaoV4 = () => {
 
 
       {/* 3. DESCRIÇÃO + CTA */}
-      <div className="relative z-10 flex-shrink-0 pb-[2vh] md:pb-[3vh] px-6">
-        <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-5">
+      <div className="relative z-10 flex-shrink-0 pb-[4vh] sm:pb-[2vh] md:pb-[3vh] px-5 sm:px-6">
+        <div className="text-center max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5">
+
           <p className="text-base sm:text-lg text-white/70 leading-relaxed">
             {description}
           </p>
