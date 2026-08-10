@@ -45,35 +45,38 @@ const HeroDecisaoV4 = () => {
       {/* FUNDO EM VÍDEO (PT) — camada ambiente, sem bordas perceptíveis */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          {playVideo ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={heroVideoPoster.url}
-              className="absolute inset-0 w-full h-full object-cover select-none"
-              style={VIDEO_TREATMENT}
-            >
-              <source src={heroVideoWebm.url} type="video/webm" />
-              <source src={heroVideoMp4.url} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={heroVideoPoster.url}
-              alt=""
-              loading="eager"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover select-none"
-              style={VIDEO_TREATMENT}
-            />
-          )}
+          <div className="absolute inset-x-0 top-[16vh] h-[58vh] sm:top-[17vh] sm:h-[60vh] md:top-[15vh] md:h-[66vh] flex items-center justify-center px-4 sm:px-8 md:px-16">
+            {playVideo ? (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={heroVideoPoster.url}
+                className="w-full h-full max-w-[1200px] object-contain select-none"
+                style={VIDEO_TREATMENT}
+              >
+                <source src={heroVideoWebm.url} type="video/webm" />
+                <source src={heroVideoMp4.url} type="video/mp4" />
+              </video>
+            ) : (
+              <img
+                src={heroVideoPoster.url}
+                alt=""
+                loading="eager"
+                decoding="async"
+                className="w-full h-full max-w-[1200px] object-contain select-none"
+                style={VIDEO_TREATMENT}
+              />
+            )}
+          </div>
 
           {/* integração com o navy — mesmo padrão da capa de success stories */}
-          <div className="absolute inset-0 bg-[#0B1224]/20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-[#0B1224]/15 to-[#0B1224]" />
+          <div className="absolute inset-0 bg-[#0B1224]/10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-transparent to-[#0B1224]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent to-[#0B1224]" />
+
 
 
           {/* glow coral difuso no núcleo */}
