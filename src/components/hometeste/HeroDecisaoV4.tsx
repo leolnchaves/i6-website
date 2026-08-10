@@ -43,45 +43,36 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* FUNDO EM VÍDEO (PT) — camada ambiente, sem bordas perceptíveis */}
+      {/* FUNDO EM VÍDEO (PT) — tela cheia, integrado ao navy por gradientes */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <div
-            className="absolute inset-x-0 top-[16vh] h-[58vh] sm:top-[17vh] sm:h-[60vh] md:top-[15vh] md:h-[66vh] flex items-center justify-center px-4 sm:px-8 md:px-16"
-            style={{ WebkitMaskImage: SOFT_EDGE, maskImage: SOFT_EDGE }}
-          >
-            {playVideo ? (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster={heroVideoPoster.url}
-                className="w-full h-full max-w-[1200px] object-contain select-none"
-                style={VIDEO_TREATMENT}
-              >
-                <source src={heroVideoWebm.url} type="video/webm" />
-                <source src={heroVideoMp4.url} type="video/mp4" />
-              </video>
-            ) : (
-              <img
-                src={heroVideoPoster.url}
-                alt=""
-                loading="eager"
-                decoding="async"
-                className="w-full h-full max-w-[1200px] object-contain select-none"
-                style={VIDEO_TREATMENT}
-              />
-            )}
-          </div>
+          {playVideo ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={heroVideoPoster.url}
+              className={VIDEO_CLASS}
+            >
+              <source src={heroVideoWebm.url} type="video/webm" />
+              <source src={heroVideoMp4.url} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={heroVideoPoster.url}
+              alt=""
+              loading="eager"
+              decoding="async"
+              className={VIDEO_CLASS}
+            />
+          )}
 
-          {/* integração com o navy — apenas nas bordas, sem véu sobre o núcleo */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] from-[8%] via-transparent via-40% to-[#0B1224]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] from-[6%] via-transparent via-35% to-[#0B1224]" />
-
-
-
+          {/* integração com o navy — mesma técnica dos success stories */}
+          <div className="absolute inset-0 bg-[#0B1224]/35" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/40 to-[#0B1224]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224]/50 via-transparent to-[#0B1224]/50" />
 
           {/* glow coral difuso no núcleo */}
           <div
@@ -92,6 +83,7 @@ const HeroDecisaoV4 = () => {
             }}
           />
         </div>
+
 
       )}
 
