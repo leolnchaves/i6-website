@@ -45,7 +45,10 @@ const HeroDecisaoV4 = () => {
       {/* FUNDO EM VÍDEO (PT) — camada ambiente, sem bordas perceptíveis */}
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-x-0 top-[16vh] h-[58vh] sm:top-[17vh] sm:h-[60vh] md:top-[15vh] md:h-[66vh] flex items-center justify-center px-4 sm:px-8 md:px-16">
+          <div
+            className="absolute inset-x-0 top-[16vh] h-[58vh] sm:top-[17vh] sm:h-[60vh] md:top-[15vh] md:h-[66vh] flex items-center justify-center px-4 sm:px-8 md:px-16"
+            style={{ WebkitMaskImage: SOFT_EDGE, maskImage: SOFT_EDGE }}
+          >
             {playVideo ? (
               <video
                 autoPlay
