@@ -11,7 +11,7 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-cover object-[50%_40%] md:object-center select-none filter brightness-[0.95] saturate-100 contrast-[1.02]';
+  'absolute inset-0 w-full h-full object-contain object-center md:object-cover select-none filter brightness-[0.95] saturate-100 contrast-[1.02]';
 
 
 
@@ -45,7 +45,10 @@ const HeroDecisaoV4 = () => {
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
       {/* FUNDO EM VÍDEO (PT) — tela cheia, integrado ao navy por gradientes */}
       {isPt && (
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-[26svh] h-[38svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+        >
           {playVideo ? (
             <video
               autoPlay
@@ -71,20 +74,32 @@ const HeroDecisaoV4 = () => {
 
           {/* integração com o navy — mesma técnica dos success stories */}
           <div className="absolute inset-0 bg-[#0B1224]/10" />
+
+          {/* mobile: fade suave apenas no topo/base da faixa */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 md:hidden"
+            style={{
+              background:
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 10%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.35) 90%, #0B1224 100%)',
+            }}
+          />
+
+          {/* desktop: fade vertical + laterais */}
+          <div
+            className="absolute inset-0 hidden md:block"
             style={{
               background:
                 'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 88%, #0B1224 100%)',
             }}
           />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 hidden md:block"
             style={{
               background:
                 'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 18%, rgba(11,18,36,0) 82%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
             }}
           />
+
 
           {/* glow coral difuso no núcleo */}
           <div
