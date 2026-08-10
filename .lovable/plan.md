@@ -1,25 +1,23 @@
-# Por que o vídeo do hero parece desfocado
+# Hero PT com o vídeo em alta resolução
 
-## Causas confirmadas
-
-1. **O arquivo original já é de baixa qualidade.** `hero-i6-5.mp4` tem 1268x724 e apenas ~425 kbps (541 KB para 10 s). Nessa taxa, um vídeo com muitas linhas finas e brilho neon perde nitidez logo na origem.
-2. **A conversão reduziu ainda mais.** Os arquivos publicados ficaram em ~193 KB (MP4) e ~206 KB (WebM), ou seja cerca de 155 kbps — menos da metade do bitrate do original. Compressão em cima de compressão amplifica o borrão.
-3. **A imagem é ampliada na tela.** No desktop o vídeo usa `object-cover` em tela cheia: num viewport de 1366x902 os 1268x724 são esticados ~1,25x e recortados, então cada pixel do vídeo cobre mais de um pixel da tela.
-4. **Filtro de brilho.** O hero aplica `brightness(0.95)`, que reduz levemente o contraste das linhas neon e reforça a sensação de suavidade.
+O novo anexo (`hero-i6-6.mp4`) tem 3808x2176 a 30 fps e ~3 Mbps (3,7 MB) — muito acima do arquivo anterior (1268x724, ~425 kbps), que era a causa principal do borrão.
 
 ## O que fazer
 
-1. **Reencodar sem perda visível**: gerar novamente WebM/VP9 e MP4/H.264 com qualidade alta (CRF ~20 no H.264 e ~28 no VP9, com `-deadline good -cpu-used 2`), aceitando arquivos maiores (~1–2 MB) — ainda leves para um hero.
-2. **Upscale controlado no encode**: renderizar a 1904x1088 (1,5x) com filtro de nitidez suave (`lanczos` + `unsharp` leve), para que a exibição em tela cheia não precise esticar pixels.
-3. **Ajustar a exibição**: manter `object-cover` no desktop e reduzir/remover o `brightness(0.95)` se as linhas continuarem apagadas, sem mexer em gradientes, layout ou responsividade.
-4. **Verificar** com screenshot do preview PT em desktop (1366x902) e mobile, comparando a nitidez do núcleo da arte.
-
-## Observação importante
-
-Como o arquivo enviado já nasce com pouca informação, o reencode melhora bastante mas não recupera detalhe que não existe. Se o resultado ainda não satisfizer, o caminho definitivo é exportar o vídeo da origem em maior resolução/bitrate (ex.: 1920x1080 a 4–8 Mbps) e reenviar.
+1. **Gerar os arquivos de exibição a partir do novo master**, sem downscale agressivo:
+   - MP4/H.264 em 1920x1098, CRF ~20, `+faststart`, sem áudio (fallback Safari/iOS).
+   - WebM/VP9 em 1920x1098, CRF ~28, `-deadline good -cpu-used 2`, sem áudio.
+   - Reescala com `lanczos` para preservar as linhas finas neon.
+   - Poster JPG de alta qualidade do primeiro frame.
+   - Alvo de peso: ~1–2,5 MB por arquivo, aceitável para um hero com `preload="metadata"`.
+2. **Publicar como assets CDN** `hero-video-pt-v7.webm`, `.mp4` e `-poster.jpg`.
+3. **Trocar os três imports** em `src/components/hometeste/HeroDecisaoV4.tsx` (de `v6` para `v7`).
+4. **Nitidez na exibição**: remover o `brightness(0.95)` (ou levar a 1.0) se as linhas ficarem apagadas, mantendo `saturate-100 contrast(1.02)`. Nenhuma mudança em layout, gradientes de integração, responsividade ou conteúdo.
+5. **Verificar** por screenshot do preview PT em desktop (1366x902) e mobile, confirmando nitidez e a mesma fusão com o navy.
 
 ## Técnico
 
-- Novos assets CDN `hero-video-pt-v7.webm`, `.mp4` e `-poster.jpg`.
-- Único arquivo de código alterado: `src/components/hometeste/HeroDecisaoV4.tsx` (imports dos assets e, se necessário, o filtro de brilho).
+- Codificação com `ffmpeg` no sandbox, partindo direto de `/mnt/user-uploads/hero-i6-6.mp4`.
+- Único arquivo de código alterado: `src/components/hometeste/HeroDecisaoV4.tsx`.
+- Pointers antigos (`hero-video-pt-v1..v6`) permanecem no repo sem uso.
 - Sem release/deploy nesta etapa.
