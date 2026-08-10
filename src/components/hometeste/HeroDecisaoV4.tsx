@@ -10,9 +10,13 @@ import heroVideoPoster from '@/assets/hero-video-pt-v3-poster.jpg.asset.json';
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
+const SOFT_EDGE =
+  'radial-gradient(ellipse 72% 72% at 50% 50%, #000 45%, rgba(0,0,0,0.75) 65%, rgba(0,0,0,0.25) 82%, transparent 96%)';
+
 const VIDEO_TREATMENT = {
   filter: 'brightness(0.92) saturate(0.95) contrast(1.03)',
 };
+
 
 
 const HeroDecisaoV4 = () => {
