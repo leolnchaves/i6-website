@@ -11,10 +11,10 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const SOFT_EDGE =
-  'radial-gradient(ellipse 85% 85% at 50% 50%, #000 68%, rgba(0,0,0,0.85) 82%, rgba(0,0,0,0.35) 92%, transparent 100%)';
+  'radial-gradient(ellipse 92% 92% at 50% 50%, #000 76%, rgba(0,0,0,0.9) 87%, rgba(0,0,0,0.4) 95%, transparent 100%)';
 
 const VIDEO_TREATMENT = {
-  filter: 'brightness(1.05) saturate(1.05) contrast(1.05)',
+  filter: 'brightness(1.28) saturate(1.2) contrast(1.06)',
 };
 
 
@@ -80,8 +80,8 @@ const HeroDecisaoV4 = () => {
           </div>
 
           {/* integração com o navy — apenas nas bordas, sem véu sobre o núcleo */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-transparent via-50% to-[#0B1224]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent via-50% to-[#0B1224]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] from-[8%] via-transparent via-40% to-[#0B1224]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] from-[6%] via-transparent via-35% to-[#0B1224]" />
 
 
 
