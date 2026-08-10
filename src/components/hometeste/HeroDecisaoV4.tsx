@@ -3,19 +3,16 @@ import { useEffect, useState } from 'react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroVideoMp4 from '@/assets/hero-video-pt-v3.mp4.asset.json';
-import heroVideoWebm from '@/assets/hero-video-pt-v3.webm.asset.json';
-import heroVideoPoster from '@/assets/hero-video-pt-v3-poster.jpg.asset.json';
+import heroVideoMp4 from '@/assets/hero-video-pt-v4.mp4.asset.json';
+import heroVideoWebm from '@/assets/hero-video-pt-v4.webm.asset.json';
+import heroVideoPoster from '@/assets/hero-video-pt-v4-poster.jpg.asset.json';
 
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
-const SOFT_EDGE =
-  'radial-gradient(ellipse 92% 92% at 50% 50%, #000 76%, rgba(0,0,0,0.9) 87%, rgba(0,0,0,0.4) 95%, transparent 100%)';
+const VIDEO_CLASS =
+  'absolute inset-0 w-full h-full object-cover select-none filter brightness-[0.7] saturate-[0.85] contrast-[1.05]';
 
-const VIDEO_TREATMENT = {
-  filter: 'brightness(1.28) saturate(1.2) contrast(1.06)',
-};
 
 
 
