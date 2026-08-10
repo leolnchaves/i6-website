@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
-import heroPanoramaPt from '@/assets/hero-decisao-panorama-pt-v8-transparent.png.asset.json';
-import heroMobilePt from '@/assets/hero-decisao-mobile-pt-v6-transparent.png.asset.json';
+import heroNeonPt from '@/assets/hero-decisao-neon-pt-v1.png.asset.json';
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
