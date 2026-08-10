@@ -59,7 +59,7 @@ const HeroDecisaoV4 = () => {
                 preload="metadata"
                 poster={heroVideoPoster.url}
                 className="w-full h-full object-contain select-none"
-                style={{ filter: 'saturate(0.8) brightness(0.95) contrast(0.95)' }}
+                style={{ filter: 'saturate(0.5) brightness(0.6) contrast(0.95)' }}
               >
                 <source src={heroVideoWebm.url} type="video/webm" />
                 <source src={heroVideoMp4.url} type="video/mp4" />
@@ -71,20 +71,17 @@ const HeroDecisaoV4 = () => {
                 loading="eager"
                 decoding="async"
                 className="w-full h-full object-contain select-none"
-                style={{ filter: 'saturate(0.8) brightness(0.95) contrast(0.95)' }}
+                style={{ filter: 'saturate(0.5) brightness(0.6) contrast(0.95)' }}
               />
             )}
           </div>
 
-          {/* quadro neutro: navy translúcido + blur leve para tirar o excesso de cor */}
+          {/* véu navy plano — apenas atenua o tom, sem desfoque */}
           <div
             className="absolute inset-0"
-            style={{
-              backgroundColor: 'rgba(11,18,36,0.12)',
-              backdropFilter: 'blur(1.5px)',
-              WebkitBackdropFilter: 'blur(1.5px)',
-            }}
+            style={{ backgroundColor: 'rgba(11,18,36,0.18)' }}
           />
+
 
 
           {/* glow coral difuso no núcleo */}
