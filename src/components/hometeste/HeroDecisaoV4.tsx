@@ -30,7 +30,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(42% 48% at 50% 52%, rgba(244,132,95,0.14) 0%, rgba(244,132,95,0.05) 48%, rgba(244,132,95,0) 78%)',
+                'radial-gradient(40% 42% at 50% 58%, rgba(244,132,95,0.13) 0%, rgba(244,132,95,0.05) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
           <img
@@ -38,13 +38,13 @@ const HeroDecisaoV4 = () => {
             alt=""
             loading="eager"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-center select-none animate-fade-in scale-[1.35] md:scale-100"
+            className="absolute left-1/2 -translate-x-1/2 top-[19vh] md:top-[22vh] w-[112%] md:w-[100%] max-w-none h-[62vh] md:h-[60vh] object-contain select-none animate-fade-in"
             style={{
-              opacity: 0.9,
+              opacity: 0.92,
               WebkitMaskImage:
-                'radial-gradient(ellipse 68% 58% at 50% 52%, #000 22%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.3) 72%, rgba(0,0,0,0) 92%)',
+                'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
               maskImage:
-                'radial-gradient(ellipse 68% 58% at 50% 52%, #000 22%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.3) 72%, rgba(0,0,0,0) 92%)',
+                'radial-gradient(ellipse 62% 60% at 50% 50%, #000 30%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0) 96%)',
             }}
           />
           {/* vinheta navy nas quatro bordas — dissolve qualquer linha reta */}
@@ -52,10 +52,11 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0) 26%), linear-gradient(to left, #0B1224 0%, rgba(11,18,36,0) 26%), linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0) 24%), linear-gradient(to top, #0B1224 0%, rgba(11,18,36,0) 24%)',
+                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0) 18%), linear-gradient(to left, #0B1224 0%, rgba(11,18,36,0) 18%), linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0) 22%), linear-gradient(to top, #0B1224 0%, rgba(11,18,36,0) 20%)',
             }}
           />
         </div>
+
       )}
 
       {/* 1. TÍTULO */}
