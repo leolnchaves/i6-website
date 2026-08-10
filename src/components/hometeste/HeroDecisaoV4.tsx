@@ -103,8 +103,6 @@ const HeroDecisaoV4 = () => {
             }}
           />
 
-          {/* Véu fino sem blur: reduz o brilho sem afetar a nitidez */}
-          <div className="absolute inset-0 bg-[#0B1224]/[0.04]" />
         </div>
       )}
 
