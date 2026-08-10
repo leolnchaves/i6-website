@@ -75,9 +75,10 @@ const HeroDecisaoV4 = () => {
           )}
 
           {/* integração com o navy — mesmo padrão da capa de success stories */}
-          <div className="absolute inset-0 bg-[#0B1224]/35" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-[#0B1224]/35 to-[#0B1224]" />
+          <div className="absolute inset-0 bg-[#0B1224]/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-[#0B1224]/15 to-[#0B1224]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent to-[#0B1224]" />
+
 
           {/* glow coral difuso no núcleo */}
           <div
