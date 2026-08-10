@@ -59,7 +59,7 @@ const HeroDecisaoV4 = () => {
                 preload="metadata"
                 poster={heroVideoPoster.url}
                 className="w-full h-full object-contain select-none"
-                style={{ filter: 'saturate(0.8) brightness(0.95) contrast(0.95)' }}
+                style={{ filter: 'saturate(0.5) brightness(0.6) contrast(0.95)' }}
               >
                 <source src={heroVideoWebm.url} type="video/webm" />
                 <source src={heroVideoMp4.url} type="video/mp4" />
