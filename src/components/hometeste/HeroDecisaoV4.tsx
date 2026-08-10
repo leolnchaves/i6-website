@@ -47,7 +47,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div
-            className="absolute inset-0"
+            className="absolute inset-x-[-8%] md:inset-x-[-2%] top-[16vh] md:top-[18vh] h-[66vh] md:h-[64vh]"
             style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
           >
             {playVideo ? (
@@ -58,8 +58,8 @@ const HeroDecisaoV4 = () => {
                 playsInline
                 preload="metadata"
                 poster={heroVideoPoster.url}
-                className="w-full h-full object-cover select-none"
-                style={{ filter: 'saturate(0.7) brightness(0.82) contrast(0.95)' }}
+                className="w-full h-full object-contain select-none"
+                style={{ filter: 'saturate(0.8) brightness(0.95) contrast(0.95)' }}
               >
                 <source src={heroVideoWebm.url} type="video/webm" />
                 <source src={heroVideoMp4.url} type="video/mp4" />
@@ -70,8 +70,8 @@ const HeroDecisaoV4 = () => {
                 alt=""
                 loading="eager"
                 decoding="async"
-                className="w-full h-full object-cover select-none"
-                style={{ filter: 'saturate(0.7) brightness(0.82) contrast(0.95)' }}
+                className="w-full h-full object-contain select-none"
+                style={{ filter: 'saturate(0.8) brightness(0.95) contrast(0.95)' }}
               />
             )}
           </div>
@@ -80,11 +80,12 @@ const HeroDecisaoV4 = () => {
           <div
             className="absolute inset-0"
             style={{
-              backgroundColor: 'rgba(11,18,36,0.42)',
-              backdropFilter: 'blur(7px)',
-              WebkitBackdropFilter: 'blur(7px)',
+              backgroundColor: 'rgba(11,18,36,0.22)',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
             }}
           />
+
 
           {/* glow coral difuso no núcleo */}
           <div
