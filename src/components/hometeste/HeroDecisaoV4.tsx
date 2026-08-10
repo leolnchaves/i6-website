@@ -79,10 +79,10 @@ const HeroDecisaoV4 = () => {
             )}
           </div>
 
-          {/* integração com o navy — mesmo padrão da capa de success stories */}
-          <div className="absolute inset-0 bg-[#0B1224]/10" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-transparent to-[#0B1224]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent to-[#0B1224]" />
+          {/* integração com o navy — apenas nas bordas, sem véu sobre o núcleo */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1224] via-transparent via-50% to-[#0B1224]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224] via-transparent via-50% to-[#0B1224]" />
+
 
 
 
