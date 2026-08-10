@@ -11,7 +11,7 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-cover object-[50%_40%] md:object-center select-none filter brightness-[0.95] saturate-100 contrast-[1.02]';
+  'absolute inset-0 w-full h-full object-contain object-center md:object-cover select-none filter brightness-[0.95] saturate-100 contrast-[1.02]';
 
 
 
@@ -45,7 +45,10 @@ const HeroDecisaoV4 = () => {
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
       {/* FUNDO EM VÍDEO (PT) — tela cheia, integrado ao navy por gradientes */}
       {isPt && (
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-[26svh] h-[38svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+        >
           {playVideo ? (
             <video
               autoPlay
