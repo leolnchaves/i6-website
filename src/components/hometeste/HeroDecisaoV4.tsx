@@ -11,7 +11,7 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-cover select-none filter brightness-[0.7] saturate-[0.85] contrast-[1.05]';
+  'absolute inset-0 w-full h-full object-cover object-[50%_40%] md:object-center select-none filter brightness-[0.95] saturate-100 contrast-[1.02]';
 
 
 
@@ -70,9 +70,21 @@ const HeroDecisaoV4 = () => {
           )}
 
           {/* integração com o navy — mesma técnica dos success stories */}
-          <div className="absolute inset-0 bg-[#0B1224]/35" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1224]/40 to-[#0B1224]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1224]/50 via-transparent to-[#0B1224]/50" />
+          <div className="absolute inset-0 bg-[#0B1224]/10" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 88%, #0B1224 100%)',
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 18%, rgba(11,18,36,0) 82%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
+            }}
+          />
 
           {/* glow coral difuso no núcleo */}
           <div
