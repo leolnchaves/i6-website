@@ -20,20 +20,16 @@ const HeroDecisaoV4 = () => {
   const { language } = useLanguage();
   const isPt = language === 'pt';
 
-  // vídeo só no desktop e sem prefers-reduced-motion; caso contrário fica o poster
+  // vídeo em qualquer tamanho de tela; poster quando prefers-reduced-motion
   const [playVideo, setPlayVideo] = useState(false);
   useEffect(() => {
-    const mqDesktop = window.matchMedia('(min-width: 768px)');
     const mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setPlayVideo(mqDesktop.matches && !mqMotion.matches);
+    const update = () => setPlayVideo(!mqMotion.matches);
     update();
-    mqDesktop.addEventListener('change', update);
     mqMotion.addEventListener('change', update);
-    return () => {
-      mqDesktop.removeEventListener('change', update);
-      mqMotion.removeEventListener('change', update);
-    };
+    return () => mqMotion.removeEventListener('change', update);
   }, []);
+
 
   const description = isPt
     ? 'Transformamos sinais do negócio, mercado e comportamento em decisões que protegem margem, aceleram giro, aumentam conversão e reduzem custo.'
