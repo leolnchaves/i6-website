@@ -11,7 +11,8 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-contain object-center md:object-cover select-none filter brightness-100 saturate-100 contrast-[1.02]';
+  'absolute inset-0 w-full h-full object-contain object-center md:object-cover md:object-[center_58%] select-none filter brightness-100 saturate-100 contrast-[1.02]';
+
 
 
 
