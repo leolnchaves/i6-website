@@ -48,7 +48,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[26svh] h-[38svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-x-0 top-[30svh] h-[34svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
         >
           {playVideo ? (
             <video
