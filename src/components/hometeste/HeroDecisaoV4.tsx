@@ -107,7 +107,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(40% 42% at 50% 55%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
+                'radial-gradient(40% 42% at 50% 60%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
         </div>
