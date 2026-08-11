@@ -11,7 +11,7 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-contain object-center md:object-cover md:object-[center_58%] select-none filter brightness-100 saturate-100 contrast-[1.02]';
+  'absolute inset-0 w-full h-full object-contain object-center md:object-cover md:object-center md:translate-y-[4vh] select-none filter brightness-100 saturate-100 contrast-[1.06]';
 
 
 
@@ -48,7 +48,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[30svh] h-[34svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-x-0 top-[33svh] h-[34svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
         >
           {playVideo ? (
             <video
@@ -60,8 +60,8 @@ const HeroDecisaoV4 = () => {
               poster={heroVideoPoster.url}
               className={VIDEO_CLASS}
             >
-              <source src={heroVideoWebm.url} type="video/webm" />
               <source src={heroVideoMp4.url} type="video/mp4" />
+              <source src={heroVideoWebm.url} type="video/webm" />
             </video>
           ) : (
             <img
@@ -81,7 +81,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0 md:hidden"
             style={{
               background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 24%, rgba(11,18,36,0) 76%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 7%, rgba(11,18,36,0) 21%, rgba(11,18,36,0) 79%, rgba(11,18,36,0.35) 93%, #0B1224 100%)',
             }}
           />
 
@@ -90,7 +90,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0 hidden md:block"
             style={{
               background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 70%, rgba(11,18,36,0.55) 84%, #0B1224 100%)',
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 10%, rgba(11,18,36,0) 23%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 87%, #0B1224 100%)',
             }}
           />
           <div
@@ -107,7 +107,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(40% 42% at 50% 60%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
+                'radial-gradient(40% 42% at 50% 64%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
         </div>
