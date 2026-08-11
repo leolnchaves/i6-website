@@ -81,7 +81,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0 md:hidden"
             style={{
               background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 10%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.35) 90%, #0B1224 100%)',
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 24%, rgba(11,18,36,0) 76%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
             }}
           />
 
