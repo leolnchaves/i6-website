@@ -90,7 +90,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0 hidden md:block"
             style={{
               background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 88%, #0B1224 100%)',
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 70%, rgba(11,18,36,0.55) 84%, #0B1224 100%)',
             }}
           />
           <div
