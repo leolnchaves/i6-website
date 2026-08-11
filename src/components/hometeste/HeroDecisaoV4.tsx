@@ -11,7 +11,8 @@ import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-contain object-center md:object-cover select-none filter brightness-100 saturate-100 contrast-[1.02]';
+  'absolute inset-0 w-full h-full object-contain object-center md:object-cover md:object-[center_58%] select-none filter brightness-100 saturate-100 contrast-[1.02]';
+
 
 
 
@@ -47,7 +48,7 @@ const HeroDecisaoV4 = () => {
       {isPt && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[26svh] h-[38svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-x-0 top-[30svh] h-[34svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
         >
           {playVideo ? (
             <video
@@ -80,7 +81,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0 md:hidden"
             style={{
               background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 10%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.35) 90%, #0B1224 100%)',
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 24%, rgba(11,18,36,0) 76%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
             }}
           />
 
@@ -89,7 +90,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0 hidden md:block"
             style={{
               background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 88%, #0B1224 100%)',
+                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 12%, rgba(11,18,36,0) 26%, rgba(11,18,36,0) 70%, rgba(11,18,36,0.55) 84%, #0B1224 100%)',
             }}
           />
           <div
@@ -106,7 +107,7 @@ const HeroDecisaoV4 = () => {
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(40% 42% at 50% 55%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
+                'radial-gradient(40% 42% at 50% 60%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 50%, rgba(244,132,95,0) 78%)',
             }}
           />
         </div>
