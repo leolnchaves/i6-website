@@ -6,14 +6,6 @@ O deploy da v2.3.0 não falhou por causa do código do site. Ele parou no passo 
 
 ## Como resolver
 
-1. **Republicar agora**: reexecutar o workflow da tag v2.3.0 (o feed já pode ter voltado). Se o feed responder, o site publica normalmente.
-2. **Tornar o deploy resiliente ao i6Hub** (para não perder mais releases por indisponibilidade do CMS):
-   - Adicionar retentativa no fetch do feed (3 tentativas com espera crescente, ex. 3s/6s/12s) em `scripts/sync-content-from-i6hub.mjs`.
-   - Se depois das retentativas o feed continuar fora, o passo registra um aviso e **não derruba o build** — o site é publicado com o conteúdo de Markdown que já está no repositório.
-   - Regra importante: falha do feed nunca apaga nem sobrescreve conteúdo existente; sem resposta válida, mantém-se o que está versionado.
+**Republicar a v2.3.0**: reexecutar o workflow "Deploy to GitHub Pages" da run que falhou (mesma tag v2.3.0), já que o feed do i6Hub provavelmente voltou. Nenhuma alteração de código ou de workflow será feita.
 
-## Detalhes técnicos
-
-- Arquivo `scripts/sync-content-from-i6hub.mjs`: envolver a chamada do feed numa função `fetchWithRetry` e, no caminho de erro final, sair com código 0 após `console.warn`, sem gravar arquivos.
-- Workflow `.github/workflows/deploy-gh-pages.yml`: manter os 4 passos de sync como estão (o próprio script passa a não falhar); não alterar os triggers de `repository_dispatch` do i6Hub.
-- Depois do ajuste, publicar um patch (v2.3.1) para validar o pipeline de ponta a ponta.
+Depois de disparar, acompanhar o resultado do run e reportar: se passar, o site publica normalmente; se cair de novo no mesmo 502, avisar que o i6Hub segue indisponível e aguardar sua decisão.
