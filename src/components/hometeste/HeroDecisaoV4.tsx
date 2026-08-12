@@ -151,25 +151,8 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* 2. ESPAÇO CENTRAL — arte de fundo (PT) ou imagem dedicada (EN) */}
-      <div className="relative flex-1 min-h-[18vh] sm:min-h-0 w-full overflow-hidden flex items-center justify-center -my-[1vh] sm:-my-[2vh] md:-my-[3vh]">
-
-        {!isPt && (
-          <div className="container mx-auto px-6 h-full hidden md:flex items-center justify-center relative">
-            <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
-              <source media="(min-width: 768px)" srcSet={heroPanoramaEn.url} />
-
-              <img
-                src={heroMobileEn.url}
-                alt=""
-                aria-hidden
-                className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-                style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
-              />
-            </picture>
-          </div>
-        )}
-      </div>
+      {/* 2. ESPAÇO CENTRAL — arte de fundo em vídeo */}
+      <div className="relative flex-1 min-h-[18vh] sm:min-h-0 w-full overflow-hidden flex items-center justify-center -my-[1vh] sm:-my-[2vh] md:-my-[3vh]" />
 
 
 
