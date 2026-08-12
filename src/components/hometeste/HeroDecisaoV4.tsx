@@ -50,11 +50,11 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* FUNDO EM VÍDEO (PT) — tela cheia, integrado ao navy por gradientes */}
+      {/* FUNDO EM VÍDEO (PT) — apenas tablet e desktop */}
       {isPt && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[33svh] h-[34svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden hidden md:block"
         >
           {playVideo ? (
             <video
@@ -82,25 +82,16 @@ const HeroDecisaoV4 = () => {
           {/* integração com o navy — mesma técnica dos success stories */}
           <div className="absolute inset-0 bg-[#0B1224]/10" />
 
-          {/* mobile: fade suave apenas no topo/base da faixa */}
+          {/* fade vertical + laterais */}
           <div
-            className="absolute inset-0 md:hidden"
-            style={{
-              background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 7%, rgba(11,18,36,0) 21%, rgba(11,18,36,0) 79%, rgba(11,18,36,0.35) 93%, #0B1224 100%)',
-            }}
-          />
-
-          {/* desktop: fade vertical + laterais */}
-          <div
-            className="absolute inset-0 hidden md:block"
+            className="absolute inset-0"
             style={{
               background:
                 'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 10%, rgba(11,18,36,0) 23%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 87%, #0B1224 100%)',
             }}
           />
           <div
-            className="absolute inset-0 hidden md:block"
+            className="absolute inset-0"
             style={{
               background:
                 'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 18%, rgba(11,18,36,0) 82%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
@@ -117,9 +108,37 @@ const HeroDecisaoV4 = () => {
             }}
           />
         </div>
-
-
       )}
+
+      {/* MOBILE — imagem estática do mapa, fundida ao navy */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-[27svh] h-[40svh] z-0 overflow-hidden md:hidden"
+      >
+        <img
+          src={isPt ? heroMapaMobilePt.url : heroMapaMobileEn.url}
+          alt=""
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-contain object-center select-none"
+          style={{
+            mixBlendMode: 'lighten',
+            maskImage: MOBILE_ART_MASK,
+            WebkitMaskImage: MOBILE_ART_MASK,
+            maskComposite: 'intersect',
+            WebkitMaskComposite: 'source-in',
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(46% 46% at 50% 50%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 52%, rgba(244,132,95,0) 78%)',
+          }}
+        />
+      </div>
+
+
 
 
       {/* 1. TÍTULO */}
