@@ -9,9 +9,15 @@ import heroVideoPoster from '@/assets/hero-video-pt-v8-poster.jpg.asset.json';
 
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
+import heroMapaMobilePt from '@/assets/hero-mapa-mobile-pt-v9.png.asset.json';
+import heroMapaMobileEn from '@/assets/hero-mapa-mobile-en-v9.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-contain object-center md:object-cover md:object-center md:translate-y-[4vh] select-none filter brightness-100 saturate-100 contrast-[1.06]';
+  'absolute inset-0 w-full h-full object-contain object-center lg:object-cover lg:object-[center_58%] lg:translate-y-[4vh] select-none filter brightness-100 saturate-100 contrast-[1.06]';
+
+const MOBILE_ART_MASK =
+  'linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)';
+
 
 
 
