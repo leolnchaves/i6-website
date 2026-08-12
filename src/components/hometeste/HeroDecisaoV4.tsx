@@ -6,9 +6,9 @@ import { ArrowRight } from 'lucide-react';
 import heroVideoMp4 from '@/assets/hero-video-pt-v8.mp4.asset.json';
 import heroVideoWebm from '@/assets/hero-video-pt-v8.webm.asset.json';
 import heroVideoPoster from '@/assets/hero-video-pt-v8-poster.jpg.asset.json';
+import heroVideoEnMp4 from '@/assets/hero-video-en-v1.mp4.asset.json';
+import heroVideoEnPoster from '@/assets/hero-video-en-v1-poster.jpg.asset.json';
 
-import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
-import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
 import heroMapaMobilePt from '@/assets/hero-mapa-mobile-pt-v9.png.asset.json';
 import heroMapaMobileEn from '@/assets/hero-mapa-mobile-en-v9.png.asset.json';
 
@@ -46,32 +46,39 @@ const HeroDecisaoV4 = () => {
   const ctaBefore = isPt ? 'antes' : 'before';
   const ctaPrefix = isPt ? 'Decida ' : 'Decide ';
   const ctaSuffix = isPt ? ' do mercado.' : ' the market.';
-  const heroImageWidth = 'w-[72%]';
+  const videoPosterUrl = isPt ? heroVideoPoster.url : heroVideoEnPoster.url;
 
   return (
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* FUNDO EM VÍDEO (PT) — apenas tablet e desktop */}
-      {isPt && (
+      {/* FUNDO EM VÍDEO (PT/EN) — apenas tablet e desktop */}
+      {(
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden hidden md:block"
         >
           {playVideo ? (
             <video
+              key={language}
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-              poster={heroVideoPoster.url}
+              poster={videoPosterUrl}
               className={VIDEO_CLASS}
             >
-              <source src={heroVideoMp4.url} type="video/mp4" />
-              <source src={heroVideoWebm.url} type="video/webm" />
+              {isPt ? (
+                <>
+                  <source src={heroVideoMp4.url} type="video/mp4" />
+                  <source src={heroVideoWebm.url} type="video/webm" />
+                </>
+              ) : (
+                <source src={heroVideoEnMp4.url} type="video/mp4" />
+              )}
             </video>
           ) : (
             <img
-              src={heroVideoPoster.url}
+              src={videoPosterUrl}
               alt=""
               loading="eager"
               decoding="async"
@@ -151,25 +158,8 @@ const HeroDecisaoV4 = () => {
         </div>
       </div>
 
-      {/* 2. ESPAÇO CENTRAL — arte de fundo (PT) ou imagem dedicada (EN) */}
-      <div className="relative flex-1 min-h-[18vh] sm:min-h-0 w-full overflow-hidden flex items-center justify-center -my-[1vh] sm:-my-[2vh] md:-my-[3vh]">
-
-        {!isPt && (
-          <div className="container mx-auto px-6 h-full hidden md:flex items-center justify-center relative">
-            <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
-              <source media="(min-width: 768px)" srcSet={heroPanoramaEn.url} />
-
-              <img
-                src={heroMobileEn.url}
-                alt=""
-                aria-hidden
-                className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-                style={{ clipPath: 'inset(0 0.5% 2.5% 0.5%)' }}
-              />
-            </picture>
-          </div>
-        )}
-      </div>
+      {/* 2. ESPAÇO CENTRAL — arte de fundo em vídeo */}
+      <div className="relative flex-1 min-h-[18vh] sm:min-h-0 w-full overflow-hidden flex items-center justify-center -my-[1vh] sm:-my-[2vh] md:-my-[3vh]" />
 
 
 
