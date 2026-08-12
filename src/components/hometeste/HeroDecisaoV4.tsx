@@ -51,27 +51,34 @@ const HeroDecisaoV4 = () => {
   return (
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
       {/* FUNDO EM VÍDEO (PT/EN) — apenas tablet e desktop */}
-      {true && (
+      {(
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden hidden md:block"
         >
           {playVideo ? (
             <video
+              key={language}
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-              poster={heroVideoPoster.url}
+              poster={videoPosterUrl}
               className={VIDEO_CLASS}
             >
-              <source src={heroVideoMp4.url} type="video/mp4" />
-              <source src={heroVideoWebm.url} type="video/webm" />
+              {isPt ? (
+                <>
+                  <source src={heroVideoMp4.url} type="video/mp4" />
+                  <source src={heroVideoWebm.url} type="video/webm" />
+                </>
+              ) : (
+                <source src={heroVideoEnMp4.url} type="video/mp4" />
+              )}
             </video>
           ) : (
             <img
-              src={heroVideoPoster.url}
+              src={videoPosterUrl}
               alt=""
               loading="eager"
               decoding="async"
