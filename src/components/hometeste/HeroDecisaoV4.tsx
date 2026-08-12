@@ -9,9 +9,15 @@ import heroVideoPoster from '@/assets/hero-video-pt-v8-poster.jpg.asset.json';
 
 import heroPanoramaEn from '@/assets/hero-decisao-panorama-en-v7-transparent.png.asset.json';
 import heroMobileEn from '@/assets/hero-decisao-mobile-en-v5-transparent.png.asset.json';
+import heroMapaMobilePt from '@/assets/hero-mapa-mobile-pt-v9.png.asset.json';
+import heroMapaMobileEn from '@/assets/hero-mapa-mobile-en-v9.png.asset.json';
 
 const VIDEO_CLASS =
-  'absolute inset-0 w-full h-full object-contain object-center md:object-cover md:object-center md:translate-y-[4vh] select-none filter brightness-100 saturate-100 contrast-[1.06]';
+  'absolute inset-0 w-full h-full object-contain object-center lg:object-cover lg:object-[center_58%] lg:translate-y-[4vh] select-none filter brightness-100 saturate-100 contrast-[1.06]';
+
+const MOBILE_ART_MASK =
+  'linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)';
+
 
 
 
@@ -44,11 +50,11 @@ const HeroDecisaoV4 = () => {
 
   return (
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* FUNDO EM VÍDEO (PT) — tela cheia, integrado ao navy por gradientes */}
+      {/* FUNDO EM VÍDEO (PT) — apenas tablet e desktop */}
       {isPt && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[33svh] h-[34svh] md:inset-0 md:top-0 md:h-auto z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden hidden md:block"
         >
           {playVideo ? (
             <video
@@ -76,25 +82,16 @@ const HeroDecisaoV4 = () => {
           {/* integração com o navy — mesma técnica dos success stories */}
           <div className="absolute inset-0 bg-[#0B1224]/10" />
 
-          {/* mobile: fade suave apenas no topo/base da faixa */}
+          {/* fade vertical + laterais */}
           <div
-            className="absolute inset-0 md:hidden"
-            style={{
-              background:
-                'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.35) 7%, rgba(11,18,36,0) 21%, rgba(11,18,36,0) 79%, rgba(11,18,36,0.35) 93%, #0B1224 100%)',
-            }}
-          />
-
-          {/* desktop: fade vertical + laterais */}
-          <div
-            className="absolute inset-0 hidden md:block"
+            className="absolute inset-0"
             style={{
               background:
                 'linear-gradient(to bottom, #0B1224 0%, rgba(11,18,36,0.45) 10%, rgba(11,18,36,0) 23%, rgba(11,18,36,0) 74%, rgba(11,18,36,0.55) 87%, #0B1224 100%)',
             }}
           />
           <div
-            className="absolute inset-0 hidden md:block"
+            className="absolute inset-0"
             style={{
               background:
                 'linear-gradient(to right, #0B1224 0%, rgba(11,18,36,0.35) 8%, rgba(11,18,36,0) 18%, rgba(11,18,36,0) 82%, rgba(11,18,36,0.35) 92%, #0B1224 100%)',
@@ -111,9 +108,37 @@ const HeroDecisaoV4 = () => {
             }}
           />
         </div>
-
-
       )}
+
+      {/* MOBILE — imagem estática do mapa, fundida ao navy */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-[27svh] h-[40svh] z-0 overflow-hidden md:hidden"
+      >
+        <img
+          src={isPt ? heroMapaMobilePt.url : heroMapaMobileEn.url}
+          alt=""
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-contain object-center select-none"
+          style={{
+            mixBlendMode: 'lighten',
+            maskImage: MOBILE_ART_MASK,
+            WebkitMaskImage: MOBILE_ART_MASK,
+            maskComposite: 'intersect',
+            WebkitMaskComposite: 'source-in',
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(46% 46% at 50% 50%, rgba(244,132,95,0.12) 0%, rgba(244,132,95,0.04) 52%, rgba(244,132,95,0) 78%)',
+          }}
+        />
+      </div>
+
+
 
 
       {/* 1. TÍTULO */}
@@ -130,9 +155,10 @@ const HeroDecisaoV4 = () => {
       <div className="relative flex-1 min-h-[18vh] sm:min-h-0 w-full overflow-hidden flex items-center justify-center -my-[1vh] sm:-my-[2vh] md:-my-[3vh]">
 
         {!isPt && (
-          <div className="container mx-auto px-6 h-full flex items-center justify-center relative">
+          <div className="container mx-auto px-6 h-full hidden md:flex items-center justify-center relative">
             <picture className={`${heroImageWidth} h-full max-h-[45vh] md:max-h-[43vh] flex items-center justify-center`}>
               <source media="(min-width: 768px)" srcSet={heroPanoramaEn.url} />
+
               <img
                 src={heroMobileEn.url}
                 alt=""
