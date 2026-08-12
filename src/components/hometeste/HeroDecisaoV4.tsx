@@ -46,12 +46,12 @@ const HeroDecisaoV4 = () => {
   const ctaBefore = isPt ? 'antes' : 'before';
   const ctaPrefix = isPt ? 'Decida ' : 'Decide ';
   const ctaSuffix = isPt ? ' do mercado.' : ' the market.';
-  const heroImageWidth = 'w-[72%]';
+  const videoPosterUrl = isPt ? heroVideoPoster.url : heroVideoEnPoster.url;
 
   return (
     <section className="relative min-h-[100svh] bg-[#0B1224] overflow-hidden flex flex-col">
-      {/* FUNDO EM VÍDEO (PT) — apenas tablet e desktop */}
-      {isPt && (
+      {/* FUNDO EM VÍDEO (PT/EN) — apenas tablet e desktop */}
+      {true && (
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden hidden md:block"
