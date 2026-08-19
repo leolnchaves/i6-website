@@ -159,7 +159,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
     } finally {
       setIsSubmitting(false);
     }
-  }, [reset, toast, language]);
+  }, [reset, toast, language, leadSource, extraFields]);
 
   const text = useMemo(() => content[language], [language]);
 
