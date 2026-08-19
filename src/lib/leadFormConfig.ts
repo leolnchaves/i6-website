@@ -47,7 +47,9 @@ export type LeadSource =
   | 'lead-gate-research'
   | 'article-cta-insight'
   | 'article-cta-research'
+  | 'go-landing'
   | 'kiosk-demo';
+
 
 export const LEAD_SOURCE_MAX_LEN = 50;
 

@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
-import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD, normalizeLeadFields } from '@/lib/leadFormConfig';
+import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD, normalizeLeadFields, type LeadSource } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
 
@@ -23,7 +23,16 @@ interface FormData {
   [HONEYPOT_FIELD]?: string;
 }
 
-const ContactForm = memo(() => {
+export interface ContactFormProps {
+  /** Pré-preenchimento (ex.: landing /go/:token com dados do lead do HUB) */
+  defaultValues?: Partial<Pick<FormData, 'name' | 'email' | 'company' | 'subject' | 'message'>>;
+  /** Origem do lead enviada ao HUB. Default: contact-form */
+  leadSource?: LeadSource;
+  /** Campos extras no payload (ex.: outreach_send_id) */
+  extraFields?: Record<string, string | undefined>;
+}
+
+const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields }: ContactFormProps = {}) => {
   const { language } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +43,8 @@ const ContactForm = memo(() => {
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<FormData>();
+  } = useForm<FormData>({ defaultValues: defaultValues as FormData | undefined });
+
   
   // Static content - memoized for stability
   const content = useMemo(() => ({
@@ -107,12 +117,14 @@ const ContactForm = memo(() => {
           company: data.company || '',
           message: enrichedMessage,
           subscription: data.subject,
-          reason: 'contact-form',
+          reason: leadSource,
           token: SHARED_FORM_TOKEN,
           ...getLeadContextFields(),
+          ...(extraFields || {}),
         },
-        'contact-form',
+        leadSource,
       );
+
 
       const fields = Object.entries(normalized).map(([name, value]) => ({ name, value }));
 
@@ -147,7 +159,7 @@ const ContactForm = memo(() => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [reset, toast, language]);
+  }, [reset, toast, language, leadSource, extraFields]);
 
   const text = useMemo(() => content[language], [language]);
 
