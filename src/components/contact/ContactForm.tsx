@@ -43,7 +43,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<FormData>({ values: defaultValues as FormData | undefined });
+  } = useForm<FormData>({ defaultValues: defaultValues as FormData | undefined });
 
   
   // Static content - memoized for stability
