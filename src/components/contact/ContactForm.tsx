@@ -117,12 +117,14 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
           company: data.company || '',
           message: enrichedMessage,
           subscription: data.subject,
-          reason: 'contact-form',
+          reason: leadSource,
           token: SHARED_FORM_TOKEN,
           ...getLeadContextFields(),
+          ...(extraFields || {}),
         },
-        'contact-form',
+        leadSource,
       );
+
 
       const fields = Object.entries(normalized).map(([name, value]) => ({ name, value }));
 
