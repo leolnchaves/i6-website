@@ -12,9 +12,9 @@ const HowWeImplement = memo(({ hideHeader = false, compact = false }: HowWeImple
   const { howWeImplement } = solutionsContent[language];
 
   const costBadge = (
-    <div className={`flex items-center justify-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#0B1224] px-4 py-2 shadow-lg shadow-black/20 w-full ${compact ? 'max-w-xl mx-auto' : ''}`}>
-      <span className="h-2 w-2 rounded-full bg-[#F4845F] shrink-0" />
-      <span className={`font-semibold text-[#F4845F] ${compact ? 'text-xs' : 'text-sm'}`}>
+    <div className={`flex items-center justify-center gap-2 rounded-full border border-[#F4845F]/40 bg-[#0B1224] px-3 py-1.5 shadow-lg shadow-black/20 w-full ${compact ? 'max-w-xl mx-auto' : ''}`}>
+      <span className="h-1.5 w-1.5 rounded-full bg-[#F4845F] shrink-0" />
+      <span className={`font-semibold text-[#F4845F] ${compact ? 'text-[10px]' : 'text-sm'}`}>
         {howWeImplement.costNote}
       </span>
     </div>
@@ -35,17 +35,17 @@ const HowWeImplement = memo(({ hideHeader = false, compact = false }: HowWeImple
         )}
 
         <div className={`${compact ? '' : 'relative'}`}>
-          <ol className={`grid grid-cols-1 md:grid-cols-5 ${compact ? 'gap-2' : 'gap-4'}`}>
+          <ol className={`grid grid-cols-1 md:grid-cols-5 ${compact ? 'gap-1.5' : 'gap-4'}`}>
             {howWeImplement.steps.map((step, idx) => (
               <Fragment key={step.n}>
                 <li
-                  className={`relative rounded-2xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 ${compact ? 'p-3' : 'p-5'}`}
+                  className={`relative rounded-xl bg-white/5 border border-white/10 hover:border-[#F4845F]/50 transition-all duration-500 ${compact ? 'p-2' : 'p-5'}`}
                 >
-                  <span className={`font-bold text-[#F4845F]/80 leading-none block ${compact ? 'text-2xl mb-2' : 'text-3xl mb-3'}`}>
+                  <span className={`font-bold text-[#F4845F]/80 leading-none block ${compact ? 'text-xl mb-1' : 'text-3xl mb-3'}`}>
                     {step.n}
                   </span>
-                  <h3 className={`font-bold text-white mb-1 ${compact ? 'text-xs' : 'text-sm'}`}>{step.title}</h3>
-                  <p className={`text-white/60 ${compact ? 'text-[10px] leading-snug' : 'text-xs leading-relaxed'}`}>{step.description}</p>
+                  <h3 className={`font-bold text-white mb-0.5 ${compact ? 'text-[10px]' : 'text-sm'}`}>{step.title}</h3>
+                  <p className={`text-white/60 ${compact ? 'text-[9px] leading-tight' : 'text-xs leading-relaxed'}`}>{step.description}</p>
                 </li>
                 {idx === 2 && (
                   <li className="md:hidden list-none">
@@ -57,7 +57,7 @@ const HowWeImplement = memo(({ hideHeader = false, compact = false }: HowWeImple
 
           </ol>
 
-          <div className={`hidden md:block ${compact ? 'mt-3' : 'absolute left-0 bottom-0 w-[calc(60%-0.4rem)] translate-y-1/2 z-10'}`}>
+          <div className={`hidden md:block ${compact ? 'mt-2' : 'absolute left-0 bottom-0 w-[calc(60%-0.4rem)] translate-y-1/2 z-10'}`}>
             {costBadge}
           </div>
         </div>
