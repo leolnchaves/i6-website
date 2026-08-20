@@ -213,17 +213,19 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="company" className="text-sm font-medium text-white/70 mb-2 block">
-                {text.company}
-              </Label>
-              <Input
-                id="company"
-                type="text"
-                {...register("company")}
-                className="w-full px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent"
-              />
-            </div>
+            {!hideCompany && (
+              <div>
+                <Label htmlFor="company" className="text-sm font-medium text-white/70 mb-2 block">
+                  {text.company}
+                </Label>
+                <Input
+                  id="company"
+                  type="text"
+                  {...register("company")}
+                  className="w-full px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent"
+                />
+              </div>
+            )}
 
             <div>
               <Label htmlFor="subject" className="text-sm font-medium text-white/70 mb-2 block">
