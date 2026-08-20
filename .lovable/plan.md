@@ -23,6 +23,10 @@
   - Voltar espaçamentos do modo compacto a valores um pouco mais generosos (`space-y-3`, `gap-3`, textarea `min-h-[80px]`).
 - Sem mudança de conteúdo/textos além da remoção do kicker; PT e EN seguem o mesmo layout.
 
+## Nota de deploy
+
+Conforme regra da KB do projeto, **não publico automaticamente no GitHub**. Após aprovação deste plano, você precisará pedir explicitamente a publicação quando quiser subir a versão.
+
 ## Verificação
 
 Renderizar `/pt/go/<token>` e `/en/go/<token>` em viewport de desktop, conferir a ordem visual (título → subtítulo → 5 cards → badge sob os passos 1–3 → formulário sem "Assunto") e checar que o payload enviado ainda contém o assunto do token.
