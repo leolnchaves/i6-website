@@ -30,9 +30,13 @@ export interface ContactFormProps {
   leadSource?: LeadSource;
   /** Campos extras no payload (ex.: outreach_send_id) */
   extraFields?: Record<string, string | undefined>;
+  /** Oculta o campo Empresa (ex.: landing /go) */
+  hideCompany?: boolean;
+  /** Layout compacto para caber sem scroll */
+  compact?: boolean;
 }
 
-const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields }: ContactFormProps = {}) => {
+const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields, hideCompany = false, compact = false }: ContactFormProps = {}) => {
   const { language } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
