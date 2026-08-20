@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ContactForm from '@/components/contact/ContactForm';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import HowWeImplement from '@/components/solutions-v2/HowWeImplement';
+
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useOutreachToken } from '@/hooks/useOutreachToken';
 
