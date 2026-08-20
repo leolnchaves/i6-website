@@ -171,9 +171,9 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
-      <CardContent className={`${compact ? 'p-2.5' : 'p-8'} flex-1 flex flex-col`}>
+      <CardContent className={`${compact ? 'p-4' : 'p-8'} flex-1 flex flex-col`}>
 
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-2' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-3' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
           {/* Honeypot */}
           <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
             <label htmlFor="contact-website">Website</label>
@@ -185,7 +185,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               {...register(HONEYPOT_FIELD as keyof FormData)}
             />
           </div>
-          <div className={`flex-1 ${compact ? 'space-y-2' : 'space-y-6'}`}>
+          <div className={`flex-1 ${compact ? 'space-y-3' : 'space-y-6'}`}>
             <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-2' : 'gap-6'}`}>
               <div>
                 <Label htmlFor="name" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
