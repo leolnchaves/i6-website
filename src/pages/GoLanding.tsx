@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ContactForm from '@/components/contact/ContactForm';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import HowWeImplement from '@/components/solutions-v2/HowWeImplement';
+
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useOutreachToken } from '@/hooks/useOutreachToken';
 
@@ -99,7 +101,10 @@ const GoLanding = () => {
         </div>
       </section>
 
-      <section className="pb-12">
+      <HowWeImplement />
+
+      <section className="pt-12 pb-12">
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <ContactForm
