@@ -169,9 +169,9 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
-      <CardContent className={`${compact ? 'p-6' : 'p-8'} flex-1 flex flex-col`}>
-        
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-4' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
+      <CardContent className={`${compact ? 'p-2.5' : 'p-8'} flex-1 flex flex-col`}>
+
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-2' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
           {/* Honeypot */}
           <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
             <label htmlFor="contact-website">Website</label>
@@ -183,32 +183,32 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               {...register(HONEYPOT_FIELD as keyof FormData)}
             />
           </div>
-          <div className={`flex-1 ${compact ? 'space-y-4' : 'space-y-6'}`}>
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-4' : 'gap-6'}`}>
+          <div className={`flex-1 ${compact ? 'space-y-2' : 'space-y-6'}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-2' : 'gap-6'}`}>
               <div>
-                <Label htmlFor="name" className="text-sm font-medium text-white/70 mb-2 block">
+                <Label htmlFor="name" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                   {text.name} *
                 </Label>
                 <Input
                   id="name"
                   type="text"
                   {...register("name", { required: text.errors.nameRequired })}
-                  className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
-                    errors.name ? 'border-red-500' : 'border-white/10'
-                  }`}
+                  className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                    compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
+                  } ${errors.name ? 'border-red-500' : 'border-white/10'}`}
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="text-sm font-medium text-white/70 mb-2 block">
+                <Label htmlFor="email" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                   {text.email} *
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   {...register("email", { required: text.errors.emailRequired, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: text.errors.emailInvalid } })}
-                  className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
-                    errors.email ? 'border-red-500' : 'border-white/10'
-                  }`}
+                  className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                    compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
+                  } ${errors.email ? 'border-red-500' : 'border-white/10'}`}
                 />
               </div>
             </div>
@@ -228,15 +228,15 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
             )}
 
             <div>
-              <Label htmlFor="subject" className="text-sm font-medium text-white/70 mb-2 block">
+              <Label htmlFor="subject" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                 {text.subject} *
               </Label>
               <select
                 id="subject"
                 {...register("subject", { required: text.errors.subjectRequired })}
-                className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
-                  errors.subject ? 'border-red-500' : 'border-white/10'
-                }`}
+                className={`w-full bg-white/10 border rounded-lg text-white focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                  compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
+                } ${errors.subject ? 'border-red-500' : 'border-white/10'}`}
               >
                 <option value="" className="bg-[#0B1224]">{text.subject}</option>
                 <option value="general" className="bg-[#0B1224]">{text.subjectOptions.general}</option>
@@ -247,16 +247,16 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
             </div>
 
             <div className="flex-1 flex flex-col">
-              <Label htmlFor="message" className="text-sm font-medium text-white/70 mb-2 block">
-                {text.message} * <span className="text-xs text-white/40 font-normal">{text.messageMinChar}</span>
+              <Label htmlFor="message" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
+                {text.message} * <span className="text-white/40 font-normal">{text.messageMinChar}</span>
               </Label>
               <Textarea
                 id="message"
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
-                className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 ${compact ? 'min-h-[96px]' : 'min-h-[120px]'} ${
-                  errors.message ? 'border-red-500' : 'border-white/10'
-                }`}
+                className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 ${
+                  compact ? 'px-3 py-1.5 min-h-[52px] text-sm' : 'px-4 py-2 min-h-[120px]'
+                } ${errors.message ? 'border-red-500' : 'border-white/10'}`}
               />
             </div>
 
@@ -275,7 +275,9 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full bg-white/10 hover:bg-[#F4845F]/20 border border-transparent hover:border-[#F4845F]/30 text-white/80 hover:text-[#F4845F] text-lg py-3 mt-auto transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`w-full bg-white/10 hover:bg-[#F4845F]/20 border border-transparent hover:border-[#F4845F]/30 text-white/80 hover:text-[#F4845F] mt-auto transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed ${
+              compact ? 'text-base py-2' : 'text-lg py-3'
+            }`}
           >
             {isSubmitting ? 'Sending...' : text.sendButton}
             <Send className={`ml-2 w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
