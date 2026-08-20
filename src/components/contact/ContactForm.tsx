@@ -186,7 +186,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
             />
           </div>
           <div className={`flex-1 ${compact ? 'space-y-3' : 'space-y-6'}`}>
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-2' : 'gap-6'}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-3' : 'gap-6'}`}>
               <div>
                 <Label htmlFor="name" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                   {text.name} *
@@ -229,24 +229,28 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               </div>
             )}
 
-            <div>
-              <Label htmlFor="subject" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
-                {text.subject} *
-              </Label>
-              <select
-                id="subject"
-                {...register("subject", { required: text.errors.subjectRequired })}
-                className={`w-full bg-white/10 border rounded-lg text-white focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
-                  compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
-                } ${errors.subject ? 'border-red-500' : 'border-white/10'}`}
-              >
-                <option value="" className="bg-[#0B1224]">{text.subject}</option>
-                <option value="general" className="bg-[#0B1224]">{text.subjectOptions.general}</option>
-                <option value="demo" className="bg-[#0B1224]">{text.subjectOptions.demo}</option>
-                <option value="partnership" className="bg-[#0B1224]">{text.subjectOptions.partnership}</option>
-                <option value="support" className="bg-[#0B1224]">{text.subjectOptions.support}</option>
-              </select>
-            </div>
+            {hideSubject ? (
+              <input type="hidden" {...register("subject")} />
+            ) : (
+              <div>
+                <Label htmlFor="subject" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
+                  {text.subject} *
+                </Label>
+                <select
+                  id="subject"
+                  {...register("subject", { required: text.errors.subjectRequired })}
+                  className={`w-full bg-white/10 border rounded-lg text-white focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                    compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
+                  } ${errors.subject ? 'border-red-500' : 'border-white/10'}`}
+                >
+                  <option value="" className="bg-[#0B1224]">{text.subject}</option>
+                  <option value="general" className="bg-[#0B1224]">{text.subjectOptions.general}</option>
+                  <option value="demo" className="bg-[#0B1224]">{text.subjectOptions.demo}</option>
+                  <option value="partnership" className="bg-[#0B1224]">{text.subjectOptions.partnership}</option>
+                  <option value="support" className="bg-[#0B1224]">{text.subjectOptions.support}</option>
+                </select>
+              </div>
+            )}
 
             <div className="flex-1 flex flex-col">
               <Label htmlFor="message" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
@@ -257,7 +261,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
                 className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 ${
-                  compact ? 'px-3 py-1.5 min-h-[52px] text-sm' : 'px-4 py-2 min-h-[120px]'
+                  compact ? 'px-3 py-1.5 min-h-[72px] text-sm' : 'px-4 py-2 min-h-[120px]'
                 } ${errors.message ? 'border-red-500' : 'border-white/10'}`}
               />
             </div>
