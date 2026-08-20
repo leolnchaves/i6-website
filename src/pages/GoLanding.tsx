@@ -85,21 +85,21 @@ const GoLanding = () => {
   return (
     <>
       {head}
-      <section className="pt-28 pb-10">
+      <section className="pt-24 pb-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-[#F4845F] text-sm tracking-[0.2em] uppercase mb-4">{copy.kicker}</p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <p className="text-[#F4845F] text-sm tracking-[0.2em] uppercase mb-3">{copy.kicker}</p>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
               {landing?.title || copy.title}
             </h1>
-            <p className="mt-5 text-lg text-white/60">
+            <p className="mt-3 text-base text-white/60">
               {landing?.subtitle || copy.subtitle}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="pb-20">
+      <section className="pb-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <ContactForm
@@ -107,6 +107,8 @@ const GoLanding = () => {
               defaultValues={defaultValues}
               leadSource="go-landing"
               extraFields={extraFields}
+              hideCompany
+              compact
             />
           </div>
         </div>

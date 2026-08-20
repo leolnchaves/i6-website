@@ -30,9 +30,13 @@ export interface ContactFormProps {
   leadSource?: LeadSource;
   /** Campos extras no payload (ex.: outreach_send_id) */
   extraFields?: Record<string, string | undefined>;
+  /** Oculta o campo Empresa (ex.: landing /go) */
+  hideCompany?: boolean;
+  /** Layout compacto para caber sem scroll */
+  compact?: boolean;
 }
 
-const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields }: ContactFormProps = {}) => {
+const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields, hideCompany = false, compact = false }: ContactFormProps = {}) => {
   const { language } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -165,9 +169,9 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
-      <CardContent className="p-8 flex-1 flex flex-col">
+      <CardContent className={`${compact ? 'p-6' : 'p-8'} flex-1 flex flex-col`}>
         
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1 flex flex-col" noValidate>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-4' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
           {/* Honeypot */}
           <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
             <label htmlFor="contact-website">Website</label>
@@ -179,8 +183,8 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               {...register(HONEYPOT_FIELD as keyof FormData)}
             />
           </div>
-          <div className="flex-1 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className={`flex-1 ${compact ? 'space-y-4' : 'space-y-6'}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-4' : 'gap-6'}`}>
               <div>
                 <Label htmlFor="name" className="text-sm font-medium text-white/70 mb-2 block">
                   {text.name} *
@@ -209,17 +213,19 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="company" className="text-sm font-medium text-white/70 mb-2 block">
-                {text.company}
-              </Label>
-              <Input
-                id="company"
-                type="text"
-                {...register("company")}
-                className="w-full px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent"
-              />
-            </div>
+            {!hideCompany && (
+              <div>
+                <Label htmlFor="company" className="text-sm font-medium text-white/70 mb-2 block">
+                  {text.company}
+                </Label>
+                <Input
+                  id="company"
+                  type="text"
+                  {...register("company")}
+                  className="w-full px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent"
+                />
+              </div>
+            )}
 
             <div>
               <Label htmlFor="subject" className="text-sm font-medium text-white/70 mb-2 block">
@@ -248,7 +254,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
                 id="message"
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
-                className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 min-h-[120px] ${
+                className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 ${compact ? 'min-h-[96px]' : 'min-h-[120px]'} ${
                   errors.message ? 'border-red-500' : 'border-white/10'
                 }`}
               />
