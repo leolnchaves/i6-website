@@ -32,11 +32,13 @@ export interface ContactFormProps {
   extraFields?: Record<string, string | undefined>;
   /** Oculta o campo Empresa (ex.: landing /go) */
   hideCompany?: boolean;
+  /** Oculta o campo Assunto visualmente, mas mantém o valor no envio (ex.: landing /go) */
+  hideSubject?: boolean;
   /** Layout compacto para caber sem scroll */
   compact?: boolean;
 }
 
-const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields, hideCompany = false, compact = false }: ContactFormProps = {}) => {
+const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields, hideCompany = false, hideSubject = false, compact = false }: ContactFormProps = {}) => {
   const { language } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
