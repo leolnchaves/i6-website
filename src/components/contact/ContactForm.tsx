@@ -185,7 +185,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               {...register(HONEYPOT_FIELD as keyof FormData)}
             />
           </div>
-          <div className={`flex-1 ${compact ? 'space-y-3' : 'space-y-6'}`}>
+          <div className={`${compact ? '' : 'flex-1'} ${compact ? 'space-y-3' : 'space-y-6'}`}>
             <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-3' : 'gap-6'}`}>
               <div>
                 <Label htmlFor="name" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
@@ -252,7 +252,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               </div>
             )}
 
-            <div className="flex-1 flex flex-col">
+            <div className={`${compact ? '' : 'flex-1'} flex flex-col`}>
               <Label htmlFor="message" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                 {text.message} * <span className="text-white/40 font-normal">{text.messageMinChar}</span>
               </Label>
@@ -260,7 +260,9 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
                 id="message"
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
-                className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 ${
+                className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none ${
+                  compact ? '' : 'flex-1'
+                } ${
                   compact ? 'px-3 py-1.5 min-h-[72px] text-sm' : 'px-4 py-2 min-h-[120px]'
                 } ${errors.message ? 'border-red-500' : 'border-white/10'}`}
               />
