@@ -169,9 +169,9 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
-      <CardContent className={`${compact ? 'p-6' : 'p-8'} flex-1 flex flex-col`}>
-        
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-4' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
+      <CardContent className={`${compact ? 'p-4' : 'p-8'} flex-1 flex flex-col`}>
+
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-3' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
           {/* Honeypot */}
           <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
             <label htmlFor="contact-website">Website</label>
