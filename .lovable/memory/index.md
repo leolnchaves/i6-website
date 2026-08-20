@@ -14,7 +14,7 @@ type: reference
 - **Design**: Use inline SVG flags for languages, NEVER use emoji flags.
 - **Architecture**: 100% static site serving Markdown from `/public/content/`. No database.
 - **Deployment**: GitHub Pages, custom domain infinity6.ai. Deploy gatilhado por **tag `v*`** (push em main NÃO publica). i6Hub publica automático via `repository_dispatch`.
-- **Publish via chat**: quando o user pedir "publica nova versão", seguir `mem://deployment/publish-protocol` (criar release via API GitHub usando `GITHUB_RELEASE_TOKEN`).
+- **Publish via chat**: quando o user pedir explicitamente, seguir `mem://deployment/publish-protocol` (criar release via API GitHub usando `GITHUB_RELEASE_TOKEN`). NUNCA publicar/deploy automaticamente.
 - **i6Signal positioning**: Conversational layer over PREDICTIVE OUTPUT of i6 engines (i6Previsio/i6RecSys/i6ElasticPrice). Not a data Q&A bot — anticipatory and prescriptive.
 - **Header**: Comunidade is NOT in main header; it lives inside `/our-ai` (link to huggingface.co/infinity6). Solutions dropdown: AI Solutions (→/solutions) + Proprietary AI (→/our-ai) + 4 Transformation landings (→/solutions/<slug>). All 4 landings active (MD-managed in src/content/landings/).
 

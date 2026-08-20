@@ -42,6 +42,7 @@ When the user asks to publish a new version (PT: "publica nova versão", "public
 6. **Report back**: tell the user the version published, the release URL from the response, and that deploy will be live at infinity6.ai in ~2 min.
 
 ## Rules
+- NEVER auto-trigger a GitHub release or deploy. Only publish when the user explicitly asks (e.g., "publica o patch", "publica versão minor", "publish release").
 - NEVER store the PAT in code or logs. Only reference `$GITHUB_RELEASE_TOKEN`.
 - NEVER bump MAJOR unless the user explicitly asked.
 - If the API returns 401 → token expired; ask the user to regenerate the PAT and update the secret.
