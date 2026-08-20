@@ -255,7 +255,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
                 className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none flex-1 ${
-                  compact ? 'px-3 py-1.5 min-h-[60px] text-sm' : 'px-4 py-2 min-h-[120px]'
+                  compact ? 'px-3 py-1.5 min-h-[52px] text-sm' : 'px-4 py-2 min-h-[120px]'
                 } ${errors.message ? 'border-red-500' : 'border-white/10'}`}
               />
             </div>
