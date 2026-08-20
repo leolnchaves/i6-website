@@ -183,7 +183,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               {...register(HONEYPOT_FIELD as keyof FormData)}
             />
           </div>
-          <div className={`flex-1 ${compact ? 'space-y-4' : 'space-y-6'}`}>
+          <div className={`flex-1 ${compact ? 'space-y-3' : 'space-y-6'}`}>
             <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-3' : 'gap-6'}`}>
               <div>
                 <Label htmlFor="name" className="text-sm font-medium text-white/70 mb-2 block">
