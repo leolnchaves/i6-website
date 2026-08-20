@@ -99,7 +99,10 @@ const GoLanding = () => {
         </div>
       </section>
 
-      <section className="pb-12">
+      <HowWeImplement />
+
+      <section className="pt-12 pb-12">
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <ContactForm
