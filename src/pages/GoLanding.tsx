@@ -87,7 +87,7 @@ const GoLanding = () => {
   return (
     <>
       {head}
-      <section className="pt-12 pb-2">
+      <section className="pt-10 pb-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-[#F4845F] text-sm tracking-[0.2em] uppercase mb-1">{copy.kicker}</p>
@@ -103,7 +103,7 @@ const GoLanding = () => {
 
       <HowWeImplement hideHeader compact />
 
-      <section className="pt-4 pb-6">
+      <section className="pt-3 pb-4">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <ContactForm
