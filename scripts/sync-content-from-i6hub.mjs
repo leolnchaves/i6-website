@@ -102,6 +102,33 @@ const items = TYPE === 'insights'
   ? rawItems.filter((it) => INSIGHT_TYPES.has(it?.type))
   : rawItems;
 console.log(`[${TYPE}] received ${rawItems.length} items${TYPE === 'insights' ? ` (${items.length} after type filter)` : ''}`);
+
+// ---------- Validate slugs (fail fast, before any write/download) ----------
+{
+  const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+  const invalid = [];
+  for (const it of items) {
+    const slug = it?.slug;
+    if (typeof slug !== 'string' || !SLUG_RE.test(slug)) {
+      invalid.push({ slug, language: it?.language, title: it?.title });
+    }
+  }
+  if (invalid.length) {
+    for (const bad of invalid) {
+      console.error(
+        `[${TYPE}] SLUG INVÁLIDO: ${JSON.stringify(bad.slug ?? null)} (${bad.language ?? '?'})` +
+        (bad.title ? ` — "${bad.title}"` : ''),
+      );
+    }
+    console.error(
+      `[${TYPE}] Slug deve conter apenas letras minúsculas, números e hífens ` +
+      `(sem barras, espaços, acentos ou caminho de rota).`,
+    );
+    console.error(`[${TYPE}] Corrija no i6Hub e salve novamente para redisparar o deploy.`);
+    process.exit(1);
+  }
+}
+
 const MD_DIR   = CONFIG.mdDir;
 const IMG_DIR  = CONFIG.imgDir  ?? null;
 const LOGO_DIR = CONFIG.logoDir ?? null;
