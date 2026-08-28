@@ -105,7 +105,10 @@ console.log(`[${TYPE}] received ${rawItems.length} items${TYPE === 'insights' ? 
 
 // ---------- Validate slugs (fail fast, before any write/download) ----------
 {
-  const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+  // Slugs from the HUB may preserve Unicode letters and capitalization.
+  // Keep the value verbatim, but reject separators/path traversal and any
+  // character other than a letter, number or internal hyphen.
+  const SLUG_RE = /^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u;
   const invalid = [];
   for (const it of items) {
     const slug = it?.slug;
@@ -121,8 +124,8 @@ console.log(`[${TYPE}] received ${rawItems.length} items${TYPE === 'insights' ? 
       );
     }
     console.error(
-      `[${TYPE}] Slug deve conter apenas letras minúsculas, números e hífens ` +
-      `(sem barras, espaços, acentos ou caminho de rota).`,
+      `[${TYPE}] Slug deve conter apenas letras, números e hífens internos ` +
+      `(sem barras, espaços, pontos ou caminho de rota).`,
     );
     console.error(`[${TYPE}] Corrija no i6Hub e salve novamente para redisparar o deploy.`);
     process.exit(1);
