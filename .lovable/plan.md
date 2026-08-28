@@ -15,20 +15,26 @@ Causa: o insight publicado no i6Hub tem o slug gravado como **`/blog/sinais-de-i
 
 ## Correção proposta
 
-1. **Normalizar o slug no script de sync** (`scripts/sync-content-from-i6hub.mjs`), aplicado a todos os tipos (insights, research, landings, stories):
-   - remover barras no início/fim e prefixos de rota;
-   - trocar barras internas por `-`;
-   - manter apenas caracteres seguros para nome de arquivo;
-   - usar o slug normalizado tanto no nome do `.md` quanto nas pastas de imagens e no frontmatter, para a URL do site continuar consistente.
-2. **Não abortar o deploy por um item inválido**: registrar aviso e seguir com os demais itens, em vez de derrubar o job todo — assim um registro mal preenchido no CMS nunca mais impede a publicação do site.
-3. **Ajuste no i6Hub (do seu lado)**: corrigir o slug do artigo para `sinais-de-intencao-ia-preditiva`, para que a URL final fique `/pt/insights/sinais-de-intencao-ia-preditiva` (ou a rota de blog correta) e não dependa do saneamento automático.
+1. **Validar o slug no início do sync** (`scripts/sync-content-from-i6hub.mjs`), para todos os tipos (insights, research, landings, stories): se o slug tiver barra, espaço ou caracteres inválidos para nome de arquivo, **abortar o job imediatamente** (exit 1) com mensagem explícita, por exemplo:
+
+   ```text
+   [insights] SLUG INVÁLIDO: "/blog/sinais-de-intencao-ia-preditiva" (pt)
+   Slug deve conter apenas letras minúsculas, números e hífens.
+   Corrija no i6Hub e salve novamente para redisparar o deploy.
+   ```
+
+   O deploy continua falhando de forma ruidosa (nada de saneamento silencioso), mas o erro passa a apontar o artigo e a ação necessária em vez de um `ENOENT` de caminho.
+2. **Ajuste no i6Hub (do seu lado)**: corrigir o slug do artigo para `sinais-de-intencao-ia-preditiva` — o slug não deve conter o caminho da rota, só o identificador.
+
 
 ## Verificação
 
-- Rodar o script de sync localmente contra o feed para confirmar que o artigo gera `.md` e imagens sem erro.
-- Depois de aprovado e publicado, reexecutar o workflow (ou salvar novamente o artigo no i6Hub para disparar o `repository_dispatch`) e confirmar o run verde.
+- Rodar o script de sync localmente contra o feed: com o slug atual deve abortar com a mensagem clara; após a correção no i6Hub deve gerar `.md` e imagens sem erro.
+- Depois disso, salvar o artigo novamente no i6Hub (dispara `repository_dispatch`) ou reexecutar o workflow, e confirmar o run verde.
 
 ## Notas técnicas
 
 - Nada muda nos gatilhos do workflow (`tags v*` + `repository_dispatch`).
-- As imagens do body já foram baixadas para `public/content/insights/blog-sinais-de-intencao-ia-preditiva/pt/`; após a normalização o caminho passa a ser derivado do slug saneado, e o cleanup de órfãos remove o diretório antigo no próximo sync.
+- A validação roda antes de qualquer escrita/download, então um item inválido não deixa arquivos parciais.
+- As imagens já baixadas em `public/content/insights/blog-sinais-de-intencao-ia-preditiva/pt/` serão substituídas pelo diretório correto no próximo sync, e o cleanup de órfãos remove o antigo.
+
