@@ -29,10 +29,12 @@ Causa: o insight publicado no i6Hub tem o slug gravado como **`/blog/sinais-de-i
 
 ## Verificação
 
-- Rodar o script de sync localmente contra o feed para confirmar que o artigo gera `.md` e imagens sem erro.
-- Depois de aprovado e publicado, reexecutar o workflow (ou salvar novamente o artigo no i6Hub para disparar o `repository_dispatch`) e confirmar o run verde.
+- Rodar o script de sync localmente contra o feed: com o slug atual deve abortar com a mensagem clara; após a correção no i6Hub deve gerar `.md` e imagens sem erro.
+- Depois disso, salvar o artigo novamente no i6Hub (dispara `repository_dispatch`) ou reexecutar o workflow, e confirmar o run verde.
 
 ## Notas técnicas
 
 - Nada muda nos gatilhos do workflow (`tags v*` + `repository_dispatch`).
-- As imagens do body já foram baixadas para `public/content/insights/blog-sinais-de-intencao-ia-preditiva/pt/`; após a normalização o caminho passa a ser derivado do slug saneado, e o cleanup de órfãos remove o diretório antigo no próximo sync.
+- A validação roda antes de qualquer escrita/download, então um item inválido não deixa arquivos parciais.
+- As imagens já baixadas em `public/content/insights/blog-sinais-de-intencao-ia-preditiva/pt/` serão substituídas pelo diretório correto no próximo sync, e o cleanup de órfãos remove o antigo.
+
