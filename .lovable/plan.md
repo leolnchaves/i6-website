@@ -15,13 +15,17 @@ Causa: o insight publicado no i6Hub tem o slug gravado como **`/blog/sinais-de-i
 
 ## Correção proposta
 
-1. **Normalizar o slug no script de sync** (`scripts/sync-content-from-i6hub.mjs`), aplicado a todos os tipos (insights, research, landings, stories):
-   - remover barras no início/fim e prefixos de rota;
-   - trocar barras internas por `-`;
-   - manter apenas caracteres seguros para nome de arquivo;
-   - usar o slug normalizado tanto no nome do `.md` quanto nas pastas de imagens e no frontmatter, para a URL do site continuar consistente.
-2. **Não abortar o deploy por um item inválido**: registrar aviso e seguir com os demais itens, em vez de derrubar o job todo — assim um registro mal preenchido no CMS nunca mais impede a publicação do site.
-3. **Ajuste no i6Hub (do seu lado)**: corrigir o slug do artigo para `sinais-de-intencao-ia-preditiva`, para que a URL final fique `/pt/insights/sinais-de-intencao-ia-preditiva` (ou a rota de blog correta) e não dependa do saneamento automático.
+1. **Validar o slug no início do sync** (`scripts/sync-content-from-i6hub.mjs`), para todos os tipos (insights, research, landings, stories): se o slug tiver barra, espaço ou caracteres inválidos para nome de arquivo, **abortar o job imediatamente** (exit 1) com mensagem explícita, por exemplo:
+
+   ```text
+   [insights] SLUG INVÁLIDO: "/blog/sinais-de-intencao-ia-preditiva" (pt)
+   Slug deve conter apenas letras minúsculas, números e hífens.
+   Corrija no i6Hub e salve novamente para redisparar o deploy.
+   ```
+
+   O deploy continua falhando de forma ruidosa (nada de saneamento silencioso), mas o erro passa a apontar o artigo e a ação necessária em vez de um `ENOENT` de caminho.
+2. **Ajuste no i6Hub (do seu lado)**: corrigir o slug do artigo para `sinais-de-intencao-ia-preditiva` — o slug não deve conter o caminho da rota, só o identificador.
+
 
 ## Verificação
 
