@@ -1,26 +1,26 @@
-import HeroDecisaoV4 from '@/components/hometeste/HeroDecisaoV4';
-import ComoFuncionamosSection from '@/components/hometeste/ComoFuncionamosSection';
-import SinaisSection from '@/components/hometeste/SinaisSection';
-import ClientesSection from '@/components/hometeste/ClientesSection';
-
-import InsightsSection from '@/components/hometeste/InsightsSection';
-import CTAFinal from '@/components/hometeste/CTAFinal';
 import SEOHead from '@/components/common/SEOHead';
-import RealResultsStrip from '@/components/common/RealResultsStrip';
-import TestemunhosCompact from '@/components/hometeste/TestemunhosCompact';
+import HeroSuite from '@/components/home-v3/HeroSuite';
+import ClientProof from '@/components/home-v3/ClientProof';
+import WhyInfinity6 from '@/components/home-v3/WhyInfinity6';
+import AnticipateGrid from '@/components/home-v3/AnticipateGrid';
+import HowItWorks from '@/components/home-v3/HowItWorks';
+import ProofAndVoices from '@/components/home-v3/ProofAndVoices';
+import InsightsRow from '@/components/home-v3/InsightsRow';
+import FinalCTA from '@/components/home-v3/FinalCTA';
 
 const HomeTeste = () => (
   <>
     <SEOHead page="home" />
-    <HeroDecisaoV4 />
-    <ComoFuncionamosSection />
-    <SinaisSection />
-    
-    <RealResultsStrip compact />
-    <TestemunhosCompact />
-    <ClientesSection />
-    <InsightsSection />
-    <CTAFinal />
+    <div className="theme-sand">
+      <HeroSuite />
+      <ClientProof />
+      <WhyInfinity6 />
+      <AnticipateGrid />
+      <HowItWorks />
+      <ProofAndVoices />
+      <InsightsRow />
+      <FinalCTA />
+    </div>
   </>
 );
 
