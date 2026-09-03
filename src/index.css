@@ -798,3 +798,93 @@ html {
 .animate-glow-white {
   animation: glow-pulse-white 2.5s ease-in-out infinite;
 }
+
+/* ==========================================================================
+   Home v3 — "Terracotta Sand" scoped theme (identidade i6 Decision Suite)
+   Applied only inside `.theme-sand` so header/footer and inner pages keep
+   the existing navy identity.
+   ========================================================================== */
+.theme-sand {
+  --background: 36 43% 98%;
+  --foreground: 24 10% 27%;
+  --card: 0 0% 100%;
+  --card-foreground: 24 10% 27%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 24 10% 27%;
+  --primary: 19 60% 56%;
+  --primary-foreground: 36 43% 98%;
+  --secondary: 34 27% 95%;
+  --secondary-foreground: 24 10% 27%;
+  --muted: 34 27% 95%;
+  --muted-foreground: 27 8% 50%;
+  --accent: 31 33% 93%;
+  --accent-foreground: 19 45% 32%;
+  --border: 33 25% 92%;
+  --input: 33 25% 92%;
+  --ring: 19 60% 56%;
+  --radius: 0.875rem;
+
+  --sand-shadow-soft: 0 1px 2px hsl(24 10% 27% / 0.04), 0 8px 24px -12px hsl(24 10% 27% / 0.10);
+  --sand-shadow-lift: 0 2px 4px hsl(24 10% 27% / 0.05), 0 18px 40px -18px hsl(19 60% 40% / 0.22);
+
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+.theme-sand h1,
+.theme-sand h2,
+.theme-sand h3,
+.theme-sand .font-display {
+  font-family: 'Sora', 'Manrope', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.sand-card {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: var(--sand-shadow-soft);
+  transition: box-shadow .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1), border-color .3s ease;
+}
+
+.sand-card-hover:hover {
+  box-shadow: var(--sand-shadow-lift);
+  transform: translateY(-3px);
+  border-color: hsl(var(--primary) / 0.35);
+}
+
+/* Grain-free soft radial glow used behind the hero */
+.sand-glow {
+  background:
+    radial-gradient(60% 60% at 78% 18%, hsl(19 60% 56% / 0.13) 0%, transparent 70%),
+    radial-gradient(50% 50% at 12% 8%, hsl(31 45% 70% / 0.16) 0%, transparent 70%);
+}
+
+@keyframes sand-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-sand-rise { animation: sand-rise .7s cubic-bezier(.22,1,.36,1) both; }
+
+@keyframes sand-ticker {
+  0% { opacity: 0; transform: translateY(10px); }
+  8%, 30% { opacity: 1; transform: translateY(0); }
+  38%, 100% { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes sand-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(220%); }
+}
+.animate-sand-scan { animation: sand-scan 3.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-sand *,
+  .theme-sand *::before,
+  .theme-sand *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
