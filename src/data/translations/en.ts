@@ -19,7 +19,7 @@ export const enTranslations = {
   'header.research.media': 'i6 in the Media',
   'header.research.blog': 'i6 Blog',
   'header.research.comingSoon': 'Coming soon',
-  'header.decisionPlatform': 'Decision Platform',
+  'header.decisionPlatform': 'i6 Decision Suite',
   'header.partners': 'Development Partners',
   'header.partners.builder': 'i6 Builder Platform',
   'header.partners.community': 'Community',
