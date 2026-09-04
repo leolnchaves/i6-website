@@ -32,6 +32,8 @@ import KioskMetrics from "./pages/KioskMetrics";
 import GoLanding from "./pages/GoLanding";
 import I6Builders from "./pages/I6Builders";
 import Comunidade from "./pages/Comunidade";
+import Docs from "./pages/Docs";
+
 
 
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -94,6 +96,9 @@ const LocalizedRoutes = () => {
         <Route path="i6-blog/:slug" element={<InsightArticle />} />
         <Route path="i6-builders" element={<I6Builders />} />
         <Route path="comunidade" element={<Comunidade />} />
+        <Route path="docs" element={<Docs />} />
+        <Route path="docs/:slug" element={<Docs />} />
+
         <Route path="go/:token" element={<GoLanding />} />
 
       </Route>

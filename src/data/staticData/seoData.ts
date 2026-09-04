@@ -242,5 +242,32 @@ export const seoData: SEODataMap = {
       ],
     },
   },
+  docs: {
+    pt: {
+      title: 'Documentação i6 — engines, SDKs e APIs de modelagem',
+      description: 'Referência técnica da infinity6: autenticação, envio de dados, execução de modelagem, consumo de predições e códigos de erro das APIs e SDKs',
+      keywords: [
+        'documentação técnica',
+        'referência de API',
+        'SDK de machine learning',
+        'autenticação de API',
+        'engines preditivos',
+        'integração de dados',
+      ],
+    },
+    en: {
+      title: 'i6 documentation — modeling engines, SDKs and APIs',
+      description: 'infinity6 technical reference: authentication, data ingestion, modeling executions, prediction retrieval and error codes for the APIs and SDKs',
+      keywords: [
+        'technical documentation',
+        'API reference',
+        'machine learning SDK',
+        'API authentication',
+        'predictive engines',
+        'data integration',
+      ],
+    },
+  },
 };
+
 
