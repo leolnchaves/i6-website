@@ -4,7 +4,7 @@
  */
 
 export const DOCS_PATH = '/docs';
-export const COMMUNITY_PATH = '/comunidade';
+export const COMMUNITY_PATH = '/community';
 export const CONTACT_ANCHOR = '#fale-com-o-time';
 
 export const builderCopy = {
