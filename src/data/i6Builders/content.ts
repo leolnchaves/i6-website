@@ -311,7 +311,7 @@ export const builderCopy = {
         '    series="demanda_sku",',
         '    horizon=12,',
         ')',
-        '# cada salida acompaña sus drivers',
+        '# cada pronóstico llega con los factores que lo explican',
         'forecast.drivers()',
       ],
     },
