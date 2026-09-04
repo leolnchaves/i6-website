@@ -11,15 +11,15 @@ A fonte de fatos é a página Proprietary AI: três motores próprios (i6RecSys,
 
 ## Texto proposto (PT)
 
-> Motores de IA proprietários e modelo fundacional próprio, treinados em bilhões de eventos reais de negócio — engenharia de ponta que entrega a decisão pronta, com o porquê explicado.
+> Motores de IA proprietários e modelo fundacional próprio, treinados em bilhões de eventos reais de negócio — engenharia de ponta que entrega a decisão pronta, com explicabilidade nativa.
 
 Alternativa mais curta, caso prefira:
 
-> IA proprietária de ponta: motores próprios e modelo fundacional treinados em bilhões de eventos reais — a decisão pronta, com o porquê explicado.
+> IA proprietária de ponta: motores próprios e modelo fundacional treinados em bilhões de eventos reais — a decisão pronta, com explicabilidade nativa.
 
 ## Texto proposto (EN)
 
-> Proprietary AI engines and our own foundation model, trained on billions of real business events — high-end engineering that delivers the decision, with the reasoning explained.
+> Proprietary AI engines and our own foundation model, trained on billions of real business events — high-end engineering that delivers the decision, with native explainability.
 
 ## Selos abaixo dos botões
 
