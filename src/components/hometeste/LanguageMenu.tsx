@@ -56,7 +56,7 @@ const LanguageMenu = () => {
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-[calc(100%+0.6rem)] z-[60] min-w-[168px] overflow-hidden rounded-xl border border-white/12 bg-[#0B1224]/98 shadow-[0_20px_40px_rgba(0,0,0,0.45)] backdrop-blur-md py-1"
+          className="absolute right-0 top-[calc(100%+0.6rem)] z-[60] min-w-[168px] overflow-hidden rounded-xl border border-white/20 bg-[#0B1224] shadow-[0_20px_40px_rgba(0,0,0,0.45)] py-1"
         >
           {LANGUAGES.map((l) => {
             const active = l.code === language;
