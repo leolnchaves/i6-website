@@ -151,7 +151,18 @@ const HeaderNovo = () => {
             )}
           </li>
 
-          {/* Development Partners dropdown */}
+          {rightLinks.map((l) => (
+            <li key={l.to}>
+              <Link
+                to={l.to}
+                className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+
+          {/* i6 Platform dropdown */}
           <li ref={partnersRef} className="relative">
             <button
               onClick={() => setPartnersOpen((v) => !v)}
@@ -186,17 +197,6 @@ const HeaderNovo = () => {
               </ul>
             )}
           </li>
-
-          {rightLinks.map((l) => (
-            <li key={l.to}>
-              <Link
-                to={l.to}
-                className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
 
           <li>
             <Link
