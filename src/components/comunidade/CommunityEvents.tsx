@@ -33,14 +33,14 @@ const CommunityEvents = () => {
           {copy.items.map((item, i) => {
             const isHighlight = i === copy.items.length - 1;
             return (
-              <li key={item.name} className={`relative ${indents[i]}`}>
-                {isHighlight && (
-                  <span
-                    aria-hidden
-                    className="absolute -left-4 top-1/2 hidden h-8 w-[3px] -translate-y-1/2 rounded-full bg-primary md:block"
-                  />
-                )}
-                <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+              <li key={item.name} className={indents[i]}>
+                <div className="flex items-center gap-3">
+                  {isHighlight && (
+                    <span
+                      aria-hidden
+                      className="hidden h-11 w-[4px] flex-shrink-0 rounded-full bg-primary md:block"
+                    />
+                  )}
                   <span
                     className={`${sizes[i]} font-bold leading-none tracking-[-0.03em] ${
                       isHighlight ? 'text-primary' : 'text-foreground'
