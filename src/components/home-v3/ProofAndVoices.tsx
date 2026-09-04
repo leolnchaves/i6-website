@@ -69,8 +69,7 @@ const ProofAndVoices = memo(() => {
         {hasVoices && (
           <div className="mt-20">
             <div className="text-center max-w-2xl mx-auto mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">{copy.voicesTitle}</h3>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{copy.voicesSub}</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{copy.voicesTitle}</h3>
             </div>
 
             <Carousel
