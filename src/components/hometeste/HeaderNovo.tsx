@@ -50,6 +50,7 @@ const HeaderNovo = () => {
   }, [menuOpen]);
 
   const researchMenu: ResearchItem[] = [
+    { to: localized('/our-ai'), label: t('header.proprietaryAi') },
     { to: localized('/i6-intelligence'), label: t('header.research.hub') },
     { to: localized('/insights'), label: t('header.research.media') },
     { to: localized('/i6-blog'), label: t('header.research.blog') },
@@ -59,14 +60,22 @@ const HeaderNovo = () => {
     { to: localized('/solutions/behavior-conversion'), label: t('header.solutions.behaviorConversion') },
   ];
 
+  // Telas ainda em construção: entram com o selo "Em breve".
+  const partnersMenu: ResearchItem[] = [
+    { label: t('header.partners.builder'), comingSoon: true },
+    { label: t('header.partners.community'), comingSoon: true },
+    { label: t('header.partners.docs'), comingSoon: true },
+  ];
+
   const leftLinks = [
     { to: localized('/'), label: t('header.home') },
-    { to: localized('/solutions'), label: t('header.solutions') },
-    { to: localized('/our-ai'), label: t('header.proprietaryAi') },
     { to: localized('/success-stories'), label: t('header.successStories') },
   ];
 
+  const decisionPlatform = { href: 'https://www.i6decision.ai', label: t('header.decisionPlatform') };
+
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
+
 
   // A home usa a identidade clara (theme-sand): o header precisa manter o
   // fundo navy sólido para os links brancos permanecerem legíveis.
