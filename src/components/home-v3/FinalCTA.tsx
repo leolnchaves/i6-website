@@ -7,14 +7,12 @@ import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 const copyByLang = {
   pt: {
     title: 'Seu concorrente vai perceber o movimento depois de você',
-    sub: 'Sem custo até você ver o potencial de impacto na sua operação.',
     primary: 'Falar com especialista',
     secondary: 'Conheça o i6 Decision Suite',
     note: 'CUSTO ZERO ATÉ O BACKTEST COMPROVAR O POTENCIAL DE RESULTADO',
   },
   en: {
     title: 'Your competitor will notice the move after you do',
-    sub: 'No cost until you see the potential impact in your operation.',
     primary: 'Talk to an expert',
     secondary: 'Explore the i6 Decision Suite',
     note: 'ZERO COST UNTIL THE BACKTEST PROVES THE POTENTIAL RESULT',
