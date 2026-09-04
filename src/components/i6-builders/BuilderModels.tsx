@@ -93,10 +93,10 @@ const BuilderModels = () => {
 
   return (
     <section className="container mx-auto px-6 py-16 md:py-24">
-      <div className="max-w-3xl">
+      <div>
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">{copy.eyebrow}</p>
-        <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground whitespace-nowrap truncate">{copy.title}</h2>
-        <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed whitespace-nowrap truncate">{copy.intro}</p>
+        <h2 className="text-[clamp(1.25rem,3.2vw,2.25rem)] leading-[1.12] font-bold text-foreground whitespace-nowrap">{copy.title}</h2>
+        <p className="mt-5 text-[clamp(0.75rem,1.4vw,1.125rem)] text-muted-foreground leading-relaxed whitespace-nowrap">{copy.intro}</p>
       </div>
 
       <div ref={wrapRef} className="relative mt-12 grid gap-8 md:grid-cols-[minmax(0,320px)_1fr] md:gap-14">
