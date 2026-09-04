@@ -24,7 +24,7 @@ const copyByLang = {
     caption:
       'Anonymized data from infinity6 clients. Metrics measured in production after deploying the proprietary engines.',
     voicesTitle: 'In their words: those already deciding first',
-    voicesSub: 'Anticipated decisions driving real impact.'
+    voicesSub: 'Anticipated decisions driving real impact.',
     cta: 'View success stories',
   },
 };
