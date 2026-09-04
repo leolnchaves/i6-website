@@ -210,16 +210,47 @@ export const builderCopy = {
         {
           name: 'Forecasting, Demand Modeling & Sales Planning',
           desc: 'Projection of future demand, volume and capacity behavior across horizons and aggregation levels',
+          long: 'Models sales history, inventory, capacity and external variables to anticipate what tends to happen for every product, channel and location combination. It supports replenishment, sales planning, capacity allocation and target setting, always exposing the factors pushing each projection up or down',
+          outputs: [
+            'Demand forecast by period, product, channel and location',
+            'Confidence intervals and optimistic/pessimistic scenarios',
+            'Stockout and overstock risk per item',
+            'Replenishment suggestion and days of coverage',
+            'Sales plan and targets by commercial hierarchy',
+            'Drivers behind each projection: seasonality, trend, price, events',
+          ],
+          engines: ['i6Previsio'],
         },
         {
           name: 'Recommendation, Personalization, Propension & Assortment',
           desc: 'Ranking of items, audiences and combinations by response probability and fit to each decision context',
+          long: 'Models individual and collective behavior from browsing, purchase and interaction events to rank what to offer, to whom and when. It spans in-product recommendation, store-level assortment design and contact-list prioritization',
+          outputs: [
+            'Ranked item list per customer or session',
+            'Propensity score for purchase, repurchase and churn',
+            'Prioritized audience per campaign and channel',
+            'Suggested assortment by store, region or cluster',
+            'Cross-sell and up-sell combinations',
+            'Drivers behind each recommendation: affinity, context, history',
+          ],
+          engines: ['i6RecSys', 'i6Previsio'],
         },
         {
           name: 'Pricing & Elasticity Modeling',
           desc: 'Estimation of price sensitivity and of the volume versus margin trade-off in every simulated scenario',
+          long: 'Estimates how demand responds to price changes by item, channel and region, accounting for competition, promotion and positioning. It allows simulating scenarios before touching price and choosing the point that balances volume, revenue and margin',
+          outputs: [
+            'Recommended price by item, channel and region',
+            'Elasticity curve and acceptable price range',
+            'Volume x revenue x margin simulation per scenario',
+            'Estimated impact of promotion and markdown',
+            'Adjustment priority: where margin is being drained',
+            'Drivers behind each pricing recommendation',
+          ],
+          engines: ['i6ElasticPrice'],
         },
       ],
+
     },
     accelerators: {
       eyebrow: 'Domain Accelerators',
