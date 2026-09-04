@@ -23,7 +23,7 @@ const copyByLang = {
     ],
   },
   en: {
-    eyebrow: 'Decision Intelligence · Latin America',
+    eyebrow: 'AI DECISION INTELLIGENCE',
     titleA: 'The most advanced',
     titleB: 'predictive decision',
     titleC: 'platform in Latin America',
