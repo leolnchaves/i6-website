@@ -121,9 +121,17 @@ const FooterNovo = () => {
               {t('header.partners')}
             </h3>
             <ul className="space-y-2">
-              {partnersLinks.map((label) => (
-                <li key={label}>
-                  <span className="text-white/40 text-sm">{label}</span>
+              {partnersLinks.map((l) => (
+                <li key={l.to}>
+                  {l.external ? (
+                    <a href={l.to} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                      {l.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
