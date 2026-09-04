@@ -120,7 +120,6 @@ export const builderCopy = {
       eyebrow: 'Domain Accelerators',
       title: 'Pacotes por vertical para reduzir o time-to-value',
       intro: 'Combinações pré-configuradas de múltiplos engines, com parametrização e métricas típicas de cada domínio, para encurtar o caminho entre integração e primeiro resultado',
-      exampleNote: 'Verticais abaixo são exemplos ilustrativos',
     },
     persona: {
       eyebrow: 'Como você constrói com o i6 Builder',
