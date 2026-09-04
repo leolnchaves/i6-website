@@ -25,9 +25,10 @@ const copyByLang = {
   },
   en: {
     eyebrow: 'AI DECISION INTELLIGENCE',
-    titleA: 'The most advanced',
+    titleA: 'The most advanced ',
     titleB: 'predictive decision',
-    titleC: 'platform in Latin America',
+    titleC: 'platform',
+    titleD: 'in Latin America',
     sub: 'Not a dashboard. Not a report. The decision, ready before your competitor notices the move.',
     ctaPrimary: 'Explore the i6 Decision Suite',
     ctaSecondary: 'Talk to an expert',
