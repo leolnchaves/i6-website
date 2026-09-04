@@ -204,25 +204,26 @@ const HeroSuite = () => {
               </div>
 
               <div
-                className="-mb-3"
+                className="relative overflow-hidden"
+                style={{ height: FRAME }}
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
               >
                 {slots.map((s, i) => (
                   <div
                     key={s.key}
-                    className={`overflow-hidden ${
-                      s.role === 'out'
-                        ? 'animate-decision-out'
-                        : s.role === 'in'
-                        ? 'animate-decision-in'
-                        : cursor === 0
-                        ? 'animate-sand-rise'
-                        : ''
+                    className={`absolute left-0 right-0 top-0 ${
+                      s.entering ? 'animate-decision-fade' : cursor === 0 ? 'animate-sand-rise' : ''
                     }`}
-                    style={cursor === 0 ? { animationDelay: `${0.4 + i * 0.14}s` } : undefined}
+                    style={{
+                      height: ROW,
+                      transform: `translateY(${s.pos * (ROW + GAP)}px)`,
+                      opacity: s.pos < 0 ? 0 : 1,
+                      transition: 'transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease',
+                      ...(cursor === 0 ? { animationDelay: `${0.4 + i * 0.14}s` } : null),
+                    }}
                   >
-                    <div className="mb-3 rounded-[calc(var(--radius)-4px)] border border-border bg-secondary/60 p-4">
+                    <div className="h-full overflow-hidden rounded-[calc(var(--radius)-4px)] border border-border bg-secondary/60 p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <s.item.icon size={14} className="text-primary" />
                         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
@@ -235,6 +236,7 @@ const HeroSuite = () => {
                   </div>
                 ))}
               </div>
+
 
             </div>
           </div>
