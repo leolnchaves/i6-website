@@ -7,9 +7,10 @@ import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 const copyByLang = {
   pt: {
     eyebrow: 'AI DECISION INTELLIGENCE',
-    titleA: 'A plataforma de decisão',
-    titleB: 'preditiva mais avançada',
-    titleC: 'da América Latina',
+    titleA: 'A plataforma de ',
+    titleB: 'decisão preditiva',
+    titleC: 'mais avançada',
+    titleD: 'da América Latina',
     sub: 'Não é dashboard. Não é relatório. É a decisão pronta, antes do concorrente perceber o movimento.',
     ctaPrimary: 'Conheça o i6 Decision Suite',
     ctaSecondary: 'Falar com especialista',
