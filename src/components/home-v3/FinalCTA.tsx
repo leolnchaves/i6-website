@@ -2,20 +2,21 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 const copyByLang = {
   pt: {
     title: 'Seu concorrente vai perceber o movimento depois de você',
     sub: 'Comece com um backtest nos seus próprios dados. Sem custo até você ver o impacto na sua operação.',
     primary: 'Falar com especialista',
-    secondary: 'Ver as soluções',
+    secondary: 'Conheça o i6 Decision Suite',
     note: 'Custo zero até o backtest comprovar o resultado',
   },
   en: {
     title: 'Your competitor will notice the move after you do',
     sub: 'Start with a backtest on your own data. No cost until you see the impact in your operation.',
     primary: 'Talk to an expert',
-    secondary: 'Explore solutions',
+    secondary: 'Explore the i6 Decision Suite',
     note: 'Zero cost until the backtest proves the result',
   },
 };
@@ -41,12 +42,14 @@ const FinalCTA = () => {
               {copy.primary}
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </Link>
-            <Link
-              to={localized('/solutions')}
+            <a
+              href={SUITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 transition-all"
             >
               {copy.secondary}
-            </Link>
+            </a>
           </div>
 
           <p className="mt-6 text-xs font-medium uppercase tracking-[0.16em] text-primary">{copy.note}</p>

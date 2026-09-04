@@ -42,7 +42,7 @@ const FooterNovo = () => {
 
   const navLinks: { to: string; label: string; external?: boolean }[] = [
     { to: localized('/'), label: t('header.home') },
-    { to: localized('/solutions'), label: t('header.solutions') },
+    { to: 'https://www.i6decision.ai', label: 'i6 Decision Suite', external: true },
     { to: localized('/our-ai'), label: t('header.solutions.proprietaryAi') },
     { to: localized('/success-stories'), label: t('header.successStories') },
     { to: 'https://huggingface.co/infinity6', label: t('header.community'), external: true },
