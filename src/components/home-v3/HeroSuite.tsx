@@ -95,18 +95,24 @@ const HeroSuite = () => {
     return () => clearInterval(timer);
   }, [paused, items.length]);
 
-  const slots: { key: string; item: typeof items[number]; role: 'out' | 'stay' | 'in' }[] = [];
+  const ROW = 112;
+  const GAP = 12;
+  const FRAME = ROW * 3 + GAP * 2;
+
+  const slots: { key: string; item: typeof items[number]; pos: number; entering: boolean }[] = [];
   if (cursor > 0) {
-    slots.push({ key: `out-${cursor - 1}`, item: items[(cursor - 1) % items.length], role: 'out' });
+    slots.push({ key: `d-${cursor - 1}`, item: items[(cursor - 1) % items.length], pos: -1, entering: false });
   }
   for (let k = 0; k < 3; k++) {
     const abs = cursor + k;
     slots.push({
       key: `d-${abs}`,
       item: items[abs % items.length],
-      role: k === 2 && cursor > 0 ? 'in' : 'stay',
+      pos: k,
+      entering: k === 2 && cursor > 0,
     });
   }
+
 
 
 
