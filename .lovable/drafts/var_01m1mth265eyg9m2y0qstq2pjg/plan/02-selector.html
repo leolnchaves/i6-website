@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><style>
+svg { font-family: var(--font-sans); }
+.lbl { font-size: 14px; font-weight: 480; fill: hsl(var(--foreground)); }
+.sm { font-size: 12px; fill: hsl(var(--muted-foreground)); }
+.tag { font-size: 12px; fill: hsl(var(--border)); }
+.box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+.rail { stroke: hsl(var(--border)); stroke-width: 1; }
+.quiet { fill: hsl(var(--muted)); }
+</style></head>
+<body>
+<svg viewBox="0 0 640 300" width="640" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- header rail -->
+  <rect x="8" y="16" width="624" height="44" rx="8" class="quiet"/>
+  <text x="24" y="43" class="lbl">infinity6</text>
+  <text x="150" y="43" class="sm">Decision Platform</text>
+  <text x="280" y="43" class="sm">Inteligência Aplicada</text>
+  <text x="440" y="43" class="sm">Contato</text>
+
+  <!-- globe button -->
+  <rect x="530" y="26" width="82" height="26" rx="13" fill="none" stroke="hsl(var(--accent))" stroke-width="1"/>
+  <circle cx="546" cy="39" r="7" fill="none" stroke="hsl(var(--accent))" stroke-width="1"/>
+  <path d="M539 39h14M546 32c-4 4-4 10 0 14M546 32c4 4 4 10 0 14" fill="none" stroke="hsl(var(--accent))" stroke-width="1"/>
+  <text x="560" y="43" style="font-size:12px;fill:hsl(var(--accent))">idioma</text>
+
+  <!-- dropdown -->
+  <rect x="486" y="72" width="126" height="118" rx="8" class="box"/>
+  <rect x="490" y="80" width="118" height="32" rx="6" fill="hsl(var(--accent))" opacity="0.16"/>
+  <text x="504" y="101" class="lbl" style="fill:hsl(var(--accent))">Português</text>
+  <path d="M584 96l4 4 6-8" fill="none" stroke="hsl(var(--accent))" stroke-width="1.5"/>
+  <text x="504" y="137" class="lbl">English</text>
+  <text x="504" y="171" class="lbl">Español</text>
+  <line x1="490" y1="150" x2="608" y2="150" class="rail"/>
+  <line x1="490" y1="116" x2="608" y2="116" class="rail"/>
+
+  <!-- ledger -->
+  <circle cx="30" cy="110" r="10" fill="hsl(var(--accent))"/>
+  <text x="30" y="115" text-anchor="middle" style="font-size:12px;fill:hsl(var(--accent-foreground))">1</text>
+  <text x="50" y="115" class="sm">Globo discreto no lugar das pílulas PT / EN</text>
+
+  <circle cx="30" cy="146" r="10" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="30" y="151" text-anchor="middle" class="sm">2</text>
+  <text x="50" y="151" class="sm">Lista com nomes completos, ativo em coral</text>
+
+  <circle cx="30" cy="182" r="10" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="30" y="187" text-anchor="middle" class="sm">3</text>
+  <text x="50" y="187" class="sm">Trocar idioma mantém a mesma página (/pt → /es)</text>
+
+  <!-- mobile block -->
+  <rect x="50" y="216" width="180" height="70" rx="8" class="box"/>
+  <text x="64" y="238" class="sm">no celular: mesmo bloco</text>
+  <rect x="64" y="248" width="46" height="22" rx="11" fill="hsl(var(--accent))" opacity="0.16"/>
+  <text x="87" y="263" text-anchor="middle" style="font-size:11px;fill:hsl(var(--accent))">PT</text>
+  <rect x="116" y="248" width="46" height="22" rx="11" fill="none" stroke="hsl(var(--border))"/>
+  <text x="139" y="263" text-anchor="middle" style="font-size:11px;fill:hsl(var(--muted-foreground))">EN</text>
+  <rect x="168" y="248" width="46" height="22" rx="11" fill="none" stroke="hsl(var(--border))"/>
+  <text x="191" y="263" text-anchor="middle" style="font-size:11px;fill:hsl(var(--muted-foreground))">ES</text>
+  <text x="248" y="256" class="tag">estrutura atual preservada</text>
+</svg>
+</body>
+</html>

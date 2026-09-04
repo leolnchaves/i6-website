@@ -1,27 +1,21 @@
-# Frase de abertura: força técnica em IA
+# Novo seletor de idiomas + espanhol
 
-Hoje a frase abaixo do título diz o que **não** somos ("Não é dashboard. Não é relatório."). Você quer que esse espaço afirme nossa capacidade técnica: IA proprietária, motores próprios, engenharia de alto nível.
+## O que muda para quem visita
 
-A fonte de fatos é a página Proprietary AI: três motores próprios (i6RecSys, i6Previsio, i6ElasticPrice), modelo fundacional próprio (i6-RecSys-Base.g1, treinado em 1,45B de registros em 2025, rumo a 20B em 2026), explicabilidade nativa (XAI) e deploy no ecossistema do cliente.
+Hoje o cabeçalho mostra duas pílulas (PT / EN) presas numa moldura coral. No lugar disso entra um botão discreto com um ícone de globo: ao clicar, abre uma lista curta com os nomes dos idiomas — Português, English, Español — com o ativo destacado em coral e um sinal de seleção. Sem bandeiras, sem siglas soltas, no mesmo estilo de bordas suaves e fundo escuro translúcido dos outros menus do cabeçalho.
 
-## O que muda
+No celular, o mesmo bloco aparece dentro do menu aberto, com os três idiomas em linhas confortáveis de toque.
 
-1. Nova frase de abertura (PT e EN), no mesmo lugar, mesmo tamanho e estilo — só o texto.
-2. Os três selos logo abaixo dos botões passam a reforçar a mesma mensagem técnica.
+## Espanhol
 
-## Texto proposto (PT)
+O site passa a aceitar `/es/...` como as outras versões, e o idioma continua vindo do endereço da página. Nesta etapa o espanhol cobre:
 
-> Motores de IA proprietários e modelo fundacional próprio, treinados em bilhões de eventos reais de negócio — engenharia de ponta que entrega a decisão pronta, com explicabilidade nativa.
+- a home nova por completo (todas as seções e cartões);
+- cabeçalho, menus, submenus e rodapé;
+- textos de formulários, botões e avisos de cookies que já vivem no dicionário do site.
 
-Alternativa mais curta, caso prefira:
+Páginas internas e conteúdos editoriais (cases, insights, research) ainda não têm versão em espanhol: quando faltar, o texto aparece em português, como você escolheu. Nada quebra e nada fica vazio.
 
-> IA proprietária de ponta: motores próprios e modelo fundacional treinados em bilhões de eventos reais — a decisão pronta, com explicabilidade nativa.
+## Detecção automática
 
-## Texto proposto (EN)
-
-> Proprietary AI engines and our own foundation model, trained on billions of real business events — high-end engineering that delivers the decision, with native explainability.
-
-## Selos abaixo dos botões
-
-- PT: "Motores proprietários de IA" · "Modelo fundacional próprio" · "Explicabilidade nativa (XAI)"
-- EN: "Proprietary AI engines" · "In-house foundation model" · "Native explainability (XAI)"
+Quem chega pela raiz do site com navegador em espanhol passa a cair em `/es`. Português e inglês seguem como hoje.
