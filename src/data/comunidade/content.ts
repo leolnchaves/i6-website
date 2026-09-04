@@ -130,7 +130,7 @@ export const communityCopy = {
   },
   es: {
     opening: {
-      eyebrow: 'comunidad infinity6',
+      eyebrow: 'COMUNIDAD I6 BUILDERS',
       titleTop: 'El lugar de',
       titleAccent: 'quien construye',
       titleBottom: 'decisión con datos',
