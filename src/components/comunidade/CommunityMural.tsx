@@ -88,7 +88,7 @@ const CommunityMural = () => {
       <div className="container mx-auto mt-10 px-6 md:hidden">
         <ul className="space-y-8">
           {copy.archetypes.map((a, i) => {
-            const img = MURAL_IMAGES[i % MURAL_IMAGES.length];
+            const img = imageForSlot(i);
             const withImage = i % 3 === 1;
             return (
               <li key={a.label} className={i % 2 === 1 ? 'pl-5 border-l border-primary/30' : ''}>
@@ -99,6 +99,7 @@ const CommunityMural = () => {
                     aria-hidden
                     loading="lazy"
                     className="mb-3 h-32 w-full rounded-2xl object-cover opacity-75 ring-1 ring-border"
+                    style={{ objectPosition: img.objectPosition }}
                   />
                 )}
                 <span className="block text-[11px] font-mono text-primary/70">
