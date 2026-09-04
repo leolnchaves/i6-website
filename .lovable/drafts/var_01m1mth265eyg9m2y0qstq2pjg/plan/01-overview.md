@@ -1,21 +1,19 @@
-# Repensar a página i6 Builder Platform
+# Famílias de modelagem: lista à esquerda, detalhe à direita
 
-Dois problemas a resolver:
+Hoje as três famílias aparecem como três colunas lado a lado, com uma frase curta cada. A seção passa a ser interativa:
 
-1. **Ritmo monótono** — hoje são oito blocos com a mesma receita: rótulo, título, grade de cards. A página lê como um catálogo, não como uma história.
-2. **Cabeçalho e rodapé fora do tom** — o topo entra transparente sobre o fundo claro desta página, então ele parece diferente do resto do site, e a passagem do fundo claro para o rodapé escuro acontece de forma seca.
+- À esquerda, as três famílias em lista vertical, uma sob a outra, clicáveis.
+- À direita, um único quadro que mostra o conteúdo da família escolhida.
+- Ao clicar, uma linha fina em terracota se desenha da família selecionada até o quadro, e o conteúdo do quadro entra com uma transição suave.
+- A primeira família já vem selecionada quando a seção aparece, para ninguém ver um quadro vazio.
+- No celular, a lista vira uma pilha e o quadro abre logo abaixo da família escolhida (a linha de conexão, que não faz sentido em tela estreita, não aparece).
 
-O conteúdo, os textos nos três idiomas, o formulário de contato e os dados de exemplo continuam os mesmos. Muda a forma como a página respira.
+## Conteúdo mais profundo em cada família
 
-## Novo ritmo da página
+Cada família passa a ter, além da frase atual:
 
-Cada seção passa a ter uma forma própria, alternando fundo claro e fundo escuro, texto largo e texto estreito, imagem e lista:
+- um parágrafo de contexto explicando o que a família realmente modela e em que decisões entra;
+- uma lista dos tipos de saída entregues por ela (o que sai do modelo e pode ser consumido pelo produto do parceiro);
+- os motores i6 envolvidos, como etiquetas.
 
-1. **Abertura** — título grande à esquerda, e à direita um painel escuro com um trecho de código curto (uma chamada real de previsão e a resposta). Diz "isto é uma plataforma para quem programa" sem precisar afirmar.
-2. **O que é** — três frases em linha contínua separadas por finas divisórias verticais, sem molduras de card.
-3. **Como funciona** — uma faixa escura com um percurso horizontal: SDK, API, Toolkit ligados por uma linha, com o passo ativo em destaque.
-4. **Os modelos** — três colunas altas em estilo editorial, com numeração grande e nome do motor, sem caixas.
-5. **Aceleradores por setor** — carrossel horizontal de fichas compactas, que sinaliza "há mais" em vez de listar tudo.
-6. **Dois caminhos** — divisão em duas metades contrastantes: embutir no seu produto (claro) ou criar um produto novo (escuro).
-7. **Casos de parceiros** — três depoimentos em citação, com o número de resultado em destaque terracota.
-8. **Fechamento e formulário** — bloco final em fundo escuro que já emenda no rodapé, sem corte brusco.
+Tudo nos três idiomas (português, inglês e espanhol).
