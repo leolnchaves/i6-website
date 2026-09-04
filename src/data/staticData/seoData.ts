@@ -216,4 +216,31 @@ export const seoData: SEODataMap = {
       ],
     },
   },
+  comunidade: {
+    pt: {
+      title: 'Comunidade infinity6 — para quem constrói decisão com dados',
+      description: 'Comunidade técnica da infinity6 para times que projetam, treinam e colocam modelos de decisão em produção: Office Hours, meetups regionais e Builder Summit',
+      keywords: [
+        'comunidade técnica de IA',
+        'machine learning em produção',
+        'forecasting',
+        'sistemas de recomendação',
+        'meetup de dados',
+        'builder summit',
+      ],
+    },
+    en: {
+      title: 'infinity6 community — for people who build decisions with data',
+      description: 'The infinity6 technical community for teams that design, train and ship decision models to production: Office Hours, regional meetups and Builder Summit',
+      keywords: [
+        'AI technical community',
+        'machine learning in production',
+        'forecasting',
+        'recommender systems',
+        'data meetup',
+        'builder summit',
+      ],
+    },
+  },
 };
+

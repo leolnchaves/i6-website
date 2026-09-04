@@ -49,7 +49,8 @@ export type LeadSource =
   | 'article-cta-research'
   | 'go-landing'
   | 'kiosk-demo'
-  | 'i6-builders';
+  | 'i6-builders'
+  | 'i6-comunidade';
 
 
 export const LEAD_SOURCE_MAX_LEN = 50;

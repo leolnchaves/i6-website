@@ -69,7 +69,7 @@ const HeaderNovo = () => {
   // Telas ainda em construção: entram com o selo "Em breve".
   const partnersMenu: ResearchItem[] = [
     { to: localized('/i6-builders'), label: t('header.partners.builder') },
-    { label: t('header.partners.community'), comingSoon: true },
+    { to: localized('/comunidade'), label: t('header.partners.community') },
     { label: t('header.partners.docs'), comingSoon: true },
   ];
 
@@ -85,7 +85,7 @@ const HeaderNovo = () => {
   // Páginas de tema claro (home e /i6-builders): o header precisa manter o
   // fundo navy sólido para os links brancos permanecerem legíveis.
   const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
-  const isLightPage = ['/', '/i6-builders'].includes(normalizedPath);
+  const isLightPage = ['/', '/i6-builders', '/comunidade'].includes(normalizedPath);
 
 
   return (
