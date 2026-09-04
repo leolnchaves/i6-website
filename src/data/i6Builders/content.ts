@@ -350,16 +350,47 @@ export const builderCopy = {
         {
           name: 'Forecasting, Demand Modeling & Sales Planning',
           desc: 'Proyección del comportamiento futuro de demanda, volumen y capacidad en distintos horizontes y niveles de agregación',
+          long: 'Modela el histórico de ventas, inventario, capacidad y variables externas para anticipar lo que tiende a ocurrir en cada combinación de producto, canal y local. Sustenta decisiones de reposición, plan de ventas, asignación de capacidad y definición de metas, mostrando los factores que empujan cada proyección',
+          outputs: [
+            'Previsión de demanda por período, producto, canal y local',
+            'Intervalos de confianza y escenarios optimista/pesimista',
+            'Riesgo de quiebre y de exceso de inventario por ítem',
+            'Sugerencia de reposición y cobertura en días',
+            'Plan de ventas y metas por jerarquía comercial',
+            'Drivers de cada proyección: estacionalidad, tendencia, precio, eventos',
+          ],
+          engines: ['i6Previsio'],
         },
         {
           name: 'Recommendation, Personalization, Propension & Assortment',
           desc: 'Ordenación de ítems, públicos y combinaciones por probabilidad de respuesta y ajuste al contexto de cada decisión',
+          long: 'Modela comportamiento individual y colectivo a partir de eventos de navegación, compra e interacción para ordenar qué ofrecer, a quién y en qué momento. Abarca recomendación dentro del producto, diseño de surtido por tienda y priorización de listas de contacto',
+          outputs: [
+            'Lista ordenada de ítems por cliente o sesión',
+            'Score de propensión a compra, recompra y churn',
+            'Público priorizado por campaña y canal',
+            'Surtido sugerido por tienda, región o clúster',
+            'Combinaciones de cross-sell y up-sell',
+            'Drivers de cada recomendación: afinidad, contexto, histórico',
+          ],
+          engines: ['i6RecSys', 'i6Previsio'],
         },
         {
           name: 'Pricing & Elasticity Modeling',
           desc: 'Estimación de sensibilidad al precio y del trade-off entre volumen y margen en cada escenario simulado',
+          long: 'Estima cómo responde la demanda a variaciones de precio por ítem, canal y región, considerando competencia, promoción y posicionamiento. Permite simular escenarios antes de mover el precio y elegir el punto que equilibra volumen, ingreso y margen',
+          outputs: [
+            'Precio recomendado por ítem, canal y región',
+            'Curva de elasticidad y rango de precio aceptable',
+            'Simulación volumen x ingreso x margen por escenario',
+            'Impacto estimado de promoción y markdown',
+            'Prioridad de ajuste: dónde se está drenando el margen',
+            'Drivers de cada recomendación de precio',
+          ],
+          engines: ['i6ElasticPrice'],
         },
       ],
+
     },
     accelerators: {
       eyebrow: 'Domain Accelerators',
