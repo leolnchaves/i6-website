@@ -254,4 +254,9 @@
   <url><loc>https://infinity6.ai/en/comunidade</loc><changefreq>monthly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/comunidade"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/comunidade"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/comunidade"/></url>
   <url><loc>https://infinity6.ai/pt/comunidade</loc><changefreq>monthly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/comunidade"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/comunidade"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/comunidade"/></url>
 
+  <!-- Documentação -->
+  <url><loc>https://infinity6.ai/en/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/></url>
+  <url><loc>https://infinity6.ai/pt/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/></url>
+
 </urlset>
+
