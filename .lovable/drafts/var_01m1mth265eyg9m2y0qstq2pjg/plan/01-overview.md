@@ -1,8 +1,8 @@
-# Faixa vertical à direita da lista de famílias
+# Faixa vertical espelhada à direita da lista de famílias
 
-Na seção **Famílias de modelagem** (`/i6-builders`), adicionar uma segunda faixa vertical terracota, igual à que existe hoje à esquerda do item ativo, mas posicionada do lado direito da lista — fechando a lista como um contêiner.
+Na seção **Famílias de modelagem** (`/i6-builders`), adicionar uma segunda faixa vertical terracota do lado direito da lista, espelhando exatamente a faixa que já marca o item ativo à esquerda: mesma altura e mesmo alinhamento vertical.
 
-A linha horizontal passa a nascer nessa nova faixa (lado oposto ao círculo) e termina com o círculo junto ao quadro de detalhe, à direita.
+A linha horizontal nasce nessa nova faixa e termina com o círculo junto ao quadro de detalhe, à direita.
 
 ## Escopo
 - Apenas `src/components/i6-builders/BuilderModels.tsx`.
@@ -15,5 +15,5 @@ A linha horizontal passa a nascer nessa nova faixa (lado oposto ao círculo) e t
  |  Pricing & Elasticity  |———o   [ quadro de detalhe ]
  |  Modeling              |
  ^                        ^
- faixa do item ativo      faixa nova (fecha a lista)
+ faixa do item ativo      faixa nova: mesma altura, mesmo topo/base
 ```

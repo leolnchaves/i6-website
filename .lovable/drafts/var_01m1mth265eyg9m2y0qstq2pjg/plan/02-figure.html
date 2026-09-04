@@ -7,6 +7,7 @@
       .accent { fill: hsl(var(--primary)); }
       .line { stroke: hsl(var(--primary)); stroke-width: 1.5; }
       .bar { fill: hsl(var(--primary)); }
+      .guide { stroke: hsl(var(--border)); stroke-width: 1; stroke-dasharray: 4 3; }
     </style>
   </defs>
 
@@ -17,9 +18,13 @@
   <text x="48" y="100" class="label">Modeling</text>
 
   <!-- Faixa do item ativo (já existe) -->
-  <rect x="34" y="48" width="3" height="60" rx="1.5" class="bar" />
-  <!-- Faixa nova: fecha a lista à direita -->
-  <rect x="247" y="42" width="3" height="116" rx="1.5" class="bar" />
+  <rect x="34" y="52" width="3" height="72" rx="1.5" class="bar" />
+  <!-- Faixa nova: espelhada, mesma altura e mesmo topo/base -->
+  <rect x="247" y="52" width="3" height="72" rx="1.5" class="bar" />
+
+  <!-- Guias mostrando alinhamento -->
+  <line x1="34" y1="52" x2="250" y2="52" class="guide" />
+  <line x1="34" y1="124" x2="250" y2="124" class="guide" />
 
   <!-- Linha horizontal: nasce na faixa nova, círculo do lado oposto -->
   <line x1="250" y1="88" x2="400" y2="88" class="line" />
@@ -32,6 +37,5 @@
   <rect x="422" y="92" width="168" height="8" rx="4" fill="hsl(var(--muted))" />
   <rect x="422" y="108" width="130" height="8" rx="4" fill="hsl(var(--muted))" />
 
-  <text x="200" y="190" class="note">faixa nova, alinhada à altura da lista</text>
-  <text x="410" y="190" class="note">círculo fica no lado oposto</text>
+  <text x="120" y="196" class="note">mesma altura, mesmo topo e mesma base</text>
 </svg>
