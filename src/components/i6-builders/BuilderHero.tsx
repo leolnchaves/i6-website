@@ -2,16 +2,22 @@ import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang } from '@/utils/localizedPath';
 import { builderCopy, CONTACT_ANCHOR } from '@/data/i6Builders/content';
+import { useTypewriter } from '@/hooks/useTypewriter';
 
 /**
  * Abertura editorial: título à esquerda, painel de código à direita.
- * Sem grade de cards — o painel escuro já sinaliza "plataforma para devs".
+ * O painel de código usa animação typewriter linha a linha, sem interação
+ * do usuário. O bloco animado é decorativo (aria-hidden); o código completo
+ * fica disponível em sr-only para leitores de tela. Com prefers-reduced-motion,
+ * o próprio bloco principal mostra tudo imediatamente e serve de fonte acessível.
  */
 const BuilderHero = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, builderCopy).hero;
+  const { visibleCount, reducedMotion } = useTypewriter(copy.codeLines);
 
   const [before, after] = copy.title.split(copy.highlight);
+  const fullCode = copy.codeLines.join('\n');
 
   return (
     <section className="relative overflow-hidden">
@@ -55,13 +61,36 @@ const BuilderHero = () => {
                 <span aria-hidden className="h-2 w-2 rounded-full bg-white/20" />
                 <span className="ml-2 font-mono text-[11px] tracking-wide text-white/45">{copy.codeTitle}</span>
               </div>
-              <pre className="overflow-x-auto px-5 py-6 font-mono text-[12.5px] leading-[1.85] text-white/80">
+
+              {/* Código completo para leitores de tela quando a animação está ativa */}
+              {!reducedMotion && (
+                <pre className="sr-only">{fullCode}</pre>
+              )}
+
+              <pre
+                aria-hidden={!reducedMotion}
+                className="overflow-x-auto px-5 py-6 font-mono text-[12.5px] leading-[1.85] text-white/80"
+              >
                 <code>
-                  {copy.codeLines.map((line, i) => (
-                    <span key={`${i}-${line}`} className="block whitespace-pre">
-                      {line.startsWith('#') ? <span className="text-white/35">{line}</span> : line}
-                    </span>
-                  ))}
+                  {copy.codeLines.map((line, i) => {
+                    const isVisible = reducedMotion || i < visibleCount;
+                    const showCursor = !reducedMotion && visibleCount > 0 && i === visibleCount - 1;
+
+                    return (
+                      <span
+                        key={`${i}-${line}`}
+                        className={`block whitespace-pre ${isVisible ? '' : 'invisible'}`}
+                      >
+                        {line.startsWith('#') ? <span className="text-white/35">{line}</span> : line}
+                        {showCursor && (
+                          <span
+                            aria-hidden
+                            className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[2px] animate-pulse bg-white/70"
+                          />
+                        )}
+                      </span>
+                    );
+                  })}
                 </code>
               </pre>
             </div>
