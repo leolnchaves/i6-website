@@ -4,4 +4,4 @@
 - [x] Atualizar `BuilderHero.tsx` com animação, altura reservada, aria-hidden + sr-only, reduced-motion
 - [x] Atualizar `codeLines` PT/EN/ES em `src/data/i6Builders/content.ts`
 - [x] Rodar build e checagem de tipos
-- [x] Verificar visualmente em PT/EN/ES
+- [x] Verificar visualmente em PT/EN/ES (desktop e mobile)
