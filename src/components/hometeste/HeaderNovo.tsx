@@ -214,11 +214,9 @@ const HeaderNovo = () => {
             href={decisionPlatform.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex h-8 items-center gap-2 rounded-full border border-[#F4845F]/50 bg-[#F5F0E8] pl-2.5 pr-4 text-xs font-semibold text-[#0B1224] whitespace-nowrap transition-colors hover:border-[#F4845F] hover:bg-white"
+            className="hidden sm:inline-flex h-8 items-center gap-2.5 rounded-full border border-[#0B1224]/15 bg-[#E7ECEA] pl-3 pr-4 text-xs font-semibold text-[#0B1224] whitespace-nowrap transition-colors hover:border-[#F4845F]/70 hover:bg-[#F5F0E8]"
           >
-            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#0B1224]">
-              <img src={getPublicAssetUrl('content/logos/i6-decision-symbol.png')} alt="" aria-hidden="true" className="h-3.5 w-auto" />
-            </span>
+            <img src={getPublicAssetUrl('content/logos/i6-decision-symbol.png')} alt="" aria-hidden="true" className="h-5 w-auto flex-shrink-0" />
 
             {t('header.suiteCta')}
           </a>
