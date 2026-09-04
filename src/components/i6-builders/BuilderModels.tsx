@@ -162,6 +162,13 @@ const BuilderModels = () => {
                   active === i ? 'bg-primary opacity-100' : 'bg-primary/40 opacity-0 group-hover:opacity-60'
                 }`}
               />
+              {active === i && (
+                <span
+                  aria-hidden="true"
+                  className="absolute right-0 top-1/2 hidden h-[calc(100%-2rem)] w-[2px] -translate-y-1/2 rounded-full bg-primary md:block"
+                />
+              )}
+
               <span className="font-mono text-xs text-primary">{String(i + 1).padStart(2, '0')}</span>
               <span className="mt-2 block text-base md:text-lg font-semibold leading-snug">{card.name}</span>
             </button>
