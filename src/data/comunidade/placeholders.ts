@@ -6,6 +6,11 @@
  * colagem apenas a partir de md — abaixo desse breakpoint tudo empilha reto.
  */
 import { getPublicAssetUrl } from '@/utils/assetUtils';
+import whiteboardAsset from '@/assets/comunidade/community-whiteboard.jpg.asset.json';
+import desksAsset from '@/assets/comunidade/community-desks.jpg.asset.json';
+import pairAsset from '@/assets/comunidade/community-pair.jpg.asset.json';
+import rowAsset from '@/assets/comunidade/community-row.jpg.asset.json';
+import audienceAsset from '@/assets/comunidade/community-audience.jpg.asset.json';
 
 export interface MuralImage {
   id: string;
@@ -20,6 +25,8 @@ export interface MuralImage {
 
 /** Recorte da colagem da abertura: posição absoluta (md+) já embutida. */
 export interface OpeningImage extends MuralImage {
+  /** descrição genérica da cena (imagens ilustrativas) */
+  alt: string;
   /** classes de posição + tamanho, aplicadas só em md+ */
   place: string;
   /** opacidade da camada */
@@ -38,11 +45,16 @@ export const MURAL_IMAGES: MuralImage[] = [
 /**
  * Colagem da abertura — cinco recortes na metade direita e nas bordas,
  * sempre fora da caixa de texto do título.
+ *
+ * ATENÇÃO: estas imagens são ILUSTRATIVAS (geradas por IA), não registros de
+ * eventos reais. Quando existirem fotos reais de encontros da comunidade,
+ * basta trocar `src` e `alt` de cada item aqui — o markup não muda.
  */
 export const OPENING_IMAGES: OpeningImage[] = [
   {
     id: 'o1',
-    src: PLACEHOLDER,
+    src: whiteboardAsset.url,
+    alt: 'Pessoas reunidas em frente a monitores com código na tela, ao lado de um quadro branco cheio de anotações',
     tilt: -5,
     ratio: 'tall',
     offset: 'none',
@@ -51,7 +63,8 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o2',
-    src: PLACEHOLDER,
+    src: desksAsset.url,
+    alt: 'Mesas de trabalho com telas de código acesas em um ambiente amplo e escuro',
     tilt: 4,
     ratio: 'wide',
     offset: 'up',
@@ -60,7 +73,8 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o3',
-    src: PLACEHOLDER,
+    src: pairAsset.url,
+    alt: 'Duas pessoas concentradas diante de um computador, uma delas de fones de ouvido',
     tilt: 7,
     ratio: 'square',
     offset: 'down',
@@ -69,7 +83,8 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o4',
-    src: PLACEHOLDER,
+    src: rowAsset.url,
+    alt: 'Fileira de pessoas de fones de ouvido programando lado a lado em uma mesa longa',
     tilt: 3,
     ratio: 'wide',
     offset: 'down',
@@ -78,12 +93,13 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o5',
-    src: PLACEHOLDER,
+    src: audienceAsset.url,
+    alt: 'Plateia em ambiente escuro acompanhando código projetado em uma tela grande',
     tilt: -6,
     ratio: 'tall',
     offset: 'up',
     place: 'right-[41%] bottom-6 h-[190px] w-[145px] rounded-[1.5rem]',
-    opacity: 'opacity-[0.5]',
+    opacity: 'opacity-[0.42]',
   },
 ];
 
