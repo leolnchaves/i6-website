@@ -15,7 +15,6 @@ const copyByLang = {
     caption:
       'Dados anonimizados de clientes infinity6. Métricas medidas em produção após o deploy dos motores proprietários.',
     voicesTitle: 'Com a palavra: quem já está decidindo antes',
-    voicesSub: 'Decisões antecipadas gerando impacto real.',
     cta: 'Veja histórias de sucesso',
   },
   en: {
@@ -24,7 +23,6 @@ const copyByLang = {
     caption:
       'Anonymized data from infinity6 clients. Metrics measured in production after deploying the proprietary engines.',
     voicesTitle: 'In their words: those already deciding first',
-    voicesSub: 'Anticipated decisions driving real impact.',
     cta: 'View success stories',
   },
 };
