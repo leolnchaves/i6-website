@@ -64,6 +64,17 @@ const RootLangRedirect = () => {
   return <Navigate to={target} replace />;
 };
 
+/**
+ * Redireciona uma URL antiga em português para o slug equivalente em inglês,
+ * usando caminho absoluto para funcionar mesmo quando o bundle carrega puro
+ * a partir da URL antiga (sem navegação anterior dentro do app).
+ */
+const LegacySlugRedirect = ({ to }: { to: string }) => {
+  const location = useLocation();
+  const lang = isLang(location.pathname.split('/')[1]) ? location.pathname.split('/')[1] : detectPreferredLang();
+  return <Navigate to={`/${lang}${to}${location.search}${location.hash}`} replace />;
+};
+
 /** Validates :lang param; if invalid, redirects to detected language */
 const LocalizedRoutes = () => {
   const { lang } = useParams();
@@ -74,6 +85,7 @@ const LocalizedRoutes = () => {
     const rest = location.pathname.replace(/^\/[^/]+/, '');
     return <Navigate to={`/${preferred}${rest}${location.search}${location.hash}`} replace />;
   }
+
 
   return (
     <Routes>
