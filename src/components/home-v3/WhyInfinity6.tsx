@@ -6,7 +6,7 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 const copyByLang = {
   pt: {
     eyebrow: 'Por que infinity6',
-    title: 'Todo mundo mostra o que aconteceu. Nós entregamos o que fazer agora',
+    title: 'Todo mundo mostra o que aconteceu. Nós entregamos o que vai acontecer e o que fazer agora.',
     intro:
       'Analytics tradicional explica o passado. Nossos motores proprietários calculam a próxima melhor decisão e a colocam na mão de quem executa.',
     cta: 'Conheça nossa IA proprietária',
