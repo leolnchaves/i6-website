@@ -48,7 +48,14 @@ const CommunityEvents = () => {
                         : 'font-bold text-foreground'
                     }`}
                   >
-                    {item.name}
+                    {item.brandPrefix ? (
+                      <>
+                        <span className="inline-block font-black text-[1.08em]">{item.brandPrefix}</span>
+                        <span>{item.name.slice(item.brandPrefix.length)}</span>
+                      </>
+                    ) : (
+                      item.name
+                    )}
                   </span>
                 </div>
                 <span
