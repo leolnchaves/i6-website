@@ -5,33 +5,33 @@ import { communityCopy, COMMUNITY_CONTACT_ANCHOR } from '@/data/comunidade/conte
 import { OPENING_IMAGES } from '@/data/comunidade/placeholders';
 
 /**
- * Abertura: tipografia gigante como elemento gráfico, com dois recortes de
- * imagem invadindo as laterais e uma etiqueta terracota sobreposta.
- * Abaixo de md os recortes saem do caminho do texto e viram uma faixa.
+ * Abertura: tipografia gigante como elemento gráfico, com uma colagem de
+ * recortes ao redor — sempre fora da caixa do texto. Abaixo de lg a colagem
+ * sai do caminho e vira uma faixa horizontal sob os CTAs.
  */
 const CommunityOpening = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, communityCopy).opening;
-  const [imgA, imgB] = OPENING_IMAGES;
+  const [imgA, imgB, imgC] = OPENING_IMAGES;
 
   return (
     <section className="relative overflow-hidden">
       <div aria-hidden className="absolute inset-0 sand-glow" />
 
-      {/* Recortes decorativos — só md+, dentro do overflow-hidden da seção */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
-        <img
-          src={imgA.src}
-          alt=""
-          loading="lazy"
-          className="absolute right-[3%] top-24 h-[300px] w-[190px] rotate-[-3deg] rounded-[2rem] object-cover opacity-70 ring-1 ring-border animate-sand-rise"
-        />
-        <img
-          src={imgB.src}
-          alt=""
-          loading="lazy"
-          className="absolute right-[16%] bottom-10 h-[150px] w-[150px] rotate-[4deg] rounded-[1.5rem] object-cover opacity-60 ring-1 ring-border"
-        />
+      {/* Colagem decorativa — só lg+, dentro do overflow-hidden da seção */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
+        {OPENING_IMAGES.map((img, i) => (
+          <img
+            key={img.id}
+            src={img.src}
+            alt=""
+            loading="lazy"
+            style={{ animationDelay: `${i * 110}ms` }}
+            className={`absolute object-cover ring-1 ring-border animate-sand-rise ${img.place} ${img.opacity}`}
+            // rotação aplicada inline para evitar classes dinâmicas fora do Tailwind
+            {...{ 'data-tilt': img.tilt }}
+          />
+        ))}
         <span className="absolute left-[52%] top-[38%] h-24 w-px bg-primary/40" />
       </div>
 
@@ -62,15 +62,13 @@ const CommunityOpening = () => {
             {copy.cta}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
           </a>
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary md:-rotate-2">
-            {copy.tag}
-          </span>
         </div>
 
-        {/* Faixa de imagem no mobile: nunca sobre o texto */}
-        <div aria-hidden className="mt-12 flex gap-3 md:hidden">
-          <img src={imgA.src} alt="" loading="lazy" className="h-28 flex-[2] rounded-2xl object-cover ring-1 ring-border" />
-          <img src={imgB.src} alt="" loading="lazy" className="h-28 flex-1 rounded-2xl object-cover ring-1 ring-border" />
+        {/* Faixa de imagem abaixo de lg: nunca sobre o texto */}
+        <div aria-hidden className="mt-12 flex items-end gap-3 lg:hidden">
+          <img src={imgA.src} alt="" loading="lazy" className="h-32 flex-[2] rounded-2xl object-cover ring-1 ring-border" />
+          <img src={imgB.src} alt="" loading="lazy" className="h-24 flex-1 rounded-2xl object-cover ring-1 ring-border" />
+          <img src={imgC.src} alt="" loading="lazy" className="h-28 flex-1 rounded-2xl object-cover ring-1 ring-border" />
         </div>
 
         <p className="mt-12 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
