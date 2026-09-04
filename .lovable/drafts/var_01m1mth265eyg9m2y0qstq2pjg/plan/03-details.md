@@ -1,55 +1,41 @@
-## Implementação proposta
+# Detalhes técnicos
 
-### 1. Hook de typewriter
+## `src/hooks/useTypewriter.ts` (reescrever a máquina de estados)
 
-Criar um hook leve em `src/hooks/useTypewriter.ts` que receba um array de strings (linhas de código) e devolva:
+- Entrada continua `lines: string[]`; internamente junta com `'\n'` e conta **caracteres** (a quebra de linha conta como um passo).
+- Retorna `{ typedCount, isDone, reducedMotion }`:
+  - `typedCount` — quantos caracteres do texto completo já foram "digitados".
+  - `isDone` — true ao final (o componente passa a usar para manter o cursor piscando).
+  - `reducedMotion` — inalterado: quando ativo, `typedCount = total` imediato.
+- Timing por passo, via `setTimeout` recursivo:
+  - caractere comum: `40 + (Math.random() * 30 - 15)` ms
+  - após um `'\n'`: os ~40ms base + `350` ms extras
+  - `startDelay` inicial de 400ms mantido
+- Sem loop: ao atingir o total, apenas `setIsDone(true)`.
 
-- `displayedLines`: array com o texto já "digitado".
-- `currentLineIndex`: índice da linha em digitação.
-- `currentCharIndex`: quantos caracteres da linha atual já apareceram.
-- `isDone`: booleano para controlar cursor e reinício.
+## `src/components/i6-builders/BuilderHero.tsx` (render por linha com fantasma)
 
-O hook usará `useEffect` com `setTimeout` (ou `requestAnimationFrame`) para avançar caractere por caractere, com velocidade configurável. Respeitará `prefers-reduced-motion` devolvendo tudo pronto imediatamente.
+Para cada linha `i`, o componente calcula quantos caracteres dela já foram digitados a partir de `typedCount` e do offset acumulado das linhas anteriores:
 
-### 2. Ajuste no `BuilderHero.tsx`
+```text
+┌─ linha (relative, block, whitespace-pre) ─────────────┐
+│  fantasma: linha completa, invisível (reserva largura) │
+│  overlay:  absolute inset-0, fatia digitada + cursor   │
+└────────────────────────────────────────────────────────┘
+```
 
-Substituir o bloco estático `<pre><code>` por uma versão que consuma o hook:
+- Fantasma com `invisible` (mantém espaço, some visualmente). Linhas vazias usam `\u00A0` no fantasma para preservar a altura da linha.
+- Overlay absoluto com a fatia `line.slice(0, typed)`; comentários (`#`) mantêm `text-white/35`.
+- Cursor renderizado **dentro do overlay**, logo após o último caractere digitado da linha ativa — acompanha a digitação; após `isDone`, fica piscando no fim da última linha.
+- `prefers-reduced-motion`: renderiza o código completo direto (sem fantasma/overlay, sem `sr-only` duplicado) — caminho atual preservado.
+- `aria-hidden={!reducedMotion}` no bloco animado + `<pre className="sr-only">` com o código completo — inalterado.
 
-- Renderizar cada linha já digitada por completo.
-- Na linha ativa, renderizar apenas os caracteres correspondentes a `currentCharIndex`.
-- Adicionar um cursor (`|`) ao final da linha ativa (ou de todo o bloco quando `isDone`).
-- Manter o destaque de comentários (`text-white/35`) e o restante do estilo visual.
+## Conteúdo
 
-### 3. Conteúdo trilíngue
+`codeLines` em `src/data/i6Builders/content.ts` (PT/EN/ES) **não muda** — apenas a animação.
 
-As linhas continuam vindo de `src/data/i6Builders/content.ts`. Não é necessário alterar os textos, apenas a forma de renderização. O hook recebe `copy.codeLines` como entrada.
+## Verificação
 
-### 4. Acessibilidade e motion
-
-- Verificar `window.matchMedia('(prefers-reduced-motion: reduce)')` no hook.
-- Se ativo, exibir todo o código de uma vez, sem animação.
-- Adicionar `aria-label` descritivo no painel, informando que se trata de um exemplo de código.
-- Opcionalmente, esconder o cursor de leitores de tela com `aria-hidden`.
-
-### 5. Comportamento ao finalizar
-
-Opções a escolher:
-
-- **A. Pausa com cursor piscando**: a animação para no final e o cursor continua piscando.
-- **B. Loop com pausa**: após 3-4 segundos, apaga tudo e recomeça.
-- **C. Pausa definitiva**: para e mantém o código completo visível.
-
-Recomendação padrão: **A**, menos distrativa para quem fica na página lendo.
-
-### 6. Testes e validação
-
-- Build (`bun run build`).
-- Checagem de tipos (`tsgo`).
-- Screenshots em PT/EN/ES, desktop e mobile, verificando que o painel não quebra o layout durante a animação.
-- Verificação de `prefers-reduced-motion` via emulação no DevTools.
-
-## Arquivos envolvidos
-
-- `src/hooks/useTypewriter.ts` (novo)
-- `src/components/i6-builders/BuilderHero.tsx` (ajuste no painel de código)
-- `src/data/i6Builders/content.ts` (sem alteração de conteúdo, apenas consumo)
+1. `bun run build` e `tsgo` sem erros.
+2. Playwright: captura em PT/EN/ES, desktop e mobile, em três momentos — início da animação (parcial, cursor no meio de uma linha), meio e fim (cursor piscando ao final).
+3. Checagem de DOM: `aria-hidden`, `sr-only` presente, e emulação de `prefers-reduced-motion` mostrando tudo de imediato.

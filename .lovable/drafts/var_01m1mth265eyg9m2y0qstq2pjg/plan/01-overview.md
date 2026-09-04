@@ -1,19 +1,20 @@
-# Efeito de digitação no painel de código do /i6-builders
+# Typewriter caractere por caractere em /i6-builders
 
-Adicionar uma animação typewriter no painel de código da hero de `/i6-builders`, para que o snippet pareça estar sendo digitado em tempo real. **É uma animação puramente visual e automática — o visitante não interage com ela, apenas assiste.**
+Trocar a animação do painel de código da hero de linha-por-linha para caractere-por-caractere, com cadência de digitação humana e zero reflow.
 
-A proposta preserva o conteúdo trilíngue existente, mantém acessibilidade e oferece fallback para quem prefere motion reduzida.
+## O que muda
 
-## O que vai mudar
+1. **Granularidade por caractere** — o hook `useTypewriter` deixa de contar linhas e passa a contar caracteres sobre o código completo. O cursor acompanha a posição exata do último caractere digitado.
+2. **Cadência humana** — ~40ms por caractere com variação aleatória de ±15ms a cada tecla, mais uma pausa extra de ~350ms a cada quebra de linha antes de começar a próxima.
+3. **Anti-reflow por linha** — cada linha ganha uma camada "fantasma" com o texto completo invisível (reservando largura e quebra finais desde o primeiro frame) e o texto digitado fica sobreposto por cima, crescendo sem nunca alterar a largura ocupada.
 
-- O painel de código da hero passa de estático para animado.
-- Um cursor pisca ao final de cada linha (ou do bloco inteiro, conforme a escolha).
-- A animação roda sozinha assim que o componente é montado, sem click, hover ou scroll do usuário.
-- A animação respeita `prefers-reduced-motion`: usuários com essa preferência veem o código completo imediatamente.
-- O conteúdo continua vindo de `src/data/i6Builders/content.ts` (PT/EN/ES).
+## O que se mantém (já aprovado)
 
-## Decisões pendentes
+- Ao terminar: cursor piscando ao final do bloco, sem loop.
+- `aria-hidden` no bloco animado + código completo em `sr-only` para leitores de tela.
+- `prefers-reduced-motion` mostra tudo de imediato, sem elemento duplicado.
+- Escopo: apenas `BuilderHero.tsx`. Nenhum painel de `/community` é tocado.
 
-1. **Granularidade da digitação**: caractere por caractere (mais realista) ou linha por linha (mais legível e leve).
-2. **Comportamento ao terminar**: pausa com cursor piscando, reinício automático após X segundos, ou para definitivamente.
-3. **Escopo do efeito**: aplicar só no `/i6-builders` ou transformar em componente reutilizável para outros painéis de código do site (ex: `/community`).
+## Verificação
+
+Build, checagem de tipos e inspeção visual em PT/EN/ES, desktop e mobile, incluindo a animação em andamento (não só o estado final).
