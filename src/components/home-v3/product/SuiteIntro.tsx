@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import suiteLogoAsset from '@/assets/i6-decision-suite-logo.png.asset.json';
 import { suiteCopy } from './suiteContent';
 
 const SuiteIntro = () => {
