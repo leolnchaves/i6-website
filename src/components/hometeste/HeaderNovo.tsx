@@ -260,6 +260,17 @@ const HeaderNovo = () => {
             </li>
           ))}
           <li>
+            <a
+              href={decisionPlatform.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+            >
+              {decisionPlatform.label}
+            </a>
+          </li>
+          <li>
             <div className="text-white/50 uppercase tracking-wider text-xs mb-2">{t('header.research')}</div>
             <ul className="flex flex-col gap-3 pl-3 border-l border-white/10">
               {researchMenu.map((sl, i) => (
