@@ -50,7 +50,7 @@ const CommunityEvents = () => {
                   >
                     {item.brandPrefix ? (
                       <>
-                        <span className="inline-block font-black text-[1.08em]">{item.brandPrefix}</span>
+                        <span className="inline-block font-black text-[1.22em] tracking-[-0.04em]">{item.brandPrefix}</span>
                         <span>{item.name.slice(item.brandPrefix.length)}</span>
                       </>
                     ) : (
