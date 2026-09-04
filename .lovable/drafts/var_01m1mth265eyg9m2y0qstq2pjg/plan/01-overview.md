@@ -1,17 +1,15 @@
-# Área de documentação com menu lateral
+# Fotos reais na abertura da Comunidade
 
-Criar uma área de documentação nova em `/pt/docs`, `/en/docs` e `/es/docs` (slug não traduzido, mesmo padrão de `/i6-builders` e `/comunidade`), com três colunas: menu de navegação à esquerda, o texto no centro e o índice da própria página à direita.
+As cinco fotos enviadas entram nos cinco espaços de imagem da abertura de `/comunidade`, substituindo os retângulos cinza. Os cartões de código, o título e todo o resto da página ficam exatamente como estão.
 
-O conteúdo vem dos mesmos arquivos publicados pelo i6 HUB, num novo tipo `docs`, então publicar documentação passa a ser só publicar no HUB — sem mexer em nada do que já existe hoje.
+## Qual foto vai em qual espaço
 
-## O que o usuário vê
+As fotos são todas verticais (832x1248), então cada uma vai para o espaço cujo formato e clima combinam melhor:
 
-- `/pt/docs` abre a primeira página de documentação, com o menu lateral já aberto.
-- O menu agrupa as páginas por seção (ex.: Introdução, SDK, API, Guias), destaca onde você está e pode ser recolhido; no celular ele vira um painel que abre por um botão.
-- Um campo de busca no topo do menu filtra as páginas por título enquanto se digita.
-- À direita, o índice da página lista os títulos do texto e acompanha a rolagem; clicar leva à seção. Em telas menores esse índice simplesmente não aparece — a navegação secundária fica sendo só o menu lateral que abre por botão, sem nenhum terceiro mecanismo.
-- No fim de cada página, links "anterior / próxima" seguindo a ordem do menu.
-- Cabeçalho e rodapé idênticos ao resto do site, no tema claro (mesma regra já usada em `/i6-builders` e `/comunidade`).
-- Enquanto o HUB não publicar a documentação real, cada página de exemplo mostra um aviso no topo do conteúdo, nos 3 idiomas ("Conteúdo de exemplo — estrutura final, referência técnica real em preparação"). O aviso vem de uma marca no próprio arquivo de exemplo, então desaparece sozinho quando a página real do HUB substituir aquele arquivo.
-- Sem números, nomes ou empresas inventados nos exemplos.
+1. **Espaço vertical grande, canto direito, topo** — o grupo de três pessoas discutindo código na frente dos monitores (a foto com o quadro branco e post-its). É a mais legível e a mais "gente construindo junto": merece o maior recorte.
+2. **Espaço horizontal, topo ao centro** — a mesa do hackathon com duas pessoas de costas e as telas de código ao fundo. Corta bem em formato deitado e traz o ambiente do evento.
+3. **Espaço quadrado, meio à direita** — o close das duas pessoas de headset no hackathon. Rosto centralizado, ideal para recorte quadrado.
+4. **Espaço horizontal, base direita** — a fileira de três pessoas de headset diante do monitor. A composição já é horizontal e fecha o canto inferior.
+5. **Espaço vertical menor, base ao centro** — a plateia assistindo à apresentação de código no telão. Mais escura e atmosférica, funciona como camada de fundo, com opacidade mais baixa.
 
+Todas continuam com a mesma inclinação, cantos arredondados e opacidade que já estão definidos hoje, e a versão em celular segue mostrando os recortes empilhados abaixo do botão, sem sobra lateral.
