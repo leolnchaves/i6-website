@@ -4,28 +4,29 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
 import { builderCopy, COMMUNITY_PATH, CONTACT_ANCHOR, DOCS_PATH } from '@/data/i6Builders/content';
 
+/**
+ * Fechamento escuro: já dentro da faixa navy que emenda no rodapé.
+ */
 const BuilderFinalCTA = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const copy = pickLang(language, builderCopy).finalCta;
 
   return (
-    <section className="container mx-auto px-6 pb-24">
-      <div className="relative overflow-hidden rounded-[calc(var(--radius)+8px)] border border-primary/25 bg-accent px-6 py-14 md:px-14 md:py-16 text-center">
-        <div aria-hidden className="absolute inset-0 sand-glow" />
-        <div className="relative max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-[2.6rem] leading-[1.14] font-bold text-foreground">{copy.title}</h2>
-          <p className="mt-5 text-base text-muted-foreground leading-relaxed">{copy.sub}</p>
+    <section className="container mx-auto px-6 pt-20 md:pt-28 pb-12 md:pb-16">
+      <div className="max-w-3xl">
+        <h2 className="text-3xl md:text-[2.8rem] leading-[1.12] font-bold text-white">{copy.title}</h2>
+        <p className="mt-5 text-base md:text-lg text-white/60 leading-relaxed">{copy.sub}</p>
 
+        <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
           <a
             href={CONTACT_ANCHOR}
-            className="group mt-8 inline-flex items-center gap-2 rounded-[var(--radius)] bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="group inline-flex items-center gap-2 rounded-[var(--radius)] border border-[#F4845F]/60 bg-[#F4845F]/10 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/20"
           >
             {copy.primary}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </a>
-
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-primary">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-semibold text-[#F4845F]">
             <Link to={localized(COMMUNITY_PATH)}>{copy.community}</Link>
             <Link to={localized(DOCS_PATH)}>{copy.docs}</Link>
           </div>
