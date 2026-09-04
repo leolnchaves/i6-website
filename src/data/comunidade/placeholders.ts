@@ -64,7 +64,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
     tilt: 7,
     ratio: 'square',
     offset: 'down',
-    place: 'right-[24%] top-[46%] h-[180px] w-[180px] rounded-[1.75rem]',
+    place: 'right-[16%] top-[62%] h-[180px] w-[180px] rounded-[1.75rem]',
     opacity: 'opacity-[0.62]',
   },
   {
@@ -108,7 +108,7 @@ export const OPENING_CODE_CARDS: OpeningCodeCard[] = [
   },
   {
     id: 'c2',
-    place: 'right-[3%] top-[56%] w-[240px] rounded-[1.5rem]',
+    place: 'right-[2%] top-[60%] w-[240px] rounded-[1.5rem]',
     tilt: 5,
     opacity: 'opacity-[0.85]',
     title: 'deploy.sh',
@@ -116,7 +116,7 @@ export const OPENING_CODE_CARDS: OpeningCodeCard[] = [
   },
   {
     id: 'c3',
-    place: 'right-[43%] top-[24%] w-[250px] rounded-[1.5rem]',
+    place: 'right-[30%] top-[44%] w-[250px] rounded-[1.5rem]',
     tilt: -7,
     opacity: 'opacity-[0.8]',
     title: 'sdk.ts',
