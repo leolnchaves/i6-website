@@ -42,8 +42,10 @@ const CommunityEvents = () => {
                     />
                   )}
                   <span
-                    className={`${sizes[i]} font-bold leading-none tracking-[-0.03em] ${
-                      isHighlight ? 'text-primary' : 'text-foreground'
+                    className={`${sizes[i]} leading-none tracking-[-0.03em] ${
+                      isHighlight
+                        ? 'font-extrabold text-primary [text-shadow:0_0_22px_hsl(var(--primary)/0.55)]'
+                        : 'font-bold text-foreground'
                     }`}
                   >
                     {item.name}
