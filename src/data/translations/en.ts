@@ -20,6 +20,7 @@ export const enTranslations = {
   'header.research.blog': 'i6 Blog',
   'header.research.comingSoon': 'Coming soon',
   'header.decisionPlatform': 'i6 Decision Suite',
+  'header.suiteCta': 'Access the i6 Decision Suite',
   'header.partners': 'i6 Platform Builders',
   'header.partners.builder': 'i6 Builder Platform',
   'header.partners.community': 'Community',

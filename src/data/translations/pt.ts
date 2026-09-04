@@ -20,6 +20,7 @@ export const ptTranslations = {
   'header.research.blog': 'i6 Blog',
   'header.research.comingSoon': 'Em breve',
   'header.decisionPlatform': 'i6 Decision Suite',
+  'header.suiteCta': 'Acesse o i6 Decision Suite',
   'header.partners': 'i6 Platform Builders',
   'header.partners.builder': 'i6 Builder Platform',
   'header.partners.community': 'Comunidade',
