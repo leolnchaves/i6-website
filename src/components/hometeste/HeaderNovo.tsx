@@ -296,6 +296,42 @@ const HeaderNovo = () => {
             </ul>
           </li>
           <li>
+            <div className="text-white/50 uppercase tracking-wider text-xs mb-2">{t('header.partners')}</div>
+            <ul className="flex flex-col gap-3 pl-3 border-l border-white/10">
+              {partnersMenu.map((sl, i) => (
+                <li key={sl.to ?? `partner-m-${i}`}>
+                  {sl.comingSoon || !sl.to ? (
+                    <span className="flex items-center gap-2 text-white/40 text-sm font-medium cursor-not-allowed">
+                      {sl.label}
+                      <span className="text-[10px] uppercase tracking-wider bg-white/10 text-white/60 px-1.5 py-0.5 rounded">
+                        {t('header.research.comingSoon')}
+                      </span>
+                    </span>
+                  ) : (
+                    <Link
+                      to={sl.to}
+                      onClick={() => setMenuOpen(false)}
+                      className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+                    >
+                      {sl.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </li>
+          {rightLinks.map((l) => (
+            <li key={l.to}>
+              <Link
+                to={l.to}
+                onClick={() => setMenuOpen(false)}
+                className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+          <li>
             <Link
               to={contactLink.to}
               onClick={() => setMenuOpen(false)}
