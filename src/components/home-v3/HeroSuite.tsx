@@ -213,7 +213,7 @@ const HeroSuite = () => {
                   <div
                     key={s.key}
                     className={`absolute left-0 right-0 top-0 ${
-                      s.entering ? 'animate-decision-fade' : cursor === 0 ? 'animate-sand-rise' : ''
+                      s.entering || cursor === 0 ? 'animate-decision-fade' : ''
                     }`}
                     style={{
                       height: ROW,
