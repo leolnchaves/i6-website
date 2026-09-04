@@ -70,7 +70,7 @@ const HeaderNovo = () => {
   const partnersMenu: ResearchItem[] = [
     { to: localized('/i6-builders'), label: t('header.partners.builder') },
     { to: localized('/comunidade'), label: t('header.partners.community') },
-    { label: t('header.partners.docs'), comingSoon: true },
+    { to: localized('/docs'), label: t('header.partners.docs') },
   ];
 
   const leftLinks = [{ to: localized('/'), label: t('header.home') }];
