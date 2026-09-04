@@ -1,5 +1,5 @@
 /**
- * Imagens provisórias da página /comunidade.
+ * Imagens provisórias da página /community.
  *
  * Isoladas aqui de propósito: quando as fotos reais chegarem, basta trocar
  * `src` (e `alt`) sem tocar no markup das seções. `tilt` e `span` controlam a

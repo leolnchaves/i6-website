@@ -1,5 +1,5 @@
 /**
- * Textos da página /comunidade (PT / EN / ES).
+ * Textos da página /community (PT / EN / ES).
  *
  * Regras de conteúdo: nenhum número fabricado, nenhuma pessoa ou empresa
  * fictícia. A escala vem de um fato real — a plataforma já roda em produção
