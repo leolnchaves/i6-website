@@ -212,7 +212,20 @@ const HeaderNovo = () => {
           </li>
         </ul>
 
-        <LanguageMenu />
+        <div className="flex items-center gap-3">
+          {/* Acesso ao produto — badge externo, ao lado do seletor de idiomas */}
+          <a
+            href={decisionPlatform.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-[#F4845F]/50 bg-white/5 pl-2 pr-4 py-1.5 text-xs font-semibold text-white whitespace-nowrap transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/15"
+          >
+            <img src={suiteSymbol.url} alt="" aria-hidden="true" className="h-5 w-auto" />
+            {t('header.suiteCta')}
+          </a>
+          <LanguageMenu />
+        </div>
+
 
         {/* Mobile toggle */}
         <button
