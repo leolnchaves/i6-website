@@ -190,4 +190,30 @@ export const seoData: SEODataMap = {
       ],
     },
   },
+  i6Builders: {
+    pt: {
+      title: 'i6 Builder Platform — Engines, SDKs e APIs de modelagem',
+      description: 'Plataforma de modelagem da infinity6 para times de tecnologia: engines preditivos, SDKs, APIs e toolkits para construir produtos próprios de decisão orientada a dados.',
+      keywords: [
+        'plataforma de modelagem',
+        'SDK de machine learning',
+        'API de previsão',
+        'engines preditivos',
+        'OEM de IA',
+        'IA embarcada em produto',
+      ],
+    },
+    en: {
+      title: 'i6 Builder Platform — Modeling engines, SDKs and APIs',
+      description: 'The infinity6 modeling platform for technology teams: predictive engines, SDKs, APIs and toolkits to build your own data-driven decision products.',
+      keywords: [
+        'modeling platform',
+        'machine learning SDK',
+        'forecasting API',
+        'predictive engines',
+        'AI OEM',
+        'embedded AI product',
+      ],
+    },
+  },
 };
