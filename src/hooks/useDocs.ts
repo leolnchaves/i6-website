@@ -9,8 +9,9 @@ export interface DocPage {
   section: string;
   section_label: string;
   order: number;
-  description?: string | null;
-  updated_at?: string | null;
+  description: string | null;
+  updated_at: string | null;
+
   /** Set only on the placeholder files shipped with the repo. The i6 HUB never
    *  writes this field, so the notice disappears as soon as the real page lands. */
   sample: boolean;
