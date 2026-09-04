@@ -26,12 +26,11 @@ const CommunityOpening = () => {
             src={img.src}
             alt=""
             loading="lazy"
-            style={{ animationDelay: `${i * 110}ms` }}
+            style={{ animationDelay: `${i * 110}ms`, rotate: `${img.tilt}deg` }}
             className={`absolute object-cover ring-1 ring-border animate-sand-rise ${img.place} ${img.opacity}`}
-            // rotação aplicada inline para evitar classes dinâmicas fora do Tailwind
-            {...{ 'data-tilt': img.tilt }}
           />
         ))}
+
         <span className="absolute left-[52%] top-[38%] h-24 w-px bg-primary/40" />
       </div>
 
