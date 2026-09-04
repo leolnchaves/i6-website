@@ -1,10 +1,10 @@
-<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+<svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
   <style>
-    .lbl { font-size: 14px; font-weight: 480; fill: hsl(var(--foreground)); }
     .sm { font-size: 12px; fill: hsl(var(--muted-foreground)); }
     .bx { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
     .q { fill: hsl(var(--muted)); stroke: hsl(var(--border)); stroke-width: 1; }
     .wire { stroke: hsl(var(--muted-foreground)); stroke-width: 1; fill: none; }
+    .acc { fill: hsl(var(--muted)); stroke: hsl(var(--accent)); stroke-width: 1; }
   </style>
   <defs>
     <marker id="ch" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
@@ -12,40 +12,39 @@
     </marker>
   </defs>
 
-  <rect x="16" y="30" width="140" height="200" rx="8" class="bx"/>
-  <text x="86" y="22" class="sm" text-anchor="middle">tela 1 (atual)</text>
-  <rect x="28" y="44" width="116" height="52" rx="6" class="q"/>
-  <text x="40" y="66" class="sm">RUPTURA</text>
-  <rect x="28" y="106" width="116" height="52" rx="6" class="q"/>
-  <text x="40" y="128" class="sm">MARGEM</text>
-  <rect x="28" y="168" width="116" height="52" rx="6" class="q"/>
-  <text x="40" y="190" class="sm">PROPENSÃO</text>
+  <text x="90" y="20" class="sm" text-anchor="middle">agora</text>
+  <rect x="20" y="30" width="140" height="200" rx="8" class="bx"/>
+  <rect x="32" y="44" width="116" height="52" rx="6" class="q"/>
+  <text x="44" y="66" class="sm">RUPTURA</text>
+  <rect x="32" y="106" width="116" height="52" rx="6" class="q"/>
+  <text x="44" y="128" class="sm">MARGEM</text>
+  <rect x="32" y="168" width="116" height="52" rx="6" class="q"/>
+  <text x="44" y="190" class="sm">PROPENSÃO</text>
 
-  <rect x="196" y="30" width="140" height="200" rx="8" class="bx"/>
-  <text x="266" y="22" class="sm" text-anchor="middle">tela 2</text>
-  <rect x="208" y="44" width="116" height="52" rx="6" class="q" style="stroke:hsl(var(--accent))"/>
-  <text x="220" y="66" class="sm">TENDÊNCIA</text>
-  <rect x="208" y="106" width="116" height="52" rx="6" class="q" style="stroke:hsl(var(--accent))"/>
-  <text x="220" y="128" class="sm">MARKDOWN</text>
-  <rect x="208" y="168" width="116" height="52" rx="6" class="q" style="stroke:hsl(var(--accent))"/>
-  <text x="220" y="190" class="sm">CANAL</text>
+  <path d="M168 130 L212 130" class="wire" marker-end="url(#ch)"/>
+  <text x="190" y="122" class="sm" text-anchor="middle">~4s</text>
 
-  <rect x="376" y="30" width="140" height="200" rx="8" class="bx"/>
-  <text x="446" y="22" class="sm" text-anchor="middle">tela 3</text>
-  <rect x="388" y="44" width="116" height="52" rx="6" class="q" style="stroke:hsl(var(--accent))"/>
-  <text x="400" y="66" class="sm">LOOK</text>
-  <rect x="388" y="106" width="116" height="52" rx="6" class="q" style="stroke:hsl(var(--accent))"/>
-  <text x="400" y="128" class="sm">SIMILARES</text>
-  <rect x="388" y="168" width="116" height="52" rx="6" class="q" style="stroke:hsl(var(--accent))"/>
-  <text x="400" y="190" class="sm">METAS</text>
+  <text x="290" y="20" class="sm" text-anchor="middle">o de cima sai</text>
+  <rect x="220" y="30" width="140" height="200" rx="8" class="bx"/>
+  <rect x="232" y="34" width="116" height="52" rx="6" class="q" opacity="0.35"/>
+  <text x="244" y="56" class="sm" opacity="0.5">RUPTURA</text>
+  <rect x="232" y="96" width="116" height="52" rx="6" class="q"/>
+  <text x="244" y="118" class="sm">MARGEM</text>
+  <rect x="232" y="158" width="116" height="52" rx="6" class="q"/>
+  <text x="244" y="180" class="sm">PROPENSÃO</text>
+  <rect x="232" y="218" width="116" height="20" rx="6" class="acc" opacity="0.4"/>
 
-  <rect x="556" y="30" width="68" height="200" rx="8" class="bx" stroke-dasharray="4 3"/>
-  <text x="590" y="22" class="sm" text-anchor="middle">tela 4</text>
-  <text x="590" y="135" class="sm" text-anchor="middle">…</text>
+  <path d="M368 130 L412 130" class="wire" marker-end="url(#ch)"/>
 
-  <path d="M160 130 L192 130" class="wire" marker-end="url(#ch)"/>
-  <path d="M340 130 L372 130" class="wire" marker-end="url(#ch)"/>
-  <path d="M520 130 L552 130" class="wire" marker-end="url(#ch)"/>
-  <path d="M600 250 C 420 285, 200 285, 60 252" class="wire" stroke-dasharray="4 3" marker-end="url(#ch)"/>
-  <text x="330" y="288" class="sm" text-anchor="middle">volta ao início · troca a cada ~5s com fade</text>
+  <text x="490" y="20" class="sm" text-anchor="middle">novo entra embaixo</text>
+  <rect x="420" y="30" width="140" height="200" rx="8" class="bx"/>
+  <rect x="432" y="44" width="116" height="52" rx="6" class="q"/>
+  <text x="444" y="66" class="sm">MARGEM</text>
+  <rect x="432" y="106" width="116" height="52" rx="6" class="q"/>
+  <text x="444" y="128" class="sm">PROPENSÃO</text>
+  <rect x="432" y="168" width="116" height="52" rx="6" class="acc"/>
+  <text x="444" y="190" class="sm">TENDÊNCIA</text>
+
+  <path d="M560 252 C 400 278, 200 278, 70 254" class="wire" stroke-dasharray="4 3" marker-end="url(#ch)"/>
+  <text x="315" y="272" class="sm" text-anchor="middle">fila contínua · 12 decisões em loop · sempre 3 visíveis, mesma altura</text>
 </svg>
