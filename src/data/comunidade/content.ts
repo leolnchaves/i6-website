@@ -103,12 +103,14 @@ export const communityCopy = {
     },
     events: {
       eyebrow: 'community rhythm',
-      title: 'Three formats, one technical agenda',
+      title: 'Five events, one technical agenda',
       sub: 'Sessions built to end in a decision, not in a slide',
       items: [
-        { name: 'Office Hours', kicker: 'every round, live', desc: 'Open sessions with infinity6 engineers and scientists to unblock a real modeling, integration or evaluation problem' },
-        { name: 'Regional Meetups', kicker: 'in person, by city', desc: 'Local gatherings with a technical talk and case discussion, in the format of people who show code and results' },
-        { name: 'Builder Summit', kicker: 'the big one', desc: 'The peak of the calendar: architecture, benchmarks, explainability and what comes next on the decision frontier' },
+        { name: 'Office Hours', desc: 'Open sessions with infinity6 engineers and scientists to unblock a real modeling, integration or evaluation problem' },
+        { name: 'Segment Meetups', desc: 'Industry-specific cuts, where the case discussed belongs to the same sector as the people in the room' },
+        { name: 'Regional Meetups', desc: 'Local gatherings with a technical talk and case discussion, in the format of people who show code and results' },
+        { name: 'Solution Hackathons', desc: 'Teams attacking a real decision problem end-to-end, with data, model and measured outcome' },
+        { name: 'i6 Builder Summit', desc: 'The peak of the calendar: architecture, benchmarks, explainability and what comes next on the decision frontier' },
       ],
     },
     belonging: {
