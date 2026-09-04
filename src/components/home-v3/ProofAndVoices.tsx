@@ -15,7 +15,7 @@ const copyByLang = {
     caption:
       'Dados anonimizados de clientes infinity6. Métricas medidas em produção após o deploy dos motores proprietários.',
     voicesTitle: 'Com a palavra: quem já está decidindo antes',
-    voicesSub: 'Líderes compartilham como decisões antecipadas estão gerando impacto real nos negócios.',
+    voicesSub: 'Decisões antecipadas gerando impacto real.'
     cta: 'Veja histórias de sucesso',
   },
   en: {
