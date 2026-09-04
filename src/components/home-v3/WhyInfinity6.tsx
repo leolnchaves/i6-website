@@ -35,7 +35,7 @@ const copyByLang = {
   },
   en: {
     eyebrow: 'Why infinity6',
-    title: 'Everyone shows what happened. We deliver what to do now',
+    title: 'Everyone shows what happened. We deliver what will happen and what to do now.',
     intro:
       'Traditional analytics explains the past. Our proprietary engines compute the next best decision and hand it to whoever executes.',
     cta: 'Explore our proprietary AI',
