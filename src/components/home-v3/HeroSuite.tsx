@@ -6,7 +6,7 @@ import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 const copyByLang = {
   pt: {
-    eyebrow: 'Decision Intelligence · América Latina',
+    eyebrow: 'AI DECISION INTELLIGENCE',
     titleA: 'A plataforma de decisão',
     titleB: 'preditiva mais avançada',
     titleC: 'da América Latina',
