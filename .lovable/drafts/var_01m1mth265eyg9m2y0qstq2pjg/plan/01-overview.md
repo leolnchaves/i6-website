@@ -1,6 +1,6 @@
 # Faixa vertical no painel direito da seção de Famílias
 
-Adicionar, no painel de detalhes à direita da seção **Famílias de modelagem** (`/i6-builders`), uma faixa vertical idêntica à que já existe nos itens da lista à esquerda. A faixa deve ficar colada à linha horizontal que conecta o item ativo ao painel, reforçando visualmente a relação entre o item selecionado e o conteúdo exibido.
+Adicionar, no painel de detalhes à direita da seção **Famílias de modelagem** (`/i6-builders`), uma faixa vertical idêntica à que já existe nos itens da lista à esquerda. A faixa deve ficar na borda esquerda do painel, do lado oposto ao círculo que marca a chegada da linha horizontal, criando uma simetria visual: faixa vertical → linha horizontal com círculo → faixa vertical no painel.
 
 ## Escopo
 - Apenas `src/components/i6-builders/BuilderModels.tsx`.
@@ -9,5 +9,5 @@ Adicionar, no painel de detalhes à direita da seção **Famílias de modelagem*
 
 ## Resultado esperado
 - Item ativo à esquerda: faixa vertical terracota.
-- Linha horizontal: conecta o item ao painel.
-- Painel à direita: faixa vertical terracota na borda esquerda, alinhada ao centro da linha, dando continuidade visual.
+- Linha horizontal: sai da faixa esquerda e termina com um círculo junto à faixa direita.
+- Painel à direita: faixa vertical terracota na borda esquerda, recebendo a linha no centro da faixa.
