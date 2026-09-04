@@ -292,6 +292,17 @@ const HeaderNovo = () => {
               ))}
             </ul>
           </li>
+          {rightLinks.map((l) => (
+            <li key={l.to}>
+              <Link
+                to={l.to}
+                onClick={() => setMenuOpen(false)}
+                className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
           <li>
             <div className="text-white/50 uppercase tracking-wider text-xs mb-2">{t('header.partners')}</div>
             <ul className="flex flex-col gap-3 pl-3 border-l border-white/10">
@@ -317,17 +328,6 @@ const HeaderNovo = () => {
               ))}
             </ul>
           </li>
-          {rightLinks.map((l) => (
-            <li key={l.to}>
-              <Link
-                to={l.to}
-                onClick={() => setMenuOpen(false)}
-                className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
           <li>
             <Link
               to={contactLink.to}
