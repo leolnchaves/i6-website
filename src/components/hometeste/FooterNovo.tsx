@@ -108,21 +108,20 @@ const FooterNovo = () => {
             </ul>
           </div>
 
-          {/* Transformations */}
+          {/* Development Partners */}
           <div>
             <h3 className="text-sm font-semibold mb-4 text-white/60 uppercase tracking-wider">
-              {language === 'pt' ? 'Aplicabilidade' : 'Applicability'}
+              {t('header.partners')}
             </h3>
             <ul className="space-y-2">
-              {transformationLinks.map((l) => (
-                <li key={l.to}>
-                  <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
-                    {l.label}
-                  </Link>
+              {partnersLinks.map((label) => (
+                <li key={label}>
+                  <span className="text-white/40 text-sm">{label}</span>
                 </li>
               ))}
             </ul>
           </div>
+
 
           {/* Contact */}
           <div>
