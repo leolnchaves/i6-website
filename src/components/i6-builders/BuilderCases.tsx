@@ -1,10 +1,11 @@
-import { Quote } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang } from '@/utils/localizedPath';
 import { builderCopy } from '@/data/i6Builders/content';
 import { PARTNER_CASES } from '@/data/i6Builders/placeholders';
-import { getPublicAssetUrl } from '@/utils/assetUtils';
 
+/**
+ * Citações empilhadas: tipografia grande, sem grade de cards.
+ */
 const BuilderCases = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, builderCopy).cases;
@@ -16,26 +17,29 @@ const BuilderCases = () => {
         <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground">{copy.title}</h2>
       </div>
 
-      <div className="mt-12 grid md:grid-cols-3 gap-5">
+      <div className="mt-12 border-t border-border">
         {PARTNER_CASES.map((c) => (
-          <article key={c.id} className="sand-card sand-card-hover p-6 flex flex-col">
-            <div className="flex items-center gap-3 mb-5">
-              <img
-                src={getPublicAssetUrl(c.logo)}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                className="h-8 w-8 object-contain opacity-60"
-              />
-              <div>
-                <p className="text-sm font-semibold text-foreground">{c.company}</p>
-                <p className="text-[11px] uppercase tracking-wider text-primary">{c.context[language]}</p>
-              </div>
-            </div>
-            <Quote size={16} className="text-primary mb-3" />
-            <p className="text-sm text-muted-foreground leading-relaxed flex-1">{c.quote[language]}</p>
-            <p className="mt-5 text-xs font-medium text-foreground/70">{c.author[language]}</p>
-          </article>
+          <figure
+            key={c.id}
+            className="grid md:grid-cols-[0.7fr_1.3fr] gap-4 md:gap-16 border-b border-border py-9 md:py-11"
+          >
+            <figcaption className="order-2 md:order-1">
+              <p className="text-sm font-semibold text-foreground">{c.company}</p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-primary">{c.context[language]}</p>
+              <p className="mt-3 text-xs text-muted-foreground">{c.author[language]}</p>
+            </figcaption>
+            <blockquote className="order-1 md:order-2 relative pl-6 md:pl-8">
+              <span
+                aria-hidden
+                className="absolute left-0 top-0 font-display text-4xl leading-none text-primary/40"
+              >
+                &ldquo;
+              </span>
+              <p className="text-lg md:text-[1.45rem] leading-[1.45] text-foreground/85 font-display">
+                {c.quote[language]}
+              </p>
+            </blockquote>
+          </figure>
         ))}
       </div>
 
