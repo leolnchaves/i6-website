@@ -112,7 +112,20 @@ const HeaderNovo = () => {
             </li>
           ))}
 
-          {/* i6 Research dropdown */}
+          {/* Decision Platform — produto, site externo */}
+          <li>
+            <a
+              href={decisionPlatform.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
+            >
+              {decisionPlatform.label}
+            </a>
+          </li>
+
+          {/* Inteligência Aplicada dropdown */}
+
           <li ref={dropdownRef} className="relative">
             <button
               onClick={() => setResearchOpen((v) => !v)}
