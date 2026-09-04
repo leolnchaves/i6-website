@@ -1,31 +1,34 @@
-<svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans); color: hsl(var(--foreground));">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
   <style>
-    .box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; rx: 8; }
-    .fill { fill: hsl(var(--muted)); stroke: none; }
-    .accent { fill: hsl(var(--primary)); }
-    .text { fill: hsl(var(--foreground)); font-size: 14px; font-weight: 600; }
-    .small { fill: hsl(var(--muted-foreground)); font-size: 12px; }
-    .wire { stroke: hsl(var(--primary)); stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    .box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+    .surface { fill: hsl(var(--muted)); stroke: none; }
+    .lbl { fill: hsl(var(--foreground)); font-family: var(--font-sans); font-size: 14px; font-weight: 600; }
+    .note { fill: hsl(var(--muted-foreground)); font-family: var(--font-sans); font-size: 12px; }
+    .acc { stroke: hsl(var(--primary)); stroke-width: 2; fill: none; }
+    .accf { fill: hsl(var(--primary)); }
   </style>
-  <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-      <path d="M0,0 L8,4 L0,8 Z" class="accent" />
-    </marker>
-  </defs>
 
-  <rect x="40" y="40" width="260" height="80" class="box" />
-  <text x="60" y="70" class="text">Antes</text>
-  <text x="60" y="95" class="small">/:lang/comunidade</text>
-  <text x="60" y="110" class="small">/comunidade</text>
+  <text x="30" y="28" class="lbl">Antes — foto repetida do bloco 01</text>
+  <rect x="30" y="44" width="240" height="120" rx="18" class="surface" />
+  <rect x="30" y="44" width="240" height="120" rx="18" class="box" />
+  <circle cx="80" cy="130" r="12" fill="hsl(var(--border))" />
+  <circle cx="120" cy="134" r="12" fill="hsl(var(--border))" />
+  <circle cx="160" cy="130" r="12" fill="hsl(var(--border))" />
+  <text x="30" y="186" class="note">enquadramento centralizado corta as cabeças</text>
 
-  <rect x="340" y="40" width="260" height="80" class="box" />
-  <rect x="340" y="40" width="260" height="80" style="fill: hsl(var(--primary) / 0.08); stroke: hsl(var(--primary)); stroke-width: 2; rx: 8;" />
-  <text x="360" y="70" class="text">Depois</text>
-  <text x="360" y="95" class="small accent-text" style="fill: hsl(var(--primary)); font-weight: 700;">/:lang/community</text>
-  <text x="360" y="110" class="small accent-text" style="fill: hsl(var(--primary)); font-weight: 700;">/community</text>
+  <text x="360" y="28" class="lbl">Depois — foto do time, rostos no topo</text>
+  <rect x="360" y="44" width="240" height="120" rx="18" class="surface" />
+  <rect x="360" y="44" width="240" height="120" rx="18" class="acc" />
+  <circle cx="410" cy="78" r="12" class="accf" />
+  <circle cx="450" cy="82" r="12" fill="hsl(var(--muted-foreground))" />
+  <circle cx="490" cy="78" r="12" fill="hsl(var(--muted-foreground))" />
+  <circle cx="530" cy="82" r="12" fill="hsl(var(--muted-foreground))" />
+  <text x="360" y="186" class="note">recorte deslocado para cima: rostos inteiros e visíveis</text>
 
-  <line x1="300" y1="80" x2="340" y2="80" class="wire" />
+  <line x1="290" y1="104" x2="345" y2="104" class="acc" />
+  <path d="M345,99 L355,104 L345,109 Z" class="accf" />
 
-  <text x="40" y="170" class="text">Pontos de entrada atualizados</text>
-  <text x="40" y="195" class="small">Header, footer, CTAs do i6-builders, sitemap e redirecionamento da rota antiga.</text>
+  <text x="30" y="234" class="lbl">Mantido sem alteração</text>
+  <text x="30" y="256" class="note">tamanho, cantos arredondados, inclinação, opacidade, borda e posição no mural</text>
+  <text x="30" y="276" class="note">as demais fotos do mural continuam como estão</text>
 </svg>
