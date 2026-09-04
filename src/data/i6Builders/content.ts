@@ -66,6 +66,10 @@ export const builderCopy = {
       eyebrow: 'Os modelos',
       title: 'Três famílias de capacidade de modelagem',
       intro: 'Capacidades técnicas disponíveis na plataforma, combináveis conforme o produto que você constrói',
+      pickLabel: 'Escolha uma família',
+      outputsLabel: 'Tipos de saída entregues',
+      enginesLabel: 'Engines envolvidos',
+
       cards: [
         {
           name: 'Forecasting, Demand Modeling & Sales Planning',
