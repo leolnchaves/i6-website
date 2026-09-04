@@ -18,7 +18,7 @@ const BuilderAccelerators = () => {
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">{copy.eyebrow}</p>
             <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground">{copy.title}</h2>
           </div>
-          <p className="max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed">{copy.intro}</p>
+          <p className="max-w-2xl self-start text-base md:text-lg text-muted-foreground leading-relaxed lg:pt-[1.75rem]">{copy.intro}</p>
         </div>
       </div>
 
