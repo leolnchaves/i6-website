@@ -41,20 +41,18 @@ const FooterNovo = () => {
       : '© 2025 Infinity6.ai. All rights reserved.';
 
   const navLinks: { to: string; label: string; external?: boolean }[] = [
-    { to: localized('/'), label: t('header.home') },
     { to: 'https://www.i6decision.ai', label: 'i6 Decision Suite', external: true },
     { to: localized('/our-ai'), label: t('header.solutions.proprietaryAi') },
     { to: localized('/success-stories'), label: t('header.successStories') },
-    { to: 'https://huggingface.co/infinity6', label: t('header.community'), external: true },
     { to: localized('/contact'), label: t('header.contact') },
   ];
 
-  const transformationLinks: { to: string; label: string }[] = [
-    { to: localized('/solutions/demand-supply-efficiency'), label: t('header.solutions.demandSupply') },
-    { to: localized('/solutions/data-monetization'), label: t('header.solutions.dataMonetization') },
-    { to: localized('/solutions/predictive-operations'), label: t('header.solutions.predictiveOps') },
-    { to: localized('/solutions/behavior-conversion'), label: t('header.solutions.behaviorConversion') },
+  const partnersLinks: string[] = [
+    t('header.partners.builder'),
+    t('header.partners.community'),
+    t('header.partners.docs'),
   ];
+
 
   return (
     <footer className="bg-[#0B1224] text-white">
