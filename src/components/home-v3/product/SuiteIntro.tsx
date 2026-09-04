@@ -9,9 +9,12 @@ const SuiteIntro = () => {
   return (
     <section id="decision-suite" className="container mx-auto px-6 pt-20 md:pt-28">
       <div className="max-w-3xl">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">
-          {copy.eyebrow}
-        </p>
+        <img
+          src={suiteLogoAsset.url}
+          alt="i6 Decision Suite"
+          className="h-7 sm:h-8 w-auto mb-5"
+          draggable={false}
+        />
         <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground">
           {copy.title}
         </h2>
