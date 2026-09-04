@@ -25,7 +25,7 @@ const CommunityOpening = () => {
           <img
             key={img.id}
             src={img.src}
-            alt=""
+            alt={img.alt}
             loading="lazy"
             style={{ animationDelay: `${i * 110}ms`, rotate: `${img.tilt}deg` }}
             className={`absolute object-cover ring-1 ring-border animate-sand-rise ${img.place} ${img.opacity}`}
@@ -90,8 +90,8 @@ const CommunityOpening = () => {
 
         {/* Faixa de imagem abaixo de lg: nunca sobre o texto */}
         <div aria-hidden className="mt-12 flex items-end gap-3 lg:hidden">
-          <img src={imgA.src} alt="" loading="lazy" className="h-40 flex-[2] rounded-2xl object-cover ring-1 ring-border" />
-          <img src={imgB.src} alt="" loading="lazy" className="h-32 flex-1 rounded-2xl object-cover ring-1 ring-border" />
+          <img src={imgA.src} alt={imgA.alt} loading="lazy" className="h-40 flex-[2] rounded-2xl object-cover ring-1 ring-border" />
+          <img src={imgB.src} alt={imgB.alt} loading="lazy" className="h-32 flex-1 rounded-2xl object-cover ring-1 ring-border" />
           <div className="h-36 flex-[1.4] overflow-hidden rounded-2xl border border-[#0B1224]/15 bg-[#0B1224]">
             <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F4845F]/80" />
