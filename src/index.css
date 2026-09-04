@@ -879,6 +879,17 @@ html {
 }
 .animate-sand-scan { animation: sand-scan 3.2s ease-in-out infinite; }
 
+/* Faixa contínua da página /comunidade — pausa em hover/foco via utilitários */
+@keyframes community-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-community-marquee { animation: community-marquee 28s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-community-marquee { animation: none !important; transform: none !important; }
+}
+
 /* Carrossel do quadro "Próxima melhor decisão": o card de cima sai, um novo entra embaixo */
 @keyframes decision-fade {
   from { opacity: 0; }
