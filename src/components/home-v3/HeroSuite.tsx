@@ -1,5 +1,21 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, TrendingUp, AlertTriangle, Target } from 'lucide-react';
+import {
+  ArrowRight,
+  Sparkles,
+  TrendingUp,
+  AlertTriangle,
+  Target,
+  LineChart,
+  Layers,
+  Store,
+  Tags,
+  Radio,
+  Compass,
+  Repeat,
+  PackageSearch,
+  Flag,
+} from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
@@ -21,6 +37,16 @@ const copyByLang = {
       { icon: AlertTriangle, tag: 'Ruptura', text: 'Antecipe reposição em 42 SKUs de alto giro', impact: 'risco evitado R$ 1,8M' },
       { icon: TrendingUp, tag: 'Margem', text: 'Reajuste de preço em 3 regiões com elasticidade baixa', impact: '+2,4 p.p. de margem' },
       { icon: Target, tag: 'Propensão', text: 'Ative 18 mil clientes com maior chance de recompra', impact: '-31% custo por conversão' },
+      { icon: LineChart, tag: 'Tendência', text: 'Antecipe aceleração de demanda em 7 categorias', impact: '+12% de acurácia no plano' },
+      { icon: Tags, tag: 'Markdown', text: 'Aplique o desconto mínimo para escoar 12 mil unidades', impact: '-6 p.p. de perda de margem' },
+      { icon: Radio, tag: 'Canal', text: 'Concentre a ativação no canal com maior resposta prevista', impact: '+2,7x resposta por contato' },
+      { icon: Compass, tag: 'Discovery', text: 'Componha looks que puxam itens de fundo de catálogo', impact: '+4,1 p.p. de margem no ticket' },
+      { icon: Layers, tag: 'Esparsidade', text: 'Preveja 3,4 mil itens de baixa frequência sem histórico estável', impact: '+18% de cobertura de previsão' },
+      { icon: Flag, tag: 'Metas', text: 'Redistribua meta para carteiras com potencial acima do histórico', impact: '+9% de atingimento previsto' },
+      { icon: Repeat, tag: 'Similares', text: 'Ofereça substitutos equivalentes quando o item sai de linha', impact: '+23% de conversão recuperada' },
+      { icon: Store, tag: 'Sortimento', text: 'Realoque 260 itens entre lojas com perfis de demanda distintos', impact: '+7% de giro no sortimento' },
+      { icon: PackageSearch, tag: 'Portfólio', text: 'Revise itens muito recomendados e pouco comprados', impact: '-14% de catálogo improdutivo' },
+      { icon: TrendingUp, tag: 'Preço dinâmico', text: 'Ajuste preço por contexto para ganhar conversão sem perder margem', impact: '+3,2% de receita incremental' },
     ],
   },
   en: {
@@ -39,9 +65,20 @@ const copyByLang = {
       { icon: AlertTriangle, tag: 'Stockout', text: 'Anticipate replenishment across 42 high-turn SKUs', impact: 'BRL 1.8M risk avoided' },
       { icon: TrendingUp, tag: 'Margin', text: 'Reprice 3 regions with low elasticity', impact: '+2.4 p.p. margin' },
       { icon: Target, tag: 'Propensity', text: 'Activate 18k customers most likely to repurchase', impact: '-31% cost per conversion' },
+      { icon: LineChart, tag: 'Trend', text: 'Anticipate demand acceleration across 7 categories', impact: '+12% planning accuracy' },
+      { icon: Tags, tag: 'Markdown', text: 'Apply the minimum discount to clear 12k units', impact: '-6 p.p. margin loss' },
+      { icon: Radio, tag: 'Channel', text: 'Focus activation on the channel with the highest predicted response', impact: '+2.7x response per contact' },
+      { icon: Compass, tag: 'Discovery', text: 'Build looks that pull long-tail catalog items', impact: '+4.1 p.p. margin per basket' },
+      { icon: Layers, tag: 'Sparsity', text: 'Forecast 3.4k low-frequency items with unstable history', impact: '+18% forecast coverage' },
+      { icon: Flag, tag: 'Targets', text: 'Reallocate targets to portfolios with above-history potential', impact: '+9% predicted attainment' },
+      { icon: Repeat, tag: 'Similars', text: 'Offer equivalent substitutes when an item goes out of line', impact: '+23% recovered conversion' },
+      { icon: Store, tag: 'Assortment', text: 'Reallocate 260 items across stores with distinct demand profiles', impact: '+7% assortment turnover' },
+      { icon: PackageSearch, tag: 'Portfolio', text: 'Review items highly recommended and rarely purchased', impact: '-14% unproductive catalog' },
+      { icon: TrendingUp, tag: 'Dynamic price', text: 'Adjust price by context to win conversion without losing margin', impact: '+3.2% incremental revenue' },
     ],
   },
 };
+
 
 const HeroSuite = () => {
   const { language } = useLanguage();
