@@ -263,7 +263,6 @@ export const builderCopy = {
       eyebrow: 'Domain Accelerators',
       title: 'Vertical packages that shorten time-to-value',
       intro: 'Pre-configured combinations of multiple engines, with the parameterization and metrics typical of each domain, shortening the path between integration and first result',
-      exampleNote: 'Verticals below are illustrative examples',
     },
     persona: {
       eyebrow: 'How you build with the i6 Builder',
@@ -407,7 +406,6 @@ export const builderCopy = {
       eyebrow: 'Domain Accelerators',
       title: 'Paquetes por vertical para reducir el time-to-value',
       intro: 'Combinaciones preconfiguradas de múltiples engines, con la parametrización y las métricas típicas de cada dominio, para acortar el camino entre integración y primer resultado',
-      exampleNote: 'Las verticales abajo son ejemplos ilustrativos',
     },
     persona: {
       eyebrow: 'Cómo construyes con el i6 Builder',
