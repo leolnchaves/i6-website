@@ -30,6 +30,7 @@ import TransformationLanding from "./pages/TransformationLanding";
 import Kiosk from "./pages/Kiosk";
 import KioskMetrics from "./pages/KioskMetrics";
 import GoLanding from "./pages/GoLanding";
+import I6Builders from "./pages/I6Builders";
 
 
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -90,6 +91,7 @@ const LocalizedRoutes = () => {
         <Route path="i6-intelligence/:slug" element={<IntelligenceOrInsightArticle />} />
         <Route path="i6-blog" element={<Blog />} />
         <Route path="i6-blog/:slug" element={<InsightArticle />} />
+        <Route path="i6-builders" element={<I6Builders />} />
         <Route path="go/:token" element={<GoLanding />} />
 
       </Route>

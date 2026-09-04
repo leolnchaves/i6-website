@@ -68,7 +68,7 @@ const HeaderNovo = () => {
 
   // Telas ainda em construção: entram com o selo "Em breve".
   const partnersMenu: ResearchItem[] = [
-    { label: t('header.partners.builder'), comingSoon: true },
+    { to: localized('/i6-builders'), label: t('header.partners.builder') },
     { label: t('header.partners.community'), comingSoon: true },
     { label: t('header.partners.docs'), comingSoon: true },
   ];
