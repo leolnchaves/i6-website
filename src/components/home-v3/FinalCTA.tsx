@@ -10,14 +10,14 @@ const copyByLang = {
     sub: 'Sem custo até você ver o potencial de impacto na sua operação.',
     primary: 'Falar com especialista',
     secondary: 'Conheça o i6 Decision Suite',
-    note: 'Custo zero até o backtest comprovar o resultado',
+    note: 'CUSTO ZERO ATÉ O BACKTEST COMPROVAR O POTENCIAL DE RESULTADO',
   },
   en: {
     title: 'Your competitor will notice the move after you do',
     sub: 'No cost until you see the potential impact in your operation.',
     primary: 'Talk to an expert',
     secondary: 'Explore the i6 Decision Suite',
-    note: 'Zero cost until the backtest proves the result',
+    note: 'ZERO COST UNTIL THE BACKTEST PROVES THE POTENTIAL RESULT',
   },
 };
 
