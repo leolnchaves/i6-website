@@ -116,7 +116,7 @@ export const OPENING_CODE_CARDS: OpeningCodeCard[] = [
   },
   {
     id: 'c3',
-    place: 'right-[30%] top-[44%] w-[250px] rounded-[1.5rem]',
+    place: 'right-[32%] top-[64%] w-[250px] rounded-[1.5rem]',
     tilt: -7,
     opacity: 'opacity-[0.8]',
     title: 'sdk.ts',
