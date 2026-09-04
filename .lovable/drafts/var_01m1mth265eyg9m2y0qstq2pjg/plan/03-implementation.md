@@ -1,17 +1,16 @@
 # Implementação
 
-1. Em `BuilderModels.tsx`, dentro do `tabpanel` (quadro de detalhe à direita), adicionar uma faixa vertical absoluta na borda esquerda do card.
-   - Largura de 2px, cor `hsl(var(--primary))`.
-   - Posicionada de forma que o centro da faixa coincida com a altura da linha horizontal (centro do item ativo).
-   - Animação de fade/altura suave, respeitando `prefers-reduced-motion`.
+1. Em `BuilderModels.tsx`, adicionar uma faixa vertical absoluta na borda **direita** da coluna da lista (mesma largura, cor e raio da faixa do item ativo: 2px, `hsl(var(--primary))`).
+   - Altura acompanhando a lista (medida pelo `ResizeObserver` já existente ou por `inset-y` com pequeno recuo, como na faixa do item).
+   - Visível apenas de `md` para cima, junto com a linha de conexão.
 
-2. Ajustar o padding interno do painel para que o conteúdo não sobreponha a faixa.
+2. Ajustar o cálculo da linha SVG para que `x1` passe a ser a posição dessa faixa (borda direita da lista) em vez da borda do botão, mantendo `x2` no quadro e o círculo somente na ponta direita.
 
-3. Manter a linha SVG horizontal e o círculo na extremidade como estão; o círculo deve tocar ou ficar junto à nova faixa vertical direita.
+3. Manter animação de traço da linha e fade do quadro, ambas suprimidas com `prefers-reduced-motion`.
 
-4. Garantir que a faixa seja recalculada/renderizada corretamente ao trocar de família ou idioma, aproveitando a chave `key={`${active}-${language}`}` já existente no conteúdo do painel.
+4. Nenhuma alteração em `content.ts`, `placeholders.ts`, rota, SEO ou formulário.
 
 ## Validação
 - Build e typecheck OK.
-- Screenshots em PT, EN e ES confirmando a faixa vertical no painel direito.
-- Verificar que a faixa não quebra em mobile (escondida abaixo de `md`, assim como a linha horizontal).
+- Screenshots em PT, EN e ES; conferir alinhamento da faixa com a altura da lista.
+- Conferir mobile: faixa nova e linha ocultas abaixo de `md`.

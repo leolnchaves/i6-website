@@ -1,9 +1,9 @@
-<svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
+<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
   <defs>
     <style>
       text { font-size: 12px; }
       .label { font-weight: 600; fill: hsl(var(--foreground)); }
-      .muted { fill: hsl(var(--muted-foreground)); font-size: 11px; }
+      .note { fill: hsl(var(--muted-foreground)); font-size: 11px; }
       .accent { fill: hsl(var(--primary)); }
       .line { stroke: hsl(var(--primary)); stroke-width: 1.5; }
       .bar { fill: hsl(var(--primary)); }
@@ -11,23 +11,27 @@
   </defs>
 
   <!-- Lista à esquerda -->
-  <rect x="20" y="40" width="180" height="160" rx="8" fill="none" stroke="hsl(var(--border))" />
-  <text x="35" y="68" class="accent" font-family="var(--font-mono)">03</text>
-  <text x="35" y="90" class="label">Pricing &amp; Elasticity</text>
-  <text x="35" y="108" class="label">Modeling</text>
-  <!-- Faixa vertical esquerda -->
-  <rect x="24" y="60" width="3" height="56" rx="1.5" class="bar" />
+  <rect x="30" y="30" width="220" height="140" rx="8" fill="none" stroke="hsl(var(--border))" />
+  <text x="48" y="60" class="accent" font-family="var(--font-mono)">03</text>
+  <text x="48" y="82" class="label">Pricing &amp; Elasticity</text>
+  <text x="48" y="100" class="label">Modeling</text>
 
-  <!-- Linha horizontal com círculo no meio/final -->
-  <line x1="200" y1="86" x2="420" y2="86" class="line" />
-  <circle cx="420" cy="86" r="4" class="bar" />
+  <!-- Faixa do item ativo (já existe) -->
+  <rect x="34" y="48" width="3" height="60" rx="1.5" class="bar" />
+  <!-- Faixa nova: fecha a lista à direita -->
+  <rect x="247" y="42" width="3" height="116" rx="1.5" class="bar" />
 
-  <!-- Painel à direita -->
-  <rect x="420" y="40" width="200" height="160" rx="8" fill="none" stroke="hsl(var(--border))" />
-  <!-- Faixa vertical direita (novo elemento) -->
-  <rect x="420" y="60" width="3" height="120" rx="1.5" class="bar" />
-  <text x="440" y="80" class="label">Pricing &amp; Elasticity Modeling</text>
-  <rect x="440" y="95" width="140" height="8" rx="4" fill="hsl(var(--muted))" />
-  <rect x="440" y="110" width="155" height="8" rx="4" fill="hsl(var(--muted))" />
-  <rect x="440" y="125" width="120" height="8" rx="4" fill="hsl(var(--muted))" />
+  <!-- Linha horizontal: nasce na faixa nova, círculo do lado oposto -->
+  <line x1="250" y1="88" x2="400" y2="88" class="line" />
+  <circle cx="400" cy="88" r="4" class="bar" />
+
+  <!-- Quadro de detalhe -->
+  <rect x="404" y="30" width="206" height="140" rx="8" fill="none" stroke="hsl(var(--border))" />
+  <text x="422" y="60" class="label">Pricing &amp; Elasticity Modeling</text>
+  <rect x="422" y="76" width="150" height="8" rx="4" fill="hsl(var(--muted))" />
+  <rect x="422" y="92" width="168" height="8" rx="4" fill="hsl(var(--muted))" />
+  <rect x="422" y="108" width="130" height="8" rx="4" fill="hsl(var(--muted))" />
+
+  <text x="200" y="190" class="note">faixa nova, alinhada à altura da lista</text>
+  <text x="410" y="190" class="note">círculo fica no lado oposto</text>
 </svg>
