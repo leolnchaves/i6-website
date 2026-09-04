@@ -16,6 +16,8 @@ export interface MuralImage {
   ratio: 'tall' | 'wide' | 'square';
   /** deslocamento vertical dentro da coluna (md+) */
   offset: 'none' | 'down' | 'up';
+  /** enquadramento do object-cover (ex.: 'center 22%' para destacar rostos) */
+  objectPosition?: string;
 }
 
 /** Recorte da colagem da abertura: posição absoluta (md+) já embutida. */
