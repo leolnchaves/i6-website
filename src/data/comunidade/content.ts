@@ -12,7 +12,7 @@ export const COMMUNITY_CONTACT_ANCHOR = '#fale-com-a-comunidade';
 export const communityCopy = {
   pt: {
     opening: {
-      eyebrow: 'comunidade infinity6',
+      eyebrow: 'COMUNIDADE I6 BUILDERS',
       titleTop: 'O lugar de',
       titleAccent: 'quem constrói',
       titleBottom: 'decisão com dados',
@@ -71,7 +71,7 @@ export const communityCopy = {
   },
   en: {
     opening: {
-      eyebrow: 'infinity6 community',
+      eyebrow: 'I6 BUILDERS COMMUNITY',
       titleTop: 'The home of',
       titleAccent: 'those who build',
       titleBottom: 'decisions with data',
