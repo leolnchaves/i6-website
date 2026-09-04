@@ -38,13 +38,13 @@ const CommunityOpening = () => {
             style={{ animationDelay: `${550 + i * 120}ms`, rotate: `${card.tilt}deg` }}
             className={`absolute overflow-hidden border border-[#0B1224]/15 bg-[#0B1224] shadow-[var(--sand-shadow-lift)] animate-sand-rise ${card.place} ${card.opacity}`}
           >
-            <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2">
+            <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F4845F]/80" />
               <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
               <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-              <span className="ml-1 font-mono text-[10px] tracking-wide text-white/45">{card.title}</span>
+              <span className="ml-1 font-mono text-[11px] tracking-wide text-white/45">{card.title}</span>
             </div>
-            <pre className="px-3 py-3 font-mono text-[11px] leading-[1.7] text-white/75">
+            <pre className="px-4 py-3.5 font-mono text-[12px] leading-[1.75] text-white/75">
               <code>
                 {card.lines.map((line, j) => (
                   <span key={`${j}-${line}`} className={`block whitespace-pre ${line.startsWith('#') ? 'text-white/35' : ''}`}>
@@ -90,9 +90,9 @@ const CommunityOpening = () => {
 
         {/* Faixa de imagem abaixo de lg: nunca sobre o texto */}
         <div aria-hidden className="mt-12 flex items-end gap-3 lg:hidden">
-          <img src={imgA.src} alt="" loading="lazy" className="h-32 flex-[2] rounded-2xl object-cover ring-1 ring-border" />
-          <img src={imgB.src} alt="" loading="lazy" className="h-24 flex-1 rounded-2xl object-cover ring-1 ring-border" />
-          <div className="h-28 flex-[1.4] overflow-hidden rounded-2xl border border-[#0B1224]/15 bg-[#0B1224]">
+          <img src={imgA.src} alt="" loading="lazy" className="h-40 flex-[2] rounded-2xl object-cover ring-1 ring-border" />
+          <img src={imgB.src} alt="" loading="lazy" className="h-32 flex-1 rounded-2xl object-cover ring-1 ring-border" />
+          <div className="h-36 flex-[1.4] overflow-hidden rounded-2xl border border-[#0B1224]/15 bg-[#0B1224]">
             <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F4845F]/80" />
               <span className="h-1.5 w-1.5 rounded-full bg-white/20" />

@@ -46,7 +46,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
     tilt: -5,
     ratio: 'tall',
     offset: 'none',
-    place: 'right-[5%] top-16 h-[250px] w-[170px] rounded-[2rem]',
+    place: 'right-[4%] top-10 h-[330px] w-[225px] rounded-[2rem]',
     opacity: 'opacity-[0.72]',
   },
   {
@@ -55,7 +55,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
     tilt: 4,
     ratio: 'wide',
     offset: 'up',
-    place: 'right-[27%] top-12 h-[125px] w-[190px] rounded-[1.5rem]',
+    place: 'right-[28%] top-8 h-[165px] w-[250px] rounded-[1.75rem]',
     opacity: 'opacity-[0.55]',
   },
   {
@@ -64,7 +64,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
     tilt: 7,
     ratio: 'square',
     offset: 'down',
-    place: 'right-[27%] top-[46%] h-[130px] w-[130px] rounded-[1.5rem]',
+    place: 'right-[24%] top-[46%] h-[180px] w-[180px] rounded-[1.75rem]',
     opacity: 'opacity-[0.62]',
   },
   {
@@ -73,7 +73,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
     tilt: 3,
     ratio: 'wide',
     offset: 'down',
-    place: 'right-[6%] bottom-10 h-[115px] w-[170px] rounded-[1.5rem]',
+    place: 'right-[5%] bottom-6 h-[160px] w-[240px] rounded-[1.75rem]',
     opacity: 'opacity-[0.68]',
   },
   {
@@ -82,7 +82,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
     tilt: -6,
     ratio: 'tall',
     offset: 'up',
-    place: 'right-[40%] bottom-8 h-[140px] w-[105px] rounded-[1.25rem]',
+    place: 'right-[41%] bottom-6 h-[190px] w-[145px] rounded-[1.5rem]',
     opacity: 'opacity-[0.5]',
   },
 ];
@@ -100,7 +100,7 @@ export interface OpeningCodeCard {
 export const OPENING_CODE_CARDS: OpeningCodeCard[] = [
   {
     id: 'c1',
-    place: 'right-[16%] top-[26%] w-[220px] rounded-[1.25rem]',
+    place: 'right-[15%] top-[24%] w-[260px] rounded-[1.5rem]',
     tilt: -4,
     opacity: 'opacity-[0.92]',
     title: 'train.py',
@@ -108,7 +108,7 @@ export const OPENING_CODE_CARDS: OpeningCodeCard[] = [
   },
   {
     id: 'c2',
-    place: 'right-[4%] top-[54%] w-[195px] rounded-[1.25rem]',
+    place: 'right-[3%] top-[56%] w-[240px] rounded-[1.5rem]',
     tilt: 5,
     opacity: 'opacity-[0.85]',
     title: 'deploy.sh',
@@ -116,7 +116,7 @@ export const OPENING_CODE_CARDS: OpeningCodeCard[] = [
   },
   {
     id: 'c3',
-    place: 'right-[42%] top-[54%] w-[205px] rounded-[1.25rem]',
+    place: 'right-[43%] top-[24%] w-[250px] rounded-[1.5rem]',
     tilt: -7,
     opacity: 'opacity-[0.8]',
     title: 'sdk.ts',
