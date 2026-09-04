@@ -30,9 +30,8 @@ const FinalCTA = () => {
         <div aria-hidden className="absolute inset-0 sand-glow" />
         <div className="relative max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-[2.6rem] leading-[1.14] font-bold text-foreground">{copy.title}</h2>
-          <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{copy.sub}</p>
 
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Link
               to={localized('/contact')}
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
