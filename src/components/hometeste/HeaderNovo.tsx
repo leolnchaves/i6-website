@@ -18,7 +18,9 @@ const HeaderNovo = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [researchOpen, setResearchOpen] = useState(false);
+  const [partnersOpen, setPartnersOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
+  const partnersRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -28,8 +30,12 @@ const HeaderNovo = () => {
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
         setResearchOpen(false);
+      }
+      if (partnersRef.current && !partnersRef.current.contains(target)) {
+        setPartnersOpen(false);
       }
     };
     document.addEventListener('mousedown', onClick);
@@ -38,6 +44,7 @@ const HeaderNovo = () => {
 
   useEffect(() => {
     setResearchOpen(false);
+    setPartnersOpen(false);
     setMenuOpen(false);
   }, [location.pathname]);
 
@@ -67,10 +74,9 @@ const HeaderNovo = () => {
     { label: t('header.partners.docs'), comingSoon: true },
   ];
 
-  const leftLinks = [
-    { to: localized('/'), label: t('header.home') },
-    { to: localized('/success-stories'), label: t('header.successStories') },
-  ];
+  const leftLinks = [{ to: localized('/'), label: t('header.home') }];
+
+  const rightLinks = [{ to: localized('/success-stories'), label: t('header.successStories') }];
 
   const decisionPlatform = { href: 'https://www.i6decision.ai', label: t('header.decisionPlatform') };
 
