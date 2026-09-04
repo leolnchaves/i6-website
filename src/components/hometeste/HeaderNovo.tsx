@@ -214,7 +214,7 @@ const HeaderNovo = () => {
             href={decisionPlatform.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex h-8 items-center gap-2 rounded-full border border-[#F4845F]/50 bg-white/5 pl-3 pr-4 text-xs font-semibold text-white whitespace-nowrap transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/15"
+            className="hidden sm:inline-flex h-8 items-center gap-2 rounded-full border border-[#F4845F]/50 bg-[#F5F0E8] pl-3 pr-4 text-xs font-semibold text-[#0B1224] whitespace-nowrap transition-colors hover:border-[#F4845F] hover:bg-white"
           >
             <img src={getPublicAssetUrl('content/logos/i6-decision-symbol.png')} alt="" aria-hidden="true" className="h-4 w-auto" />
 
