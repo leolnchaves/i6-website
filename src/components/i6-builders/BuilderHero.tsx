@@ -57,8 +57,8 @@ const BuilderHero = () => {
               </div>
               <pre className="overflow-x-auto px-5 py-6 font-mono text-[12.5px] leading-[1.85] text-white/80">
                 <code>
-                  {copy.codeLines.map((line) => (
-                    <span key={line || Math.random()} className="block whitespace-pre">
+                  {copy.codeLines.map((line, i) => (
+                    <span key={`${i}-${line}`} className="block whitespace-pre">
                       {line.startsWith('#') ? <span className="text-white/35">{line}</span> : line}
                     </span>
                   ))}
