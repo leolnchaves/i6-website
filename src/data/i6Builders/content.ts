@@ -16,6 +16,18 @@ export const builderCopy = {
       sub: 'Engines de modelagem, SDKs, APIs e toolkits da infinity6 disponíveis para times de tecnologia desenvolverem seus próprios produtos de decisão orientada a dados',
       cta: 'Fale com o time',
       badges: ['Engines proprietários', 'Explicabilidade nativa', 'Integração por API'],
+      codeTitle: 'quickstart.py',
+      codeLines: [
+        'from i6 import Builder',
+        '',
+        'builder = Builder(api_key=I6_KEY)',
+        'forecast = builder.forecast(',
+        '    series="demanda_sku",',
+        '    horizon=12,',
+        ')',
+        '# cada saída acompanha seus drivers',
+        'forecast.drivers()',
+      ],
     },
     what: {
       eyebrow: 'O que é o i6 Builder',
@@ -34,6 +46,7 @@ export const builderCopy = {
       eyebrow: 'Como funciona',
       title: 'SDKs, APIs e toolkits',
       docsLink: 'Ver documentação completa',
+      railLabel: 'Percurso de integração',
       blocks: [
         {
           title: 'SDKs',
@@ -112,6 +125,18 @@ export const builderCopy = {
       sub: 'infinity6 modeling engines, SDKs, APIs and toolkits available for technology teams developing their own data-driven decision products',
       cta: 'Talk to the team',
       badges: ['Proprietary engines', 'Native explainability', 'API-first integration'],
+      codeTitle: 'quickstart.py',
+      codeLines: [
+        'from i6 import Builder',
+        '',
+        'builder = Builder(api_key=I6_KEY)',
+        'forecast = builder.forecast(',
+        '    series="sku_demand",',
+        '    horizon=12,',
+        ')',
+        '# every output carries its drivers',
+        'forecast.drivers()',
+      ],
     },
     what: {
       eyebrow: 'What the i6 Builder is',
@@ -130,6 +155,7 @@ export const builderCopy = {
       eyebrow: 'How it works',
       title: 'SDKs, APIs and toolkits',
       docsLink: 'See full documentation',
+      railLabel: 'Integration path',
       blocks: [
         {
           title: 'SDKs',
@@ -208,6 +234,18 @@ export const builderCopy = {
       sub: 'Engines de modelado, SDKs, APIs y toolkits de infinity6 disponibles para equipos de tecnología que desarrollan sus propios productos de decisión orientada a datos',
       cta: 'Habla con el equipo',
       badges: ['Engines propietarios', 'Explicabilidad nativa', 'Integración por API'],
+      codeTitle: 'quickstart.py',
+      codeLines: [
+        'from i6 import Builder',
+        '',
+        'builder = Builder(api_key=I6_KEY)',
+        'forecast = builder.forecast(',
+        '    series="demanda_sku",',
+        '    horizon=12,',
+        ')',
+        '# cada salida acompaña sus drivers',
+        'forecast.drivers()',
+      ],
     },
     what: {
       eyebrow: 'Qué es el i6 Builder',
@@ -226,6 +264,7 @@ export const builderCopy = {
       eyebrow: 'Cómo funciona',
       title: 'SDKs, APIs y toolkits',
       docsLink: 'Ver documentación completa',
+      railLabel: 'Recorrido de integración',
       blocks: [
         {
           title: 'SDKs',
