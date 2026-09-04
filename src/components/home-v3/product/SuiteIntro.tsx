@@ -10,7 +10,7 @@ const SuiteIntro = () => {
     <section id="decision-suite" className="container mx-auto px-6 pt-20 md:pt-28">
       <div className="max-w-3xl">
         <img
-          src={suiteLogoAsset.url}
+          src={getPublicAssetUrl('content/logos/i6-decision-suite-logo.png')}
           alt="i6 Decision Suite"
           className="h-7 sm:h-8 w-auto mb-5"
           draggable={false}
