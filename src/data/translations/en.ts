@@ -19,6 +19,11 @@ export const enTranslations = {
   'header.research.media': 'i6 in the Media',
   'header.research.blog': 'i6 Blog',
   'header.research.comingSoon': 'Coming soon',
+  'header.decisionPlatform': 'Decision Platform',
+  'header.partners': 'Development Partners',
+  'header.partners.builder': 'i6 Builder Platform',
+  'header.partners.community': 'Partner Community',
+  'header.partners.docs': 'Documentation',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',
 
