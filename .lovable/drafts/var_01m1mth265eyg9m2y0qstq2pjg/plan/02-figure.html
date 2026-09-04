@@ -1,0 +1,29 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
+  <style>
+    .box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; rx: 8; }
+    .fill { fill: hsl(var(--muted)); }
+    .accent { fill: hsl(var(--primary)); }
+    .text { fill: hsl(var(--foreground)); font-size: 14px; font-weight: 500; }
+    .small { fill: hsl(var(--muted-foreground)); font-size: 12px; }
+    .wire { stroke: hsl(var(--muted-foreground)); stroke-width: 1; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="60" width="220" height="240" class="box"/>
+  <rect x="60" y="90" width="180" height="120" class="fill"/>
+  <text x="150" y="235" text-anchor="middle" class="text">Foto anexa</text>
+  <text x="150" y="255" text-anchor="middle" class="small">dois colegas diante de laptop</text>
+
+  <rect x="380" y="60" width="220" height="240" class="box"/>
+  <rect x="400" y="90" width="180" height="120" class="fill"/>
+  <rect x="400" y="90" width="180" height="120" fill="hsl(var(--primary))" opacity="0.15"/>
+  <text x="490" y="235" text-anchor="middle" class="text">MURAL_IMAGES[1]</text>
+  <text x="490" y="255" text-anchor="middle" class="small">placeholder.svg → nova foto</text>
+
+  <line x1="270" y1="150" x2="380" y2="150" class="wire"/>
+  <circle cx="490" cy="150" r="5" class="accent"/>
+</svg>
