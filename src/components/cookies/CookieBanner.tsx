@@ -50,6 +50,29 @@ const CookieBanner = () => {
         onlyEssential: 'Apenas essenciais',
         back: 'Voltar',
       }
+    : language === 'es'
+    ? {
+        title: 'Cookies',
+        body: 'Usamos cookies esenciales y de análisis anónimos para que el sitio funcione y podamos medir el rendimiento. ¿Aceptas también cookies adicionales de marketing y preferencias?',
+        privacy: 'Política de Privacidad',
+        preferences: 'Preferencias',
+        continueEssential: 'Rechazar adicionales',
+        acceptAdditional: 'Aceptar adicionales',
+        prefsTitle: 'Preferencias de Cookies',
+        prefsSubtitle: 'Elige qué categorías permites.',
+        essential: 'Esenciales',
+        essentialDesc: 'Funcionamiento del sitio y métricas anónimas propias (interés legítimo). Siempre activas.',
+        analytics: 'Análisis (GA4)',
+        analyticsDesc: 'Envío anónimo a Google Analytics 4 (tercero).',
+        marketing: 'Marketing',
+        marketingDesc: 'Medir campañas y personalizar contenido.',
+        prefs: 'Preferencias',
+        prefsDesc: 'Recordar idioma, layout y ajustes de interfaz.',
+        save: 'Guardar preferencias',
+        acceptAll: 'Aceptar todas',
+        onlyEssential: 'Solo esenciales',
+        back: 'Volver',
+      }
     : {
         title: 'Cookies',
         body: 'We use essential and anonymous analytics cookies so the site works and we can measure performance. Do you also accept additional marketing and preferences cookies?',

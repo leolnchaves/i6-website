@@ -20,6 +20,14 @@ export const CookieDetailsModal = ({ open, onOpenChange }: CookieDetailsModalPro
         continueEssential: 'Rejeitar adicionais',
         granular: 'Ajustar preferências',
       }
+    : language === 'es'
+    ? {
+        title: 'Cookies',
+        body: 'Usamos cookies esenciales y de análisis anónimos para que el sitio funcione y podamos medir el rendimiento. ¿Aceptas también cookies adicionales de marketing y preferencias?',
+        acceptAdditional: 'Aceptar adicionales',
+        continueEssential: 'Rechazar adicionales',
+        granular: 'Ajustar preferencias',
+      }
     : {
         title: 'Cookies',
         body: 'We use essential and anonymous analytics cookies so the site works and we can measure performance. Do you also accept additional marketing and preferences cookies?',
