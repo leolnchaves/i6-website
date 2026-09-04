@@ -60,7 +60,7 @@ const HeroSuite = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-6 pt-16 pb-16 md:pt-24 md:pb-24">
+      <div className="relative container mx-auto px-6 pt-28 pb-16 md:pt-36 md:pb-24">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
           <div>
             <span className="animate-sand-rise inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">

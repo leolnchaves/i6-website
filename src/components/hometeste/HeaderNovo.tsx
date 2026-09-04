@@ -68,11 +68,15 @@ const HeaderNovo = () => {
 
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 
+  // A home usa a identidade clara (theme-sand): o header precisa manter o
+  // fundo navy sólido para os links brancos permanecerem legíveis.
+  const isLightPage = ['/', '/pt', '/pt/', '/en', '/en/'].includes(location.pathname);
+
   return (
     <>
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[#0B1224]/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
+        scrolled || isLightPage ? 'bg-[#0B1224]/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
