@@ -34,8 +34,8 @@ const args = Object.fromEntries(
   }),
 );
 const TYPE = args.type;
-if (!TYPE || !['insights', 'research', 'landings', 'stories'].includes(TYPE)) {
-  console.error('Usage: --type=insights|research|landings|stories');
+if (!TYPE || !['insights', 'research', 'landings', 'stories', 'docs'].includes(TYPE)) {
+  console.error('Usage: --type=insights|research|landings|stories|docs');
   process.exit(2);
 }
 
@@ -66,6 +66,14 @@ const CONFIG = {
     imgWebPath: null,
     fileName: (it) => `${it.slug}-${it.language}.md`,
     frontmatter: fmLandings,
+  },
+  docs: {
+    envFeed: 'I6HUB_FEED_URL_DOCS',
+    mdDir:   'src/content/docs',
+    imgDir:  null, // docs hoje não materializam imagens
+    imgWebPath: null,
+    fileName: (it) => `${it.slug}-${it.language}.md`,
+    frontmatter: fmDocs,
   },
   stories: {
     envFeed: 'I6HUB_FEED_URL_STORIES',
@@ -398,6 +406,29 @@ function fmLandings(it) {
     it.related_engines ? `related_engines: ${yaml(it.related_engines)}` : null,
     it.related_stories ? `related_stories: ${yaml(it.related_stories)}` : null,
     `cover_image: ${cover ? yaml(cover) : 'null'}`,
+    '---',
+    '',
+    it.content ?? it.body_md ?? '',
+  ].filter(Boolean).join('\n');
+}
+
+/**
+ * Docs (`/:lang/docs`). Note: `sample` is intentionally never written here —
+ * it only exists on the placeholder files shipped with the repo, so publishing
+ * a real page removes the "sample content" notice automatically.
+ */
+function fmDocs(it) {
+  return [
+    '---',
+    `title: ${yaml(it.title ?? '')}`,
+    `slug: ${it.slug}`,
+    `language: ${it.language}`,
+    `section: ${it.section ?? 'general'}`,
+    `section_label: ${yaml(it.section_label ?? it.section ?? 'general')}`,
+    `order: ${Number.isFinite(it.order) ? it.order : 999}`,
+    it.description ? `description: ${yaml(it.description)}` : null,
+    it.updated_at  ? `updated_at: ${yaml(it.updated_at)}`   : null,
+    it.hidden ? 'hidden: true' : null,
     '---',
     '',
     it.content ?? it.body_md ?? '',
