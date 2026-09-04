@@ -43,7 +43,7 @@ const CommunityMural = () => {
             const spans = ['col-span-7', 'col-span-5', 'col-span-4', 'col-span-8', 'col-span-6', 'col-span-6', 'col-span-5', 'col-span-7'];
             const offsets = ['', 'mt-10', '-mt-4', 'mt-6', '', 'mt-12', '-mt-2', 'mt-8'];
             const tilts = ['md:-rotate-1', 'md:rotate-1', '', 'md:rotate-[0.6deg]', 'md:-rotate-[0.8deg]', '', 'md:rotate-1', 'md:-rotate-1'];
-            const img = MURAL_IMAGES[i % MURAL_IMAGES.length];
+            const img = imageForSlot(i);
             const withImage = i % 3 === 1;
 
             return (
@@ -56,7 +56,7 @@ const CommunityMural = () => {
                       aria-hidden
                       loading="lazy"
                       className="mb-4 h-40 w-full rounded-[1.75rem] object-cover opacity-75 ring-1 ring-border"
-                      style={{ transform: `rotate(${img.tilt}deg)` }}
+                      style={{ transform: `rotate(${img.tilt}deg)`, objectPosition: img.objectPosition }}
                     />
                   )}
                   <span className="block text-[11px] font-mono text-primary/70">
