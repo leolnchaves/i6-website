@@ -35,7 +35,7 @@ const ClientProof = () => {
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[hsl(var(--background))] to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[hsl(var(--background))] to-transparent z-10" />
         <div
-          className="flex items-center gap-16 w-max motion-safe:animate-marquee"
+          className="flex items-center gap-16 w-max animate-marquee"
           style={{ animationDuration: '38s' }}
         >
           {renderGroup('a')}
