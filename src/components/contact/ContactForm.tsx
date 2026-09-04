@@ -167,7 +167,8 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
     }
   }, [reset, toast, language, leadSource, extraFields]);
 
-  const text = useMemo(() => content[language], [language]);
+  // ES ainda não tem cópia própria: cai no PT (mesma regra de fallback do site)
+  const text = useMemo(() => content[language] ?? content.pt, [language]);
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
