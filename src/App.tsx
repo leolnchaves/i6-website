@@ -109,7 +109,7 @@ const LocalizedRoutes = () => {
         <Route path="i6-builders" element={<I6Builders />} />
         <Route path="community" element={<Comunidade />} />
         {/* URL antiga em português: redireciona para o slug em inglês. */}
-        <Route path="comunidade" element={<Navigate to="../community" replace />} />
+        <Route path="comunidade" element={<LegacySlugRedirect to="/community" />} />
         <Route path="docs" element={<Docs />} />
         <Route path="docs/:slug" element={<Docs />} />
 
