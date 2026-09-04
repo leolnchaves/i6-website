@@ -69,7 +69,7 @@ const HeaderNovo = () => {
   // Telas ainda em construção: entram com o selo "Em breve".
   const partnersMenu: ResearchItem[] = [
     { to: localized('/i6-builders'), label: t('header.partners.builder') },
-    { to: localized('/comunidade'), label: t('header.partners.community') },
+    { to: localized('/community'), label: t('header.partners.community') },
     { to: localized('/docs'), label: t('header.partners.docs') },
   ];
 
@@ -82,11 +82,13 @@ const HeaderNovo = () => {
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 
 
-  // Páginas de tema claro (home e /i6-builders): o header precisa manter o
-  // fundo navy sólido para os links brancos permanecerem legíveis.
+  // Páginas de tema claro (home, /i6-builders, /community, /docs): o header
+  // precisa manter o fundo navy sólido para os links brancos permanecerem
+  // legíveis. A checagem usa o path normalizado (sem prefixo de idioma e sem
+  // barra final), então /community e /community/ são equivalentes.
   const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
   const isLightPage =
-    ['/', '/i6-builders', '/comunidade'].includes(normalizedPath) ||
+    ['/', '/i6-builders', '/community'].includes(normalizedPath) ||
     normalizedPath === '/docs' ||
     normalizedPath.startsWith('/docs/');
 

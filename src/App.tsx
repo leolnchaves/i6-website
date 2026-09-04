@@ -95,7 +95,9 @@ const LocalizedRoutes = () => {
         <Route path="i6-blog" element={<Blog />} />
         <Route path="i6-blog/:slug" element={<InsightArticle />} />
         <Route path="i6-builders" element={<I6Builders />} />
-        <Route path="comunidade" element={<Comunidade />} />
+        <Route path="community" element={<Comunidade />} />
+        {/* URL antiga em português: redireciona para o slug em inglês. */}
+        <Route path="comunidade" element={<Navigate to="../community" replace />} />
         <Route path="docs" element={<Docs />} />
         <Route path="docs/:slug" element={<Docs />} />
 
