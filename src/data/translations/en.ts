@@ -22,7 +22,7 @@ export const enTranslations = {
   'header.decisionPlatform': 'Decision Platform',
   'header.partners': 'Development Partners',
   'header.partners.builder': 'i6 Builder Platform',
-  'header.partners.community': 'Partner Community',
+  'header.partners.community': 'Community',
   'header.partners.docs': 'Documentation',
   'header.contact': 'Contact Us',
   'header.getStarted': 'Get Started',

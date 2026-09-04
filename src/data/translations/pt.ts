@@ -22,7 +22,7 @@ export const ptTranslations = {
   'header.decisionPlatform': 'Decision Platform',
   'header.partners': 'Development Partners',
   'header.partners.builder': 'i6 Builder Platform',
-  'header.partners.community': 'Comunidade de Parceiros',
+  'header.partners.community': 'Comunidade',
   'header.partners.docs': 'Documentação',
   'header.contact': 'Contato',
   'header.getStarted': 'Começar',
