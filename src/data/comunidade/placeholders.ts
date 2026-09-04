@@ -6,11 +6,6 @@
  * colagem apenas a partir de md — abaixo desse breakpoint tudo empilha reto.
  */
 import { getPublicAssetUrl } from '@/utils/assetUtils';
-import whiteboardAsset from '@/assets/comunidade/community-whiteboard.jpg.asset.json';
-import desksAsset from '@/assets/comunidade/community-desks.jpg.asset.json';
-import pairAsset from '@/assets/comunidade/community-pair.jpg.asset.json';
-import rowAsset from '@/assets/comunidade/community-row.jpg.asset.json';
-import audienceAsset from '@/assets/comunidade/community-audience.jpg.asset.json';
 
 export interface MuralImage {
   id: string;
@@ -53,7 +48,7 @@ export const MURAL_IMAGES: MuralImage[] = [
 export const OPENING_IMAGES: OpeningImage[] = [
   {
     id: 'o1',
-    src: whiteboardAsset.url,
+    src: getPublicAssetUrl('/images/comunidade/community-whiteboard.jpg'),
     alt: 'Pessoas reunidas em frente a monitores com código na tela, ao lado de um quadro branco cheio de anotações',
     tilt: -5,
     ratio: 'tall',
@@ -63,7 +58,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o2',
-    src: desksAsset.url,
+    src: getPublicAssetUrl('/images/comunidade/community-desks.jpg'),
     alt: 'Mesas de trabalho com telas de código acesas em um ambiente amplo e escuro',
     tilt: 4,
     ratio: 'wide',
@@ -73,7 +68,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o3',
-    src: pairAsset.url,
+    src: getPublicAssetUrl('/images/comunidade/community-pair.jpg'),
     alt: 'Duas pessoas concentradas diante de um computador, uma delas de fones de ouvido',
     tilt: 7,
     ratio: 'square',
@@ -83,7 +78,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o4',
-    src: rowAsset.url,
+    src: getPublicAssetUrl('/images/comunidade/community-row.jpg'),
     alt: 'Fileira de pessoas de fones de ouvido programando lado a lado em uma mesa longa',
     tilt: 3,
     ratio: 'wide',
@@ -93,7 +88,7 @@ export const OPENING_IMAGES: OpeningImage[] = [
   },
   {
     id: 'o5',
-    src: audienceAsset.url,
+    src: getPublicAssetUrl('/images/comunidade/community-audience.jpg'),
     alt: 'Plateia em ambiente escuro acompanhando código projetado em uma tela grande',
     tilt: -6,
     ratio: 'tall',
