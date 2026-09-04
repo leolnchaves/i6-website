@@ -197,24 +197,39 @@ const HeroSuite = () => {
                 </span>
               </div>
 
-              <div className="space-y-3">
-                {copy.decisions.map((d, i) => (
+              <div
+                className="-mb-3"
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+              >
+                {slots.map((s, i) => (
                   <div
-                    key={d.tag}
-                    className="rounded-[calc(var(--radius)-4px)] border border-border bg-secondary/60 p-4 animate-sand-rise"
-                    style={{ animationDelay: `${0.4 + i * 0.14}s` }}
+                    key={s.key}
+                    className={`overflow-hidden ${
+                      s.role === 'out'
+                        ? 'animate-decision-out'
+                        : s.role === 'in'
+                        ? 'animate-decision-in'
+                        : cursor === 0
+                        ? 'animate-sand-rise'
+                        : ''
+                    }`}
+                    style={cursor === 0 ? { animationDelay: `${0.4 + i * 0.14}s` } : undefined}
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      <d.icon size={14} className="text-primary" />
-                      <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                        {d.tag}
-                      </span>
+                    <div className="mb-3 rounded-[calc(var(--radius)-4px)] border border-border bg-secondary/60 p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <s.item.icon size={14} className="text-primary" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                          {s.item.tag}
+                        </span>
+                      </div>
+                      <p className="text-sm font-medium text-foreground leading-snug">{s.item.text}</p>
+                      <p className="mt-2 text-xs font-semibold text-primary">{s.item.impact}</p>
                     </div>
-                    <p className="text-sm font-medium text-foreground leading-snug">{d.text}</p>
-                    <p className="mt-2 text-xs font-semibold text-primary">{d.impact}</p>
                   </div>
                 ))}
               </div>
+
             </div>
           </div>
         </div>
