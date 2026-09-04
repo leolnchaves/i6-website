@@ -260,11 +260,13 @@ const HeaderNovo = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="text-white/80 hover:text-[#F4845F] transition-colors text-sm font-medium"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#F4845F]/50 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/15"
             >
-              {decisionPlatform.label}
+              <img src={suiteSymbol.url} alt="" aria-hidden="true" className="h-5 w-auto" />
+              {t('header.suiteCta')}
             </a>
           </li>
+
           <li>
             <div className="text-white/50 uppercase tracking-wider text-xs mb-2">{t('header.research')}</div>
             <ul className="flex flex-col gap-3 pl-3 border-l border-white/10">
