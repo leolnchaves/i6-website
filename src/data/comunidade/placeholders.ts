@@ -32,7 +32,7 @@ const PLACEHOLDER = getPublicAssetUrl('/placeholder.svg');
 
 export const MURAL_IMAGES: MuralImage[] = [
   { id: 'm1', src: getPublicAssetUrl('/images/comunidade/mural-forecasting.jpg'), tilt: -2, ratio: 'tall', offset: 'none' },
-  { id: 'm2', src: PLACEHOLDER, tilt: 2, ratio: 'wide', offset: 'down' },
+  { id: 'm2', src: getPublicAssetUrl('/images/comunidade/mural-recommendation.jpg'), tilt: 2, ratio: 'wide', offset: 'down' },
   { id: 'm3', src: PLACEHOLDER, tilt: -1, ratio: 'square', offset: 'up' },
   { id: 'm4', src: PLACEHOLDER, tilt: 3, ratio: 'tall', offset: 'down' },
 ];
