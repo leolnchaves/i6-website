@@ -44,12 +44,14 @@ export const communityCopy = {
     },
     events: {
       eyebrow: 'ritmo da comunidade',
-      title: 'Três formatos, uma agenda técnica',
+      title: 'Cinco encontros, uma agenda técnica',
       sub: 'Encontros construídos para sair com decisão, não com slide',
       items: [
-        { name: 'Office Hours', kicker: 'toda rodada, ao vivo', desc: 'Sessões abertas com engenheiros e cientistas da infinity6 para destravar problema real de modelagem, integração ou avaliação' },
-        { name: 'Meetups regionais', kicker: 'presencial, por praça', desc: 'Encontros locais com apresentação técnica e discussão de caso, no formato de quem mostra código e resultado' },
-        { name: 'Builder Summit', kicker: 'o encontro maior', desc: 'O ponto alto do calendário: arquitetura, benchmarks, explicabilidade e o que vem na fronteira da decisão orientada a dados' },
+        { name: 'Office Hours', desc: 'Sessões abertas com engenheiros e cientistas da infinity6 para destravar problema real de modelagem, integração ou avaliação' },
+        { name: 'Meetups por Segmento', desc: 'Recortes por indústria, onde o caso discutido é do mesmo setor de quem está na sala' },
+        { name: 'Meetups Regionais', desc: 'Encontros locais com apresentação técnica e discussão de caso, no formato de quem mostra código e resultado' },
+        { name: 'Hackatons de Soluções', desc: 'Times atacando um problema real de decisão do começo ao fim, com dado, modelo e resultado medido' },
+        { name: 'i6 Builder Summit', desc: 'O encontro maior: arquitetura, benchmarks, explicabilidade e o que vem na fronteira da decisão orientada a dados' },
       ],
     },
     belonging: {
