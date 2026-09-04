@@ -4,7 +4,9 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import logoHeader from '@/assets/images/logo-header.png';
+import suiteSymbol from '@/assets/i6-decision-symbol.png.asset.json';
 import LanguageMenu from './LanguageMenu';
+
 
 type ResearchItem = {
   to?: string;
@@ -113,17 +115,8 @@ const HeaderNovo = () => {
             </li>
           ))}
 
-          {/* Decision Platform — produto, site externo */}
-          <li>
-            <a
-              href={decisionPlatform.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
-            >
-              {decisionPlatform.label}
-            </a>
-          </li>
+
+
 
           {/* Inteligência Aplicada dropdown */}
 
