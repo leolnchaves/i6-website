@@ -16,6 +16,8 @@ const HomeTeste = () => (
     <div className="theme-sand">
       <HeroSuite />
       <ClientProof />
+      <SuiteIntro />
+      <ProductSuite />
       <WhyInfinity6 />
       <AnticipateGrid />
       <HowItWorks />
