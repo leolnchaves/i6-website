@@ -55,8 +55,6 @@ const CommunityOpening = () => {
             </pre>
           </div>
         ))}
-
-        <span className="absolute left-[52%] top-[38%] h-24 w-px bg-primary/40" />
       </div>
 
       <div className="relative container mx-auto px-6 pt-32 pb-20 md:pt-44 md:pb-32">
