@@ -11,8 +11,10 @@ Mesma paleta e mesmas fontes da página inicial: areia, grafite quente, um únic
 
 ## Detalhes técnicos
 
-- Reescrever os oito componentes em `src/components/i6-builders/` com a nova forma de cada seção; `src/data/i6Builders/content.ts` e `placeholders.ts` permanecem intactos, apenas ganhando os campos de texto que as novas formas exigirem (rótulos do percurso, trecho de código da abertura), sempre nos três idiomas.
+- Reescrever os componentes em `src/components/i6-builders/` com a nova forma de cada seção; a página completa fica em `src/components/i6-builders/index.tsx` e a rota em `App.tsx` importa esse componente diretamente, sem arquivo separado em `pages/`.
+- `src/data/i6Builders/content.ts` e `placeholders.ts` permanecem intactos; apenas ganhando os campos de texto que as novas formas exigirem (rótulos do percurso, trecho de código da abertura), sempre nos três idiomas.
 - `HeaderNovo.tsx`: incluir a rota `i6-builders` na condição que aplica fundo sólido, com uma regra baseada em página de tema claro em vez de uma lista fixa de caminhos.
-- `I6Builders.tsx`: envolver fecho e formulário numa faixa escura para a transição até o rodapé.
+- `App.tsx`: ajustar a importação da rota para apontar para `src/components/i6-builders/index.tsx`.
+- O fechamento da página (`BuilderFinalCTA` + `ContactForm`) fica dentro de uma faixa escura para a transição até o rodapé.
 - Sem mudança de rota, SEO, formulário de captura ou envio de leads.
 - Verificação: build, checagem de tipos e capturas de tela em `/pt`, `/en` e `/es`, além de largura de celular.
