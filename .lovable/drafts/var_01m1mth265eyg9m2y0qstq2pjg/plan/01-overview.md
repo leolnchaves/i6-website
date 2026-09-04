@@ -5,5 +5,5 @@ Hoje a home tem duas seções seguidas com mensagens sobrepostas: a seção **Pr
 O que muda:
 
 - A seção **O que você antecipa** sai da home por completo — junto com ela sai o bloco **i6Signal** que vivia dentro dela.
-- O conteúdo útil dessa seção (as três alavancas de decisão, com suas frases-chave e chips) passa a viver **dentro da seção de Produtos**, como uma faixa compacta acima do seletor de produtos, mantendo o link para `/solutions`.
+- As três alavancas **não** viram uma nova faixa. Os produtos já cobrem esse conteúdo; a revisão é apenas conferir, alavanca por alavanca, se sobrou alguma frase ou chip com valor que ainda não aparece no card do produto correspondente — e, quando sobrar, incorporar ao texto ou ao fluxo daquele produto.
 - Nenhuma outra seção muda: hero, logos, Por que infinity6, Como funcionamos, Resultados, Insights e CTA final ficam iguais.
