@@ -98,6 +98,15 @@ const CommunityMural = () => {
                 </span>
                 <p className="mt-1.5 text-xl font-bold leading-tight text-foreground">{a.label}</p>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.note}</p>
+                {i === 0 && (
+                  <img
+                    src={MURAL_IMAGES[0].src}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    className="mt-4 h-32 w-full rounded-2xl object-cover opacity-75 ring-1 ring-border"
+                  />
+                )}
               </li>
             );
           })}
