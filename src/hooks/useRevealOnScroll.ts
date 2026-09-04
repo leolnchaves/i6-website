@@ -40,8 +40,10 @@ export const useRevealOnScroll = <T extends HTMLElement = HTMLDivElement>(
 };
 
 /** Classe utilitária de entrada (fade + deslocamento curto) */
-export const revealClass = (revealed: boolean, delayMs = 0): string =>
+export const revealClass = (revealed: boolean): string =>
   [
     'transition-[opacity,transform] duration-[700ms] ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none',
-    revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 motion-reduce:opacity-100 motion-reduce:translate-y-0',
-  ].join(' ') + (delayMs ? ` [transition-delay:${delayMs}ms]` : '');
+    revealed
+      ? 'opacity-100 translate-y-0'
+      : 'opacity-0 translate-y-6 motion-reduce:opacity-100 motion-reduce:translate-y-0',
+  ].join(' ');
