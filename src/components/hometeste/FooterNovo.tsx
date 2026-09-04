@@ -27,6 +27,12 @@ const FooterNovo = () => {
         <br />
         Transformamos comportamento vivo em crescimento previsível.
       </>
+    ) : language === 'es' ? (
+      <>
+        Decide <span className="font-bold text-white">antes</span> que el mercado.
+        <br />
+        Convertimos el comportamiento vivo en crecimiento previsible.
+      </>
     ) : (
       <>
         Decide <span className="font-bold text-white">before</span> the market.
@@ -38,7 +44,9 @@ const FooterNovo = () => {
   const copyright =
     language === 'pt'
       ? '© 2025 Infinity6.ai. Todos os direitos reservados.'
-      : '© 2025 Infinity6.ai. All rights reserved.';
+      : language === 'es'
+        ? '© 2025 Infinity6.ai. Todos los derechos reservados.'
+        : '© 2025 Infinity6.ai. All rights reserved.';
 
   const navLinks: { to: string; label: string; external?: boolean }[] = [
     { to: 'https://www.i6decision.ai', label: 'i6 Decision Suite', external: true },

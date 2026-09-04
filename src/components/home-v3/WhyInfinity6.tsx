@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Brain, Gauge, Eye, Plug } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
 
 const copyByLang = {
   pt: {
@@ -62,12 +62,41 @@ const copyByLang = {
       },
     ],
   },
+  es: {
+    eyebrow: 'Por qué infinity6',
+    title: 'Todos muestran lo que pasó. Nosotros entregamos lo que va a pasar y qué hacer ahora.',
+    intro:
+      'El analytics tradicional explica el pasado. Nuestros motores propietarios calculan la próxima mejor decisión y la ponen en manos de quien ejecuta.',
+    cta: 'Conoce nuestra IA propietaria',
+    items: [
+      {
+        icon: Brain,
+        title: 'Motores propietarios, no wrappers',
+        desc: 'i6 Previsio, i6 RecSys e i6 ElasticPrice fueron construidos por nosotros, entrenados con operación real de América Latina.',
+      },
+      {
+        icon: Gauge,
+        title: 'Decisión priorizada, no una lista de insights',
+        desc: 'Cada salida llega rankeada por impacto: qué SKU, qué cliente, qué región, qué precio y por qué.',
+      },
+      {
+        icon: Eye,
+        title: 'XAI for Business',
+        desc: 'Explicabilidad en lenguaje de negocio. El equipo entiende el driver de la recomendación antes de aprobar la acción.',
+      },
+      {
+        icon: Plug,
+        title: 'Activación en tu ecosistema',
+        desc: 'La decisión no muere en un panel: se entrega en el ERP, CRM, e-commerce, fuerza de ventas o canal de medios.',
+      },
+    ],
+  },
 };
 
 const WhyInfinity6 = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const copy = copyByLang[language === 'pt' ? 'pt' : 'en'];
+  const copy = pickLang(language, copyByLang);
 
   return (
     <section className="container mx-auto px-6 py-20 md:py-28">

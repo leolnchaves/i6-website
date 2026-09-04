@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
@@ -200,7 +201,8 @@ ALL.sort((a, b) => (a.date < b.date ? 1 : -1));
  * `i6 eBook` items live under `/i6-intelligence` and `i6 Article` under `/i6-blog`.
  */
 export const useInsights = (limit?: number) => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   const [items, setItems] = useState<Insight[]>([]);
 
   useEffect(() => {
@@ -218,7 +220,8 @@ export const useInsights = (limit?: number) => {
  * alongside Research pieces.
  */
 export const useIntelligenceInsights = () => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   const [items, setItems] = useState<Insight[]>([]);
 
   useEffect(() => {
@@ -235,7 +238,8 @@ export const useIntelligenceInsights = () => {
  * Returns `i6 Article` items powering the `/i6-blog` page.
  */
 export const useBlogArticles = () => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   const [items, setItems] = useState<Insight[]>([]);
 
   useEffect(() => {
@@ -251,7 +255,8 @@ export const useBlogArticles = () => {
 
 
 export const useFeaturedInsights = (limit?: number) => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   const [items, setItems] = useState<Insight[]>([]);
 
   useEffect(() => {
@@ -263,7 +268,8 @@ export const useFeaturedInsights = (limit?: number) => {
 };
 
 export const useInsight = (slug: string) => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   return ALL.find((i) => i.slug === slug && i.language === language) || null;
 };
 

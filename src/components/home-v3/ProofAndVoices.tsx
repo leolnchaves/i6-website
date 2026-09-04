@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Linkedin, Quote } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
 import { useTestimonialsMarkdown } from '@/hooks/useTestimonialsMarkdown';
 import { realResults } from '@/data/staticData/realResults';
 import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/components/ui/carousel';
@@ -25,12 +25,20 @@ const copyByLang = {
     voicesTitle: 'In their words: those already deciding first',
     cta: 'View success stories',
   },
+  es: {
+    eyebrow: 'Anticipación en números',
+    title: 'Resultados reales, medidos en producción',
+    caption:
+      'Datos anonimizados de clientes infinity6. Métricas medidas en producción tras el despliegue de los motores propietarios.',
+    voicesTitle: 'Con la palabra: quienes ya deciden antes',
+    cta: 'Ver casos de éxito',
+  },
 };
 
 const ProofAndVoices = memo(() => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const copy = copyByLang[language === 'pt' ? 'pt' : 'en'];
+  const copy = pickLang(language, copyByLang);
   const { testimonials, loading, error } = useTestimonialsMarkdown();
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
@@ -58,9 +66,9 @@ const ProofAndVoices = memo(() => {
           {realResults.map((kpi) => (
             <li key={kpi.slug} className="sand-card sand-card-hover p-4 flex flex-col">
               <span className="text-2xl md:text-[1.75rem] font-bold text-primary leading-none mb-2">{kpi.value}</span>
-              <span className="text-[11px] md:text-xs text-foreground/75 leading-snug">{kpi.label[language]}</span>
+              <span className="text-[11px] md:text-xs text-foreground/75 leading-snug">{kpi.label[language === 'en' ? 'en' : 'pt']}</span>
               <span className="text-[10px] text-muted-foreground mt-2 uppercase tracking-wider">
-                {kpi.source[language]}
+                {kpi.source[language === 'en' ? 'en' : 'pt']}
               </span>
             </li>
           ))}

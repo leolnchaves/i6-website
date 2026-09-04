@@ -8,7 +8,9 @@ const ClientProof = () => {
   const title =
     language === 'pt'
       ? 'Líderes que transformam antecipação em vantagem'
-      : 'Leaders who turn anticipation into advantage';
+      : language === 'es'
+        ? 'Líderes que convierten la anticipación en ventaja'
+        : 'Leaders who turn anticipation into advantage';
 
   if (loading || partners.length === 0) return null;
 

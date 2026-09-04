@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import logoHeader from '@/assets/images/logo-header.png';
+import LanguageMenu from './LanguageMenu';
 
 type ResearchItem = {
   to?: string;
@@ -218,19 +219,7 @@ const HeaderNovo = () => {
           </li>
         </ul>
 
-        <div className="hidden md:flex items-center gap-1 rounded-full border border-[#F4845F]/30 px-1 py-0.5">
-          {(['pt', 'en'] as const).map((lang) => (
-            <button
-              key={lang}
-              onClick={() => setLanguage(lang)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
-                language === lang ? 'bg-[#F4845F] text-white' : 'text-white/60 hover:text-white'
-              }`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
-        </div>
+        <LanguageMenu />
 
         {/* Mobile toggle */}
         <button
@@ -342,7 +331,7 @@ const HeaderNovo = () => {
           </li>
         </ul>
         <div className="flex gap-2 mt-4">
-          {(['pt', 'en'] as const).map((lang) => (
+          {(['pt', 'en', 'es'] as const).map((lang) => (
             <button
               key={lang}
               onClick={() => { setLanguage(lang); setMenuOpen(false); }}

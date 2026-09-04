@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { pickLang } from '@/utils/localizedPath';
 import { suiteCopy, SUITE_URL } from './suiteContent';
 
 const ProductSuite = () => {
   const { language } = useLanguage();
-  const copy = suiteCopy[language === 'pt' ? 'pt' : 'en'].products;
+  const copy = pickLang(language, suiteCopy).products;
   const [activeId, setActiveId] = useState(copy.items[0].id);
 
   const active = copy.items.find((p) => p.id === activeId) ?? copy.items[0];

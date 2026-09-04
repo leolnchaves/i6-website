@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowRight, Layers, TrendingUp, DollarSign, MessageSquare, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLocalizedPath, toContentLang } from '@/utils/localizedPath';
 import { useLanding, isLandingSlug, type LandingPiece } from '@/hooks/useLandings';
 import { getStoryBySlug } from '@/hooks/useSuccessStoriesMarkdown';
 import RelatedStoryMiniCard from '@/components/landings/RelatedStoryMiniCard';
@@ -211,6 +211,7 @@ const FAQList = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'en' }) =>
 const TransformationLanding = () => {
   const { slug = '' } = useParams<{ slug: string }>();
   const { language } = useLanguage();
+  const contentLang = toContentLang(language);
   const localized = useLocalizedPath();
   const piece = useLanding(slug);
 
@@ -286,7 +287,7 @@ const TransformationLanding = () => {
         {piece.faq.map((f, i) => <div key={i}><strong>{f.q}</strong><p>{f.a}</p></div>)}
       </div>
 
-      <HeroSection piece={piece} lang={language} />
+      <HeroSection piece={piece} lang={contentLang} />
 
       {pain && (
         <SectionShell eyebrow={language === 'pt' ? 'A dor real' : 'The real pain'} title={language === 'pt' ? 'Dor' : 'Pain'}>
@@ -303,14 +304,14 @@ const TransformationLanding = () => {
       {solution && (
         <SectionShell eyebrow={language === 'pt' ? 'Motores aplicados' : 'Applied engines'} title={language === 'pt' ? 'Solução' : 'Solution'}>
           <MarkdownBody md={solution.body} />
-          <SolutionEngines piece={piece} lang={language} />
+          <SolutionEngines piece={piece} lang={contentLang} />
         </SectionShell>
       )}
 
       {application && (
         <SectionShell eyebrow={language === 'pt' ? 'Como roda em produção' : 'How it runs in production'} title={language === 'pt' ? 'Aplicação' : 'Application'}>
           <MarkdownBody md={application.body} />
-          <ApplicationFlow lang={language} />
+          <ApplicationFlow lang={contentLang} />
         </SectionShell>
       )}
 
@@ -320,8 +321,8 @@ const TransformationLanding = () => {
         </SectionShell>
       )}
 
-      <RelatedStories piece={piece} lang={language} />
-      <FAQList piece={piece} lang={language} />
+      <RelatedStories piece={piece} lang={contentLang} />
+      <FAQList piece={piece} lang={contentLang} />
       <CTAFinal />
     </>
   );

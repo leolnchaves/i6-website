@@ -17,7 +17,7 @@ import {
   Flag,
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 const copyByLang = {
@@ -77,13 +77,41 @@ const copyByLang = {
       { icon: TrendingUp, tag: 'Dynamic price', text: 'Adjust price by context to win conversion without losing margin', impact: '+3.2% incremental revenue' },
     ],
   },
+  es: {
+    eyebrow: 'AI DECISION INTELLIGENCE',
+    titleA: 'La plataforma de ',
+    titleB: 'decisión predictiva',
+    titleC: 'más avanzada',
+    titleD: 'de América Latina',
+    sub: 'Motores de IA propietarios y modelo fundacional propio, entrenados con miles de millones de eventos reales de negocio — ingeniería de punta que entrega la decisión lista, con explicabilidad nativa.',
+    ctaPrimary: 'Conoce el i6 Decision Suite',
+    ctaSecondary: 'Hablar con un especialista',
+    proof: ['Motores propietarios de IA', 'Modelo fundacional propio', 'Explicabilidad nativa (XAI)'],
+    panelTitle: 'Próxima mejor decisión',
+    panelNow: 'ahora',
+    decisions: [
+      { icon: AlertTriangle, tag: 'Quiebre', text: 'Anticipa la reposición de 42 SKUs de alta rotación', impact: 'riesgo evitado BRL 1,8M' },
+      { icon: TrendingUp, tag: 'Margen', text: 'Reajusta el precio en 3 regiones con baja elasticidad', impact: '+2,4 p.p. de margen' },
+      { icon: Target, tag: 'Propensión', text: 'Activa 18 mil clientes con mayor probabilidad de recompra', impact: '-31% costo por conversión' },
+      { icon: LineChart, tag: 'Tendencia', text: 'Anticipa la aceleración de demanda en 7 categorías', impact: '+12% de precisión en el plan' },
+      { icon: Tags, tag: 'Markdown', text: 'Aplica el descuento mínimo para liquidar 12 mil unidades', impact: '-6 p.p. de pérdida de margen' },
+      { icon: Radio, tag: 'Canal', text: 'Concentra la activación en el canal con mayor respuesta prevista', impact: '+2,7x respuesta por contacto' },
+      { icon: Compass, tag: 'Discovery', text: 'Compón looks que impulsan ítems de cola larga del catálogo', impact: '+4,1 p.p. de margen por ticket' },
+      { icon: Layers, tag: 'Dispersión', text: 'Prevé 3,4 mil ítems de baja frecuencia sin historial estable', impact: '+18% de cobertura de pronóstico' },
+      { icon: Flag, tag: 'Metas', text: 'Redistribuye metas hacia carteras con potencial sobre el histórico', impact: '+9% de cumplimiento previsto' },
+      { icon: Repeat, tag: 'Similares', text: 'Ofrece sustitutos equivalentes cuando el ítem sale de línea', impact: '+23% de conversión recuperada' },
+      { icon: Store, tag: 'Surtido', text: 'Reasigna 260 ítems entre tiendas con perfiles de demanda distintos', impact: '+7% de rotación del surtido' },
+      { icon: PackageSearch, tag: 'Portafolio', text: 'Revisa ítems muy recomendados y poco comprados', impact: '-14% de catálogo improductivo' },
+      { icon: TrendingUp, tag: 'Precio dinámico', text: 'Ajusta el precio por contexto para ganar conversión sin perder margen', impact: '+3,2% de ingreso incremental' },
+    ],
+  },
 };
 
 
 const HeroSuite = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const copy = copyByLang[language === 'pt' ? 'pt' : 'en'];
+  const copy = pickLang(language, copyByLang);
 
   const items = copy.decisions;
   const [cursor, setCursor] = useState(0);

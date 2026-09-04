@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { seoData } from '@/data/staticData/seoData';
@@ -18,7 +19,7 @@ const pagePath = (page: string): string => {
 
 const SEOHead = ({ page, jsonLd }: SEOHeadProps) => {
   const { language } = useLanguage();
-  const data = seoData[page]?.[language];
+  const data = seoData[page]?.[toContentLang(language)];
 
   if (!data) return null;
 
@@ -30,7 +31,7 @@ const SEOHead = ({ page, jsonLd }: SEOHeadProps) => {
 
   return (
     <Helmet>
-      <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
+      <html lang={language === 'pt' ? 'pt-BR' : language === 'es' ? 'es' : 'en'} />
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords.join(', ')} />
@@ -48,7 +49,7 @@ const SEOHead = ({ page, jsonLd }: SEOHeadProps) => {
       <meta property="og:image" content={OG_IMAGE} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="infinity6" />
-      <meta property="og:locale" content={language === 'pt' ? 'pt_BR' : 'en_US'} />
+      <meta property="og:locale" content={language === 'pt' ? 'pt_BR' : language === 'es' ? 'es_ES' : 'en_US'} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />

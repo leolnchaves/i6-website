@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
@@ -104,7 +105,8 @@ ALL.sort((a, b) => (a.date < b.date ? 1 : -1));
 
 
 export const useIntelligence = (limit?: number) => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   const [items, setItems] = useState<IntelligencePiece[]>([]);
   useEffect(() => {
     const filtered = ALL.filter((i) => i.language === language);
@@ -114,7 +116,8 @@ export const useIntelligence = (limit?: number) => {
 };
 
 export const useIntelligencePiece = (slug: string) => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   return ALL.find((i) => i.slug === slug && i.language === language) || null;
 };
 

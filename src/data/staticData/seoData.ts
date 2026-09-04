@@ -1,3 +1,4 @@
+import type { ContentLang } from '@/utils/localizedPath';
 import type { Language } from '@/types/language';
 
 interface PageSEO {
@@ -6,7 +7,7 @@ interface PageSEO {
   keywords: string[];
 }
 
-type SEODataMap = Record<string, Record<Language, PageSEO>>;
+type SEODataMap = Record<string, Record<ContentLang, PageSEO>>;
 
 export const seoData: SEODataMap = {
   home: {

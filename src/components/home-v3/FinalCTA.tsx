@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 const copyByLang = {
@@ -17,12 +17,18 @@ const copyByLang = {
     secondary: 'Explore the i6 Decision Suite',
     note: 'ZERO COST UNTIL THE BACKTEST PROVES THE POTENTIAL RESULT',
   },
+  es: {
+    title: 'Tu competidor va a notar el movimiento después de ti',
+    primary: 'Hablar con un especialista',
+    secondary: 'Conoce el i6 Decision Suite',
+    note: 'COSTO CERO HASTA QUE EL BACKTEST COMPRUEBE EL POTENCIAL DE RESULTADO',
+  },
 };
 
 const FinalCTA = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const copy = copyByLang[language === 'pt' ? 'pt' : 'en'];
+  const copy = pickLang(language, copyByLang);
 
   return (
     <section className="container mx-auto px-6 pb-24">

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { Language, LanguageContextType } from '@/types/language';
-import { translations } from '@/data/translations';
+import { translate } from '@/data/translations';
 import { getLangFromPath, stripLangPrefix } from '@/utils/localizedPath';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -15,7 +15,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Keep <html lang> + localStorage in sync
   useEffect(() => {
-    document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
+    document.documentElement.lang =
+      language === 'pt' ? 'pt-BR' : language === 'es' ? 'es' : 'en';
     try {
       localStorage.setItem('language', language);
     } catch {
@@ -34,9 +35,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 
   const t = useMemo(() => {
-    return (key: string): string => {
-      return translations[language][key as keyof typeof translations['en']] || key;
-    };
+    return (key: string): string => translate(language, key);
   }, [language]);
 
   const contextValue = useMemo(

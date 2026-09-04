@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -18,7 +19,8 @@ export const useMarkdownContent = (): UseMarkdownContentReturn => {
   const [results, setResults] = useState<ResultItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
 
   useEffect(() => {
     const fetchMarkdownContent = async () => {

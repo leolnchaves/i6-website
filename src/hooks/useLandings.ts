@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export const LANDING_SLUGS = [
@@ -149,7 +150,8 @@ export const isLandingSlug = (s: string): s is LandingSlug =>
   (LANDING_SLUGS as readonly string[]).includes(s);
 
 export const useLanding = (slug: string): LandingPiece | null => {
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
   return ALL.find((l) => l.slug === slug && l.language === language) || null;
 };
 

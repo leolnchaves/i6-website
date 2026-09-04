@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
@@ -156,7 +157,8 @@ export const useSuccessStoriesMarkdown = (): UseSuccessStoriesMarkdownReturn => 
   const [stories, setStories] = useState<SuccessStoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
 
   useEffect(() => {
     try {

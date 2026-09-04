@@ -1,12 +1,13 @@
+import type { ContentLang } from '@/utils/localizedPath';
 import type { Language } from '@/types/language';
 
 export interface RealResultKPI {
   slug: string;
   value: string;
   /** Short label shown under the big number */
-  label: Record<Language, string>;
+  label: Record<ContentLang, string>;
   /** Sector / client tag in caption */
-  source: Record<Language, string>;
+  source: Record<ContentLang, string>;
   /** Optional numeric for JSON-LD Statistic (when expressible) */
   numericValue?: number;
   unitText?: string;

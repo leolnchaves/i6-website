@@ -1,3 +1,4 @@
+import type { ContentLang } from '@/utils/localizedPath';
 import type { Language } from '@/types/language';
 
 export interface EngineDef {
@@ -96,7 +97,7 @@ export interface OurAIContent {
 
 }
 
-export const ourAIContent: Record<Language, OurAIContent> = {
+export const ourAIContent: Record<ContentLang, OurAIContent> = {
   pt: {
     hero: {
       eyebrow: 'Proprietary AI',

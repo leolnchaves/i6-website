@@ -1,3 +1,4 @@
+import { toContentLang } from '@/utils/localizedPath';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -21,7 +22,8 @@ export const useTestimonialsMarkdown = (): UseTestimonialsMarkdownReturn => {
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
 
   useEffect(() => {
     const fetchTestimonials = async () => {

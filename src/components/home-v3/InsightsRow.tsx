@@ -49,24 +49,29 @@ const InsightsRow = () => {
 
   if (insights.length === 0) return null;
 
-  const isPt = language === 'pt';
+  const labels =
+    language === 'pt'
+      ? { eyebrow: 'Inteligência aplicada', title: 'Últimos insights', all: 'Ver todos os insights' }
+      : language === 'es'
+        ? { eyebrow: 'Inteligencia aplicada', title: 'Últimos insights', all: 'Ver todos los insights' }
+        : { eyebrow: 'Applied intelligence', title: 'Latest insights', all: 'See all insights' };
 
   return (
     <section className="container mx-auto px-6 py-20 md:py-24">
       <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-3">
-            {isPt ? 'Inteligência aplicada' : 'Applied intelligence'}
+            {labels.eyebrow}
           </p>
           <h2 className="text-3xl md:text-[2.4rem] font-bold text-foreground">
-            {isPt ? 'Últimos insights' : 'Latest insights'}
+            {labels.title}
           </h2>
         </div>
         <Link
           to={localized('/insights')}
           className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
         >
-          {isPt ? 'Ver todos os insights' : 'See all insights'}
+          {labels.all}
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

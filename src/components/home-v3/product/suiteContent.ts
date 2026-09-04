@@ -39,7 +39,7 @@ export interface SuiteCopy {
 
 export const SUITE_URL = 'https://www.i6decision.ai';
 
-export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
+export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   pt: {
     intro: {
       eyebrow: 'A suíte',
@@ -273,6 +273,125 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
             input: 'Behavior + campaign history',
             decision: 'Propensity + ranking',
             value: 'More response with less wasted contact',
+          },
+        },
+      ],
+    },
+  },
+  es: {
+    intro: {
+      eyebrow: 'La suite',
+      title: 'Una plataforma de decisión, no un conjunto de dashboards',
+      description:
+        'i6 Decision Suite convierte datos de negocio en decisiones aplicables, no solo en indicadores. Sus productos comparten contexto, gobernanza y aprendizaje para que cada decisión sea más precisa a medida que la operación evoluciona.',
+      pillars: [
+        {
+          title: 'Datos listos para decidir',
+          body: 'Datos transaccionales, de comportamiento, operativos y contextuales entran en un mismo contexto de decisión, con validación, calidad y gobernanza.',
+        },
+        {
+          title: 'Inteligencia especializada',
+          body: 'Cada producto aplica modelos especializados a la decisión que debe resolver. Predecir, recomendar, priorizar u optimizar es parte del proceso. La salida es una decisión utilizable.',
+        },
+        {
+          title: 'Decisión lista para ejecutar',
+          body: 'La salida no termina en el panel. La decisión llega a los equipos y sistemas de ejecución, y el resultado vuelve a la plataforma para mejorar el próximo ciclo.',
+        },
+      ],
+    },
+    products: {
+      eyebrow: 'Productos',
+      title: 'Seis decisiones críticas, una suite',
+      description:
+        'Elige la decisión que quieres mejorar. Cada producto recibe los datos necesarios, aplica inteligencia especializada y devuelve una acción medible para el negocio.',
+      selectorLabel: 'Selecciona un producto de la suite',
+      flowLabels: { input: 'Entrada', decision: 'Decisión', value: 'Valor' },
+      cta: 'Conoce el i6 Decision Suite',
+      items: [
+        {
+          id: 'discovery',
+          name: 'Discovery',
+          claim: 'Recomienda la próxima mejor opción para cada contexto',
+          pain: 'Sin esto: todo visitante y todo cliente recibe la misma oferta, y medios, CRM y catálogo se convierten en desperdicio.',
+          headline: 'Recomendaciones que conectan intención con resultado',
+          body: 'Combina catálogo, comportamiento y contexto para decidir qué recomendar en cada interacción. Las recomendaciones se consumen en los canales de ejecución, mientras el producto monitorea cobertura, calidad, respuesta y oportunidades de mejora.',
+          capabilities:
+            'Ingesta y validación · Live Events · Recomendaciones · Integraciones · Cobertura y Calidad · Insights de Negocio',
+          flow: {
+            input: 'Catálogo + comportamiento + contexto',
+            decision: 'Ranking y recomendación',
+            value: 'Más relevancia, conversión y aprovechamiento del catálogo',
+          },
+        },
+        {
+          id: 'forecasting',
+          name: 'Forecasting',
+          claim: 'Predice la demanda en la granularidad en que el negocio decide',
+          pain: 'Sin esto: la demanda se planifica por histórico y promedio, y la cuenta llega como quiebre o exceso.',
+          headline: 'Pronósticos que se vuelven decisiones de planificación',
+          body: 'Convierte histórico y señales del negocio en pronósticos de demanda con la granularidad necesaria para planificar inventario, capacidad y metas. El producto monitorea la calidad de los pronósticos y evidencia dónde la decisión necesita atención.',
+          capabilities:
+            'Histórico de demanda · Modelos comparables · Forecast granular · Monitoreo de precisión · Calidad',
+          flow: {
+            input: 'Histórico + calendario + señales operativas',
+            decision: 'Forecast + selección de modelo + precisión',
+            value: 'Menos quiebres y excesos. Más precisión en la planificación',
+          },
+        },
+        {
+          id: 'assortment',
+          name: 'Assortment',
+          claim: 'Define el mix ideal por tienda, canal o contexto',
+          pain: 'Sin esto: el mix se repite en tiendas y canales que compran de formas completamente distintas.',
+          headline: 'El mix correcto para cada contexto de demanda',
+          body: 'Combina demanda, desempeño, inventario y restricciones para recomendar el surtido más adecuado por tienda, canal o contexto. Ayuda a decidir qué mantener, incluir, retirar o redistribuir.',
+          capabilities: 'Desempeño · Demanda · Recomendación de mix · Restricciones · Cobertura',
+          flow: {
+            input: 'Demanda + catálogo + inventario + restricciones',
+            decision: 'Priorización y optimización del mix',
+            value: 'Más disponibilidad, rotación y productividad del surtido',
+          },
+        },
+        {
+          id: 'sales-planning',
+          name: 'Sales Planning',
+          claim: 'Convierte potencial y pronóstico en metas y prioridades',
+          pain: 'Sin esto: metas y esfuerzo comercial siguen el histórico, no el potencial real de cada cartera.',
+          headline: 'Metas y prioridades comerciales basadas en potencial',
+          body: 'Conecta histórico, pronóstico y potencial comercial para distribuir metas y prioridades con más precisión. La planificación deja de depender solo del histórico y pasa a reflejar dónde está la próxima oportunidad.',
+          capabilities: 'Histórico comercial · Forecast · Potencial · Metas predictivas · Priorización',
+          flow: {
+            input: 'Histórico + forecast + potencial',
+            decision: 'Metas y prioridades',
+            value: 'Mejor asignación del esfuerzo y mayor eficiencia comercial',
+          },
+        },
+        {
+          id: 'pricing',
+          name: 'Pricing',
+          claim: 'Recomienda precios para equilibrar demanda, ingreso y margen',
+          pain: 'Sin esto: el precio es tabla y reacción al competidor, no una palanca gobernada de margen, rotación y conversión.',
+          headline: 'Precio orientado por elasticidad, margen y demanda',
+          body: 'Analiza la respuesta histórica al precio, la demanda, el margen y el contexto para recomendar precios dentro de las reglas del negocio. La decisión deja de ser solo reactiva y pasa a considerar el impacto económico esperado.',
+          capabilities: 'Histórico de precios · Elasticidad · Margen · Guardrails · Recomendación',
+          flow: {
+            input: 'Precio + demanda + margen + contexto',
+            decision: 'Elasticidad y precio recomendado',
+            value: 'Más margen y mejor equilibrio entre precio y demanda',
+          },
+        },
+        {
+          id: 'targeting',
+          name: 'Targeting',
+          claim: 'Prioriza a quien tiene mayor propensión a responder',
+          pain: 'Sin esto: campañas amplias y costosas hablan con quien nunca iba a responder.',
+          headline: 'Propensión para decidir a quién activar y cuándo',
+          body: 'Convierte comportamiento e histórico de respuesta en scores de propensión para priorizar audiencias antes de la activación. Las decisiones van a los canales de ejecución y regresan con los eventos de respuesta para alimentar el próximo ciclo.',
+          capabilities: 'Eventos · Propensión · Ranking de audiencia · Integraciones · Medición de respuesta',
+          flow: {
+            input: 'Comportamiento + histórico de campañas',
+            decision: 'Propensión + ranking',
+            value: 'Más respuesta con menos desperdicio de contacto',
           },
         },
       ],

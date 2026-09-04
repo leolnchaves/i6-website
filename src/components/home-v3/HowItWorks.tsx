@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { pickLang } from '@/utils/localizedPath';
 
 import oracleLogo from '@/assets/logos/oracle.png.asset.json';
 import sapLogo from '@/assets/logos/sap.svg.asset.json';
@@ -72,6 +73,20 @@ const copyByLang = {
       { title: 'Activation', desc: 'The decision reaches operations inside the client ecosystem.' },
     ],
   },
+  es: {
+    eyebrow: 'Cómo trabajamos',
+    title: 'De la señal bruta a la decisión ejecutada',
+    intro:
+      'Capturamos señales de cualquier ecosistema, predecimos el movimiento, priorizamos la acción y devolvemos la decisión donde la operación ya trabaja.',
+    sourcesLabel: 'Capturamos de cualquier ecosistema',
+    activationLabel: 'Activamos en cualquier ecosistema',
+    steps: [
+      { title: 'Captura de señales', desc: 'Demanda, precio, inventario, comportamiento y contexto de mercado.' },
+      { title: 'Predicción', desc: 'Motores propietarios identifican riesgo, intención, elasticidad y propensión.' },
+      { title: 'Recomendación priorizada', desc: 'La mejor acción por objetivo, canal, cliente, SKU o región.' },
+      { title: 'Activación', desc: 'La decisión llega a la operación dentro del ecosistema del cliente.' },
+    ],
+  },
 };
 
 const Chip = ({ item }: { item: LogoItem }) => (
@@ -83,7 +98,7 @@ const Chip = ({ item }: { item: LogoItem }) => (
 
 const HowItWorks = () => {
   const { language } = useLanguage();
-  const copy = copyByLang[language === 'pt' ? 'pt' : 'en'];
+  const copy = pickLang(language, copyByLang);
 
   return (
     <section className="container mx-auto px-6 py-20 md:py-28">

@@ -1,10 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
+import { pickLang } from '@/utils/localizedPath';
 import { suiteCopy } from './suiteContent';
 
 const SuiteIntro = () => {
   const { language } = useLanguage();
-  const copy = suiteCopy[language === 'pt' ? 'pt' : 'en'].intro;
+  const copy = pickLang(language, suiteCopy).intro;
 
   return (
     <section id="decision-suite" className="container mx-auto px-6 pt-20 md:pt-28">

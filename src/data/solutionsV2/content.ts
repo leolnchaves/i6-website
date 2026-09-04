@@ -1,3 +1,4 @@
+import type { ContentLang } from '@/utils/localizedPath';
 // Copy da página /solutions (PT + EN). Todas as ocorrências de "i6" foram
 // escritas como "infinity6" conforme solicitado.
 import type { Language } from '@/types/language';
@@ -503,4 +504,4 @@ const en: SolutionsV2Content = {
   },
 };
 
-export const solutionsContent: Record<Language, SolutionsV2Content> = { pt, en };
+export const solutionsContent: Record<ContentLang, SolutionsV2Content> = { pt, en };
