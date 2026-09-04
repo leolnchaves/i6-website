@@ -1,0 +1,36 @@
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    :root {
+      --foreground: #3d3a36;
+      --muted-foreground: #7a756d;
+      --primary: #d97a52;
+      --border: #e5e0d8;
+      --background: #f7f4f0;
+    }
+    text { font-family: var(--font-sans, sans-serif); }
+    .title { font-size: 22px; font-weight: 700; fill: var(--foreground); }
+    .highlight { font-size: 22px; font-weight: 700; fill: var(--primary); }
+    .desc { font-size: 12px; fill: var(--muted-foreground); }
+    .line { stroke: var(--border); stroke-width: 1; }
+    .accent { stroke: var(--primary); stroke-width: 2; }
+    .bar { fill: var(--primary); }
+  </style>
+
+  <!-- background -->
+  <rect width="640" height="320" fill="var(--background)" rx="8"/>
+
+  <!-- previous items -->
+  <text x="60" y="60" class="title">Office Hours</text>
+  <line x1="60" y1="72" x2="420" y2="72" class="line"/>
+  <text x="60" y="95" class="desc">Sessões abertas com engenheiros e cientistas...</text>
+
+  <text x="110" y="150" class="title">Meetups por Segmento</text>
+  <line x1="110" y1="162" x2="470" y2="162" class="line"/>
+  <text x="110" y="185" class="desc">Recortes por indústria...</text>
+
+  <!-- highlighted item -->
+  <rect x="160" y="220" width="6" height="42" rx="3" class="bar"/>
+  <text x="180" y="242" class="highlight">i6 Builder Summit</text>
+  <line x1="180" y1="252" x2="540" y2="252" class="accent"/>
+  <text x="180" y="278" class="desc">O encontro maior: arquitetura, benchmarks...</text>
+</svg>
