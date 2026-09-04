@@ -2,7 +2,7 @@
 
 ### 1. Roteamento (`src/App.tsx`)
 - Alterar a rota `comunidade` para `community`.
-- Adicionar redirecionamento da rota antiga `/comunidade` (e `/:lang/comunidade`) para `/community` (e `/:lang/community`), preservando bookmarks e indexação.
+- Adicionar redirecionamento da rota antiga `/comunidade` (e `/:lang/comunidade`) para `/community` (e `/:lang/community`) usando `<Navigate>` do React Router. Como não há arquivos físicos para essas rotas no GitHub Pages, o SPA sempre carrega via `404.html`/`index.html`; o redirecionamento client-side dispara assim que o bundle interpreta o path antigo.
 
 ### 2. Navegação global
 - `src/components/hometeste/HeaderNovo.tsx`: trocar `localized('/comunidade')` por `localized('/community')` e atualizar o array de paths usado no controle de tema/classe ativa.
