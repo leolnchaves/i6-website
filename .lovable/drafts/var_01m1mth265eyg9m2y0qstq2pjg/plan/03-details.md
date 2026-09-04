@@ -1,10 +1,24 @@
-## Detalhe técnico
+## Detalhes técnicos
 
-Em `src/components/i6-builders/BuilderModels.tsx`:
+### Arquivo
+`src/components/i6-builders/BuilderModels.tsx`
 
-- `measure()`: `y2` passa a ser igual a `y1` (centro vertical do item ativo), em vez de mirar o topo do painel. `x1` = borda direita do item, `x2` = borda esquerda do painel.
-- O `<path>` com curva Bézier vira `<line>` (ou path `M x1 y1 L x2 y1`), mantendo `stroke="hsl(var(--primary))"` e a mesma espessura.
-- `length` passa a ser `x2 - x1` (com a folga atual) para o traço animado `i6-draw` continuar correto.
-- `<circle cx={line.x2} cy={line.y1} r="3" />` mantido na ponta.
+### Mudanças no cabeçalho (linhas 96–100)
+1. Remover `max-w-3xl` do `<div>` que envolve o cabeçalho, permitindo que o texto ocupe a largura total do container da seção.
+2. No `<h2>`:
+   - Remover `truncate`.
+   - Manter `whitespace-nowrap`.
+   - Ajustar o tamanho da fonte para que caiba em uma linha (ex: `text-2xl md:text-3xl lg:text-[2.2rem]` ou `text-[clamp(1.5rem,3.5vw,2.2rem)]`).
+3. No segundo `<p>`:
+   - Remover `truncate`.
+   - Manter `whitespace-nowrap`.
+   - Reduzir o tamanho da fonte para `text-sm md:text-base` ou usar `clamp()` para escalar com a largura da tela.
 
-Sem alteração em `content.ts`, rota, SEO, formulário ou envio de leads.
+### Considerações
+- O texto não será alterado.
+- Em telas muito estreitas, `whitespace-nowrap` pode forçar overflow horizontal. A solução é a escala responsiva do tamanho da fonte (`clamp` ou breakpoints menores).
+- A seção abaixo (lista de famílias + painel) não será alterada.
+
+### Validação
+- `bun run build` e `tsgo` (ou `tsc --noEmit`) devem passar.
+- Screenshot da seção em `/pt/i6-builders` para confirmar que título e subtítulo aparecem completos em uma linha.
