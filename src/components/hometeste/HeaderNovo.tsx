@@ -259,9 +259,7 @@ const HeaderNovo = () => {
               onClick={() => setMenuOpen(false)}
               className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#F4845F]/50 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/15"
             >
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white">
-                <img src={getPublicAssetUrl('content/logos/i6-decision-symbol.png')} alt="" aria-hidden="true" className="h-3.5 w-auto" />
-              </span>
+              <img src={getPublicAssetUrl('content/logos/i6-decision-symbol.png')} alt="" aria-hidden="true" className="h-4 w-auto" />
 
               {t('header.suiteCta')}
             </a>
