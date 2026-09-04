@@ -12,6 +12,7 @@ export interface SuiteProduct {
   id: string;
   name: string;
   claim: string;
+  pain: string;
   headline: string;
   body: string;
   capabilities: string;
@@ -73,6 +74,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'discovery',
           name: 'Discovery',
           claim: 'Recomenda a próxima melhor opção para cada contexto',
+          pain: 'Sem isso: todo visitante e todo cliente recebem a mesma oferta, e mídia, CRM e catálogo viram desperdício.',
           headline: 'Recomendações que conectam intenção a resultado',
           body: 'Combina catálogo, comportamento e contexto para decidir o que recomendar em cada interação. As recomendações são consumidas pelos canais de execução, enquanto o produto acompanha cobertura, qualidade, resposta e oportunidades de melhoria.',
           capabilities:
@@ -87,6 +89,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'forecasting',
           name: 'Forecasting',
           claim: 'Prevê demanda na granularidade em que o negócio decide',
+          pain: 'Sem isso: a demanda é planejada por histórico e média, e a conta chega como ruptura ou excesso.',
           headline: 'Previsões que viram decisões de planejamento',
           body: 'Transforma histórico e sinais do negócio em previsões de demanda na granularidade necessária para planejar estoque, capacidade e metas. O produto acompanha a qualidade das previsões e evidencia onde a decisão precisa de atenção.',
           capabilities:
@@ -101,6 +104,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'assortment',
           name: 'Assortment',
           claim: 'Define o mix ideal por loja, canal ou contexto',
+          pain: 'Sem isso: o mix segue igual em lojas e canais que compram de formas completamente diferentes.',
           headline: 'O mix certo para cada contexto de demanda',
           body: 'Combina demanda, desempenho, estoque e restrições para recomendar o sortimento mais adequado por loja, canal ou contexto. Ajuda a decidir o que manter, incluir, retirar ou redistribuir.',
           capabilities: 'Desempenho · Demanda · Recomendação de mix · Restrições · Cobertura',
@@ -114,6 +118,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'sales-planning',
           name: 'Sales Planning',
           claim: 'Transforma potencial e previsão em metas e prioridades',
+          pain: 'Sem isso: metas e esforço comercial seguem o histórico, não o potencial real de cada carteira.',
           headline: 'Metas e prioridades comerciais baseadas em potencial',
           body: 'Conecta histórico, previsão e potencial comercial para distribuir metas e prioridades com mais precisão. O planejamento deixa de depender apenas do histórico e passa a refletir onde está a próxima oportunidade.',
           capabilities: 'Histórico comercial · Forecast · Potencial · Metas preditivas · Priorização',
@@ -127,6 +132,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'pricing',
           name: 'Pricing',
           claim: 'Recomenda preços para equilibrar demanda, receita e margem',
+          pain: 'Sem isso: preço é tabela e reação ao concorrente, não alavanca governada de margem, giro e conversão.',
           headline: 'Preço orientado por elasticidade, margem e demanda',
           body: 'Analisa a resposta histórica a preço, demanda, margem e contexto para recomendar preços dentro das regras do negócio. A decisão deixa de ser apenas reativa e passa a considerar impacto econômico esperado.',
           capabilities: 'Histórico de preços · Elasticidade · Margem · Guardrails · Recomendação',
@@ -140,6 +146,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'targeting',
           name: 'Targeting',
           claim: 'Prioriza quem tem maior propensão a responder',
+          pain: 'Sem isso: campanhas amplas e caras falam com quem nunca ia responder.',
           headline: 'Propensão para decidir quem ativar e quando',
           body: 'Transforma comportamento e histórico de resposta em scores de propensão para priorizar audiências antes da ativação. As decisões seguem para os canais de execução e retornam com os eventos de resposta para alimentar o próximo ciclo.',
           capabilities: 'Eventos · Propensão · Ranking de audiência · Integrações · Medição de resposta',
@@ -186,6 +193,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'discovery',
           name: 'Discovery',
           claim: 'Recommends the next best option for every context',
+          pain: 'Without it: every visitor and customer gets the same offer, and media, CRM and catalog turn into waste.',
           headline: 'Recommendations that connect intent to outcome',
           body: 'Combines catalog, behavior and context to decide what to recommend in every interaction. Recommendations are consumed by execution channels while the product tracks coverage, quality, response and improvement opportunities.',
           capabilities:
@@ -200,6 +208,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'forecasting',
           name: 'Forecasting',
           claim: 'Forecasts demand at the granularity the business decides on',
+          pain: 'Without it: demand is planned on history and averages, and the bill arrives as stockout or excess.',
           headline: 'Forecasts that become planning decisions',
           body: 'Turns history and business signals into demand forecasts at the granularity needed to plan inventory, capacity and targets. The product tracks forecast quality and highlights where a decision needs attention.',
           capabilities:
@@ -214,6 +223,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'assortment',
           name: 'Assortment',
           claim: 'Defines the ideal mix per store, channel or context',
+          pain: 'Without it: the mix stays the same across stores and channels that buy in completely different ways.',
           headline: 'The right mix for every demand context',
           body: 'Combines demand, performance, inventory and constraints to recommend the most suitable assortment per store, channel or context. It helps decide what to keep, add, remove or redistribute.',
           capabilities: 'Performance · Demand · Mix recommendation · Constraints · Coverage',
@@ -227,6 +237,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'sales-planning',
           name: 'Sales Planning',
           claim: 'Turns potential and forecast into targets and priorities',
+          pain: 'Without it: targets and sales effort follow history, not the real potential of each portfolio.',
           headline: 'Commercial targets and priorities based on potential',
           body: 'Connects history, forecast and commercial potential to distribute targets and priorities with more precision. Planning stops relying only on history and starts reflecting where the next opportunity is.',
           capabilities: 'Commercial history · Forecast · Potential · Predictive targets · Prioritization',
@@ -240,6 +251,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'pricing',
           name: 'Pricing',
           claim: 'Recommends prices balancing demand, revenue and margin',
+          pain: 'Without it: price is a table and a reaction to competitors, not a governed lever of margin, turnover and conversion.',
           headline: 'Pricing driven by elasticity, margin and demand',
           body: 'Analyzes historical price response, demand, margin and context to recommend prices within business rules. The decision stops being purely reactive and starts considering expected economic impact.',
           capabilities: 'Price history · Elasticity · Margin · Guardrails · Recommendation',
@@ -253,6 +265,7 @@ export const suiteCopy: Record<'pt' | 'en', SuiteCopy> = {
           id: 'targeting',
           name: 'Targeting',
           claim: 'Prioritizes who is most likely to respond',
+          pain: 'Without it: broad, expensive campaigns talk to people who were never going to respond.',
           headline: 'Propensity to decide who to activate and when',
           body: 'Turns behavior and response history into propensity scores to prioritize audiences before activation. Decisions flow to execution channels and return with response events to feed the next cycle.',
           capabilities: 'Events · Propensity · Audience ranking · Integrations · Response measurement',
