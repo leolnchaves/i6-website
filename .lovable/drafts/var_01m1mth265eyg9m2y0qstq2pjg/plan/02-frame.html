@@ -1,0 +1,32 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+  <style>
+    text { fill: hsl(var(--muted-foreground)); font-size: 12px }
+    .lbl { fill: hsl(var(--foreground)); font-size: 14px; font-weight: 480 }
+    .bx { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1 }
+    .zn { fill: none; stroke: hsl(var(--border)); stroke-width: 1; stroke-dasharray: 4 3 }
+  </style>
+
+  <text class="lbl" x="20" y="24">antes (altura oscila)</text>
+  <rect class="zn" x="20" y="34" width="240" height="230" rx="8"/>
+  <rect class="bx" x="36" y="48" width="208" height="34" rx="8"/>
+  <text x="46" y="69">card 1 encolhendo</text>
+  <rect class="bx" x="36" y="92" width="208" height="48" rx="8"/>
+  <text x="46" y="121">card 2</text>
+  <rect class="bx" x="36" y="150" width="208" height="48" rx="8"/>
+  <text x="46" y="179">card 3</text>
+  <rect class="bx" x="36" y="208" width="208" height="34" rx="8"/>
+  <text x="46" y="229">card 4 crescendo</text>
+
+  <text class="lbl" x="380" y="24">depois (frame fixo)</text>
+  <rect x="380" y="34" width="240" height="230" rx="8" fill="hsl(var(--muted))" stroke="hsl(var(--accent))"/>
+  <rect class="bx" x="396" y="52" width="208" height="56" rx="8" stroke-dasharray="4 3"/>
+  <text x="406" y="85">card de cima: fade out</text>
+  <rect class="bx" x="396" y="118" width="208" height="56" rx="8"/>
+  <text x="406" y="151">sobe para o topo</text>
+  <rect class="bx" x="396" y="184" width="208" height="56" rx="8"/>
+  <text x="406" y="217">novo card: fade in</text>
+
+  <circle cx="320" cy="150" r="10" fill="hsl(var(--accent))"/>
+  <text x="316" y="154" style="fill: hsl(var(--accent-foreground)); font-size: 11px">1</text>
+  <text x="20" y="288">1 · a altura do quadro deixa de depender da animação</text>
+</svg>
