@@ -220,7 +220,10 @@ const HeaderNovo = () => {
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-2 rounded-full border border-[#F4845F]/50 bg-white/5 pl-2 pr-4 py-1.5 text-xs font-semibold text-white whitespace-nowrap transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/15"
           >
-            <img src={suiteSymbol.url} alt="" aria-hidden="true" className="h-5 w-auto" />
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white">
+              <img src={suiteSymbol.url} alt="" aria-hidden="true" className="h-3.5 w-auto" />
+            </span>
+
             {t('header.suiteCta')}
           </a>
           <LanguageMenu />
@@ -262,7 +265,10 @@ const HeaderNovo = () => {
               onClick={() => setMenuOpen(false)}
               className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#F4845F]/50 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition-colors hover:border-[#F4845F] hover:bg-[#F4845F]/15"
             >
-              <img src={suiteSymbol.url} alt="" aria-hidden="true" className="h-5 w-auto" />
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                <img src={suiteSymbol.url} alt="" aria-hidden="true" className="h-3.5 w-auto" />
+              </span>
+
               {t('header.suiteCta')}
             </a>
           </li>
