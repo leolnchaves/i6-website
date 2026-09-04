@@ -85,7 +85,11 @@ const HeaderNovo = () => {
   // Páginas de tema claro (home e /i6-builders): o header precisa manter o
   // fundo navy sólido para os links brancos permanecerem legíveis.
   const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
-  const isLightPage = ['/', '/i6-builders', '/comunidade'].includes(normalizedPath);
+  const isLightPage =
+    ['/', '/i6-builders', '/comunidade'].includes(normalizedPath) ||
+    normalizedPath === '/docs' ||
+    normalizedPath.startsWith('/docs/');
+
 
 
   return (
