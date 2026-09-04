@@ -1,0 +1,33 @@
+<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+    .surface { fill: hsl(var(--muted)); }
+    .lbl { fill: hsl(var(--foreground)); font-family: var(--font-sans); font-size: 14px; font-weight: 600; }
+    .note { fill: hsl(var(--muted-foreground)); font-family: var(--font-sans); font-size: 12px; }
+    .acc { stroke: hsl(var(--primary)); stroke-width: 2; fill: none; }
+    .accf { fill: hsl(var(--primary)); }
+    .frame { stroke: hsl(var(--border)); stroke-width: 1; fill: none; stroke-dasharray: 4 3; }
+  </style>
+
+  <text x="30" y="26" class="lbl">Antes — recorte centralizado</text>
+  <rect x="30" y="40" width="200" height="130" class="surface" />
+  <rect x="30" y="40" width="200" height="130" class="frame" />
+  <circle cx="105" cy="66" r="14" fill="hsl(var(--muted-foreground))" />
+  <rect x="88" y="84" width="34" height="60" rx="12" fill="hsl(var(--muted-foreground))" />
+  <rect x="30" y="86" width="200" height="52" class="box" />
+  <text x="30" y="192" class="note">a faixa visível pega o corpo e corta a cabeça</text>
+
+  <line x1="256" y1="112" x2="330" y2="112" class="acc" />
+  <path d="M330,107 L340,112 L330,117 Z" class="accf" />
+
+  <text x="360" y="26" class="lbl">Depois — recorte deslocado para cima</text>
+  <rect x="360" y="40" width="200" height="130" class="surface" />
+  <rect x="360" y="40" width="200" height="130" class="frame" />
+  <circle cx="435" cy="66" r="14" class="accf" />
+  <rect x="418" y="84" width="34" height="60" rx="12" fill="hsl(var(--muted-foreground))" />
+  <rect x="360" y="48" width="200" height="52" class="acc" />
+  <text x="360" y="192" class="note">a faixa visível sobe e mantém o rosto inteiro</text>
+
+  <text x="30" y="230" class="lbl">Mantido sem alteração</text>
+  <text x="30" y="250" class="note">tamanho, cantos, inclinação, opacidade, borda e posição do bloco no mural</text>
+</svg>
