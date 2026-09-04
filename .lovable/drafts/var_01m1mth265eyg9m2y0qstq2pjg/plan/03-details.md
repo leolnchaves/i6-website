@@ -1,19 +1,12 @@
-## Cabeçalho e rodapé iguais ao resto do site
+## Comportamento
 
-O topo e o rodapé já são os mesmos do site inteiro; o que muda é o comportamento. Hoje o topo só fica com fundo escuro fixo na página inicial, e nas outras entra transparente — nesta página, sobre um fundo claro, isso o deixa com aparência diferente.
-
-- O topo passa a entrar já com o fundo escuro nesta página, exatamente como na inicial.
-- O fim da página vira um bloco escuro que emenda no rodapé, eliminando o corte seco entre o claro e o escuro.
-
-## Identidade visual
-
-Mesma paleta e mesmas fontes da página inicial: areia, grafite quente, um único acento terracota por seção. Sem sombras fortes, sem gradientes novos, sem animação chamativa — só entradas suaves ao rolar e o deslizar do carrossel.
+- Clique (e teclado: Enter/Espaço, setas) troca a família ativa; a família ativa fica marcada com filete terracota e texto em destaque.
+- A linha de conexão é desenhada em SVG entre a família ativa e a borda do quadro, com animação curta de traço (`stroke-dashoffset`) — sutil, sem exagero, respeitando redução de movimento.
+- O conteúdo do quadro entra com fade e leve deslocamento vertical.
 
 ## Detalhes técnicos
 
-- Reescrever os componentes de seção em `src/components/i6-builders/` com a nova forma; a página completa continua em `src/pages/I6Builders.tsx`, seguindo o padrão do resto do site.
-- `src/data/i6Builders/content.ts` e `placeholders.ts` permanecem intactos; apenas ganhando os campos de texto que as novas formas exigirem (rótulos do percurso, trecho de código da abertura), sempre nos três idiomas.
-- `HeaderNovo.tsx`: incluir a rota `i6-builders` na condição que aplica fundo sólido, com uma regra baseada em página de tema claro em vez de uma lista fixa de caminhos.
-- `I6Builders.tsx`: envolver fecho e formulário numa faixa escura para a transição até o rodapé.
-- Sem mudança de rota, SEO, formulário de captura ou envio de leads.
-- Verificação: build, checagem de tipos e capturas de tela em `/pt`, `/en` e `/es`, além de largura de celular.
+- `src/components/i6-builders/BuilderModels.tsx`: reescrever como grid de duas colunas (`md:grid-cols-[minmax(0,340px)_1fr]`), com `useState` para o índice ativo, `role="tablist"`/`role="tabpanel"` e `aria-selected`. Overlay SVG absoluto na área da seção para a linha, escondido abaixo de `md`. Tokens do `theme-sand` já existentes (`text-primary`, `border-border`, `sand-card`), sem cores literais.
+- `src/data/i6Builders/content.ts`: cada item de `models.cards` ganha `long` (parágrafo), `outputs` (lista de tipos de saída) e `engines` (etiquetas), nos três idiomas. Nada mais na seção muda; `placeholders.ts` intacto.
+- Sem mudança de rota, SEO, formulário ou envio de leads.
+- Verificação: build, checagem de tipos e capturas em `/pt`, `/en`, `/es` e em largura de celular, com troca de família.
