@@ -78,6 +78,10 @@ const ProductSuite = () => {
             {active.body}
           </p>
 
+          <p className="mt-4 border-l-2 border-primary/40 pl-4 text-sm leading-relaxed text-foreground/80">
+            {active.pain}
+          </p>
+
           <p className="mt-6 text-xs leading-relaxed text-muted-foreground/90 border-t border-border pt-5">
             {active.capabilities}
           </p>

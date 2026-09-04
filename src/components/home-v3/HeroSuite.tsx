@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, TrendingUp, AlertTriangle, Target } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 const copyByLang = {
   pt: {
@@ -10,7 +11,7 @@ const copyByLang = {
     titleB: 'preditiva mais avançada',
     titleC: 'da América Latina',
     sub: 'Não é dashboard. Não é relatório. É a decisão pronta, antes do concorrente perceber o movimento.',
-    ctaPrimary: 'Ver as soluções',
+    ctaPrimary: 'Conheça o i6 Decision Suite',
     ctaSecondary: 'Falar com especialista',
     proof: ['Motores proprietários', 'Explicabilidade nativa (XAI)', 'Deploy no seu ecossistema'],
     panelTitle: 'Próxima melhor decisão',
@@ -27,7 +28,7 @@ const copyByLang = {
     titleB: 'predictive decision',
     titleC: 'platform in Latin America',
     sub: 'Not a dashboard. Not a report. The decision, ready before your competitor notices the move.',
-    ctaPrimary: 'Explore solutions',
+    ctaPrimary: 'Explore the i6 Decision Suite',
     ctaSecondary: 'Talk to an expert',
     proof: ['Proprietary engines', 'Native explainability (XAI)', 'Deployed in your ecosystem'],
     panelTitle: 'Next best decision',
@@ -87,13 +88,15 @@ const HeroSuite = () => {
             </p>
 
             <div className="animate-sand-rise mt-9 flex flex-wrap gap-3" style={{ animationDelay: '.24s' }}>
-              <Link
-                to={localized('/solutions')}
+              <a
+                href={SUITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
               >
                 {copy.ctaPrimary}
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Link>
+              </a>
               <Link
                 to={localized('/contact')}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 hover:shadow-[var(--sand-shadow-soft)] transition-all"
