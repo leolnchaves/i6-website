@@ -20,14 +20,18 @@ const I6Builders = () => (
       <BuilderAccelerators />
       <BuilderPersona />
       <BuilderCases />
-      <BuilderFinalCTA />
 
-      {/* Captura de lead: reutiliza o formulário existente (planilha + sync i6 HUB) */}
-      <section id="fale-com-o-time" className="container mx-auto px-6 pb-24 scroll-mt-28">
-        <div className="max-w-4xl mx-auto">
-          <ContactForm leadSource="i6-builders" />
-        </div>
-      </section>
+      {/* Fecho escuro: emenda direto no rodapé, sem corte seco */}
+      <div className="bg-[#0B1224]">
+        <BuilderFinalCTA />
+
+        {/* Captura de lead: reutiliza o formulário existente (planilha + sync i6 HUB) */}
+        <section id="fale-com-o-time" className="container mx-auto px-6 pb-24 scroll-mt-28">
+          <div className="max-w-4xl mx-auto">
+            <ContactForm leadSource="i6-builders" />
+          </div>
+        </section>
+      </div>
     </div>
   </>
 );
