@@ -82,9 +82,11 @@ const HeaderNovo = () => {
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 
 
-  // A home usa a identidade clara (theme-sand): o header precisa manter o
+  // Páginas de tema claro (home e /i6-builders): o header precisa manter o
   // fundo navy sólido para os links brancos permanecerem legíveis.
-  const isLightPage = ['/', '/pt', '/pt/', '/en', '/en/', '/es', '/es/'].includes(location.pathname);
+  const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
+  const isLightPage = ['/', '/i6-builders'].includes(normalizedPath);
+
 
   return (
     <>
