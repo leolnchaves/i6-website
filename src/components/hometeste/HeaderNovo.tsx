@@ -161,6 +161,53 @@ const HeaderNovo = () => {
             )}
           </li>
 
+          {/* Development Partners dropdown */}
+          <li ref={partnersRef} className="relative">
+            <button
+              onClick={() => setPartnersOpen((v) => !v)}
+              className="inline-flex items-center gap-1 text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
+              aria-expanded={partnersOpen}
+              aria-haspopup="true"
+            >
+              {t('header.partners')}
+              <ChevronDown size={14} className={`transition-transform ${partnersOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {partnersOpen && (
+              <ul className="absolute left-0 top-full mt-2 w-max rounded-lg border border-white/10 bg-[#0B1224]/95 backdrop-blur-md shadow-xl py-2">
+                {partnersMenu.map((sl, i) => (
+                  <li key={sl.to ?? `partner-${i}`}>
+                    {sl.comingSoon || !sl.to ? (
+                      <span className="flex items-center gap-2 px-4 py-2 text-sm text-white/40 whitespace-nowrap cursor-not-allowed">
+                        {sl.label}
+                        <span className="text-[10px] uppercase tracking-wider bg-white/10 text-white/60 px-1.5 py-0.5 rounded">
+                          {t('header.research.comingSoon')}
+                        </span>
+                      </span>
+                    ) : (
+                      <Link
+                        to={sl.to}
+                        className="block px-4 py-2 text-sm text-white/80 hover:text-[#F4845F] hover:bg-white/5 transition-colors whitespace-nowrap"
+                      >
+                        {sl.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          {rightLinks.map((l) => (
+            <li key={l.to}>
+              <Link
+                to={l.to}
+                className="text-sm font-medium text-white/80 hover:text-[#F4845F] transition-colors"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+
           <li>
             <Link
               to={contactLink.to}
