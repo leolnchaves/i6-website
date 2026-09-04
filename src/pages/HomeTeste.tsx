@@ -1,4 +1,5 @@
 import SEOHead from '@/components/common/SEOHead';
+import HeroSuite from '@/components/home-v3/HeroSuite';
 import ClientProof from '@/components/home-v3/ClientProof';
 import SuiteIntro from '@/components/home-v3/product/SuiteIntro';
 import ProductSuite from '@/components/home-v3/product/ProductSuite';
