@@ -3,7 +3,7 @@
  * Linguagem agnóstica de segmento, sem menção a produtos comerciais.
  */
 
-export const DOCS_PATH = '/documentacao';
+export const DOCS_PATH = '/docs';
 export const COMMUNITY_PATH = '/comunidade';
 export const CONTACT_ANCHOR = '#fale-com-o-time';
 
