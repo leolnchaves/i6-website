@@ -13,6 +13,14 @@ import { useRevealOnScroll, revealClass } from '@/hooks/useRevealOnScroll';
  *        sem rotação, sem margem negativa e sem sobreposição. A seção usa
  *        overflow-hidden, então nada vaza pela borda nem gera scroll lateral.
  */
+/**
+ * Imagem de cada slot que exibe foto (índices 1, 4 e 7). Mapa explícito para
+ * que cada bloco tenha foto própria — o slot 4 usa a foto do time (m5).
+ */
+const SLOT_IMAGE: Record<number, string> = { 1: 'm2', 4: 'm5', 7: 'm4' };
+const imageForSlot = (i: number) =>
+  MURAL_IMAGES.find((m) => m.id === SLOT_IMAGE[i]) ?? MURAL_IMAGES[i % MURAL_IMAGES.length];
+
 const CommunityMural = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, communityCopy).mural;
