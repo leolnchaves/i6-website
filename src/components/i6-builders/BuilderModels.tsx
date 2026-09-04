@@ -44,11 +44,12 @@ const BuilderModels = () => {
     const w = wrap.getBoundingClientRect();
     const i = item.getBoundingClientRect();
     const p = panel.getBoundingClientRect();
+    const y = i.top + i.height / 2 - w.top;
     setLine({
       x1: i.right - w.left,
-      y1: i.top + i.height / 2 - w.top,
+      y1: y,
       x2: p.left - w.left,
-      y2: p.top + Math.min(56, p.height / 2) - w.top,
+      y2: y,
     });
   }, [active]);
 
@@ -88,7 +89,7 @@ const BuilderModels = () => {
   };
 
   const current = cards[active];
-  const length = line ? Math.hypot(line.x2 - line.x1, line.y2 - line.y1) + 40 : 0;
+  const length = line ? line.x2 - line.x1 + 40 : 0;
 
   return (
     <section className="container mx-auto px-6 py-16 md:py-24">
@@ -105,10 +106,12 @@ const BuilderModels = () => {
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 hidden md:block h-full w-full overflow-visible"
           >
-            <path
+            <line
               key={`${active}-${language}`}
-              d={`M ${line.x1} ${line.y1} C ${line.x1 + 60} ${line.y1}, ${line.x2 - 60} ${line.y2}, ${line.x2} ${line.y2}`}
-              fill="none"
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y1}
               stroke="hsl(var(--primary))"
               strokeWidth="1.25"
               strokeDasharray={reduced ? undefined : length}
@@ -118,9 +121,8 @@ const BuilderModels = () => {
                   ? undefined
                   : ({ animation: 'i6-draw 520ms ease-out both', '--i6-len': `${length}` } as React.CSSProperties)
               }
-
             />
-            <circle cx={line.x2} cy={line.y2} r="3" fill="hsl(var(--primary))" />
+            <circle cx={line.x2} cy={line.y1} r="3" fill="hsl(var(--primary))" />
           </svg>
         )}
         <style>{'@keyframes i6-draw{from{stroke-dashoffset:var(--i6-len,600)}to{stroke-dashoffset:0}}'}</style>

@@ -12,12 +12,12 @@ const BuilderWhat = () => {
 
   return (
     <section className="container mx-auto px-6 py-16 md:py-24">
-      <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16">
+      <div className="grid items-start lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">{copy.eyebrow}</p>
           <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground">{copy.title}</h2>
         </div>
-        <div className="max-w-2xl">
+        <div className="max-w-2xl lg:pt-[1.75rem]">
           {copy.body.map((p) => (
             <p key={p} className="mb-5 text-base md:text-lg text-muted-foreground leading-relaxed last:mb-0">
               {p}
