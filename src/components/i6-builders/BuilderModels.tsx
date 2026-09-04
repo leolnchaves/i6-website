@@ -113,7 +113,12 @@ const BuilderModels = () => {
               strokeWidth="1.25"
               strokeDasharray={reduced ? undefined : length}
               strokeDashoffset={reduced ? undefined : 0}
-              style={reduced ? undefined : { animation: 'i6-draw 520ms ease-out both' }}
+              style={
+                reduced
+                  ? undefined
+                  : ({ animation: 'i6-draw 520ms ease-out both', '--i6-len': `${length}` } as React.CSSProperties)
+              }
+
             />
             <circle cx={line.x2} cy={line.y2} r="3" fill="hsl(var(--primary))" />
           </svg>
