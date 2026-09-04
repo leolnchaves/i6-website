@@ -59,6 +59,16 @@ const CommunityMural = () => {
                   </p>
                   <span aria-hidden className="mt-3 block h-px w-16 bg-primary/50" />
                   <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">{a.note}</p>
+                  {i === 0 && (
+                    <img
+                      src={MURAL_IMAGES[0].src}
+                      alt=""
+                      aria-hidden
+                      loading="lazy"
+                      className="mt-8 ml-14 h-52 w-[80%] max-w-md rounded-[1.75rem] object-cover opacity-75 ring-1 ring-border"
+                      style={{ transform: `rotate(${MURAL_IMAGES[0].tilt}deg)` }}
+                    />
+                  )}
                 </div>
               </div>
             );
