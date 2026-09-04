@@ -30,7 +30,7 @@ const DocsShell = ({ sections, current, prev, next, copy, localized }: DocsShell
   useEffect(() => setPanelOpen(false), [current.slug]);
 
   return (
-    <div className="container mx-auto px-6 py-10 md:py-14">
+    <div className="container mx-auto px-6 pt-28 pb-14 md:pt-32 md:pb-20">
       <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[240px_minmax(0,1fr)_220px] xl:gap-14">
         {/* Menu — sticky on desktop */}
         <div className="hidden lg:block">
