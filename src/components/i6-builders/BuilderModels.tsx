@@ -1,10 +1,10 @@
-import { TrendingUp, Sparkles, Tag } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang } from '@/utils/localizedPath';
 import { builderCopy } from '@/data/i6Builders/content';
 
-const icons = [TrendingUp, Sparkles, Tag];
-
+/**
+ * Colunas editoriais numeradas, separadas apenas por filete vertical.
+ */
 const BuilderModels = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, builderCopy).models;
@@ -17,19 +17,17 @@ const BuilderModels = () => {
         <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{copy.intro}</p>
       </div>
 
-      <div className="mt-12 grid md:grid-cols-3 gap-5">
-        {copy.cards.map((card, i) => {
-          const Icon = icons[i] ?? TrendingUp;
-          return (
-            <article key={card.name} className="sand-card sand-card-hover p-6 md:p-7">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-[calc(var(--radius)-6px)] bg-accent text-primary mb-5">
-                <Icon size={18} />
-              </span>
-              <h3 className="text-base font-semibold text-foreground mb-2 leading-snug">{card.name}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
-            </article>
-          );
-        })}
+      <div className="mt-14 grid md:grid-cols-3 md:divide-x divide-border">
+        {copy.cards.map((card, i) => (
+          <div
+            key={card.name}
+            className="border-t border-border pt-6 pb-8 md:border-t-0 md:pt-0 md:pb-0 md:px-8 md:first:pl-0 md:last:pr-0"
+          >
+            <span className="font-mono text-xs text-primary">{String(i + 1).padStart(2, '0')}</span>
+            <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground leading-snug">{card.name}</h3>
+            <p className="mt-3 text-sm md:text-[15px] text-muted-foreground leading-relaxed">{card.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
