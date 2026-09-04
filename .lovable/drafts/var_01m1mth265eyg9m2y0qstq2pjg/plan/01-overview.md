@@ -1,7 +1,11 @@
-# Traço de conexão sempre reto
+# Ajuste no cabeçalho de Famílias de Modelagem
 
-Hoje o traço que liga a família escolhida ao quadro de detalhes é uma curva, porque ele sai do meio do item da esquerda e sobe até o topo do quadro.
+## Contexto
+Na seção `BuilderModels` de `/i6-builders`, o título e o subtítulo do cabeçalho estão com `truncate`, o que corta o texto com reticências. O usuário pediu para manter cada um em uma única linha, mas **sem truncar**.
 
-A mudança: o traço passa a ser uma linha reta horizontal, saindo do meio do item selecionado da esquerda e chegando na borda do quadro da direita, na mesma altura. Mesma cor terracota de hoje e o mesmo pontinho (círculo) na ponta final.
+## Objetivo
+Fazer com que o eyebrow, o título e o subtítulo do cabeçalho fiquem em uma linha cada, sem corte de texto, ajustando apenas o posicionamento/tipografia — sem alterar o conteúdo dos textos.
 
-Nada mais muda: continua aparecendo só no desktop, continua recalculando quando a tela muda de tamanho, quando troca de família ou de idioma, e continua sem animação para quem prefere menos movimento.
+## Escopo
+- Apenas `src/components/i6-builders/BuilderModels.tsx`.
+- Nenhuma mudança de rota, SEO, formulário ou conteúdo textual.
