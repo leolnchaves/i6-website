@@ -88,7 +88,7 @@ const HeaderNovo = () => {
 
   // A home usa a identidade clara (theme-sand): o header precisa manter o
   // fundo navy sólido para os links brancos permanecerem legíveis.
-  const isLightPage = ['/', '/pt', '/pt/', '/en', '/en/'].includes(location.pathname);
+  const isLightPage = ['/', '/pt', '/pt/', '/en', '/en/', '/es', '/es/'].includes(location.pathname);
 
   return (
     <>
