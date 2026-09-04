@@ -13,7 +13,6 @@ export const communityCopy = {
   pt: {
     opening: {
       eyebrow: 'comunidade infinity6',
-      tag: 'para quem constrói',
       titleTop: 'O lugar de',
       titleAccent: 'quem constrói',
       titleBottom: 'decisão com dados',
@@ -71,7 +70,6 @@ export const communityCopy = {
   en: {
     opening: {
       eyebrow: 'infinity6 community',
-      tag: 'for people who build',
       titleTop: 'The home of',
       titleAccent: 'those who build',
       titleBottom: 'decisions with data',
@@ -129,7 +127,6 @@ export const communityCopy = {
   es: {
     opening: {
       eyebrow: 'comunidad infinity6',
-      tag: 'para quien construye',
       titleTop: 'El lugar de',
       titleAccent: 'quien construye',
       titleBottom: 'decisión con datos',
