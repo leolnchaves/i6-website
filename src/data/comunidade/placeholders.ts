@@ -37,6 +37,8 @@ export const MURAL_IMAGES: MuralImage[] = [
   { id: 'm2', src: getPublicAssetUrl('/images/comunidade/mural-recommendation.jpg'), tilt: 2, ratio: 'wide', offset: 'down' },
   { id: 'm3', src: PLACEHOLDER, tilt: -1, ratio: 'square', offset: 'up' },
   { id: 'm4', src: getPublicAssetUrl('/images/comunidade/mural-whiteboard.jpg'), tilt: 3, ratio: 'tall', offset: 'down' },
+  // Foto do time: recorte deslocado para cima para os rostos ficarem inteiros.
+  { id: 'm5', src: getPublicAssetUrl('/images/comunidade/mural-team.jpg'), tilt: -2, ratio: 'wide', offset: 'none', objectPosition: 'center 22%' },
 ];
 
 /**
