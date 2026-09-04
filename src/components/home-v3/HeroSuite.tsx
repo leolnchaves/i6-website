@@ -85,6 +85,31 @@ const HeroSuite = () => {
   const localized = useLocalizedPath();
   const copy = copyByLang[language === 'pt' ? 'pt' : 'en'];
 
+  const items = copy.decisions;
+  const [cursor, setCursor] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => setCursor((c) => c + 1), 4200);
+    return () => clearInterval(timer);
+  }, [paused, items.length]);
+
+  const slots: { key: string; item: typeof items[number]; role: 'out' | 'stay' | 'in' }[] = [];
+  if (cursor > 0) {
+    slots.push({ key: `out-${cursor - 1}`, item: items[(cursor - 1) % items.length], role: 'out' });
+  }
+  for (let k = 0; k < 3; k++) {
+    const abs = cursor + k;
+    slots.push({
+      key: `d-${abs}`,
+      item: items[abs % items.length],
+      role: k === 2 && cursor > 0 ? 'in' : 'stay',
+    });
+  }
+
+
+
   return (
     <section className="relative overflow-hidden">
       <div aria-hidden className="absolute inset-0 sand-glow" />
