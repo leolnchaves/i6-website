@@ -87,10 +87,11 @@ const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) =>
             );
           },
           pre: ({ children }) => (
-            <pre className="mb-6 overflow-x-auto rounded-xl border border-border bg-secondary/70 p-4">
+            <DocsCodeBlock copyLabel={copyLabel} copiedLabel={copiedLabel}>
               {children}
-            </pre>
+            </DocsCodeBlock>
           ),
+
           table: ({ children }) => (
             <div className="mb-6 overflow-x-auto rounded-xl border border-border">
               <table className="w-full border-collapse text-sm">{children}</table>

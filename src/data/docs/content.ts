@@ -13,7 +13,13 @@ export interface DocsUiCopy {
   updatedAt: string;
   sampleNotice: string;
   empty: string;
+  copyCode: string;
+  copiedCode: string;
+  playVideo: string;
+  downloadLabel: string;
+  downloadAction: string;
 }
+
 
 /** UI chrome for the documentation area. Page content itself comes from the i6 HUB. */
 export const docsUi: Record<Language, DocsUiCopy> = {
