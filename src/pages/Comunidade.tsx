@@ -17,22 +17,19 @@ const Comunidade = () => (
       <CommunityEvents />
       <CommunityBelonging />
 
-      {/* Fecho escuro: emenda direto no rodapé, sem corte seco */}
-      <div className="bg-[#0B1224]">
-        <CommunityFinalCTA />
-      </div>
-
-      {/* Transição suave do fecho escuro para a faixa areia */}
-      <div aria-hidden className="h-16 bg-gradient-to-b from-[#0B1224] to-background" />
-
-      {/* Captura de lead: mesmo formulário do site (planilha + sync i6 HUB) */}
-      <section id="fale-com-a-comunidade" className="bg-background pb-24 scroll-mt-28">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <ContactForm leadSource="i6-community" variant="community" />
+      {/* Fecho + captura de lead numa única faixa areia */}
+      <section id="fale-com-a-comunidade" className="container mx-auto px-6 pb-24 pt-8 scroll-mt-28">
+        <div className="relative overflow-hidden rounded-[calc(var(--radius)+8px)] border border-primary/25 bg-accent px-6 py-14 md:px-14 md:py-16">
+          <div aria-hidden className="absolute inset-0 sand-glow" />
+          <div className="relative max-w-4xl mx-auto">
+            <CommunityFinalCTA />
+            <div className="mt-12">
+              <ContactForm leadSource="i6-community" variant="community" />
+            </div>
           </div>
         </div>
       </section>
+
 
     </div>
   </>
