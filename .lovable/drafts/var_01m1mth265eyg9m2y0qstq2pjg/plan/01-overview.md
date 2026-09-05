@@ -9,4 +9,11 @@ Mesma linguagem editorial de /i6-builders (areia, grafite quente, terracota, tip
 
 O formulário continua exatamente o mesmo por trás: mesmo envio, mesmos dados, mesma proteção anti-robô. Muda só a aparência e o campo Assunto, que passa a oferecer quatro opções fixas: Vendas — i6 Decision Suite, Parcerias, Imprensa, Outro.
 
-Uma observação honesta: procurei a pendência marcada como "TODO" no formulário e ela não existe mais no código — os textos do formulário de contato já estão escritos em português, inglês e espanhol. O que realmente falta traduzir é o texto novo desta página (abertura, triagem, opções de assunto, perguntas frequentes, legenda do mapa), e isso entra nos três idiomas.
+Ajustes finais já incorporados:
+
+- **E-mail direto**: logo abaixo do cartão do formulário, uma linha simples "Prefere e-mail direto? suporte@infinity6.ai", só texto clicável, sem trazer de volta a faixa de contato antiga.
+- **Mapa redesenhado**: sai a imagem de mapa-múndi antiga e entra um desenho próprio, suave e fluido, na mesma linguagem do resto do site — ondas leves, um ponto pulsante em Campinas com endereço e e-mail, e traços delicados indicando os próximos destinos, sem afirmar escritórios que não existem.
+- **Textos finais** de abertura, triagem, assunto, 13 perguntas e legenda do mapa nos três idiomas, exatamente como enviados.
+
+Sobre a pendência do formulário: verifiquei o código e não há mais nenhum trecho que force o português na versão usada em /contact — os textos seguem o idioma da página, com o português apenas como último recurso quando o idioma não existe. Vou confirmar isso com o trecho exato no relatório final.
+
