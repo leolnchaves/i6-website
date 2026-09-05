@@ -334,15 +334,17 @@ const ContactForm = memo(({
               <Label htmlFor="message" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-1'}`}>
                 {text.message} * <span className="text-white/40 font-normal">{text.messageMinChar}</span>
               </Label>
-              <p
-                id="message-description"
-                className={`text-white/60 leading-relaxed ${compact ? 'text-[11px] mb-2' : 'text-sm mb-3'}`}
-              >
-                {messageDescription}
-              </p>
+              {messageDescription && (
+                <p
+                  id="message-description"
+                  className={`text-white/60 leading-relaxed ${compact ? 'text-[11px] mb-2' : 'text-sm mb-3'}`}
+                >
+                  {messageDescription}
+                </p>
+              )}
               <Textarea
                 id="message"
-                aria-describedby="message-description"
+                aria-describedby={messageDescription ? "message-description" : undefined}
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
                 className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none ${
