@@ -240,10 +240,10 @@ const ContactForm = memo(({
   const text = useMemo(() => content[language] ?? content.pt, [content, language]);
 
   const emailLabel = variant === 'community' ? text.emailSimple : text.email;
-  const messagePlaceholder =
-    variant === 'community' ? text.messageCommunity
-    : variant === 'builders' ? text.messageBuilders
-    : text.messagePlaceholder;
+  const messageDescription =
+    variant === 'community' ? text.messageDescriptionCommunity
+    : variant === 'builders' ? text.messageDescriptionBuilders
+    : text.messageDescriptionDefault;
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
