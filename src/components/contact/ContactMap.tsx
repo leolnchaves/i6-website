@@ -2,13 +2,28 @@ import { MapPin, Mail } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang } from '@/utils/localizedPath';
 import { contactCopy, CONTACT_EMAIL } from '@/data/contact/content';
+import worldMapImage from '@/assets/images/world-map.png';
+
+/** Posição de Campinas (lon -47.06 / lat -22.9) sobre a projeção da silhueta. */
+const CAMPINAS = { x: 36.9, y: 74 };
+
+const maskStyle: React.CSSProperties = {
+  WebkitMaskImage: `url(${worldMapImage})`,
+  maskImage: `url(${worldMapImage})`,
+  WebkitMaskSize: 'contain',
+  maskSize: 'contain',
+  WebkitMaskRepeat: 'no-repeat',
+  maskRepeat: 'no-repeat',
+  WebkitMaskPosition: 'center',
+  maskPosition: 'center',
+};
 
 /**
- * Presença da infinity6 em desenho próprio: ondas suaves, anéis difusos
- * e um ponto pulsante na sede. Os traços de expansão são puramente
- * decorativos — não apontam para nenhum país ou região real.
+ * Presença da infinity6 sobre um mapa-múndi real: silhueta discreta
+ * recolorida pelos tokens do tema areia e um ponto terracota na sede.
  */
 const ContactMap = () => {
+
   const { language } = useLanguage();
   const copy = pickLang(language, contactCopy).map;
 
