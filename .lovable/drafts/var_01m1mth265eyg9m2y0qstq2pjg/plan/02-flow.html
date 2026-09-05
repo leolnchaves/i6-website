@@ -1,35 +1,57 @@
-<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
+  <style>
+    text { font-family: inherit; }
+    .label { font-size: 12px; fill: hsl(var(--muted-foreground)); }
+    .box-label { font-size: 13px; fill: hsl(var(--foreground)); }
+    .accent-label { font-size: 13px; fill: hsl(var(--accent-foreground)); font-weight: 600; }
+    .box { stroke: hsl(var(--border)); fill: hsl(var(--card)); rx: 8; }
+    .accent { stroke: hsl(var(--accent)); fill: hsl(var(--accent)); rx: 8; }
+    .muted { stroke: hsl(var(--muted)); fill: hsl(var(--muted)); rx: 8; }
+    .wire { stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+  </style>
+
+  <!-- default -->
+  <rect x="40" y="40" width="170" height="220" class="box" />
+  <text x="125" y="68" text-anchor="middle" class="box-label">/contact (default)</text>
+  <rect x="60" y="90" width="130" height="24" class="muted" />
+  <text x="125" y="106" text-anchor="middle" class="label">Label: Mensagem</text>
+  <rect x="60" y="124" width="130" height="40" class="accent" />
+  <text x="125" y="142" text-anchor="middle" class="accent-label">Descrição fixa</text>
+  <text x="125" y="158" text-anchor="middle" class="accent-label">mantida</text>
+  <rect x="60" y="178" width="130" height="56" class="muted" />
+  <text x="125" y="200" text-anchor="middle" class="label">Textarea</text>
+  <text x="125" y="216" text-anchor="middle" class="label">placeholder curto</text>
+
+  <!-- builders -->
+  <rect x="235" y="40" width="170" height="220" class="box" />
+  <text x="320" y="68" text-anchor="middle" class="box-label">/i6-builders</text>
+  <rect x="255" y="90" width="130" height="24" class="muted" />
+  <text x="320" y="106" text-anchor="middle" class="label">Label: Mensagem</text>
+  <rect x="255" y="124" width="130" height="40" class="accent" />
+  <text x="320" y="142" text-anchor="middle" class="accent-label">Descrição fixa</text>
+  <text x="320" y="158" text-anchor="middle" class="accent-label">mantida</text>
+  <rect x="255" y="178" width="130" height="56" class="muted" />
+  <text x="320" y="200" text-anchor="middle" class="label">Textarea</label>
+  <text x="320" y="216" text-anchor="middle" class="label">placeholder curto</text>
+
+  <!-- community -->
+  <rect x="430" y="40" width="170" height="220" class="box" />
+  <text x="515" y="68" text-anchor="middle" class="box-label">/community</text>
+  <rect x="450" y="90" width="130" height="24" class="muted" />
+  <text x="515" y="106" text-anchor="middle" class="label">Label: Mensagem</text>
+  <rect x="450" y="124" width="130" height="40" class="muted" stroke-dasharray="4 3" />
+  <text x="515" y="148" text-anchor="middle" class="label" style="font-style: italic;">sem descrição</text>
+  <rect x="450" y="178" width="130" height="56" class="muted" />
+  <text x="515" y="200" text-anchor="middle" class="label">Textarea</text>
+  <text x="515" y="216" text-anchor="middle" class="label">placeholder curto</text>
+
+  <!-- arrows -->
+  <line x1="210" y1="150" x2="235" y2="150" class="wire" marker-end="url(#arrow)" />
+  <line x1="405" y1="150" x2="430" y2="150" class="wire" marker-end="url(#arrow)" />
+
   <defs>
-    <marker id="ch" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M1 1 L6 4 L1 7" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="hsl(var(--muted-foreground))" />
     </marker>
   </defs>
-  <rect x="12" y="30" width="150" height="54" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="87" y="53" text-anchor="middle" fill="hsl(var(--foreground))" style="font-size:14px;font-weight:480">campo de busca</text>
-  <text x="87" y="70" text-anchor="middle" fill="hsl(var(--muted-foreground))" style="font-size:12px">"frame"</text>
-
-  <rect x="205" y="14" width="180" height="40" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="295" y="39" text-anchor="middle" fill="hsl(var(--foreground))" style="font-size:14px">título</text>
-  <rect x="205" y="66" width="180" height="40" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="295" y="91" text-anchor="middle" fill="hsl(var(--foreground))" style="font-size:14px">descrição</text>
-  <rect x="205" y="118" width="180" height="40" rx="8" fill="hsl(var(--accent))" stroke="hsl(var(--muted-foreground))"/>
-  <text x="295" y="143" text-anchor="middle" fill="hsl(var(--accent-foreground))" style="font-size:14px;font-weight:480">texto da página (novo)</text>
-
-  <line x1="162" y1="57" x2="200" y2="34" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
-  <line x1="162" y1="57" x2="200" y2="86" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
-  <line x1="162" y1="57" x2="200" y2="138" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
-
-  <rect x="430" y="40" width="198" height="118" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="529" y="64" text-anchor="middle" fill="hsl(var(--foreground))" style="font-size:14px;font-weight:480">resultados</text>
-  <rect x="450" y="78" width="120" height="8" rx="4" fill="hsl(var(--border))"/>
-  <rect x="450" y="94" width="158" height="8" rx="4" fill="hsl(var(--border))"/>
-  <rect x="450" y="112" width="100" height="8" rx="4" fill="hsl(var(--border))"/>
-  <rect x="450" y="128" width="140" height="8" rx="4" fill="hsl(var(--border))"/>
-  <text x="529" y="182" text-anchor="middle" fill="hsl(var(--muted-foreground))" style="font-size:12px">título + trecho com o termo destacado</text>
-
-  <line x1="385" y1="99" x2="425" y2="99" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
-
-  <circle cx="24" cy="216" r="10" fill="hsl(var(--accent))"/>
-  <text x="24" y="220" text-anchor="middle" fill="hsl(var(--accent-foreground))" style="font-size:12px">1</text>
-  <text x="44" y="220" fill="hsl(var(--muted-foreground))" style="font-size:12px">campo vazio devolve o menu normal de seções e páginas</text>
 </svg>
