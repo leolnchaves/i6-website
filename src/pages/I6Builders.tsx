@@ -28,7 +28,7 @@ const I6Builders = () => (
         {/* Captura de lead: reutiliza o formulário existente (planilha + sync i6 HUB) */}
         <section id="fale-com-o-time" className="container mx-auto px-6 pb-24 scroll-mt-28">
           <div className="max-w-4xl mx-auto">
-            <ContactForm leadSource="i6-builders" />
+            <ContactForm leadSource="i6-builders" variant="builders" />
           </div>
         </section>
       </div>

@@ -50,7 +50,7 @@ export type LeadSource =
   | 'go-landing'
   | 'kiosk-demo'
   | 'i6-builders'
-  | 'i6-comunidade';
+  | 'i6-community';
 
 
 export const LEAD_SOURCE_MAX_LEN = 50;

@@ -24,7 +24,7 @@ const Comunidade = () => (
         {/* Captura de lead: mesmo formulário do site (planilha + sync i6 HUB) */}
         <section id="fale-com-a-comunidade" className="container mx-auto px-6 pb-24 scroll-mt-28">
           <div className="max-w-4xl mx-auto">
-            <ContactForm leadSource="i6-comunidade" />
+            <ContactForm leadSource="i6-community" variant="community" />
           </div>
         </section>
       </div>
