@@ -18,11 +18,19 @@ de destaque, apenas a extensão para o fim do documento.
    (`xl:grid-cols-[240px_minmax(0,1fr)_220px]`), mesmo breakpoint em que
    `DocsToc` aparece (ajustar `DocsToc` de `lg:block` para `xl:block`).
 3. `src/components/docs/DocsToc.tsx` — mesmo padrão sticky com scroll
-   próprio; manter `rootMargin '-120px 0px -65% 0px'`; adicionar listener
-   de scroll que ativa o último título quando a rolagem atinge o fim do
-   documento; item ativo com `scrollIntoView({ block: 'nearest' })`
-   apenas quando a coluna tem rolagem interna, respeitando
-   `prefers-reduced-motion`.
+   próprio; manter `rootMargin '-120px 0px -65% 0px'`; item ativo com
+   `scrollIntoView({ block: 'nearest' })` apenas quando a coluna tem
+   rolagem interna, respeitando `prefers-reduced-motion`.
+4. Destaque com **estado único** — os dois mecanismos não competem:
+   - Um `atBottomRef`/estado booleano marca "a poucos pixels do fim do
+     documento" (`scrollHeight - scrollY - innerHeight <= 24`), atualizado
+     num listener de scroll com `requestAnimationFrame`.
+   - O `setActiveId` do `IntersectionObserver` é ignorado enquanto essa
+     condição for verdadeira; ao entrar na condição, o estado passa a ser
+     o id do último título e permanece assim; ao sair, o observer volta a
+     comandar. Assim não há duas fontes sobrescrevendo o mesmo estado nem
+     alternância/flicker perto do fim.
+
 
 Verificação: build, `tsgo --noEmit` e Playwright em PT/EN/ES conferindo
 laterais paradas, destaque durante a leitura, destaque na última seção e
