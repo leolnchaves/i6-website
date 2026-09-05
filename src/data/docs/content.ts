@@ -20,6 +20,25 @@ export interface DocsUiCopy {
   playVideo: string;
   downloadLabel: string;
   downloadAction: string;
+  support: DocsSupportCopy;
+}
+
+export interface DocsSupportChannelCopy {
+  label: string;
+  description: string;
+  availability?: string;
+}
+
+export interface DocsSupportCopy {
+  title: string;
+  body: string;
+  comingSoon: string;
+  emailAction: string;
+  channels: {
+    email: DocsSupportChannelCopy;
+    whatsapp: DocsSupportChannelCopy;
+    assistant: DocsSupportChannelCopy;
+  };
 }
 
 
@@ -45,6 +64,29 @@ export const docsUi: Record<Language, DocsUiCopy> = {
     playVideo: 'Reproduzir o vídeo',
     downloadLabel: 'Material para download',
     downloadAction: 'Baixar',
+    support: {
+      title: 'Suporte à implementação',
+      body: 'Canais oficiais para tirar dúvidas durante a integração.',
+      comingSoon: 'Em breve',
+      emailAction: 'Enviar e-mail',
+      channels: {
+        email: {
+          label: 'E-mail de suporte técnico',
+          description: 'Envie dúvidas de implementação com o contexto do passo atual.',
+          availability: 'Resposta em até 1 dia útil',
+        },
+        whatsapp: {
+          label: 'WhatsApp',
+          description: 'Atendimento direto para dúvidas rápidas de integração.',
+          availability: 'Em breve',
+        },
+        assistant: {
+          label: 'Assistente de suporte',
+          description: 'Assistente de documentação e implementação da i6.',
+          availability: 'Em breve',
+        },
+      },
+    },
   },
   en: {
     eyebrow: 'I6 DOCUMENTATION',
@@ -66,6 +108,29 @@ export const docsUi: Record<Language, DocsUiCopy> = {
     playVideo: 'Play the video',
     downloadLabel: 'Downloadable material',
     downloadAction: 'Download',
+    support: {
+      title: 'Implementation support',
+      body: 'Official channels to clear up questions during the integration.',
+      comingSoon: 'Coming soon',
+      emailAction: 'Send e-mail',
+      channels: {
+        email: {
+          label: 'Technical support e-mail',
+          description: 'Send implementation questions with the context of the current step.',
+          availability: 'Reply within 1 business day',
+        },
+        whatsapp: {
+          label: 'WhatsApp',
+          description: 'Direct channel for quick integration questions.',
+          availability: 'Coming soon',
+        },
+        assistant: {
+          label: 'Support assistant',
+          description: 'i6 documentation and implementation assistant.',
+          availability: 'Coming soon',
+        },
+      },
+    },
   },
   es: {
     eyebrow: 'DOCUMENTACIÓN I6',
@@ -87,5 +152,28 @@ export const docsUi: Record<Language, DocsUiCopy> = {
     playVideo: 'Reproducir el video',
     downloadLabel: 'Material para descargar',
     downloadAction: 'Descargar',
+    support: {
+      title: 'Soporte a la implementación',
+      body: 'Canales oficiales para resolver dudas durante la integración.',
+      comingSoon: 'Muy pronto',
+      emailAction: 'Enviar correo',
+      channels: {
+        email: {
+          label: 'Correo de soporte técnico',
+          description: 'Envía dudas de implementación con el contexto del paso actual.',
+          availability: 'Respuesta en hasta 1 día hábil',
+        },
+        whatsapp: {
+          label: 'WhatsApp',
+          description: 'Atención directa para dudas rápidas de integración.',
+          availability: 'Muy pronto',
+        },
+        assistant: {
+          label: 'Asistente de soporte',
+          description: 'Asistente de documentación e implementación de i6.',
+          availability: 'Muy pronto',
+        },
+      },
+    },
   },
 };
