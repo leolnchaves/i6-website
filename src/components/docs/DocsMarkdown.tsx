@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { createHeadingIdFactory } from '@/utils/headingSlug';
+import DocsCodeBlock from './DocsCodeBlock';
 import type { ReactNode } from 'react';
 
 /**
@@ -18,12 +19,16 @@ const flatten = (node: ReactNode): string => {
 
 interface DocsMarkdownProps {
   content: string;
+  copyLabel: string;
+  copiedLabel: string;
 }
 
-const DocsMarkdown = ({ content }: DocsMarkdownProps) => {
+const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) => {
   // Recreated on every render and consumed synchronously in document order,
   // mirroring extractHeadings() exactly.
   const nextId = createHeadingIdFactory();
+
+
 
   return (
     <div className="max-w-none text-[0.975rem] md:text-base leading-relaxed text-muted-foreground">
