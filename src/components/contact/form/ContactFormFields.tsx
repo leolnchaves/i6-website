@@ -16,13 +16,22 @@ interface ContactFormFieldsProps {
 const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsProps) => {
   const { t } = useLanguage();
 
+  const nameDescription = t('contact.form.nameDescription');
+  const emailDescription = t('contact.form.emailDescription');
+  const companyDescription = t('contact.form.companyDescription');
+  const phoneDescription = t('contact.form.phoneDescription');
+  const messageDescription = t('contact.form.messageDescription');
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t('contact.form.fullName')} *
           </label>
+          {nameDescription && (
+            <p className="text-xs text-gray-500 mb-2">{nameDescription}</p>
+          )}
           <input
             type="text"
             name="name"
@@ -34,9 +43,12 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t('contact.form.emailAddress')} *
           </label>
+          {emailDescription && (
+            <p className="text-xs text-gray-500 mb-2">{emailDescription}</p>
+          )}
           <input
             type="email"
             name="email"
@@ -51,9 +63,12 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t('contact.form.company')}
           </label>
+          {companyDescription && (
+            <p className="text-xs text-gray-500 mb-2">{companyDescription}</p>
+          )}
           <input
             type="text"
             name="company"
@@ -64,9 +79,12 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t('contact.form.phoneNumber')}
           </label>
+          {phoneDescription && (
+            <p className="text-xs text-gray-500 mb-2">{phoneDescription}</p>
+          )}
           <input
             type="tel"
             name="phone"
@@ -79,7 +97,7 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t('contact.form.subject')} *
         </label>
         <select
@@ -98,9 +116,12 @@ const ContactFormFields = ({ formData, handleInputChange }: ContactFormFieldsPro
       </div>
 
       <div className="flex-1">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t('contact.form.message')} *
         </label>
+        {messageDescription && (
+          <p className="text-sm text-gray-600 mb-3">{messageDescription}</p>
+        )}
         <textarea
           name="message"
           required
