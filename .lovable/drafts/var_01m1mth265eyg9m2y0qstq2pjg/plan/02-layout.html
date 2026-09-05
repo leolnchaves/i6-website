@@ -1,37 +1,50 @@
-<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+<svg viewBox="0 0 640 440" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
   <style>
-    .l { fill: hsl(var(--foreground)); font-size: 14px; font-weight: 480; }
-    .s { fill: hsl(var(--muted-foreground)); font-size: 12px; }
-    .bx { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
-    .rail { stroke: hsl(var(--border)); stroke-width: 1; }
-    .q { fill: hsl(var(--muted)); }
+    .l{fill:hsl(var(--foreground));font-size:14px;font-weight:480}
+    .s{fill:hsl(var(--muted-foreground));font-size:12px}
+    .bx{fill:none;stroke:hsl(var(--muted-foreground));stroke-width:1}
+    .z{fill:none;stroke:hsl(var(--border));stroke-width:1;stroke-dasharray:4 3}
   </style>
 
-  <rect class="bx" x="8" y="8" width="120" height="180" rx="8"/>
-  <text class="s" x="20" y="28">menu</text>
-  <rect class="q" x="20" y="40" width="80" height="7" rx="3"/>
-  <rect class="q" x="20" y="56" width="66" height="7" rx="3"/>
-  <rect class="q" x="20" y="72" width="74" height="7" rx="3"/>
+  <!-- hero zone -->
+  <rect class="z" x="8" y="8" width="624" height="180" rx="8"/>
+  <text class="s" x="20" y="26">abertura</text>
 
-  <rect class="bx" x="140" y="8" width="368" height="180" rx="8"/>
-  <text class="l" x="154" y="30">conteúdo da página</text>
-  <rect class="q" x="154" y="44" width="330" height="7" rx="3"/>
-  <rect class="q" x="154" y="60" width="300" height="7" rx="3"/>
-  <rect class="q" x="154" y="76" width="320" height="7" rx="3"/>
-  <line class="rail" x1="154" y1="150" x2="494" y2="150"/>
-  <text class="s" x="154" y="170">Anterior / Próxima</text>
+  <text class="l" x="24" y="60">Toda decisão importante</text>
+  <text class="l" x="24" y="80">começa com uma conversa</text>
+  <rect x="24" y="94" width="230" height="7" rx="3" fill="hsl(var(--muted))"/>
+  <rect x="24" y="106" width="180" height="7" rx="3" fill="hsl(var(--muted))"/>
 
-  <rect class="bx" x="520" y="8" width="112" height="180" rx="8"/>
-  <text class="s" x="532" y="28">nesta página</text>
+  <rect class="bx" x="24" y="124" width="266" height="52" rx="8"/>
+  <text class="s" x="36" y="142">Já sabe o que procura?</text>
+  <text class="s" x="36" y="162">→ Builder   → Comunidade   → Docs</text>
 
-  <rect x="8" y="200" width="624" height="70" rx="8" fill="hsl(var(--accent))" stroke="hsl(var(--muted-foreground))"/>
-  <text x="22" y="222" style="font-size:14px;font-weight:480;fill:hsl(var(--accent-foreground))">Suporte à implementação</text>
-  <rect class="bx" x="22" y="232" width="190" height="28" rx="8"/>
-  <text class="s" x="34" y="250" style="fill:hsl(var(--accent-foreground))">E-mail de suporte</text>
-  <rect class="bx" x="224" y="232" width="190" height="28" rx="8"/>
-  <text class="s" x="236" y="250" style="fill:hsl(var(--accent-foreground))">WhatsApp · Em breve</text>
-  <rect class="bx" x="426" y="232" width="192" height="28" rx="8"/>
-  <text class="s" x="438" y="250" style="fill:hsl(var(--accent-foreground))">Assistente · Em breve</text>
+  <rect x="326" y="36" width="290" height="140" rx="8" fill="hsl(var(--card))" stroke="hsl(var(--muted-foreground))"/>
+  <text class="l" x="342" y="58">formulário</text>
+  <rect x="342" y="70" width="118" height="18" rx="4" fill="hsl(var(--muted))"/>
+  <rect x="474" y="70" width="118" height="18" rx="4" fill="hsl(var(--muted))"/>
+  <rect x="342" y="96" width="250" height="18" rx="4" fill="hsl(var(--muted))"/>
+  <text class="s" x="346" y="110">Assunto (4 opções)</text>
+  <rect x="342" y="122" width="250" height="26" rx="4" fill="hsl(var(--muted))"/>
+  <rect x="342" y="154" width="110" height="16" rx="8" fill="hsl(var(--accent))"/>
+  <text x="352" y="166" style="font-size:11px;fill:hsl(var(--accent-foreground))">Enviar</text>
 
-  <text class="s" x="8" y="290">rodapé do site</text>
+  <!-- faq -->
+  <rect class="z" x="8" y="200" width="624" height="140" rx="8"/>
+  <text class="s" x="20" y="218">perguntas frequentes</text>
+  <rect class="bx" x="24" y="228" width="592" height="26" rx="8"/>
+  <text class="s" x="38" y="245">Quanto tempo leva para colocar em produção?</text>
+  <rect x="24" y="260" width="592" height="44" rx="8" fill="hsl(var(--muted))"/>
+  <text class="s" x="38" y="278">Como iniciar sem alto risco de investimento?</text>
+  <rect x="38" y="286" width="380" height="6" rx="3" fill="hsl(var(--border))"/>
+  <rect class="bx" x="24" y="310" width="592" height="24" rx="8"/>
+  <text class="s" x="38" y="326">… 13 no total, uma aberta por vez</text>
+
+  <!-- map -->
+  <rect class="z" x="8" y="352" width="624" height="80" rx="8"/>
+  <text class="s" x="20" y="370">mapa</text>
+  <text class="l" x="24" y="396">De Campinas para o mundo</text>
+  <rect x="24" y="408" width="330" height="7" rx="3" fill="hsl(var(--muted))"/>
+  <rect class="bx" x="400" y="366" width="216" height="56" rx="8"/>
+  <text class="s" x="414" y="398">mapa interativo atual</text>
 </svg>

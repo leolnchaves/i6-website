@@ -1,29 +1,27 @@
-## Detalhes técnicos
+## Hierarquia visual
 
-### 1. Navegação interna sem reload (`src/components/docs/DocsMarkdown.tsx`)
-- Usar `useNavigate` de `react-router-dom` (padrão já usado no projeto) no renderizador `a`.
-- Considerar interno todo href que: começa com `/docs`, casa `^/(pt|en|es)/docs`, ou é relativo sem esquema apontando para docs. Ancoras (`#...`), `mailto:`, `tel:` e URLs absolutas http(s) para outro domínio ficam intactas.
-- No clique interno: se não houver modificador (`metaKey`, `ctrlKey`, `shiftKey`, `altKey`) e for botão primário, `event.preventDefault()` + `navigate(path)`. O `href` permanece no DOM (abrir em nova aba continua funcionando).
-- Normalizar o destino com o helper de idioma já existente (`useLocalizedPath`) quando o href vier sem prefixo de idioma, para não perder o idioma atual.
-- Nenhuma mudança nos outros renderizadores.
+- Faixa clara `theme-sand` na página inteira (como /i6-builders), com o mapa mantido em faixa escura no fim para emendar no rodapé.
+- Headline em `font-display` (Sora), tamanho hero, grafite quente; "uma conversa" em terracota. Subtítulo em corpo `muted-foreground`, largura máxima ~48ch.
+- Cartão do formulário: superfície `card`, borda sutil, sombra baixa, canto 12–16px. No desktop é `lg:sticky` até o fim do hero; no mobile a coluna colapsa e o formulário vem depois da triagem.
+- Triagem: bloco leve (não cartão-pesado), três `Link` com seta `ArrowRight`, hover em terracota. A linha "Se é sobre o i6 Decision Suite…" fica como nota `text-sm text-muted-foreground` abaixo dos três links.
+- FAQ: acordeão shadcn (`Accordion` type="single" collapsible), divisores 1px, pergunta em peso médio, resposta em corpo. Sem cartões individuais.
 
-### 2. `related` em `src/hooks/useDocs.ts`
-- `DocPage` ganha `related: string[]` (vazio quando ausente).
-- O parser de frontmatter é simples (sem YAML de listas), então aceitar as duas formas que o HUB pode emitir: `related: a, b, c` e `related: [a, b, c]` — split por vírgula, trim, remoção de colchetes/quotes, descarte de itens vazios.
-- `useDocs` passa a expor também um resolvedor: para cada slug em `current.related`, buscar em `pages` (idioma já resolvido pela cadeia de fallback existente) e, se não achar, buscar em `ALL` por qualquer idioma antes de descartar. Slug inexistente → ignorado, com `console.warn` só quando `import.meta.env.DEV`.
-- `scripts/sync-content-from-i6hub.mjs` (`fmDocs`): escrever `related: a, b, c` quando o item do HUB trouxer o campo, mantendo-o opcional.
+## Estrutura de arquivos
 
-### 3. Novo `src/components/docs/DocsRelated.tsx`
-- Props: lista já resolvida `{ slug, title }[]`, título da seção e `localized`.
-- Renderiza `<nav>` com título `text-sm font-semibold uppercase tracking-wide` e lista de `Link` (react-router) com seta `ArrowRight` (lucide), estilo de link primary já usado no /docs. Sem cartões nem chips.
-- Retorna `null` quando a lista está vazia.
+- `src/pages/Contact.tsx` — recompõe a ordem: `ContactHeroSplit` → `ContactFAQ` (acordeão) → seção de mapa. Mantém `SEOHead` e o JSON-LD de FAQ, regenerado a partir da nova lista de 13 perguntas.
+- `src/components/contact/ContactHeroSplit.tsx` (novo) — grid 2 colunas, headline/subtítulo/triagem + `<ContactForm />` (variant default, sem props novas).
+- `src/components/contact/ContactTriage.tsx` (novo) — os três links + linha de fecho, com `useLocalizedPath` para `/i6-builders#fale-com-o-time`, `/community#fale-com-o-time`, `/docs`.
+- `src/components/contact/FAQSection.tsx` — reescrito para acordeão e para a nova lista de 13 itens (respostas 3, 4, 5, 12 e 13 aguardam os textos que você vai enviar; até lá ficam com a resposta atual como rascunho marcado).
+- `src/components/contact/WorldMap.tsx` — só troca `title`/`description` nos 3 idiomas; mapa, marcadores e interação intactos.
+- `src/data/contact/content.ts` (novo) — todo o texto novo (hero, triagem, FAQ, legenda do mapa) em PT/EN/ES, no mesmo padrão `content[language] ?? content.pt` usado no resto da pasta.
+- `src/components/contact/ContactForm.tsx` — apenas `subjectOptions` passa a ser `{ salesSuite, partnerships, press, other }` nos 3 idiomas; os `value` enviados continuam chaves estáveis não traduzidas. Nenhuma mudança em endpoint, honeypot, `lead_uid`, `normalizeLeadFields` ou tracking.
+- `src/components/hometeste/HeaderNovo.tsx` — adiciona `/contact` à lista de rotas de tema claro na checagem já normalizada por `stripLangPrefix`.
+- Componentes hoje na página e que saem da composição: `ContactHero`, `DirectContactStrip`. Ficam no repositório (usados/potenciais em outros pontos) mas deixam de ser renderizados em /contact — confirme se prefere que a faixa de contato direto (e-mail/telefone) continue em algum lugar da página.
 
-### 4. Integração e textos
-- `DocsShell.tsx`: renderizar `<DocsRelated …/>` entre `<DocsMarkdown/>` e `<DocsPager/>`.
-- `src/data/docs/content.ts`: nova chave `relatedTitle` em `DocsUiCopy` — "Leitura relacionada" / "Related reading" / "Lectura relacionada".
+## Fora de escopo
 
-### Fora de escopo
-Taxonomia de seções, chips/etiquetas, sidebar, índice lateral, `/i6-builders`, release/deploy.
+Pipeline de deploy, i6 HUB, captura de lead, `/i6-builders`, `/community`, `/docs`, release/publicação.
 
-### Verificação
-`npx tsgo --noEmit`, `bun run build` e checagem no preview: clicar num link interno de doc sem recarregar (sem flash de página) e ver o bloco "Leitura relacionada" numa página de exemplo com o campo preenchido.
+## Verificação
+
+Checagem de tipos, build e conferência no preview em `/pt/contact`, `/en/contact`, `/es/contact`: formulário ao lado da headline no desktop, empilhado no mobile, acordeão abrindo um item por vez, header legível e envio de teste **não** disparado.
