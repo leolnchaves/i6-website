@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
-import { builderCopy, COMMUNITY_PATH, CONTACT_ANCHOR, DOCS_PATH } from '@/data/i6Builders/content';
+import { builderCopy, COMMUNITY_PATH, DOCS_PATH } from '@/data/i6Builders/content';
 
 const BuilderFinalCTA = () => {
   const { language } = useLanguage();
