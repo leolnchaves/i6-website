@@ -246,7 +246,7 @@ const ContactForm = memo(({
     : text.messageDescriptionDefault;
 
   return (
-    <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
+    <Card className="sand-card h-full flex flex-col">
       <CardContent className={`${compact ? 'p-4' : 'p-8'} flex-1 flex flex-col`}>
 
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`${compact ? 'space-y-3' : 'space-y-6'} flex-1 flex flex-col`} noValidate>
