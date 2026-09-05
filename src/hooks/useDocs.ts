@@ -77,6 +77,25 @@ const modules = import.meta.glob('/src/content/docs/*.md', {
 
 const isLanguage = (v: unknown): v is Language => v === 'pt' || v === 'en' || v === 'es';
 
+/** CDN pointers for files attached to `download` pages, keyed by pointer filename. */
+const assetPointers = import.meta.glob('/src/assets/*.asset.json', { eager: true }) as Record<
+  string,
+  { default?: { url?: string }; url?: string }
+>;
+
+const resolveAssetUrl = (value: unknown): string | null => {
+  if (typeof value !== 'string' || !value) return null;
+  if (/^https?:\/\//.test(value) || value.startsWith('/__l5e/')) return value;
+  const file = value.split('/').pop()!;
+  const entry = Object.entries(assetPointers).find(([path]) => path.endsWith(`/${file}`));
+  if (!entry) return null;
+  const mod = entry[1];
+  return mod.default?.url ?? mod.url ?? null;
+};
+
+const isContentType = (v: unknown): v is DocContentType =>
+  v === 'article' || v === 'video' || v === 'download';
+
 const ALL: DocPage[] = Object.entries(modules)
   .map(([path, raw]) => {
     if (/\/README\.md$/i.test(path)) return null;
@@ -91,6 +110,9 @@ const ALL: DocPage[] = Object.entries(modules)
       path.split('/').pop()!.replace(/\.md$/, '').replace(/-(pt|en|es)$/, '');
 
     const section = typeof data.section === 'string' ? data.section : 'general';
+    const contentType: DocContentType = isContentType(data.content_type)
+      ? data.content_type
+      : 'article';
 
     return {
       title,
@@ -101,11 +123,17 @@ const ALL: DocPage[] = Object.entries(modules)
       order: typeof data.order === 'number' ? data.order : 999,
       description: typeof data.description === 'string' ? data.description : null,
       updated_at: typeof data.updated_at === 'string' ? data.updated_at : null,
+      content_type: contentType,
+      video_provider: data.video_provider === 'youtube' ? 'youtube' : null,
+      video_id: typeof data.video_id === 'string' && data.video_id ? data.video_id : null,
+      file_url: resolveAssetUrl(data.file_asset ?? data.file_url),
+      file_label: typeof data.file_label === 'string' && data.file_label ? data.file_label : null,
       sample: data.sample === true,
       hidden: data.hidden === true,
       content,
     } satisfies DocPage;
   })
+
   .filter((p): p is DocPage => p !== null);
 
 /** es -> pt -> en fallback, so a missing translation never yields an empty area. */
