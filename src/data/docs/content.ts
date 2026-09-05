@@ -26,7 +26,7 @@ export interface DocsUiCopy {
 /** UI chrome for the documentation area. Page content itself comes from the i6 HUB. */
 export const docsUi: Record<Language, DocsUiCopy> = {
   pt: {
-    eyebrow: 'DOCUMENTAÇÃO I6',
+    eyebrow: 'DOCUMENTAÇÃO I6 BUILDER',
     title: 'Documentação',
     searchLabel: 'Buscar no conteúdo da documentação',
     searchPlaceholder: 'Buscar no conteúdo…',
