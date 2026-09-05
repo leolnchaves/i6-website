@@ -17,6 +17,7 @@
 ---
 
 # Concluído
+- [x] /contact redesenhado: hero com formulário ao lado, triagem, FAQ em acordeão (13 itens), mapa em SVG próprio, e-mail decida@infinity6.ai, tema claro no header
 - [x] Formulários de contato por variante + textos ES da página de contato
 - [x] Typewriter em /i6-builders
 
