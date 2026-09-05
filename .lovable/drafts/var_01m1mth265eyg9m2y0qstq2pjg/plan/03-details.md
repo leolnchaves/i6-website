@@ -1,17 +1,18 @@
-## Ajuste a aplicar
+## Detalhes técnicos
 
-Renomear a etiqueta de origem da página de comunidade de `i6-comunidade` para `i6-community`, alinhando com a URL.
-
-- `src/lib/leadFormConfig.ts`: trocar o valor na lista de origens aceitas (`LeadSource`).
-- `src/pages/Comunidade.tsx`: passar `leadSource="i6-community"` no formulário.
-- Nenhuma outra rota, texto ou layout muda; o campo continua com menos de 50 caracteres, dentro do limite do HUB.
-
-Efeito na planilha: leads antigos permanecem marcados como `i6-comunidade` e os novos entram como `i6-community`. Se você usa filtro ou regra por essa coluna, vale considerar as duas grafias.
+- `src/components/contact/ContactForm.tsx`: nova prop `variant: 'default' | 'community' | 'builders'` (padrão `default`).
+  - `community` e `builders`: campo de assunto renderizado como campo oculto, com valor fixo `Interesse — Comunidade` / `Interesse — i6 Builders` (não traduzido), enviado normalmente em `subscription`.
+  - `community`: rótulo de e-mail PT "E-mail" / EN "Email" / ES "Correo electrónico", sem exigência de e-mail corporativo; mensagem obrigatória com placeholder específico.
+  - `builders`: `company` com `required`; mensagem obrigatória com placeholder específico.
+  - `default`: campos, validações e textos idênticos aos atuais.
+- Bloco `content` do componente ganha a chave `es` completa (o fallback `?? content.pt` deixa de ser acionado); textos por variante vivem nesse mesmo bloco, por idioma.
+- `src/pages/Comunidade.tsx` e `src/pages/I6Builders.tsx`: passam `variant`. Também alinho a etiqueta de origem da comunidade para `i6-community`, como você aprovou antes (`src/lib/leadFormConfig.ts`).
+- Sem alteração de endpoint, honeypot, `lead_uid`, normalização de payload ou aviso de sucesso.
 
 ## Verificação
 
-Checagem de tipos e compilação. Sem envio de lead de teste, conforme você pediu.
+Compilação, checagem de tipos e conferência visual em PT/EN/ES nas três páginas, sem enviar lead de teste.
 
 ## Publicação
 
-Só publico release/deploy quando você pedir o incremento de versão.
+Release/deploy só quando você pedir o incremento de versão.
