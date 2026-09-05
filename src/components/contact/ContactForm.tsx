@@ -1,9 +1,9 @@
 
-import React, { memo, useCallback, useMemo, useState, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -23,6 +23,24 @@ interface FormData {
   [HONEYPOT_FIELD]?: string;
 }
 
+/**
+ * Variantes do formulário.
+ *
+ * 'default'   → /contact (comportamento histórico, sem mudanças)
+ * 'community' → /community (assunto fixo oculto, e-mail simples, mensagem obrigatória)
+ * 'builders'  → /i6-builders (assunto fixo oculto, empresa obrigatória, mensagem obrigatória)
+ */
+export type ContactFormVariant = 'default' | 'community' | 'builders';
+
+/**
+ * Valores de assunto usados na triagem interna. Propositalmente NÃO traduzidos:
+ * são chaves de classificação na planilha / i6 HUB, iguais nos 3 idiomas.
+ */
+const FIXED_SUBJECT: Record<Exclude<ContactFormVariant, 'default'>, string> = {
+  community: 'Interesse — Comunidade',
+  builders: 'Interesse — i6 Builders',
+};
+
 export interface ContactFormProps {
   /** Pré-preenchimento (ex.: landing /go/:token com dados do lead do HUB) */
   defaultValues?: Partial<Pick<FormData, 'name' | 'email' | 'company' | 'subject' | 'message'>>;
@@ -36,9 +54,19 @@ export interface ContactFormProps {
   hideSubject?: boolean;
   /** Layout compacto para caber sem scroll */
   compact?: boolean;
+  /** Conjunto de campos/textos por página */
+  variant?: ContactFormVariant;
 }
 
-const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFields, hideCompany = false, hideSubject = false, compact = false }: ContactFormProps = {}) => {
+const ContactForm = memo(({
+  defaultValues,
+  leadSource = 'contact-form',
+  extraFields,
+  hideCompany = false,
+  hideSubject = false,
+  compact = false,
+  variant = 'default',
+}: ContactFormProps = {}) => {
   const { language } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,6 +75,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     reset
   } = useForm<FormData>({ defaultValues: defaultValues as FormData | undefined });
@@ -60,6 +89,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
       subtitle: "Fale conosco e compartilhe seu objetivo ou desafio estratégico.",
       name: "Nome completo",
       email: "Email profissional",
+      emailSimple: "E-mail",
       company: "Empresa",
       phone: "Telefone",
       subject: "Assunto",
@@ -67,9 +97,12 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
       message: "Mensagem",
       messageMinChar: "(mínimo 10 caracteres)",
       messagePlaceholder: "Descreva como podemos ajudar seu negócio...",
+      messageCommunity: "Conte um pouco do seu histórico, por que você quer fazer parte da comunidade e o que espera encontrar aqui.",
+      messageBuilders: "Descreva sua empresa, o produto que já tem ou pretende construir usando os modelos do i6 Builder, e um panorama rápido da capacidade técnica do time. Conte também o que espera alcançar aplicando os modelos da Infinity6 no seu produto.",
       sendButton: "Enviar Mensagem",
+      sending: "Enviando...",
       successMessage: "Mensagem enviada com sucesso! Entraremos em contato em breve.",
-      errors: { nameRequired: "Preencha este campo.", emailRequired: "Preencha este campo.", emailInvalid: "Preencha este campo.", subjectRequired: "Preencha este campo.", messageRequired: "Preencha este campo.", messageMinLength: "Preencha este campo." }
+      errors: { nameRequired: "Preencha este campo.", emailRequired: "Preencha este campo.", emailInvalid: "Preencha este campo.", companyRequired: "Preencha este campo.", subjectRequired: "Preencha este campo.", messageRequired: "Preencha este campo.", messageMinLength: "Preencha este campo." }
     },
     en: {
       title1: "Start Moving",
@@ -77,6 +110,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
       subtitle: "Talk to us and share your strategic goal or challenge.",
       name: "Full name",
       email: "Professional email",
+      emailSimple: "Email",
       company: "Company",
       phone: "Phone",
       subject: "Subject",
@@ -84,11 +118,45 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
       message: "Message",
       messageMinChar: "(minimum 10 characters)",
       messagePlaceholder: "Describe how we can help your business...",
+      messageCommunity: "Tell us a bit about your background, why you want to join the community, and what you're hoping to find here.",
+      messageBuilders: "Describe your company, the product you already have or want to build using i6 Builder's models, and a quick overview of your team's technical capability. Also tell us what you're hoping to achieve by applying Infinity6's models to your product.",
       sendButton: "Send Message",
+      sending: "Sending...",
       successMessage: "Message sent successfully! We will contact you soon.",
-      errors: { nameRequired: "Please fill out this field.", emailRequired: "Please fill out this field.", emailInvalid: "Please fill out this field.", subjectRequired: "Please fill out this field.", messageRequired: "Please fill out this field.", messageMinLength: "Please fill out this field." }
+      errors: { nameRequired: "Please fill out this field.", emailRequired: "Please fill out this field.", emailInvalid: "Please fill out this field.", companyRequired: "Please fill out this field.", subjectRequired: "Please fill out this field.", messageRequired: "Please fill out this field.", messageMinLength: "Please fill out this field." }
+    },
+    es: {
+      title1: "Empieza a Mover",
+      title2: "Tus Resultados",
+      subtitle: "Habla con nosotros y comparte tu objetivo o desafío estratégico.",
+      name: "Nombre completo",
+      email: "Correo electrónico profesional",
+      emailSimple: "Correo electrónico",
+      company: "Empresa",
+      phone: "Teléfono",
+      subject: "Asunto",
+      subjectOptions: { general: "Consulta general", demo: "Solicitar demostración", partnership: "Alianza", support: "Soporte técnico" },
+      message: "Mensaje",
+      messageMinChar: "(mínimo 10 caracteres)",
+      messagePlaceholder: "Describe cómo podemos ayudar a tu negocio...",
+      messageCommunity: "Cuéntanos un poco sobre tu trayectoria, por qué quieres unirte a la comunidad y qué esperas encontrar aquí.",
+      messageBuilders: "Describe tu empresa, el producto que ya tienes o quieres construir usando los modelos de i6 Builder, y un panorama rápido de la capacidad técnica de tu equipo. Cuéntanos también qué esperas lograr aplicando los modelos de Infinity6 en tu producto.",
+      sendButton: "Enviar Mensaje",
+      sending: "Enviando...",
+      successMessage: "¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.",
+      errors: { nameRequired: "Completa este campo.", emailRequired: "Completa este campo.", emailInvalid: "Completa este campo.", companyRequired: "Completa este campo.", subjectRequired: "Completa este campo.", messageRequired: "Completa este campo.", messageMinLength: "Completa este campo." }
     }
   }), []);
+
+  const isFixedSubject = variant !== 'default';
+  const fixedSubjectValue = isFixedSubject ? FIXED_SUBJECT[variant] : undefined;
+  const subjectHidden = hideSubject || isFixedSubject;
+  const companyRequired = variant === 'builders';
+
+  // Assunto fixo das variantes entra no estado do form desde a montagem
+  useEffect(() => {
+    if (fixedSubjectValue) setValue('subject', fixedSubjectValue);
+  }, [fixedSubjectValue, setValue]);
 
   const onSubmit = useCallback(async (data: FormData) => {
     // Honeypot: silently drop bot submissions
@@ -122,7 +190,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
           email: data.email,
           company: data.company || '',
           message: enrichedMessage,
-          subscription: data.subject,
+          subscription: fixedSubjectValue ?? data.subject,
           reason: leadSource,
           token: SHARED_FORM_TOKEN,
           ...getLeadContextFields(),
@@ -150,25 +218,29 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
         document.body.removeChild(iframe);
       }, 1000);
 
-      trackEvent(TRACKER_EVENTS.CONTACT_FORM_SUBMITTED, { subject: data.subject });
+      trackEvent(TRACKER_EVENTS.CONTACT_FORM_SUBMITTED, { subject: fixedSubjectValue ?? data.subject });
 
       setIsSuccess(true);
       toast({
-        title: language === 'pt' 
-          ? "Mensagem enviada com sucesso! Entraremos em contato em breve."
-          : "Message sent successfully! We will contact you soon.",
+        title: (content[language] ?? content.pt).successMessage,
         description: "",
       });
       reset();
+      if (fixedSubjectValue) setValue('subject', fixedSubjectValue);
     } catch (error) {
       console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
     }
-  }, [reset, toast, language, leadSource, extraFields]);
+  }, [reset, toast, language, leadSource, extraFields, content, fixedSubjectValue, setValue]);
 
-  // ES ainda não tem cópia própria: cai no PT (mesma regra de fallback do site)
-  const text = useMemo(() => content[language] ?? content.pt, [language]);
+  const text = useMemo(() => content[language] ?? content.pt, [content, language]);
+
+  const emailLabel = variant === 'community' ? text.emailSimple : text.email;
+  const messagePlaceholder =
+    variant === 'community' ? text.messageCommunity
+    : variant === 'builders' ? text.messageBuilders
+    : text.messagePlaceholder;
 
   return (
     <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl h-full flex flex-col">
@@ -203,7 +275,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               </div>
               <div>
                 <Label htmlFor="email" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
-                  {text.email} *
+                  {emailLabel} *
                 </Label>
                 <Input
                   id="email"
@@ -219,18 +291,20 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
             {!hideCompany && (
               <div>
                 <Label htmlFor="company" className="text-sm font-medium text-white/70 mb-2 block">
-                  {text.company}
+                  {text.company}{companyRequired ? ' *' : ''}
                 </Label>
                 <Input
                   id="company"
                   type="text"
-                  {...register("company")}
-                  className="w-full px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent"
+                  {...register("company", companyRequired ? { required: text.errors.companyRequired } : {})}
+                  className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                    errors.company ? 'border-red-500' : 'border-white/10'
+                  }`}
                 />
               </div>
             )}
 
-            {hideSubject ? (
+            {subjectHidden ? (
               <input type="hidden" {...register("subject")} />
             ) : (
               <div>
@@ -259,7 +333,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               </Label>
               <Textarea
                 id="message"
-                placeholder={text.messagePlaceholder}
+                placeholder={messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
                 className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none ${
                   compact ? '' : 'flex-1'
@@ -288,7 +362,7 @@ const ContactForm = memo(({ defaultValues, leadSource = 'contact-form', extraFie
               compact ? 'text-base py-2' : 'text-lg py-3'
             }`}
           >
-            {isSubmitting ? 'Sending...' : text.sendButton}
+            {isSubmitting ? text.sending : text.sendButton}
             <Send className={`ml-2 w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
           </Button>
         </form>
