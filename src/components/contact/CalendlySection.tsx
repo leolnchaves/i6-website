@@ -30,10 +30,14 @@ const CalendlySection = memo(() => {
     en: {
       title: "Sometimes a quick chat is all it takes.",
       description: "Or schedule a strategic conversation to map predictive impact on your business."
+    },
+    es: {
+      title: "¿Prefieres avanzar directo a una conversación estratégica?",
+      description: "O agenda una conversación estratégica para mapear el impacto predictivo en tu negocio."
     }
   }), []);
 
-  const text = useMemo(() => content[language], [language]);
+  const text = useMemo(() => content[language] ?? content.pt, [content, language]);
 
   return (
     <Card ref={containerRef} className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl">

@@ -51,10 +51,32 @@ const ContactInfoCards = memo(() => {
         description: "Mon - Fri: 9:00 - 18:00",
         value: "GMT-3 (Brasília)"
       }
+    },
+    es: {
+      email: {
+        title: "Correo electrónico",
+        description: "Envíanos un mensaje",
+        value: "partner@infinity6.ai"
+      },
+      phone: {
+        title: "Teléfono",
+        description: "Llámanos",
+        value: "+55 19 99999-9999"
+      },
+      address: {
+        title: "Dirección",
+        description: "Visita nuestra oficina",
+        value: "Campinas, São Paulo, Brasil"
+      },
+      hours: {
+        title: "Horario",
+        description: "Lun - Vie: 9:00 - 18:00",
+        value: "GMT-3 (Brasilia)"
+      }
     }
   }), []);
 
-  const text = useMemo(() => content[language], [content, language]);
+  const text = useMemo(() => content[language] ?? content.pt, [content, language]);
 
   const cards = useMemo(() => [
     {

@@ -66,10 +66,30 @@ const FAQSection = memo(() => {
         { id: 11, question: "What sets you apart from other AI companies?", answer: "We combine predictive intelligence with real-time activation. Our proprietary engines transform data into operational decisions, while i6Signal connects these insights directly to teams, converting analysis into immediate action.\n\nWe don't just deliver models. We put decisions in motion.", order: 11 },
         { id: 12, question: "How do you measure business impact?", answer: "We work with clear revenue, margin and efficiency indicators from the start of the project, tracking variations directly attributable to predictive activations in production.", order: 12 }
       ]
+    },
+    es: {
+      title: "Lo Que Necesitas Saber",
+      subtitle: "Respuestas directas sobre cómo implementar inteligencia predictiva con rapidez y seguridad.",
+      searchPlaceholder: "Busca por tema, desafío o palabra clave...",
+      noResults: "No se encontraron preguntas frecuentes que coincidan con tu búsqueda. Prueba con otras palabras clave.",
+      faqs: [
+        { id: 1, question: "¿Cuánto tiempo toma poner la inteligencia en producción?", answer: "Ponemos inteligencia predictiva en producción entre 4 y 12 semanas, con generación de impacto financiero medible desde las primeras activaciones, ya sea en crecimiento de ingresos, protección de margen o ganancia de eficiencia operativa.", order: 1 },
+        { id: 2, question: "¿Cómo empezar sin alto riesgo de inversión?", answer: "Empezamos con una fase de validación orientada al negocio, usando muestras de datos para estimar el potencial de impacto antes de la integración completa. El modelo es progresivo, lo que permite comenzar con un alcance controlado y expandirlo a medida que se comprueban los resultados.", order: 2 },
+        { id: 3, question: "¿En qué industrias trabajan?", answer: "Trabajamos en sectores como retail, industria, finanzas, salud, farmacéutica, educación y tecnología, siempre con foco directo en impacto de negocio y resultados medibles.", order: 3 },
+        { id: 4, question: "¿El soporte es continuo?", answer: "Sí. Monitoreamos el desempeño, ajustamos los modelos continuamente y garantizamos la evolución constante de los resultados en producción.", order: 4 },
+        { id: 5, question: "¿Cómo garantizan que los modelos sigan rindiendo a lo largo del tiempo?", answer: "Usamos modelos adaptativos y monitoreo continuo de desempeño. Los ajustes se realizan según cambios de comportamiento, mercado o estrategia, manteniendo un impacto consistente en el tiempo.", order: 5 },
+        { id: 6, question: "¿Cuál es el ROI típico de las soluciones?", answer: "Los proyectos pueden generar hasta 20x de ROI en el primer año, impulsando ingresos, protegiendo margen y reduciendo ineficiencias operativas.", order: 6 },
+        { id: 7, question: "¿Qué tipo de datos se necesitan para empezar?", answer: "Usamos los datos que tu empresa ya tiene, como transacciones, comportamiento, CRM y supply. Empezamos con muestras para validar el potencial antes de la integración completa, con modelos robustos frente a lagunas de datos.", order: 7 },
+        { id: 8, question: "¿La solución se integra con nuestros sistemas actuales?", answer: "Sí. Nuestra arquitectura es API-first y se conecta con facilidad a ERPs, CRMs, e-commerce y otras bases internas.", order: 8 },
+        { id: 9, question: "¿Es necesario tener un equipo de ciencia de datos?", answer: "No. Las soluciones están diseñadas para que los equipos de negocio operen decisiones predictivas sin dependencia técnica.", order: 9 },
+        { id: 10, question: "¿La inteligencia es explicable y compatible con las regulaciones?", answer: "Sí. Trabajamos con capas de explicabilidad y adherencia a normas como LGPD y GDPR, garantizando transparencia y seguridad.", order: 10 },
+        { id: 11, question: "¿Qué los diferencia de otras empresas de IA?", answer: "Unimos inteligencia predictiva con activación en tiempo real. Nuestros motores propietarios transforman datos en decisiones operativas, mientras i6Signal conecta esos insights directamente a los equipos, convirtiendo el análisis en acción inmediata.\n\nNo entregamos solo modelos. Ponemos las decisiones en movimiento.", order: 11 },
+        { id: 12, question: "¿Cómo miden el impacto en el negocio?", answer: "Trabajamos con indicadores claros de ingresos, margen y eficiencia desde el inicio del proyecto, siguiendo variaciones directamente atribuibles a las activaciones predictivas en producción.", order: 12 }
+      ]
     }
   }), []);
 
-  const text = useMemo(() => content[language], [language]);
+  const text = useMemo(() => content[language] ?? content.pt, [content, language]);
 
   const filteredFaqs = useMemo(() => {
     if (!debouncedSearchTerm.trim()) return text.faqs;

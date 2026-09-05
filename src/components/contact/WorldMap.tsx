@@ -29,10 +29,17 @@ const WorldMap = memo(() => {
       headquarters: "Headquarters",
       brazil: "Brazil",
       hoverTip: "Hover over locations for more information"
+    },
+    es: {
+      title: "Nuestra Presencia Global",
+      description: "Haz clic en cada ubicación para ver información de contacto detallada.",
+      headquarters: "Sede",
+      brazil: "Brasil",
+      hoverTip: "Pasa el cursor sobre las ubicaciones para más información"
     }
   }), []);
 
-  const text = useMemo(() => content[language], [language]);
+  const text = useMemo(() => content[language] ?? content.pt, [content, language]);
 
   const positions = useMemo(() => ({
     campinas: isMobile ? { top: '68%', left: '35%' } : { top: '68%', left: '32%' }

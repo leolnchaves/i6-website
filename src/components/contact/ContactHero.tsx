@@ -17,10 +17,16 @@ const ContactHero = memo(() => {
       highlight: "next advantage",
       suffix: "starts with the next decision.",
       description: "Talk to our team about anticipating demand, protecting margin, accelerating turnover and increasing conversion."
+    },
+    es: {
+      prefix: "Tu",
+      highlight: "próxima ventaja",
+      suffix: "empieza en la próxima decisión.",
+      description: "Habla con nuestro equipo sobre anticipar la demanda, proteger el margen, acelerar la rotación y aumentar la conversión."
     }
   }), []);
 
-  const text = useMemo(() => content[language], [content, language]);
+  const text = useMemo(() => content[language] ?? content.pt, [content, language]);
 
   return (
     <section className="w-full pt-28 pb-6 relative z-[10]">
