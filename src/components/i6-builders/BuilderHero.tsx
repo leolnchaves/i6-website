@@ -90,30 +90,46 @@ const BuilderHero = () => {
 
               <pre
                 aria-hidden={!reducedMotion}
-                className="overflow-x-auto px-5 py-6 font-mono text-[12.5px] leading-[1.85] text-white/80"
+                tabIndex={reducedMotion ? undefined : 0}
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+                onFocus={() => setPaused(true)}
+                onBlur={() => setPaused(false)}
+                className="overflow-x-auto px-5 py-6 font-mono text-[12.5px] leading-[1.85] text-white/80 outline-none"
               >
                 <code>
                   {copy.codeLines.map((line, i) => {
-                    const isVisible = reducedMotion || i < visibleCount;
-                    const showCursor = !reducedMotion && visibleCount > 0 && i === visibleCount - 1;
+                    const isComment = line.startsWith('#');
+                    const typed = reducedMotion
+                      ? line.length
+                      : Math.max(0, Math.min(line.length, typedCount - lineOffsets[i]));
+                    const showCursor = !reducedMotion && i === activeLine;
 
                     return (
-                      <span
-                        key={`${i}-${line}`}
-                        className={`block whitespace-pre ${isVisible ? '' : 'invisible'}`}
-                      >
-                        {line.startsWith('#') ? <span className="text-white/35">{line}</span> : line}
-                        {showCursor && (
-                          <span
-                            aria-hidden
-                            className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[2px] animate-pulse bg-white/70"
-                          />
-                        )}
+                      <span key={`${i}-${line}`} className="relative block whitespace-pre">
+                        {/* Camada fantasma: reserva a largura/quebra final da linha */}
+                        <span aria-hidden className="invisible">
+                          {line.length ? line : '\u00A0'}
+                        </span>
+
+                        {/* Camada digitada, sobreposta */}
+                        <span
+                          className={`absolute inset-0 whitespace-pre ${isComment ? 'text-white/35' : ''}`}
+                        >
+                          {line.slice(0, typed)}
+                          {showCursor && (
+                            <span
+                              aria-hidden
+                              className={`ml-0.5 inline-block h-[1em] w-[2px] translate-y-[2px] bg-white/70 ${isDone ? 'animate-pulse' : ''}`}
+                            />
+                          )}
+                        </span>
                       </span>
                     );
                   })}
                 </code>
               </pre>
+
             </div>
           </div>
         </div>
