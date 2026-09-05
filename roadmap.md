@@ -19,3 +19,5 @@
 # Concluído
 - [x] Formulários de contato por variante + textos ES da página de contato
 - [x] Typewriter em /i6-builders
+
+- [x] Bloco "Suporte à implementação" no fim das páginas /docs (PT/EN/ES)

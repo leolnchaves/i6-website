@@ -8,6 +8,7 @@ import DocsSampleNotice from './DocsSampleNotice';
 import DocsMarkdown from './DocsMarkdown';
 import DocsVideo from './DocsVideo';
 import DocsDownload from './DocsDownload';
+import DocsSupport from './DocsSupport';
 
 import type { DocPage, DocSection } from '@/hooks/useDocs';
 import type { DocsUiCopy } from '@/data/docs/content';
@@ -111,6 +112,8 @@ const DocsShell = ({ sections, current, prev, next, copy, localized }: DocsShell
 
 
           <DocsPager prev={prev} next={next} copy={copy} localized={localized} />
+
+          <DocsSupport copy={copy.support} />
         </article>
 
         {/* On-page index */}
