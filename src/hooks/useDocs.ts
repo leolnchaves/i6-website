@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { Language } from '@/types/language';
 
+export type DocContentType = 'article' | 'video' | 'download';
+
 export interface DocPage {
   title: string;
   slug: string;
@@ -12,12 +14,22 @@ export interface DocPage {
   description: string | null;
   updated_at: string | null;
 
+  /** Defaults to 'article' when absent or unrecognised, so existing pages
+   *  keep rendering exactly as before. */
+  content_type: DocContentType;
+  video_provider: 'youtube' | null;
+  video_id: string | null;
+  /** Resolved URL of the attached file (from a `.asset.json` pointer). */
+  file_url: string | null;
+  file_label: string | null;
+
   /** Set only on the placeholder files shipped with the repo. The i6 HUB never
    *  writes this field, so the notice disappears as soon as the real page lands. */
   sample: boolean;
   hidden: boolean;
   content: string;
 }
+
 
 export interface DocSection {
   key: string;
