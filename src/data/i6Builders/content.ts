@@ -146,9 +146,8 @@ export const builderCopy = {
     finalCta: {
       title: 'Vamos avaliar o que você quer construir',
       sub: 'O time técnico da infinity6 avalia o caso, o caminho de integração e o desenho de entrega',
-      primary: 'Fale com o time',
-      community: 'Comunidade',
-      docs: 'Documentação',
+      community: 'Entre na comunidade i6 Builders',
+      docs: 'Ver documentação completa',
     },
   },
   en: {
@@ -289,9 +288,8 @@ export const builderCopy = {
     finalCta: {
       title: "Let's assess what you want to build",
       sub: 'The infinity6 technical team reviews the case, the integration path and the delivery design',
-      primary: 'Talk to the team',
-      community: 'Community',
-      docs: 'Documentation',
+      community: 'Join the i6 Builders community',
+      docs: 'View full documentation',
     },
   },
   es: {
@@ -432,9 +430,8 @@ export const builderCopy = {
     finalCta: {
       title: 'Vamos a evaluar lo que quieres construir',
       sub: 'El equipo técnico de infinity6 evalúa el caso, el camino de integración y el diseño de entrega',
-      primary: 'Habla con el equipo',
-      community: 'Comunidad',
-      docs: 'Documentación',
+      community: 'Únete a la comunidad i6 Builders',
+      docs: 'Ver documentación completa',
     },
   },
 };
