@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  Sparkles,
   TrendingUp,
   AlertTriangle,
   Target,
