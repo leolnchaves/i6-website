@@ -264,44 +264,44 @@ const ContactForm = memo(({
           <div className={`${compact ? '' : 'flex-1'} ${compact ? 'space-y-3' : 'space-y-6'}`}>
             <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? 'gap-3' : 'gap-6'}`}>
               <div>
-                <Label htmlFor="name" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
+                <Label htmlFor="name" className={`font-medium text-foreground block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                   {text.name} *
                 </Label>
                 <Input
                   id="name"
                   type="text"
                   {...register("name", { required: text.errors.nameRequired })}
-                  className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                  className={`w-full bg-secondary/60 border rounded-[calc(var(--radius)-4px)] text-foreground placeholder:text-muted-foreground/70 focus:ring-2 focus:ring-ring/30 focus:border-primary/40 ${
                     compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
-                  } ${errors.name ? 'border-red-500' : 'border-white/10'}`}
+                  } ${errors.name ? 'border-destructive/60' : 'border-border'}`}
                 />
               </div>
               <div>
-                <Label htmlFor="email" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
+                <Label htmlFor="email" className={`font-medium text-foreground block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                   {emailLabel} *
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   {...register("email", { required: text.errors.emailRequired, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: text.errors.emailInvalid } })}
-                  className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                  className={`w-full bg-secondary/60 border rounded-[calc(var(--radius)-4px)] text-foreground placeholder:text-muted-foreground/70 focus:ring-2 focus:ring-ring/30 focus:border-primary/40 ${
                     compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
-                  } ${errors.email ? 'border-red-500' : 'border-white/10'}`}
+                  } ${errors.email ? 'border-destructive/60' : 'border-border'}`}
                 />
               </div>
             </div>
 
             {!hideCompany && (
               <div>
-                <Label htmlFor="company" className="text-sm font-medium text-white/70 mb-2 block">
+                <Label htmlFor="company" className="text-sm font-medium text-foreground mb-2 block">
                   {text.company}{companyRequired ? ' *' : ''}
                 </Label>
                 <Input
                   id="company"
                   type="text"
                   {...register("company", companyRequired ? { required: text.errors.companyRequired } : {})}
-                  className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
-                    errors.company ? 'border-red-500' : 'border-white/10'
+                  className={`w-full px-4 py-2 bg-secondary/60 border rounded-[calc(var(--radius)-4px)] text-foreground placeholder:text-muted-foreground/70 focus:ring-2 focus:ring-ring/30 focus:border-primary/40 ${
+                    errors.company ? 'border-destructive/60' : 'border-border'
                   }`}
                 />
               </div>
@@ -311,33 +311,33 @@ const ContactForm = memo(({
               <input type="hidden" {...register("subject")} />
             ) : (
               <div>
-                <Label htmlFor="subject" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
+                <Label htmlFor="subject" className={`font-medium text-foreground block ${compact ? 'text-xs mb-1' : 'text-sm mb-2'}`}>
                   {text.subject} *
                 </Label>
                 <select
                   id="subject"
                   {...register("subject", { required: text.errors.subjectRequired })}
-                  className={`w-full bg-white/10 border rounded-lg text-white focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent ${
+                  className={`w-full bg-secondary/60 border rounded-[calc(var(--radius)-4px)] text-foreground focus:ring-2 focus:ring-ring/30 focus:border-primary/40 ${
                     compact ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
-                  } ${errors.subject ? 'border-red-500' : 'border-white/10'}`}
+                  } ${errors.subject ? 'border-destructive/60' : 'border-border'}`}
                 >
-                  <option value="" className="bg-[#0B1224]">{text.subject}</option>
-                  <option value="sales_suite" className="bg-[#0B1224]">{text.subjectOptions.salesSuite}</option>
-                  <option value="partnerships" className="bg-[#0B1224]">{text.subjectOptions.partnerships}</option>
-                  <option value="press" className="bg-[#0B1224]">{text.subjectOptions.press}</option>
-                  <option value="other" className="bg-[#0B1224]">{text.subjectOptions.other}</option>
+                  <option value="">{text.subject}</option>
+                  <option value="sales_suite">{text.subjectOptions.salesSuite}</option>
+                  <option value="partnerships">{text.subjectOptions.partnerships}</option>
+                  <option value="press">{text.subjectOptions.press}</option>
+                  <option value="other">{text.subjectOptions.other}</option>
                 </select>
               </div>
             )}
 
             <div className={`${compact ? '' : 'flex-1'} flex flex-col`}>
-              <Label htmlFor="message" className={`font-medium text-white/70 block ${compact ? 'text-xs mb-1' : 'text-sm mb-1'}`}>
-                {text.message} * <span className="text-white/40 font-normal">{text.messageMinChar}</span>
+              <Label htmlFor="message" className={`font-medium text-foreground block ${compact ? 'text-xs mb-1' : 'text-sm mb-1'}`}>
+                {text.message} * <span className="text-muted-foreground font-normal">{text.messageMinChar}</span>
               </Label>
               {messageDescription && (
                 <p
                   id="message-description"
-                  className={`text-white/60 leading-relaxed ${compact ? 'text-[11px] mb-2' : 'text-sm mb-3'}`}
+                  className={`text-muted-foreground leading-relaxed ${compact ? 'text-[11px] mb-2' : 'text-sm mb-3'}`}
                 >
                   {messageDescription}
                 </p>
@@ -347,16 +347,16 @@ const ContactForm = memo(({
                 aria-describedby={messageDescription ? "message-description" : undefined}
                 placeholder={text.messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
-                className={`w-full bg-white/10 border rounded-lg text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#F4845F]/30 focus:border-transparent resize-none ${
+                className={`w-full bg-secondary/60 border rounded-[calc(var(--radius)-4px)] text-foreground placeholder:text-muted-foreground/70 focus:ring-2 focus:ring-ring/30 focus:border-primary/40 resize-none ${
                   compact ? '' : 'flex-1'
                 } ${
                   compact ? 'px-3 py-1.5 min-h-[72px] text-sm' : 'px-4 py-2 min-h-[120px]'
-                } ${errors.message ? 'border-red-500' : 'border-white/10'}`}
+                } ${errors.message ? 'border-destructive/60' : 'border-border'}`}
               />
             </div>
 
             {isSuccess && (
-              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 text-green-400">
+              <div className="bg-emerald-500/10 border border-emerald-500/25 rounded-[calc(var(--radius)-4px)] p-4 text-emerald-700">
                 <div className="flex items-center">
                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -370,13 +370,14 @@ const ContactForm = memo(({
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className={`w-full bg-white/10 hover:bg-[#F4845F]/20 border border-transparent hover:border-[#F4845F]/30 text-white/80 hover:text-[#F4845F] mt-auto transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`w-full bg-primary text-primary-foreground border border-transparent hover:brightness-[1.06] shadow-[var(--sand-shadow-soft)] mt-auto transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
               compact ? 'text-base py-2' : 'text-lg py-3'
             }`}
           >
             {isSubmitting ? text.sending : text.sendButton}
             <Send className={`ml-2 w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
           </Button>
+
         </form>
       </CardContent>
     </Card>
