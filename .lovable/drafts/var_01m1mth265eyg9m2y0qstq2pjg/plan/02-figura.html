@@ -1,0 +1,47 @@
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
+  <style>
+    :root {
+      --foreground: hsl(220 25% 18%);
+      --muted-foreground: hsl(220 12% 45%);
+      --border: hsl(30 18% 82%);
+      --muted: hsl(30 24% 94%);
+      --background: hsl(30 26% 96%);
+      --primary: hsl(16 78% 66%);
+    }
+  </style>
+
+  <!-- Background -->
+  <rect width="640" height="320" fill="var(--background)" />
+
+  <!-- Section container -->
+  <rect x="60" y="60" width="520" height="200" rx="16" fill="var(--muted)" stroke="var(--border)" />
+
+  <!-- Title -->
+  <rect x="100" y="100" width="320" height="20" rx="4" fill="var(--foreground)" opacity="0.9" />
+  <!-- Subtitle lines -->
+  <rect x="100" y="132" width="280" height="12" rx="3" fill="var(--muted-foreground)" />
+  <rect x="100" y="150" width="240" height="12" rx="3" fill="var(--muted-foreground)" />
+
+  <!-- Removed primary button area (ghosted) -->
+  <rect x="100" y="190" width="140" height="36" rx="8" fill="var(--primary)" opacity="0.15" stroke="var(--primary)" stroke-dasharray="4 3" />
+  <text x="170" y="213" font-size="11" fill="var(--primary)" text-anchor="middle" font-weight="600">REMOVER</text>
+
+  <!-- New link 1 -->
+  <g transform="translate(300, 190)">
+    <rect width="220" height="36" rx="8" fill="none" />
+    <text x="0" y="23" font-size="13" fill="var(--primary)" font-weight="600">Entre na comunidade i6 Builders</text>
+    <path d="M200 18 L210 18 L206 14 M210 18 L206 22" stroke="var(--primary)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- New link 2 -->
+  <g transform="translate(300, 232)">
+    <rect width="180" height="36" rx="8" fill="none" />
+    <text x="0" y="23" font-size="13" fill="var(--primary)" font-weight="600">Ver documentação completa</text>
+    <path d="M160 18 L170 18 L166 14 M170 18 L166 22" stroke="var(--primary)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Annotation -->
+  <circle cx="540" cy="208" r="12" fill="var(--primary)" />
+  <text x="540" y="212" font-size="10" fill="white" text-anchor="middle" font-weight="700">1</text>
+  <text x="560" y="212" font-size="11" fill="var(--muted-foreground)">seta move no hover</text>
+</svg>
