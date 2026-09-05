@@ -1,12 +1,12 @@
 # Roadmap — Formulários de contato por página
 
-- [ ] `ContactForm` com `variant: 'default' | 'community' | 'builders'`
-- [ ] Assunto oculto com valor fixo (`Interesse — Comunidade` / `Interesse — i6 Builders`)
-- [ ] Obrigatoriedade por variante (empresa em builders, mensagem nas duas)
-- [ ] Rótulo de e-mail simples em community
-- [ ] Textos ES completos na origem (corrige `/es/contact`, `/es/community`, `/es/i6-builders`)
-- [ ] `leadSource` da comunidade → `i6-community`
-- [ ] Build, checagem de tipos e relatório com o ES da variante default
+- [x] `ContactForm` com `variant: 'default' | 'community' | 'builders'`
+- [x] Assunto oculto com valor fixo (`Interesse — Comunidade` / `Interesse — i6 Builders`)
+- [x] Obrigatoriedade por variante (empresa em builders, mensagem nas duas)
+- [x] Rótulo de e-mail simples em community
+- [x] Textos ES completos na origem (formulário + hero, FAQ, mapa, cards e agenda de /contact)
+- [x] `leadSource` da comunidade → `i6-community`
+- [x] Build, checagem de tipos e verificação PT/EN/ES
 
 ---
 
