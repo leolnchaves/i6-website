@@ -6,18 +6,39 @@ import { useTypewriter } from '@/hooks/useTypewriter';
 
 /**
  * Abertura editorial: título à esquerda, painel de código à direita.
- * O painel de código usa animação typewriter linha a linha, sem interação
- * do usuário. O bloco animado é decorativo (aria-hidden); o código completo
- * fica disponível em sr-only para leitores de tela. Com prefers-reduced-motion,
- * o próprio bloco principal mostra tudo imediatamente e serve de fonte acessível.
+ * O painel de código usa animação typewriter caractere a caractere, em loop,
+ * sem interação do usuário (hover/foco apenas congelam). Cada linha tem uma
+ * camada "fantasma" invisível com o texto completo, reservando a largura final
+ * desde o primeiro frame — o texto digitado é sobreposto por cima, sem reflow.
+ * O bloco animado é decorativo (aria-hidden); o código completo fica em sr-only
+ * para leitores de tela. Com prefers-reduced-motion, o bloco principal mostra
+ * tudo imediatamente e serve de fonte acessível.
  */
 const BuilderHero = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, builderCopy).hero;
-  const { visibleCount, reducedMotion } = useTypewriter(copy.codeLines);
+  const { typedCount, isDone, reducedMotion, setPaused } = useTypewriter(copy.codeLines);
 
   const [before, after] = copy.title.split(copy.highlight);
   const fullCode = copy.codeLines.join('\n');
+
+  // Offset inicial de cada linha dentro do texto completo (+1 pela quebra de linha)
+  const lineOffsets: number[] = [];
+  copy.codeLines.reduce((acc, line, i) => {
+    lineOffsets[i] = acc;
+    return acc + line.length + 1;
+  }, 0);
+
+  // Linha onde o cursor está agora
+  const activeLine = reducedMotion
+    ? copy.codeLines.length - 1
+    : isDone
+      ? copy.codeLines.length - 1
+      : copy.codeLines.reduce(
+          (found, line, i) => (typedCount >= lineOffsets[i] ? i : found),
+          0,
+        );
+
 
   return (
     <section className="relative overflow-hidden">
