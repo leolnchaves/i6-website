@@ -6,6 +6,8 @@ export interface DocsUiCopy {
   searchLabel: string;
   searchPlaceholder: string;
   noResults: string;
+  resultsCount: string;
+  sampleTag: string;
   menuButton: string;
   tocTitle: string;
   prev: string;
@@ -26,9 +28,11 @@ export const docsUi: Record<Language, DocsUiCopy> = {
   pt: {
     eyebrow: 'DOCUMENTAÇÃO I6',
     title: 'Documentação',
-    searchLabel: 'Buscar na documentação',
-    searchPlaceholder: 'Buscar página…',
-    noResults: 'Nenhuma página encontrada',
+    searchLabel: 'Buscar no conteúdo da documentação',
+    searchPlaceholder: 'Buscar no conteúdo…',
+    noResults: 'Nenhum resultado',
+    resultsCount: '{count} resultado(s) encontrado(s)',
+    sampleTag: '(exemplo)',
     menuButton: 'Sumário',
     tocTitle: 'Nesta página',
     prev: 'Anterior',
@@ -45,9 +49,11 @@ export const docsUi: Record<Language, DocsUiCopy> = {
   en: {
     eyebrow: 'I6 DOCUMENTATION',
     title: 'Documentation',
-    searchLabel: 'Search the documentation',
-    searchPlaceholder: 'Search page…',
-    noResults: 'No page found',
+    searchLabel: 'Search the documentation content',
+    searchPlaceholder: 'Search the content…',
+    noResults: 'No results',
+    resultsCount: '{count} result(s) found',
+    sampleTag: '(sample)',
     menuButton: 'Contents',
     tocTitle: 'On this page',
     prev: 'Previous',
@@ -64,9 +70,11 @@ export const docsUi: Record<Language, DocsUiCopy> = {
   es: {
     eyebrow: 'DOCUMENTACIÓN I6',
     title: 'Documentación',
-    searchLabel: 'Buscar en la documentación',
-    searchPlaceholder: 'Buscar página…',
-    noResults: 'Ninguna página encontrada',
+    searchLabel: 'Buscar en el contenido de la documentación',
+    searchPlaceholder: 'Buscar en el contenido…',
+    noResults: 'Ningún resultado',
+    resultsCount: '{count} resultado(s) encontrado(s)',
+    sampleTag: '(ejemplo)',
     menuButton: 'Contenido',
     tocTitle: 'En esta página',
     prev: 'Anterior',
