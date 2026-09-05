@@ -64,8 +64,13 @@ laterais paradas, destaque durante a leitura, destaque na última seção e
    (`navigator.clipboard.writeText` do texto do bloco, fallback via
    `textarea` temporária), ícone `Copy` → `Check` por ~2s,
    `aria-label`/`title` PT "Copiar código", EN "Copy code", ES "Copiar
-   código", vindos de `docsUi` em `src/data/docs/content.ts`. Escopo
-   exclusivo de `DocsMarkdown`; as outras cinco renderizações de Markdown
+   código", vindos de `docsUi` em `src/data/docs/content.ts`. Além da
+   troca de ícone, um `<span role="status" aria-live="polite"
+   class="sr-only">` recebe "Copiado" / "Copied" / "Copiado" no idioma
+   ativo quando a cópia dá certo, e volta a vazio ao expirar o feedback.
+   Escopo exclusivo de `DocsMarkdown`; as outras cinco renderizações de
+   Markdown
+
    do site não são tocadas.
 6. Exemplos: `video-tour-{pt,en,es}.md` e
    `download-guide-{pt,en,es}.md` em `src/content/docs/`, com
