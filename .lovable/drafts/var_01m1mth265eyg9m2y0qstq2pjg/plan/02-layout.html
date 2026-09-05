@@ -1,0 +1,46 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+  <style>
+    .lbl { font-size: 14px; font-weight: 480; fill: hsl(var(--foreground)); }
+    .sm  { font-size: 12px; fill: hsl(var(--muted-foreground)); }
+    .bx  { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+    .zn  { fill: none; stroke: hsl(var(--border)); stroke-width: 1; stroke-dasharray: 4 3; }
+    .gr  { fill: hsl(var(--border)); }
+    .qf  { fill: hsl(var(--muted)); }
+  </style>
+
+  <text class="sm" x="8" y="14">tela</text>
+  <rect class="zn" x="8" y="20" width="624" height="230" rx="8"/>
+
+  <!-- left menu -->
+  <rect class="bx" x="24" y="36" width="140" height="198" rx="8"/>
+  <text class="lbl" x="36" y="58">menu</text>
+  <rect class="gr" x="36" y="70" width="90" height="7" rx="3"/>
+  <rect class="gr" x="36" y="84" width="108" height="7" rx="3"/>
+  <rect class="gr" x="36" y="98" width="76" height="7" rx="3"/>
+  <text class="sm" x="36" y="222">parado</text>
+
+  <!-- middle content, the change -->
+  <rect x="180" y="36" width="288" height="198" rx="8" fill="none" stroke="hsl(var(--accent))" stroke-width="1"/>
+  <text class="lbl" x="192" y="58">conteúdo</text>
+  <rect class="gr" x="192" y="70" width="240" height="7" rx="3"/>
+  <rect class="gr" x="192" y="84" width="256" height="7" rx="3"/>
+  <rect class="gr" x="192" y="98" width="210" height="7" rx="3"/>
+  <rect class="gr" x="192" y="112" width="248" height="7" rx="3"/>
+  <rect class="gr" x="192" y="126" width="180" height="7" rx="3"/>
+  <!-- scrollbar track on middle only -->
+  <rect class="qf" x="452" y="46" width="6" height="178" rx="3"/>
+  <rect x="452" y="90" width="6" height="70" rx="3" fill="hsl(var(--accent))"/>
+  <text class="sm" x="192" y="222">única barra de rolagem</text>
+
+  <!-- right index -->
+  <rect class="bx" x="484" y="36" width="132" height="198" rx="8"/>
+  <text class="lbl" x="496" y="58">nesta página</text>
+  <rect x="496" y="70" width="3" height="10" rx="1.5" fill="hsl(var(--accent))"/>
+  <rect class="gr" x="506" y="70" width="72" height="7" rx="3"/>
+  <rect class="gr" x="506" y="86" width="86" height="7" rx="3"/>
+  <rect class="gr" x="514" y="102" width="64" height="7" rx="3"/>
+  <text class="sm" x="496" y="222">destaque segue</text>
+  <text class="sm" x="496" y="236">a leitura</text>
+
+  <text class="sm" x="8" y="272">rolagem no meio · laterais paradas com rolagem própria quando longas</text>
+</svg>

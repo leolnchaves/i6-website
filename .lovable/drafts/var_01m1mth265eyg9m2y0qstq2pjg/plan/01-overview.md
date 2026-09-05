@@ -1,13 +1,27 @@
-# Formulários por página: /contact, /i6-builders, /community
+# Menu e índice fixos na documentação
 
-Os três usam o mesmo formulário de contato, com o mesmo envio para a planilha e para o i6 HUB. A mudança é só de campos e textos por página — o envio, o anti-robô, a chave única contra duplicata e o aviso de sucesso ficam iguais.
+Hoje, na página de documentação, o menu da esquerda e o índice da direita
+deveriam acompanhar a rolagem, mas não acompanham: eles sobem junto com o
+texto e desaparecem da tela.
 
-## Causa do espanhol errado
+A causa é real e já verificada na página em execução: o contêiner geral do
+site (o mesmo usado por todas as páginas) corta o transbordo horizontal de
+uma forma que anula o comportamento "grudar no topo" das colunas laterais.
+Também confirmei que o destaque da seção atual no índice da direita já
+funciona — ele estava atualizando corretamente durante a rolagem, só não
+ficava visível porque a coluna saía da tela.
 
-Os textos do formulário existem apenas em português e inglês; qualquer idioma não previsto cai no português. Por isso `/es/i6-builders`, `/es/community` e também `/es/contact` mostram o formulário em português. A correção é adicionar a versão em espanhol na origem dos textos — não um remendo por página.
+O que vai mudar:
 
-## O que muda em cada página
-
-- **/contact**: nada. Continua exatamente como está hoje (só ganha o espanhol correto).
-- **/community**: assunto invisível, preenchido automaticamente como "Interesse — Comunidade"; rótulo de e-mail simples, sem exigir e-mail corporativo; mensagem obrigatória pedindo histórico, motivo e expectativa.
-- **/i6-builders**: assunto invisível, preenchido automaticamente como "Interesse — i6 Builders"; empresa passa a ser obrigatória; mensagem obrigatória pedindo empresa, produto e capacidade técnica do time.
+- O menu da esquerda e o índice da direita passam a ficar parados na tela
+  enquanto só o conteúdo do meio rola.
+- Cada coluna lateral ganha rolagem própria, para o caso de o menu ou o
+  índice ficarem mais longos que a altura da tela.
+- O destaque no índice da direita continua acompanhando a seção que a
+  pessoa está lendo, incluindo agora um destaque correto quando ela chega
+  ao final da página (última seção).
+- O índice da direita aparece a partir de telas grandes, junto com o
+  espaço reservado para ele — hoje há um desencontro que faz o índice cair
+  embaixo do texto em telas intermediárias.
+- No celular nada muda: o menu continua sendo aberto por botão e o índice
+  segue oculto, como já foi definido.
