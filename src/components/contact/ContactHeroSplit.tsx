@@ -39,9 +39,8 @@ const ContactHeroSplit = () => {
 
           {/* Formulário */}
           <div id="contact-form" className="scroll-mt-28">
-            <div className="rounded-[var(--radius)] bg-[#0B1224] p-2 shadow-[var(--sand-shadow-lift)] sm:p-3">
-              <ContactForm />
-            </div>
+            <ContactForm />
+
             <p className="mt-4 text-sm text-muted-foreground">
               {copy.directPrefix}{' '}
               <a

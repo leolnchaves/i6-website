@@ -24,14 +24,20 @@ const I6Builders = () => (
       {/* Fecho escuro: emenda direto no rodapé, sem corte seco */}
       <div className="bg-[#0B1224]">
         <BuilderFinalCTA />
+      </div>
 
-        {/* Captura de lead: reutiliza o formulário existente (planilha + sync i6 HUB) */}
-        <section id="fale-com-o-time" className="container mx-auto px-6 pb-24 scroll-mt-28">
+      {/* Transição suave do fecho escuro para a faixa areia */}
+      <div aria-hidden className="h-16 bg-gradient-to-b from-[#0B1224] to-background" />
+
+      {/* Captura de lead: reutiliza o formulário existente (planilha + sync i6 HUB) */}
+      <section id="fale-com-o-time" className="bg-background pb-24 scroll-mt-28">
+        <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <ContactForm leadSource="i6-builders" variant="builders" />
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
     </div>
   </>
 );
