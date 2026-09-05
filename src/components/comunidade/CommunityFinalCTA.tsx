@@ -1,7 +1,6 @@
-import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang } from '@/utils/localizedPath';
-import { communityCopy, COMMUNITY_CONTACT_ANCHOR } from '@/data/comunidade/content';
+import { communityCopy } from '@/data/comunidade/content';
 
 const CommunityFinalCTA = () => {
   const { language } = useLanguage();
