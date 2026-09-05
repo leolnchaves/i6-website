@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { createHeadingIdFactory } from '@/utils/headingSlug';
 import DocsCodeBlock from './DocsCodeBlock';
-import type { ReactNode } from 'react';
+import { useLocalizedPath } from '@/utils/localizedPath';
+import type { MouseEvent, ReactNode } from 'react';
 
 /**
  * Markdown renderer used ONLY by the documentation area.
@@ -23,7 +25,29 @@ interface DocsMarkdownProps {
   copiedLabel: string;
 }
 
+/** True for hrefs that point at another documentation page of this very site. */
+const isInternalDocHref = (href?: string): boolean => {
+  if (!href) return false;
+  if (/^(https?:|mailto:|tel:|#|\/\/)/i.test(href)) return false;
+  if (/^\/(pt|en|es)\/docs(\/|$)/.test(href)) return true;
+  if (/^\/docs(\/|$)/.test(href)) return true;
+  // Relative, schemeless links such as "docs/guia" or "./docs/guia".
+  return /^\.{0,2}\/?docs(\/|$)/.test(href);
+};
+
 const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) => {
+  const navigate = useNavigate();
+  const localized = useLocalizedPath();
+
+  const handleInternalClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Preserve native behaviour for new tab / new window intents.
+    if (event.defaultPrevented) return;
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    const path = href.replace(/^\.{0,2}\//, '/').replace(/^(?!\/)/, '/');
+    navigate(/^\/(pt|en|es)\//.test(path) ? path : localized(path));
+  };
+
   // Recreated on every render and consumed synchronously in document order,
   // mirroring extractHeadings() exactly.
   const nextId = createHeadingIdFactory();
@@ -56,16 +80,20 @@ const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) =>
           ol: ({ children }) => <ol className="mb-5 list-decimal space-y-2 pl-5">{children}</ol>,
           li: ({ children }) => <li className="leading-relaxed">{children}</li>,
           strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              target={href?.startsWith('http') ? '_blank' : undefined}
-              rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children }) => {
+            const internal = isInternalDocHref(href);
+            return (
+              <a
+                href={href}
+                onClick={internal ? (event) => handleInternalClick(event, href!) : undefined}
+                target={href?.startsWith('http') ? '_blank' : undefined}
+                rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
+              >
+                {children}
+              </a>
+            );
+          },
           blockquote: ({ children }) => (
             <blockquote className="mb-6 border-l-2 border-primary pl-5 italic text-foreground/80">
               {children}
