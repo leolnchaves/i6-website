@@ -241,7 +241,7 @@ const ContactForm = memo(({
 
   const emailLabel = variant === 'community' ? text.emailSimple : text.email;
   const messageDescription =
-    variant === 'community' ? text.messageDescriptionCommunity
+    variant === 'community' ? undefined
     : variant === 'builders' ? text.messageDescriptionBuilders
     : text.messageDescriptionDefault;
 
