@@ -1,15 +1,21 @@
-# Roadmap — Formulários de contato por página
+# Roadmap — Documentação (/docs)
 
-- [x] `ContactForm` com `variant: 'default' | 'community' | 'builders'`
-- [x] Assunto oculto com valor fixo (`Interesse — Comunidade` / `Interesse — i6 Builders`)
-- [x] Obrigatoriedade por variante (empresa em builders, mensagem nas duas)
-- [x] Rótulo de e-mail simples em community
-- [x] Textos ES completos na origem (formulário + hero, FAQ, mapa, cards e agenda de /contact)
-- [x] `leadSource` da comunidade → `i6-community`
-- [x] Build, checagem de tipos e verificação PT/EN/ES
+## Frente A — Menu e índice fixos
+- [ ] `DarkLayout`: `overflow-x-hidden` → `overflow-x-clip`
+- [ ] `DocsShell`: menu sticky com scroll próprio; grid reserva índice em `xl`
+- [ ] `DocsToc`: sticky com scroll próprio; estado único de destaque (fim de documento com prioridade, sem flicker); `scrollIntoView({block:'nearest'})` com reduced-motion
+- [ ] Sem barra horizontal em home, i6-builders, community, contact e docs (PT/EN/ES)
+
+## Frente B — Vídeo, download e copiar código
+- [ ] `content_type: 'article' | 'video' | 'download'` em `useDocs` + `fmDocs` no sync
+- [ ] `DocsVideo`: thumbnail + play, iframe youtube-nocookie só após clique
+- [ ] `DocsDownload`: cartão de destaque com `file_url`/`file_label`
+- [ ] `DocsCodeBlock`: botão copiar (Copy→Check) + `aria-live="polite"` nos 3 idiomas
+- [ ] Exemplos `video-tour` e `download-guide` nos 3 idiomas com `sample: true`
+- [ ] Build, checagem de tipos e verificação visual
 
 ---
 
-# Concluído — Typewriter em /i6-builders
-
-- [x] `useTypewriter` caractere por caractere, anti-reflow, loop, pausa em hover, reduced-motion, build e verificação visual
+# Concluído
+- [x] Formulários de contato por variante + textos ES da página de contato
+- [x] Typewriter em /i6-builders
