@@ -47,108 +47,48 @@ const ContactMap = () => {
             </div>
           </div>
 
-          {/* Composição abstrata */}
+          {/* Mapa-múndi real, recolorido pelos tokens do tema */}
           <div className="sand-card overflow-hidden p-6 sm:p-8">
-            <svg
-              viewBox="0 0 640 400"
+            <div
               role="img"
               aria-label={copy.title}
-              className="h-auto w-full"
+              className="relative w-full"
+              style={{ aspectRatio: '1280 / 640' }}
             >
-              <defs>
-                <radialGradient id="cm-glow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.20" />
-                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
-                </radialGradient>
-                <linearGradient id="cm-wave" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="hsl(var(--border))" stopOpacity="0.2" />
-                  <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.55" />
-                  <stop offset="100%" stopColor="hsl(var(--border))" stopOpacity="0.2" />
-                </linearGradient>
-              </defs>
+              {/* Continentes */}
+              <div className="absolute inset-0 bg-foreground/[0.13]" style={maskStyle} />
+              {/* Realce da América do Sul */}
+              <div
+                className="absolute inset-0 bg-primary/25"
+                style={{ ...maskStyle, clipPath: 'inset(48% 66% 0% 17%)' }}
+              />
 
-              {/* Ondas suaves de fundo */}
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <path
-                  key={i}
-                  d={`M-20 ${120 + i * 34} C 130 ${74 + i * 34}, 240 ${172 + i * 34}, 350 ${132 + i * 34} S 540 ${70 + i * 34}, 660 ${118 + i * 34}`}
-                  fill="none"
-                  stroke="url(#cm-wave)"
-                  strokeWidth={i === 3 ? 1.4 : 1}
-                  opacity={i === 3 ? 0.9 : 0.45}
-                />
-              ))}
-
-              {/* Halo e anéis difusos ao redor da sede */}
-              <circle cx="330" cy="234" r="150" fill="url(#cm-glow)" />
-              {[46, 84, 122].map((r, i) => (
-                <circle
-                  key={r}
-                  cx="330"
-                  cy="234"
-                  r={r}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeOpacity={0.26 - i * 0.07}
-                  strokeWidth="1"
-                />
-              ))}
-
-              {/* Traços decorativos de expansão: simétricos, sem direção geográfica */}
-              {[0, 60, 120, 180, 240, 300].map((deg) => {
-                const rad = (deg * Math.PI) / 180;
-                const x1 = 330 + Math.cos(rad) * 52;
-                const y1 = 234 + Math.sin(rad) * 52;
-                const x2 = 330 + Math.cos(rad) * 118;
-                const y2 = 234 + Math.sin(rad) * 118;
-                return (
-                  <line
-                    key={deg}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke="hsl(var(--primary))"
-                    strokeOpacity="0.28"
-                    strokeWidth="1"
-                    strokeDasharray="3 7"
-                    strokeLinecap="round"
-                  />
-                );
-              })}
-
-              {/* Ponto da sede */}
-              <circle cx="330" cy="234" r="16" fill="hsl(var(--primary))" opacity="0.16">
-                <animate attributeName="r" values="16;26;16" dur="4s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.18;0.02;0.18" dur="4s" repeatCount="indefinite" />
-              </circle>
-              <circle cx="330" cy="234" r="7" fill="hsl(var(--primary))" />
-              <circle cx="330" cy="234" r="13" fill="none" stroke="hsl(var(--primary))" strokeOpacity="0.5" strokeWidth="1" />
-
-              <text
-                x="356"
-                y="230"
-                style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 600, fill: 'hsl(var(--foreground))' }}
+              {/* Marcador de Campinas */}
+              <div
+                className="absolute"
+                style={{ left: `${CAMPINAS.x}%`, top: `${CAMPINAS.y}%` }}
               >
-                {copy.city}
-              </text>
-              <text
-                x="356"
-                y="248"
-                style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
-              >
-                {copy.country}
-              </text>
+                <span className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2">
+                  <span className="block h-16 w-16 rounded-full bg-primary/10 motion-safe:animate-pulse" />
+                </span>
+                <span className="absolute left-0 top-0 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40" />
+                <span className="absolute left-0 top-0 h-[10px] w-[10px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary ring-4 ring-primary/20" />
+                <span className="absolute left-4 top-0 -translate-y-1/2 whitespace-nowrap">
+                  <span className="block text-sm font-semibold leading-tight text-foreground">
+                    {copy.city}
+                  </span>
+                  <span className="block text-xs leading-tight text-muted-foreground">
+                    {copy.country}
+                  </span>
+                </span>
+              </div>
 
-              <text
-                x="24"
-                y="372"
-                style={{ fontFamily: 'var(--font-sans)', fontSize: 11, letterSpacing: '0.16em', fill: 'hsl(var(--muted-foreground))' }}
-              >
-                {copy.nextLabel.toUpperCase()}
-              </text>
-            </svg>
+              <p className="absolute bottom-0 left-0 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                {copy.nextLabel}
+              </p>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
