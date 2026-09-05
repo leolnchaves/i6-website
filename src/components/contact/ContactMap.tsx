@@ -5,7 +5,7 @@ import { contactCopy, CONTACT_EMAIL } from '@/data/contact/content';
 import worldMapImage from '@/assets/images/world-map.png';
 
 /** Posição de Campinas (lon -47.06 / lat -22.9) sobre a projeção da silhueta. */
-const CAMPINAS = { x: 31.2, y: 75.3 };
+const CAMPINAS = { x: 30.7, y: 75.6 };
 
 const maskStyle: React.CSSProperties = {
   WebkitMaskImage: `url(${worldMapImage})`,
