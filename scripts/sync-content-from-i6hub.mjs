@@ -428,7 +428,14 @@ function fmDocs(it) {
     `order: ${Number.isFinite(it.order) ? it.order : 999}`,
     it.description ? `description: ${yaml(it.description)}` : null,
     it.updated_at  ? `updated_at: ${yaml(it.updated_at)}`   : null,
+    // Optional content types. Absent fields keep the page rendering as an article.
+    it.content_type && it.content_type !== 'article' ? `content_type: ${it.content_type}` : null,
+    it.video_provider ? `video_provider: ${it.video_provider}` : null,
+    it.video_id       ? `video_id: ${yaml(it.video_id)}`       : null,
+    it.file_url       ? `file_url: ${yaml(it.file_url)}`       : null,
+    it.file_label     ? `file_label: ${yaml(it.file_label)}`   : null,
     it.hidden ? 'hidden: true' : null,
+
     '---',
     '',
     it.content ?? it.body_md ?? '',
