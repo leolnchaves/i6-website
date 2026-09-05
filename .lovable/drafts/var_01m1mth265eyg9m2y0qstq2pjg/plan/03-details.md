@@ -1,18 +1,29 @@
 ## Detalhes técnicos
 
-**Novo componente** `src/components/docs/DocsSupport.tsx`
-- `<section>` com `rounded-2xl border border-border bg-card p-5`, título `text-sm font-semibold` + linha de apoio `text-sm text-muted-foreground`.
-- `<ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">` com cartões `rounded-xl border border-border bg-muted/20 p-4`: ícone lucide (`Mail`, `MessageCircle`, `MessagesSquare`), rótulo, descrição `text-xs`, `Badge variant="secondary" size="sm"` para disponibilidade e botão `Button variant="outline" size="sm"` no rodapé do cartão.
-- E-mail: `<Button asChild>` com `mailto:performance@infinity6.ai`. WhatsApp e Assistente: botão `disabled` com o texto "Em breve"/"Coming soon"/"Muy pronto".
-- Componente sem estado, dados vindos de props/constante local — nenhuma chamada de rede, nenhum dado do i6 HUB.
+### 1. Navegação interna sem reload (`src/components/docs/DocsMarkdown.tsx`)
+- Usar `useNavigate` de `react-router-dom` (padrão já usado no projeto) no renderizador `a`.
+- Considerar interno todo href que: começa com `/docs`, casa `^/(pt|en|es)/docs`, ou é relativo sem esquema apontando para docs. Ancoras (`#...`), `mailto:`, `tel:` e URLs absolutas http(s) para outro domínio ficam intactas.
+- No clique interno: se não houver modificador (`metaKey`, `ctrlKey`, `shiftKey`, `altKey`) e for botão primário, `event.preventDefault()` + `navigate(path)`. O `href` permanece no DOM (abrir em nova aba continua funcionando).
+- Normalizar o destino com o helper de idioma já existente (`useLocalizedPath`) quando o href vier sem prefixo de idioma, para não perder o idioma atual.
+- Nenhuma mudança nos outros renderizadores.
 
-**Textos** em `src/data/docs/content.ts`
-- Estender `DocsUiCopy` com `support: { title, body, comingSoon, channels: { email: {...}, whatsapp: {...}, assistant: {...} } }` e preencher nos três idiomas (base pt do i6 Decision Suite; EN/ES traduzidos).
+### 2. `related` em `src/hooks/useDocs.ts`
+- `DocPage` ganha `related: string[]` (vazio quando ausente).
+- O parser de frontmatter é simples (sem YAML de listas), então aceitar as duas formas que o HUB pode emitir: `related: a, b, c` e `related: [a, b, c]` — split por vírgula, trim, remoção de colchetes/quotes, descarte de itens vazios.
+- `useDocs` passa a expor também um resolvedor: para cada slug em `current.related`, buscar em `pages` (idioma já resolvido pela cadeia de fallback existente) e, se não achar, buscar em `ALL` por qualquer idioma antes de descartar. Slug inexistente → ignorado, com `console.warn` só quando `import.meta.env.DEV`.
+- `scripts/sync-content-from-i6hub.mjs` (`fmDocs`): escrever `related: a, b, c` quando o item do HUB trouxer o campo, mantendo-o opcional.
 
-**Integração** em `src/components/docs/DocsShell.tsx`
-- Renderizar `<DocsSupport copy={copy.support} />` depois de `<DocsPager />`, dentro do `<article>`, com `mt-12`.
-- Nenhuma alteração no grid sticky, no índice lateral, na busca ou nas páginas de vídeo/download.
+### 3. Novo `src/components/docs/DocsRelated.tsx`
+- Props: lista já resolvida `{ slug, title }[]`, título da seção e `localized`.
+- Renderiza `<nav>` com título `text-sm font-semibold uppercase tracking-wide` e lista de `Link` (react-router) com seta `ArrowRight` (lucide), estilo de link primary já usado no /docs. Sem cartões nem chips.
+- Retorna `null` quando a lista está vazia.
 
-**Fora de escopo**: número real de WhatsApp, cartão de central de ajuda, assistente funcional, release/deploy.
+### 4. Integração e textos
+- `DocsShell.tsx`: renderizar `<DocsRelated …/>` entre `<DocsMarkdown/>` e `<DocsPager/>`.
+- `src/data/docs/content.ts`: nova chave `relatedTitle` em `DocsUiCopy` — "Leitura relacionada" / "Related reading" / "Lectura relacionada".
 
-**Verificação**: `npx tsgo --noEmit`, `bun run build` e screenshots de `/pt/docs/...` e `/en/docs/...` confirmando o bloco acima do rodapé.
+### Fora de escopo
+Taxonomia de seções, chips/etiquetas, sidebar, índice lateral, `/i6-builders`, release/deploy.
+
+### Verificação
+`npx tsgo --noEmit`, `bun run build` e checagem no preview: clicar num link interno de doc sem recarregar (sem flash de página) e ver o bloco "Leitura relacionada" numa página de exemplo com o campo preenchido.

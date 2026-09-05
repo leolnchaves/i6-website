@@ -1,19 +1,9 @@
-# Bloco de suporte no fim da documentação
+# Navegação sem recarregar + leitura relacionada em /docs
 
-Adicionar, no fim de toda página de documentação (logo acima do rodapé), o mesmo bloco "Suporte à implementação" que já existe no i6 Decision Suite: um cartão largo com título, uma linha de apoio e cartões de canais lado a lado.
+Duas melhorias na área de documentação:
 
-## Canais (decisões já tomadas)
+**1. Links internos sem recarregar a página.** Hoje um link no texto que aponta para outra página de documentação faz o navegador recarregar o site inteiro. Passa a trocar apenas o conteúdo, instantaneamente, como o menu lateral já faz. Links para outros sites continuam abrindo em nova aba, sem mudança.
 
-| Canal | Conteúdo | Ação |
-| --- | --- | --- |
-| E-mail de suporte técnico | Envie dúvidas de implementação com o contexto do passo atual. Selo: resposta em até 1 dia útil | Abre e-mail para performance@infinity6.ai |
-| WhatsApp | Atendimento direto para dúvidas rápidas de integração. Selo: Em breve | Botão desativado ("Em breve") |
-| Assistente de suporte | Assistente de documentação e implementação da i6. Selo: Em breve | Botão desativado ("Em breve") |
+**2. Bloco "Leitura relacionada".** Uma página pode indicar outras páginas de documentação; elas aparecem como uma pequena lista de links no fim do texto, antes dos botões Anterior/Próxima. O título mostrado é o da página de destino no idioma atual. Indicações que apontem para páginas inexistentes simplesmente não aparecem (aviso apenas no console em desenvolvimento). Páginas sem indicações não mostram nada de novo.
 
-O cartão "Central de ajuda" fica fora, já que o usuário está dentro da própria documentação.
-
-## Onde aparece
-
-Em toda página de documentação, depois do bloco Anterior/Próxima e antes do rodapé. Em telas largas os três cartões ficam em linha; no celular empilham.
-
-Textos em português, inglês e espanhol, seguindo o idioma da página. Nada de release ou publicação nesta rodada.
+Nada muda na organização de seções, no menu, no índice lateral ou nas páginas de vídeo e download. Sem publicação nesta rodada.
