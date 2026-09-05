@@ -58,6 +58,7 @@ const FooterNovo = () => {
   const partnersLinks: { to: string; label: string; external?: boolean }[] = [
     { to: localized('/i6-builders'), label: t('header.partners.builder') },
     { to: localized('/community'), label: t('header.partners.community') },
+    { to: localized('/docs'), label: t('header.partners.docs') },
   ];
 
 
