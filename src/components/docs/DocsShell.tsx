@@ -6,6 +6,9 @@ import DocsToc from './DocsToc';
 import DocsPager from './DocsPager';
 import DocsSampleNotice from './DocsSampleNotice';
 import DocsMarkdown from './DocsMarkdown';
+import DocsVideo from './DocsVideo';
+import DocsDownload from './DocsDownload';
+
 import type { DocPage, DocSection } from '@/hooks/useDocs';
 import type { DocsUiCopy } from '@/data/docs/content';
 
@@ -34,7 +37,7 @@ const DocsShell = ({ sections, current, prev, next, copy, localized }: DocsShell
       <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[240px_minmax(0,1fr)_220px] xl:gap-14">
         {/* Menu — sticky on desktop */}
         <div className="hidden lg:block">
-          <div className="sticky top-28 max-h-[calc(100vh-9rem)] overflow-y-auto pr-2">
+          <div className="sticky top-28 max-h-[calc(100vh-9rem)] overflow-y-auto overscroll-contain pr-2">
             <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
               {copy.eyebrow}
             </p>
@@ -88,7 +91,24 @@ const DocsShell = ({ sections, current, prev, next, copy, localized }: DocsShell
 
           {current.sample && <DocsSampleNotice message={copy.sampleNotice} />}
 
-          <DocsMarkdown content={current.content} />
+          {current.content_type === 'video' && current.video_id && (
+            <DocsVideo videoId={current.video_id} title={current.title} playLabel={copy.playVideo} />
+          )}
+
+          {current.content_type === 'download' && current.file_url && (
+            <DocsDownload
+              href={current.file_url}
+              label={current.file_label ?? copy.downloadLabel}
+              actionLabel={copy.downloadAction}
+            />
+          )}
+
+          <DocsMarkdown
+            content={current.content}
+            copyLabel={copy.copyCode}
+            copiedLabel={copy.copiedCode}
+          />
+
 
           <DocsPager prev={prev} next={next} copy={copy} localized={localized} />
         </article>
