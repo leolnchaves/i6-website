@@ -5,7 +5,7 @@ import { contactCopy, CONTACT_EMAIL } from '@/data/contact/content';
 import worldMapImage from '@/assets/images/world-map.png';
 
 /** Posição de Campinas (lon -47.06 / lat -22.9) sobre a projeção da silhueta. */
-const CAMPINAS = { x: 36.9, y: 74 };
+const CAMPINAS = { x: 31.2, y: 75.3 };
 
 const maskStyle: React.CSSProperties = {
   WebkitMaskImage: `url(${worldMapImage})`,
@@ -75,7 +75,7 @@ const ContactMap = () => {
               {/* Realce da América do Sul */}
               <div
                 className="absolute inset-0 bg-primary/25"
-                style={{ ...maskStyle, clipPath: 'inset(48% 66% 0% 17%)' }}
+                style={{ ...maskStyle, clipPath: 'inset(51% 66% 0% 17%)' }}
               />
 
               {/* Marcador de Campinas */}
@@ -84,7 +84,7 @@ const ContactMap = () => {
                 style={{ left: `${CAMPINAS.x}%`, top: `${CAMPINAS.y}%` }}
               >
                 <span className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2">
-                  <span className="block h-16 w-16 rounded-full bg-primary/10 motion-safe:animate-pulse" />
+                  <span className="block h-11 w-11 rounded-full bg-primary/10 motion-safe:animate-pulse" />
                 </span>
                 <span className="absolute left-0 top-0 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40" />
                 <span className="absolute left-0 top-0 h-[10px] w-[10px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary ring-4 ring-primary/20" />
