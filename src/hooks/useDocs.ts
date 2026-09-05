@@ -25,6 +25,9 @@ export interface DocPage {
 
   /** Set only on the placeholder files shipped with the repo. The i6 HUB never
    *  writes this field, so the notice disappears as soon as the real page lands. */
+  /** Slugs of other doc pages suggested as related reading. Empty when absent. */
+  related: string[];
+
   sample: boolean;
   hidden: boolean;
   content: string;
@@ -93,6 +96,17 @@ const resolveAssetUrl = (value: unknown): string | null => {
   return mod.default?.url ?? mod.url ?? null;
 };
 
+/** Accepts both `related: a, b, c` and `related: [a, b, c]`. */
+const parseRelated = (value: unknown): string[] => {
+  if (Array.isArray(value)) return value.map((v) => String(v).trim()).filter(Boolean);
+  if (typeof value !== 'string') return [];
+  return value
+    .replace(/^\[|\]$/g, '')
+    .split(',')
+    .map((item) => item.trim().replace(/^['"]|['"]$/g, ''))
+    .filter(Boolean);
+};
+
 const isContentType = (v: unknown): v is DocContentType =>
   v === 'article' || v === 'video' || v === 'download';
 
@@ -128,6 +142,7 @@ const ALL: DocPage[] = Object.entries(modules)
       video_id: typeof data.video_id === 'string' && data.video_id ? data.video_id : null,
       file_url: resolveAssetUrl(data.file_asset ?? data.file_url),
       file_label: typeof data.file_label === 'string' && data.file_label ? data.file_label : null,
+      related: parseRelated(data.related),
       sample: data.sample === true,
       hidden: data.hidden === true,
       content,
@@ -172,8 +187,23 @@ export const useDocs = (slug?: string) => {
     const index = slug ? pages.findIndex((p) => p.slug === slug) : 0;
     const current = index >= 0 ? pages[index] ?? null : null;
 
+    // Related reading: title in the active language, then any language, else skip.
+    const related = (current?.related ?? []).flatMap((relatedSlug) => {
+      const match =
+        pages.find((p) => p.slug === relatedSlug) ??
+        ALL.find((p) => p.slug === relatedSlug && !p.hidden);
+      if (!match) {
+        if (import.meta.env.DEV) {
+          console.warn(`[docs] related slug not found: "${relatedSlug}"`);
+        }
+        return [];
+      }
+      return [{ slug: match.slug, title: match.title }];
+    });
+
     return {
       pages,
+      related,
       sections,
       current,
       first: pages[0] ?? null,

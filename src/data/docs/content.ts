@@ -20,6 +20,7 @@ export interface DocsUiCopy {
   playVideo: string;
   downloadLabel: string;
   downloadAction: string;
+  relatedTitle: string;
   support: DocsSupportCopy;
 }
 
@@ -64,6 +65,7 @@ export const docsUi: Record<Language, DocsUiCopy> = {
     playVideo: 'Reproduzir o vídeo',
     downloadLabel: 'Material para download',
     downloadAction: 'Baixar',
+    relatedTitle: 'Leitura relacionada',
     support: {
       title: 'Suporte à implementação',
       body: 'Canais oficiais para tirar dúvidas durante a integração.',
@@ -108,6 +110,7 @@ export const docsUi: Record<Language, DocsUiCopy> = {
     playVideo: 'Play the video',
     downloadLabel: 'Downloadable material',
     downloadAction: 'Download',
+    relatedTitle: 'Related reading',
     support: {
       title: 'Implementation support',
       body: 'Official channels to clear up questions during the integration.',
@@ -152,6 +155,7 @@ export const docsUi: Record<Language, DocsUiCopy> = {
     playVideo: 'Reproducir el video',
     downloadLabel: 'Material para descargar',
     downloadAction: 'Descargar',
+    relatedTitle: 'Lectura relacionada',
     support: {
       title: 'Soporte a la implementación',
       body: 'Canales oficiales para resolver dudas durante la integración.',

@@ -11,7 +11,7 @@ const Docs = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const copy = docsUi[language];
-  const { sections, current, first, prev, next } = useDocs(slug);
+  const { sections, current, first, prev, next, related } = useDocs(slug);
 
   // /docs (no slug) or unknown slug -> first page in menu order
   if (!current) {
@@ -42,6 +42,7 @@ const Docs = () => {
           next={next}
           copy={copy}
           localized={localized}
+          related={related}
         />
       </div>
     </>

@@ -9,6 +9,8 @@ import DocsMarkdown from './DocsMarkdown';
 import DocsVideo from './DocsVideo';
 import DocsDownload from './DocsDownload';
 import DocsSupport from './DocsSupport';
+import DocsRelated from './DocsRelated';
+import type { DocsRelatedItem } from './DocsRelated';
 
 import type { DocPage, DocSection } from '@/hooks/useDocs';
 import type { DocsUiCopy } from '@/data/docs/content';
@@ -20,6 +22,7 @@ interface DocsShellProps {
   next: DocPage | null;
   copy: DocsUiCopy;
   localized: (path: string) => string;
+  related?: DocsRelatedItem[];
 }
 
 /**
@@ -27,7 +30,7 @@ interface DocsShellProps {
  * Below `lg` the index is hidden and the menu becomes a panel opened by button —
  * no third mobile mechanism.
  */
-const DocsShell = ({ sections, current, prev, next, copy, localized }: DocsShellProps) => {
+const DocsShell = ({ sections, current, prev, next, copy, localized, related = [] }: DocsShellProps) => {
   const [panelOpen, setPanelOpen] = useState(false);
 
   // Close the mobile panel whenever the page changes.
@@ -110,6 +113,8 @@ const DocsShell = ({ sections, current, prev, next, copy, localized }: DocsShell
             copiedLabel={copy.copiedCode}
           />
 
+
+          <DocsRelated items={related} title={copy.relatedTitle} localized={localized} />
 
           <DocsPager prev={prev} next={next} copy={copy} localized={localized} />
 

@@ -434,6 +434,9 @@ function fmDocs(it) {
     it.video_id       ? `video_id: ${yaml(it.video_id)}`       : null,
     it.file_url       ? `file_url: ${yaml(it.file_url)}`       : null,
     it.file_label     ? `file_label: ${yaml(it.file_label)}`   : null,
+    Array.isArray(it.related) && it.related.length
+      ? `related: ${it.related.join(', ')}`
+      : (typeof it.related === 'string' && it.related.trim() ? `related: ${it.related.trim()}` : null),
     it.hidden ? 'hidden: true' : null,
 
     '---',
