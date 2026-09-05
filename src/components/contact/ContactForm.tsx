@@ -93,7 +93,7 @@ const ContactForm = memo(({
       company: "Empresa",
       phone: "Telefone",
       subject: "Assunto",
-      subjectOptions: { general: "Consulta geral", demo: "Solicitar demonstração", partnership: "Parceria", support: "Suporte técnico" },
+      subjectOptions: { salesSuite: "Vendas — i6 Decision Suite", partnerships: "Parcerias", press: "Imprensa", other: "Outro" },
       message: "Mensagem",
       messageMinChar: "(mínimo 10 caracteres)",
       messagePlaceholder: "Descreva como podemos ajudar seu negócio...",
@@ -115,7 +115,7 @@ const ContactForm = memo(({
       company: "Company",
       phone: "Phone",
       subject: "Subject",
-      subjectOptions: { general: "General inquiry", demo: "Request demo", partnership: "Partnership", support: "Technical support" },
+      subjectOptions: { salesSuite: "Sales — i6 Decision Suite", partnerships: "Partnerships", press: "Press", other: "Other" },
       message: "Message",
       messageMinChar: "(minimum 10 characters)",
       messagePlaceholder: "Describe how we can help your business...",
@@ -137,7 +137,7 @@ const ContactForm = memo(({
       company: "Empresa",
       phone: "Teléfono",
       subject: "Asunto",
-      subjectOptions: { general: "Consulta general", demo: "Solicitar demostración", partnership: "Alianza", support: "Soporte técnico" },
+      subjectOptions: { salesSuite: "Ventas — i6 Decision Suite", partnerships: "Alianzas", press: "Prensa", other: "Otro" },
       message: "Mensaje",
       messageMinChar: "(mínimo 10 caracteres)",
       messagePlaceholder: "Describe cómo podemos ayudar a tu negocio...",
@@ -322,10 +322,10 @@ const ContactForm = memo(({
                   } ${errors.subject ? 'border-red-500' : 'border-white/10'}`}
                 >
                   <option value="" className="bg-[#0B1224]">{text.subject}</option>
-                  <option value="general" className="bg-[#0B1224]">{text.subjectOptions.general}</option>
-                  <option value="demo" className="bg-[#0B1224]">{text.subjectOptions.demo}</option>
-                  <option value="partnership" className="bg-[#0B1224]">{text.subjectOptions.partnership}</option>
-                  <option value="support" className="bg-[#0B1224]">{text.subjectOptions.support}</option>
+                  <option value="sales_suite" className="bg-[#0B1224]">{text.subjectOptions.salesSuite}</option>
+                  <option value="partnerships" className="bg-[#0B1224]">{text.subjectOptions.partnerships}</option>
+                  <option value="press" className="bg-[#0B1224]">{text.subjectOptions.press}</option>
+                  <option value="other" className="bg-[#0B1224]">{text.subjectOptions.other}</option>
                 </select>
               </div>
             )}
