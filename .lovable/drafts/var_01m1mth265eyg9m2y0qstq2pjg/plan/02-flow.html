@@ -1,0 +1,46 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
+  <g style="font-size:12px; fill:hsl(var(--muted-foreground))">
+    <text x="0" y="14">antes</text>
+    <text x="0" y="164">depois</text>
+  </g>
+
+  <!-- ANTES -->
+  <rect x="0" y="26" width="150" height="52" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="75" y="49" text-anchor="middle" style="font-size:14px; font-weight:480; fill:hsl(var(--foreground))">peça de research</text>
+  <text x="75" y="66" text-anchor="middle" style="font-size:12px; fill:hsl(var(--muted-foreground))">sem tipo</text>
+
+  <line x1="150" y1="52" x2="235" y2="52" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
+  <rect x="240" y="26" width="180" height="52" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="330" y="49" text-anchor="middle" style="font-size:14px; font-weight:480; fill:hsl(var(--foreground))">regra "sem tipo</text>
+  <text x="330" y="66" text-anchor="middle" style="font-size:12px; fill:hsl(var(--muted-foreground))">= research"</text>
+
+  <line x1="420" y1="52" x2="505" y2="52" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
+  <rect x="510" y="26" width="128" height="52" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="574" y="57" text-anchor="middle" style="font-size:14px; font-weight:480; fill:hsl(var(--foreground))">aparece</text>
+
+  <rect x="0" y="96" width="638" height="1" fill="hsl(var(--border))"/>
+
+  <!-- DEPOIS -->
+  <rect x="0" y="176" width="150" height="52" rx="8" fill="none" stroke="hsl(var(--accent))"/>
+  <text x="75" y="199" text-anchor="middle" style="font-size:14px; font-weight:480; fill:hsl(var(--foreground))">peça de research</text>
+  <text x="75" y="216" text-anchor="middle" style="font-size:12px; fill:hsl(var(--accent))">tipo: i6 Research</text>
+
+  <line x1="150" y1="202" x2="235" y2="202" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
+  <rect x="240" y="176" width="180" height="52" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="330" y="199" text-anchor="middle" style="font-size:14px; font-weight:480; fill:hsl(var(--foreground))">só aceita research</text>
+  <text x="330" y="216" text-anchor="middle" style="font-size:12px; fill:hsl(var(--muted-foreground))">ou eBook</text>
+
+  <line x1="420" y1="202" x2="505" y2="202" stroke="hsl(var(--muted-foreground))" marker-end="url(#ch)"/>
+  <rect x="510" y="176" width="128" height="52" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
+  <text x="574" y="207" text-anchor="middle" style="font-size:14px; font-weight:480; fill:hsl(var(--foreground))">aparece</text>
+
+  <line x1="330" y1="228" x2="330" y2="266" stroke="hsl(var(--muted-foreground))" stroke-dasharray="4 3" marker-end="url(#ch)"/>
+  <rect x="220" y="266" width="220" height="30" rx="15" fill="hsl(var(--muted))" stroke="none"/>
+  <text x="330" y="286" text-anchor="middle" style="font-size:12px; fill:hsl(var(--muted-foreground))">tipo errado: ignorado + aviso no console</text>
+
+  <defs>
+    <marker id="ch" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9" fill="none" stroke="hsl(var(--muted-foreground))"/>
+    </marker>
+  </defs>
+</svg>
