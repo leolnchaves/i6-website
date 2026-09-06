@@ -3,6 +3,7 @@ id: ruptura-gondola-ia-preditiva
 title: "Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico"
 slug: ruptura-gondola-ia-preditiva
 language: pt
+type: i6 Research
 date: 2026-06-12
 sector: farma
 theme: estoque
