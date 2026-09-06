@@ -1,21 +1,27 @@
-
 import React, { useState, useEffect, memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
+import { successStoriesData } from '@/data/staticData/successStoriesData';
 
 interface SegmentFilterProps {
   onSegmentChange: (segment: string | null) => void;
   selectedSegment: string | null;
 }
 
+/**
+ * Mecânica preservada: segmentos derivados dos cases publicados, clique no
+ * segmento ativo limpa o filtro. Apenas o tratamento visual muda (etiquetas
+ * arredondadas em areia/terracota, faixa rolável no celular).
+ */
 const SegmentFilter: React.FC<SegmentFilterProps> = memo(({ onSegmentChange, selectedSegment }) => {
   const { language } = useLanguage();
   const [availableSegments, setAvailableSegments] = useState<string[]>([]);
-  const { stories, loading } = useSuccessStoriesMarkdown();
+  const { stories } = useSuccessStoriesMarkdown();
+  const copy = (successStoriesData[language] || successStoriesData.en).listing;
 
   useEffect(() => {
     if (stories.length > 0) {
-      const uniqueSegments = [...new Set(stories.map(story => story.segment))].sort();
+      const uniqueSegments = [...new Set(stories.map(story => story.segment))].filter(Boolean).sort();
       setAvailableSegments(uniqueSegments);
     }
   }, [stories]);
@@ -26,32 +32,34 @@ const SegmentFilter: React.FC<SegmentFilterProps> = memo(({ onSegmentChange, sel
 
   if (availableSegments.length === 0) return null;
 
-  return (
-    <div className="flex flex-wrap justify-center gap-3">
-      <button
-        onClick={() => onSegmentChange(null)}
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
-          selectedSegment === null
-            ? 'bg-[#F4845F] border-[#F4845F] text-white'
-            : 'bg-white/5 border-white/20 text-white/70 hover:bg-white/10 hover:text-white'
-        }`}
-      >
-        {language === 'en' ? 'All Industries' : 'Todos os Segmentos'}
-      </button>
+  const chip = 'shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300';
+  const active = 'bg-primary border-primary text-primary-foreground';
+  const idle = 'bg-card border-border text-muted-foreground hover:border-primary/40 hover:text-foreground';
 
-      {availableSegments.map((segment) => (
+  return (
+    <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex gap-2 md:flex-wrap">
         <button
-          key={segment}
-          onClick={() => handleSegmentClick(segment)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
-            selectedSegment === segment
-              ? 'bg-[#F4845F] border-[#F4845F] text-white'
-              : 'bg-white/5 border-white/20 text-white/70 hover:bg-white/10 hover:text-white'
-          }`}
+          type="button"
+          onClick={() => onSegmentChange(null)}
+          aria-pressed={selectedSegment === null}
+          className={`${chip} ${selectedSegment === null ? active : idle}`}
         >
-          {segment}
+          {copy.filterAll}
         </button>
-      ))}
+
+        {availableSegments.map((segment) => (
+          <button
+            key={segment}
+            type="button"
+            onClick={() => handleSegmentClick(segment)}
+            aria-pressed={selectedSegment === segment}
+            className={`${chip} ${selectedSegment === segment ? active : idle}`}
+          >
+            {segment}
+          </button>
+        ))}
+      </div>
     </div>
   );
 });

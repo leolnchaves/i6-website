@@ -1,36 +1,49 @@
-
 import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
 
 interface SuccessStoriesHeroProps {
+  /** Filtro de segmento (mecânica inalterada) */
   children?: React.ReactNode;
+  /** Quantidade de cases visíveis após filtro */
+  count?: number;
 }
 
-const SuccessStoriesHero = memo(({ children }: SuccessStoriesHeroProps) => {
+/**
+ * Abertura tipográfica em areia: título em duas linhas (2ª em terracota),
+ * linha de apoio e contador discreto de cases visíveis.
+ */
+const SuccessStoriesHero = memo(({ children, count }: SuccessStoriesHeroProps) => {
   const { language } = useLanguage();
-  const heroContent = successStoriesData[language]?.hero || successStoriesData.en.hero;
+  const content = successStoriesData[language] || successStoriesData.en;
+  const hero = content.hero;
+  const copy = content.listing;
 
   return (
-    <section className="w-full pt-32 pb-16 relative overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
-            {heroContent.title}
-            <br />
-            <span
-              style={{
-                color: '#F4845F',
-                textShadow: '0 0 40px rgba(244,132,95,0.4)',
-              }}
-            >
-              {heroContent.subtitle}
-            </span>
-          </h1>
-          <p className="text-base sm:text-lg text-white/60 max-w-3xl mx-auto leading-relaxed mb-8">
-            {heroContent.description}
+    <section className="relative overflow-hidden pt-32 pb-10 md:pt-40 md:pb-14">
+      <div aria-hidden className="absolute inset-0 sand-glow" />
+      <div className="container relative mx-auto px-6">
+        <div className="max-w-3xl">
+          <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
+            {copy.eyebrow}
           </p>
-          {children}
+          <h1 className="text-4xl md:text-6xl font-bold leading-[1.05] text-foreground">
+            {hero.title}
+            <br />
+            <span className="text-primary">{hero.subtitle}</span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">
+            {hero.description}
+          </p>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-5 border-t border-border pt-6 md:flex-row md:items-center md:justify-between">
+          <div className="min-w-0">{children}</div>
+          {typeof count === 'number' && (
+            <p className="shrink-0 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              {count} {count === 1 ? copy.countOne : copy.countMany}
+            </p>
+          )}
         </div>
       </div>
     </section>
