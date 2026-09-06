@@ -177,13 +177,32 @@ const existingMdSnapshot = {}; // fileName -> { cover_image, logo }
   }
 }
 
-// ---------- Cleanup .md (preserve README.md) ----------
+// ---------- Cleanup .md (preserve README.md and site-managed pages) ----------
+/**
+ * True when the file's frontmatter carries `site_managed: true`. Those pages are
+ * written by hand in this repo (not by the HUB) and must survive the wipe.
+ */
+const isSiteManaged = async (abs) => {
+  const raw = await fs.readFile(abs, 'utf8').catch(() => '');
+  const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!fm) return false;
+  return /^\s*site_managed\s*:\s*true\s*$/im.test(fm[1]);
+};
+
 const existingMd = await fs.readdir(MD_DIR);
 await Promise.all(
   existingMd
     .filter((n) => n.endsWith('.md') && n.toLowerCase() !== 'readme.md')
-    .map((n) => fs.rm(path.join(MD_DIR, n), { force: true })),
+    .map(async (n) => {
+      const abs = path.join(MD_DIR, n);
+      if (await isSiteManaged(abs)) {
+        console.log(`· keep (site_managed): ${n}`);
+        return;
+      }
+      await fs.rm(abs, { force: true });
+    }),
 );
+
 
 // ---------- Helpers ----------
 const yaml = (v) => JSON.stringify(v);
