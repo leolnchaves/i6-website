@@ -236,7 +236,7 @@ export const useIntelligenceInsights = () => {
 };
 
 /**
- * Returns `i6 Article` items powering the `/i6-blog` page.
+ * Returns `i6 Article` and `i6 Blog` items powering the `/i6-blog` page.
  */
 export const useBlogArticles = () => {
   const { language: uiLanguage } = useLanguage();
@@ -245,7 +245,7 @@ export const useBlogArticles = () => {
 
   useEffect(() => {
     const filtered = ALL.filter(
-      (i) => i.language === language && i.type === 'i6 Article',
+      (i) => i.language === language && BLOG_TYPES.includes(i.type),
     );
     setItems(filtered);
   }, [language]);
