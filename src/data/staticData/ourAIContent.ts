@@ -1,663 +1,663 @@
-import type { ContentLang } from '@/utils/localizedPath';
 import type { Language } from '@/types/language';
 
 export interface EngineDef {
-  id: 'i6recsys' | 'i6previsio' | 'i6elasticprice' | 'i6signal';
+  id: 'i6previsio' | 'i6recsys' | 'i6elasticprice';
   name: string;
   tagline: string;
   description: string;
-}
-
-export interface ChallengeRow {
-  challenge: string;
-  learning: string;
-  resolution: string;
+  points: string[];
 }
 
 export interface OurAIContent {
-  hero: { eyebrow: string; title: string; subtitle: string; lead: string };
-  thesis: {
+  hero: {
     eyebrow: string;
     title: string;
-    pillars: { title: string; text: string }[];
-    stages: { label: string; detail: string }[];
-    journey: string[];
-    attributes: string[];
-    foundation: {
-      label: string;
-      name: string;
-      description: string;
-      stats: { value: string; label: string }[];
-      mix: { value: string; label: string }[];
-      references: { title: string; items: { author: string; paper: string; note: string }[] };
-    };
+    lead: string;
+    layers: { name: string; role: string; current?: boolean }[];
   };
   engines: {
+    eyebrow: string;
     title: string;
     lead: string;
     items: EngineDef[];
-    differentiators: { title: string; items: string[] };
+    note: string;
   };
-  diversity: {
-    title: string;
-    lead: string;
-    tasks: string[];
-    middle: { title: string; subtitle: string };
-    chartNote: string;
-    chartHighlight: string;
-  };
-  explainability: {
-    title: string;
+  builder: {
     eyebrow: string;
-    lead: string;
-    description: string;
-    steps: {
-      title: string;
-      description: string;
-      sample?: { sku: string; rows: { feature: string; weight: string }[] };
-      cards?: { title: string; subtitle: string }[];
-      segments?: { label: string; items: { title: string; subtitle: string }[] }[];
-    }[];
-  };
-  security: {
-    title: string;
-    pillars: { title: string; description: string }[];
-  };
-  challenges: {
     title: string;
     lead: string;
-    headers: { challenge: string; learning: string; resolution: string };
-    rows: ChallengeRow[];
-  };
-  community: {
-    title: string;
-    description: string;
+    bullets: { title: string; text: string }[];
     cta: string;
   };
-  research: {
+  foundation: {
+    eyebrow: string;
+    label: string;
+    name: string;
+    description: string;
+    architectureTitle: string;
+    architecture: { term: string; detail: string }[];
+    statsTitle: string;
+    stats: { value: string; label: string }[];
+    mixTitle: string;
+    mix: { value: string; label: string }[];
+    references: { title: string; items: { author: string; paper: string; note: string }[] };
+  };
+  reasoning: {
     eyebrow: string;
     title: string;
     lead: string;
-    publicationsLabel: string;
-    talksLabel: string;
-    openLabel: string;
-    watchLabel: string;
-    publications: { badge: string; title: string; venue: string; url: string }[];
-    talks: { title: string; venue: string; url: string }[];
+    parts: { index: string; title: string; description: string; points: string[] }[];
+    note: string;
+  };
+  security: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    pillars: { title: string; description: string }[];
+  };
+  results: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    sourceLabel: string;
+  };
+  science: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    highlights: { badge: string; title: string; venue: string; url: string }[];
+    cta: string;
   };
   glossary: {
+    eyebrow: string;
     title: string;
     lead: string;
     terms: { slug: string; term: string; definition: string }[];
+    cta: string;
   };
-  cta: {
+  closing: {
+    eyebrow: string;
     title: string;
-    button: string;
+    lead: string;
+    primary: string;
+    secondary: string;
   };
-
 }
 
-export const ourAIContent: Record<ContentLang, OurAIContent> = {
+export const ourAIContent: Record<Language, OurAIContent> = {
   pt: {
     hero: {
-      eyebrow: 'Proprietary AI',
-      title: 'Motores proprietários de IA',
-      subtitle: 'IA aplicada é um organismo que se constrói, se alimenta e se adapta',
-      lead: 'Três motores próprios que aprendem comportamento, antecipam decisão e prescrevem ação — não geram texto, geram resultado.',
-    },
-    thesis: {
-      eyebrow: 'Do comportamento ao resultado',
-      title: 'IA só precisa saber o que muda o jogo',
-      stages: [
-        { label: 'Fine tuning', detail: 'Calibração a partir do comportamento isolado' },
-        { label: 'Necessidade específica', detail: 'Para influência e continuidade da jornada' },
-        { label: 'Resultado de negócio', detail: 'Necessidades do negócio e metas a alcançar' },
+      eyebrow: 'infinity6 · a camada de inteligência',
+      title: 'A inteligência que sustenta tudo o que entregamos',
+      lead: 'Esta página não é sobre produto nem sobre como construir com a nossa IA. É sobre a camada mais profunda: os motores proprietários, o modelo fundacional que os alimenta e o rigor científico por trás de cada decisão que eles produzem.',
+      layers: [
+        { name: 'i6 Decision Suite', role: 'O que a inteligência resolve no negócio' },
+        { name: 'i6 Builder Platform', role: 'Como se constrói sobre a inteligência' },
+        { name: 'A inteligência', role: 'Motores, modelo fundacional e método científico', current: true },
       ],
-      journey: ['interesse', 'pesquisa', 'compra'],
-      attributes: ['Relevância', 'Oportunidade', 'Timing', 'Necessidade', 'Substituição', 'Elasticidade', 'Similaridade', 'Explicabilidade'],
-      pillars: [
-        {
-          title: 'Clareza do problema',
-          text: 'Dar à IA o problema certo para resolver — não dados crus, mas a decisão de negócio que importa.',
-        },
-        {
-          title: 'Isolar o comportamento',
-          text: 'O treinamento isola o comportamento que leva ao objetivo de negócio e elimina variáveis ruidosas.',
-        },
-        {
-          title: 'Aderência contextual',
-          text: 'Não é o que o cliente "gosta" — é o que ele tem intenção e condição de comprar agora.',
-        },
-      ],
-      foundation: {
-        label: 'Modelo fundacional',
-        name: 'i6-RecSys-Base.g1',
-        description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptável com poucas amostras, com memória externa para aprender novas tarefas rapidamente.',
-        stats: [
-          { value: '1,45B', label: 'registros (2025)' },
-          { value: '20B', label: 'registros (2026)' },
-          { value: '12', label: 'bases públicas/adquiridas (2025)' },
-          { value: '~50', label: 'bases públicas/adquiridas (2026)' },
-        ],
-        mix: [
-          { value: '15%', label: 'comportamento em produtos financeiros' },
-          { value: '45%', label: 'e-commerce' },
-          { value: '20%', label: 'telecom' },
-          { value: '20%', label: 'atacado / varejo' },
-        ],
-        references: {
-          title: 'Referências acadêmicas',
-          items: [
-            { author: 'Finn, Abbeel & Levine', paper: 'Model-Agnostic Meta-Learning (MAML)', note: 'Algoritmo que treina modelos para serem adaptáveis com poucas amostras' },
-            { author: 'Vinyals et al.', paper: 'Matching Networks for One Shot Learning', note: 'Fundamenta abordagens metric-based de meta-learning' },
-            { author: 'Ravi & Larochelle', paper: 'Optimization as a Model for Few-Shot Learning', note: 'Redes recorrentes para aprender otimizadores que generalizam' },
-            { author: 'Santoro et al.', paper: 'Meta-Learning with Memory-Augmented Neural Networks', note: 'Memória externa para aprender novas tarefas rapidamente' },
-          ],
-        },
-      },
     },
     engines: {
-      title: 'Três motores. Uma camada conversacional.',
-      lead: 'Cada motor resolve uma classe de decisão. O i6 Signal lê o output preditivo dos três e entrega a próxima ação ao time de negócio.',
+      eyebrow: 'Núcleo preditivo',
+      title: 'Três motores proprietários',
+      lead: 'Cada motor resolve uma classe própria de decisão e é treinado sobre o mesmo modelo fundacional. Não geram texto — geram previsão calibrada, com incerteza medida e explicação rastreável.',
       items: [
-        {
-          id: 'i6recsys',
-          name: 'i6 RecSys',
-          tagline: 'Recomendação de alto desempenho',
-          description: 'Sugestões personalizadas e escaláveis para mix e volume de produtos — em PDV, e-commerce e canais digitais.',
-        },
         {
           id: 'i6previsio',
           name: 'i6 Previsio',
           tagline: 'Previsão de demanda granular',
-          description: 'Previsões precisas que otimizam produção, estoque e distribuição — eliminando ruptura e excesso.',
+          description: 'Previsão por SKU, canal e janela temporal, com intervalo de confiança e decomposição de sazonalidade.',
+          points: [
+            'Granularidade até SKU × ponto de venda × dia',
+            'Decomposição de tendência, sazonalidade e evento',
+            'Reprocessamento contínuo conforme o dado novo chega',
+          ],
+        },
+        {
+          id: 'i6recsys',
+          name: 'i6 RecSys',
+          tagline: 'Recomendação de alto desempenho',
+          description: 'Ranqueamento comportamental que combina histórico, contexto e restrição operacional na mesma função de decisão.',
+          points: [
+            'Aprende comportamento transacional, não preferência declarada',
+            'Opera com identificado e anônimo no mesmo espaço latente',
+            'Balanceamento explícito entre precisão e diversidade',
+          ],
         },
         {
           id: 'i6elasticprice',
           name: 'i6 ElasticPrice',
           tagline: 'Precificação dinâmica',
-          description: 'Aprende continuamente com sinais de mercado e demanda para entregar recomendações de preço rápidas e precisas.',
-        },
-        {
-          id: 'i6signal',
-          name: 'i6 Signal',
-          tagline: 'Camada conversacional preditiva',
-          description: 'Conversa com o output preditivo dos três motores e entrega recomendações antecipatórias e prescritivas para a decisão.',
+          description: 'Estimação contínua de elasticidade por SKU, canal e ciclo de vida, substituindo curvas estáticas por aprendizado online.',
+          points: [
+            'Elasticidade recalculada a cada ciclo de dado',
+            'Restrições de margem e posicionamento como limites do modelo',
+            'Simulação de cenário antes da aplicação do preço',
+          ],
         },
       ],
-      differentiators: {
-        title: 'Recursos incomparáveis',
+      note: 'Arquitetura híbrida, operação sobre dados anonimizados e ajuste fino do equilíbrio entre metas concorrentes.',
+    },
+    builder: {
+      eyebrow: 'Camada de abstração',
+      title: 'i6 Builder Platform',
+      lead: 'Os motores desta página não são consumidos diretamente. A i6 Builder Platform é a camada que os expõe de forma programável — SDK, API e toolkits — para que times técnicos construam suas próprias aplicações sobre a mesma inteligência.',
+      bullets: [
+        { title: 'SDK', text: 'Bibliotecas para treinar, adaptar e servir modelos derivados do modelo fundacional.' },
+        { title: 'API', text: 'Endpoints de previsão, ranqueamento e elasticidade com contrato estável e versionado.' },
+        { title: 'Toolkits', text: 'Blocos prontos de avaliação, monitoramento de deriva e explicabilidade.' },
+      ],
+      cta: 'Conhecer a i6 Builder Platform',
+    },
+    foundation: {
+      eyebrow: 'Modelo fundacional',
+      label: 'Modelo fundacional',
+      name: 'i6-RecSys-Base.g1',
+      description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptável com poucas amostras, com memória externa para aprender novas tarefas rapidamente.',
+      architectureTitle: 'Arquitetura',
+      architecture: [
+        { term: 'MAML', detail: 'Meta-aprendizado que deixa o modelo pronto para se adaptar a uma nova tarefa com poucas amostras do cliente.' },
+        { term: 'Active Learning', detail: 'O próprio modelo escolhe quais amostras valem rotulagem, acelerando o aprendizado e reduzindo custo de anotação.' },
+        { term: 'Topological Loss', detail: 'Preserva as relações topológicas do espaço latente, o que estabiliza embeddings e melhora generalização em poucos shots.' },
+      ],
+      statsTitle: 'Escala de treino',
+      stats: [
+        { value: '1,45B', label: 'registros (2025)' },
+        { value: '20B', label: 'registros (2026)' },
+        { value: '12', label: 'bases públicas/adquiridas (2025)' },
+        { value: '~50', label: 'bases públicas/adquiridas (2026)' },
+      ],
+      mixTitle: 'Diversidade dos dados de treino',
+      mix: [
+        { value: '15%', label: 'comportamento em produtos financeiros' },
+        { value: '45%', label: 'e-commerce' },
+        { value: '20%', label: 'telecom' },
+        { value: '20%', label: 'atacado / varejo' },
+      ],
+      references: {
+        title: 'Referências acadêmicas',
         items: [
-          'Arquitetura híbrida',
-          'Operação com dados anonimizados',
-          'Ajuste fino do equilíbrio entre metas comerciais',
+          { author: 'Finn, Abbeel & Levine', paper: 'Model-Agnostic Meta-Learning (MAML)', note: 'Algoritmo que treina modelos para serem adaptáveis com poucas amostras' },
+          { author: 'Vinyals et al.', paper: 'Matching Networks for One Shot Learning', note: 'Fundamenta abordagens metric-based de meta-learning' },
+          { author: 'Ravi & Larochelle', paper: 'Optimization as a Model for Few-Shot Learning', note: 'Redes recorrentes para aprender otimizadores que generalizam' },
+          { author: 'Santoro et al.', paper: 'Meta-Learning with Memory-Augmented Neural Networks', note: 'Memória externa para aprender novas tarefas rapidamente' },
         ],
       },
     },
-    diversity: {
-      title: 'Balanceamento de diversidade',
-      lead: 'Ao analisar comportamentos únicos e padrões de recomendação, identificamos os melhores produtos inexplorados para cada cliente — garantindo sugestões diversas e relevantes além do histórico.',
-      tasks: ['Recomendado para você', 'Comprados juntos com frequência', 'Compre novamente', 'Itens similares', 'Em promoção'],
-      middle: {
-        title: 'Treinamento com ajuste fino',
-        subtitle: 'Para precisão e diversidade',
-      },
-      chartNote: 'Distribuição de clientes por número de produtos diversos recomendados — clientes com previsões diversas, mantendo alta precisão no alinhamento comportamental.',
-      chartHighlight: '9 recomendações com o mesmo nível de relevância — inclusive para usuários anônimos',
-    },
-    explainability: {
-      title: 'Explicabilidade que vira argumento de venda',
-      eyebrow: 'XAI orientada a negócio',
-      lead: 'Aplicamos XAI — Explainable AI — para transformar outputs preditivos em recomendações claras, rastreáveis e acionáveis.',
-      description: 'Mais do que mostrar um score, explicamos os principais sinais que influenciaram cada decisão: comportamento, propensão, estoque, margem, demanda, elasticidade e similaridade. Assim, a IA deixa de ser uma caixa preta e passa a apoiar decisões comerciais, operacionais e estratégicas com contexto, confiança e argumento de negócio.',
-      steps: [
+    reasoning: {
+      eyebrow: 'Método',
+      title: 'Como a inteligência raciocina',
+      lead: 'Duas propriedades definem a qualidade de uma decisão preditiva: a saída não pode colapsar no óbvio, e cada decisão precisa ser auditável até os sinais que a produziram.',
+      parts: [
         {
-          title: 'Identifica motivadores',
-          description: 'Detecta os principais fatores que influenciam a recomendação',
-          sample: {
-            sku: 'SKU 3874',
-            rows: [
-              { feature: 'ct_lst_15_days', weight: '+0.0824' },
-              { feature: 'cx_time_tobuy', weight: '+0.0360' },
-              { feature: 'ct_lst_7_days', weight: '−0.0352' },
-              { feature: 'cx_item_id_weighted', weight: '−0.0239' },
-            ],
-          },
-        },
-        {
-          title: 'Prioriza fatores e estrutura',
-          description: 'Classifica fatores pelo impacto estimado no aumento de vendas e escolhe o melhor modelo de mensagem',
-          cards: [
-            { title: 'Aumento de demanda', subtitle: 'priorize o argumento de oportunidade de crescimento' },
-            { title: 'Ocasião de recompra', subtitle: 'enfatize a necessidade de reposição imediata' },
-            { title: 'Produto novo', subtitle: 'destaque a tendência de mercado' },
-            { title: 'Produto de alta venda', subtitle: 'reforce o risco de ruptura' },
+          index: '01',
+          title: 'Equilíbrio antes da resposta',
+          description: 'Um modelo que só repete o histórico é preciso e inútil. O treinamento aplica um ajuste fino que mantém a precisão comportamental enquanto abre o espaço de saída para alternativas ainda não exploradas.',
+          points: [
+            'Precisão e diversidade tratadas como objetivos simultâneos, não como troca',
+            'Sinais raros preservados em vez de suprimidos pela frequência',
+            'Mesmo nível de relevância mantido também para perfis anônimos',
           ],
         },
         {
-          title: 'Gera argumento dinâmico',
-          description: 'Preenche o modelo com elementos dinâmicos, compondo a mensagem personalizada para cada PDV/SKU',
-          segments: [
-            {
-              label: 'Indústria',
-              items: [
-                { title: 'Padrão de consumo', subtitle: 'replicado em janelas sazonais comparáveis' },
-                { title: 'Sazonalidade prevista', subtitle: 'antecipa pico de demanda em 21 dias' },
-                { title: 'Reposição inteligente', subtitle: 'evita ruptura no canal de maior giro' },
-              ],
-            },
-            {
-              label: 'Varejo',
-              items: [
-                { title: 'Alto engajamento', subtitle: 'de perfis de cliente similares nos últimos 30 dias' },
-                { title: 'Bundling otimizado', subtitle: 'baseado em padrões bem-sucedidos de cross-sell' },
-                { title: 'Forte correlação', subtitle: 'com os produtos preferidos de clientes de alto valor' },
-              ],
-            },
-            {
-              label: 'Financeiro',
-              items: [
-                { title: 'Propensão a contratar', subtitle: 'score elevado de afinidade com a oferta' },
-                { title: 'Perfil de risco alinhado', subtitle: 'dentro do apetite definido pela carteira' },
-                { title: 'Cross-sell de produto', subtitle: 'aderente à jornada do cliente já ativo' },
-              ],
-            },
-            {
-              label: 'Farma',
-              items: [
-                { title: 'Aderência ao tratamento', subtitle: 'momento ideal de renovação da receita' },
-                { title: 'Recompra prevista', subtitle: 'janela de continuidade da terapia' },
-                { title: 'Recomendação por perfil clínico', subtitle: 'coerente com a categoria prescrita' },
-              ],
-            },
+          index: '02',
+          title: 'Explicabilidade como parte da saída',
+          description: 'A explicação não é um relatório posterior: cada decisão carrega o peso dos sinais que a determinaram, o que permite auditoria, contestação e correção.',
+          points: [
+            'Atribuição de contribuição por variável em cada decisão individual',
+            'Sinais rastreáveis: comportamento, propensão, estoque, margem, demanda, elasticidade e similaridade',
+            'Registro versionado de modelo, dado e decisão para auditoria posterior',
           ],
         },
       ],
+      note: 'Nenhum modelo entra em produção sem explicabilidade e sem medição de deriva ao longo do tempo.',
     },
     security: {
+      eyebrow: 'Governança',
       title: 'Segurança e conformidade por design',
+      lead: 'Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.',
       pillars: [
         { title: 'Anonimização na origem', description: 'Dados sensíveis são anonimizados antes de qualquer treinamento — pré-requisito de segurança para todos os modelos' },
         { title: 'Arquitetura segura', description: 'Autenticação multinível e controle de acesso baseado em rotas' },
         { title: 'Ambiente isolado', description: 'Ambientes seguros e isolados protegem dados e modelos contra acesso não autorizado' },
-        
         { title: 'Pronto para escalar', description: 'Solução 100% em nuvem, com escalonamento automático de recursos' },
       ],
     },
-    challenges: {
-      title: 'Por que a IA falha e como resolvemos',
-      lead: 'IA aplicada é um organismo que se constrói, se alimenta e se adapta. Os principais desafios que enfrentamos com clientes e como a infinity6 endereça cada um.',
-      headers: { challenge: 'Desafio', learning: 'Aprendizado', resolution: 'Como resolvemos' },
-      rows: [
-        { challenge: 'Jornadas não digitais ou fragmentadas', learning: 'Sem interação, IA não aprende', resolution: 'Touchpoints híbridos (contextual, WhatsApp, integrações simples)' },
-        { challenge: 'Dados transacionais sem contexto', learning: 'Dados frios geram modelos cegos', resolution: 'Modelos funcionais que generalizam o comportamento' },
-        { challenge: 'Dado bom, mas desorganizado', learning: 'Volume não é qualidade', resolution: 'Estruturação e curadoria de variáveis mais relevantes' },
-        { challenge: 'CPC (Contato Pessoa Certa)', learning: 'Canal errado anula mensagem certa', resolution: 'Enriquecimento de dados' },
-        { challenge: 'Falta de estratégia corporativa', learning: 'IA isolada é IA ineficiente', resolution: 'Rastreabilidade entre aplicação da IA, objetivos estratégicos e áreas' },
-        { challenge: 'Expectativas irreais', learning: '"IA vai resolver tudo" é o primeiro passo do fracasso', resolution: 'Processo incremental com entregas rápidas' },
-        { challenge: 'Foco em modelo, não em resultado', learning: 'O modelo é meio, não fim', resolution: 'IA orientada à decisão, não à curiosidade técnica' },
-        { challenge: 'Dependência de IA genérica', learning: 'Nem toda IA precisa ser proprietária', resolution: 'Combinar GLM (general large model) para automação e SAM (small actionable model) para precisão e escala' },
-        { challenge: 'Governança e privacidade', learning: 'Medo de errar trava inovação', resolution: 'AI by design: anonimização, segurança e experimentação responsável' },
-      ],
+    results: {
+      eyebrow: 'Evidência',
+      title: 'Resultados reais em produção',
+      lead: 'Números medidos em operação de clientes. O setor aparece como procedência da evidência — é o que torna o número verificável.',
+      sourceLabel: 'Setor',
     },
-    community: {
-      title: 'Comunidade infinity6',
-      description: 'Publicamos modelos, datasets e experimentos abertos no Hugging Face — parte do que aprendemos volta para a comunidade.',
-      cta: 'Visitar nossa comunidade',
-    },
-    research: {
-      eyebrow: 'Pesquisa & Fundamentos',
-      title: 'Base científica dos motores i6',
-      lead: 'Referências técnicas próprias: estudos conduzidos pelo founder da infinity6 e nossa área de P&D, em uma base de pesquisa em IA construída desde 2010, que sustentam os motores i6Previsio, i6RecSys e i6ElasticPrice — de mapas auto-organizáveis a clustering não-supervisionado e descoberta de padrões sem regras prévias',
-      publicationsLabel: 'Publicações revisadas por pares',
-      talksLabel: 'Palestras técnicas',
-      openLabel: 'Acessar',
-      watchLabel: 'Assistir',
-      publications: [
+    science: {
+      eyebrow: 'Base científica',
+      title: 'Pesquisa própria desde 2010',
+      lead: 'Os motores nascem de uma linha de pesquisa conduzida pelo founder da infinity6 e pela área de P&D — de mapas auto-organizáveis a clustering não supervisionado e descoberta de padrões sem regras prévias.',
+      highlights: [
         {
           badge: 'SPRINGER · LNBIP · 2013',
           title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer, Berlin, Heidelberg',
+          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
           url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
         },
         {
           badge: 'CONFERÊNCIA · WEBIST · 2012',
           title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
-          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)',
+          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
           url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
         },
         {
-          badge: 'SPRINGER · LNCS · 2010',
-          title: 'Development of a Business Intelligence Environment for e-Gov using Open Source Technologies',
-          venue: 'Lecture Notes in Computer Science, Springer',
-          url: 'https://www.academia.edu/24631504/Development_of_a_Business_Intelligence_Environment_for_e_Gov_Using_Open_Source_Technologies',
-        },
-        {
-          badge: 'ARTIGO · PT-BR',
-          title: 'Mapas auto-organizáveis aplicados em governo eletrônico',
-          venue: 'Publicação acadêmica · Academia.edu',
-          url: 'https://www.academia.edu/122408570/Mapas_auto_organiz%C3%A1veis_aplicados_em_governo_eletr%C3%B4nico',
-        },
-        {
-          badge: 'ARTIGO · Open Access',
-          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Repositório acadêmico · Academia.edu',
-          url: 'https://www.academia.edu/24631415/Knowledge_Discovery_Data_Mining_by_Self_organizing_Maps',
+          badge: 'PALESTRA · InfoQ · QCon',
+          title: 'Recomendação de conteúdo na escala do iFood',
+          venue: 'InfoQ Brasil · QCon',
+          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
       ],
-      talks: [
-        { title: 'Ciência de dados para alinhar produto', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/' },
-        { title: 'Recomendação de conteúdo na escala do iFood', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/' },
-        { title: 'Machine Learning — do gênesis ao apocalipse', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/' },
-        { title: 'Classificação de padrões: uma abordagem prática com redes neurais artificiais', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/' },
-        { title: 'Machine Learning em Java com Apache Mahout', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/' },
-        { title: 'Classificação de documentos baseada em inteligência artificial', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/' },
-        { title: 'Postgres como Big SQL', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/postgres-bigsql/' },
-        { title: 'Mineração de dados com Weka API', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/' },
-        { title: 'Machine Learning e mineração de dados', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/' },
-      ],
+      cta: 'Ver toda a produção técnica',
     },
     glossary: {
-      title: 'Glossário GEO — termos da infinity6',
-      lead: 'Definições curtas dos termos próprios da infinity6 e da literatura técnica que sustenta nossos motores.',
+      eyebrow: 'Vocabulário',
+      title: 'Termos usados nesta página',
+      lead: 'Definições curtas do que é necessário para ler o restante desta página.',
       terms: [
-        { slug: 'predicao-comportamental', term: 'Predição comportamental', definition: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais — não declarados — para antecipar a próxima ação relevante.' },
-        { slug: 'propensao-conversao', term: 'Propensão de conversão', definition: 'Score preditivo que estima a probabilidade de um anônimo ou cliente concluir uma compra em um contexto específico (canal, momento, oferta).' },
-        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', definition: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida — substitui curvas estáticas por aprendizado online.' },
-        { slug: 'aderencia-contextual', term: 'Aderência contextual', definition: 'Grau em que uma recomendação combina histórico de comportamento com o contexto atual (estoque, momento, perfil de PDV) — base da decisão prescritiva da infinity6.' },
-        { slug: 'ruptura-gondola', term: 'Ruptura de gôndola', definition: 'Indisponibilidade de SKU no ponto de venda quando há demanda real. No varejo farma custa entre 4% e 12% do faturamento líquido.' },
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva relações topológicas entre exemplos no espaço latente, melhorando generalização em poucos shots e estabilidade do embedding.' },
         { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o modelo seleciona ativamente quais amostras rotular para acelerar aprendizado e reduzir custo de anotação.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva relações topológicas entre exemplos no espaço latente, melhorando generalização em poucos shots e estabilidade do embedding.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional proprietário da infinity6 (MAML + Active Learning + Topological Loss) pré-treinado em 1,45 bilhão de registros multissetoriais, adaptável com poucas amostras por cliente.' },
-        { slug: 'i6signal', term: 'i6 Signal', definition: 'Camada conversacional preditiva que lê o output dos motores i6 Previsio, i6 RecSys e i6 ElasticPrice e entrega ao time de negócio a próxima ação prescritiva — antecipatória, não reativa.' },
+        { slug: 'predicao-comportamental', term: 'Predição comportamental', definition: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais — não declarados — para antecipar a próxima ação relevante.' },
+        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', definition: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida — substitui curvas estáticas por aprendizado online.' },
       ],
+      cta: 'Glossário completo na documentação',
     },
-    cta: {
-      title: 'Quer conhecer os motores em profundidade?',
-      button: 'Converse com nosso time técnico',
+    closing: {
+      eyebrow: 'Próximo passo',
+      title: 'Quer avaliar a inteligência em profundidade?',
+      lead: 'Conversamos com times técnicos sobre arquitetura, avaliação de modelo e integração — sem intermediação comercial.',
+      primary: 'Falar com o time técnico',
+      secondary: 'Construir sobre a i6 Builder Platform',
     },
   },
 
   en: {
     hero: {
-      eyebrow: 'Proprietary AI',
-      title: 'Proprietary AI engines',
-      subtitle: 'Applied AI is an organism that builds itself, feeds itself and adapts',
-      lead: 'Three in-house engines that learn behavior, anticipate decisions and prescribe action — they do not generate text, they generate outcomes.',
-    },
-    thesis: {
-      eyebrow: 'From behavior to outcome',
-      title: 'AI only needs to know what changes the game',
-      stages: [
-        { label: 'Fine tuning', detail: 'Calibration from isolated behavior' },
-        { label: 'Specific need', detail: 'For influence and journey continuity' },
-        { label: 'Business outcome', detail: 'Business needs and goals to achieve' },
+      eyebrow: 'infinity6 · the intelligence layer',
+      title: 'The intelligence beneath everything we ship',
+      lead: 'This page is not about a product, nor about how to build with our AI. It is about the deepest layer: the proprietary engines, the foundation model that feeds them, and the scientific rigor behind every decision they produce.',
+      layers: [
+        { name: 'i6 Decision Suite', role: 'What the intelligence solves for the business' },
+        { name: 'i6 Builder Platform', role: 'How you build on top of the intelligence' },
+        { name: 'The intelligence', role: 'Engines, foundation model and scientific method', current: true },
       ],
-      journey: ['interest', 'research', 'purchase'],
-      attributes: ['Relevance', 'Opportunity', 'Timing', 'Need', 'Substitution', 'Elasticity', 'Similarity', 'Explainability'],
-      pillars: [
-        {
-          title: 'Clarity of the problem',
-          text: 'Give AI the right problem to solve — not raw data, but the business decision that actually matters.',
-        },
-        {
-          title: 'Isolate the behavior',
-          text: 'Training isolates the behavior that leads to the business goal and removes noisy variables.',
-        },
-        {
-          title: 'Contextual adherence',
-          text: "It's not about what the customer 'likes' — it's about what they intend and are ready to buy now.",
-        },
-      ],
-      foundation: {
-        label: 'Foundation model',
-        name: 'i6-RecSys-Base.g1',
-        description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptable from few samples, with external memory to learn new tasks fast.',
-        stats: [
-          { value: '1.45B', label: 'records (2025)' },
-          { value: '20B', label: 'records (2026)' },
-          { value: '12', label: 'public/acquired sources (2025)' },
-          { value: '~50', label: 'public/acquired sources (2026)' },
-        ],
-        mix: [
-          { value: '15%', label: 'financial product behavior' },
-          { value: '45%', label: 'e-commerce' },
-          { value: '20%', label: 'telecom' },
-          { value: '20%', label: 'wholesale / retail' },
-        ],
-        references: {
-          title: 'Academic references',
-          items: [
-            { author: 'Finn, Abbeel & Levine', paper: 'Model-Agnostic Meta-Learning (MAML)', note: 'Algorithm that trains models to adapt from few samples' },
-            { author: 'Vinyals et al.', paper: 'Matching Networks for One Shot Learning', note: 'Foundation for metric-based meta-learning' },
-            { author: 'Ravi & Larochelle', paper: 'Optimization as a Model for Few-Shot Learning', note: 'Recurrent networks to learn optimizers that generalize' },
-            { author: 'Santoro et al.', paper: 'Meta-Learning with Memory-Augmented Neural Networks', note: 'External memory to learn new tasks rapidly' },
-          ],
-        },
-      },
     },
     engines: {
-      title: 'Three engines. One conversational layer.',
-      lead: 'Each engine solves a class of decision. i6 Signal reads the predictive output of all three and delivers the next action to the business team.',
+      eyebrow: 'Predictive core',
+      title: 'Three proprietary engines',
+      lead: 'Each engine solves its own class of decision and is trained on the same foundation model. They do not generate text — they generate calibrated prediction, with measured uncertainty and traceable explanation.',
       items: [
-        {
-          id: 'i6recsys',
-          name: 'i6 RecSys',
-          tagline: 'High-performance recommendation',
-          description: 'Personalized, scalable suggestions for product mix and volume — across POS, e-commerce and digital channels.',
-        },
         {
           id: 'i6previsio',
           name: 'i6 Previsio',
           tagline: 'Granular demand forecasting',
-          description: 'Accurate forecasts that optimize production, inventory and distribution — eliminating stockouts and overstock.',
+          description: 'Forecasts per SKU, channel and time window, with confidence intervals and seasonality decomposition.',
+          points: [
+            'Granularity down to SKU × point of sale × day',
+            'Decomposition of trend, seasonality and event',
+            'Continuous reprocessing as new data arrives',
+          ],
+        },
+        {
+          id: 'i6recsys',
+          name: 'i6 RecSys',
+          tagline: 'High-performance recommendation',
+          description: 'Behavioral ranking that combines history, context and operational constraint in a single decision function.',
+          points: [
+            'Learns transactional behavior, not declared preference',
+            'Handles known and anonymous users in the same latent space',
+            'Explicit balance between precision and diversity',
+          ],
         },
         {
           id: 'i6elasticprice',
           name: 'i6 ElasticPrice',
           tagline: 'Dynamic pricing',
-          description: 'Continuously learns from market and demand signals to deliver fast, precise price recommendations.',
-        },
-        {
-          id: 'i6signal',
-          name: 'i6 Signal',
-          tagline: 'Predictive conversational layer',
-          description: 'Talks to the predictive output of the three engines and delivers anticipatory, prescriptive recommendations for decision-making.',
+          description: 'Continuous elasticity estimation per SKU, channel and lifecycle, replacing static curves with online learning.',
+          points: [
+            'Elasticity recomputed on every data cycle',
+            'Margin and positioning constraints as model bounds',
+            'Scenario simulation before any price is applied',
+          ],
         },
       ],
-      differentiators: {
-        title: 'Unmatched capabilities',
+      note: 'Hybrid architecture, operation on anonymized data and fine-tuned balance across competing goals.',
+    },
+    builder: {
+      eyebrow: 'Abstraction layer',
+      title: 'i6 Builder Platform',
+      lead: 'The engines on this page are not consumed directly. The i6 Builder Platform is the layer that exposes them programmatically — SDK, API and toolkits — so technical teams can build their own applications on the same intelligence.',
+      bullets: [
+        { title: 'SDK', text: 'Libraries to train, adapt and serve models derived from the foundation model.' },
+        { title: 'API', text: 'Forecasting, ranking and elasticity endpoints with a stable, versioned contract.' },
+        { title: 'Toolkits', text: 'Ready-made blocks for evaluation, drift monitoring and explainability.' },
+      ],
+      cta: 'Explore the i6 Builder Platform',
+    },
+    foundation: {
+      eyebrow: 'Foundation model',
+      label: 'Foundation model',
+      name: 'i6-RecSys-Base.g1',
+      description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptable from few samples, with external memory to learn new tasks fast.',
+      architectureTitle: 'Architecture',
+      architecture: [
+        { term: 'MAML', detail: 'Meta-learning that leaves the model ready to adapt to a new task from a handful of client samples.' },
+        { term: 'Active Learning', detail: 'The model itself picks which samples deserve labeling, accelerating learning and cutting annotation cost.' },
+        { term: 'Topological Loss', detail: 'Preserves topological relations in the latent space, stabilizing embeddings and improving few-shot generalization.' },
+      ],
+      statsTitle: 'Training scale',
+      stats: [
+        { value: '1.45B', label: 'records (2025)' },
+        { value: '20B', label: 'records (2026)' },
+        { value: '12', label: 'public/acquired sources (2025)' },
+        { value: '~50', label: 'public/acquired sources (2026)' },
+      ],
+      mixTitle: 'Training data diversity',
+      mix: [
+        { value: '15%', label: 'financial product behavior' },
+        { value: '45%', label: 'e-commerce' },
+        { value: '20%', label: 'telecom' },
+        { value: '20%', label: 'wholesale / retail' },
+      ],
+      references: {
+        title: 'Academic references',
         items: [
-          'Hybrid architecture',
-          'Operates on anonymized data',
-          'Fine-tuned balance across business goals',
+          { author: 'Finn, Abbeel & Levine', paper: 'Model-Agnostic Meta-Learning (MAML)', note: 'Algorithm that trains models to adapt from few samples' },
+          { author: 'Vinyals et al.', paper: 'Matching Networks for One Shot Learning', note: 'Foundation for metric-based meta-learning' },
+          { author: 'Ravi & Larochelle', paper: 'Optimization as a Model for Few-Shot Learning', note: 'Recurrent networks to learn optimizers that generalize' },
+          { author: 'Santoro et al.', paper: 'Meta-Learning with Memory-Augmented Neural Networks', note: 'External memory to learn new tasks rapidly' },
         ],
       },
     },
-    diversity: {
-      title: 'Diversity balancing',
-      lead: 'By analyzing unique behaviors and recommendation patterns, we identify the best unexplored products for each customer — ensuring diverse, relevant suggestions beyond purchase history.',
-      tasks: ['Recommended for you', 'Frequently bought together', 'Buy it again', 'Similar items', 'On sale'],
-      middle: {
-        title: 'Fine-tuned training',
-        subtitle: 'For precision and diversity',
-      },
-      chartNote: 'Distribution of customers by number of diverse products recommended — customers with diverse predictions, while keeping high precision in behavioral alignment.',
-      chartHighlight: '9 recommendations at the same relevance level — even for anonymous users',
-    },
-    explainability: {
-      title: 'Explainability that becomes a sales argument',
-      eyebrow: 'XAI for Business',
-      lead: 'We apply XAI — Explainable AI — to turn predictive outputs into clear, traceable, actionable recommendations.',
-      description: 'More than showing a score, we explain the key signals behind every decision: behavior, propensity, inventory, margin, demand, elasticity and similarity. This way AI stops being a black box and starts supporting commercial, operational and strategic decisions with context, confidence and business rationale.',
-      steps: [
+    reasoning: {
+      eyebrow: 'Method',
+      title: 'How the intelligence reasons',
+      lead: 'Two properties define the quality of a predictive decision: the output must not collapse into the obvious, and every decision must be auditable back to the signals that produced it.',
+      parts: [
         {
-          title: 'Identify drivers',
-          description: 'Detect the main factors that influence the recommendation',
-          sample: {
-            sku: 'SKU 3874',
-            rows: [
-              { feature: 'ct_lst_15_days', weight: '+0.0824' },
-              { feature: 'cx_time_tobuy', weight: '+0.0360' },
-              { feature: 'ct_lst_7_days', weight: '−0.0352' },
-              { feature: 'cx_item_id_weighted', weight: '−0.0239' },
-            ],
-          },
-        },
-        {
-          title: 'Prioritize factors and structure',
-          description: 'Classify factors by estimated impact on sales growth and pick the best message template',
-          cards: [
-            { title: 'Increase in demand', subtitle: 'prioritize argument of growth opportunity' },
-            { title: 'Repurchase occasion', subtitle: 'emphasize need for immediate restocking' },
-            { title: 'New product', subtitle: 'highlight market trend' },
-            { title: 'High-selling product', subtitle: 'stress risk of stockout' },
+          index: '01',
+          title: 'Balance before the answer',
+          description: 'A model that merely repeats history is accurate and useless. Training applies a fine-tuning step that keeps behavioral precision while opening the output space to alternatives not yet explored.',
+          points: [
+            'Precision and diversity as simultaneous objectives, not a trade-off',
+            'Rare signals preserved instead of suppressed by frequency',
+            'Same relevance level maintained for anonymous profiles as well',
           ],
         },
         {
-          title: 'Generate dynamic argument',
-          description: 'Fill the template with dynamic elements, composing a personalized message per POS/SKU',
-          segments: [
-            {
-              label: 'Industry',
-              items: [
-                { title: 'Consumption pattern', subtitle: 'mirrored in comparable seasonal windows' },
-                { title: 'Forecasted seasonality', subtitle: 'anticipates demand peak in 21 days' },
-                { title: 'Smart replenishment', subtitle: 'prevents stockout in the highest-turnover channel' },
-              ],
-            },
-            {
-              label: 'Retail',
-              items: [
-                { title: 'High engagement', subtitle: 'from similar customer profiles in the last 30 days' },
-                { title: 'Optimized bundling', subtitle: 'based on successful cross-sell patterns' },
-                { title: 'Strong correlation', subtitle: 'with the preferred products of high-value customers' },
-              ],
-            },
-            {
-              label: 'Finance',
-              items: [
-                { title: 'Propensity to contract', subtitle: 'high affinity score with the offer' },
-                { title: 'Aligned risk profile', subtitle: "within the portfolio's defined appetite" },
-                { title: 'Product cross-sell', subtitle: 'consistent with the active customer journey' },
-              ],
-            },
-            {
-              label: 'Pharma',
-              items: [
-                { title: 'Treatment adherence', subtitle: 'ideal moment to renew prescription' },
-                { title: 'Predicted repurchase', subtitle: 'continuity window for therapy' },
-                { title: 'Clinical-profile recommendation', subtitle: 'aligned with the prescribed category' },
-              ],
-            },
+          index: '02',
+          title: 'Explainability as part of the output',
+          description: 'Explanation is not a report written afterwards: every decision carries the weight of the signals that determined it, enabling audit, challenge and correction.',
+          points: [
+            'Per-variable contribution attribution on every individual decision',
+            'Traceable signals: behavior, propensity, inventory, margin, demand, elasticity and similarity',
+            'Versioned record of model, data and decision for later audit',
           ],
         },
       ],
+      note: 'No model reaches production without explainability and without drift measurement over time.',
     },
     security: {
+      eyebrow: 'Governance',
       title: 'Security and compliance by design',
+      lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
       pillars: [
         { title: 'Anonymization at source', description: 'Sensitive data is anonymized before any training — a security prerequisite for every model' },
         { title: 'Secure architecture', description: 'Multi-level authentication and route-based access control' },
         { title: 'Isolated environment', description: 'Secure, isolated environments protect your data and models from unauthorized access' },
-        
         { title: 'Ready to scale', description: '100% cloud-native solution with automatic resource scaling' },
       ],
     },
-    challenges: {
-      title: 'Why AI fails and how we solve it',
-      lead: 'Applied AI is an organism that builds itself, feeds itself and adapts. The main challenges we face with clients and how infinity6 addresses each one.',
-      headers: { challenge: 'Challenge', learning: 'Learning', resolution: 'How we solve it' },
-      rows: [
-        { challenge: 'Non-digital or fragmented journeys', learning: 'Without interaction, AI cannot learn', resolution: 'Hybrid touchpoints (contextual, WhatsApp, simple integrations)' },
-        { challenge: 'Transactional data without context', learning: 'Cold data produces blind models', resolution: 'Functional models that generalize behavior' },
-        { challenge: 'Good data, but disorganized', learning: 'Volume is not quality', resolution: 'Structuring and curating the most relevant variables' },
-        { challenge: 'Right Person Contact', learning: 'The wrong channel cancels the right message', resolution: 'Data enrichment' },
-        { challenge: 'No corporate strategy', learning: 'Isolated AI is inefficient AI', resolution: 'Traceability between AI application, strategic goals and business areas' },
-        { challenge: 'Unrealistic expectations', learning: '"AI will solve everything" is the first step toward failure', resolution: 'Incremental process with fast deliveries' },
-        { challenge: 'Focus on model, not on outcome', learning: 'The model is means, not end', resolution: 'Decision-oriented AI, not technical curiosity' },
-        { challenge: 'Dependence on generic AI', learning: 'Not every AI needs to be proprietary', resolution: 'Combine GLM (general large model) for automation and SAM (small actionable model) for precision and scale' },
-        { challenge: 'Governance and privacy', learning: 'Fear of failure blocks innovation', resolution: 'AI by design: anonymization, security and responsible experimentation' },
-      ],
+    results: {
+      eyebrow: 'Evidence',
+      title: 'Real results in production',
+      lead: 'Numbers measured in client operations. The sector appears as the provenance of the evidence — it is what makes the number verifiable.',
+      sourceLabel: 'Sector',
     },
-    community: {
-      title: 'infinity6 community',
-      description: 'We publish open models, datasets and experiments on Hugging Face — part of what we learn flows back to the community.',
-      cta: 'Visit our community',
-    },
-    research: {
-      eyebrow: 'Research & Foundations',
-      title: 'Scientific foundations behind the i6 engines',
-      lead: 'Proprietary technical references: studies developed by the founder of infinity6 and our R&D department, on an AI research base built since 2010, powering i6Previsio, i6RecSys and i6ElasticPrice — from self-organizing maps to unsupervised clustering and rule-free pattern discovery',
-      publicationsLabel: 'Peer-reviewed publications',
-      talksLabel: 'Technical talks',
-      openLabel: 'Open',
-      watchLabel: 'Watch',
-      publications: [
+    science: {
+      eyebrow: 'Scientific foundations',
+      title: 'In-house research since 2010',
+      lead: 'The engines come out of a research line led by the founder of infinity6 and our R&D team — from self-organizing maps to unsupervised clustering and rule-free pattern discovery.',
+      highlights: [
         {
           badge: 'SPRINGER · LNBIP · 2013',
           title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer, Berlin, Heidelberg',
+          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
           url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
         },
         {
           badge: 'CONFERENCE · WEBIST · 2012',
           title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
-          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)',
+          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
           url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
         },
         {
-          badge: 'SPRINGER · LNCS · 2010',
-          title: 'Development of a Business Intelligence Environment for e-Gov using Open Source Technologies',
-          venue: 'Lecture Notes in Computer Science, Springer',
-          url: 'https://www.academia.edu/24631504/Development_of_a_Business_Intelligence_Environment_for_e_Gov_Using_Open_Source_Technologies',
-        },
-        {
-          badge: 'ARTICLE · PT-BR',
-          title: 'Self-organizing maps applied to electronic government (Portuguese)',
-          venue: 'Academic publication · Academia.edu',
-          url: 'https://www.academia.edu/122408570/Mapas_auto_organiz%C3%A1veis_aplicados_em_governo_eletr%C3%B4nico',
-        },
-        {
-          badge: 'ARTICLE · Open Access',
-          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Academic repository · Academia.edu',
-          url: 'https://www.academia.edu/24631415/Knowledge_Discovery_Data_Mining_by_Self_organizing_Maps',
+          badge: 'TALK · InfoQ · QCon',
+          title: 'Content recommendation at iFood scale',
+          venue: 'InfoQ Brasil · QCon',
+          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
       ],
-      talks: [
-        { title: 'Data science to align product', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/' },
-        { title: 'Content recommendation at iFood scale', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/' },
-        { title: 'Machine Learning — from genesis to apocalypse', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/' },
-        { title: 'Pattern classification: a practical approach with artificial neural networks', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/' },
-        { title: 'Machine Learning in Java with Apache Mahout', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/' },
-        { title: 'Document classification based on artificial intelligence', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/' },
-        { title: 'Postgres as Big SQL', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/postgres-bigsql/' },
-        { title: 'Data mining with Weka API', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/' },
-        { title: 'Machine Learning and data mining', venue: 'InfoQ Brasil · QCon', url: 'https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/' },
-      ],
+      cta: 'See all technical production',
     },
     glossary: {
-      title: 'GEO Glossary — infinity6 terms',
-      lead: 'Short definitions of infinity6 proprietary terms and the technical literature underpinning our engines.',
+      eyebrow: 'Vocabulary',
+      title: 'Terms used on this page',
+      lead: 'Short definitions of what you need to read the rest of this page.',
       terms: [
-        { slug: 'behavioral-prediction', term: 'Behavioral prediction', definition: 'Modeling that learns the real behavior of a customer, channel or product from transactional data — not declared preferences — to anticipate the next relevant action.' },
-        { slug: 'conversion-propensity', term: 'Conversion propensity', definition: 'Predictive score estimating the probability that an anonymous visitor or known customer completes a purchase in a specific context (channel, moment, offer).' },
-        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', definition: 'Price sensitivity of demand computed continuously by SKU, channel and lifecycle — replacing static curves with online learning.' },
-        { slug: 'contextual-adherence', term: 'Contextual adherence', definition: 'Degree to which a recommendation combines behavioral history with current context (stock, moment, POS profile) — the basis of infinity6 prescriptive decisions.' },
-        { slug: 'shelf-stockout', term: 'Shelf stockout', definition: 'Unavailability of a SKU at the point of sale when real demand exists. In pharma retail it costs between 4% and 12% of net revenue.' },
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algorithm (Finn, Abbeel & Levine, 2017) that trains models to adapt quickly to new tasks from few samples — the basis of i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Loss function that preserves topological relationships between examples in the latent space, improving few-shot generalization and embedding stability.' },
         { slug: 'active-learning', term: 'Active Learning', definition: 'Strategy where the model actively selects which samples to label, accelerating learning and reducing annotation cost.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Loss function that preserves topological relationships between examples in the latent space, improving few-shot generalization and embedding stability.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss) pre-trained on 1.45 billion cross-sector records, adaptable from few client samples.' },
-        { slug: 'i6signal', term: 'i6 Signal', definition: 'Predictive conversational layer that reads the output of the i6 Previsio, i6 RecSys and i6 ElasticPrice engines and delivers the next prescriptive action to business teams — anticipatory, not reactive.' },
+        { slug: 'behavioral-prediction', term: 'Behavioral prediction', definition: 'Modeling that learns the real behavior of a customer, channel or product from transactional data — not declared preferences — to anticipate the next relevant action.' },
+        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', definition: 'Price sensitivity of demand computed continuously by SKU, channel and lifecycle — replacing static curves with online learning.' },
+      ],
+      cta: 'Full glossary in the documentation',
+    },
+    closing: {
+      eyebrow: 'Next step',
+      title: 'Want to assess the intelligence in depth?',
+      lead: 'We talk to technical teams about architecture, model evaluation and integration — with no commercial layer in between.',
+      primary: 'Talk to the technical team',
+      secondary: 'Build on the i6 Builder Platform',
+    },
+  },
+
+  es: {
+    hero: {
+      eyebrow: 'infinity6 · la capa de inteligencia',
+      title: 'La inteligencia que sostiene todo lo que entregamos',
+      lead: 'Esta página no trata de un producto ni de cómo construir con nuestra IA. Trata de la capa más profunda: los motores propios, el modelo fundacional que los alimenta y el rigor científico detrás de cada decisión que producen.',
+      layers: [
+        { name: 'i6 Decision Suite', role: 'Lo que la inteligencia resuelve en el negocio' },
+        { name: 'i6 Builder Platform', role: 'Cómo se construye sobre la inteligencia' },
+        { name: 'La inteligencia', role: 'Motores, modelo fundacional y método científico', current: true },
       ],
     },
-    cta: {
-      title: 'Want to explore the engines in depth?',
-      button: 'Talk to our technical team',
+    engines: {
+      eyebrow: 'Núcleo predictivo',
+      title: 'Tres motores propios',
+      lead: 'Cada motor resuelve su propia clase de decisión y se entrena sobre el mismo modelo fundacional. No generan texto: generan predicción calibrada, con incertidumbre medida y explicación rastreable.',
+      items: [
+        {
+          id: 'i6previsio',
+          name: 'i6 Previsio',
+          tagline: 'Previsión de demanda granular',
+          description: 'Previsión por SKU, canal y ventana temporal, con intervalo de confianza y descomposición de estacionalidad.',
+          points: [
+            'Granularidad hasta SKU × punto de venta × día',
+            'Descomposición de tendencia, estacionalidad y evento',
+            'Reprocesamiento continuo a medida que llega dato nuevo',
+          ],
+        },
+        {
+          id: 'i6recsys',
+          name: 'i6 RecSys',
+          tagline: 'Recomendación de alto desempeño',
+          description: 'Ranking conductual que combina histórico, contexto y restricción operativa en una única función de decisión.',
+          points: [
+            'Aprende comportamiento transaccional, no preferencia declarada',
+            'Opera con usuarios identificados y anónimos en el mismo espacio latente',
+            'Equilibrio explícito entre precisión y diversidad',
+          ],
+        },
+        {
+          id: 'i6elasticprice',
+          name: 'i6 ElasticPrice',
+          tagline: 'Precios dinámicos',
+          description: 'Estimación continua de elasticidad por SKU, canal y ciclo de vida, sustituyendo curvas estáticas por aprendizaje en línea.',
+          points: [
+            'Elasticidad recalculada en cada ciclo de datos',
+            'Restricciones de margen y posicionamiento como límites del modelo',
+            'Simulación de escenarios antes de aplicar el precio',
+          ],
+        },
+      ],
+      note: 'Arquitectura híbrida, operación sobre datos anonimizados y ajuste fino del equilibrio entre metas en competencia.',
     },
-
+    builder: {
+      eyebrow: 'Capa de abstracción',
+      title: 'i6 Builder Platform',
+      lead: 'Los motores de esta página no se consumen de forma directa. La i6 Builder Platform es la capa que los expone de forma programable — SDK, API y toolkits — para que los equipos técnicos construyan sus propias aplicaciones sobre la misma inteligencia.',
+      bullets: [
+        { title: 'SDK', text: 'Bibliotecas para entrenar, adaptar y servir modelos derivados del modelo fundacional.' },
+        { title: 'API', text: 'Endpoints de previsión, ranking y elasticidad con contrato estable y versionado.' },
+        { title: 'Toolkits', text: 'Bloques listos de evaluación, monitoreo de deriva y explicabilidad.' },
+      ],
+      cta: 'Conocer la i6 Builder Platform',
+    },
+    foundation: {
+      eyebrow: 'Modelo fundacional',
+      label: 'Modelo fundacional',
+      name: 'i6-RecSys-Base.g1',
+      description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptable con pocas muestras, con memoria externa para aprender nuevas tareas rápidamente.',
+      architectureTitle: 'Arquitectura',
+      architecture: [
+        { term: 'MAML', detail: 'Meta-aprendizaje que deja el modelo listo para adaptarse a una nueva tarea con pocas muestras del cliente.' },
+        { term: 'Active Learning', detail: 'El propio modelo elige qué muestras merecen etiquetado, acelerando el aprendizaje y reduciendo el costo de anotación.' },
+        { term: 'Topological Loss', detail: 'Preserva las relaciones topológicas del espacio latente, lo que estabiliza embeddings y mejora la generalización con pocas muestras.' },
+      ],
+      statsTitle: 'Escala de entrenamiento',
+      stats: [
+        { value: '1,45B', label: 'registros (2025)' },
+        { value: '20B', label: 'registros (2026)' },
+        { value: '12', label: 'bases públicas/adquiridas (2025)' },
+        { value: '~50', label: 'bases públicas/adquiridas (2026)' },
+      ],
+      mixTitle: 'Diversidad de los datos de entrenamiento',
+      mix: [
+        { value: '15%', label: 'comportamiento en productos financieros' },
+        { value: '45%', label: 'e-commerce' },
+        { value: '20%', label: 'telecom' },
+        { value: '20%', label: 'mayorista / retail' },
+      ],
+      references: {
+        title: 'Referencias académicas',
+        items: [
+          { author: 'Finn, Abbeel & Levine', paper: 'Model-Agnostic Meta-Learning (MAML)', note: 'Algoritmo que entrena modelos para adaptarse con pocas muestras' },
+          { author: 'Vinyals et al.', paper: 'Matching Networks for One Shot Learning', note: 'Fundamenta enfoques metric-based de meta-learning' },
+          { author: 'Ravi & Larochelle', paper: 'Optimization as a Model for Few-Shot Learning', note: 'Redes recurrentes para aprender optimizadores que generalizan' },
+          { author: 'Santoro et al.', paper: 'Meta-Learning with Memory-Augmented Neural Networks', note: 'Memoria externa para aprender nuevas tareas rápidamente' },
+        ],
+      },
+    },
+    reasoning: {
+      eyebrow: 'Método',
+      title: 'Cómo razona la inteligencia',
+      lead: 'Dos propiedades definen la calidad de una decisión predictiva: la salida no puede colapsar en lo obvio, y cada decisión debe ser auditable hasta las señales que la produjeron.',
+      parts: [
+        {
+          index: '01',
+          title: 'Equilibrio antes de la respuesta',
+          description: 'Un modelo que solo repite el histórico es preciso e inútil. El entrenamiento aplica un ajuste fino que mantiene la precisión conductual mientras abre el espacio de salida a alternativas aún no exploradas.',
+          points: [
+            'Precisión y diversidad como objetivos simultáneos, no como intercambio',
+            'Señales raras preservadas en lugar de suprimidas por la frecuencia',
+            'Mismo nivel de relevancia también para perfiles anónimos',
+          ],
+        },
+        {
+          index: '02',
+          title: 'Explicabilidad como parte de la salida',
+          description: 'La explicación no es un informe posterior: cada decisión carga el peso de las señales que la determinaron, lo que permite auditoría, cuestionamiento y corrección.',
+          points: [
+            'Atribución de contribución por variable en cada decisión individual',
+            'Señales rastreables: comportamiento, propensión, inventario, margen, demanda, elasticidad y similitud',
+            'Registro versionado de modelo, dato y decisión para auditoría posterior',
+          ],
+        },
+      ],
+      note: 'Ningún modelo entra en producción sin explicabilidad y sin medición de deriva a lo largo del tiempo.',
+    },
+    security: {
+      eyebrow: 'Gobernanza',
+      title: 'Seguridad y cumplimiento por diseño',
+      lead: 'Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.',
+      pillars: [
+        { title: 'Anonimización en el origen', description: 'Los datos sensibles se anonimizan antes de cualquier entrenamiento — requisito de seguridad para todos los modelos' },
+        { title: 'Arquitectura segura', description: 'Autenticación multinivel y control de acceso basado en rutas' },
+        { title: 'Entorno aislado', description: 'Entornos seguros y aislados protegen datos y modelos contra accesos no autorizados' },
+        { title: 'Listo para escalar', description: 'Solución 100% en la nube, con escalado automático de recursos' },
+      ],
+    },
+    results: {
+      eyebrow: 'Evidencia',
+      title: 'Resultados reales en producción',
+      lead: 'Números medidos en operaciones de clientes. El sector aparece como procedencia de la evidencia: es lo que hace verificable el número.',
+      sourceLabel: 'Sector',
+    },
+    science: {
+      eyebrow: 'Base científica',
+      title: 'Investigación propia desde 2010',
+      lead: 'Los motores nacen de una línea de investigación conducida por el founder de infinity6 y el área de I+D — de mapas autoorganizados a clustering no supervisado y descubrimiento de patrones sin reglas previas.',
+      highlights: [
+        {
+          badge: 'SPRINGER · LNBIP · 2013',
+          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
+          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
+          url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
+        },
+        {
+          badge: 'CONFERENCIA · WEBIST · 2012',
+          title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
+          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
+          url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
+        },
+        {
+          badge: 'CHARLA · InfoQ · QCon',
+          title: 'Recomendación de contenido a la escala de iFood',
+          venue: 'InfoQ Brasil · QCon',
+          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
+        },
+      ],
+      cta: 'Ver toda la producción técnica',
+    },
+    glossary: {
+      eyebrow: 'Vocabulario',
+      title: 'Términos usados en esta página',
+      lead: 'Definiciones breves de lo necesario para leer el resto de esta página.',
+      terms: [
+        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que entrena modelos para adaptarse rápidamente a nuevas tareas con pocas muestras — base del i6-RecSys-Base.g1.' },
+        { slug: 'active-learning', term: 'Active Learning', definition: 'Estrategia en la que el modelo selecciona activamente qué muestras etiquetar para acelerar el aprendizaje y reducir el costo de anotación.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Función de pérdida que preserva relaciones topológicas entre ejemplos en el espacio latente, mejorando la generalización con pocas muestras y la estabilidad del embedding.' },
+        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional propio de infinity6 (MAML + Active Learning + Topological Loss) preentrenado en 1.450 millones de registros multisectoriales, adaptable con pocas muestras por cliente.' },
+        { slug: 'prediccion-conductual', term: 'Predicción conductual', definition: 'Modelado que aprende el comportamiento real del cliente, canal o producto a partir de datos transaccionales — no declarados — para anticipar la próxima acción relevante.' },
+        { slug: 'elasticidad-dinamica', term: 'Elasticidad dinámica', definition: 'Sensibilidad de la demanda al precio calculada de forma continua por SKU, canal y ciclo de vida — sustituye curvas estáticas por aprendizaje en línea.' },
+      ],
+      cta: 'Glosario completo en la documentación',
+    },
+    closing: {
+      eyebrow: 'Siguiente paso',
+      title: '¿Quieres evaluar la inteligencia en profundidad?',
+      lead: 'Hablamos con equipos técnicos sobre arquitectura, evaluación de modelos e integración — sin intermediación comercial.',
+      primary: 'Hablar con el equipo técnico',
+      secondary: 'Construir sobre la i6 Builder Platform',
+    },
   },
 };
