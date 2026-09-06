@@ -88,7 +88,7 @@ const HeaderNovo = () => {
   // barra final), então /community e /community/ são equivalentes.
   const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
   const isLightPage =
-    ['/', '/i6-builders', '/community', '/contact'].includes(normalizedPath) ||
+    ['/', '/i6-builders', '/community', '/contact', '/i6-blog'].includes(normalizedPath) ||
     normalizedPath === '/docs' ||
     normalizedPath.startsWith('/docs/');
 
