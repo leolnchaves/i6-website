@@ -5,143 +5,80 @@ import { resolveCoverImage, type Insight } from '@/hooks/useInsights';
 
 interface Props {
   article: Insight;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'horizontal';
-  /** Compact horizontal layout: smaller image, less padding, no theme chip. */
-  dense?: boolean;
+  /** `feature` ocupa duas colunas com imagem maior; `compact` é o padrão. */
+  variant?: 'feature' | 'compact';
 }
 
-/**
- * Blog card with a soft radial glow that appears on hover — background only,
- * so the card doesn't move. Cover image (if any) sits on top with rounded
- * corners; text lives below.
- */
-const BlogCard = ({ article, size = 'md', variant = 'default', dense = false }: Props) => {
+const BlogCard = ({ article, variant = 'compact' }: Props) => {
   const { t, language } = useLanguage();
   const localized = useLocalizedPath();
   const cover = resolveCoverImage(article.cover_image);
+  const locale = language === 'pt' ? 'pt-BR' : language === 'es' ? 'es-ES' : 'en-US';
+  const feature = variant === 'feature';
 
-  const heightClass =
-    size === 'lg' ? 'h-56 md:h-64' : size === 'sm' ? 'h-32 md:h-36' : 'h-40 md:h-48';
-
-  if (variant === 'horizontal') {
-    return (
-      <Link
-        to={localized(`/i6-blog/${article.slug}`)}
-        className="group relative block h-full rounded-2xl p-[1px] overflow-hidden"
-      >
-        <span
-          aria-hidden="true"
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(120% 90% at 20% 0%, rgba(244,132,95,0.35) 0%, rgba(244,132,95,0.08) 35%, transparent 70%)',
-          }}
-        />
-        <article className="relative h-full flex flex-row rounded-2xl border border-white/10 bg-[#0B1224]/80 backdrop-blur-sm group-hover:border-[#F4845F]/40 transition-colors overflow-hidden">
-          {cover && (
-            <div className={`${dense ? 'w-1/3' : 'w-2/5'} shrink-0 overflow-hidden bg-white/5`}>
-              <img
-                src={cover}
-                alt={article.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-            </div>
-          )}
-          <div className={`${dense ? 'px-3 py-2.5 md:px-4 md:py-3' : 'p-4 md:p-5'} flex-1 flex flex-col min-w-0`}>
-            <div className={`flex items-center gap-2 ${dense ? 'mb-1' : 'mb-2'} flex-wrap shrink-0`}>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] px-2 py-0.5 rounded bg-[#F4845F]/15 text-[#F4845F]">
-                {t('blog.badge')}
-              </span>
-              {!dense && article.theme && (
-                <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 text-white/60">
-                  {article.theme}
-                </span>
-              )}
-            </div>
-            <h3
-              className={`font-semibold text-white group-hover:text-[#F4845F] transition-colors mb-2 leading-snug ${
-                dense ? 'text-sm' : 'text-sm md:text-base'
-              }`}
-            >
-              {article.title}
-            </h3>
-            <div className="flex items-center gap-2 text-xs text-white/40 mt-auto shrink-0">
-              <time>
-                {new Date(article.date).toLocaleDateString(
-                  language === 'pt' ? 'pt-BR' : 'en-US',
-                  { day: '2-digit', month: 'short', year: 'numeric' },
-                )}
-              </time>
-              {article.read_time && (
-                <span>· {article.read_time} {t('blog.minRead')}</span>
-              )}
-            </div>
-          </div>
-        </article>
-      </Link>
-    );
-  }
+  const meta = (
+    <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+      {(article.theme_label || article.theme) && (
+        <span className="uppercase tracking-[0.16em] text-primary">
+          {article.theme_label || article.theme}
+        </span>
+      )}
+      {article.date && (
+        <time dateTime={article.date}>
+          {new Date(article.date).toLocaleDateString(locale, {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          })}
+        </time>
+      )}
+      {article.read_time && (
+        <span>
+          {article.read_time} {t('blog.minRead')}
+        </span>
+      )}
+    </div>
+  );
 
   return (
     <Link
       to={localized(`/i6-blog/${article.slug}`)}
-      className="group relative block h-full rounded-2xl p-[1px] overflow-hidden"
+      className="group sand-card sand-card-hover flex h-full flex-col overflow-hidden"
     >
-      {/* Soft hover glow (radial, coral) — sits behind the card body */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(120% 90% at 20% 0%, rgba(244,132,95,0.35) 0%, rgba(244,132,95,0.08) 35%, transparent 70%)',
-        }}
-      />
-
-      <article className="relative h-full flex flex-col rounded-2xl border border-white/10 bg-[#0B1224]/80 backdrop-blur-sm group-hover:border-[#F4845F]/40 transition-colors overflow-hidden">
-        {cover && (
-          <div className={`${heightClass} overflow-hidden bg-white/5`}>
-            <img
-              src={cover}
-              alt={article.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
+      <div
+        className={`w-full overflow-hidden bg-secondary ${feature ? 'h-52 md:h-64' : 'h-40'}`}
+      >
+        {cover ? (
+          <img
+            src={cover}
+            alt={article.title}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+          />
+        ) : (
+          <div className="sand-glow h-full w-full" aria-hidden="true" />
         )}
-        <div className="p-5 md:p-6 flex-1 flex flex-col">
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] px-2 py-0.5 rounded bg-[#F4845F]/15 text-[#F4845F]">
-              {t('blog.badge')}
-            </span>
-            {article.theme && (
-              <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 text-white/60">
-                {article.theme}
-              </span>
-            )}
-          </div>
-          <h3
-            className={`font-semibold text-white group-hover:text-[#F4845F] transition-colors mb-2 ${
-              size === 'lg' ? 'text-xl md:text-2xl' : 'text-base md:text-lg'
+      </div>
+
+      <div className={`flex flex-1 flex-col ${feature ? 'p-6 md:p-7' : 'p-5'}`}>
+        <h3
+          className={`font-display leading-snug text-foreground transition-colors group-hover:text-primary ${
+            feature ? 'text-xl md:text-2xl' : 'text-base'
+          }`}
+        >
+          {article.title}
+        </h3>
+        {article.excerpt && (
+          <p
+            className={`mt-3 flex-1 text-sm leading-relaxed text-muted-foreground ${
+              feature ? 'line-clamp-3' : 'line-clamp-2'
             }`}
           >
-            {article.title}
-          </h3>
-          <p className="text-sm text-white/60 line-clamp-3 flex-1">{article.excerpt}</p>
-          <div className="flex items-center gap-2 text-xs text-white/40 mt-4">
-            <time>
-              {new Date(article.date).toLocaleDateString(
-                language === 'pt' ? 'pt-BR' : 'en-US',
-                { day: '2-digit', month: 'short', year: 'numeric' },
-              )}
-            </time>
-            {article.read_time && (
-              <span>· {article.read_time} {t('blog.minRead')}</span>
-            )}
-          </div>
-        </div>
-      </article>
+            {article.excerpt}
+          </p>
+        )}
+        {meta}
+      </div>
     </Link>
   );
 };
