@@ -36,6 +36,16 @@ const OurAIClosing = memo(({ content }: Props) => {
               {content.secondary}
               <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
+            <a
+              href="https://i6decision.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            >
+              {content.tertiary}
+              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+            </a>
+
           </div>
         </div>
       </div>

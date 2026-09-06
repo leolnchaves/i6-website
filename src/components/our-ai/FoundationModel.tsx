@@ -63,8 +63,8 @@ const FoundationModel = memo(({ content }: Props) => (
       </div>
     </div>
   </section>
-
 ));
+
 
 FoundationModel.displayName = 'FoundationModel';
 export default FoundationModel;
