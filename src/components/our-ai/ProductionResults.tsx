@@ -18,27 +18,28 @@ const ProductionResults = memo(({ content }: Props) => {
   const cl = toContentLang(language);
 
   return (
-    <section className="bg-[hsl(24_10%_14%)] py-16 md:py-24">
+    <section className="bg-secondary/60 py-16 md:py-24">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">{content.eyebrow}</p>
-          <h2 className="mt-4 text-3xl md:text-[2.6rem] font-bold leading-[1.12] text-[hsl(36_43%_98%)]">
+          <h2 className="mt-4 text-3xl md:text-[2.6rem] font-bold leading-[1.12] text-foreground">
             {content.title}
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-[hsl(36_20%_82%)]">{content.lead}</p>
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground">{content.lead}</p>
         </div>
 
-        <dl className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius)] bg-[hsl(36_20%_82%/0.18)] sm:grid-cols-2 lg:grid-cols-3">
+        <dl className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
           {realResults.map((r) => (
-            <div key={r.slug} className="bg-[hsl(24_10%_14%)] p-7">
-              <dt className="text-3xl font-bold text-[hsl(36_43%_98%)]">{r.value}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-[hsl(36_20%_82%/0.85)]">{r.label[cl]}</dd>
+            <div key={r.slug} className="bg-card p-7">
+              <dt className="text-3xl font-bold text-foreground">{r.value}</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.label[cl]}</dd>
               <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
                 {content.sourceLabel} · {r.source[cl]}
               </p>
             </div>
           ))}
         </dl>
+
       </div>
     </section>
   );

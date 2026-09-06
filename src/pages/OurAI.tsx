@@ -104,14 +104,15 @@ const OurAI = memo(() => {
       <div className="theme-sand">
         <IntelligenceHero content={c.hero} />
         <EnginesTrio content={c.engines} />
-        <BuilderBridge content={c.builder} />
         <FoundationModel content={c.foundation} />
         <ReasoningSection content={c.reasoning} />
         <SecuritySection content={c.security} />
+        <BuilderBridge content={c.builder} />
         <ProductionResults content={c.results} />
         <ScienceHighlights content={c.science} />
         <GlossaryCondensed content={c.glossary} />
         <OurAIClosing content={c.closing} />
+
       </div>
     </>
   );
