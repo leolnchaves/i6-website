@@ -43,9 +43,9 @@ de arquivos).
   chamado de dentro de `DocsMarkdown` quando há abas, o que mantém `DocsShell`
   intocado.
 - `DocsToc.tsx`: recorte de headings por aba ativa.
-- `DocsSidebar.tsx`: indexação incluindo os blocos de aba e `?tab=` no link do
-  resultado. (Fora da lista de arquivos travados; se preferir, a busca fica só na
-  introdução e a sidebar não é tocada — é a única decisão em aberto.)
+- `DocsSidebar.tsx`: indexação incluindo os três blocos de aba e `?tab=` no link do
+  resultado, conforme a decisão fechada da seção "Busca".
+
 - Intocados: `DocsShell`, `DocsPager`, `DocsSupport`, `DocsRelated`,
   `DocsSampleNotice`, `DocsCodeBlock`, `scripts/sync-content-from-i6hub.mjs`.
 
