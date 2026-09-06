@@ -1,3 +1,10 @@
+# Roadmap
+
+## Em andamento
+- [ ] Remover código morto de success-stories: excluir `src/components/success-stories/optimized/LazyComponents.tsx` e a pasta `optimized/` se ficar vazia; validar typecheck, build e /pt/success-stories.
+
+---
+
 # Roadmap — Documentação (/docs)
 
 ## Frente A — Menu e índice fixos
