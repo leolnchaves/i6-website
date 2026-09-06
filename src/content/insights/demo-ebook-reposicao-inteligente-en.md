@@ -12,7 +12,7 @@ read_time: 19
 featured: false
 cover_image: /images/comunidade/community-desks.jpg
 gated: true
-asset_url: /content/demo-ebook.pdf
+asset_url: null
 ---
 > Demo content created to test the page layout. Figures and cases are fictional.
 

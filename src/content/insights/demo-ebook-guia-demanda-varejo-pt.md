@@ -12,7 +12,7 @@ read_time: 22
 featured: true
 cover_image: /images/comunidade/mural-team.jpg
 gated: true
-asset_url: /content/demo-ebook.pdf
+asset_url: null
 ---
 > Conteúdo de demonstração criado para testar o layout da página. Números e casos são fictícios.
 

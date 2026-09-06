@@ -12,7 +12,7 @@ read_time: 26
 featured: false
 cover_image: null
 gated: true
-asset_url: /content/demo-ebook.pdf
+asset_url: null
 ---
 > Conteúdo de demonstração criado para testar o layout da página. Números e casos são fictícios.
 
