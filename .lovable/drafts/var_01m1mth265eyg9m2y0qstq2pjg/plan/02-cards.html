@@ -1,0 +1,33 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Antes e depois do card: foto de ambiente trocada por logo de veiculo">
+<style>
+  text { font-family: var(--font-sans); fill: hsl(var(--muted-foreground)); font-size: 12px; }
+  .lbl { fill: hsl(var(--foreground)); font-size: 14px; font-weight: 480; }
+  .tag { font-size: 11px; letter-spacing: .1em; }
+  .bx { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+  .fill { fill: hsl(var(--muted)); stroke: none; }
+  .greek { fill: hsl(var(--border)); }
+</style>
+
+  <text class="tag" x="0" y="14">HOJE</text>
+  <rect class="bx" x="0" y="26" width="250" height="230" rx="8"/>
+  <rect class="fill" x="1" y="27" width="248" height="86"/>
+  <text x="125" y="76" text-anchor="middle">foto de ambiente</text>
+  <rect class="greek" x="20" y="136" width="120" height="8" rx="4"/>
+  <rect class="greek" x="20" y="158" width="200" height="10" rx="5"/>
+  <rect class="greek" x="20" y="176" width="160" height="10" rx="5"/>
+  <rect class="greek" x="20" y="206" width="90" height="8" rx="4"/>
+
+  <text class="tag" x="390" y="14">DEPOIS</text>
+  <rect class="bx" x="390" y="26" width="250" height="230" rx="8" stroke="hsl(var(--accent))"/>
+  <rect class="fill" x="391" y="27" width="248" height="86"/>
+  <rect x="470" y="58" width="90" height="24" rx="4" fill="hsl(var(--accent))" opacity="0.14"/>
+  <text x="515" y="74" text-anchor="middle" style="fill:hsl(var(--accent-foreground)); font-size:12px; letter-spacing:.12em">NEOFEED</text>
+  <rect class="greek" x="410" y="136" width="120" height="8" rx="4"/>
+  <rect class="greek" x="410" y="158" width="200" height="10" rx="5"/>
+  <rect class="greek" x="410" y="176" width="160" height="10" rx="5"/>
+  <rect class="greek" x="410" y="206" width="90" height="8" rx="4"/>
+
+  <line x1="270" y1="141" x2="370" y2="141" stroke="hsl(var(--muted-foreground))" stroke-width="1" marker-end="url(#a)"/>
+  <defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0،0" /><path d="M0 0 L6 3 L0 6 z" fill="hsl(var(--muted-foreground))"/></marker></defs>
+  <text x="320" y="132" text-anchor="middle" style="paint-order:stroke; stroke:hsl(var(--background)); stroke-width:4px">logo</text>
+</svg>
