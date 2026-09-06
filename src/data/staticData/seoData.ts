@@ -7,7 +7,8 @@ interface PageSEO {
   keywords: string[];
 }
 
-type SEODataMap = Record<string, Record<ContentLang, PageSEO>>;
+// ES é opcional: quando ausente, a página cai no par PT/EN.
+type SEODataMap = Record<string, Record<ContentLang, PageSEO> & { es?: PageSEO }>;
 
 export const seoData: SEODataMap = {
   home: {
