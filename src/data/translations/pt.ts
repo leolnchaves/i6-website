@@ -39,6 +39,9 @@ export const ptTranslations = {
   'blog.filterAll': 'Todos',
   'blog.empty': 'Em breve, novos artigos',
   'blog.minRead': 'min de leitura',
+  'blog.featured': 'Destaque',
+  'blog.articlesLabel': 'artigos',
+  'blog.clearFilters': 'Limpar filtros',
   'blog.themeFallback': 'Sem tema',
 
   

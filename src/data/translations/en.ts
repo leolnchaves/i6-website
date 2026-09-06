@@ -39,6 +39,9 @@ export const enTranslations = {
   'blog.filterAll': 'All',
   'blog.empty': 'New articles coming soon',
   'blog.minRead': 'min read',
+  'blog.featured': 'Featured',
+  'blog.articlesLabel': 'articles',
+  'blog.clearFilters': 'Clear filters',
   'blog.themeFallback': 'Uncategorized',
 
   

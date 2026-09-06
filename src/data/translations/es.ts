@@ -43,6 +43,9 @@ export const esTranslations = {
   'blog.filterAll': 'Todos',
   'blog.empty': 'Pronto, nuevos artículos',
   'blog.minRead': 'min de lectura',
+  'blog.featured': 'Destacado',
+  'blog.articlesLabel': 'artículos',
+  'blog.clearFilters': 'Limpiar filtros',
   'blog.themeFallback': 'Sin tema',
 
   // Common CTAs

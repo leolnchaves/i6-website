@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useBlogArticles, type Insight } from '@/hooks/useInsights';
+import BlogIntro from '@/components/blog/BlogIntro';
 import BlogHero from '@/components/blog/BlogHero';
+import BlogDivider from '@/components/blog/BlogDivider';
 import RecentStrip from '@/components/blog/RecentStrip';
 import BlogFilters from '@/components/blog/BlogFilters';
 import ThemeRail from '@/components/blog/ThemeRail';
@@ -71,56 +73,63 @@ const Blog = () => {
     return Array.from(map.values());
   }, [filtered, t]);
 
+  const hasFilter = activeTheme !== null || activeTag !== null;
+
   return (
     <>
       <Helmet>
-        <html lang={language === 'pt' ? 'pt-BR' : 'en'} />
+        <html lang={language === 'pt' ? 'pt-BR' : language === 'es' ? 'es' : 'en'} />
         <title>{`${t('blog.pageTitle')} | infinity6`}</title>
         <meta name="description" content={t('blog.pageSubtitle')} />
       </Helmet>
 
-      <section className="container mx-auto px-6 pt-32 pb-20">
-        <header className="max-w-3xl mb-10">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#F4845F] mb-3">
-            infinity6 · Blog
-          </p>
-          <h1 className="sr-only">{t('blog.pageTitle')}</h1>
-          <p className="text-lg text-white/70">{t('blog.pageSubtitle')}</p>
-        </header>
+      <div className="theme-sand">
+        <BlogIntro total={articles.length} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:h-[62vh]">
-          {heroArticle && (
-            <div className="lg:col-span-2">
-              <BlogHero article={heroArticle} />
-            </div>
-          )}
-          <div className="hidden lg:block lg:col-span-1">
-            <RecentStrip articles={recent} layout="side" />
-          </div>
-        </div>
+        {heroArticle && <BlogHero article={heroArticle} />}
 
-        {/* Mobile/tablet fallback: original horizontal strip below the hero */}
-        <div className="lg:hidden">
-          <RecentStrip articles={recent} layout="row" />
-        </div>
-
-        <BlogFilters
-          themes={themes}
-          tags={tags}
-          activeTheme={activeTheme}
-          activeTag={activeTag}
-          onThemeChange={setActiveTheme}
-          onTagChange={setActiveTag}
-        />
-
-        {byTheme.length === 0 && articles.length === 0 && (
-          <p className="mt-16 text-white/50">{t('blog.empty')}</p>
+        {recent.length > 0 && (
+          <>
+            <BlogDivider to="graphite" />
+            <RecentStrip articles={recent} />
+            <BlogDivider to="sand" />
+          </>
         )}
 
-        {byTheme.map(({ label, items }) => (
-          <ThemeRail key={label} title={label} articles={items} />
-        ))}
-      </section>
+        <section className="mx-auto max-w-7xl px-6 pb-24 pt-14 md:pt-16">
+          <BlogFilters
+            themes={themes}
+            tags={tags}
+            activeTheme={activeTheme}
+            activeTag={activeTag}
+            onThemeChange={setActiveTheme}
+            onTagChange={setActiveTag}
+            resultCount={filtered.length}
+          />
+
+          {filtered.length === 0 && (
+            <div className="py-20 text-center">
+              <p className="font-display text-lg text-foreground">{t('blog.empty')}</p>
+              {hasFilter && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTheme(null);
+                    setActiveTag(null);
+                  }}
+                  className="mt-4 text-sm text-primary underline-offset-4 hover:underline"
+                >
+                  {t('blog.clearFilters')}
+                </button>
+              )}
+            </div>
+          )}
+
+          {byTheme.map(({ label, items }) => (
+            <ThemeRail key={label} title={label} articles={items} />
+          ))}
+        </section>
+      </div>
     </>
   );
 };
