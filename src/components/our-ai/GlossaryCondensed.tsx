@@ -31,7 +31,7 @@ const GlossaryCondensed = memo(({ content }: Props) => {
         </dl>
 
         <Link
-          to={localized('/docs')}
+          to={localized('/docs/glossario')}
           className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-primary"
         >
           {content.cta}
