@@ -1,13 +1,11 @@
-# /i6-intelligence — "i6 Deep Research"
+# Correção da tipagem do conteúdo de research
 
-A página de research passa a ter a mesma linguagem editorial clara já aprovada em i6 Blog e i6 na Mídia, com fundo areia, título grande e cartões com hierarquia tipográfica. O nome muda de "i6 Executive Research" para "i6 Deep Research" em todos os lugares do site. A rota continua a mesma.
+Nesta rodada não há nenhuma mudança visual. O objetivo é fazer com que cada peça de research diga explicitamente o que ela é, em vez de o site adivinhar pela pasta onde o arquivo está.
 
-## Composição
+Hoje as duas peças reais de research não têm o campo de tipo preenchido e só aparecem porque existe uma regra antiga que assume "sem tipo = research". Isso é frágil: qualquer conteúdo novo mal classificado entra na página sem aviso.
 
-1. **Abertura tipográfica em areia** — faixa clara com sobrelinha discreta em terracota ("infinity6 · i6 Deep Research"), título grande em duas ou três linhas e um parágrafo curto de posicionamento. Mesma família e escala usadas na abertura do blog, mas sem imagem de destaque: research é lista, não vitrine.
+## O que muda
 
-2. **Barra de filtros enxuta** — logo abaixo da abertura, numa linha só: **Tipo** (Todos / i6 Research / i6 eBook) e **Tema** (dinâmico, derivado do que está publicado). O filtro de **Setor** sai por completo — botões, rótulos, estado e parâmetro na URL. Um contador discreto de resultados ao lado ("8 peças").
-
-3. **Grade de cartões densa, mais próxima do blog** — duas colunas em telas grandes, uma em telas pequenas, com respiro generoso. Peças de research têm resumo mais longo, então o cartão prioriza texto: badge de tipo pequeno, título forte, resumo em até três linhas, e um rodapé fino com tema, data e tempo de leitura. Item marcado como destaque ganha a linha inteira, com resumo mais longo e um selo discreto — sem imagem gigante.
-
-4. **Estado vazio honesto** — quando um filtro não retorna nada, uma linha de texto e um atalho para limpar os filtros, no mesmo tom das outras duas páginas.
+1. A rotina que traz o conteúdo do i6 HUB passa a gravar o tipo da peça: usa o tipo que vier do HUB e, quando não vier, grava "i6 Research". Nenhum outro dado gravado por ela muda.
+2. As duas peças reais existentes (versão PT e EN da matéria sobre ruptura de gôndola) recebem o tipo "i6 Research" no cabeçalho do arquivo. Nada mais nesses arquivos é alterado.
+3. A página de research passa a aceitar apenas peças com tipo "i6 Research" ou "i6 eBook". A regra antiga do "sem tipo" é removida. Uma peça sem tipo, ou com tipo diferente, é simplesmente ignorada — sem quebrar o site — e, durante o desenvolvimento, aparece um aviso no console citando o identificador da peça descartada, para achar rápido conteúdo mal classificado.
