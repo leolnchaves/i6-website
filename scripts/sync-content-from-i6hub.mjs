@@ -371,6 +371,7 @@ function fmResearch(it, { coverLocal }) {
     `title: ${yaml(it.title ?? '')}`,
     `slug: ${it.slug}`,
     `language: ${it.language}`,
+    `type: ${it.type ?? 'i6 Research'}`,
     it.date ? `date: ${it.date}` : null,
     it.sector ? `sector: ${it.sector}` : null,
     it.theme ? `theme: ${it.theme}` : null,
