@@ -3,6 +3,7 @@ id: ruptura-gondola-ia-preditiva
 title: "How to reduce shelf stockouts with predictive AI in pharma retail"
 slug: ruptura-gondola-ia-preditiva
 language: en
+type: i6 Research
 date: 2026-06-12
 sector: farma
 theme: estoque

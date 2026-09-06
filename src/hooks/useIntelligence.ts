@@ -74,10 +74,8 @@ const modules = import.meta.glob('/src/content/intelligence/*.md', {
   eager: true,
 }) as Record<string, string>;
 
-// Research page should only list i6 Research and i6 eBook items.
-// Files without an explicit type are treated as i6 Research (legacy behavior).
+// Research page only lists items explicitly typed as i6 Research or i6 eBook.
 const RESEARCH_TYPES = new Set<string>(['i6 Research', 'i6 eBook']);
-const BLOG_MEDIA_TYPES = new Set<string>(['i6 Article', 'i6 Blog', 'i6 on Media', 'i6 Social']);
 
 const ALL: IntelligencePiece[] = Object.entries(modules)
   .map(([path, raw]) => {
@@ -86,10 +84,15 @@ const ALL: IntelligencePiece[] = Object.entries(modules)
     if (!fm.title || !fm.language || !fm.date) return null;
 
     const type = fm.type?.trim();
-    // Ignore blog/media items that were placed in the research folder by mistake.
-    if (type && BLOG_MEDIA_TYPES.has(type)) return null;
-    // Only accept research/eBook types (or no type, defaulting to research).
-    if (type && !RESEARCH_TYPES.has(type)) return null;
+    if (!type || !RESEARCH_TYPES.has(type)) {
+      if (import.meta.env.DEV) {
+        const slug = fm.slug || path.split('/').pop()!.replace(/\.md$/, '');
+        console.warn(
+          `[useIntelligence] item descartado: slug="${slug}", type=${type ? `"${type}"` : 'ausente'} (esperado "i6 Research" ou "i6 eBook")`,
+        );
+      }
+      return null;
+    }
 
     return {
       id: fm.id,
