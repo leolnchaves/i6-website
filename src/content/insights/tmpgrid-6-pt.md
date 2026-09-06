@@ -7,7 +7,7 @@ language: pt
 excerpt: "Trecho de exemplo para validar a grade densa de cards compactos na página de mídia."
 cover_image: content/logos/ems-new.png
 external_url: https://example.com/materia-6
-featured: false
+featured: true
 ---
 
 corpo
