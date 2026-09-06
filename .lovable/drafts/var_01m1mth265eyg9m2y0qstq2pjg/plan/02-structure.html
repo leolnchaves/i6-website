@@ -1,0 +1,44 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+  <style>
+    .lbl { font-size: 14px; font-weight: 480; fill: hsl(var(--foreground)); }
+    .note { font-size: 12px; fill: hsl(var(--muted-foreground)); }
+    .mono { font-size: 12px; font-family: var(--font-mono); fill: hsl(var(--muted-foreground)); }
+    .box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+    .zone { fill: none; stroke: hsl(var(--border)); stroke-width: 1; stroke-dasharray: 4 3; }
+    .wire { stroke: hsl(var(--muted-foreground)); stroke-width: 1; fill: none; }
+  </style>
+  <defs>
+    <marker id="c" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L6,3.5 L0,7" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <rect class="zone" x="8" y="20" width="280" height="150" rx="8"/>
+  <text class="note" x="20" y="40">arquivos de demonstração</text>
+
+  <rect class="box" x="28" y="52" width="240" height="46" rx="8"/>
+  <text class="lbl" x="44" y="72">16 artigos do blog</text>
+  <text class="mono" x="44" y="89">demo-*-pt.md / demo-*-en.md</text>
+
+  <rect class="box" x="28" y="110" width="240" height="46" rx="8"/>
+  <text class="lbl" x="44" y="130">16 itens On Media / Social</text>
+  <text class="mono" x="44" y="147">demo-*-pt.md / demo-*-en.md</text>
+
+  <line class="wire" x1="288" y1="75" x2="366" y2="75" marker-end="url(#c)"/>
+  <line class="wire" x1="288" y1="133" x2="366" y2="133" marker-end="url(#c)"/>
+
+  <rect class="box" x="372" y="52" width="200" height="46" rx="8" fill="hsl(var(--accent))"/>
+  <text class="lbl" x="392" y="80" style="fill: hsl(var(--accent-foreground))">/i6-blog completo</text>
+
+  <rect class="box" x="372" y="110" width="200" height="46" rx="8" fill="hsl(var(--accent))"/>
+  <text class="lbl" x="392" y="138" style="fill: hsl(var(--accent-foreground))">/insights completo</text>
+
+  <rect class="zone" x="8" y="196" width="564" height="86" rx="8"/>
+  <text class="note" x="20" y="216">limpeza antes de publicar</text>
+  <rect class="box" x="28" y="228" width="180" height="40" rx="8"/>
+  <text class="lbl" x="48" y="253">remover demo-*</text>
+  <line class="wire" x1="208" y1="248" x2="266" y2="248" marker-end="url(#c)" stroke-dasharray="4 3"/>
+  <rect class="box" x="272" y="228" width="280" height="40" rx="8"/>
+  <text class="lbl" x="292" y="248">publicação regenera as pastas</text>
+  <text class="note" x="292" y="263">nenhum exemplo vai para o site no ar</text>
+</svg>

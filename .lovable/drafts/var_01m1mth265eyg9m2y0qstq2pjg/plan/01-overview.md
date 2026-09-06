@@ -1,19 +1,23 @@
-## Visão geral — nova página /insights
+# Conteúdo de demonstração para testar o Blog e o On Media
 
-A página `/insights` ("i6 On Media") será redesenhada no mesmo espírito editorial do `/i6-blog` recém-aprovado, mas com uma voz mais enxuta e cards compactos. O objetivo é distinguir claramente o que é conteúdo próprio do infinity6 (`i6 Blog`) do que é menção/entrevista/publicação em veículos externos (`i6 On Media` / `i6 Social`).
+Hoje as duas páginas aparecem vazias porque a pasta de conteúdo do site só tem dois textos (e nenhum do tipo notícia/rede social). A proposta é criar um pacote de textos de demonstração, em português e inglês, só para você ver as páginas completas — e removê-los antes de publicar.
 
-### Diretriz criativa
+## O que será criado
 
-- Mesmos tokens visuais do resto do site novo: fundo areia (`theme-sand`), grafite quente `#0B1224`, terracota `#F4845F`, tipografia já em uso.
-- Abertura tipográfica assimétrica, como no blog, porém mais compacta — este é um índice de clipping, não longo formato.
-- Grade de cards em 1/2/3/4 colunas (responsivo), com destaque leve para itens `featured: true` (ocupa 2 colunas no desktop).
-- O logo do veículo/rede social — vindo de `cover_image` via `resolveCoverImage` — ganha área própria e proeminente no card. Não há campo de "nome do veículo" no frontmatter, então nenhum texto será inventado.
-- Todo card externo (`isExternal`) exibe, em texto visível, o rótulo "Ver no site original" / "View original" / "Ver en el sitio original" com seta, além do ícone. O comportamento de abrir em nova aba (`target="_blank" rel="noopener noreferrer"`) permanece inalterado.
-- Badge de tipo e data no mesmo tom usado no blog.
+**Blog (/i6-blog) — 8 artigos por idioma (16 arquivos)**
+- 1 artigo marcado como destaque principal (abre a página com imagem grande).
+- 7 artigos distribuídos em 3 temas diferentes (ex.: Previsão de demanda, Preço, Recomendação), para que as trilhas por tema, os filtros e a régua de "recentes" apareçam com conteúdo real.
+- Cada artigo com data, tempo de leitura, resumo, etiquetas e corpo de texto de 4 a 6 blocos (títulos, listas, citação, tabela) para testar a formatação.
 
-### Escopo exato
+**On Media (/insights) — 8 itens por idioma (16 arquivos)**
+- 5 do tipo "i6 on Media" (matéria em veículo externo, abrindo em nova aba) e 3 do tipo "i6 Social" (post em rede social).
+- 2 deles marcados como destaque, para testar o card que ocupa espaço maior, e um total que não fecha múltiplo de 3 — os dois cenários de grade que já validamos.
+- Alguns com logo de veículo e outros sem, para você ver o card com imagem e o card com o símbolo infinity6 de reserva.
 
-- Alterar apenas `src/pages/Insights.tsx` (incluindo o `InsightCard` inline).
-- Adicionar `/insights` à lista de rotas de tema claro em `HeaderNovo.tsx`.
-- Criar/renomear chaves de tradução em `src/data/translations/{pt,en,es}.ts` para o rótulo de saída externa e subtítulos da página.
-- NÃO alterar: `InsightArticle.tsx`, `useInsights.ts`, parser de frontmatter, sync do i6 HUB, interface `InsightFrontmatter`, `/i6-blog`, `/i6-intelligence`, `InsightsRow.tsx`, `InsightsSection.tsx`, lógica `isExternal` nem o mecanismo de navegação externa.
+## Marcação e remoção
+
+Todo arquivo de demonstração recebe nome começando com `demo-` e um aviso no topo do próprio texto. Para tirar tudo depois, é um comando único removendo esses arquivos — e mesmo que passe, a rotina de publicação já regenera essas pastas a partir do i6 HUB, então nada de demonstração vai para o ar.
+
+## Nomes de veículos e imagens
+
+Não existe campo separado de nome de veículo no conteúdo, então os logos usarão imagens neutras já presentes no site (marcas de cliente/símbolo infinity6) e nenhum item vai citar veículo real como se fosse matéria verdadeira: os textos são fictícios e identificados como exemplo.
