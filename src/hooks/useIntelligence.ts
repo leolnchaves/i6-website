@@ -10,8 +10,9 @@ export interface IntelligenceFrontmatter {
   date: string;
   language: 'pt' | 'en';
   excerpt: string;
-  sector?: string;        // varejo | farma | industria | ecommerce | multissetor
-  theme?: string;         // demanda | margem | estoque | mix | propensao | cac
+  type?: string;                // i6 Research | i6 eBook (blog types like i6 Article are ignored here)
+  sector?: string;              // varejo | farma | industria | ecommerce | multissetor
+  theme?: string;               // demanda | margem | estoque | mix | propensao | cac
   cover_image?: string | null;
   read_time?: number;
   featured?: boolean;
