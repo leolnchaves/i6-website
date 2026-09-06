@@ -1,29 +1,18 @@
-## Cartão sem imagem
+## Verificação obrigatória
 
-O bloco com o nome do tipo em letra enorme e apagada sai. No lugar:
+Depois da mudança 3, as duas peças de ruptura de gôndola precisam continuar visíveis na página de research, em PT e EN. Se desaparecerem, significa que os passos 1 ou 2 não foram aplicados corretamente: o trabalho para, é reportado e nada mais é alterado.
 
-- Cartão claro sobre a areia, com borda fina e leve elevação no hover (terracota na borda e no título, como no blog).
-- O tipo é comunicado só pelo badge pequeno no topo — não se repete em nenhum outro lugar do cartão.
-- Fundo com uma textura geométrica muito discreta no canto superior direito (linhas diagonais finas em tom de borda, baixo contraste), que aparece **apenas** quando não há imagem de capa; quando há capa, ela ocupa a faixa superior como hoje.
-- A hierarquia é tipográfica: título forte, resumo em três linhas com corte limpo, e rodapé fino com tema, data e tempo de leitura separados por ponto médio.
-
-## Onde "Executive Research" será substituído por "i6 Deep Research"
-
-Levantamento completo do que existe hoje:
-
-- Rótulo do menu "Inteligência Aplicada" / "Applied Intelligence" / "Inteligencia Aplicada": chave `header.research.hub`, hoje "i6 Executive Research" nos três arquivos de tradução (pt, en, es) — passa a "i6 Deep Research" em todos.
-- Sobrelinha da abertura da página: hoje "infinity6 · Executive Research".
-- Título e descrição de SEO da listagem: hoje "i6 Research | infinity6" e o texto de apoio — passam a usar "i6 Deep Research", incluindo o nome no dado estruturado da página.
-- Título acessível (h1 oculto) e o rótulo de tipo dos cartões: o badge de peça continua "i6 Research" (é o nome do tipo de conteúdo, não da página) — só o nome da página muda. Confirmo isso na revisão para não gerar ambiguidade.
-
-Não há link com esse texto no rodapé hoje; o rodapé não referencia a página. Breadcrumb e título de leitura de item individual (`IntelligenceArticle.tsx`, `InsightArticle.tsx`) ficam **fora de escopo** nesta rodada, como pedido — eles continuarão dizendo "i6 Research". Vale registrar que isso deixa uma inconsistência temporária entre listagem e leitura, a resolver numa próxima rodada.
+Ao final: verificação de tipos, build e relatório. Sem publicação nem deploy nesta rodada. O redesenho visual aprovado vem depois, separado.
 
 ## Detalhes técnicos
 
-- Arquivos alterados: `src/pages/Intelligence.tsx` (composição, cartão, remoção do filtro de setor), `src/components/hometeste/HeaderNovo.tsx` (adicionar `/i6-intelligence` à lista de rotas de tema claro), `src/data/translations/pt.ts`, `en.ts`, `es.ts` (chave `header.research.hub`).
-- Sem novos arquivos de componente: o cartão continua inline em `Intelligence.tsx`, como hoje.
-- Intocados: `useIntelligence.ts`, `useInsights.ts` (incluindo `useIntelligenceInsights`), `IntelligenceOrInsightArticle.tsx`, `IntelligenceArticle.tsx`, `InsightArticle.tsx`, `Insights.tsx`, `Blog.tsx`, o sync do i6 HUB.
-- O campo `sector` permanece no frontmatter e nos hooks; apenas a UI e o parâmetro `sector` da URL desaparecem. O parâmetro `theme` continua funcionando — os cartões de solução em `/solutions` linkam para `/i6-intelligence?theme=...` e esse atalho segue válido.
-- Cores só por tokens do tema (areia, grafite, terracota), sem hexadecimais soltos como os `#F4845F` atuais.
-- A página hoje decide textos com `language === 'pt' ? ... : ...`, então espanhol cai no inglês. Na nova composição os rótulos de interface (Tipo, Tema, Todos, tempo de leitura, estado vazio, contador) ganham as três variantes pt/en/es.
-- Ao final: checagem de tipos, build e verificação em pt/en/es de que a página não tem rolagem horizontal e que os filtros de tipo e tema funcionam junto com o parâmetro da URL. Sem release nem deploy.
+**1. `scripts/sync-content-from-i6hub.mjs` — `fmResearch`**
+Acrescentar uma única linha de frontmatter: `type: ${it.type ?? 'i6 Research'}`. Demais campos gravados permanecem idênticos, na mesma ordem.
+
+**2. Frontmatter dos arquivos reais**
+Adicionar `type: i6 Research` em `src/content/intelligence/ruptura-gondola-ia-preditiva-pt.md` e `...-en.md`. Nenhum outro campo é tocado.
+
+**3. `src/hooks/useIntelligence.ts`**
+No `.map()` que monta `ALL`, substituir a lógica atual (que aceita item sem `type` e rejeita apenas tipos conhecidos de blog/mídia) por: aceitar somente `type` presente e pertencente a `RESEARCH_TYPES` (`i6 Research`, `i6 eBook`); qualquer outro caso retorna `null`. Antes do `null`, emitir `console.warn` sob `import.meta.env.DEV` citando o slug (derivado do frontmatter ou do nome do arquivo) e o tipo encontrado. O set `BLOG_MEDIA_TYPES` deixa de ser necessário e sai junto com o comentário legado. Nenhuma outra função do hook (`useIntelligencePiece`, `resolveIntelligenceCover`) muda.
+
+Fora de escopo: `Intelligence.tsx`, `useInsights.ts`, leitores de artigo, `HeaderNovo.tsx`, traduções, blog e insights.
