@@ -19,7 +19,7 @@ export const esTranslations = {
   'header.intelligence': 'Inteligencia Aplicada',
   'header.proprietaryAi': 'IA Propietaria',
   'header.research': 'Inteligencia Aplicada',
-  'header.research.hub': 'i6 Executive Research',
+  'header.research.hub': 'i6 Deep Research',
   'header.research.media': 'i6 en los Medios',
   'header.research.blog': 'i6 Blog',
   'header.research.comingSoon': 'Pronto',
