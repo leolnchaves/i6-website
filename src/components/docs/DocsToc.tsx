@@ -85,6 +85,18 @@ const DocsToc = ({ content, title }: DocsTocProps) => {
     window.addEventListener('resize', onScroll);
     onScroll();
 
+    // Initial highlight from the current scroll position: the observer only
+    // fires on change, so after a tab switch the closest heading above the
+    // viewport is chosen right away instead of leaving the index blank.
+    if (!atBottomRef.current) {
+      let initial = headings[0].id;
+      for (const heading of headings) {
+        const el = document.getElementById(heading.id);
+        if (el && el.getBoundingClientRect().top <= 140) initial = heading.id;
+      }
+      setActiveId(initial);
+    }
+
     return () => {
       observer.disconnect();
       window.removeEventListener('scroll', onScroll);
