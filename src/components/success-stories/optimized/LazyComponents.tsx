@@ -1,3 +1,5 @@
+import type { Language } from '@/types/language';
+import type { StoryCardData } from '../story-components/StoryCard';
 import React, { Suspense, memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -147,8 +149,8 @@ const StoryCard = React.lazy(() =>
 
 // Wrapper com Suspense para lazy loading
 interface LazyStoryCardProps {
-  story: any;
-  language: string;
+  story: StoryCardData;
+  language: Language;
 }
 
 export const LazyStoryCard: React.FC<LazyStoryCardProps> = memo((props) => {
