@@ -104,7 +104,7 @@ const SolutionEngines = ({ piece, lang }: { piece: LandingPiece; lang: 'pt' | 'e
       )}
       {hasSignal && (
         <Link
-          to={localized(`/our-ai#${ENGINE_META.i6signal.anchor}`)}
+          to={localized(`/solutions#${ENGINE_META.i6signal.anchor}`)}
           className="group flex items-start gap-4 border border-[#F4845F]/30 rounded-lg p-5 bg-[#F4845F]/[0.04] hover:border-[#F4845F]/60 hover:bg-[#F4845F]/[0.07] transition-all"
         >
           <div className="shrink-0 w-10 h-10 rounded-md border border-[#F4845F]/40 flex items-center justify-center text-[#F4845F] group-hover:border-[#F4845F] transition-colors">

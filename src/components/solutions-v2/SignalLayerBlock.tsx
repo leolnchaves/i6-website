@@ -9,7 +9,7 @@ const SignalLayerBlock = memo(() => {
   const { signal } = solutionsContent[language];
 
   return (
-    <section className="py-16 md:py-20 bg-[#0B1224] border-t border-white/5">
+    <section id="i6signal" className="scroll-mt-24 py-16 md:py-20 bg-[#0B1224] border-t border-white/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="max-w-4xl mb-4">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#F4845F] mb-3">
