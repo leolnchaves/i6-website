@@ -142,10 +142,11 @@ const intelligenceModules = import.meta.glob('/src/content/intelligence/*.md', {
 }) as Record<string, string>;
 const modules: Record<string, string> = { ...insightModules, ...intelligenceModules };
 
-const VALID_TYPES: InsightType[] = ['i6 on Media', 'i6 Article', 'i6 eBook', 'i6 Social'];
+const VALID_TYPES: InsightType[] = ['i6 on Media', 'i6 Article', 'i6 Blog', 'i6 eBook', 'i6 Social'];
 const MEDIA_TYPES: InsightType[] = ['i6 on Media', 'i6 Social'];
-/** i6 Intelligence page keeps eBooks alongside Research. i6 Article moved to /i6-blog. */
+/** i6 Intelligence page keeps eBooks alongside Research. i6 Article/i6 Blog moved to /i6-blog. */
 const INTELLIGENCE_INSIGHT_TYPES: InsightType[] = ['i6 eBook'];
+const BLOG_TYPES: InsightType[] = ['i6 Article', 'i6 Blog'];
 
 const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
