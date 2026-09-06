@@ -1,6 +1,6 @@
 ## Como corrigir
 
-1. Fazer a página de Research exibir apenas peças de research e eBooks, ignorando itens marcados como artigo de blog — mesmo que o arquivo esteja na mesma pasta. Isso vale também para o conteúdo real vindo do i6 HUB, evitando o mesmo vazamento no futuro.
+1. Fazer a página de Research exibir apenas os tipos i6 Research e i6 eBook (hoje ela também mostra i6 Article), ignorando itens marcados como artigo de blog — mesmo que o arquivo esteja na mesma pasta. Isso vale também para o conteúdo real vindo do i6 HUB, evitando o mesmo vazamento no futuro.
 2. Mover os 16 arquivos de demonstração de artigo para a pasta usada pelas peças de blog/on media, para que o lugar do arquivo reflita o que ele é.
 3. Conferir depois: em PT e EN, o blog continua com os 8 artigos de teste e o Research volta a mostrar apenas as peças de research/eBook.
 
