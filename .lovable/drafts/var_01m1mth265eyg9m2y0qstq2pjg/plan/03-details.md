@@ -1,37 +1,70 @@
-## Estrutura de arquivos (só dentro do escopo)
+## Estrutura de arquivos e mudanças
 
-Reescritos em `src/components/blog/`:
+### Arquivos alterados
 
-- `BlogHero.tsx` → destaque editorial assimétrico com cartão flutuante de metadados reais (`theme_label`, `date`, `read_time`), imagem `cover_image` via `resolveCoverImage`, sem scrim escuro.
-- `RecentStrip.tsx` → régua numerada na faixa grafite.
-- `BlogFilters.tsx` → abas de tema com sublinhado terracota + chips de tag e contagem de resultados, mesma API de props de hoje.
-- `ThemeRail.tsx` → cabeçalho de tema tipográfico + grade assimétrica.
-- `BlogCard.tsx` → variantes `feature` / `compact` no tema areia.
+1. `src/pages/Insights.tsx`
+   - Reescreve o `InsightCard` inline com novo tratamento visual.
+   - Reorganiza a página em abertura tipográfica + grade.
+   - Mantém `isExternal`, `target="_blank"`, `rel="noopener noreferrer"` e o `Link` interno exatamente como estão.
 
-Novos, ainda em `src/components/blog/`: `BlogIntro.tsx` (abertura tipográfica) e `BlogDivider.tsx` (quebra diagonal).
+2. `src/components/hometeste/HeaderNovo.tsx`
+   - Adiciona `'/insights'` ao array `isLightPage` para o header manter fundo navy sólido.
 
-`src/pages/Blog.tsx`: mesma lógica de dados (memos inalterados), envolvida por `theme-sand` e pela nova sequência de faixas. Helmet mantido.
+3. `src/data/translations/{pt,en,es}.ts`
+   - Novas chaves:
+     - `insights.pageTitle` / `insights.pageSubtitle`
+     - `insights.eyebrow`
+     - `insights.viewOriginal` (texto visível do link externo)
+     - `insights.viewOriginalAria` (aria-label equivalente)
+     - `insights.empty`
 
-## Imagem de borda a borda, sem rolagem lateral
+### Comportamento dos cards
 
-Nada de `100vw` com margem negativa — com barra de rolagem vertical, `100vw` inclui a barra e sobra alguns pixels.
+- O cálculo de `isExternal` permanece idêntico:
+  ```ts
+  const isExternal = !insight.gated && insight.type !== 'i6 Article' && !!insight.external_url;
+  ```
+- Cards externos renderizam o rótulo "Ver no site original" / "View original" / "Ver en el sitio original" com seta à direita, em terracota, dentro do próprio card. O ícone `ExternalLink` pode continuar, mas o texto é obrigatório.
+- Cards internos (`i6 Article` não-externo, embora raros em `/insights`) mantêm o link interno sem rótulo de saída.
+- O `aria-label` do link externo inclui o título do insight e a indicação de abertura em nova aba.
 
-Técnica: a faixa do destaque é uma `section` de largura 100% (sem container), com grid de duas colunas em telas grandes. A coluna de texto recebe o recuo normal da página e alinha o conteúdo por dentro (`flex justify-end` com largura máxima em `rem`), replicando o alinhamento do container do site. A coluna da imagem simplesmente ocupa 100% da própria coluna até a borda direita — a imagem chega à borda sem nenhum truque de viewport. Tudo em `%`/`rem`, sem `vw` e sem margem negativa.
+### Tratamento visual do card
 
-Verificação: script de navegador comparando `document.documentElement.scrollWidth` com `clientWidth` em `/pt/i6-blog`, `/en/i6-blog` e `/es/i6-blog`, nas larguras 390, 768, 1280 e 1600.
+- Fundo do card: branco ou `bg-card` sobre o fundo areia, com borda sutil e sombra leve no hover.
+- Área do logo: retângulo com fundo bege claro (`bg-secondary/40`) e padding generoso, altura fixa (~64 px), para o logo do veículo/rede social respirar. Sem logo, usa o símbolo infinity6 como fallback, em tom mais apagado.
+- Corpo do card: badge de tipo (`i6 On Media` / `i6 Social`) + data, título em 2 linhas, excerpt em 2-3 linhas.
+- Hover: borda terracota suave, título muda para terracota, logo ganha opacidade total.
+- Card `featured`: ocupa 2 colunas no desktop (`md:col-span-2`) e mantém a mesma densidade visual, apenas com mais espaço horizontal para o título/excerpt.
 
-## Comportamento com poucos artigos
+### Grade responsiva
 
-- **Régua de recentes**: renderiza apenas os artigos existentes (`slice(0, 5)` sobre a lista real), sem espaços reservados nem numeração fantasma; com zero recentes, a faixa grafite inteira não é renderizada.
-- **Grupo de tema**: o padrão "1 grande + compactos" só é aplicado com 5 ou mais artigos no tema. Com 3–4, todos aparecem compactos em três colunas; com 1–2, todos compactos em até duas colunas. Nenhuma posição vazia é criada.
-- **Zero resultados no filtro**: mensagem de estado vazio no mesmo tom tipográfico, sobre o fundo areia, com opção de limpar o filtro.
+```text
+mobile:  1 coluna
+tablet:  2 colunas
+ desktop: 3 colunas (ou 4 se o design do blog sugerir 4)
+```
 
-## Notas técnicas
+A escolha final será 3 colunas no desktop, alinhada ao ritmo do `/i6-blog`. O card `featured` ocupa 2 colunas; em telas menores, todos ocupam 1 coluna.
 
-- Cores e fontes por tokens do tema areia; a faixa escura usa o mesmo grafite `#0B1224` já adotado nas faixas escuras de /i6-builders.
-- `/i6-blog` entra na checagem de rota clara do cabeçalho, junto de `/contact`, `/docs`, `/community` e `/i6-builders`.
-- Cartão flutuante do destaque: absoluto sobre a imagem em telas médias/grandes, empilhado abaixo no celular.
-- Quebra diagonal com `clip-path` em bloco de largura 100%, `aria-hidden`.
-- Novas chaves de texto PT/EN/ES para "destaque", "artigos" e contagem de resultados.
-- Sem alterações em `InsightArticle.tsx`, `useInsights.ts`, parser de frontmatter, sync do i6 HUB, `/insights`, `/i6-intelligence`, `InsightsRow.tsx` e `InsightsSection.tsx`.
-- Ao final: checagem de tipos, build e o teste de rolagem acima. Sem release ou publicação.
+### Abertura tipográfica
+
+- Título grande (`text-4xl md:text-5xl lg:text-6xl`), peso semibold, cor do texto principal do tema areia.
+- Eyebrow terracota: "infinity6 · Na Mídia" / "infinity6 · In the Media" / "infinity6 · En los Medios".
+- Subtítulo curto e direto, sem repetição do texto atual genérico.
+
+### Estado vazio
+
+- Mantém a mensagem localizada no mesmo tom tipográfico quando `insights.length === 0`.
+
+### Fora de escopo (garantido)
+
+- Nenhuma mudança em `InsightArticle.tsx`, `useInsights.ts`, parser de frontmatter, `scripts/sync-content-from-i6hub.mjs`, interface `InsightFrontmatter`.
+- Nenhuma mudança em `/i6-blog`, `/i6-intelligence`, `InsightsRow.tsx`, `InsightsSection.tsx`.
+- Nenhuma mudança na lógica `isExternal` ou no comportamento de abertura em nova aba.
+- Sem release/deploy nesta rodada.
+
+### Verificação planejada
+
+- `npx tsgo --noEmit`
+- `bun run build`
+- Playwright: abrir `/pt/insights`, `/en/insights`, `/es/insights` e confirmar que cards externos exibem o rótulo de saída visível, que o header está com fundo navy sólido e que a grade não quebra em 390, 768, 1280 e 1600 px.

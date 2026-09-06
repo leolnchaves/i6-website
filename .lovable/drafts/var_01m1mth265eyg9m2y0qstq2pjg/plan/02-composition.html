@@ -1,58 +1,77 @@
-<!doctype html>
-<html>
-<head><meta charset="utf-8"><style>
-svg { font-family: var(--font-sans); }
-.lbl { font-size: 14px; font-weight: 480; fill: hsl(var(--foreground)); }
-.note { font-size: 12px; fill: hsl(var(--muted-foreground)); }
-.tag { font-size: 12px; fill: hsl(var(--muted-foreground)); }
-.box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
-.quiet { fill: hsl(var(--muted)); stroke: none; }
-.rail { stroke: hsl(var(--border)); stroke-width: 1; }
-.greek { fill: hsl(var(--border)); }
-</style></head>
-<body>
-<svg viewBox="0 0 640 470" xmlns="http://www.w3.org/2000/svg">
-  <!-- 1 abertura -->
-  <rect class="box" x="20" y="14" width="600" height="70" rx="8"/>
-  <rect class="greek" x="40" y="30" width="230" height="14" rx="7"/>
-  <rect class="greek" x="40" y="52" width="160" height="14" rx="7"/>
-  <rect class="greek" x="430" y="52" width="150" height="8" rx="4"/>
-  <text class="tag" x="40" y="24">abertura tipográfica · areia</text>
+<svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans); color: hsl(var(--foreground));">
+  <defs>
+    <style>
+      .box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; rx: 8; }
+      .fill-sand { fill: hsl(var(--muted)); }
+      .fill-graphite { fill: hsl(var(--card)); }
+      .fill-accent { fill: hsl(var(--accent)); }
+      .text { fill: hsl(var(--foreground)); font-size: 12px; font-weight: 500; }
+      .text-small { fill: hsl(var(--muted-foreground)); font-size: 10px; }
+      .wire { stroke: hsl(var(--border)); stroke-width: 1; fill: none; }
+      .accent-wire { stroke: hsl(var(--accent)); stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
 
-  <!-- 2 destaque -->
-  <rect class="box" x="20" y="94" width="600" height="150" rx="8"/>
-  <text class="tag" x="40" y="112">destaque editorial</text>
-  <rect class="greek" x="40" y="124" width="240" height="20" rx="8"/>
-  <rect class="greek" x="40" y="152" width="190" height="20" rx="8"/>
-  <rect class="greek" x="40" y="188" width="140" height="8" rx="4"/>
-  <rect class="quiet" x="330" y="118" width="290" height="112" rx="8"/>
-  <rect x="300" y="196" width="180" height="34" rx="8" fill="hsl(var(--card))" stroke="hsl(var(--accent))"/>
-  <text class="lbl" x="312" y="217">tema · data · leitura</text>
-  <circle cx="596" cy="112" r="9" fill="hsl(var(--accent))"/>
-  <text x="596" y="116" text-anchor="middle" font-size="11" fill="hsl(var(--accent-foreground))">1</text>
+  <!-- Background sand strip -->
+  <rect x="0" y="0" width="640" height="480" class="fill-sand" opacity="0.25"/>
 
-  <!-- diagonal break -->
-  <path d="M20 254 L620 244 L620 250 L20 260 Z" fill="hsl(var(--border))"/>
-  <text class="note" x="20" y="276">quebra diagonal suave · areia → grafite</text>
+  <!-- Header note -->
+  <text x="40" y="32" class="text-small">/insights — tema claro (header navy sólido)</text>
 
-  <!-- 3 faixa grafite -->
-  <rect x="20" y="286" width="600" height="86" rx="8" fill="hsl(var(--secondary))" stroke="none"/>
-  <text class="tag" x="40" y="304">recentes · régua numerada</text>
-  <line class="rail" x1="40" y1="316" x2="600" y2="316"/>
-  <text class="lbl" x="40" y="334">01</text><rect class="greek" x="70" y="325" width="300" height="9" rx="4"/>
-  <line class="rail" x1="40" y1="342" x2="600" y2="342"/>
-  <text class="lbl" x="40" y="360">02</text><rect class="greek" x="70" y="351" width="240" height="9" rx="4"/>
-  <line class="rail" x1="40" y1="366" x2="600" y2="366"/>
+  <!-- Hero / opening -->
+  <rect x="40" y="48" width="560" height="90" class="box"/>
+  <text x="60" y="78" class="text" style="font-size: 18px; font-weight: 600;">i6 na Mídia</text>
+  <text x="60" y="100" class="text-small">Entrevistas, menções e publicações em veículos externos.</text>
+  <text x="60" y="122" class="text-small" style="fill: hsl(var(--accent));">terracota eyebrow · contagem de itens</text>
 
-  <!-- 4 filtro + grade -->
-  <rect class="box" x="20" y="382" width="600" height="76" rx="8"/>
-  <text class="tag" x="40" y="400">filtro em abas + grade assimétrica</text>
-  <line x1="40" y1="412" x2="90" y2="412" stroke="hsl(var(--accent))" stroke-width="2"/>
-  <line class="rail" x1="98" y1="412" x2="230" y2="412"/>
-  <rect class="box" x="40" y="422" width="200" height="28" rx="8"/>
-  <rect class="box" x="252" y="422" width="110" height="28" rx="8"/>
-  <rect class="box" x="374" y="422" width="110" height="28" rx="8"/>
-  <rect class="box" x="496" y="422" width="104" height="28" rx="8"/>
+  <!-- Grid -->
+  <rect x="40" y="158" width="560" height="270" class="box" stroke-dasharray="4 3"/>
+  <text x="60" y="182" class="text-small">grade de cards compactos</text>
+
+  <!-- Featured card (2 cols) -->
+  <rect x="60" y="198" width="260" height="110" class="fill-graphite box"/>
+  <rect x="76" y="216" width="56" height="24" class="fill-accent" rx="4"/>
+  <text x="82" y="232" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 9px;">LOGO</text>
+  <text x="76" y="260" class="text" style="font-size: 11px;">Título do item em destaque</text>
+  <text x="76" y="280" class="text-small">i6 On Media · 12 ago 2026</text>
+  <text x="76" y="298" class="text-small" style="fill: hsl(var(--accent));">Ver no site original →</text>
+
+  <!-- Regular cards -->
+  <rect x="340" y="198" width="120" height="110" class="fill-graphite box"/>
+  <rect x="356" y="216" width="40" height="20" class="fill-accent" rx="4"/>
+  <text x="362" y="230" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 8px;">LOGO</text>
+  <text x="356" y="258" class="text-small">Título compacto</text>
+  <text x="356" y="298" class="text-small" style="fill: hsl(var(--accent));">Ver original →</text>
+
+  <rect x="480" y="198" width="120" height="110" class="fill-graphite box"/>
+  <rect x="496" y="216" width="40" height="20" class="fill-accent" rx="4"/>
+  <text x="502" y="230" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 8px;">LOGO</text>
+  <text x="496" y="258" class="text-small">Título compacto</text>
+
+  <rect x="60" y="324" width="120" height="90" class="fill-graphite box"/>
+  <rect x="76" y="340" width="40" height="20" class="fill-accent" rx="4"/>
+  <text x="82" y="354" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 8px;">LOGO</text>
+
+  <rect x="200" y="324" width="120" height="90" class="fill-graphite box"/>
+  <rect x="216" y="340" width="40" height="20" class="fill-accent" rx="4"/>
+  <text x="222" y="354" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 8px;">LOGO</text>
+
+  <rect x="340" y="324" width="120" height="90" class="fill-graphite box"/>
+  <rect x="356" y="340" width="40" height="20" class="fill-accent" rx="4"/>
+  <text x="362" y="354" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 8px;">LOGO</text>
+
+  <rect x="480" y="324" width="120" height="90" class="fill-graphite box"/>
+  <rect x="496" y="340" width="40" height="20" class="fill-accent" rx="4"/>
+  <text x="502" y="354" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 8px;">LOGO</text>
+
+  <!-- Annotation pins -->
+  <circle cx="312" cy="253" r="8" class="fill-accent"/>
+  <text x="308" y="257" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 9px;">1</text>
+  <text x="328" y="257" class="text-small">featured ocupa 2 colunas</text>
+
+  <circle cx="312" cy="369" r="8" class="fill-accent"/>
+  <text x="308" y="373" class="text" style="fill: hsl(var(--accent-foreground)); font-size: 9px;">2</text>
+  <text x="328" y="373" class="text-small">logo do veículo em destaque</text>
+
+  <line x1="320" y1="253" x2="340" y2="253" class="accent-wire" marker-end="url()"/>
 </svg>
-</body>
-</html>
