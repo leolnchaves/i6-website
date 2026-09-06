@@ -7,7 +7,7 @@ language: en
 date: 2026-07-06
 excerpt: "Sample post with a fictional metric and what it changes in operations."
 external_url: https://www.linkedin.com/company/infinity6ai/
-cover_image: null
+cover_image: /content/logos/demo-logo-youtube.svg
 featured: false
 ---
 

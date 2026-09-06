@@ -7,7 +7,7 @@ language: en
 date: 2026-07-24
 excerpt: "Fictional panel on consistent history, granularity and integration contracts."
 external_url: https://www.infinity6.ai
-cover_image: /images/comunidade/community-desks.jpg
+cover_image: /content/logos/demo-logo-valor.svg
 featured: false
 ---
 

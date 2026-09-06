@@ -7,7 +7,7 @@ language: en
 date: 2026-08-30
 excerpt: "Fictional interview on how replenishment and pricing decisions moved from the annual committee to the daily routine."
 external_url: https://www.infinity6.ai
-cover_image: /images/comunidade/mural-forecasting.jpg
+cover_image: /content/logos/demo-logo-neofeed.svg
 featured: true
 ---
 

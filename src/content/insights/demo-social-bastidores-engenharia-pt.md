@@ -7,7 +7,7 @@ language: pt
 date: 2026-07-15
 excerpt: "Post de exemplo com o ritual de validação semanal do time de engenharia."
 external_url: https://www.linkedin.com/company/infinity6ai/
-cover_image: /images/comunidade/community-row.jpg
+cover_image: /content/logos/demo-logo-linkedin.svg
 featured: true
 ---
 

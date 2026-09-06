@@ -7,7 +7,7 @@ language: en
 date: 2026-08-21
 excerpt: "Sample article on elasticity per store cluster and the ethical limit of personalized pricing."
 external_url: https://www.infinity6.ai
-cover_image: /images/comunidade/mural-recommendation.jpg
+cover_image: /content/logos/demo-logo-exame.svg
 featured: false
 ---
 

@@ -7,7 +7,7 @@ language: pt
 date: 2026-08-05
 excerpt: "Reportagem de exemplo sobre personalização para visitantes anônimos e impacto em receita por sessão."
 external_url: https://www.infinity6.ai
-cover_image: /images/comunidade/mural-whiteboard.jpg
+cover_image: /content/logos/demo-logo-cnn.svg
 featured: false
 ---
 

@@ -7,7 +7,7 @@ language: pt
 date: 2026-06-26
 excerpt: "Post de exemplo sobre o encontro presencial e as demos apresentadas pelos participantes."
 external_url: https://www.linkedin.com/company/infinity6ai/
-cover_image: /images/comunidade/community-audience.jpg
+cover_image: /content/logos/demo-logo-instagram.svg
 featured: false
 ---
 

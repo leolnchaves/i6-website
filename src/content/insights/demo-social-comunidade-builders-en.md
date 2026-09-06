@@ -7,7 +7,7 @@ language: en
 date: 2026-06-26
 excerpt: "Sample post about the in-person meetup and the demos presented by participants."
 external_url: https://www.linkedin.com/company/infinity6ai/
-cover_image: /images/comunidade/community-audience.jpg
+cover_image: /content/logos/demo-logo-instagram.svg
 featured: false
 ---
 

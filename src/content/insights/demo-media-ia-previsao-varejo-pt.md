@@ -7,7 +7,7 @@ language: pt
 date: 2026-08-30
 excerpt: "Entrevista fictícia sobre como decisões de reposição e preço migraram do comitê anual para a rotina diária."
 external_url: https://www.infinity6.ai
-cover_image: /images/comunidade/mural-forecasting.jpg
+cover_image: /content/logos/demo-logo-neofeed.svg
 featured: true
 ---
 

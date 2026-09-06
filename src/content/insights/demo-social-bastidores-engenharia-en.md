@@ -7,7 +7,7 @@ language: en
 date: 2026-07-15
 excerpt: "Sample post on the engineering team weekly validation ritual."
 external_url: https://www.linkedin.com/company/infinity6ai/
-cover_image: /images/comunidade/community-row.jpg
+cover_image: /content/logos/demo-logo-linkedin.svg
 featured: true
 ---
 

@@ -7,7 +7,7 @@ language: pt
 date: 2026-07-24
 excerpt: "Painel fictício sobre histórico consistente, granularidade e contratos de integração."
 external_url: https://www.infinity6.ai
-cover_image: /images/comunidade/community-desks.jpg
+cover_image: /content/logos/demo-logo-valor.svg
 featured: false
 ---
 
