@@ -16,11 +16,11 @@ const IntelligenceHero = memo(({ content }: Props) => (
       </h1>
       <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">{content.lead}</p>
 
-      <ul className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border md:grid-cols-3">
+      <ul className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border md:grid-cols-2">
         {content.layers.map((layer) => (
           <li
             key={layer.name}
-            className={`p-6 ${layer.current ? 'bg-accent' : 'bg-card'}`}
+            className={`p-6 ${layer.current ? 'bg-accent md:col-span-2' : 'bg-card'}`}
           >
             <p
               className={`text-sm font-semibold ${
@@ -33,6 +33,7 @@ const IntelligenceHero = memo(({ content }: Props) => (
           </li>
         ))}
       </ul>
+
     </div>
   </section>
 ));

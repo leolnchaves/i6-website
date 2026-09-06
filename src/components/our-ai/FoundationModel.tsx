@@ -16,12 +16,12 @@ const FoundationModel = memo(({ content }: Props) => (
       <p className="mt-5 text-base md:text-lg leading-relaxed text-muted-foreground">{content.description}</p>
     </div>
 
-    <div className="mt-12 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-      <div>
+    <div className="mt-12 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:gap-16">
+      <div className="flex h-full flex-col">
         <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground">
           {content.architectureTitle}
         </h3>
-        <dl className="mt-5 border-t border-border">
+        <dl className="mt-5 flex flex-1 flex-col justify-between border-t border-border">
           {content.architecture.map((a) => (
             <div key={a.term} className="border-b border-border py-5">
               <dt className="font-mono text-sm font-semibold text-accent-foreground">{a.term}</dt>
@@ -31,7 +31,7 @@ const FoundationModel = memo(({ content }: Props) => (
         </dl>
       </div>
 
-      <div className="space-y-8">
+      <div className="flex h-full flex-col justify-between gap-8">
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground">{content.statsTitle}</h3>
           <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border">
@@ -62,22 +62,8 @@ const FoundationModel = memo(({ content }: Props) => (
         </div>
       </div>
     </div>
-
-    <div className="mt-14 rounded-[var(--radius)] border border-border bg-secondary/60 p-7">
-      <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground">
-        {content.references.title}
-      </h3>
-      <ul className="mt-5 grid gap-5 md:grid-cols-2">
-        {content.references.items.map((r) => (
-          <li key={r.paper}>
-            <p className="text-sm font-semibold text-foreground">{r.paper}</p>
-            <p className="mt-1 text-xs text-accent-foreground">{r.author}</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{r.note}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
   </section>
+
 ));
 
 FoundationModel.displayName = 'FoundationModel';
