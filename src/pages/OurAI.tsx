@@ -1,22 +1,20 @@
 import { memo, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
+import { toContentLang } from '@/utils/localizedPath';
 import { ourAIContent } from '@/data/staticData/ourAIContent';
 import { realResults } from '@/data/staticData/realResults';
 
-import OurAIHero from '@/components/our-ai/OurAIHero';
-import ThesisSection from '@/components/our-ai/ThesisSection';
-import EnginesGrid from '@/components/our-ai/EnginesGrid';
-import DiversityBalanceSection from '@/components/our-ai/DiversityBalanceSection';
-import ExplainabilitySection from '@/components/our-ai/ExplainabilitySection';
-
+import IntelligenceHero from '@/components/our-ai/IntelligenceHero';
+import EnginesTrio from '@/components/our-ai/EnginesTrio';
+import BuilderBridge from '@/components/our-ai/BuilderBridge';
+import FoundationModel from '@/components/our-ai/FoundationModel';
+import ReasoningSection from '@/components/our-ai/ReasoningSection';
 import SecuritySection from '@/components/our-ai/SecuritySection';
-import ChallengesAccordion from '@/components/our-ai/ChallengesAccordion';
-import CommunitySection from '@/components/our-ai/CommunitySection';
-import ResearchSection from '@/components/our-ai/ResearchSection';
-import GlossarySection from '@/components/our-ai/GlossarySection';
-import CTAFinal from '@/components/hometeste/CTAFinal';
-import RealResultsStrip from '@/components/common/RealResultsStrip';
+import ProductionResults from '@/components/our-ai/ProductionResults';
+import ScienceHighlights from '@/components/our-ai/ScienceHighlights';
+import GlossaryCondensed from '@/components/our-ai/GlossaryCondensed';
+import OurAIClosing from '@/components/our-ai/OurAIClosing';
 
 const BASE_URL = 'https://infinity6.ai';
 
@@ -26,6 +24,9 @@ const OurAI = memo(() => {
 
   const jsonLd = useMemo(() => {
     const url = `${BASE_URL}/${language}/our-ai`;
+    const cl = toContentLang(language);
+    const inLanguage = language === 'pt' ? 'pt-BR' : language === 'es' ? 'es' : 'en';
+
     const techArticle = {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
@@ -33,14 +34,15 @@ const OurAI = memo(() => {
       description: c.hero.lead,
       url,
       image: `${BASE_URL}/favicon.ico`,
-      inLanguage: language === 'pt' ? 'pt-BR' : 'en',
+      inLanguage,
       author: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
       publisher: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
       about: c.engines.items.map((e) => e.name),
       keywords: [
-        'proprietary AI', 'predictive intelligence', 'recommendation engine',
-        'demand forecasting', 'dynamic pricing', 'i6-RecSys-Base.g1',
-        'MAML', 'Active Learning', 'Topological Loss',
+        'proprietary AI', 'intelligence layer', 'predictive engines',
+        'demand forecasting', 'recommendation engine', 'dynamic pricing',
+        'i6-RecSys-Base.g1', 'MAML', 'Active Learning', 'Topological Loss',
+        'explainable AI',
       ],
     };
 
@@ -62,7 +64,7 @@ const OurAI = memo(() => {
       '@id': `${url}#glossario`,
       name: c.glossary.title,
       description: c.glossary.lead,
-      inLanguage: language === 'pt' ? 'pt-BR' : 'en',
+      inLanguage,
       hasDefinedTerm: c.glossary.terms.map((t) => ({
         '@type': 'DefinedTerm',
         '@id': `${url}#glossario-${t.slug}`,
@@ -78,16 +80,16 @@ const OurAI = memo(() => {
       .map((r) => ({
         '@context': 'https://schema.org',
         '@type': 'Observation',
-        name: r.label[language],
+        name: r.label[cl],
         observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
         variableMeasured: {
           '@type': 'PropertyValue',
-          name: r.label[language],
+          name: r.label[cl],
           ...(r.unitText ? { unitText: r.unitText } : {}),
         },
         measuredValue: r.numericValue,
         ...(r.unitText ? { unitText: r.unitText } : {}),
-        description: `${language === 'pt' ? 'Setor' : 'Sector'}: ${r.source[language]}`,
+        description: `${c.results.sourceLabel}: ${r.source[cl]}`,
       }));
 
     return {
@@ -99,19 +101,18 @@ const OurAI = memo(() => {
   return (
     <>
       <SEOHead page="our-ai" jsonLd={jsonLd} />
-      <OurAIHero content={c.hero} />
-      <EnginesGrid content={c.engines} foundation={c.thesis.foundation} />
-      <DiversityBalanceSection content={c.diversity} />
-      <ExplainabilitySection content={c.explainability} />
-      <ThesisSection content={c.thesis} />
-      
-      <SecuritySection content={c.security} />
-      <ChallengesAccordion content={c.challenges} />
-      <CommunitySection content={c.community} />
-      <ResearchSection content={c.research} />
-      <RealResultsStrip />
-      <GlossarySection content={c.glossary} />
-      <CTAFinal />
+      <div className="theme-sand">
+        <IntelligenceHero content={c.hero} />
+        <EnginesTrio content={c.engines} />
+        <BuilderBridge content={c.builder} />
+        <FoundationModel content={c.foundation} />
+        <ReasoningSection content={c.reasoning} />
+        <SecuritySection content={c.security} />
+        <ProductionResults content={c.results} />
+        <ScienceHighlights content={c.science} />
+        <GlossaryCondensed content={c.glossary} />
+        <OurAIClosing content={c.closing} />
+      </div>
     </>
   );
 });
