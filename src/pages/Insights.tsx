@@ -34,7 +34,7 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
       {/* Área do logo — espaço próprio e proeminente, respirando sobre bege claro */}
       <div
         className={`flex shrink-0 items-center justify-center bg-secondary px-6 ${
-          featured ? 'h-28 md:h-auto md:w-2/5 md:py-10' : 'h-24'
+          featured ? 'h-28 md:h-auto md:w-1/3 md:py-10' : 'h-24'
         }`}
       >
         <img
