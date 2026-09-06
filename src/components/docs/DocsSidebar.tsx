@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import type { DocPage, DocSection } from '@/hooks/useDocs';
 import type { DocsUiCopy } from '@/data/docs/content';
+import { stripDocMarkers } from '@/utils/docsBlocks';
 
 const normalize = (v: string) =>
   v.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -28,6 +29,8 @@ interface Match {
   page: DocPage;
   weight: number;
   snippet: string | null;
+  /** Tab that contains the match, when the page has method tabs. */
+  tabKey: string | null;
 }
 
 /** Builds a ~140 char excerpt around the first occurrence of `q`. */
@@ -106,12 +109,34 @@ const DocsSidebar = ({ sections, activeSlug, copy, localized, onNavigate }: Docs
       section.pages.forEach((page) => {
         const inTitle = normalize(page.title).includes(q);
         const inDescription = page.description ? normalize(page.description).includes(q) : false;
-        const snippet = buildSnippet(page.content, q);
+
+        // All three method tabs are indexed, not just the default one: the
+        // result links to the tab where the term was actually found.
+        const units: Array<{ tabKey: string | null; text: string }> =
+          page.tabs.length > 0
+            ? [
+                { tabKey: null, text: stripDocMarkers(page.intro) },
+                ...page.tabs.map((tab) => ({ tabKey: tab.key, text: stripDocMarkers(tab.content) })),
+              ]
+            : [{ tabKey: null, text: page.content }];
+
+        let snippet: string | null = null;
+        let tabKey: string | null = null;
+        for (const unit of units) {
+          const found = buildSnippet(unit.text, q);
+          if (found) {
+            snippet = found;
+            tabKey = unit.tabKey;
+            break;
+          }
+        }
+
         if (!inTitle && !inDescription && !snippet) return;
         out.push({
           page,
           weight: inTitle ? 3 : inDescription ? 2 : 1,
           snippet: snippet ?? (inDescription ? page.description : null),
+          tabKey,
         });
       });
     });
@@ -146,10 +171,10 @@ const DocsSidebar = ({ sections, activeSlug, copy, localized, onNavigate }: Docs
           <p className="text-muted-foreground">{copy.noResults}</p>
         ) : (
           <ul className="space-y-3">
-            {results.map(({ page, snippet }) => (
+            {results.map(({ page, snippet, tabKey }) => (
               <li key={`${page.section}-${page.slug}`}>
                 <Link
-                  to={localized(`/docs/${page.slug}`)}
+                  to={localized(`/docs/${page.slug}${tabKey ? `?tab=${tabKey}` : ''}`)}
                   onClick={onNavigate}
                   aria-current={page.slug === activeSlug ? 'page' : undefined}
                   className="block rounded-xl border border-border bg-card/60 px-3 py-2.5 transition-colors hover:border-primary/40"

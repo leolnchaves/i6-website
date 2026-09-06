@@ -1,8 +1,12 @@
 import { useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { Language } from '@/types/language';
+import { parseDocTabs, resolveAssetUrl, type DocTab } from '@/utils/docsBlocks';
+
+export type { DocTab };
 
 export type DocContentType = 'article' | 'video' | 'download';
+
 
 export interface DocPage {
   title: string;
@@ -31,7 +35,13 @@ export interface DocPage {
   sample: boolean;
   hidden: boolean;
   content: string;
+
+  /** Body before the first `:::tab` marker — the whole body when there are none. */
+  intro: string;
+  /** Method tabs declared in the body; empty for every page without markers. */
+  tabs: DocTab[];
 }
+
 
 
 export interface DocSection {
@@ -79,22 +89,6 @@ const modules = import.meta.glob('/src/content/docs/*.md', {
 }) as Record<string, string>;
 
 const isLanguage = (v: unknown): v is Language => v === 'pt' || v === 'en' || v === 'es';
-
-/** CDN pointers for files attached to `download` pages, keyed by pointer filename. */
-const assetPointers = import.meta.glob('/src/assets/*.asset.json', { eager: true }) as Record<
-  string,
-  { default?: { url?: string }; url?: string }
->;
-
-const resolveAssetUrl = (value: unknown): string | null => {
-  if (typeof value !== 'string' || !value) return null;
-  if (/^https?:\/\//.test(value) || value.startsWith('/__l5e/')) return value;
-  const file = value.split('/').pop()!;
-  const entry = Object.entries(assetPointers).find(([path]) => path.endsWith(`/${file}`));
-  if (!entry) return null;
-  const mod = entry[1];
-  return mod.default?.url ?? mod.url ?? null;
-};
 
 /** Accepts both `related: a, b, c` and `related: [a, b, c]`. */
 const parseRelated = (value: unknown): string[] => {
@@ -146,6 +140,7 @@ const ALL: DocPage[] = Object.entries(modules)
       sample: data.sample === true,
       hidden: data.hidden === true,
       content,
+      ...parseDocTabs(content),
     } satisfies DocPage;
   })
 

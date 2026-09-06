@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { extractHeadings } from '@/utils/headingSlug';
+import { parseDocTabs, resolveActiveTab, stripDocMarkers } from '@/utils/docsBlocks';
 
 interface DocsTocProps {
   content: string;
@@ -20,7 +22,13 @@ const BOTTOM_THRESHOLD = 24;
  * ignored, so there is no flicker when scrolling near the bottom.
  */
 const DocsToc = ({ content, title }: DocsTocProps) => {
-  const headings = extractHeadings(content);
+  const [searchParams] = useSearchParams();
+  const { intro, tabs } = parseDocTabs(content);
+  const activeTab = resolveActiveTab(tabs, searchParams.get('tab'));
+
+  // Only what is actually on screen: the shared intro plus the active tab.
+  const visible = stripDocMarkers(activeTab ? `${intro}\n\n${activeTab.content}` : content);
+  const headings = extractHeadings(visible);
   const [activeId, setActiveId] = useState<string>('');
   const atBottomRef = useRef(false);
   const listRef = useRef<HTMLUListElement>(null);
@@ -34,6 +42,12 @@ const DocsToc = ({ content, title }: DocsTocProps) => {
   );
 
   useEffect(() => {
+    // Tab switches change the heading set: clear the highlight and the
+    // end-of-document flag BEFORE re-observing, so the previous tab's section
+    // can never stay pinned and never competes with the observer.
+    atBottomRef.current = false;
+    setActiveId('');
+
     if (headings.length === 0) return;
 
     const observer = new IntersectionObserver(
@@ -77,8 +91,9 @@ const DocsToc = ({ content, title }: DocsTocProps) => {
       window.removeEventListener('resize', onScroll);
       if (frame) window.cancelAnimationFrame(frame);
     };
-    // ids are derived from content, so re-observe when the page changes
-  }, [content]); // eslint-disable-line react-hooks/exhaustive-deps
+    // ids are derived from the visible content, so re-observe when the page or
+    // the active tab changes
+  }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Keep the active item visible when the index itself has an inner scrollbar.
   useEffect(() => {

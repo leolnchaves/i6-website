@@ -1,9 +1,21 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { createHeadingIdFactory } from '@/utils/headingSlug';
 import DocsCodeBlock from './DocsCodeBlock';
+import DocsTabs from './DocsTabs';
+import DocsVideo from './DocsVideo';
+import DocsDownload from './DocsDownload';
 import { useLocalizedPath } from '@/utils/localizedPath';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { docsUi } from '@/data/docs/content';
+import {
+  parseDocTabs,
+  parseInlineBlocks,
+  resolveActiveTab,
+  resolveAssetUrl,
+} from '@/utils/docsBlocks';
 import type { MouseEvent, ReactNode } from 'react';
 
 /**
@@ -25,6 +37,11 @@ interface DocsMarkdownProps {
   copiedLabel: string;
 }
 
+interface BodyProps extends DocsMarkdownProps {
+  /** Shared, document-order id factory so anchors match the on-page index. */
+  nextId: (text: string) => string;
+}
+
 /** True for hrefs that point at another documentation page of this very site. */
 const isInternalDocHref = (href?: string): boolean => {
   if (!href) return false;
@@ -35,7 +52,7 @@ const isInternalDocHref = (href?: string): boolean => {
   return /^\.{0,2}\/?docs(\/|$)/.test(href);
 };
 
-const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) => {
+const DocsMarkdownBody = ({ content, copyLabel, copiedLabel, nextId }: BodyProps) => {
   const navigate = useNavigate();
   const localized = useLocalizedPath();
 
@@ -48,15 +65,16 @@ const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) =>
     navigate(/^\/(pt|en|es)\//.test(path) ? path : localized(path));
   };
 
-  // Recreated on every render and consumed synchronously in document order,
-  // mirroring extractHeadings() exactly.
-  const nextId = createHeadingIdFactory();
+  const { language } = useLanguage();
+  const copy = docsUi[language];
 
+  // Markdown chunks with the inline @video / @download markers pulled out, so
+  // each media block renders exactly where the author placed it.
+  const blocks = parseInlineBlocks(content);
 
-
-  return (
-    <div className="max-w-none text-[0.975rem] md:text-base leading-relaxed text-muted-foreground">
-      <ReactMarkdown
+  const markdown = (value: string, key: number) => (
+    <ReactMarkdown
+      key={key}
         remarkPlugins={[remarkGfm]}
         components={{
           h2: ({ children }) => (
@@ -133,10 +151,112 @@ const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) =>
           td: ({ children }) => <td className="border-b border-border px-4 py-2.5 align-top">{children}</td>,
           hr: () => <hr className="my-10 border-border" />,
         }}
-      >
-        {content}
-      </ReactMarkdown>
+    >
+      {value}
+    </ReactMarkdown>
+  );
+
+  return (
+    <div className="max-w-none text-[0.975rem] md:text-base leading-relaxed text-muted-foreground">
+      {blocks.map((block, index) => {
+        if (block.kind === 'markdown') return markdown(block.value, index);
+        if (block.kind === 'video') {
+          if (block.provider !== 'youtube') return null;
+          return (
+            <DocsVideo
+              key={index}
+              videoId={block.videoId}
+              title={block.title ?? ''}
+              playLabel={copy.playVideo}
+            />
+          );
+        }
+        const href = resolveAssetUrl(block.source);
+        if (!href) return null;
+        return (
+          <DocsDownload
+            key={index}
+            href={href}
+            label={block.label ?? copy.downloadLabel}
+            actionLabel={copy.downloadAction}
+          />
+        );
+      })}
     </div>
+  );
+};
+
+/**
+ * Entry point used by the documentation shell. When the body declares
+ * `:::tab` blocks it renders the shared intro plus the method tabs; otherwise it
+ * behaves exactly like before.
+ */
+const DocsMarkdown = ({ content, copyLabel, copiedLabel }: DocsMarkdownProps) => {
+  const { intro, tabs } = parseDocTabs(content);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const activeTab = resolveActiveTab(tabs, searchParams.get('tab'));
+
+  // A link such as ?tab=sdk#autenticacao must land on BOTH: the tab block only
+  // reaches the DOM after this render, so the anchor is reprocessed here.
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Corrective passes: the tab body only reaches the DOM after this render and
+    // media blocks can still change its height, so the anchor is re-applied
+    // until the target position settles.
+    const timers = [0, 150, 400, 900].map((delay) =>
+      window.setTimeout(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top;
+        if (Math.abs(top - 96) < 4) return;
+        el.scrollIntoView({ block: 'start', behavior: reduced || delay > 0 ? 'auto' : 'smooth' });
+      }, delay),
+    );
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [location.hash, activeTab?.key]);
+
+  const nextId = createHeadingIdFactory();
+
+  if (!activeTab) {
+    return (
+      <DocsMarkdownBody
+        content={content}
+        copyLabel={copyLabel}
+        copiedLabel={copiedLabel}
+        nextId={nextId}
+      />
+    );
+  }
+
+  const selectTab = (key: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('tab', key);
+    setSearchParams(params, { replace: true });
+  };
+
+  return (
+    <>
+      {intro && (
+        <DocsMarkdownBody
+          content={intro}
+          copyLabel={copyLabel}
+          copiedLabel={copiedLabel}
+          nextId={nextId}
+        />
+      )}
+      <DocsTabs tabs={tabs} activeKey={activeTab.key} onSelect={selectTab}>
+        <DocsMarkdownBody
+          key={activeTab.key}
+          content={activeTab.content}
+          copyLabel={copyLabel}
+          copiedLabel={copiedLabel}
+          nextId={nextId}
+        />
+      </DocsTabs>
+    </>
   );
 };
 
