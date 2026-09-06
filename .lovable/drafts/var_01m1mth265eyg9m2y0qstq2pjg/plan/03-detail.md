@@ -33,7 +33,7 @@ Continua uma rota por slug renderizando o mesmo componente para todos os cases �
 - `src/pages/SuccessStories.tsx` — ordem das seções e fundo areia.
 - `src/pages/SuccessStoryArticle.tsx` — capa intocada; corpo reescrito em areia, com rótulos vindos do arquivo de textos em três idiomas.
 - Sem mudanças em `useSuccessStoriesMarkdown.ts`, `useTestimonialsMarkdown.ts` nem no conteúdo de `src/content/stories/`.
-- `HeaderNovo.tsx` — acrescentar `/success-stories` (e as rotas de case) à lista de páginas claras.
+- `HeaderNovo.tsx` — acrescentar **apenas** `/success-stories` (comparação exata) à lista de páginas claras; rotas de case (`/success-stories/<slug>`) ficam fora e mantêm o comportamento padrão.
 
 ## Investigação embutida — respostas
 
