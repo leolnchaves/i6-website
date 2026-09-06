@@ -1,30 +1,13 @@
-# Ajustes na página da inteligência (/our-ai)
+# Linhas de conexão na abertura de /our-ai
 
-Cinco ajustes, todos dentro desta página (mais um link externo novo).
+Hoje as três faixas da abertura ficam dentro de uma moldura única, separadas apenas por uma linha fina de borda. A mudança troca essa separação por linhas de conexão desenhadas, mostrando que as duas faixas de cima se apoiam na faixa da inteligência, embaixo.
 
-## 1. Abertura — as três camadas
-Hoje as três camadas ficam lado a lado. Passa a: as duas camadas construídas em cima (Decision Suite e Builder Platform) na linha de cima, e "A inteligência" ocupando a largura inteira logo abaixo, encostada nas duas — visualmente uma base única que sustenta as duas de cima, com o destaque em areia/terracota.
+O que muda visualmente:
 
-## 2. Modelo fundacional — alinhamento
-A coluna da esquerda (arquitetura) ganha um quarto item, para terminar na mesma altura dos gráficos da direita. O novo item fala da memória externa do modelo (já citada no texto de abertura da seção): capacidade de guardar e recuperar padrões de tarefas anteriores para aprender rápido em contextos novos. As duas colunas passam a alinhar pelo rodapé, sem o vazio atual embaixo de "Topological Loss".
+- As duas faixas de cima (i6 Decision Suite e i6 Builder Platform) passam a ser cartões próprios, com um vão real entre elas e a faixa de baixo.
+- Do centro da base de cada cartão de cima desce uma linha fina em terracota, que se junta num ponto central e entra na borda de cima da faixa "A inteligência" — desenho em Y invertido, com um pequeno ponto no encontro.
+- A faixa "A inteligência" ganha uma sombra interna suave no topo, dando a sensação de peso apoiado sobre ela.
+- Ao entrar na tela, as linhas se desenham uma vez, em meio segundo. Com movimento reduzido ativado no sistema, já aparecem prontas.
+- No celular, onde as faixas empilham, as linhas não aparecem.
 
-## 3. Referências acadêmicas
-O bloco de referências sai do Modelo fundacional — a página já tem a seção "Base científica" mais abaixo, que cumpre esse papel.
-
-## 4. Próximo passo
-Além de "Falar com o time técnico" e "Construir sobre a i6 Builder Platform", entra um terceiro caminho: "Contratar a Decision Suite", abrindo i6decision.ai em nova aba (PT/EN/ES).
-
-## 5. Composição — as 10 seções na ordem definitiva
-1. Abertura
-2. Núcleo preditivo (os três motores)
-3. Modelo fundacional
-4. Método (raciocínio)
-5. Governança (segurança)
-6. Camada de abstração (i6 Builder Platform)
-7. Evidência (resultados reais) — tema areia, não grafite
-8. Base científica
-9. Vocabulário (glossário)
-10. Próximo passo (fechamento, com o terceiro CTA para i6decision.ai)
-
-O ritmo claro/escuro é redistribuído para nunca ter duas faixas escuras encostadas: escuras apenas em Método e Camada de abstração.
-
+Escopo: apenas a abertura de /our-ai. Nenhuma outra seção da página é tocada.

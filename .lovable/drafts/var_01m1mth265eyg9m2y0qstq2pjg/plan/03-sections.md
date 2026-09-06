@@ -1,20 +1,13 @@
-## Composição — 10 seções
+## Detalhes técnicos
 
-O ritmo alterna fundo areia claro e faixas grafite escuras, como em `/i6-builders`, para dar respiro entre blocos densos.
+Arquivo único: `src/components/our-ai/IntelligenceHero.tsx`.
 
-1. **Abertura** (areia) — sobrelinha terracota "infinity6 · a camada de inteligência", título grande, parágrafo curto e um trio de rótulos nomeando as três camadas. Sem imagem de herói; peso na tipografia.
-2. **Os três motores** (areia) — três cartões brancos de borda fina: nome, classe de decisão que resolve, três pontos técnicos. Três colunas no desktop, empilhados no mobile. Sem i6 Signal.
-3. **i6 Builder Platform** (faixa grafite) — ponte curta: a camada de abstração que expõe estes motores por SDK, API e toolkits. Link-seta próprio desta página (a seta desliza no hover) para `/i6-builders`. Não reutiliza a triagem do `/contact`.
-4. **Modelo fundacional** (areia) — `i6-RecSys-Base.g1`: arquitetura (MAML, Active Learning, Topological Loss) mais tira de estatísticas de escala e diversidade setorial. Números idênticos aos atuais.
-5. **Como a inteligência raciocina** (faixa grafite) — funde balanceamento de diversidade e explicabilidade numa narrativa em duas partes: como a saída é equilibrada e como cada decisão é auditável. Diagrama abstrato; nenhum exemplo de vitrine.
-6. **Segurança e conformidade por design** (areia) — conteúdo mantido, revestido nos tokens novos.
-7. **Resultados reais em produção** (faixa grafite) — os seis números com o rótulo de segmento preservado como procedência da evidência. Apresentação própria desta página; a tira compartilhada com `/solutions` não é tocada.
-8. **Base científica** (areia) — título, nota curta e 2–3 destaques reais (Springer/LNBIP 2013, WEBIST 2012, palestras QCon), com link-seta para `/i6-intelligence` em vez da lista inteira.
-9. **Glossário condensado** (areia) — só os termos necessários para ler esta página, com link para a documentação completa em `/docs`.
-10. **Fechamento** (grafite) — bloco próprio, texto voltado a times técnicos, dois caminhos: falar com o time e conhecer a plataforma de builders.
+- Estrutura: separar `content.layers` em faixas não-atuais (topo, `md:grid-cols-2`, cartões `bg-card` com `border border-border rounded-[var(--radius)]`) e a faixa `current` (base, largura total, `bg-accent`). Remove-se a moldura única `gap-px`/`bg-border`.
+- Geometria medida do DOM, como em `BuilderModels.tsx`: `wrapRef` no container relativo, refs nos dois cartões de topo e no cartão base; `measure()` usa `getBoundingClientRect()` para calcular centro-x/base-y de cada topo e o topo-y da base, tudo relativo ao wrapper. Nenhum valor fixo em px.
+- Recalcular em `useLayoutEffect` (via `requestAnimationFrame`) com dependência de `language`/`content.layers`, em `window.resize` e em `ResizeObserver` observando os três cartões.
+- Overlay: `<svg aria-hidden className="pointer-events-none absolute inset-0 hidden md:block h-full w-full overflow-visible">` dentro do container; caminho em Y invertido (duas descidas verticais + barramento horizontal + descida central até a base) com `stroke="hsl(var(--primary))"`, `strokeWidth="1.25"` e um `circle` r=3 no ponto de junção.
+- Animação de traço: reaproveita o padrão `@keyframes i6-draw` com `strokeDasharray`/`--i6-len` derivado do comprimento medido; disparo único ao entrar na viewport via `IntersectionObserver` (threshold ~0.3, desconecta após disparar). Com `prefers-reduced-motion: reduce` (checado por `matchMedia` + listener `change`), sem dasharray e sem animação.
+- Profundidade no cartão base: `shadow-[inset_0_10px_16px_-12px_hsl(var(--foreground)/0.18)]` (token semântico, sem cor literal), mantendo textos e classes de tipografia atuais.
+- Mobile: o SVG fica `hidden md:block`; as faixas empilham como hoje.
 
-## O que sai
-
-- Acordeão "Por que a IA falha e como resolvemos".
-- Bloco Hugging Face desta página, e com ele o verbete e o JSON-LD do i6 Signal daqui.
-- O ícone Hugging Face do rodapé, única referência remanescente a esse bloco. O item de menu que leva a `/community` permanece.
+Verificação: `npx tsgo --noEmit -p tsconfig.app.json`, build, e Playwright em pt/en/es a 1440px (linhas presentes, ancoradas nos cartões, sem overflow) e 390px (SVG ausente, sem overflow).
