@@ -73,3 +73,13 @@ Checagem de tipos e build; as páginas antigas (Glossário, Pesquisa, Tour em v�
 Guia em PDF) renderizando sem alteração; troca de aba sem recarga com índice
 recalculado; link direto com `?tab=sdk` abrindo na aba certa nos três idiomas; e
 aba com vídeo carregando o iframe só após o clique.
+
+Dois casos-limite obrigatórios antes de considerar concluído:
+
+1. Link com `?tab=sdk#algum-heading` carregado do zero: a aba SDK aparece **e** a
+   rolagem chega ao heading correto — a âncora é reprocessada depois de o bloco da
+   aba estar no DOM, não apenas no primeiro paint.
+2. Trocar de aba com a página rolada perto do fim: o destaque do índice não fica
+   preso a uma seção que não existe na aba nova. Ao trocar de aba, o estado de
+   "fim do documento" e o destaque são reiniciados antes de os observadores serem
+   religados, então não há competição com o IntersectionObserver.
