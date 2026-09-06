@@ -20,13 +20,14 @@ blocos com o mesmo título não competem — só um está no DOM por vez.
 
 ## Busca
 
-Indexar as três abas. A busca de /docs é o único caminho de descoberta transversal,
-e alguém que procura "chave privada" precisa achar a página mesmo que o termo só
-exista na aba Servidor a servidor. O resultado continua apontando para a página; o
-link do resultado inclui o `?tab=` do bloco onde o termo foi encontrado, então o
+Indexar as três abas — decisão fechada. A busca de /docs é o único caminho de
+descoberta transversal, e alguém que procura "chave privada" precisa achar a página
+mesmo que o termo só exista na aba Servidor a servidor. O resultado continua
+apontando para a página, com o `?tab=` do bloco onde o termo foi encontrado, então o
 visitante cai já na aba certa. Custo: o texto pesquisável por página cresce ~3x nas
 5 páginas novas — irrelevante nesta escala (busca em memória sobre poucas dezenas
 de arquivos).
+
 
 ## Mudanças técnicas
 
