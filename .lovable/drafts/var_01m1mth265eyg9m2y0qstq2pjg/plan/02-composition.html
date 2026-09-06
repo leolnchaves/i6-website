@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><style>
+svg { font-family: var(--font-sans); }
+.lbl { font-size: 14px; font-weight: 480; fill: hsl(var(--foreground)); }
+.note { font-size: 12px; fill: hsl(var(--muted-foreground)); }
+.tag { font-size: 12px; fill: hsl(var(--muted-foreground)); }
+.box { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+.quiet { fill: hsl(var(--muted)); stroke: none; }
+.rail { stroke: hsl(var(--border)); stroke-width: 1; }
+.greek { fill: hsl(var(--border)); }
+</style></head>
+<body>
+<svg viewBox="0 0 640 470" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1 abertura -->
+  <rect class="box" x="20" y="14" width="600" height="70" rx="8"/>
+  <rect class="greek" x="40" y="30" width="230" height="14" rx="7"/>
+  <rect class="greek" x="40" y="52" width="160" height="14" rx="7"/>
+  <rect class="greek" x="430" y="52" width="150" height="8" rx="4"/>
+  <text class="tag" x="40" y="24">abertura tipográfica · areia</text>
+
+  <!-- 2 destaque -->
+  <rect class="box" x="20" y="94" width="600" height="150" rx="8"/>
+  <text class="tag" x="40" y="112">destaque editorial</text>
+  <rect class="greek" x="40" y="124" width="240" height="20" rx="8"/>
+  <rect class="greek" x="40" y="152" width="190" height="20" rx="8"/>
+  <rect class="greek" x="40" y="188" width="140" height="8" rx="4"/>
+  <rect class="quiet" x="330" y="118" width="290" height="112" rx="8"/>
+  <rect x="300" y="196" width="180" height="34" rx="8" fill="hsl(var(--card))" stroke="hsl(var(--accent))"/>
+  <text class="lbl" x="312" y="217">tema · data · leitura</text>
+  <circle cx="596" cy="112" r="9" fill="hsl(var(--accent))"/>
+  <text x="596" y="116" text-anchor="middle" font-size="11" fill="hsl(var(--accent-foreground))">1</text>
+
+  <!-- diagonal break -->
+  <path d="M20 254 L620 244 L620 250 L20 260 Z" fill="hsl(var(--border))"/>
+  <text class="note" x="20" y="276">quebra diagonal suave · areia → grafite</text>
+
+  <!-- 3 faixa grafite -->
+  <rect x="20" y="286" width="600" height="86" rx="8" fill="hsl(var(--secondary))" stroke="none"/>
+  <text class="tag" x="40" y="304">recentes · régua numerada</text>
+  <line class="rail" x1="40" y1="316" x2="600" y2="316"/>
+  <text class="lbl" x="40" y="334">01</text><rect class="greek" x="70" y="325" width="300" height="9" rx="4"/>
+  <line class="rail" x1="40" y1="342" x2="600" y2="342"/>
+  <text class="lbl" x="40" y="360">02</text><rect class="greek" x="70" y="351" width="240" height="9" rx="4"/>
+  <line class="rail" x1="40" y1="366" x2="600" y2="366"/>
+
+  <!-- 4 filtro + grade -->
+  <rect class="box" x="20" y="382" width="600" height="76" rx="8"/>
+  <text class="tag" x="40" y="400">filtro em abas + grade assimétrica</text>
+  <line x1="40" y1="412" x2="90" y2="412" stroke="hsl(var(--accent))" stroke-width="2"/>
+  <line class="rail" x1="98" y1="412" x2="230" y2="412"/>
+  <rect class="box" x="40" y="422" width="200" height="28" rx="8"/>
+  <rect class="box" x="252" y="422" width="110" height="28" rx="8"/>
+  <rect class="box" x="374" y="422" width="110" height="28" rx="8"/>
+  <rect class="box" x="496" y="422" width="104" height="28" rx="8"/>
+</svg>
+</body>
+</html>
