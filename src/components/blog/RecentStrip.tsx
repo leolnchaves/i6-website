@@ -1,43 +1,76 @@
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import BlogCard from './BlogCard';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import type { Insight } from '@/hooks/useInsights';
 
 interface Props {
   articles: Insight[];
-  layout?: 'row' | 'side';
 }
 
-const RecentStrip = ({ articles, layout = 'row' }: Props) => {
-  const { t } = useLanguage();
-  if (articles.length === 0) return null;
+/**
+ * Régua numerada dos artigos mais recentes, na faixa grafite. Renderiza apenas
+ * os artigos existentes — sem posições vazias nem números fantasma.
+ */
+const RecentStrip = ({ articles }: Props) => {
+  const { t, language } = useLanguage();
+  const localized = useLocalizedPath();
+  const locale = language === 'pt' ? 'pt-BR' : language === 'es' ? 'es-ES' : 'en-US';
 
-  if (layout === 'side') {
-    const list = articles.slice(0, 3);
-    return (
-      <section className="flex flex-col h-full max-h-full overflow-hidden">
-        <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-white/60 mb-2 shrink-0">
-          {t('blog.recentTitle')}
-        </h2>
-        <div className="flex flex-col gap-2.5 flex-1 min-h-0">
-          {list.map((a) => (
-            <div key={a.slug} className="h-1/3 min-h-0">
-              <BlogCard article={a} variant="horizontal" dense />
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
+  const list = articles.slice(0, 5);
+  if (list.length === 0) return null;
 
   return (
-    <section className="mt-16">
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-white/60 mb-4">
-        {t('blog.recentTitle')}
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {articles.slice(0, 5).map((a) => (
-          <BlogCard key={a.slug} article={a} size="sm" />
-        ))}
+    <section className="w-full bg-[#0B1224] py-14 md:py-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-[#F4845F]">
+          {t('blog.recentTitle')}
+        </h2>
+
+        <ul className="mt-8 border-t border-white/10">
+          {list.map((a, i) => (
+            <li key={a.slug}>
+              <Link
+                to={localized(`/i6-blog/${a.slug}`)}
+                className="group flex items-baseline gap-5 border-b border-white/10 py-5 md:gap-8"
+              >
+                <span className="font-display text-lg tabular-nums text-[#F4845F]/70 md:text-xl">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-display text-base leading-snug text-white transition-colors group-hover:text-[#F4845F] md:text-lg">
+                    {a.title}
+                  </span>
+                  <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/45">
+                    {(a.theme_label || a.theme) && (
+                      <span className="uppercase tracking-[0.16em]">
+                        {a.theme_label || a.theme}
+                      </span>
+                    )}
+                    {a.date && (
+                      <time dateTime={a.date}>
+                        {new Date(a.date).toLocaleDateString(locale, {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                      </time>
+                    )}
+                    {a.read_time && (
+                      <span>
+                        {a.read_time} {t('blog.minRead')}
+                      </span>
+                    )}
+                  </span>
+                </span>
+                <ArrowUpRight
+                  size={16}
+                  className="shrink-0 text-white/30 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#F4845F]"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

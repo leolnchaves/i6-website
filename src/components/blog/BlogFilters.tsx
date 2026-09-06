@@ -12,13 +12,23 @@ interface Props {
   activeTag: string | null;
   onThemeChange: (v: string | null) => void;
   onTagChange: (v: string | null) => void;
+  /** Quantidade de artigos visíveis com os filtros atuais. */
+  resultCount?: number;
 }
 
-const chipClass = (active: boolean) =>
-  `px-3 py-1 rounded-full text-xs font-medium transition-all ${
-    active ? 'bg-[#F4845F] text-white' : 'bg-white/5 text-white/60 hover:bg-white/10'
+const tabClass = (active: boolean) =>
+  `relative pb-2 text-sm transition-colors ${
+    active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
   }`;
 
+const chipClass = (active: boolean) =>
+  `rounded-full border px-3 py-1 text-xs transition-colors ${
+    active
+      ? 'border-primary bg-primary/10 text-primary'
+      : 'border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground'
+  }`;
+
+/** Abas de tema com sublinhado terracota + chips de tag. Dados dinâmicos. */
 const BlogFilters = ({
   themes,
   tags,
@@ -26,37 +36,57 @@ const BlogFilters = ({
   activeTag,
   onThemeChange,
   onTagChange,
+  resultCount,
 }: Props) => {
   const { t } = useLanguage();
   if (themes.length === 0 && tags.length === 0) return null;
 
   return (
-    <div className="mt-12 space-y-3">
+    <div className="border-b border-border pb-6">
       {themes.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs uppercase tracking-wider text-white/40 mr-2">
-            {t('blog.filterTheme')}
-          </span>
-          <button onClick={() => onThemeChange(null)} className={chipClass(activeTheme === null)}>
+        <div className="flex flex-wrap items-end gap-x-7 gap-y-3">
+          <button type="button" onClick={() => onThemeChange(null)} className={tabClass(activeTheme === null)}>
             {t('blog.filterAll')}
+            {activeTheme === null && (
+              <span className="absolute inset-x-0 -bottom-px h-[2px] bg-primary" aria-hidden="true" />
+            )}
           </button>
           {themes.map((th) => (
-            <button key={th.value} onClick={() => onThemeChange(th.value)} className={chipClass(activeTheme === th.value)}>
+            <button
+              key={th.value}
+              type="button"
+              onClick={() => onThemeChange(th.value)}
+              className={tabClass(activeTheme === th.value)}
+            >
               {th.label}
+              {activeTheme === th.value && (
+                <span className="absolute inset-x-0 -bottom-px h-[2px] bg-primary" aria-hidden="true" />
+              )}
             </button>
           ))}
+          {typeof resultCount === 'number' && (
+            <span className="ml-auto pb-2 text-xs text-muted-foreground" aria-live="polite">
+              {resultCount} {t('blog.articlesLabel')}
+            </span>
+          )}
         </div>
       )}
+
       {tags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs uppercase tracking-wider text-white/40 mr-2">
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
             {t('blog.filterTags')}
           </span>
-          <button onClick={() => onTagChange(null)} className={chipClass(activeTag === null)}>
+          <button type="button" onClick={() => onTagChange(null)} className={chipClass(activeTag === null)}>
             {t('blog.filterAll')}
           </button>
           {tags.map((tag) => (
-            <button key={tag} onClick={() => onTagChange(tag)} className={chipClass(activeTag === tag)}>
+            <button
+              key={tag}
+              type="button"
+              onClick={() => onTagChange(tag)}
+              className={chipClass(activeTag === tag)}
+            >
               {tag}
             </button>
           ))}
