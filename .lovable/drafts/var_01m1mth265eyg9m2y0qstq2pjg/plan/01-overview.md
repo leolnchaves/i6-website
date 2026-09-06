@@ -14,5 +14,17 @@ O bloco de referências sai do Modelo fundacional — a página já tem a seçã
 ## 4. Próximo passo
 Além de "Falar com o time técnico" e "Construir sobre a i6 Builder Platform", entra um terceiro caminho: "Contratar a Decision Suite", abrindo i6decision.ai em nova aba (PT/EN/ES).
 
-## 5. Nova ordem das seções
-A ordem passa a ser: abertura, núcleo preditivo, modelo fundacional, método, governança, camada de abstração, evidência, base científica, vocabulário, próximo passo. Com essa ordem, duas faixas escuras ficariam encostadas — o ritmo claro/escuro é redistribuído para nunca ter duas escuras seguidas.
+## 5. Composição — as 10 seções na ordem definitiva
+1. Abertura
+2. Núcleo preditivo (os três motores)
+3. Modelo fundacional
+4. Método (raciocínio)
+5. Governança (segurança)
+6. Camada de abstração (i6 Builder Platform)
+7. Evidência (resultados reais) — tema areia, não grafite
+8. Base científica
+9. Vocabulário (glossário)
+10. Próximo passo (fechamento, com o terceiro CTA para i6decision.ai)
+
+O ritmo claro/escuro é redistribuído para nunca ter duas faixas escuras encostadas: escuras apenas em Método e Camada de abstração.
+
