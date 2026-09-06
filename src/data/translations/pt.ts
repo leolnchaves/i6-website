@@ -44,6 +44,17 @@ export const ptTranslations = {
   'blog.clearFilters': 'Limpar filtros',
   'blog.themeFallback': 'Sem tema',
 
+  // Insights — i6 na Mídia
+  'insights.badge': 'I6 ON MEDIA',
+  'insights.pageTitle': 'i6 na Mídia',
+  'insights.pageSubtitle': 'Entrevistas, menções e publicações do time infinity6 em veículos de imprensa e redes sociais.',
+  'insights.itemsLabel': 'publicações',
+  'insights.empty': 'Em breve, novas publicações',
+  'insights.viewOriginal': 'Ver no site original',
+  'insights.viewOriginalAria': 'Ver no site original (abre em nova aba)',
+  'insights.readOnSite': 'Ler no site',
+  'insights.featured': 'Destaque',
+
   
   // Hero Section
   'hero.infinite': 'Infinitas',

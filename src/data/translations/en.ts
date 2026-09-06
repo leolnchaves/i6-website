@@ -44,6 +44,17 @@ export const enTranslations = {
   'blog.clearFilters': 'Clear filters',
   'blog.themeFallback': 'Uncategorized',
 
+  // Insights — i6 On Media
+  'insights.badge': 'I6 ON MEDIA',
+  'insights.pageTitle': 'i6 On Media',
+  'insights.pageSubtitle': 'Interviews, mentions and posts from the infinity6 team across press outlets and social networks.',
+  'insights.itemsLabel': 'publications',
+  'insights.empty': 'New publications coming soon',
+  'insights.viewOriginal': 'View original',
+  'insights.viewOriginalAria': 'View original (opens in a new tab)',
+  'insights.readOnSite': 'Read on site',
+  'insights.featured': 'Featured',
+
   
   // Hero Section
   'hero.infinite': 'Endless',
