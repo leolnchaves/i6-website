@@ -1,10 +1,8 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 import EmptyState from './story-components/EmptyState';
-import { LazyStoryCard } from './optimized/LazyComponents';
-import InViewSection from './optimized/InViewSection';
-import { useImageCache } from './optimized/useImageCache';
+import StoryCard from './story-components/StoryCard';
 
 interface ModernStoriesGridProps {
   selectedSegment?: string | null;
@@ -12,79 +10,59 @@ interface ModernStoriesGridProps {
 
 const ModernStoriesGrid: React.FC<ModernStoriesGridProps> = memo(({ selectedSegment }) => {
   const { language } = useLanguage();
-  const { preloadImage } = useImageCache({ maxAge: 24 * 60 * 60 * 1000, maxSize: 100 });
   const { stories, loading, error } = useSuccessStoriesMarkdown();
 
   const filteredCards = selectedSegment
     ? stories.filter(story => story.segment === selectedSegment)
     : stories;
 
-  useEffect(() => {
-    filteredCards.forEach(story => preloadImage(story.image));
-  }, [filteredCards, preloadImage]);
-
   if (loading) {
     return (
-      <InViewSection className="py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center py-16">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#F4845F]"></div>
-          </div>
+      <section className="py-16">
+        <div className="container mx-auto flex justify-center px-6">
+          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-primary" />
         </div>
-      </InViewSection>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <InViewSection className="py-8">
-        <div className="container mx-auto px-4">
-          <div className="text-center py-16">
-            <p className="text-white/60">Error loading success stories: {error}</p>
-          </div>
+      <section className="py-16">
+        <div className="container mx-auto px-6 text-center text-sm text-muted-foreground">
+          {error}
         </div>
-      </InViewSection>
+      </section>
     );
   }
 
   if (filteredCards.length === 0) {
-    return <EmptyState selectedSegment={selectedSegment} language={language} />;
+    return <EmptyState selectedSegment={selectedSegment ?? null} language={language} />;
   }
 
   return (
-    <InViewSection className="py-8">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section className="pb-16 pt-4 md:pb-24">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredCards.map((story) => (
-            <LazyStoryCard
+            <StoryCard
               key={story.id}
-              story={{
-                id: story.id,
-                slug: story.slug,
-                industry: story.segment,
-                company_name: story.client,
-                description: story.description,
-                challenge: story.challenge,
-                solution: story.solution,
-                metric1_value: story.metric1.split(' ')[0],
-                metric1_label: story.metric1.split(' ').slice(1).join(' '),
-                metric2_value: story.metric2.split(' ')[0],
-                metric2_label: story.metric2.split(' ').slice(1).join(' '),
-                metric3_value: story.metric3.split(' ')[0],
-                metric3_label: story.metric3.split(' ').slice(1).join(' '),
-                customer_quote: story.title,
-                customer_name: story.customerName,
-                customer_title: story.customerTitle,
-                image_url: story.image,
-                solutions: story.solutions,
-                logo: story.logo,
-              }}
               language={language}
+              story={{
+                slug: story.slug,
+                segment: story.segment,
+                title: story.title,
+                description: story.description,
+                metric1: story.metric1,
+                image: story.image,
+                logo: story.logo,
+                clientAnon: story.clientAnon,
+              }}
             />
           ))}
         </div>
       </div>
-    </InViewSection>
+    </section>
   );
 });
 
