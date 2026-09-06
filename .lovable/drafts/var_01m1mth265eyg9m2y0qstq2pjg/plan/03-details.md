@@ -1,45 +1,34 @@
-## O que a página traz
+## Os nove termos
 
-Nove termos, cada um com definição completa e, quando faz sentido, uma frase de contexto de uso:
+Ordem alfabética dentro de cada idioma, com definição completa e, quando faz sentido, uma frase de contexto de uso:
 
-- MAML
-- Active Learning
-- Topological Loss
-- i6-RecSys-Base.g1
-- Predição comportamental
-- Elasticidade dinâmica
-- Propensão de conversão (recuperado)
-- Aderência contextual (recuperado)
-- Ruptura de gôndola (recuperado)
-
-Ordem alfabética por termo dentro de cada idioma, para funcionar como referência de consulta.
+Active Learning · Aderência contextual · Elasticidade dinâmica · i6-RecSys-Base.g1 · MAML · Predição comportamental · Propensão de conversão · Ruptura de gôndola · Topological Loss
 
 ## Detalhes técnicos
+
+### Proteção no sync
+`scripts/sync-content-from-i6hub.mjs`, bloco "Cleanup .md" (linhas 180–186): hoje remove todo `.md` exceto `README.md`, para qualquer `--type`. Passa a ler o frontmatter de cada arquivo candidato e pular quando houver `site_managed: true`. Leitura simples do bloco `---` inicial com regex, sem dependência nova. Nenhuma outra parte do wipe/regravação muda — arquivos do HUB (sem o campo) continuam sendo apagados e regravados igual.
 
 ### Arquivos novos
 `src/content/docs/glossario-pt.md`, `glossario-en.md`, `glossario-es.md`
 
-Frontmatter seguindo o padrão da pasta:
-- `slug: glossario` (mesmo slug nos três idiomas, como nas demais páginas)
-- `section: glossary`, `section_label`: "Glossário" / "Glossary" / "Glosario"
-- `order: 50` (depois de Recursos, que usa 40/41)
+Frontmatter:
+- `slug: glossario` (mesmo slug nos três idiomas, padrão da pasta)
+- `section: glossary`; `section_label`: "Glossário" / "Glossary" / "Glosario"
+- `order: 50` (após Recursos, que usa 40/41)
 - `description` própria por idioma
-- **sem** `sample: true` — é conteúdo real, não exemplo, então não exibe o aviso de conteúdo de exemplo
-- `content_type` ausente → `article` por padrão
+- `site_managed: true`
+- sem `sample`, sem `content_type` (default `article`)
 
-Corpo: um `##` por termo (gera âncora via `slugifyHeading`, alimenta o índice lateral e a busca full-text já existente), com 1–2 parágrafos de definição.
+Corpo: um `##` por termo → âncora via `slugifyHeading`, índice lateral e busca full-text já existentes funcionam sem alteração. Campo `site_managed` é ignorado por `useDocs.ts` (parser só lê o que conhece), então não afeta a renderização.
 
 ### Arquivo alterado
-`src/components/our-ai/GlossaryCondensed.tsx` — o CTA passa de `localized('/docs')` para `localized('/docs/glossario')`. Nenhuma outra mudança visual.
+`src/components/our-ai/GlossaryCondensed.tsx` — CTA de `localized('/docs')` para `localized('/docs/glossario')`. Nenhuma outra mudança.
 
-### O que não muda
-- `ourAIContent.ts` continua com os 6 termos condensados e o JSON-LD `DefinedTermSet` de /our-ai permanece igual.
-- `useDocs.ts`, `DocsSidebar.tsx`, `Docs.tsx` e o sync do i6 HUB não são tocados — a nova seção aparece sozinha pelo frontmatter.
-- `ScienceHighlights.tsx` segue linkando só para /i6-intelligence.
-
-### Observação sobre o sync
-`scripts/sync-content-from-i6hub.mjs --type=docs` apaga os `.md` da pasta antes de gravar. Se a documentação real for publicada pelo HUB, esta página de glossário precisará existir lá também — vale registrar isso.
+### Não tocar
+`ourAIContent.ts`, o JSON-LD `DefinedTermSet` de /our-ai, `useDocs.ts`, `DocsSidebar.tsx`, `Docs.tsx`, `ScienceHighlights.tsx`.
 
 ### Validação
-- checagem de tipos e build
-- `/pt/docs/glossario`, `/en/docs/glossario`, `/es/docs/glossario` abrindo com índice lateral, busca encontrando "Topological Loss" e "Ruptura", e o link de /our-ai chegando direto na página
+- Simulação da decisão de apagar/manter (só a lógica, sem rodar o sync) contra os arquivos reais da pasta: confirmar que os três `glossario-*.md` são mantidos e que os demais seriam apagados como antes — resultado incluído no relatório.
+- Checagem de tipos e build.
+- `/pt/docs/glossario`, `/en/docs/glossario`, `/es/docs/glossario` com índice lateral; busca encontrando "Topological Loss" e "Ruptura"; link de /our-ai chegando direto na página.
