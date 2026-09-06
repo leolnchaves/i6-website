@@ -1,37 +1,31 @@
 import { memo } from 'react';
-import { ShieldCheck, Lock, KeyRound, Maximize2, EyeOff } from 'lucide-react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
 
 interface Props {
   content: OurAIContent['security'];
 }
 
-const ICONS = [EyeOff, ShieldCheck, Lock, KeyRound, Maximize2];
-
-const SecuritySection = memo(({ content }: Props) => {
-  return (
-    <section className="relative py-14 md:py-20 bg-[#0B1224]">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10 max-w-3xl mx-auto leading-tight">
-          {content.title}
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-lg overflow-hidden">
-          {content.pillars.map((p, idx) => {
-            const Icon = ICONS[idx];
-            return (
-              <div key={p.title} className="bg-[#0B1224] p-6 md:p-7 text-center md:text-left">
-                <Icon size={20} strokeWidth={1.3} className="text-[#F4845F] mx-auto md:mx-0 mb-4" />
-                <h3 className="text-sm font-semibold text-white mb-2">{p.title}</h3>
-                <p className="text-xs text-white/55 leading-relaxed">{p.description}</p>
-              </div>
-            );
-          })}
-        </div>
+/** Segurança e conformidade por design — conteúdo mantido, tema areia. */
+const SecuritySection = memo(({ content }: Props) => (
+  <section className="container mx-auto px-6 py-16 md:py-24">
+    <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">{content.eyebrow}</p>
+        <h2 className="mt-4 text-3xl md:text-[2.4rem] font-bold leading-[1.14] text-foreground">{content.title}</h2>
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">{content.lead}</p>
       </div>
-    </section>
-  );
-});
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        {content.pillars.map((p) => (
+          <div key={p.title} className="sand-card p-6">
+            <h3 className="text-base font-semibold text-foreground">{p.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+));
 
 SecuritySection.displayName = 'SecuritySection';
 export default SecuritySection;
