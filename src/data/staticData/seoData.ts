@@ -100,6 +100,20 @@ export const seoData: SEODataMap = {
         'dynamic pricing strategy',
       ],
     },
+    es: {
+      title: 'Casos de Éxito con IA | infinity6',
+      description: 'Vea cómo las empresas aumentaron ingresos, protegieron margen y redujeron quiebres de stock con la inteligencia predictiva de infinity6.',
+      keywords: [
+        'aumentar ticket promedio',
+        'reducir churn',
+        'previsión de demanda',
+        'mejorar margen',
+        'ROI de campañas',
+        'personalización predictiva',
+        'reducir quiebre de stock',
+        'precio dinámico',
+      ],
+    },
   },
   contact: {
     pt: {
