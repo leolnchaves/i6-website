@@ -22,7 +22,18 @@ const CTAFinal = () => {
       lineHighlight: "shouldn't either.",
       cta: isMobile ? 'Anticipate your\nnext decision' : 'Anticipate your next decision',
     },
-  }[language];
+    es: {
+      line1: 'El mercado no espera.',
+      line2Start: 'Su próxima decisión tampoco ',
+      lineHighlight: 'debería.',
+      cta: isMobile ? 'Anticipe su\npróxima decisión' : 'Anticipe su próxima decisión',
+    },
+  }[language] ?? {
+    line1: "The market doesn't wait.",
+    line2Start: 'Your next decision ',
+    lineHighlight: "shouldn't either.",
+    cta: isMobile ? 'Anticipate your\nnext decision' : 'Anticipate your next decision',
+  };
 
   return (
     <section className="relative py-14 md:py-20 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">

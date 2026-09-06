@@ -87,8 +87,11 @@ const HeaderNovo = () => {
   // legíveis. A checagem usa o path normalizado (sem prefixo de idioma e sem
   // barra final), então /community e /community/ são equivalentes.
   const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
+  // Atenção: /success-stories entra por comparação EXATA. As rotas de detalhe
+  // (/success-stories/<slug>) ficam fora, mantendo o header transparente no
+  // topo para não cobrir a capa em tela cheia.
   const isLightPage =
-    ['/', '/i6-builders', '/community', '/contact', '/i6-blog', '/insights', '/i6-intelligence', '/our-ai'].includes(normalizedPath) ||
+    ['/', '/i6-builders', '/community', '/contact', '/i6-blog', '/insights', '/i6-intelligence', '/our-ai', '/success-stories'].includes(normalizedPath) ||
     normalizedPath === '/docs' ||
     normalizedPath.startsWith('/docs/');
 

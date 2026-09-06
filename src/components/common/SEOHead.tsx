@@ -19,7 +19,8 @@ const pagePath = (page: string): string => {
 
 const SEOHead = ({ page, jsonLd }: SEOHeadProps) => {
   const { language } = useLanguage();
-  const data = seoData[page]?.[toContentLang(language)];
+  // Usa a casca em ES quando existir; caso contrário, cai no par PT/EN.
+  const data = seoData[page]?.[language] ?? seoData[page]?.[toContentLang(language)];
 
   if (!data) return null;
 
