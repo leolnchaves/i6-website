@@ -1,55 +1,56 @@
 <div style="font-family: var(--font-sans);">
-<svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--font-sans)">
+<svg viewBox="0 0 640 300" width="100%" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+  <g stroke="hsl(var(--muted-foreground))" fill="none" stroke-width="1">
+    <rect x="8" y="30" width="150" height="52" rx="8"/>
+    <rect x="8" y="112" width="150" height="52" rx="8"/>
+    <rect x="240" y="16" width="150" height="44" rx="8"/>
+    <rect x="240" y="80" width="150" height="44" rx="8"/>
+    <rect x="240" y="144" width="150" height="44" rx="8"/>
+    <rect x="240" y="208" width="150" height="44" rx="8"/>
+    <rect x="472" y="16" width="160" height="44" rx="8"/>
+    <rect x="472" y="112" width="160" height="44" rx="8"/>
+    <rect x="472" y="208" width="160" height="44" rx="8"/>
+  </g>
+
   <defs>
-    <marker id="chev" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M1,1 L6,4 L1,7" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    <marker id="ch" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    </marker>
+    <marker id="cha" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="hsl(var(--accent-foreground))" stroke-width="1"/>
     </marker>
   </defs>
 
-  <!-- source -->
-  <rect x="8" y="24" width="150" height="64" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="83" y="50" text-anchor="middle" style="font-size:14px;font-weight:480" fill="hsl(var(--foreground))">arquivo .md</text>
-  <text x="83" y="70" text-anchor="middle" style="font-size:12px;font-family:var(--font-mono)" fill="hsl(var(--muted-foreground))">:::tab / @video</text>
+  <g stroke="hsl(var(--muted-foreground))" stroke-width="1" marker-end="url(#ch)">
+    <line x1="158" y1="56" x2="240" y2="38"/>
+    <line x1="158" y1="138" x2="240" y2="102"/>
+    <line x1="158" y1="138" x2="240" y2="166"/>
+    <line x1="158" y1="138" x2="240" y2="230"/>
+    <line x1="390" y1="38" x2="472" y2="38"/>
+    <line x1="390" y1="166" x2="472" y2="134"/>
+    <line x1="390" y1="230" x2="472" y2="230"/>
+  </g>
+  <line x1="390" y1="102" x2="472" y2="134" stroke="hsl(var(--accent-foreground))" stroke-width="1" marker-end="url(#cha)"/>
 
-  <!-- parser -->
-  <rect x="212" y="16" width="180" height="80" rx="8" fill="none" stroke="hsl(var(--accent))"/>
-  <text x="302" y="44" text-anchor="middle" style="font-size:14px;font-weight:480" fill="hsl(var(--accent-foreground))">useDocs.ts</text>
-  <text x="302" y="62" text-anchor="middle" style="font-size:12px" fill="hsl(var(--muted-foreground))">parseTabs + parseBlocks</text>
-  <text x="302" y="80" text-anchor="middle" style="font-size:12px;font-family:var(--font-mono)" fill="hsl(var(--muted-foreground))">page.tabs[]</text>
-  <line x1="160" y1="56" x2="206" y2="56" stroke="hsl(var(--muted-foreground))" marker-end="url(#chev)"/>
+  <g fill="hsl(var(--foreground))" font-size="13" font-weight="480" text-anchor="middle">
+    <text x="83" y="52">pasta research</text>
+    <text x="83" y="134">pasta insights</text>
+    <text x="315" y="43">i6 Research</text>
+    <text x="315" y="107">i6 eBook</text>
+    <text x="315" y="171">i6 on Media · i6 Social</text>
+    <text x="315" y="235">i6 Article · i6 Blog</text>
+    <text x="552" y="43">/i6-intelligence</text>
+    <text x="552" y="139">/insights</text>
+    <text x="552" y="235">/i6-blog</text>
+  </g>
 
-  <!-- query param -->
-  <rect x="440" y="24" width="180" height="64" rx="32" fill="hsl(var(--muted))" stroke="hsl(var(--muted-foreground))"/>
-  <text x="530" y="50" text-anchor="middle" style="font-size:14px;font-weight:480" fill="hsl(var(--foreground))">URL</text>
-  <text x="530" y="70" text-anchor="middle" style="font-size:12px;font-family:var(--font-mono)" fill="hsl(var(--muted-foreground))">?tab=sdk</text>
+  <g fill="hsl(var(--muted-foreground))" font-size="12">
+    <text x="83" y="70" text-anchor="middle">arquivos .md</text>
+    <text x="83" y="152" text-anchor="middle">arquivos .md</text>
+  </g>
 
-  <!-- shell zone -->
-  <rect x="8" y="140" width="612" height="216" rx="8" fill="none" stroke="hsl(var(--border))" stroke-dasharray="4 3"/>
-  <text x="24" y="162" style="font-size:12px" fill="hsl(var(--muted-foreground))">DocsShell — inalterado</text>
-
-  <rect x="40" y="182" width="300" height="150" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="190" y="206" text-anchor="middle" style="font-size:14px;font-weight:480" fill="hsl(var(--foreground))">DocsMarkdown</text>
-  <rect x="60" y="220" width="80" height="24" rx="12" fill="hsl(var(--primary))" stroke="none"/>
-  <text x="100" y="236" text-anchor="middle" style="font-size:12px" fill="hsl(var(--primary-foreground))">API</text>
-  <rect x="150" y="220" width="80" height="24" rx="12" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="190" y="236" text-anchor="middle" style="font-size:12px" fill="hsl(var(--muted-foreground))">SDK</text>
-  <rect x="240" y="220" width="82" height="24" rx="12" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="281" y="236" text-anchor="middle" style="font-size:12px" fill="hsl(var(--muted-foreground))">Servidor</text>
-  <rect x="60" y="256" width="262" height="12" rx="6" fill="none" stroke="hsl(var(--border))"/>
-  <rect x="60" y="276" width="180" height="12" rx="6" fill="none" stroke="hsl(var(--border))"/>
-  <rect x="60" y="298" width="120" height="20" rx="6" fill="hsl(var(--muted))" stroke="hsl(var(--border))"/>
-  <text x="120" y="312" text-anchor="middle" style="font-size:12px" fill="hsl(var(--muted-foreground))">vídeo / PDF</text>
-
-  <rect x="400" y="182" width="200" height="150" rx="8" fill="none" stroke="hsl(var(--muted-foreground))"/>
-  <text x="500" y="206" text-anchor="middle" style="font-size:14px;font-weight:480" fill="hsl(var(--foreground))">DocsToc</text>
-  <text x="500" y="226" text-anchor="middle" style="font-size:12px" fill="hsl(var(--muted-foreground))">só headings da aba ativa</text>
-  <line x1="420" y1="248" x2="420" y2="316" stroke="hsl(var(--border))"/>
-  <rect x="432" y="244" width="120" height="10" rx="5" fill="none" stroke="hsl(var(--border))"/>
-  <rect x="432" y="266" width="90" height="10" rx="5" fill="none" stroke="hsl(var(--border))"/>
-  <rect x="432" y="288" width="110" height="10" rx="5" fill="none" stroke="hsl(var(--border))"/>
-
-  <line x1="302" y1="100" x2="190" y2="176" stroke="hsl(var(--muted-foreground))" marker-end="url(#chev)"/>
-  <line x1="330" y1="100" x2="480" y2="176" stroke="hsl(var(--muted-foreground))" marker-end="url(#chev)"/>
-  <line x1="530" y1="92" x2="530" y2="176" stroke="hsl(var(--muted-foreground))" stroke-dasharray="4 3" marker-end="url(#chev)"/>
+  <circle cx="431" cy="118" r="10" fill="hsl(var(--accent))"/>
+  <text x="431" y="122" font-size="12" text-anchor="middle" fill="hsl(var(--accent-foreground))">1</text>
+  <text x="8" y="284" font-size="12" fill="hsl(var(--muted-foreground))">1 — eBook gravado na pasta de research chega ao Deep Research por dois caminhos e duplica o cartão</text>
 </svg>
 </div>
