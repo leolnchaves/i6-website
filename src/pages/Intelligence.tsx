@@ -458,7 +458,7 @@ const Intelligence = () => {
             </div>
           ) : (
             <div className="grid grid-flow-row-dense grid-cols-1 gap-5 md:grid-cols-2">
-              {filtered.map((p) => (
+              {ordered.map((p) => (
                 <FeedCard
                   key={`${p.kind}-${p.slug}-${p.language}`}
                   item={p}
