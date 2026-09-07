@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, Navigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -33,6 +33,20 @@ const InsightArticle = () => {
   const backLabel = language === 'pt'
     ? (inBlog ? 'Voltar para o Blog' : inIntel ? 'Voltar para i6 Research' : 'Voltar para Insights')
     : (inBlog ? 'Back to Blog' : inIntel ? 'Back to i6 Research' : 'Back to Insights');
+
+  // Desbloqueio inline após o envio do formulário, persistido por peça e
+  // idioma — mesmo padrão já usado nas peças de research.
+  const unlockKey = insight ? `i6_unlocked_insight:${insight.slug}:${insight.language}` : '';
+  const [unlocked, setUnlocked] = useState(false);
+
+  useEffect(() => {
+    if (!unlockKey) return;
+    try {
+      setUnlocked(localStorage.getItem(unlockKey) === '1');
+    } catch {
+      /* localStorage unavailable */
+    }
+  }, [unlockKey]);
 
   // Clean up legacy unlock entries from older versions of the gate flow
   useEffect(() => {
