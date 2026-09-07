@@ -152,13 +152,18 @@ const ALL: Insight[] = Object.entries(modules)
   .map(([path, raw]) => {
     const { data, content } = parseFrontmatter(raw);
     const fm = data as Partial<InsightFrontmatter>;
-    // For items under /content/intelligence/ without an explicit type, infer:
-    // gated/asset_url present -> i6 eBook (Research/eBook), otherwise i6 Article.
-    if (!fm.type && path.includes('/content/intelligence/')) {
-      fm.type = fm.asset_url ? 'i6 eBook' : 'i6 Article';
-    }
+    // Regra estrita: sem `type` válido no frontmatter o item é descartado.
+    // Nenhum tipo é inferido a partir da pasta ou de outros campos.
     if (!fm.title || !fm.language || !fm.type || !fm.date) return null;
-    if (!VALID_TYPES.includes(fm.type as InsightType)) return null;
+    if (!VALID_TYPES.includes(fm.type as InsightType)) {
+      if (import.meta.env.DEV) {
+        const slug = fm.slug || path.split('/').pop()!.replace(/\.md$/, '');
+        console.warn(
+          `[useInsights] item descartado: slug="${slug}", type="${String(fm.type)}" (fora dos tipos válidos)`,
+        );
+      }
+      return null;
+    }
     const rawTags = (fm as { tags?: unknown }).tags;
     const tags: string[] | undefined = Array.isArray(rawTags)
       ? (rawTags as unknown[]).map((t) => String(t)).filter(Boolean)

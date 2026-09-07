@@ -141,7 +141,8 @@ interface FeedItem {
 
 function fromIntelligence(p: IntelligencePiece): FeedItem {
   return {
-    kind: 'i6 Research',
+    // O tipo real declarado no frontmatter (o hook só devolve i6 Research/i6 eBook).
+    kind: (p.type as FeedKind) || 'i6 Research',
     slug: p.slug,
     title: p.title,
     excerpt: p.excerpt,
@@ -323,8 +324,16 @@ const Intelligence = () => {
   };
 
   const feed: FeedItem[] = useMemo(() => {
-    const combined = [...pieces.map(fromIntelligence), ...intelInsights.map(fromInsight)];
-    combined.sort((a, b) => (a.date < b.date ? 1 : -1));
+    // Um `i6 eBook` gravado na pasta de research chega pelas duas fontes.
+    // A peça da pasta de research tem precedência (é a que traz corpo de artigo).
+    const byKey = new Map<string, FeedItem>();
+    for (const item of [...pieces.map(fromIntelligence), ...intelInsights.map(fromInsight)]) {
+      const key = `${item.slug}-${item.language}`;
+      if (!byKey.has(key)) byKey.set(key, item);
+    }
+    const combined = Array.from(byKey.values());
+    // Desempate estável por slug quando duas peças têm a mesma data.
+    combined.sort((a, b) => (a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? 1 : -1));
     return combined;
   }, [pieces, intelInsights]);
 
