@@ -176,9 +176,12 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
           });
         }
 
-        if (kind === 'research' && mode === 'gate' && onUnlock) {
+        // Qualquer tipo com corpo pode ser liberado inline: a página informa
+        // isso passando `onUnlock`. A chave é separada por tipo de conteúdo.
+        if (mode === 'gate' && onUnlock) {
+          const prefix = kind === 'research' ? 'i6_unlocked_research' : 'i6_unlocked_insight';
           try {
-            localStorage.setItem(`i6_unlocked_research:${slug}:${language}`, '1');
+            localStorage.setItem(`${prefix}:${slug}:${language}`, '1');
           } catch {
             /* localStorage unavailable */
           }
