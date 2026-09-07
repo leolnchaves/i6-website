@@ -355,6 +355,14 @@ const Intelligence = () => {
   // Apenas o featured mais recente ganha a linha inteira (feed já ordenado por data).
   const heroSlug = filtered.find((p) => p.featured)?.slug ?? null;
 
+  // O destaque abre a lista mesmo quando existem peças mais recentes.
+  const ordered = useMemo(() => {
+    if (!heroSlug) return filtered;
+    const idx = filtered.findIndex((p) => p.slug === heroSlug);
+    if (idx <= 0) return filtered;
+    return [filtered[idx], ...filtered.slice(0, idx), ...filtered.slice(idx + 1)];
+  }, [filtered, heroSlug]);
+
   const kinds: FeedKind[] = ['i6 Research', 'i6 eBook'];
   const hasFilters = kind !== null || theme !== null;
 
