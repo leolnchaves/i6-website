@@ -156,7 +156,8 @@ const ALL: Insight[] = Object.entries(modules)
     // Nenhum tipo é inferido a partir da pasta ou de outros campos.
     if (!fm.title || !fm.language || !fm.type || !fm.date) return null;
     if (!VALID_TYPES.includes(fm.type as InsightType)) {
-      if (import.meta.env.DEV) {
+      // `i6 Research` é tratado por useIntelligence — não é erro de conteúdo.
+      if (import.meta.env.DEV && fm.type !== ('i6 Research' as InsightType)) {
         const slug = fm.slug || path.split('/').pop()!.replace(/\.md$/, '');
         console.warn(
           `[useInsights] item descartado: slug="${slug}", type="${String(fm.type)}" (fora dos tipos válidos)`,
