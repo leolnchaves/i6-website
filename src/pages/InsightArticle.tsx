@@ -190,6 +190,9 @@ const InsightArticle = () => {
             slug={insight.slug}
             id={insight.id}
             pdfUrl={pdfUrl}
+            // Sem corpo de artigo não há o que liberar: fica só a confirmação
+            // de envio por e-mail.
+            onUnlock={hasBody ? () => setUnlocked(true) : undefined}
           />
         ) : (
           <>
