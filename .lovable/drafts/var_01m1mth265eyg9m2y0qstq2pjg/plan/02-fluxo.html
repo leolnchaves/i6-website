@@ -1,0 +1,70 @@
+<div style="font-family: var(--font-sans);">
+<svg viewBox="0 0 640 330" width="100%" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
+  <defs>
+    <marker id="c1" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    </marker>
+    <marker id="c2" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="hsl(var(--accent-foreground))" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <text x="8" y="16" font-size="12" fill="hsl(var(--muted-foreground))">hoje</text>
+  <g stroke="hsl(var(--muted-foreground))" fill="none" stroke-width="1">
+    <rect x="8" y="28" width="126" height="46" rx="8"/>
+    <rect x="196" y="28" width="150" height="46" rx="8"/>
+    <rect x="408" y="28" width="150" height="46" rx="8"/>
+    <rect x="196" y="96" width="150" height="46" rx="8"/>
+    <rect x="408" y="96" width="150" height="46" rx="8"/>
+  </g>
+  <g stroke="hsl(var(--muted-foreground))" stroke-width="1" marker-end="url(#c1)">
+    <line x1="134" y1="51" x2="196" y2="51"/>
+    <line x1="346" y1="51" x2="408" y2="51"/>
+    <line x1="134" y1="51" x2="196" y2="119"/>
+    <line x1="346" y1="119" x2="408" y2="119"/>
+  </g>
+  <g fill="hsl(var(--foreground))" font-size="13" font-weight="480" text-anchor="middle">
+    <text x="71" y="56">peça</text>
+    <text x="271" y="56">aberta com PDF</text>
+    <text x="483" y="49">só cartão do PDF</text>
+    <text x="271" y="124">bloqueada (eBook/blog)</text>
+    <text x="483" y="117">envia e nada abre</text>
+  </g>
+  <g fill="hsl(var(--muted-foreground))" font-size="12" text-anchor="middle">
+    <text x="483" y="66">artigo escondido</text>
+    <text x="483" y="134">pede dados de novo</text>
+  </g>
+
+  <line x1="8" y1="170" x2="632" y2="170" stroke="hsl(var(--border))" stroke-width="1"/>
+
+  <text x="8" y="192" font-size="12" fill="hsl(var(--muted-foreground))">depois</text>
+  <g stroke="hsl(var(--muted-foreground))" fill="none" stroke-width="1">
+    <rect x="8" y="204" width="126" height="46" rx="8"/>
+    <rect x="196" y="204" width="150" height="46" rx="8"/>
+    <rect x="196" y="272" width="150" height="46" rx="8"/>
+  </g>
+  <g stroke="hsl(var(--accent-foreground))" fill="none" stroke-width="1">
+    <rect x="408" y="204" width="150" height="46" rx="8"/>
+    <rect x="408" y="272" width="150" height="46" rx="8"/>
+  </g>
+  <g stroke="hsl(var(--muted-foreground))" stroke-width="1" marker-end="url(#c1)">
+    <line x1="134" y1="227" x2="196" y2="227"/>
+    <line x1="134" y1="227" x2="196" y2="295"/>
+  </g>
+  <g stroke="hsl(var(--accent-foreground))" stroke-width="1" marker-end="url(#c2)">
+    <line x1="346" y1="227" x2="408" y2="227"/>
+    <line x1="346" y1="295" x2="408" y2="295"/>
+  </g>
+  <g fill="hsl(var(--foreground))" font-size="13" font-weight="480" text-anchor="middle">
+    <text x="71" y="232">peça</text>
+    <text x="271" y="232">aberta com PDF</text>
+    <text x="271" y="300">bloqueada (qualquer tipo)</text>
+    <text x="483" y="225">artigo + bloco do PDF</text>
+    <text x="483" y="293">envia e libera o texto</text>
+  </g>
+  <g fill="hsl(var(--muted-foreground))" font-size="12" text-anchor="middle">
+    <text x="483" y="242">CTA e relacionados voltam</text>
+    <text x="483" y="310">acesso lembrado no navegador</text>
+  </g>
+</svg>
+</div>
