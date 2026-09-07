@@ -116,7 +116,8 @@ const InsightArticle = () => {
   const cover = resolveCoverImage(insight.cover_image);
   const canonicalBase = isBlogType ? 'i6-blog' : isIntelType ? 'i6-intelligence' : 'insights';
   const url = `${BASE_URL}/${language}/${canonicalBase}/${insight.slug}`;
-  const isLocked = insight.gated === true;
+  const hasBody = insight.content.trim() !== '';
+  const isLocked = insight.gated === true && !unlocked;
   const pdfUrl = insight.asset_url
     ? (insight.asset_url.startsWith('http')
         ? insight.asset_url
