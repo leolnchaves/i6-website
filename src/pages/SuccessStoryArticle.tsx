@@ -257,8 +257,8 @@ const SuccessStoryArticle = () => {
                           >
                             {s.label}
                           </span>
-                        )
-                      )}
+                        );
+                      })}
                     </div>
                   );
                 })()}
