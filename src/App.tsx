@@ -11,7 +11,6 @@ import { detectPreferredLang, isLang } from "./utils/localizedPath";
 const ScrollToTop = () => { useScrollToTop(); return null; };
 
 import DarkLayout from "./components/DarkLayout";
-import Solutions from "./pages/Solutions";
 import SuccessStories from "./pages/SuccessStories";
 import SuccessStoryArticle from "./pages/SuccessStoryArticle";
 import Contact from "./pages/Contact";
@@ -26,7 +25,6 @@ import Intelligence from "./pages/Intelligence";
 import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
 import Blog from "./pages/Blog";
 import OurAI from "./pages/OurAI";
-import TransformationLanding from "./pages/TransformationLanding";
 import Kiosk from "./pages/Kiosk";
 import KioskMetrics from "./pages/KioskMetrics";
 import GoLanding from "./pages/GoLanding";
@@ -70,6 +68,22 @@ const RootLangRedirect = () => {
  * a partir da URL antiga (sem navegação anterior dentro do app).
  */
 const LegacySlugRedirect = ({ to }: { to: string }) => {
+  const location = useLocation();
+  const lang = isLang(location.pathname.split('/')[1]) ? location.pathname.split('/')[1] : detectPreferredLang();
+  return <Navigate to={`/${lang}${to}${location.search}${location.hash}`} replace />;
+};
+
+/**
+ * /solutions e /solutions/:slug foram descontinuadas: qualquer acesso
+ * (inclusive vindo de busca) vai para a Home no idioma da URL.
+ */
+const HomeRedirect = () => {
+  const location = useLocation();
+  const lang = isLang(location.pathname.split('/')[1]) ? location.pathname.split('/')[1] : detectPreferredLang();
+  return <Navigate to={`/${lang}`} replace />;
+};
+
+const LegacySlugRedirectUnused = ({ to }: { to: string }) => {
   const location = useLocation();
   const lang = isLang(location.pathname.split('/')[1]) ? location.pathname.split('/')[1] : detectPreferredLang();
   return <Navigate to={`/${lang}${to}${location.search}${location.hash}`} replace />;
