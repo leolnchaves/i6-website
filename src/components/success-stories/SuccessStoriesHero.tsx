@@ -30,7 +30,7 @@ const SuccessStoriesHero = memo(({ children, count }: SuccessStoriesHeroProps) =
           <h1 className="text-4xl md:text-6xl font-bold leading-[1.05] text-foreground">
             {hero.title}
             <br />
-            <span className="text-primary">{hero.subtitle}</span>
+            <span className="text-primary whitespace-nowrap">{hero.subtitle}</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">
             {hero.description}
