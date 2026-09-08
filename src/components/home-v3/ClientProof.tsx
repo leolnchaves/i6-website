@@ -15,13 +15,13 @@ const ClientProof = () => {
   if (loading || partners.length === 0) return null;
 
   const renderGroup = (keyPrefix: string) => (
-    <div className="flex items-center gap-16 shrink-0" aria-hidden={keyPrefix === 'b' ? true : undefined}>
+    <div className="flex items-center gap-12 shrink-0" aria-hidden={keyPrefix === 'b' ? true : undefined}>
       {partners.map((p, i) => (
         <img
           key={`${keyPrefix}-${p.name}-${i}`}
           src={`${import.meta.env.BASE_URL}${p.logo.startsWith('/') ? p.logo.slice(1) : p.logo}`}
           alt={p.name}
-          className="h-7 sm:h-9 w-auto max-w-[120px] object-contain opacity-45 hover:opacity-90 transition-opacity shrink-0"
+          className="h-6 sm:h-8 w-auto max-w-[120px] object-contain opacity-45 hover:opacity-90 transition-opacity shrink-0"
           loading="lazy"
         />
       ))}
@@ -29,15 +29,15 @@ const ClientProof = () => {
   );
 
   return (
-    <section className="py-12 border-y border-border bg-secondary/40">
-      <p className="text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground mb-8 px-6">
+    <section className="py-8 border-y border-border bg-secondary/40">
+      <p className="text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground mb-5 px-6">
         {title}
       </p>
       <div className="relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[hsl(var(--background))] to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[hsl(var(--background))] to-transparent z-10" />
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[hsl(var(--background))] to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[hsl(var(--background))] to-transparent z-10" />
         <div
-          className="flex items-center gap-16 w-max animate-marquee"
+          className="flex items-center gap-12 w-max animate-marquee"
           style={{ animationDuration: '38s' }}
         >
           {renderGroup('a')}
