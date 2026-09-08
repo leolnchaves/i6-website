@@ -236,15 +236,18 @@ const SuccessStoryArticle = () => {
                     'w-full min-h-[44px] px-4 py-2 rounded-full border text-sm flex items-center justify-center text-center transition-colors';
                   return (
                     <div className={`grid gap-3 ${gridColsFor(count)} ${count === 1 ? 'max-w-sm mx-auto' : ''} justify-items-center`}>
-                      {story.solutions.map((s, i) =>
-                        s.slug ? (
-                          <Link
+                      {story.solutions.map((s, i) => {
+                        const productUrl = getDecisionSuiteProductUrl(s.slug);
+                        return productUrl ? (
+                          <a
                             key={i}
-                            to={localized(`/solutions#territory-${s.slug}`)}
+                            href={productUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className={`${chipBase} border-primary/30 bg-primary/10 text-foreground/80 hover:border-primary/60 hover:bg-primary/20 hover:text-foreground`}
                           >
                             {s.label}
-                          </Link>
+                          </a>
                         ) : (
                           <span
                             key={i}
