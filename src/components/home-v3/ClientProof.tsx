@@ -29,7 +29,7 @@ const ClientProof = () => {
   );
 
   return (
-    <section className="py-5 border-y border-border bg-secondary/40">
+    <section className="py-4 border-y border-border bg-secondary/40">
       <p className="text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground mb-3 px-6">
         {title}
       </p>
