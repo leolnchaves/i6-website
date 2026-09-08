@@ -18,6 +18,10 @@ Título: **Inteligência para diferenciar e escalar**
 Descrição: **Incorpore a inteligência proprietária da infinity6 ao seu produto, crie experiências únicas e escale o resultado que ele entrega**  
 CTA: **Construir com i6 Builder**
 
+**Ações comuns abaixo dos dois cartões**  
+Contato: **Falar com especialista**  
+Rolagem: **Saiba mais**
+
 ## Inglês
 
 **Texto abaixo do título**
@@ -35,6 +39,10 @@ Intent line: **How to build on intelligence**
 Title: **Intelligence to differentiate and scale**  
 Description: **Embed infinity6 proprietary intelligence into your product, create unique experiences and scale the results it delivers**  
 CTA: **Build with i6 Builder**
+
+**Shared actions below both cards**  
+Contact: **Talk to an expert**  
+Scroll: **Learn more**
 
 ## Espanhol
 
@@ -54,17 +62,33 @@ Título: **Inteligencia para diferenciar y escalar**
 Descripción: **Incorpora la inteligencia propietaria de infinity6 a tu producto, crea experiencias únicas y escala los resultados que ofrece**  
 CTA: **Construir con i6 Builder**
 
+**Acciones comunes debajo de las dos tarjetas**  
+Contacto: **Hablar con un especialista**  
+Desplazamiento: **Saber más**
+
+## Quadro abaixo dos logos
+
+Título: **Duas formas de transformar inteligência em vantagem**
+
+- **i6 Decision Suite — use a inteligência**: decisões prontas, contratação direta e rápida adoção para transformar resultados do negócio
+- **i6 Builder Platform — construa sobre a inteligência**: motores e capacidades para diferenciar produtos, criar novas experiências e escalar o valor entregue
+
+Este quadro será o destino de “Saiba mais”. Ele começa somente depois da seção de logos, sem alterar a faixa existente.
+
 ## Comportamento visual
 
 - Mesmo peso e mesma altura para os dois cartões, sem sugerir que uma frente é secundária
 - Terracota sólido na ação da Decision Suite; contorno terracota na ação Builder, mantendo a linguagem atual
 - Cartão inteiro não será clicável: somente a ação, para evitar destinos acidentais
 - No celular, Decision Suite aparece primeiro e Builder logo abaixo
-- Nenhuma alteração fora de `HeroSuite`
+- As ações “Falar com especialista” e “Saiba mais” ficam abaixo dos dois cartões, sem pertencer a apenas uma frente
+- A seção de logos permanece intacta e visível na primeira tela de desktop
+- O novo quadro comparativo começa logo depois dos logos e recebe a âncora de “Saiba mais”
 
 ## Validação após aprovação
 
 - Conferir PT, EN e ES em desktop e celular
 - Confirmar que o título e o painel animado não mudaram de posição ou comportamento
-- Confirmar os dois destinos e a preservação da linha de provas
+- Confirmar os quatro destinos: Decision Suite, Builder, contato e rolagem para o quadro
+- Confirmar a preservação da linha de provas e da seção de logos
 - Verificar que não há sobreposição, corte de texto ou rolagem horizontal

@@ -7,6 +7,7 @@
 - Painel animado “Próxima melhor decisão”
 - Fundo, grade, cores, tipografia e animações atuais
 - Linha de provas: motores proprietários, modelo fundacional e explicabilidade
+- Seção de logos, sem mudança de conteúdo, desenho ou animação
 
 ## Nova composição
 
@@ -18,3 +19,14 @@ Cada cartão responde imediatamente a uma pergunta diferente:
 2. **i6 Builder Platform** — como construir sobre essa inteligência para diferenciar um produto
 
 O cartão da Decision Suite abre `https://i6decision.ai` em nova aba. O cartão da Builder Platform navega internamente para `/i6-builders` no idioma atual.
+
+Abaixo dos cartões permanecem duas ações comuns:
+
+- **Falar com especialista** leva ao contato no idioma atual
+- **Saiba mais** rola suavemente até o novo quadro comparativo logo abaixo da seção de logos
+
+## Primeira tela e seção de logos
+
+A seção de logos continua imediatamente após o conteúdo principal e permanece visível na primeira tela de desktop, sem scroll. Para acomodar os dois cartões sem empurrá-la para baixo, a região nova será compacta: descrições curtas, cartões baixos e ações comuns em uma única linha. A seção de logos não será comprimida nem redesenhada.
+
+No celular, a prioridade será a legibilidade: cartões e ações podem empilhar.
