@@ -1,18 +1,18 @@
-# Manter título do hero de /success-stories em uma única linha
+# Manter subtítulo do hero de /success-stories em uma única linha
 
 ## O que será feito
-Remover a quebra de linha (`<br />`) entre `hero.title` e `hero.subtitle` no componente `SuccessStoriesHero.tsx`, mantendo ambos os textos inalterados e o span do subtitle inline.
+Adicionar `whitespace-nowrap` ao `<span>` que envolve `hero.subtitle` no componente `SuccessStoriesHero.tsx`, garantindo que o texto "Resultados comprovados." não quebre em mais de uma linha. O `<br />` entre título e subtítulo permanece, e todos os textos continuam inalterados.
 
 ## Arquivo alterado
 - `src/components/success-stories/SuccessStoriesHero.tsx`
 
 ## Mudança exata
-- Deletar a tag `<br />` na linha 32.
-- O `hero.subtitle` continua envolvido por `<span className="text-primary">` e renderizado dentro do mesmo `<h1>`.
+- Alterar a classe do span do subtitle de `className="text-primary"` para `className="text-primary whitespace-nowrap"`.
+- Manter `<br />`, `hero.title`, `hero.description`, eyebrow e contador exatamente como estão.
 
 ## Validação
-- Verificar visualmente PT/EN/ES para garantir que o título e subtítulo fiquem na mesma linha sem truncamento em viewports desktop e mobile.
+- Verificar visualmente PT/EN/ES para garantir que o subtítulo fique inteiro na segunda linha, sem truncamento ou overflow, em viewports desktop e mobile.
 - Build/typecheck após a edição.
 
 ## Fora de escopo
-Nenhuma alteração de texto, dados, traduções ou outros componentes.
+Nenhuma alteração de texto, dados, traduções, quebra de linha entre título/subtítulo ou outros componentes.
