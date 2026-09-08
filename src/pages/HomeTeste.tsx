@@ -2,8 +2,7 @@ import SEOHead from '@/components/common/SEOHead';
 import HeroSuite from '@/components/home-v3/HeroSuite';
 import SolutionBands from '@/components/home-v3/SolutionBands';
 import ClientProof from '@/components/home-v3/ClientProof';
-import SuiteIntro from '@/components/home-v3/product/SuiteIntro';
-import ProductSuite from '@/components/home-v3/product/ProductSuite';
+import DecisionSuiteSection from '@/components/home-v3/product/DecisionSuiteSection';
 import BuilderSection from '@/components/home-v3/BuilderSection';
 import WhyInfinity6 from '@/components/home-v3/WhyInfinity6';
 
@@ -23,8 +22,7 @@ const HomeTeste = () => (
           <ClientProof />
         </div>
       </div>
-      <SuiteIntro />
-      <ProductSuite />
+      <DecisionSuiteSection />
       <BuilderSection />
       <WhyInfinity6 />
       
