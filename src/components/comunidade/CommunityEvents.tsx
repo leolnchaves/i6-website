@@ -26,7 +26,7 @@ const CommunityEvents = () => {
     <section className="relative overflow-hidden bg-secondary/60 py-20 md:py-28">
       <div ref={ref} className={`container mx-auto px-6 ${revealClass(revealed)}`}>
         <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary">{copy.eyebrow}</p>
-        <h2 className="mt-4 max-w-2xl text-3xl md:text-[2.8rem] font-bold leading-[1.08] text-foreground">{copy.title}</h2>
+        <h2 className="mt-4 max-w-2xl text-3xl md:text-[2.8rem] font-bold leading-[1.08] text-foreground whitespace-nowrap">{copy.title}</h2>
         <p className="mt-4 max-w-xl text-sm md:text-base leading-relaxed text-muted-foreground">{copy.sub}</p>
 
         <ol className="mt-14 space-y-14 md:space-y-16">
