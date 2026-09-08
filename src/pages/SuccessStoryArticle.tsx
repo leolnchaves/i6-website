@@ -9,6 +9,7 @@ import { useSuccessStoriesMarkdown } from '@/hooks/useSuccessStoriesMarkdown';
 import CTAFinal from '@/components/hometeste/CTAFinal';
 import StoryCard from '@/components/success-stories/story-components/StoryCard';
 import { successStoriesData } from '@/data/staticData/successStoriesData';
+import { getDecisionSuiteProductUrl } from '@/data/decisionSuiteProducts';
 
 const normalizeMd = (raw?: string) => {
   if (!raw) return '';
