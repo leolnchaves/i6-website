@@ -148,7 +148,7 @@ const HeroSuite = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-6 pt-24 pb-3 md:pt-24 md:pb-0">
+      <div className="relative container mx-auto px-6 pt-28 pb-0 md:pt-28 md:pb-0">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-start">
           <div>
             <span className="animate-sand-rise inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -156,7 +156,7 @@ const HeroSuite = () => {
             </span>
 
             <h1
-              className="animate-sand-rise mt-6 text-[2.1rem] leading-[1.08] sm:text-5xl lg:text-[3.6rem] font-bold text-foreground"
+              className="animate-sand-rise mt-5 text-[2.1rem] leading-[1.08] sm:text-5xl lg:text-[3.6rem] font-bold text-foreground"
               style={{ animationDelay: '.08s' }}
             >
               {copy.titleA}
@@ -168,13 +168,13 @@ const HeroSuite = () => {
             </h1>
 
             <p
-              className="animate-sand-rise mt-4 max-w-xl text-sm leading-normal text-muted-foreground"
+              className="animate-sand-rise mt-3 max-w-xl text-sm leading-normal text-muted-foreground"
               style={{ animationDelay: '.16s' }}
             >
               {copy.sub}
             </p>
 
-            <ul className="animate-sand-rise mt-4 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.2s' }}>
+            <ul className="animate-sand-rise mt-3 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.2s' }}>
               {copy.proof.map((p) => (
                 <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
