@@ -7,9 +7,9 @@ import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
 import { suiteCopy, SUITE_URL } from './suiteContent';
 
 const ctaCopyByLang = {
-  pt: { suiteCta: 'Contratar a i6 Decision Suite', contact: 'Falar com especialista' },
-  en: { suiteCta: 'Get the i6 Decision Suite', contact: 'Talk to an expert' },
-  es: { suiteCta: 'Contratar la i6 Decision Suite', contact: 'Hablar con un especialista' },
+  pt: { suiteCta: 'Conhecer a i6 Decision Suite', contact: 'Falar com especialista' },
+  en: { suiteCta: 'Discover the i6 Decision Suite', contact: 'Talk to an expert' },
+  es: { suiteCta: 'Conocer la i6 Decision Suite', contact: 'Hablar con un especialista' },
 };
 
 const DecisionSuiteSection = () => {
