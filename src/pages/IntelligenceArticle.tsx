@@ -118,17 +118,33 @@ const IntelligenceArticle = () => {
 
   const articleExtras = (
     <div className="mt-16 pt-8 border-t border-white/10 space-y-6">
-      {/* Cross-links: related product (Solutions anchor) + related success story */}
+      {/* Cross-links: produto do Decision Suite + case relacionado */}
       {(piece.related_product || piece.related_story_slug) && (
         <div className="flex flex-wrap gap-3">
-          {piece.related_product && (
-            <Link
-              to={localized(`/solutions#${piece.related_product}`)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F4845F]/40 text-[#F4845F] hover:bg-[#F4845F]/10 text-xs font-semibold uppercase tracking-wider transition-colors"
-            >
-              {language === 'pt' ? 'Ver a solução relacionada' : 'See the related solution'}
-            </Link>
-          )}
+          {piece.related_product && (() => {
+            const chip =
+              'inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold uppercase tracking-wider transition-colors';
+            const label =
+              language === 'pt'
+                ? 'Ver a solução relacionada'
+                : language === 'es'
+                  ? 'Ver la solución relacionada'
+                  : 'See the related solution';
+            const url = getDecisionSuiteProductUrl(piece.related_product);
+            // Slug desconhecido ou produto sem página publicada: texto sem link.
+            return url ? (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${chip} border-[#F4845F]/40 text-[#F4845F] hover:bg-[#F4845F]/10`}
+              >
+                {label}
+              </a>
+            ) : (
+              <span className={`${chip} border-white/15 text-white/50`}>{label}</span>
+            );
+          })()}
           {piece.related_story_slug && (
             <Link
               to={localized(`/success-stories/${piece.related_story_slug}`)}
