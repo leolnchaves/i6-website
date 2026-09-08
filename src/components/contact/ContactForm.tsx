@@ -120,6 +120,7 @@ const ContactForm = memo(({
       message: "Message",
       messageMinChar: "(minimum 10 characters)",
       messagePlaceholder: "Describe how we can help your business...",
+      messagePlaceholderCommunity: "Tell us a bit about yourself...",
       messageDescriptionDefault: "Describe your goal, challenge or question. The more context you provide, the better we can guide the conversation.",
       messageDescriptionCommunity: "Tell us a bit about your background, why you want to join the community, and what you're hoping to find here.",
       messageDescriptionBuilders: "Describe your company, the product you already have or want to build using i6 Builder's models, and a quick overview of your team's technical capability. Also tell us what you're hoping to achieve by applying Infinity6's models to your product.",
