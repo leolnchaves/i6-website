@@ -14,6 +14,9 @@ import {
   Repeat,
   PackageSearch,
   Flag,
+  Blocks,
+  Gauge,
+  ArrowDown,
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
@@ -26,9 +29,17 @@ const copyByLang = {
     titleB: 'decisão preditiva',
     titleC: 'mais avançada',
     titleD: 'da América Latina',
-    sub: 'Motores de IA proprietários e modelo fundacional próprio, treinados em bilhões de eventos reais de negócio — engenharia de ponta que entrega a decisão pronta, com explicabilidade nativa.',
-    ctaPrimary: 'Conheça o i6 Decision Suite',
-    ctaSecondary: 'Falar com especialista',
+    sub: 'A mesma inteligência proprietária, em dois caminhos: decisões prontas para transformar o negócio agora ou uma base de inteligência para diferenciar seu produto e escalar resultados',
+    suiteIntent: 'O que a inteligência resolve no seu negócio',
+    suiteTitle: 'Inteligência pronta para decidir',
+    suiteDescription: 'Plataforma pronta para uso que transforma sinais em decisões e acelera resultados',
+    suiteCta: 'Contratar a Decision Suite',
+    builderIntent: 'Como construir sobre a inteligência',
+    builderTitle: 'Inteligência para diferenciar e escalar',
+    builderDescription: 'Capacidades proprietárias para criar experiências únicas e ampliar o valor do seu produto',
+    builderCta: 'Construir com i6 Builder',
+    ctaContact: 'Falar com especialista',
+    ctaLearn: 'Saiba mais',
     proof: ['Motores proprietários de IA', 'Modelo fundacional próprio', 'Explicabilidade nativa (XAI)'],
     panelTitle: 'Próxima melhor decisão',
     panelNow: 'agora',
@@ -54,9 +65,17 @@ const copyByLang = {
     titleB: 'predictive decision',
     titleC: 'platform',
     titleD: 'in Latin America',
-    sub: 'Proprietary AI engines and our own foundation model, trained on billions of real business events — high-end engineering that delivers the decision, with native explainability.',
-    ctaPrimary: 'Explore the i6 Decision Suite',
-    ctaSecondary: 'Talk to an expert',
+    sub: 'The same proprietary intelligence, two paths: ready-to-use decisions that transform the business now, or an intelligence foundation to differentiate your product and scale results',
+    suiteIntent: 'What intelligence solves for your business',
+    suiteTitle: 'Intelligence ready to decide',
+    suiteDescription: 'A ready-to-use platform that turns signals into decisions and accelerates results',
+    suiteCta: 'Get the Decision Suite',
+    builderIntent: 'How to build on intelligence',
+    builderTitle: 'Intelligence to differentiate and scale',
+    builderDescription: 'Proprietary capabilities to create unique experiences and expand your product value',
+    builderCta: 'Build with i6 Builder',
+    ctaContact: 'Talk to an expert',
+    ctaLearn: 'Learn more',
     proof: ['Proprietary AI engines', 'In-house foundation model', 'Native explainability (XAI)'],
     panelTitle: 'Next best decision',
     panelNow: 'now',
@@ -82,9 +101,17 @@ const copyByLang = {
     titleB: 'decisión predictiva',
     titleC: 'más avanzada',
     titleD: 'de América Latina',
-    sub: 'Motores de IA propietarios y modelo fundacional propio, entrenados con miles de millones de eventos reales de negocio — ingeniería de punta que entrega la decisión lista, con explicabilidad nativa.',
-    ctaPrimary: 'Conoce el i6 Decision Suite',
-    ctaSecondary: 'Hablar con un especialista',
+    sub: 'La misma inteligencia propietaria, en dos caminos: decisiones listas para transformar el negocio ahora o una base de inteligencia para diferenciar tu producto y escalar resultados',
+    suiteIntent: 'Lo que la inteligencia resuelve en tu negocio',
+    suiteTitle: 'Inteligencia lista para decidir',
+    suiteDescription: 'Una plataforma lista para usar que convierte señales en decisiones y acelera resultados',
+    suiteCta: 'Contratar Decision Suite',
+    builderIntent: 'Cómo construir sobre la inteligencia',
+    builderTitle: 'Inteligencia para diferenciar y escalar',
+    builderDescription: 'Capacidades propietarias para crear experiencias únicas y ampliar el valor de tu producto',
+    builderCta: 'Construir con i6 Builder',
+    ctaContact: 'Hablar con un especialista',
+    ctaLearn: 'Saber más',
     proof: ['Motores propietarios de IA', 'Modelo fundacional propio', 'Explicabilidad nativa (XAI)'],
     panelTitle: 'Próxima mejor decisión',
     panelNow: 'ahora',
@@ -158,7 +185,7 @@ const HeroSuite = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-6 pt-28 pb-16 md:pt-36 md:pb-24">
+      <div className="relative container mx-auto px-6 pt-28 pb-12 md:pt-36 md:pb-10">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
           <div>
             <span className="animate-sand-rise inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -178,31 +205,51 @@ const HeroSuite = () => {
             </h1>
 
             <p
-              className="animate-sand-rise mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed"
+              className="animate-sand-rise mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
               style={{ animationDelay: '.16s' }}
             >
               {copy.sub}
             </p>
 
-            <div className="animate-sand-rise mt-9 flex flex-wrap gap-3" style={{ animationDelay: '.24s' }}>
-              <a
-                href={SUITE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
-              >
-                {copy.ctaPrimary}
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </a>
-              <Link
-                to={localized('/contact')}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 hover:shadow-[var(--sand-shadow-soft)] transition-all"
-              >
-                {copy.ctaSecondary}
-              </Link>
+            <div className="animate-sand-rise mt-5 grid gap-3 sm:grid-cols-2" style={{ animationDelay: '.24s' }}>
+              <article className="flex min-h-[154px] flex-col rounded-[var(--radius)] border border-primary/35 bg-card p-4 shadow-[var(--sand-shadow-soft)]">
+                <div className="flex items-center gap-2 text-primary">
+                  <Gauge size={15} aria-hidden />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.13em]">{copy.suiteIntent}</p>
+                </div>
+                <h2 className="mt-2 text-sm font-semibold leading-snug text-foreground">{copy.suiteTitle}</h2>
+                <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{copy.suiteDescription}</p>
+                <a href={SUITE_URL} target="_blank" rel="noopener noreferrer" className="group mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-semibold text-primary">
+                  {copy.suiteCta}
+                  <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" aria-hidden />
+                </a>
+              </article>
+
+              <article className="flex min-h-[154px] flex-col rounded-[var(--radius)] border border-border bg-card p-4 shadow-[var(--sand-shadow-soft)]">
+                <div className="flex items-center gap-2 text-primary">
+                  <Blocks size={15} aria-hidden />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.13em]">{copy.builderIntent}</p>
+                </div>
+                <h2 className="mt-2 text-sm font-semibold leading-snug text-foreground">{copy.builderTitle}</h2>
+                <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{copy.builderDescription}</p>
+                <Link to={localized('/i6-builders')} className="group mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-semibold text-primary">
+                  {copy.builderCta}
+                  <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" aria-hidden />
+                </Link>
+              </article>
             </div>
 
-            <ul className="animate-sand-rise mt-8 flex flex-wrap gap-x-6 gap-y-2" style={{ animationDelay: '.32s' }}>
+            <div className="animate-sand-rise mt-4 flex flex-wrap items-center gap-2" style={{ animationDelay: '.3s' }}>
+              <Link to={localized('/contact')} className="inline-flex items-center gap-2 rounded-[var(--radius)] border border-border bg-card px-4 py-2.5 text-xs font-semibold text-foreground transition-all hover:border-primary/40 hover:shadow-[var(--sand-shadow-soft)]">
+                {copy.ctaContact}
+              </Link>
+              <a href="#intelligence-paths" className="group inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2.5 text-xs font-semibold text-primary transition-colors hover:bg-primary/5">
+                {copy.ctaLearn}
+                <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" aria-hidden />
+              </a>
+            </div>
+
+            <ul className="animate-sand-rise mt-4 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.32s' }}>
               {copy.proof.map((p) => (
                 <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
