@@ -11,6 +11,7 @@ import { useIntelligencePiece, resolveIntelligenceCover } from '@/hooks/useIntel
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import LeadGateForm from '@/components/insights/LeadGateForm';
 import ArticleCTAForm from '@/components/insights/ArticleCTAForm';
+import { getDecisionSuiteProductUrl } from '@/data/decisionSuiteProducts';
 
 
 const BASE_URL = 'https://infinity6.ai';
