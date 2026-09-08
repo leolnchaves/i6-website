@@ -244,9 +244,11 @@ const ContactForm = memo(({
 
   const emailLabel = variant === 'community' ? text.emailSimple : text.email;
   const messageDescription =
-    variant === 'community' ? undefined
+    variant === 'community' ? text.messageDescriptionCommunity
     : variant === 'builders' ? text.messageDescriptionBuilders
     : text.messageDescriptionDefault;
+  const messagePlaceholder =
+    variant === 'community' ? text.messagePlaceholderCommunity : text.messagePlaceholder;
 
   return (
     <Card className="sand-card h-full flex flex-col">
