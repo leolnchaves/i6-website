@@ -1,12 +1,21 @@
 import { useState } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { pickLang } from '@/utils/localizedPath';
+import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
+import { Link } from 'react-router-dom';
+
+const ctaCopyByLang = {
+  pt: { suiteCta: 'Contratar a i6 Decision Suite', contact: 'Falar com especialista' },
+  en: { suiteCta: 'Get the i6 Decision Suite', contact: 'Talk to an expert' },
+  es: { suiteCta: 'Contratar la i6 Decision Suite', contact: 'Hablar con un especialista' },
+};
 import { suiteCopy, SUITE_URL } from './suiteContent';
 
 const ProductSuite = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, suiteCopy).products;
+  const localized = useLocalizedPath();
+  const contactCopy = pickLang(language, ctaCopyByLang);
   const [activeId, setActiveId] = useState(copy.items[0].id);
 
   const active = copy.items.find((p) => p.id === activeId) ?? copy.items[0];
@@ -103,16 +112,22 @@ const ProductSuite = () => {
         </article>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-10 flex flex-wrap items-center gap-3">
         <a
           href={SUITE_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
         >
-          {copy.cta}
+          {contactCopy.suiteCta}
           <ArrowUpRight size={16} />
         </a>
+        <Link
+          to={localized('/contact')}
+          className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary/40"
+        >
+          {contactCopy.contact}
+        </Link>
       </div>
     </section>
   );
