@@ -100,8 +100,9 @@ const LocalizedRoutes = () => {
     <Routes>
       <Route element={<DarkLayout />}>
         <Route index element={<HomeTeste />} />
-        <Route path="solutions" element={<Solutions />} />
-        <Route path="solutions/:slug" element={<TransformationLanding />} />
+        {/* Rotas descontinuadas: redirecionam para a Home do idioma. */}
+        <Route path="solutions" element={<HomeRedirect />} />
+        <Route path="solutions/:slug" element={<HomeRedirect />} />
         <Route path="our-ai" element={<OurAI />} />
         <Route path="success-stories" element={<SuccessStories />} />
         <Route path="success-stories/:slug" element={<SuccessStoryArticle />} />
