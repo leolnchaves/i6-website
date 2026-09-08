@@ -21,7 +21,7 @@ const HomeTeste = () => (
         </div>
         <div className="flex flex-col">
           <SolutionBands />
-          <div className="h-1 md:h-1.5" aria-hidden />
+          <div className="h-2 md:h-2.5" aria-hidden />
           <ClientProof />
         </div>
       </div>

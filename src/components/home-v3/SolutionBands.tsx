@@ -60,7 +60,7 @@ const SolutionBands = () => {
     <section className="border-y border-border">
       <div className="grid md:grid-cols-2">
         {bands.map((band) => (
-          <div key={band.label} className={`${band.tone} px-6 py-0 md:px-10 md:py-0 xl:py-3 border-b border-border md:border-b-0`}>
+          <div key={band.label} className={`${band.tone} px-6 py-0 md:px-10 md:py-0 xl:py-2 border-b border-border md:border-b-0`}>
             <div className="flex items-center gap-2 text-muted-foreground">
               <band.icon size={15} className="text-primary" aria-hidden />
               <p className="text-[10px] font-bold uppercase tracking-[0.2em]">{band.label}</p>
