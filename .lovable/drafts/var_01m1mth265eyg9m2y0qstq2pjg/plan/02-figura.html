@@ -1,0 +1,61 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans);">
+  <style>
+    :root {
+      --background: 36 43% 98%;
+      --foreground: 24 10% 27%;
+      --muted-foreground: 27 8% 50%;
+      --border: 33 25% 92%;
+      --muted: 34 27% 95%;
+      --secondary: 34 27% 95%;
+      --accent: 31 33% 93%;
+      --primary: 19 60% 56%;
+    }
+    text { fill: hsl(var(--foreground)); }
+    .label { font-size: 12px; font-weight: 500; }
+    .note { font-size: 10px; fill: hsl(var(--muted-foreground)); }
+    .zone { fill: none; stroke: hsl(var(--border)); stroke-dasharray: 4 3; stroke-width: 1; rx: 8; }
+    .band { fill: hsl(var(--secondary) / 0.75); stroke: hsl(var(--border)); stroke-width: 1; rx: 0; }
+    .panel { fill: hsl(var(--background)); stroke: hsl(var(--border)); stroke-width: 1; rx: 8; }
+    .proof { fill: hsl(var(--secondary) / 0.4); stroke: hsl(var(--border)); stroke-width: 1; rx: 0; }
+    .marker { fill: hsl(var(--primary)); }
+  </style>
+
+  <!-- Hero area -->
+  <rect x="20" y="20" width="600" height="240" class="zone" />
+  <text x="40" y="42" class="label">Hero + painel animado</text>
+
+  <!-- Eyebrow -->
+  <rect x="40" y="52" width="120" height="14" rx="7" fill="hsl(var(--background))" stroke="hsl(var(--border))" />
+  <text x="44" y="62" class="note">AI DECISION...</text>
+
+  <!-- Title -->
+  <rect x="40" y="76" width="260" height="18" rx="4" fill="hsl(var(--accent) / 0.5)" />
+  <rect x="40" y="100" width="200" height="18" rx="4" fill="hsl(var(--accent) / 0.5)" />
+  <rect x="40" y="124" width="240" height="18" rx="4" fill="hsl(var(--accent) / 0.5)" />
+
+  <!-- Panel -->
+  <rect x="360" y="52" width="240" height="190" class="panel" />
+  <text x="374" y="68" class="note">Próxima melhor decisão</text>
+  <rect x="374" y="80" width="210" height="44" rx="6" fill="hsl(var(--secondary) / 0.6)" stroke="hsl(var(--border))" />
+  <rect x="374" y="132" width="210" height="44" rx="6" fill="hsl(var(--secondary) / 0.6)" stroke="hsl(var(--border))" />
+  <rect x="374" y="184" width="210" height="44" rx="6" fill="hsl(var(--secondary) / 0.6)" stroke="hsl(var(--border))" />
+
+  <!-- Spacer arrows -->
+  <line x1="40" y1="150" x2="40" y2="178" stroke="hsl(var(--primary))" stroke-width="1.5" stroke-dasharray="3 2" />
+  <circle cx="40" cy="178" r="2" class="marker" />
+  <text x="48" y="172" class="note">proof points</text>
+
+  <!-- Solution bands -->
+  <rect x="20" y="270" width="600" height="70" class="band" />
+  <line x1="320" y1="270" x2="320" y2="340" stroke="hsl(var(--border))" stroke-width="1" />
+  <text x="40" y="292" class="label">i6 Decision Suite</text>
+  <text x="360" y="292" class="label">i6 Builder Platform</text>
+  <rect x="40" y="302" width="160" height="10" rx="2" fill="hsl(var(--accent) / 0.6)" />
+  <rect x="360" y="302" width="160" height="10" rx="2" fill="hsl(var(--accent) / 0.6)" />
+  <text x="40" y="328" class="note" fill="hsl(var(--primary))">Saiba mais ↓</text>
+  <text x="360" y="328" class="note" fill="hsl(var(--primary))">Saiba mais ↓</text>
+
+  <!-- Client proof -->
+  <rect x="20" y="350" width="600" height="40" class="proof" />
+  <text x="40" y="370" class="note">Líderes que transformam antecipação em vantagem</text>
+</svg>
