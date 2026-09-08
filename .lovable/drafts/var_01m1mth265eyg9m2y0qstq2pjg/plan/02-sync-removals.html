@@ -1,0 +1,39 @@
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans); font-size: 12px; line-height: 1.2;">
+  <style>
+    text { fill: hsl(var(--foreground)); font-weight: 400; }
+    .label { font-weight: 600; font-size: 14px; }
+    .muted { fill: hsl(var(--muted-foreground)); }
+    .box { stroke: hsl(var(--border)); stroke-width: 1; fill: hsl(var(--card)); rx: 8; }
+    .code { font-family: var(--font-mono); font-size: 11px; fill: hsl(var(--card-foreground)); }
+    .strike { text-decoration: line-through; fill: hsl(var(--muted-foreground)); }
+    .accent { fill: hsl(var(--accent)); font-weight: 600; }
+  </style>
+
+  <!-- Background frame -->
+  <rect x="10" y="10" width="620" height="300" class="box" fill="none"/>
+
+  <!-- Title -->
+  <text x="320" y="36" text-anchor="middle" class="label">Remoções no sync script</text>
+  <text x="320" y="54" text-anchor="middle" class="muted">Apenas o bloco landings sai; as demais opções permanecem</text>
+
+  <!-- File label -->
+  <rect x="40" y="70" width="560" height="180" class="box" />
+  <text x="60" y="92" class="code accent">scripts/sync-content-from-i6hub.mjs</text>
+
+  <!-- Strike 1: usage comment -->
+  <text x="60" y="115" class="code strike">node scripts/sync-content-from-i6hub.mjs --type=landings</text>
+  <text x="60" y="130" class="code">node scripts/sync-content-from-i6hub.mjs --type=insights</text>
+
+  <!-- Strike 2: validation array -->
+  <text x="60" y="155" class="code strike">!['insights', 'research', 'landings', 'stories', 'docs']</text>
+  <text x="60" y="170" class="code">!['insights', 'research', 'stories', 'docs']</text>
+
+  <!-- Strike 3: CONFIG block -->
+  <text x="60" y="195" class="code strike">landings: { envFeed: ..., mdDir: 'src/content/landings', ... }</text>
+
+  <!-- Strike 4: fmLandings -->
+  <text x="60" y="220" class="code strike">function fmLandings(it) { ... }</text>
+
+  <!-- Remaining options -->
+  <text x="60" y="245" class="code">insights · research · stories · docs</text>
+</svg>
