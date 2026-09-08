@@ -211,6 +211,15 @@ const HeroSuite = () => {
               {copy.sub}
             </p>
 
+            <ul className="animate-sand-rise mt-4 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.2s' }}>
+              {copy.proof.map((p) => (
+                <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+
             <div className="animate-sand-rise mt-4 grid gap-3 sm:grid-cols-2" style={{ animationDelay: '.24s' }}>
               <article className="flex min-h-[128px] flex-col rounded-[var(--radius)] border border-primary/35 bg-card p-3.5 shadow-[var(--sand-shadow-soft)]">
                 <div className="flex items-center gap-2 text-primary">
@@ -248,15 +257,6 @@ const HeroSuite = () => {
                 <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" aria-hidden />
               </a>
             </div>
-
-            <ul className="animate-sand-rise mt-2 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.32s' }}>
-              {copy.proof.map((p) => (
-                <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  {p}
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Decision panel */}
