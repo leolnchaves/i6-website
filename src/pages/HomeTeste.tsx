@@ -15,8 +15,12 @@ const HomeTeste = () => (
   <>
     <SEOHead page="home" />
     <div className="theme-sand">
-      <HeroSuite />
-      <ClientProof />
+      <div className="flex flex-col md:min-h-screen">
+        <HeroSuite />
+        <div className="md:mt-auto">
+          <ClientProof />
+        </div>
+      </div>
       <IntelligencePaths />
       <SuiteIntro />
       <ProductSuite />
