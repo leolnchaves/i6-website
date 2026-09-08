@@ -350,7 +350,7 @@ const ContactForm = memo(({
               <Textarea
                 id="message"
                 aria-describedby={messageDescription ? "message-description" : undefined}
-                placeholder={text.messagePlaceholder}
+                placeholder={messagePlaceholder}
                 {...register("message", { required: text.errors.messageRequired, minLength: { value: 10, message: text.errors.messageMinLength } })}
                 className={`w-full bg-secondary/60 border rounded-[calc(var(--radius)-4px)] text-foreground placeholder:text-muted-foreground/70 focus:ring-2 focus:ring-ring/30 focus:border-primary/40 resize-none ${
                   compact ? '' : 'flex-1'
