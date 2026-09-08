@@ -19,7 +19,6 @@ const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
 const PUBLIC_CONTENT = resolve('public/content');
 const INTELLIGENCE_DIR = resolve('src/content/intelligence');
-const LANDINGS_DIR = resolve('src/content/landings');
 const INSIGHTS_DIR = resolve('src/content/insights');
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
@@ -116,11 +115,6 @@ function mdToHtml(md) {
   return out.join('\n');
 }
 
-function loadSolutionsSeo(lang) {
-  const file = join(PUBLIC_CONTENT, `solutions-seo-${lang}.md`);
-  if (!existsSync(file)) return '';
-  return mdToHtml(readFileSync(file, 'utf8'));
-}
 
 
 // ---- HTML transformation ----
@@ -215,7 +209,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'solutions', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
   { name: 'i6Signal', anchor: 'i6signal', description: { pt: 'Camada conversacional preditiva sobre os motores i6Previsio, i6RecSys e i6ElasticPrice', en: 'Predictive conversational layer over the i6Previsio, i6RecSys and i6ElasticPrice engines' } },
@@ -232,26 +226,6 @@ for (const lang of ['en', 'pt']) {
     const path = route === '' ? `/${lang}` : `/${lang}/${route}`;
     let body = '';
     let jsonLd;
-    if (route === 'solutions') {
-      body = loadSolutionsSeo(lang);
-      jsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'ItemList',
-        name: lang === 'pt' ? 'Produtos de IA preditiva da infinity6' : 'infinity6 predictive AI products',
-        itemListElement: PRODUCTS.map((p, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          item: {
-            '@type': 'Product',
-            name: p.name,
-            description: p.description[lang],
-            brand: { '@type': 'Brand', name: 'infinity6' },
-            category: 'AI software',
-            url: `${BASE_URL}/${lang}/solutions#${p.anchor}`,
-          },
-        })),
-      };
-    }
     if (route === 'our-ai') {
       const ourAILead = lang === 'pt'
         ? 'A infinity6 opera quatro motores proprietários de IA aplicada: i6 RecSys (recomendação), i6 Previsio (previsão de demanda), i6 ElasticPrice (precificação dinâmica) e i6 Signal (camada conversacional preditiva). O modelo fundacional i6-RecSys-Base.g1 combina MAML, Active Learning e Topological Loss, com pré-treino em 1,45 bilhão de registros de bases públicas/adquiridas (15% bancário, 45% e-commerce, 20% telecom, 20% atacado/varejo).'
@@ -557,88 +531,6 @@ if (existsSync(INTELLIGENCE_DIR)) {
   }
 }
 
-// ---- Transformation landings (Phase 10) — driven by markdown in src/content/landings/ ----
-if (existsSync(LANDINGS_DIR)) {
-  const files = readdirSync(LANDINGS_DIR).filter((f) => f.endsWith('.md'));
-  for (const file of files) {
-    const raw = readFileSync(join(LANDINGS_DIR, file), 'utf8');
-    const { data: fm, content } = parseFrontmatter(raw);
-    if (!fm.title || !fm.language || !fm.slug) continue;
-    const lang = fm.language;
-    const path = `/${lang}/solutions/${fm.slug}`;
-    const title = `${fm.title} | infinity6`;
-    const description = fm.description || '';
-    const faq = extractFAQ(content);
-
-    // crawlable body: hero + sections (H2s) flattened
-    const heroBlock = `<p><strong>${escapeHtml(fm.hero_kicker || '')}</strong></p><h2>${escapeHtml(fm.hero_headline || fm.title)}</h2><p>${escapeHtml(fm.hero_sub || description)}</p>`;
-    const bodyHtml = `${heroBlock}${mdToHtml(content)}`;
-
-    const stats = [];
-    const resMatch = content.match(/##\s+(?:Results|Resultados)\s*\n([\s\S]*?)(?:\n##\s+|$)/i);
-    if (resMatch) {
-      for (const line of resMatch[1].split(/\r?\n/)) {
-        const m = line.match(/^\s*-\s+\*\*([^*]+)\*\*\s*(.+)$/);
-        if (m) {
-          const parts = m[2].split('|').map((s) => s.trim());
-          stats.push({ value: m[1].trim(), label: parts[0] || '', source: parts[1] });
-        }
-      }
-    }
-
-    const serviceLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: fm.title,
-      description,
-      url: `${BASE_URL}${path}`,
-      serviceType: fm.hero_kicker || fm.title,
-      provider: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
-      areaServed: ['BR', 'LatAm'],
-      ...(stats.length > 0 ? {
-        hasOfferCatalog: {
-          '@type': 'OfferCatalog',
-          name: lang === 'pt' ? 'Resultados mensuráveis' : 'Measurable results',
-          itemListElement: stats.map((s) => ({ '@type': 'QuantitativeValue', value: s.value, unitText: s.label })),
-        },
-      } : {}),
-    };
-    const breadcrumbLd = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/${lang}` },
-        { '@type': 'ListItem', position: 2, name: lang === 'pt' ? 'Soluções' : 'Solutions', item: `${BASE_URL}/${lang}/solutions` },
-        { '@type': 'ListItem', position: 3, name: fm.title, item: `${BASE_URL}${path}` },
-      ],
-    };
-
-    const html = buildStub(template, {
-      lang, path, title, description, h1: fm.hero_headline || fm.title,
-      body: bodyHtml,
-      jsonLd: { '@context': 'https://schema.org', '@graph': [serviceLd, breadcrumbLd] },
-    });
-    writeStub(path, html);
-    count++;
-
-    if (faq.length > 0) {
-      const faqLd = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faq.map((f) => ({
-          '@type': 'Question', name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
-      };
-      const outFile = join(DIST, `${path.replace(/^\//, '')}.html`);
-      if (existsSync(outFile)) {
-        let written = readFileSync(outFile, 'utf8');
-        written = written.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(faqLd)}</script>\n  </head>`);
-        writeFileSync(outFile, written, 'utf8');
-      }
-    }
-  }
-}
 
 console.log(`✅ Prerendered ${count} SEO stubs into dist/`);
 
