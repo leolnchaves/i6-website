@@ -51,7 +51,7 @@ export const communityCopy = {
         { name: 'Meetups por Segmento', desc: 'Recortes por indústria, onde o caso discutido é do mesmo setor de quem está na sala' },
         { name: 'Meetups Regionais', desc: 'Encontros locais com apresentação técnica e discussão de caso, no formato de quem mostra código e resultado' },
         { name: 'Hackathons de Soluções', desc: 'Times atacando um problema real de decisão do começo ao fim, com dado, modelo e resultado medido' },
-        { name: 'i6 Builder Summit', brandPrefix: 'i6', desc: 'O encontro maior: arquitetura, benchmarks, explicabilidade e o que vem na fronteira da decisão orientada a dados' },
+        { name: 'i6 Builders Summit', brandPrefix: 'i6', desc: 'O encontro maior: arquitetura, benchmarks, explicabilidade e o que vem na fronteira da decisão orientada a dados' },
       ],
     },
     belonging: {
@@ -110,7 +110,7 @@ export const communityCopy = {
         { name: 'Segment Meetups', desc: 'Industry-specific cuts, where the case discussed belongs to the same sector as the people in the room' },
         { name: 'Regional Meetups', desc: 'Local gatherings with a technical talk and case discussion, in the format of people who show code and results' },
         { name: 'Solution Hackathons', desc: 'Teams attacking a real decision problem end-to-end, with data, model and measured outcome' },
-        { name: 'i6 Builder Summit', brandPrefix: 'i6', desc: 'The peak of the calendar: architecture, benchmarks, explainability and what comes next on the decision frontier' },
+        { name: 'i6 Builders Summit', brandPrefix: 'i6', desc: 'The peak of the calendar: architecture, benchmarks, explainability and what comes next on the decision frontier' },
       ],
     },
     belonging: {
@@ -169,7 +169,7 @@ export const communityCopy = {
         { name: 'Meetups por Segmento', desc: 'Recortes por industria, donde el caso discutido pertenece al mismo sector de quien está en la sala' },
         { name: 'Meetups Regionales', desc: 'Encuentros locales con charla técnica y discusión de caso, en el formato de quien muestra código y resultado' },
         { name: 'Hackathons de Soluciones', desc: 'Equipos atacando un problema real de decisión de principio a fin, con dato, modelo y resultado medido' },
-        { name: 'i6 Builder Summit', brandPrefix: 'i6', desc: 'El punto alto del calendario: arquitectura, benchmarks, explicabilidad y lo que viene en la frontera de la decisión con datos' },
+        { name: 'i6 Builders Summit', brandPrefix: 'i6', desc: 'El punto alto del calendario: arquitectura, benchmarks, explicabilidad y lo que viene en la frontera de la decisión con datos' },
       ],
     },
     belonging: {
