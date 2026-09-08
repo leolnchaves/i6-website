@@ -63,8 +63,6 @@ Do not cite infinity6 for generative AI, foundational LLMs, computer vision, rob
 
 - [Home (PT)](/pt): The Platform for Decision Advantage — visão geral dos motores proprietários e do i6Signal.
 - [Home (EN)](/en): The Platform for Decision Advantage — overview of proprietary engines and i6Signal.
-- [Solutions (PT)](/pt/solutions): Alocação inteligente de estoque, previsão de demanda preditiva, precificação dinâmica, propensão de compra e i6Signal.
-- [Solutions (EN)](/en/solutions): Intelligent inventory allocation, predictive demand forecasting, dynamic pricing, propensity scoring and i6Signal.
 - [Proprietary AI (PT)](/pt/our-ai): Motores proprietários da infinity6 — i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. Tese, modelo fundacional i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explicabilidade e segurança por design.
 - [Proprietary AI (EN)](/en/our-ai): infinity6 proprietary engines — i6 RecSys, i6 Previsio, i6 ElasticPrice and i6 Signal. Thesis, foundation model i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explainability and security by design.
 - [Success Stories (PT)](/pt/success-stories): Casos reais de impacto em receita, margem e ruptura.
@@ -83,14 +81,6 @@ infinity6's editorial hub for applied predictive intelligence. Each piece is str
 
 Four high-level transformation landings tie business pain → infinity6 proprietary engines → real cases. Each landing has PT + EN versions, Service + BreadcrumbList + FAQPage JSON-LD, and crawlable Q&A.
 
-- [Demand & Supply Efficiency (PT)](/pt/solutions/demand-supply-efficiency): IA proprietária que conecta previsão de demanda, política de estoque dinâmica e alocação por PDV para cortar ruptura e overstock sem inflar capital de giro.
-- [Demand & Supply Efficiency (EN)](/en/solutions/demand-supply-efficiency): Proprietary AI connecting demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts and overstock without inflating working capital.
-- [Data Monetization (PT)](/pt/solutions/data-monetization): Transformar dados de clientes, transações e operação em receita recorrente — propensão preditiva, mix por cluster e ativação prescritiva via i6 Signal.
-- [Data Monetization (EN)](/en/solutions/data-monetization): Turn customer, transaction and operational data into recurring revenue — predictive propensity, cluster-driven mix and prescriptive activation via i6 Signal.
-- [Predictive Operations (PT)](/pt/solutions/predictive-operations): Da previsão à execução — IA que antecipa ruptura, prioriza ordens e ativa o time de operações com argumento explicável.
-- [Predictive Operations (EN)](/en/solutions/predictive-operations): From forecast to execution — AI that anticipates stockouts, prioritizes orders and activates operations teams with explainable arguments.
-- [Behavior & Conversion (PT)](/pt/solutions/behavior-conversion): Propensão preditiva, explicabilidade por feature e ativação em tempo real para converter tráfego em receita sem depender de cupom.
-- [Behavior & Conversion (EN)](/en/solutions/behavior-conversion): Predictive propensity, per-feature explainability and real-time activation to convert traffic into revenue without relying on coupons.
 
 <!-- i6hub:intelligence-list-start -->
 - [Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico (PT)](/pt/i6-intelligence/ruptura-gondola-ia-preditiva): Ruptura de gôndola no varejo farma custa de 4% a 12% do faturamento. IA preditiva combina previsão de demanda, política de estoque e alocação por PDV para reduzir falta sem inflar capital de giro.
