@@ -41,36 +41,6 @@ export const seoData: SEODataMap = {
       ],
     },
   },
-  solutions: {
-    pt: {
-      title: 'Soluções de IA Preditiva | infinity6',
-      description: 'Recomendação em tempo real, preço dinâmico, forecasting adaptativo. Soluções de IA que aumentam ticket médio, reduzem churn e otimizam margem.',
-      keywords: [
-        'motor de recomendação B2B',
-        'dynamic pricing varejo',
-        'forecast preditivo',
-        'precificação inteligente',
-        'otimização de sortimento',
-        'elasticidade de preço',
-        'IA para supply chain',
-        'propensão de compra por cliente',
-      ],
-    },
-    en: {
-      title: 'Predictive AI Solutions | infinity6',
-      description: 'Real-time recommendations, dynamic pricing, adaptive forecasting. AI solutions that increase average ticket, reduce churn and optimize margins.',
-      keywords: [
-        'B2B recommendation engine',
-        'retail dynamic pricing',
-        'predictive forecasting',
-        'intelligent pricing',
-        'assortment optimization',
-        'price elasticity',
-        'AI for supply chain',
-        'customer purchase propensity',
-      ],
-    },
-  },
   successStories: {
     pt: {
       title: 'Cases de Sucesso com IA | infinity6',

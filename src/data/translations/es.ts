@@ -6,13 +6,7 @@
 export const esTranslations = {
   // Header
   'header.home': 'Inicio',
-  'header.solutions': 'Soluciones',
-  'header.solutions.aiSolutions': 'AI Solutions',
   'header.solutions.proprietaryAi': 'IA Propietaria',
-  'header.solutions.demandSupply': 'Demanda y Supply',
-  'header.solutions.dataMonetization': 'Monetización de Datos',
-  'header.solutions.predictiveOps': 'Operaciones Predictivas',
-  'header.solutions.behaviorConversion': 'Comportamiento y Conversión',
   'header.successStories': 'Casos de Éxito',
   'header.community': 'Comunidad',
   'header.insights': 'Insights',
