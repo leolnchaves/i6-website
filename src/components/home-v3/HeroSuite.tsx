@@ -185,7 +185,7 @@ const HeroSuite = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-6 pt-28 pb-12 md:pt-36 md:pb-10">
+      <div className="relative container mx-auto px-6 pt-28 pb-10 md:pt-36 md:pb-0">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
           <div>
             <span className="animate-sand-rise inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -205,41 +205,41 @@ const HeroSuite = () => {
             </h1>
 
             <p
-              className="animate-sand-rise mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
+              className="animate-sand-rise mt-4 max-w-xl text-sm leading-normal text-muted-foreground"
               style={{ animationDelay: '.16s' }}
             >
               {copy.sub}
             </p>
 
-            <div className="animate-sand-rise mt-5 grid gap-3 sm:grid-cols-2" style={{ animationDelay: '.24s' }}>
-              <article className="flex min-h-[154px] flex-col rounded-[var(--radius)] border border-primary/35 bg-card p-4 shadow-[var(--sand-shadow-soft)]">
+            <div className="animate-sand-rise mt-4 grid gap-3 sm:grid-cols-2" style={{ animationDelay: '.24s' }}>
+              <article className="flex min-h-[128px] flex-col rounded-[var(--radius)] border border-primary/35 bg-card p-3.5 shadow-[var(--sand-shadow-soft)]">
                 <div className="flex items-center gap-2 text-primary">
                   <Gauge size={15} aria-hidden />
                   <p className="text-[9px] font-bold uppercase tracking-[0.13em]">{copy.suiteIntent}</p>
                 </div>
-                <h2 className="mt-2 text-sm font-semibold leading-snug text-foreground">{copy.suiteTitle}</h2>
-                <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{copy.suiteDescription}</p>
-                <a href={SUITE_URL} target="_blank" rel="noopener noreferrer" className="group mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-semibold text-primary">
+                <h2 className="mt-1.5 text-sm font-semibold leading-snug text-foreground">{copy.suiteTitle}</h2>
+                <p className="mt-1 text-[10px] leading-normal text-muted-foreground">{copy.suiteDescription}</p>
+                <a href={SUITE_URL} target="_blank" rel="noopener noreferrer" className="group mt-auto inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-primary">
                   {copy.suiteCta}
                   <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" aria-hidden />
                 </a>
               </article>
 
-              <article className="flex min-h-[154px] flex-col rounded-[var(--radius)] border border-border bg-card p-4 shadow-[var(--sand-shadow-soft)]">
+              <article className="flex min-h-[128px] flex-col rounded-[var(--radius)] border border-border bg-card p-3.5 shadow-[var(--sand-shadow-soft)]">
                 <div className="flex items-center gap-2 text-primary">
                   <Blocks size={15} aria-hidden />
                   <p className="text-[9px] font-bold uppercase tracking-[0.13em]">{copy.builderIntent}</p>
                 </div>
-                <h2 className="mt-2 text-sm font-semibold leading-snug text-foreground">{copy.builderTitle}</h2>
-                <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{copy.builderDescription}</p>
-                <Link to={localized('/i6-builders')} className="group mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-semibold text-primary">
+                <h2 className="mt-1.5 text-sm font-semibold leading-snug text-foreground">{copy.builderTitle}</h2>
+                <p className="mt-1 text-[10px] leading-normal text-muted-foreground">{copy.builderDescription}</p>
+                <Link to={localized('/i6-builders')} className="group mt-auto inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-primary">
                   {copy.builderCta}
                   <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" aria-hidden />
                 </Link>
               </article>
             </div>
 
-            <div className="animate-sand-rise mt-4 flex flex-wrap items-center gap-2" style={{ animationDelay: '.3s' }}>
+            <div className="animate-sand-rise mt-3 flex flex-wrap items-center gap-2" style={{ animationDelay: '.3s' }}>
               <Link to={localized('/contact')} className="inline-flex items-center gap-2 rounded-[var(--radius)] border border-border bg-card px-4 py-2.5 text-xs font-semibold text-foreground transition-all hover:border-primary/40 hover:shadow-[var(--sand-shadow-soft)]">
                 {copy.ctaContact}
               </Link>
@@ -249,7 +249,7 @@ const HeroSuite = () => {
               </a>
             </div>
 
-            <ul className="animate-sand-rise mt-4 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.32s' }}>
+            <ul className="animate-sand-rise mt-3 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.32s' }}>
               {copy.proof.map((p) => (
                 <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
