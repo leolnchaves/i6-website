@@ -83,11 +83,6 @@ const HomeRedirect = () => {
   return <Navigate to={`/${lang}`} replace />;
 };
 
-const LegacySlugRedirectUnused = ({ to }: { to: string }) => {
-  const location = useLocation();
-  const lang = isLang(location.pathname.split('/')[1]) ? location.pathname.split('/')[1] : detectPreferredLang();
-  return <Navigate to={`/${lang}${to}${location.search}${location.hash}`} replace />;
-};
 
 /** Validates :lang param; if invalid, redirects to detected language */
 const LocalizedRoutes = () => {
