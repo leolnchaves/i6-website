@@ -239,17 +239,17 @@ const HeroSuite = () => {
               </article>
             </div>
 
-            <div className="animate-sand-rise mt-3 flex flex-wrap items-center gap-2" style={{ animationDelay: '.3s' }}>
-              <Link to={localized('/contact')} className="inline-flex items-center gap-2 rounded-[var(--radius)] border border-border bg-card px-4 py-2.5 text-xs font-semibold text-foreground transition-all hover:border-primary/40 hover:shadow-[var(--sand-shadow-soft)]">
+            <div className="animate-sand-rise mt-2 flex flex-wrap items-center gap-2" style={{ animationDelay: '.3s' }}>
+              <Link to={localized('/contact')} className="inline-flex items-center gap-2 rounded-[var(--radius)] border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground transition-all hover:border-primary/40 hover:shadow-[var(--sand-shadow-soft)]">
                 {copy.ctaContact}
               </Link>
-              <a href="#intelligence-paths" className="group inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2.5 text-xs font-semibold text-primary transition-colors hover:bg-primary/5">
+              <a href="#intelligence-paths" className="group inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary/5">
                 {copy.ctaLearn}
                 <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" aria-hidden />
               </a>
             </div>
 
-            <ul className="animate-sand-rise mt-3 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.32s' }}>
+            <ul className="animate-sand-rise mt-2 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.32s' }}>
               {copy.proof.map((p) => (
                 <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
