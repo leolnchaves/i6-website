@@ -6,7 +6,7 @@
  * Usage:
  *   node scripts/sync-content-from-i6hub.mjs --type=insights
  *   node scripts/sync-content-from-i6hub.mjs --type=research
- *   node scripts/sync-content-from-i6hub.mjs --type=landings
+ *   node scripts/sync-content-from-i6hub.mjs --type=docs
  *   node scripts/sync-content-from-i6hub.mjs --type=stories
  *
  * Per item, image strategy (cover and, for stories, logo):
@@ -34,8 +34,8 @@ const args = Object.fromEntries(
   }),
 );
 const TYPE = args.type;
-if (!TYPE || !['insights', 'research', 'landings', 'stories', 'docs'].includes(TYPE)) {
-  console.error('Usage: --type=insights|research|landings|stories|docs');
+if (!TYPE || !['insights', 'research', 'stories', 'docs'].includes(TYPE)) {
+  console.error('Usage: --type=insights|research|stories|docs');
   process.exit(2);
 }
 
@@ -58,14 +58,6 @@ const CONFIG = {
     imgWebPath: '/lovable-uploads/intelligence',
     fileName: (it) => `${it.slug}-${it.language}.md`,
     frontmatter: fmResearch,
-  },
-  landings: {
-    envFeed: 'I6HUB_FEED_URL_LANDINGS',
-    mdDir:   'src/content/landings',
-    imgDir:  null, // landings hoje não materializam imagens
-    imgWebPath: null,
-    fileName: (it) => `${it.slug}-${it.language}.md`,
-    frontmatter: fmLandings,
   },
   docs: {
     envFeed: 'I6HUB_FEED_URL_DOCS',
@@ -410,27 +402,6 @@ function fmResearch(it, { coverLocal }) {
   ].filter(Boolean).join('\n');
 }
 
-function fmLandings(it) {
-  const cover = it.cover_image ?? null;
-  return [
-    '---',
-    `title: ${yaml(it.title ?? '')}`,
-    it.description ? `description: ${yaml(it.description)}` : null,
-    `slug: ${it.slug}`,
-    `language: ${it.language}`,
-    it.hero_kicker   ? `hero_kicker: ${yaml(it.hero_kicker)}`     : null,
-    it.hero_headline ? `hero_headline: ${yaml(it.hero_headline)}` : null,
-    it.hero_sub      ? `hero_sub: ${yaml(it.hero_sub)}`           : null,
-    it.sectors        ? `sectors: ${yaml(it.sectors)}`             : null,
-    it.hub_theme      ? `hub_theme: ${it.hub_theme}`               : null,
-    it.related_engines ? `related_engines: ${yaml(it.related_engines)}` : null,
-    it.related_stories ? `related_stories: ${yaml(it.related_stories)}` : null,
-    `cover_image: ${cover ? yaml(cover) : 'null'}`,
-    '---',
-    '',
-    it.content ?? it.body_md ?? '',
-  ].filter(Boolean).join('\n');
-}
 
 /**
  * Docs (`/:lang/docs`). Note: `sample` is intentionally never written here —
