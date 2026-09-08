@@ -28,10 +28,6 @@ const seo = {
     pt: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.' },
     en: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.' },
   },
-  solutions: {
-    pt: { title: 'Soluções de IA Preditiva | infinity6', description: 'Recomendação em tempo real, preço dinâmico, forecasting adaptativo. Soluções de IA que aumentam ticket médio, reduzem churn e otimizam margem.' },
-    en: { title: 'Predictive AI Solutions | infinity6', description: 'Real-time recommendations, dynamic pricing, adaptive forecasting. AI solutions that increase average ticket, reduce churn and optimize margins.' },
-  },
   'success-stories': {
     pt: { title: 'Cases de Sucesso com IA | infinity6', description: 'Veja como empresas aumentaram receita, protegeram margem e reduziram rupturas com inteligência preditiva da infinity6.' },
     en: { title: 'AI Success Stories | infinity6', description: 'See how companies grew revenue, protected margins and reduced stockouts with infinity6 predictive intelligence.' },
