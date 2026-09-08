@@ -16,9 +16,12 @@ const HomeTeste = () => (
     <SEOHead page="home" />
     <div className="theme-sand">
       <div className="flex flex-col md:min-h-screen">
-        <HeroSuite />
-        <SolutionBands />
-        <div className="md:mt-auto">
+        <div className="flex-1 min-h-0">
+          <HeroSuite />
+        </div>
+        <div className="flex flex-col">
+          <SolutionBands />
+          <div className="h-1 md:h-2" aria-hidden />
           <ClientProof />
         </div>
       </div>
