@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
-  ArrowRight,
   TrendingUp,
   AlertTriangle,
   Target,
@@ -14,13 +12,9 @@ import {
   Repeat,
   PackageSearch,
   Flag,
-  Blocks,
-  Gauge,
-  ArrowDown,
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
-import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
+import { pickLang } from '@/utils/localizedPath';
 
 const copyByLang = {
   pt: {
@@ -30,16 +24,6 @@ const copyByLang = {
     titleC: 'mais avançada',
     titleD: 'da América Latina',
     sub: 'A mesma inteligência proprietária, em dois caminhos: decisões prontas para transformar o negócio agora ou uma base de inteligência para diferenciar seu produto e escalar resultados',
-    suiteIntent: 'O que a inteligência resolve no seu negócio',
-    suiteTitle: 'Inteligência pronta para decidir',
-    suiteDescription: 'Produto pronto para uso que captura sinais, converte em decisões e entrega resultados acelerados direto no seu ecossistema.',
-    suiteCta: 'Contratar a Decision Suite',
-    builderIntent: 'Como construir sobre a inteligência',
-    builderTitle: 'Inteligência para diferenciar e escalar',
-    builderDescription: 'Capacidade de modelagens proprietárias para criar experiências únicas e ampliar o valor do seu produto',
-    builderCta: 'Construir com i6 Builder',
-    ctaContact: 'Falar com especialista',
-    ctaLearn: 'Saiba mais',
     proof: ['Motores proprietários de IA', 'Modelo fundacional próprio', 'Explicabilidade nativa (XAI)'],
     panelTitle: 'Próxima melhor decisão',
     panelNow: 'agora',
@@ -66,16 +50,6 @@ const copyByLang = {
     titleC: 'platform',
     titleD: 'in Latin America',
     sub: 'The same proprietary intelligence, two paths: ready-to-use decisions that transform the business now, or an intelligence foundation to differentiate your product and scale results',
-    suiteIntent: 'What intelligence solves for your business',
-    suiteTitle: 'Intelligence ready to decide',
-    suiteDescription: 'Ready-to-use product that captures signals, converts them into decisions and delivers accelerated results directly into your ecosystem.',
-    suiteCta: 'Get the Decision Suite',
-    builderIntent: 'How to build on intelligence',
-    builderTitle: 'Intelligence to differentiate and scale',
-    builderDescription: 'Proprietary modeling capabilities to create unique experiences and expand your product value',
-    builderCta: 'Build with i6 Builder',
-    ctaContact: 'Talk to an expert',
-    ctaLearn: 'Learn more',
     proof: ['Proprietary AI engines', 'In-house foundation model', 'Native explainability (XAI)'],
     panelTitle: 'Next best decision',
     panelNow: 'now',
@@ -102,16 +76,6 @@ const copyByLang = {
     titleC: 'más avanzada',
     titleD: 'de América Latina',
     sub: 'La misma inteligencia propietaria, en dos caminos: decisiones listas para transformar el negocio ahora o una base de inteligencia para diferenciar tu producto y escalar resultados',
-    suiteIntent: 'Lo que la inteligencia resuelve en tu negocio',
-    suiteTitle: 'Inteligencia lista para decidir',
-    suiteDescription: 'Producto listo para usar que captura señales, las convierte en decisiones y entrega resultados acelerados directamente en tu ecosistema.',
-    suiteCta: 'Contratar Decision Suite',
-    builderIntent: 'Cómo construir sobre la inteligencia',
-    builderTitle: 'Inteligencia para diferenciar y escalar',
-    builderDescription: 'Capacidad de modelados propietarios para crear experiencias únicas y ampliar el valor de tu producto',
-    builderCta: 'Construir con i6 Builder',
-    ctaContact: 'Hablar con un especialista',
-    ctaLearn: 'Saber más',
     proof: ['Motores propietarios de IA', 'Modelo fundacional propio', 'Explicabilidad nativa (XAI)'],
     panelTitle: 'Próxima mejor decisión',
     panelNow: 'ahora',
@@ -136,7 +100,6 @@ const copyByLang = {
 
 const HeroSuite = () => {
   const { language } = useLanguage();
-  const localized = useLocalizedPath();
   const copy = pickLang(language, copyByLang);
 
   const items = copy.decisions;
