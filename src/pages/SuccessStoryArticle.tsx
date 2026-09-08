@@ -222,7 +222,9 @@ const SuccessStoryArticle = () => {
                 <h2 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
                   {t.levers}
                 </h2>
-                <p className="mb-5 text-sm text-muted-foreground">{t.leversHint}</p>
+                {story.solutions.some((s) => getDecisionSuiteProductUrl(s.slug)) && (
+                  <p className="mb-5 text-sm text-muted-foreground">{t.leversHint}</p>
+                )}
                 {(() => {
                   const count = story.solutions.length;
                   const gridColsFor = (n: number) => {
