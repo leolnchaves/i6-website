@@ -49,11 +49,9 @@ const copyByLang = {
   },
 };
 
-const pillarIcons = [Zap, TerminalSquare, Network, ShieldCheck];
-
 /**
- * Faixa escura da home: abertura à esquerda, dois modos de uso empilhados
- * (Embedded/OEM e Novo Produto) e quatro pilares em grade 2x2 com ícones.
+ * Faixa escura full-bleed da home: abertura, quatro pilares em linha,
+ * faixa dividida com os dois modos de entrega e CTAs alinhados à esquerda.
  */
 const BuilderSection = () => {
   const { language } = useLanguage();
@@ -62,82 +60,66 @@ const BuilderSection = () => {
   const localized = useLocalizedPath();
 
   return (
-    <section id="builder-platform" className="scroll-mt-24 px-6 py-10 md:py-12">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#0B1224] p-8 text-white md:p-10 lg:p-12">
-        {/* Decoração: gradiente coral à direita + brilho difuso */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-[#F4845F]/5 to-transparent" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[#F4845F]/10 blur-[100px]" aria-hidden />
+    <section id="builder-platform" className="scroll-mt-24 bg-[#0B1224] text-white">
+      {/* Abertura + pilares */}
+      <div className="mx-auto max-w-7xl px-6 pb-8 pt-14 md:pt-16">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F4845F]">
+          {copy.eyebrow}
+        </p>
+        <h2 className="max-w-3xl text-2xl font-bold leading-[1.15] md:text-3xl lg:text-4xl">
+          {copy.title}
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-[15px]">
+          {copy.description}
+        </p>
 
-        {/* Abertura */}
-        <div className="relative z-10 max-w-2xl">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F4845F]">
-            {copy.eyebrow}
-          </p>
-          <h2 className="text-2xl font-bold leading-[1.15] md:text-3xl lg:text-4xl">
-            {copy.title}
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-slate-400 md:text-[15px]">
-            {copy.description}
-          </p>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {copy.pillars.map((pillar) => (
+            <div key={pillar.title} className="border-l border-white/20 pl-5">
+              <h3 className="text-base font-semibold text-white">{pillar.title}</h3>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-white/60">{pillar.body}</p>
+            </div>
+          ))}
         </div>
+      </div>
 
-        {/* Corpo: modos à esquerda, pilares à direita */}
-        <div className="relative z-10 mt-7 grid gap-6 lg:grid-cols-12 lg:items-center">
-          {/* Modos de uso */}
-          <div className="flex flex-col gap-4 lg:col-span-5">
-            {modes.map((mode, i) => (
-              <article
-                key={mode.title}
-                className="group rounded-3xl border border-white/10 bg-white/5 p-5 transition-colors hover:border-[#F4845F]/50 md:p-6"
-              >
-                <div className="mb-2 flex items-center gap-3">
-                  <span className="font-mono text-xl font-bold text-[#F4845F]/50 transition-colors group-hover:text-[#F4845F]">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="text-lg font-semibold text-white">{mode.title}</h3>
-                </div>
-                <ul className="space-y-2 text-[13px] text-slate-400">
-                  {mode.points.map((point) => (
-                    <li key={point} className="flex items-center gap-2.5">
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F4845F]" aria-hidden />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
+      {/* Faixa dividida: dois modos de entrega */}
+      <div className="grid w-full border-y border-white/10 lg:grid-cols-2">
+        {modes.map((mode, i) => (
+          <article
+            key={mode.title}
+            className={
+              i === 0
+                ? 'bg-[#F7F3F0] px-6 py-10 text-[#0B1224] md:px-10 lg:px-12'
+                : 'border-t border-white/10 bg-[#131E38] px-6 py-10 text-white md:px-10 lg:border-l lg:border-t-0 lg:px-12'
+            }
+          >
+            <span className="mb-4 block font-mono text-sm font-bold text-[#F4845F]">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 className="text-xl font-bold md:text-2xl">{mode.title}</h3>
+            <p
+              className={`mt-3 max-w-xl text-sm leading-relaxed ${
+                i === 0 ? 'text-[#0B1224]/70' : 'text-white/70'
+              }`}
+            >
+              {mode.desc}
+            </p>
+            <ul className="mt-6 space-y-3">
+              {mode.points.map((point) => (
+                <li key={point} className="flex items-start gap-3 text-[13px] font-medium">
+                  <Check size={16} className="mt-0.5 shrink-0 text-[#F4845F]" aria-hidden />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
 
-          {/* Pilares em grade 2x2 */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
-            {copy.pillars.map((pillar, i) => {
-              const Icon = pillarIcons[i];
-              return (
-                <article
-                  key={pillar.title}
-                  className="flex flex-col justify-center rounded-3xl border border-white/5 bg-white/[0.03] p-5"
-                >
-                  <div
-                    className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${
-                      i === 0
-                        ? 'bg-gradient-to-br from-[#F4845F] to-[#d46d4a]'
-                        : 'bg-white/10'
-                    }`}
-                  >
-                    <Icon size={20} className={i === 0 ? 'text-white' : 'text-[#F4845F]'} aria-hidden />
-                  </div>
-                  <h4 className="text-sm font-semibold text-white">{pillar.title}</h4>
-                  <p className="mt-1.5 text-xs leading-snug text-slate-500">
-                    {pillar.body}
-                  </p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* CTAs */}
-        <div className="relative z-10 mt-7 flex flex-wrap items-center gap-3">
+      {/* CTAs */}
+      <div className="mx-auto max-w-7xl px-6 pb-14 pt-8 md:pb-16">
+        <div className="flex flex-wrap items-center justify-start gap-3">
           <Link
             to={localized('/i6-builders')}
             className="inline-flex items-center gap-2 rounded-2xl bg-[#F4845F] px-7 py-3.5 text-sm font-bold text-[#0B1224] transition-all hover:-translate-y-0.5 hover:bg-[#ff9675]"
