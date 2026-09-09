@@ -63,23 +63,23 @@ const DecisionSuiteSection = () => {
       </div>
 
       {/* Explorador de decisões */}
-      <div className="mt-8 md:mt-10">
-        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
+      <div className="mt-6 md:mt-8">
+        <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
               {copy.products.eyebrow}
             </p>
-            <h3 className="mt-2 text-xl font-semibold leading-snug text-foreground md:text-2xl">
+            <h3 className="mt-1.5 text-lg font-semibold leading-snug text-foreground md:text-xl">
               {copy.products.title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground line-clamp-2">
               {copy.products.description}
             </p>
 
             <div
               role="group"
               aria-label={copy.products.selectorLabel}
-              className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1"
+              className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1"
             >
               {copy.products.items.map((product) => {
                 const isActive = product.id === active.id;
@@ -89,7 +89,7 @@ const DecisionSuiteSection = () => {
                     type="button"
                     onClick={() => setActiveId(product.id)}
                     aria-pressed={isActive}
-                    className={`relative min-w-0 overflow-hidden rounded-xl border px-3 py-2.5 pl-4 text-left transition-colors duration-300 ${
+                    className={`relative min-w-0 overflow-hidden rounded-xl border px-3 py-2 pl-4 text-left transition-colors duration-300 ${
                       isActive
                         ? 'border-primary/40 bg-card shadow-[var(--sand-shadow-soft)]'
                         : 'border-border bg-secondary/40 hover:bg-card'
