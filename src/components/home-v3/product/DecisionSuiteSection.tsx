@@ -55,7 +55,7 @@ const DecisionSuiteSection = () => {
       </div>
 
       {/* Explorador de decisões */}
-      <div className="mt-16 md:mt-20">
+      <div className="mt-10 md:mt-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
           {copy.products.eyebrow}
         </p>
