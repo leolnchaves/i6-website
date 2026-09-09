@@ -84,38 +84,41 @@ const BuilderSection = () => {
       </div>
 
       {/* Faixa dividida: dois modos de entrega */}
-      <div className="grid w-full border-y border-white/10 lg:grid-cols-2">
-        {modes.map((mode, i) => (
-          <article
-            key={mode.title}
-            className={
-              i === 0
-                ? 'bg-[#F7F3F0] px-6 py-10 text-[#0B1224] md:px-10 lg:px-12'
-                : 'border-t border-white/10 bg-[#131E38] px-6 py-10 text-white md:px-10 lg:border-l lg:border-t-0 lg:px-12'
-            }
-          >
-            <span className="mb-4 block font-mono text-sm font-bold text-[#F4845F]">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <h3 className="text-xl font-bold md:text-2xl">{mode.title}</h3>
-            <p
-              className={`mt-3 max-w-xl text-sm leading-relaxed ${
-                i === 0 ? 'text-[#0B1224]/70' : 'text-white/70'
-              }`}
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid overflow-hidden border-y border-white/10 lg:grid-cols-2">
+          {modes.map((mode, i) => (
+            <article
+              key={mode.title}
+              className={
+                i === 0
+                  ? 'bg-[#F7F3F0] px-6 py-10 text-[#0B1224] md:px-10 lg:px-12'
+                  : 'border-t border-white/10 bg-[#131E38] px-6 py-10 text-white md:px-10 lg:border-l lg:border-t-0 lg:px-12'
+              }
             >
-              {mode.desc}
-            </p>
-            <ul className="mt-6 space-y-3">
-              {mode.points.map((point) => (
-                <li key={point} className="flex items-start gap-3 text-[13px] font-medium">
-                  <Check size={16} className="mt-0.5 shrink-0 text-[#F4845F]" aria-hidden />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+              <span className="mb-4 block font-mono text-sm font-bold text-[#F4845F]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 className="text-xl font-bold md:text-2xl">{mode.title}</h3>
+              <p
+                className={`mt-3 max-w-xl text-sm leading-relaxed ${
+                  i === 0 ? 'text-[#0B1224]/70' : 'text-white/70'
+                }`}
+              >
+                {mode.desc}
+              </p>
+              <ul className="mt-6 space-y-3">
+                {mode.points.map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-[13px] font-medium">
+                    <Check size={16} className="mt-0.5 shrink-0 text-[#F4845F]" aria-hidden />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </div>
+
 
       {/* CTAs */}
       <div className="mx-auto max-w-7xl px-6 pb-14 pt-8 md:pb-16">
