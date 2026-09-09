@@ -1,0 +1,61 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans); overflow: visible;">
+  <defs>
+    <style>
+      .label { font-size: 11px; font-weight: 500; }
+      .muted { fill: hsl(var(--muted-foreground)); }
+      .ink { fill: hsl(var(--foreground)); }
+      .box { fill: none; stroke: hsl(var(--border)); stroke-width: 1; rx: 8; }
+      .guide { stroke: hsl(var(--primary)); stroke-width: 1; stroke-dasharray: 4 3; fill: none; opacity: 0.6; }
+      .accent { fill: hsl(var(--accent)); }
+      .accent-ink { fill: hsl(var(--accent-foreground)); }
+      .card { fill: hsl(var(--card)); stroke: hsl(var(--border)); rx: 6; }
+      .dark { fill: #0B1224; }
+      .sand { fill: #F7F3F0; }
+      .navy-light { fill: #131E38; }
+    </style>
+  </defs>
+
+  <!-- Page frame -->
+  <rect x="20" y="10" width="600" height="340" class="box" />
+  <text x="40" y="34" class="label ink">seção #builder-platform (fundo #0B1224, full-bleed)</text>
+
+  <!-- Content container -->
+  <rect x="60" y="48" width="520" height="280" class="box" stroke-dasharray="2 2" />
+  <text x="70" y="66" class="label muted">container max-w-7xl</text>
+
+  <!-- Opening text -->
+  <rect x="70" y="78" width="240" height="18" rx="3" fill="hsl(var(--muted))" opacity="0.4" />
+  <rect x="70" y="104" width="320" height="14" rx="3" fill="hsl(var(--muted))" opacity="0.3" />
+  <rect x="70" y="124" width="300" height="10" rx="3" fill="hsl(var(--muted))" opacity="0.25" />
+
+  <!-- Four pillars -->
+  <rect x="70" y="150" width="110" height="70" class="card" />
+  <rect x="196" y="150" width="110" height="70" class="card" />
+  <rect x="322" y="150" width="110" height="70" class="card" />
+  <rect x="448" y="150" width="110" height="70" class="card" />
+  <text x="75" y="170" class="label ink">Engines</text>
+  <text x="202" y="170" class="label ink">SDKs/API</text>
+  <text x="328" y="170" class="label ink">Toolkits</text>
+  <text x="454" y="170" class="label ink">Governança</text>
+
+  <!-- Divided band (contained) -->
+  <rect x="70" y="236" width="260" height="74" class="sand" />
+  <rect x="330" y="236" width="228" height="74" class="navy-light" />
+  <line x1="330" y1="236" x2="330" y2="310" stroke="rgba(255,255,255,0.1)" />
+  <text x="86" y="258" class="accent-ink label">01</text>
+  <text x="86" y="280" class="label ink" style="font-weight: 700;">Embedded (OEM)</text>
+  <text x="346" y="258" class="accent-ink label">02</text>
+  <text x="346" y="280" class="label" style="fill:#fff; font-weight: 700;">Novo Produto</text>
+
+  <!-- CTAs -->
+  <rect x="70" y="324" width="120" height="22" rx="11" class="accent" />
+  <text x="82" y="339" class="label accent-ink" style="font-weight: 600;">Construir com i6 Builder</text>
+  <rect x="200" y="324" width="110" height="22" rx="11" fill="none" stroke="rgba(255,255,255,0.2)" />
+  <text x="212" y="339" class="label" style="fill:#fff;">Falar com especialista</text>
+
+  <!-- Alignment guides -->
+  <line x1="70" y1="70" x2="70" y2="350" class="guide" />
+  <line x1="558" y1="70" x2="558" y2="310" class="guide" />
+  <text x="62" y="356" class="label muted">esquerda alinhada ao texto/CTAs</text>
+  <text x="466" y="318" class="label muted">direita alinhada ao último pilar</text>
+</svg>
