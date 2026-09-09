@@ -172,6 +172,7 @@ const HeroSuite = () => {
               style={{ animationDelay: '.08s' }}
             >
               {copy.titleA}
+              <br />
               <span className="text-primary">{copy.titleB}</span>
               <br />
               {copy.titleC}
