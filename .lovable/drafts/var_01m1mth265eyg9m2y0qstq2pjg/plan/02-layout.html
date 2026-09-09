@@ -1,56 +1,58 @@
 <svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans)">
-  <!-- header row: intro left, pillars right -->
-  <rect x="24" y="20" width="330" height="70" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-  <text x="189" y="48" text-anchor="middle" font-size="14" font-weight="480" fill="hsl(var(--foreground))">Título + descrição</text>
-  <text x="189" y="68" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">logo acima, max-w-xl</text>
+  <!-- opening -->
+  <rect x="24" y="16" width="380" height="66" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+  <text x="214" y="42" text-anchor="middle" font-size="14" font-weight="480" fill="hsl(var(--foreground))">Título + descrição</text>
+  <text x="214" y="62" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">largos, sozinhos na abertura</text>
 
-  <g>
-    <rect x="378" y="20" width="74" height="70" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-    <rect x="460" y="20" width="74" height="70" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-    <rect x="542" y="20" width="74" height="70" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-    <text x="415" y="60" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">pilar 1</text>
-    <text x="497" y="60" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">pilar 2</text>
-    <text x="579" y="60" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">pilar 3</text>
+  <!-- pillars strip -->
+  <line x1="24" y1="96" x2="616" y2="96" stroke="hsl(var(--border))" stroke-width="1"/>
+  <g font-size="12" fill="hsl(var(--muted-foreground))">
+    <circle cx="40" cy="110" r="3" fill="hsl(var(--primary))"/>
+    <text x="50" y="114">01 Dados prontos</text>
+    <circle cx="240" cy="110" r="3" fill="hsl(var(--primary))"/>
+    <text x="250" y="114">02 Inteligência</text>
+    <circle cx="430" cy="110" r="3" fill="hsl(var(--primary))"/>
+    <text x="440" y="114">03 Execução</text>
   </g>
+  <line x1="24" y1="124" x2="616" y2="124" stroke="hsl(var(--border))" stroke-width="1"/>
 
-  <line x1="24" y1="104" x2="616" y2="104" stroke="hsl(var(--border))" stroke-width="1"/>
-
-  <!-- explorer: list left, panel right -->
-  <rect x="24" y="122" width="150" height="208" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-  <text x="99" y="144" text-anchor="middle" font-size="12" font-weight="480" fill="hsl(var(--foreground))">PRODUTOS</text>
-  <text x="99" y="160" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">+ título da suíte</text>
+  <!-- explorer -->
+  <rect x="24" y="140" width="170" height="196" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+  <text x="109" y="160" text-anchor="middle" font-size="12" font-weight="480" fill="hsl(var(--foreground))">PRODUTOS + título</text>
   <g fill="none" stroke="hsl(var(--border))" stroke-width="1">
-    <rect x="36" y="172" width="126" height="22" rx="6"/>
-    <rect x="36" y="198" width="126" height="22" rx="6"/>
-    <rect x="36" y="224" width="126" height="22" rx="6"/>
-    <rect x="36" y="250" width="126" height="22" rx="6"/>
-    <rect x="36" y="276" width="126" height="22" rx="6"/>
-    <rect x="36" y="302" width="126" height="22" rx="6"/>
+    <rect x="34" y="170" width="150" height="26" rx="6"/>
+    <rect x="34" y="200" width="150" height="26" rx="6"/>
+    <rect x="34" y="230" width="150" height="26" rx="6"/>
+    <rect x="34" y="260" width="150" height="26" rx="6"/>
+    <rect x="34" y="290" width="150" height="26" rx="6"/>
+    <rect x="34" y="320" width="150" height="26" rx="6" transform="translate(0,-10)"/>
   </g>
-  <rect x="36" y="172" width="126" height="22" rx="6" fill="none" stroke="hsl(var(--primary))" stroke-width="1"/>
+  <rect x="34" y="170" width="150" height="26" rx="6" fill="none" stroke="hsl(var(--primary))" stroke-width="1"/>
+  <text x="109" y="187" text-anchor="middle" font-size="10" fill="hsl(var(--muted-foreground))">nome + 1 linha</text>
 
-  <rect x="190" y="122" width="426" height="208" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-  <text x="206" y="146" font-size="14" font-weight="480" fill="hsl(var(--foreground))">Painel do produto ativo</text>
-  <text x="206" y="166" font-size="12" fill="hsl(var(--muted-foreground))">headline · corpo · dor em citação · capacidades</text>
+  <rect x="206" y="140" width="410" height="196" rx="8" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+  <text x="222" y="162" font-size="14" font-weight="480" fill="hsl(var(--foreground))">Painel do produto ativo</text>
+  <text x="222" y="180" font-size="12" fill="hsl(var(--muted-foreground))">headline + corpo · dor em cartão lateral</text>
+  <text x="222" y="200" font-size="12" fill="hsl(var(--muted-foreground))">capacidades em marcadores</text>
   <g>
-    <rect x="206" y="278" width="126" height="40" rx="6" fill="hsl(var(--muted))"/>
-    <rect x="340" y="278" width="126" height="40" rx="6" fill="hsl(var(--muted))"/>
-    <rect x="474" y="278" width="126" height="40" rx="6" fill="hsl(var(--muted))"/>
-    <text x="269" y="302" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Entrada</text>
-    <text x="403" y="302" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Decisão</text>
-    <text x="537" y="302" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Valor</text>
-    <path d="M334 298 h4" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-    <path d="M468 298 h4" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    <rect x="222" y="290" width="116" height="34" rx="6" fill="hsl(var(--muted))"/>
+    <rect x="352" y="290" width="116" height="34" rx="6" fill="hsl(var(--muted))"/>
+    <rect x="482" y="290" width="116" height="34" rx="6" fill="hsl(var(--muted))"/>
+    <text x="280" y="310" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Entrada</text>
+    <text x="410" y="310" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Decisão</text>
+    <text x="540" y="310" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Valor</text>
+    <path d="M342 307 h6" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+    <path d="M472 307 h6" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
   </g>
 
   <!-- CTAs -->
-  <rect x="200" y="350" width="150" height="30" rx="15" fill="none" stroke="hsl(var(--primary))" stroke-width="1"/>
-  <text x="275" y="369" text-anchor="middle" font-size="12" fill="hsl(var(--primary))">Conhecer a i6 Decision Suite ↗</text>
-  <rect x="362" y="350" width="130" height="30" rx="15" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
-  <text x="427" y="369" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Falar com especialista</text>
+  <rect x="200" y="352" width="150" height="28" rx="14" fill="none" stroke="hsl(var(--primary))" stroke-width="1"/>
+  <text x="275" y="370" text-anchor="middle" font-size="12" fill="hsl(var(--primary))">Conhecer a suíte ↗</text>
+  <rect x="362" y="352" width="130" height="28" rx="14" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="1"/>
+  <text x="427" y="370" text-anchor="middle" font-size="12" fill="hsl(var(--foreground))">Falar com especialista</text>
 
-  <!-- annotation -->
-  <circle cx="616" cy="104" r="8" fill="hsl(var(--accent))"/>
-  <text x="616" y="108" text-anchor="middle" font-size="10" fill="hsl(var(--accent-foreground))">1</text>
-  <text x="320" y="398" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">Tudo dentro de ~900px de altura: abertura e pilares na mesma linha, painel com fluxo na base, CTAs fechando a tela</text>
+  <!-- pin -->
+  <circle cx="616" cy="110" r="8" fill="hsl(var(--accent))"/>
+  <text x="616" y="114" text-anchor="middle" font-size="10" fill="hsl(var(--accent-foreground))">1</text>
+  <text x="320" y="395" text-anchor="middle" font-size="12" fill="hsl(var(--muted-foreground))">Pilares subordinados entre abertura e explorador; tudo visível em ~900px sem scroll</text>
 </svg>
