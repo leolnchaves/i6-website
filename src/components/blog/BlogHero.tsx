@@ -29,7 +29,7 @@ const BlogHero = ({ article }: Props) => {
     : null;
 
   return (
-    <section className="relative w-full pb-12 md:pb-16">
+    <section className="relative w-full pb-10 md:pb-12">
       <div className="grid grid-cols-1 items-center gap-y-8 lg:grid-cols-2 lg:gap-y-0">
         {/* Coluna de texto: alinhada ao container do site, sem depender de vw */}
         <div className="flex px-6 lg:justify-end lg:pr-12">
@@ -69,7 +69,7 @@ const BlogHero = ({ article }: Props) => {
         {/* Coluna da imagem: 100% da própria coluna, encostando na borda */}
         <div className="relative">
           <Link to={href} className="group block overflow-hidden rounded-l-[2rem]">
-            <div className="relative h-[260px] w-full bg-secondary sm:h-[340px] lg:h-[520px]">
+            <div className="relative h-[260px] w-full bg-secondary sm:h-[340px] lg:h-[420px]">
               {cover ? (
                 <img
                   src={cover}
@@ -84,7 +84,7 @@ const BlogHero = ({ article }: Props) => {
           </Link>
 
           {/* Cartão flutuante com metadados reais do post */}
-          <div className="relative z-10 mx-6 -mt-10 rounded-2xl border border-border bg-card p-5 shadow-[var(--sand-shadow-soft)] lg:absolute lg:bottom-10 lg:-left-12 lg:mx-0 lg:mt-0 lg:w-[19rem]">
+          <div className="relative z-10 mx-6 -mt-10 rounded-2xl border border-border bg-card p-5 shadow-[var(--sand-shadow-soft)] lg:absolute lg:bottom-6 lg:-left-12 lg:mx-0 lg:mt-0 lg:w-[19rem]">
             {article.theme && (
               <p className="text-[11px] uppercase tracking-[0.2em] text-primary">
                 {article.theme_label || article.theme}
