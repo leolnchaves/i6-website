@@ -1,0 +1,38 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Card ativo emendado ao painel de detalhes em três posições da lista">
+  <style>
+    text { font-family: var(--font-sans); fill: hsl(var(--muted-foreground)); font-size: 12px; }
+    .lbl { fill: hsl(var(--foreground)); font-size: 14px; font-weight: 480; }
+    .bx { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; }
+    .acc { fill: none; stroke: hsl(var(--accent-foreground)); stroke-width: 1.25; }
+    .zone { fill: none; stroke: hsl(var(--border)); stroke-width: 1; stroke-dasharray: 4 3; }
+  </style>
+
+  <text class="lbl" x="0" y="14">produto no topo</text>
+  <path class="acc" d="M8 30 h96 v0 h0 a0 0 0 0 1 0 0 v26 h84 a8 8 0 0 1 8 8 v66 a8 8 0 0 1 -8 8 h-84 v0 h-96 a8 8 0 0 1 -8 -8 v-92 a8 8 0 0 1 8 -8 z" transform="translate(0,0)"/>
+  <rect class="bx" x="0" y="70" width="104" height="24" rx="8"/>
+  <rect class="bx" x="0" y="100" width="104" height="24" rx="8"/>
+  <text x="200" y="52">painel de detalhes</text>
+  <text x="200" y="70">mesma altura da lista</text>
+
+  <text class="lbl" x="0" y="164">produto no centro</text>
+  <rect class="bx" x="0" y="180" width="104" height="24" rx="8"/>
+  <path class="acc" d="M8 210 h96 v-32 h84 a8 8 0 0 1 8 8 v100 a8 8 0 0 1 -8 8 h-84 v-32 h-96 a8 8 0 0 1 -8 -8 v-36 a8 8 0 0 1 8 -8 z"/>
+  <rect class="bx" x="0" y="266" width="104" height="24" rx="8"/>
+  <text x="200" y="200">a emenda acompanha</text>
+  <text x="200" y="218">a posição do card</text>
+
+  <rect class="zone" x="360" y="24" width="272" height="128" rx="8"/>
+  <text x="372" y="44">desktop: lista + painel emendados</text>
+  <text x="372" y="64">largura da lista fixa, painel ocupa o resto</text>
+  <text x="372" y="84">borda entre os dois some no card ativo</text>
+  <text x="372" y="104">cantos do card ativo: arredondados só</text>
+  <text x="372" y="118">à esquerda</text>
+  <text x="372" y="140">tag: desktop</text>
+
+  <rect class="zone" x="360" y="172" width="272" height="118" rx="8"/>
+  <text x="372" y="192">mobile / tablet: sem conexão</text>
+  <text x="372" y="212">produtos em grade de 2 ou 3 colunas</text>
+  <text x="372" y="232">painel abaixo, contorno completo</text>
+  <text x="372" y="252">nada muda no comportamento atual</text>
+  <text x="372" y="278">tag: mobile</text>
+</svg>
