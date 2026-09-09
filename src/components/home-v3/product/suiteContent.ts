@@ -71,8 +71,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       cta: 'Conheça o i6 Decision Suite',
       items: [
         {
-          id: 'discovery',
-          name: 'Discovery',
+          id: 'relevance',
+          name: 'Relevance',
           claim: 'Recomenda a próxima melhor opção para cada contexto',
           pain: 'Sem isso: todo visitante e todo cliente recebem a mesma oferta, e mídia, CRM e catálogo viram desperdício.',
           headline: 'Recomendações que conectam intenção a resultado',
@@ -190,8 +190,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       cta: 'Explore i6 Decision Suite',
       items: [
         {
-          id: 'discovery',
-          name: 'Discovery',
+          id: 'relevance',
+          name: 'Relevance',
           claim: 'Recommends the next best option for every context',
           pain: 'Without it: every visitor and customer gets the same offer, and media, CRM and catalog turn into waste.',
           headline: 'Recommendations that connect intent to outcome',
@@ -309,8 +309,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       cta: 'Conoce el i6 Decision Suite',
       items: [
         {
-          id: 'discovery',
-          name: 'Discovery',
+          id: 'relevance',
+          name: 'Relevance',
           claim: 'Recomienda la próxima mejor opción para cada contexto',
           pain: 'Sin esto: todo visitante y todo cliente recibe la misma oferta, y medios, CRM y catálogo se convierten en desperdicio.',
           headline: 'Recomendaciones que conectan intención con resultado',
