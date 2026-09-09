@@ -162,23 +162,24 @@ const DecisionSuiteSection = () => {
       </div>
 
       {/* CTAs da seção */}
-      <div className="mt-5 flex flex-wrap items-center justify-start gap-2.5">
+      <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
         <a
           href={SUITE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110"
+          className="inline-flex items-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground transition-colors hover:brightness-110"
         >
           {contactCopy.suiteCta}
-          <ArrowUpRight size={14} aria-hidden="true" />
+          <ArrowUpRight size={16} aria-hidden="true" />
         </a>
         <Link
           to={localized('/contact')}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-foreground px-5 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
+          className="inline-flex items-center gap-2 rounded-2xl border border-foreground px-7 py-3.5 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
         >
           {contactCopy.contact}
         </Link>
       </div>
+
     </section>
   );
 };
