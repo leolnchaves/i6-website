@@ -61,37 +61,18 @@ const DecisionSuiteSection = () => {
         </p>
       </div>
 
-      {/* Pilares em cartões subordinados */}
-      <div className="mt-4 grid gap-2 md:grid-cols-3">
-        {copy.intro.pillars.map((pillar) => (
-          <article
-            key={pillar.title}
-            className="rounded-2xl border border-border bg-secondary/50 p-2.5"
-          >
-            <h3 className="text-sm font-semibold text-foreground">{pillar.title}</h3>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-1">{pillar.body}</p>
-          </article>
-        ))}
-      </div>
-
       {/* Explorador de decisões */}
-      <div className="mt-6 md:mt-8">
-        <div className="grid items-start gap-5 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-stretch lg:gap-0">
-          <div className="flex flex-col">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
-              {copy.products.eyebrow}
-            </p>
-            <h3 className="mt-1.5 text-lg font-semibold leading-snug text-foreground md:text-xl">
-              {copy.products.title}
-            </h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground line-clamp-2">
-              {copy.products.description}
-            </p>
+      <div className="mt-5 md:mt-6">
+        <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+          {copy.products.description}
+        </p>
 
+        <div className="mt-4 grid items-start gap-5 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-stretch lg:gap-0">
+          <div className="flex flex-col lg:h-full">
             <div
               role="group"
               aria-label={copy.products.selectorLabel}
-              className="relative mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:z-20 lg:flex lg:flex-1 lg:flex-col lg:gap-0"
+              className="relative grid grid-cols-2 gap-2 sm:grid-cols-3 lg:z-20 lg:flex lg:h-full lg:flex-1 lg:flex-col lg:gap-0"
             >
               {copy.products.items.map((product) => {
                 const isActive = product.id === active.id;
