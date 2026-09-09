@@ -26,8 +26,10 @@ const DecisionSuiteSection = () => {
     { label: copy.products.flowLabels.value, value: active.flow.value },
   ];
 
+  const capabilities = active.capabilities.split('·').map((capability) => capability.trim());
+
   return (
-    <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-20 md:py-28">
+    <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-12 md:py-14">
       {/* Abertura única */}
       <div className="max-w-3xl">
         <img
@@ -39,125 +41,141 @@ const DecisionSuiteSection = () => {
         <h2 className="text-3xl font-bold leading-[1.12] text-foreground md:text-[2.6rem]">
           {copy.intro.title}
         </h2>
-        <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
           {copy.intro.description}
         </p>
       </div>
 
-      {/* Pilares em faixa horizontal */}
-      <div className="mt-7 grid gap-8 md:mt-8 md:grid-cols-3">
+      {/* Pilares em cartões subordinados */}
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
         {copy.intro.pillars.map((pillar) => (
-          <article key={pillar.title} className="border-t border-border pt-5">
+          <article
+            key={pillar.title}
+            className="rounded-2xl border border-border bg-secondary/50 p-4"
+          >
             <h3 className="text-sm font-semibold text-foreground">{pillar.title}</h3>
-            <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{pillar.body}</p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{pillar.body}</p>
           </article>
         ))}
       </div>
 
       {/* Explorador de decisões */}
       <div className="mt-10 md:mt-12">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
-          {copy.products.eyebrow}
-        </p>
-        <h3 className="mt-3 text-xl font-semibold leading-snug text-foreground md:text-2xl">
-          {copy.products.title}
-        </h3>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          {copy.products.description}
-        </p>
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
+              {copy.products.eyebrow}
+            </p>
+            <h3 className="mt-3 text-xl font-semibold leading-snug text-foreground md:text-2xl">
+              {copy.products.title}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              {copy.products.description}
+            </p>
 
-        <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)]">
-          <div
-            role="group"
-            aria-label={copy.products.selectorLabel}
-            className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1"
-          >
-            {copy.products.items.map((product) => {
-              const isActive = product.id === active.id;
-              return (
-                <button
-                  key={product.id}
-                  type="button"
-                  onClick={() => setActiveId(product.id)}
-                  aria-pressed={isActive}
-                  className={`relative min-w-0 overflow-hidden rounded-[var(--radius)] border px-4 py-3 pl-5 text-left transition-colors duration-300 ${
-                    isActive
-                      ? 'border-primary/40 bg-card shadow-[var(--sand-shadow-soft)]'
-                      : 'border-border bg-secondary/40 hover:bg-card'
-                  }`}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-y-0 left-0 w-0.5 transition-colors duration-300 ${
-                      isActive ? 'bg-primary' : 'bg-transparent'
+            <div
+              role="group"
+              aria-label={copy.products.selectorLabel}
+              className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1"
+            >
+              {copy.products.items.map((product) => {
+                const isActive = product.id === active.id;
+                return (
+                  <button
+                    key={product.id}
+                    type="button"
+                    onClick={() => setActiveId(product.id)}
+                    aria-pressed={isActive}
+                    className={`relative min-w-0 overflow-hidden rounded-xl border px-4 py-3 pl-5 text-left transition-colors duration-300 ${
+                      isActive
+                        ? 'border-primary/40 bg-card shadow-[var(--sand-shadow-soft)]'
+                        : 'border-border bg-secondary/40 hover:bg-card'
                     }`}
-                  />
-                  <span className={`block text-sm font-semibold ${isActive ? 'text-primary' : 'text-foreground'}`}>
-                    {product.name}
-                  </span>
-                  {isActive && (
-                    <span className="mt-1 block text-xs leading-snug text-muted-foreground">
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`absolute inset-y-0 left-0 w-1 rounded-l-xl transition-colors duration-300 ${
+                        isActive ? 'bg-primary' : 'bg-transparent'
+                      }`}
+                    />
+                    <span className={`block text-sm font-semibold ${isActive ? 'text-primary' : 'text-foreground'}`}>
+                      {product.name}
+                    </span>
+                    <span className="mt-1 block truncate text-xs leading-snug text-muted-foreground">
                       {product.claim}
                     </span>
-                  )}
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <article key={active.id} className="sand-card p-7 motion-safe:animate-sand-rise md:p-9">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-              {active.name}
-            </p>
-            <h4 className="mt-3 text-xl font-semibold leading-snug text-foreground md:text-2xl">
-              {active.headline}
-            </h4>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base">{active.body}</p>
-            <p className="mt-4 border-l-2 border-primary/40 pl-4 text-sm leading-relaxed text-foreground/80">
-              {active.pain}
-            </p>
-            <p className="mt-6 border-t border-border pt-5 text-xs leading-relaxed text-muted-foreground/90">
-              {active.capabilities}
-            </p>
+          <article
+            key={active.id}
+            className="sand-card !rounded-3xl flex flex-col justify-between p-6 motion-safe:animate-sand-rise md:p-8"
+          >
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+                {active.name}
+              </p>
+              <h4 className="mt-3 text-xl font-semibold leading-snug text-foreground md:text-2xl">
+                {active.headline}
+              </h4>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">{active.body}</p>
+              <p className="mt-4 border-l-2 border-primary/40 pl-4 text-sm leading-relaxed text-foreground/80">
+                {active.pain}
+              </p>
 
-            <div className="mt-6 grid items-stretch gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
-              {flowSteps.map((step, index) => (
-                <div key={step.label} className="contents">
-                  <div className="rounded-[var(--radius)] bg-secondary/60 p-4">
-                    <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
-                      {step.label}
-                    </span>
-                    <span className="mt-2 block text-xs leading-snug text-foreground">{step.value}</span>
-                  </div>
-                  {index < flowSteps.length - 1 && (
-                    <div className="hidden items-center justify-center sm:flex" aria-hidden="true">
-                      <ArrowRight size={14} className="text-muted-foreground/60" />
+              <ul className="mt-6 grid gap-y-2 gap-x-4 border-t border-border pt-5 sm:grid-cols-2">
+                {capabilities.map((capability) => (
+                  <li key={capability} className="flex items-center gap-2 text-xs text-foreground">
+                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    {capability}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6 rounded-2xl bg-secondary p-4">
+                <div className="grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
+                  {flowSteps.map((step, index) => (
+                    <div key={step.label} className="contents">
+                      <div className={`rounded-xl p-3 text-center ${index === 1 ? 'bg-card shadow-[var(--sand-shadow-soft)]' : ''}`}>
+                        <span className={`block text-[10px] font-semibold uppercase tracking-[0.18em] ${index === 1 ? 'text-primary' : 'text-muted-foreground'}`}>
+                          {step.label}
+                        </span>
+                        <span className="mt-1 block text-xs font-medium leading-snug text-foreground">{step.value}</span>
+                      </div>
+                      {index < flowSteps.length - 1 && (
+                        <div className="hidden items-center justify-center sm:flex" aria-hidden="true">
+                          <ArrowRight size={14} className="text-primary" />
+                        </div>
+                      )}
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={SUITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110"
+              >
+                {contactCopy.suiteCta}
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+              <Link
+                to={localized('/contact')}
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
+              >
+                {contactCopy.contact}
+              </Link>
             </div>
           </article>
         </div>
-      </div>
-
-      {/* CTAs da seção */}
-      <div className="mt-14 flex flex-wrap items-center justify-center gap-3">
-        <a
-          href={SUITE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-        >
-          {contactCopy.suiteCta}
-          <ArrowUpRight size={16} aria-hidden="true" />
-        </a>
-        <Link
-          to={localized('/contact')}
-          className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary/40"
-        >
-          {contactCopy.contact}
-        </Link>
       </div>
     </section>
   );
