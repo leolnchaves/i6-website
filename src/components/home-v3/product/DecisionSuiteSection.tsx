@@ -32,32 +32,32 @@ const DecisionSuiteSection = () => {
     .slice(0, 4);
 
   return (
-    <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-10 md:py-12">
+    <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-8 md:py-10">
       {/* Abertura única */}
       <div className="max-w-3xl">
         <img
           src={getPublicAssetUrl('content/logos/i6-decision-suite-logo.png')}
           alt="i6 Decision Suite"
-          className="mb-4 h-7 w-auto sm:h-8"
+          className="mb-3 h-6 w-auto sm:h-7"
           draggable={false}
         />
-        <h2 className="text-3xl font-bold leading-[1.12] text-foreground md:text-[2.6rem]">
+        <h2 className="text-2xl font-bold leading-[1.12] text-foreground md:text-[2.25rem]">
           {copy.intro.title}
         </h2>
-        <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-base">
           {copy.intro.description}
         </p>
       </div>
 
       {/* Pilares em cartões subordinados */}
-      <div className="mt-5 grid gap-3 md:grid-cols-3">
+      <div className="mt-4 grid gap-2 md:grid-cols-3">
         {copy.intro.pillars.map((pillar) => (
           <article
             key={pillar.title}
-            className="rounded-2xl border border-border bg-secondary/50 p-3"
+            className="rounded-2xl border border-border bg-secondary/50 p-2.5"
           >
             <h3 className="text-sm font-semibold text-foreground">{pillar.title}</h3>
-            <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground line-clamp-2">{pillar.body}</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-1">{pillar.body}</p>
           </article>
         ))}
       </div>
