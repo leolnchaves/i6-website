@@ -166,7 +166,7 @@ const HeroSuite = () => {
 
         {/* Camada central: título + pilha de decisões */}
         <div className="mt-10 grid flex-1 items-start gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-7 lg:z-10">
+          <div className="lg:col-span-7 lg:z-10 lg:self-center">
             <h1
               className="animate-sand-rise text-[2.1rem] leading-[1.08] sm:text-5xl lg:text-[3.6rem] font-bold text-foreground"
               style={{ animationDelay: '.08s' }}
