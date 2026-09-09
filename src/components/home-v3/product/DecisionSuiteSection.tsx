@@ -45,7 +45,7 @@ const DecisionSuiteSection = () => {
       </div>
 
       {/* Pilares em faixa horizontal */}
-      <div className="mt-12 grid gap-8 md:mt-14 md:grid-cols-3">
+      <div className="mt-7 grid gap-8 md:mt-8 md:grid-cols-3">
         {copy.intro.pillars.map((pillar) => (
           <article key={pillar.title} className="border-t border-border pt-5">
             <h3 className="text-sm font-semibold text-foreground">{pillar.title}</h3>
