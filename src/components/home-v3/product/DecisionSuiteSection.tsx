@@ -115,66 +115,69 @@ const DecisionSuiteSection = () => {
 
           <article
             key={active.id}
-            className="relative flex flex-col justify-between rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)]"
+            className="relative flex flex-col rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)]"
           >
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                {active.name}
-              </p>
-              <h4 className="mt-1.5 text-lg font-semibold leading-snug text-foreground md:text-xl">
-                {active.headline}
-              </h4>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+              {active.name}
+            </p>
+            <h4 className="mt-1.5 text-lg font-semibold leading-snug text-foreground md:text-xl">
+              {active.headline}
+            </h4>
 
-              <ul className="mt-3 grid gap-y-1.5 gap-x-4 border-t border-border pt-2.5 sm:grid-cols-2">
-                {capabilities.map((capability) => (
-                  <li key={capability} className="flex items-center gap-2 text-xs text-foreground">
-                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                    {capability}
-                  </li>
-                ))}
-              </ul>
+            <ul className="mt-3 grid gap-y-1.5 gap-x-4 border-t border-border pt-2.5 sm:grid-cols-2">
+              {capabilities.map((capability) => (
+                <li key={capability} className="flex items-center gap-2 text-xs text-foreground">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  {capability}
+                </li>
+              ))}
+            </ul>
 
-              <div className="mt-3 rounded-2xl bg-secondary p-2.5">
-                <div className="grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
-                  {flowSteps.map((step, index) => (
-                    <div key={step.label} className="contents">
-                      <div className={`rounded-xl p-2 text-center ${index === 1 ? 'bg-card shadow-[var(--sand-shadow-soft)]' : ''}`}>
-                        <span className={`block text-[10px] font-semibold uppercase tracking-[0.16em] ${index === 1 ? 'text-primary' : 'text-muted-foreground'}`}>
-                          {step.label}
+            <div className="mt-3 rounded-2xl bg-secondary p-2.5">
+              <div className="grid items-stretch gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
+                {flowSteps.map((step, index) => (
+                  <div key={step.label} className="contents">
+                    <div className={`rounded-xl p-2 text-center ${index === 1 ? 'bg-card shadow-[var(--sand-shadow-soft)]' : ''}`}>
+                      {step.pillar && (
+                        <span className="block text-[10px] font-medium leading-snug text-muted-foreground">
+                          {step.pillar}
                         </span>
-                        <span className="mt-0.5 block truncate text-[11px] font-medium leading-snug text-foreground">{step.value}</span>
-                      </div>
-                      {index < flowSteps.length - 1 && (
-                        <div className="hidden items-center justify-center sm:flex" aria-hidden="true">
-                          <ArrowRight size={12} className="text-primary" />
-                        </div>
                       )}
+                      <span className={`mt-1 block text-[10px] font-semibold uppercase tracking-[0.16em] ${index === 1 ? 'text-primary' : 'text-muted-foreground'}`}>
+                        {step.label}
+                      </span>
+                      <span className="mt-0.5 block text-[11px] font-medium leading-snug text-foreground">{step.value}</span>
                     </div>
-                  ))}
-                </div>
+                    {index < flowSteps.length - 1 && (
+                      <div className="hidden items-center justify-center sm:flex" aria-hidden="true">
+                        <ArrowRight size={12} className="text-primary" />
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            </div>
-
-            {/* CTAs */}
-            <div className="mt-4 flex flex-wrap gap-2.5">
-              <a
-                href={SUITE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110"
-              >
-                {contactCopy.suiteCta}
-                <ArrowUpRight size={14} aria-hidden="true" />
-              </a>
-              <Link
-                to={localized('/contact')}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-foreground px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
-              >
-                {contactCopy.contact}
-              </Link>
             </div>
           </article>
         </div>
+      </div>
+
+      {/* CTAs da seção */}
+      <div className="mt-5 flex flex-wrap items-center justify-start gap-2.5">
+        <a
+          href={SUITE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110"
+        >
+          {contactCopy.suiteCta}
+          <ArrowUpRight size={14} aria-hidden="true" />
+        </a>
+        <Link
+          to={localized('/contact')}
+          className="inline-flex items-center justify-center gap-2 rounded-full border border-foreground px-5 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
+        >
+          {contactCopy.contact}
+        </Link>
       </div>
     </section>
   );
