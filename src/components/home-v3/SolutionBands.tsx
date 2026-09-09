@@ -60,20 +60,20 @@ const SolutionBands = () => {
     <section className="border-y border-border">
       <div className="grid md:grid-cols-2">
         {bands.map((band) => (
-          <div key={band.label} className={`${band.tone} px-6 py-0 md:px-10 md:py-0 xl:py-1 border-b border-border md:border-b-0`}>
+          <div key={band.label} className={`${band.tone} px-6 py-1 md:px-10 md:py-1 xl:py-1.5 border-b border-border md:border-b-0`}>
             <div className="flex items-center gap-2 text-muted-foreground">
               <band.icon size={15} className="text-primary" aria-hidden />
               <p className="text-[10px] font-bold uppercase tracking-[0.2em]">{band.label}</p>
             </div>
-            <h2 className="mt-1.5 text-lg md:text-xl font-semibold leading-snug text-foreground">
+            <h2 className="mt-2 text-lg md:text-xl font-semibold leading-snug text-foreground">
               {band.title}
             </h2>
-            <p className="mt-1 max-w-xl text-xs md:text-sm leading-normal text-muted-foreground">
+            <p className="mt-1.5 max-w-xl text-xs md:text-sm leading-normal text-muted-foreground">
               {band.body}
             </p>
             <a
               href={band.href}
-              className="group mt-2 inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-primary"
+              className="group mt-2.5 inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-primary"
             >
               {band.cta}
               <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" aria-hidden />
