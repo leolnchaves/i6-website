@@ -62,7 +62,7 @@ const BuilderSection = () => {
   return (
     <section id="builder-platform" className="scroll-mt-24 bg-[#0B1224] text-white">
       {/* Abertura + pilares */}
-      <div className="mx-auto max-w-7xl px-6 pb-8 pt-14 md:pt-16">
+      <div className="container mx-auto px-6 pb-8 pt-14 md:pt-16">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F4845F]">
           {copy.eyebrow}
         </p>
@@ -84,7 +84,7 @@ const BuilderSection = () => {
       </div>
 
       {/* Faixa dividida: dois modos de entrega */}
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="container mx-auto px-6">
         <div className="grid overflow-hidden border-y border-white/10 lg:grid-cols-2">
           {modes.map((mode, i) => (
             <article
@@ -121,7 +121,7 @@ const BuilderSection = () => {
 
 
       {/* CTAs */}
-      <div className="mx-auto max-w-7xl px-6 pb-14 pt-8 md:pb-16">
+      <div className="container mx-auto px-6 pb-14 pt-8 md:pb-16">
         <div className="flex flex-wrap items-center justify-start gap-3">
           <Link
             to={localized('/i6-builders')}
