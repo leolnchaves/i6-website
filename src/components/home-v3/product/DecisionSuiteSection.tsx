@@ -64,8 +64,8 @@ const DecisionSuiteSection = () => {
 
       {/* Explorador de decisões */}
       <div className="mt-6 md:mt-8">
-        <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
-          <div>
+        <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:items-stretch lg:gap-0">
+          <div className="flex flex-col">
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
               {copy.products.eyebrow}
             </p>
@@ -79,7 +79,7 @@ const DecisionSuiteSection = () => {
             <div
               role="group"
               aria-label={copy.products.selectorLabel}
-              className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1"
+              className="relative mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:z-20 lg:flex lg:flex-1 lg:flex-col lg:gap-0"
             >
               {copy.products.items.map((product) => {
                 const isActive = product.id === active.id;
@@ -89,16 +89,16 @@ const DecisionSuiteSection = () => {
                     type="button"
                     onClick={() => setActiveId(product.id)}
                     aria-pressed={isActive}
-                    className={`relative min-w-0 overflow-hidden rounded-xl border px-3 py-2 pl-4 text-left transition-colors duration-300 ${
+                    className={`relative min-w-0 overflow-hidden px-3 py-2 pl-4 text-left transition-colors duration-300 ${
                       isActive
-                        ? 'border-primary/40 bg-card shadow-[var(--sand-shadow-soft)]'
-                        : 'border-border bg-secondary/40 hover:bg-card'
+                        ? 'rounded-xl border border-primary/40 bg-card shadow-[var(--sand-shadow-soft)] lg:z-30 lg:overflow-visible lg:rounded-l-[14px] lg:rounded-r-none lg:border-0 lg:border-b-0 lg:py-3 lg:shadow-[-20px_10px_40px_-15px_rgba(74,68,63,0.1)]'
+                        : 'rounded-xl border border-border bg-secondary/40 hover:bg-card lg:rounded-none lg:border-0 lg:border-b lg:border-foreground/5 lg:bg-transparent lg:py-3 lg:opacity-60 lg:hover:bg-transparent lg:hover:opacity-100 lg:last:border-b-0'
                     }`}
                   >
                     <span
                       aria-hidden="true"
                       className={`absolute inset-y-0 left-0 w-1 rounded-l-xl transition-colors duration-300 ${
-                        isActive ? 'bg-primary' : 'bg-transparent'
+                        isActive ? 'bg-primary lg:rounded-l-[10px]' : 'bg-transparent'
                       }`}
                     />
                     <span className={`block text-sm font-semibold ${isActive ? 'text-primary' : 'text-foreground'}`}>
@@ -107,6 +107,13 @@ const DecisionSuiteSection = () => {
                     <span className="mt-0.5 block truncate text-[11px] leading-snug text-muted-foreground">
                       {product.claim}
                     </span>
+                    {/* Ponte de emenda: cobre a borda esquerda do painel */}
+                    {isActive && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-y-0 -right-px z-30 hidden w-4 bg-card lg:block"
+                      />
+                    )}
                   </button>
                 );
               })}
@@ -115,7 +122,7 @@ const DecisionSuiteSection = () => {
 
           <article
             key={active.id}
-            className="sand-card !rounded-3xl flex flex-col justify-between p-4 motion-safe:animate-sand-rise md:p-5"
+            className="relative flex flex-col justify-between rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)]"
           >
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
