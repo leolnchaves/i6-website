@@ -134,7 +134,7 @@ const HeroSuite = () => {
 
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative flex-1 overflow-hidden">
       <div aria-hidden className="absolute inset-0 sand-glow" />
       <div
         aria-hidden
