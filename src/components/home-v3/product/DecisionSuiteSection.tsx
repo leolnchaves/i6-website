@@ -26,7 +26,10 @@ const DecisionSuiteSection = () => {
     { label: copy.products.flowLabels.value, value: active.flow.value },
   ];
 
-  const capabilities = active.capabilities.split('·').map((capability) => capability.trim());
+  const capabilities = active.capabilities
+    .split('·')
+    .map((capability) => capability.trim())
+    .slice(0, 4);
 
   return (
     <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-10 md:py-12">
