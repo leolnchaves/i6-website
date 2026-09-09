@@ -127,7 +127,7 @@ const BuilderSection = () => {
                     <Icon size={20} className={i === 0 ? 'text-white' : 'text-[#F4845F]'} aria-hidden />
                   </div>
                   <h4 className="text-sm font-semibold text-white">{pillar.title}</h4>
-                  <p className="mt-1.5 text-xs leading-snug text-slate-500 line-clamp-2">
+                  <p className="mt-1.5 text-xs leading-snug text-slate-500">
                     {pillar.body}
                   </p>
                 </article>
