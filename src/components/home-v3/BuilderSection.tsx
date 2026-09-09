@@ -1,7 +1,8 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Zap, TerminalSquare, Network, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
+import { builderCopy } from '@/data/i6Builders/content';
 
 const copyByLang = {
   pt: {
@@ -48,48 +49,109 @@ const copyByLang = {
   },
 };
 
+const pillarIcons = [Zap, TerminalSquare, Network, ShieldCheck];
+
+/**
+ * Faixa escura da home: abertura à esquerda, dois modos de uso empilhados
+ * (Embedded/OEM e Novo Produto) e quatro pilares em grade 2x2 com ícones.
+ */
 const BuilderSection = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, copyByLang);
+  const modes = pickLang(language, builderCopy).persona.modes;
   const localized = useLocalizedPath();
 
   return (
-    <section id="builder-platform" className="scroll-mt-24 container mx-auto px-6 py-20 md:py-28">
-      <div className="max-w-3xl">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">
-          {copy.eyebrow}
-        </p>
-        <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground">
-          {copy.title}
-        </h2>
-        <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
-          {copy.description}
-        </p>
-      </div>
+    <section id="builder-platform" className="scroll-mt-24 px-6 py-14 md:py-16">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#0B1224] p-8 text-white md:p-12 lg:p-14">
+        {/* Decoração: gradiente coral à direita + brilho difuso */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-[#F4845F]/5 to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[#F4845F]/10 blur-[100px]" aria-hidden />
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {copy.pillars.map((pillar) => (
-          <article key={pillar.title} className="sand-card sand-card-hover p-6">
-            <h3 className="text-base font-semibold text-foreground">{pillar.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{pillar.body}</p>
-          </article>
-        ))}
-      </div>
+        {/* Abertura */}
+        <div className="relative z-10 max-w-2xl">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F4845F]">
+            {copy.eyebrow}
+          </p>
+          <h2 className="text-2xl font-bold leading-[1.15] md:text-3xl lg:text-4xl">
+            {copy.title}
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-slate-400 md:text-[15px]">
+            {copy.description}
+          </p>
+        </div>
 
-      <div className="mt-10 flex flex-wrap items-center gap-3">
-        <Link
-          to={localized('/i6-builders')}
-          className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-        >
-          {copy.ctaPrimary}
-          <ArrowRight size={16} aria-hidden />
-        </Link>
-        <Link
-          to={localized('/contact')}
-          className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary/40"
-        >
-          {copy.ctaSecondary}
-        </Link>
+        {/* Corpo: modos à esquerda, pilares à direita */}
+        <div className="relative z-10 mt-8 grid gap-6 lg:grid-cols-12 lg:items-center">
+          {/* Modos de uso */}
+          <div className="flex flex-col gap-4 lg:col-span-5">
+            {modes.map((mode, i) => (
+              <article
+                key={mode.title}
+                className="group rounded-3xl border border-white/10 bg-white/5 p-5 transition-colors hover:border-[#F4845F]/50 md:p-6"
+              >
+                <div className="mb-2 flex items-center gap-3">
+                  <span className="font-mono text-xl font-bold text-[#F4845F]/50 transition-colors group-hover:text-[#F4845F]">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-lg font-semibold text-white">{mode.title}</h3>
+                </div>
+                <ul className="space-y-2 text-[13px] text-slate-400">
+                  {mode.points.map((point) => (
+                    <li key={point} className="flex items-center gap-2.5">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F4845F]" aria-hidden />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          {/* Pilares em grade 2x2 */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
+            {copy.pillars.map((pillar, i) => {
+              const Icon = pillarIcons[i];
+              return (
+                <article
+                  key={pillar.title}
+                  className="flex flex-col justify-center rounded-3xl border border-white/5 bg-white/[0.03] p-5"
+                >
+                  <div
+                    className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${
+                      i === 0
+                        ? 'bg-gradient-to-br from-[#F4845F] to-[#d46d4a]'
+                        : 'bg-white/10'
+                    }`}
+                  >
+                    <Icon size={20} className={i === 0 ? 'text-white' : 'text-[#F4845F]'} aria-hidden />
+                  </div>
+                  <h4 className="text-sm font-semibold text-white">{pillar.title}</h4>
+                  <p className="mt-1.5 text-xs leading-snug text-slate-500 line-clamp-2">
+                    {pillar.body}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* CTAs */}
+        <div className="relative z-10 mt-8 flex flex-wrap items-center gap-3">
+          <Link
+            to={localized('/i6-builders')}
+            className="inline-flex items-center gap-2 rounded-2xl bg-[#F4845F] px-7 py-3.5 text-sm font-bold text-[#0B1224] transition-all hover:-translate-y-0.5 hover:bg-[#ff9675]"
+          >
+            {copy.ctaPrimary}
+            <ArrowRight size={16} aria-hidden />
+          </Link>
+          <Link
+            to={localized('/contact')}
+            className="inline-flex items-center gap-2 rounded-2xl border border-white/20 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:border-white/50"
+          >
+            {copy.ctaSecondary}
+          </Link>
+        </div>
       </div>
     </section>
   );
