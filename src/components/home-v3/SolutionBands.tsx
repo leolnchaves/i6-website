@@ -52,37 +52,48 @@ const SolutionBands = () => {
   const copy = pickLang(language, copyByLang);
 
   const bands = [
-    { ...copy.suite, icon: Gauge, href: '#decision-suite', tone: 'bg-secondary/80' },
-    { ...copy.builder, icon: Blocks, href: '#builder-platform', tone: 'bg-muted/70 md:border-l md:border-border' },
+    { ...copy.suite, icon: Gauge, href: '#decision-suite', index: '01' },
+    { ...copy.builder, icon: Blocks, href: '#builder-platform', index: '02' },
   ];
 
   return (
-    <section className="border-y border-border">
-      <div className="grid md:grid-cols-2">
-        {bands.map((band) => (
-          <div key={band.label} className={`${band.tone} px-6 py-1 md:px-10 md:py-1 xl:py-1.5 border-b border-border md:border-b-0`}>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <band.icon size={15} className="text-primary" aria-hidden />
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em]">{band.label}</p>
-            </div>
-            <h2 className="mt-2 text-lg md:text-xl font-semibold leading-snug text-foreground">
-              {band.title}
-            </h2>
-            <p className="mt-1.5 max-w-xl text-xs md:text-sm leading-normal text-muted-foreground">
-              {band.body}
-            </p>
-            <a
-              href={band.href}
-              className="group mt-2.5 inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-primary"
+    <section className="border-t border-border">
+      <div className="container mx-auto px-6">
+        <div className="grid md:grid-cols-2 md:divide-x md:divide-border">
+          {bands.map((band, i) => (
+            <div
+              key={band.label}
+              className={`py-6 md:py-8 ${i === 0 ? 'border-b border-border md:border-b-0 md:pr-10' : 'md:pl-10'}`}
             >
-              {band.cta}
-              <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" aria-hidden />
-            </a>
-          </div>
-        ))}
+              <div className="flex items-start gap-5">
+                <span className="text-3xl font-bold leading-none text-primary/25 md:text-4xl">{band.index}</span>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <band.icon size={14} className="text-primary" aria-hidden />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em]">{band.label}</p>
+                  </div>
+                  <h2 className="mt-1.5 text-xl font-bold leading-snug text-foreground md:text-2xl">
+                    {band.title}
+                  </h2>
+                  <p className="mt-1.5 max-w-xl text-xs leading-normal text-muted-foreground md:text-sm">
+                    {band.body}
+                  </p>
+                  <a
+                    href={band.href}
+                    className="group mt-3 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-foreground transition-colors hover:text-primary"
+                  >
+                    {band.cta}
+                    <ArrowDown size={13} className="transition-transform group-hover:translate-y-0.5" aria-hidden />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
 export default SolutionBands;
+

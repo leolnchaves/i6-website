@@ -148,15 +148,27 @@ const HeroSuite = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-6 pt-32 pb-0 md:pt-32 md:pb-0">
-        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-start">
-          <div>
-            <span className="animate-sand-rise inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              {copy.eyebrow}
-            </span>
+      <div className="relative container mx-auto flex h-full flex-col px-6 pt-24 pb-6">
+        {/* Faixa superior: badge + provas */}
+        <div className="animate-sand-rise flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            {copy.eyebrow}
+          </span>
+          <ul className="flex flex-wrap gap-x-6 gap-y-1.5">
+            {copy.proof.map((p) => (
+              <li key={p} className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
 
+        {/* Camada central: título + pilha de decisões */}
+        <div className="mt-10 grid flex-1 items-start gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-7 lg:z-10">
             <h1
-              className="animate-sand-rise mt-5 text-[2.1rem] leading-[1.08] sm:text-5xl lg:text-[3.6rem] font-bold text-foreground"
+              className="animate-sand-rise text-[2.1rem] leading-[1.08] sm:text-5xl lg:text-[3.6rem] font-bold text-foreground"
               style={{ animationDelay: '.08s' }}
             >
               {copy.titleA}
@@ -168,75 +180,64 @@ const HeroSuite = () => {
             </h1>
 
             <p
-              className="animate-sand-rise mt-3 max-w-xl text-sm leading-normal text-muted-foreground"
+              className="animate-sand-rise mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
               style={{ animationDelay: '.16s' }}
             >
               {copy.sub}
             </p>
-
-            <ul className="animate-sand-rise mt-3 flex flex-wrap gap-x-5 gap-y-1.5" style={{ animationDelay: '.2s' }}>
-              {copy.proof.map((p) => (
-                <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  {p}
-                </li>
-              ))}
-            </ul>
-
           </div>
 
-          {/* Decision panel */}
-          <div className="animate-sand-rise relative" style={{ animationDelay: '.2s' }}>
-            <div className="sand-card p-5 relative overflow-hidden">
-              <div
-                aria-hidden
-                className="absolute top-0 left-0 h-px w-1/3 bg-gradient-to-r from-transparent via-primary to-transparent animate-sand-scan"
-              />
-              <div className="flex items-center justify-between mb-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  {copy.panelTitle}
-                </p>
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  {copy.panelNow}
-                </span>
-              </div>
+          {/* Decision stack */}
+          <div
+            className="animate-sand-rise relative lg:col-span-5 lg:-ml-8 xl:-ml-16"
+            style={{ animationDelay: '.2s' }}
+          >
+            <div className="mb-3 flex items-center justify-between gap-4 lg:justify-end">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                {copy.panelTitle}
+              </p>
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                {copy.panelNow}
+              </span>
+            </div>
 
-              <div
-                className="relative overflow-hidden"
-                style={{ height: FRAME }}
-                onMouseEnter={() => setPaused(true)}
-                onMouseLeave={() => setPaused(false)}
-              >
-                {slots.map((s, i) => (
+            <div
+              className="relative overflow-hidden"
+              style={{ height: FRAME }}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              {slots.map((s, i) => (
+                <div
+                  key={s.key}
+                  className={`absolute left-0 right-0 top-0 ${
+                    s.entering || cursor === 0 ? 'animate-decision-fade' : ''
+                  }`}
+                  style={{
+                    height: ROW,
+                    transform: `translateY(${s.pos * (ROW + GAP)}px)`,
+                    opacity: s.pos < 0 ? 0 : 1,
+                    transition: 'transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease',
+                    ...(cursor === 0 ? { animationDelay: `${0.4 + i * 0.14}s` } : null),
+                  }}
+                >
                   <div
-                    key={s.key}
-                    className={`absolute left-0 right-0 top-0 ${
-                      s.entering || cursor === 0 ? 'animate-decision-fade' : ''
+                    className={`h-full overflow-hidden rounded-[calc(var(--radius)-4px)] border border-border border-l-2 border-l-primary bg-card p-4 shadow-[var(--sand-shadow-soft)] ${
+                      s.pos === 1 ? 'lg:translate-x-3' : s.pos === 2 ? 'lg:translate-x-1.5' : ''
                     }`}
-                    style={{
-                      height: ROW,
-                      transform: `translateY(${s.pos * (ROW + GAP)}px)`,
-                      opacity: s.pos < 0 ? 0 : 1,
-                      transition: 'transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease',
-                      ...(cursor === 0 ? { animationDelay: `${0.4 + i * 0.14}s` } : null),
-                    }}
                   >
-                    <div className="h-full overflow-hidden rounded-[calc(var(--radius)-4px)] border border-border bg-secondary/60 p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <s.item.icon size={14} className="text-primary" />
-                        <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                          {s.item.tag}
-                        </span>
-                      </div>
-                      <p className="text-sm font-medium text-foreground leading-snug">{s.item.text}</p>
-                      <p className="mt-2 text-xs font-semibold text-primary">{s.item.impact}</p>
+                    <div className="mb-2 flex items-center gap-2">
+                      <s.item.icon size={14} className="text-primary" />
+                      <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                        {s.item.tag}
+                      </span>
                     </div>
+                    <p className="text-sm font-medium leading-snug text-foreground">{s.item.text}</p>
+                    <p className="mt-2 text-xs font-semibold text-primary">{s.item.impact}</p>
                   </div>
-                ))}
-              </div>
-
-
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -246,3 +247,4 @@ const HeroSuite = () => {
 };
 
 export default HeroSuite;
+

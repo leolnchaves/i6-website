@@ -21,7 +21,7 @@ const ClientProof = () => {
           key={`${keyPrefix}-${p.name}-${i}`}
           src={`${import.meta.env.BASE_URL}${p.logo.startsWith('/') ? p.logo.slice(1) : p.logo}`}
           alt={p.name}
-          className="h-5 sm:h-7 w-auto max-w-[120px] object-contain opacity-45 hover:opacity-90 transition-opacity shrink-0"
+          className="h-5 sm:h-6 w-auto max-w-[110px] object-contain opacity-45 hover:opacity-90 transition-opacity shrink-0"
           loading="lazy"
         />
       ))}
@@ -29,19 +29,21 @@ const ClientProof = () => {
   );
 
   return (
-    <section className="py-5 border-y border-border bg-secondary/40 flex flex-col items-center justify-center">
-      <p className="text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground mb-4 px-6">
-        {title}
-      </p>
-      <div className="relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[hsl(var(--background))] to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[hsl(var(--background))] to-transparent z-10" />
-        <div
-          className="flex items-center gap-10 w-max animate-marquee"
-          style={{ animationDuration: '38s' }}
-        >
-          {renderGroup('a')}
-          {renderGroup('b')}
+    <section className="border-t border-border">
+      <div className="container mx-auto flex flex-col items-center gap-3 px-6 py-4 md:flex-row md:gap-8">
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground md:shrink-0 md:text-left">
+          {title}
+        </p>
+        <div className="relative w-full overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[hsl(var(--background))] to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[hsl(var(--background))] to-transparent z-10" />
+          <div
+            className="flex items-center gap-10 w-max animate-marquee"
+            style={{ animationDuration: '38s' }}
+          >
+            {renderGroup('a')}
+            {renderGroup('b')}
+          </div>
         </div>
       </div>
     </section>

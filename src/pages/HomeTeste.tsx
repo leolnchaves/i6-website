@@ -15,16 +15,14 @@ const HomeTeste = () => (
   <>
     <SEOHead page="home" />
     <div className="theme-sand">
-      <div className="flex flex-col md:min-h-screen">
-        <div className="flex-1 min-h-0">
+      <div className="flex flex-col md:h-[100svh]">
+        <div className="flex flex-1 min-h-0 flex-col">
           <HeroSuite />
         </div>
-        <div className="flex flex-col">
-          <SolutionBands />
-          <div className="h-1.5 md:h-2" aria-hidden />
-          <ClientProof />
-        </div>
+        <SolutionBands />
+        <ClientProof />
       </div>
+
       <DecisionSuiteSection />
       <BuilderSection />
       <WhyInfinity6 />
