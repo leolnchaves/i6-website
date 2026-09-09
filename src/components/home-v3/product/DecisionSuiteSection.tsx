@@ -118,18 +118,14 @@ const DecisionSuiteSection = () => {
             className="sand-card !rounded-3xl flex flex-col justify-between p-5 motion-safe:animate-sand-rise md:p-6"
           >
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 {active.name}
               </p>
-              <h4 className="mt-3 text-xl font-semibold leading-snug text-foreground md:text-2xl">
+              <h4 className="mt-2 text-xl font-semibold leading-snug text-foreground md:text-2xl">
                 {active.headline}
               </h4>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">{active.body}</p>
-              <p className="mt-4 border-l-2 border-primary/40 pl-4 text-sm leading-relaxed text-foreground/80">
-                {active.pain}
-              </p>
 
-              <ul className="mt-5 grid gap-y-2 gap-x-4 border-t border-border pt-4 sm:grid-cols-2">
+              <ul className="mt-4 grid gap-y-2 gap-x-4 border-t border-border pt-3 sm:grid-cols-2">
                 {capabilities.map((capability) => (
                   <li key={capability} className="flex items-center gap-2 text-xs text-foreground">
                     <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
@@ -138,15 +134,15 @@ const DecisionSuiteSection = () => {
                 ))}
               </ul>
 
-              <div className="mt-5 rounded-2xl bg-secondary p-3">
+              <div className="mt-4 rounded-2xl bg-secondary p-3">
                 <div className="grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
                   {flowSteps.map((step, index) => (
                     <div key={step.label} className="contents">
-                      <div className={`rounded-xl p-3 text-center ${index === 1 ? 'bg-card shadow-[var(--sand-shadow-soft)]' : ''}`}>
-                        <span className={`block text-[10px] font-semibold uppercase tracking-[0.18em] ${index === 1 ? 'text-primary' : 'text-muted-foreground'}`}>
+                      <div className={`rounded-xl p-2.5 text-center ${index === 1 ? 'bg-card shadow-[var(--sand-shadow-soft)]' : ''}`}>
+                        <span className={`block text-[10px] font-semibold uppercase tracking-[0.16em] ${index === 1 ? 'text-primary' : 'text-muted-foreground'}`}>
                           {step.label}
                         </span>
-                        <span className="mt-1 block text-xs font-medium leading-snug text-foreground">{step.value}</span>
+                        <span className="mt-1 block truncate text-xs font-medium leading-snug text-foreground">{step.value}</span>
                       </div>
                       {index < flowSteps.length - 1 && (
                         <div className="hidden items-center justify-center sm:flex" aria-hidden="true">
@@ -160,19 +156,19 @@ const DecisionSuiteSection = () => {
             </div>
 
             {/* CTAs */}
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-5 flex flex-wrap gap-3">
               <a
                 href={SUITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110"
               >
                 {contactCopy.suiteCta}
                 <ArrowUpRight size={16} aria-hidden="true" />
               </a>
               <Link
                 to={localized('/contact')}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
               >
                 {contactCopy.contact}
               </Link>
