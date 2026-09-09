@@ -21,9 +21,21 @@ const DecisionSuiteSection = () => {
   const active = copy.products.items.find((product) => product.id === activeId) ?? copy.products.items[0];
 
   const flowSteps = [
-    { label: copy.products.flowLabels.input, value: active.flow.input },
-    { label: copy.products.flowLabels.decision, value: active.flow.decision },
-    { label: copy.products.flowLabels.value, value: active.flow.value },
+    {
+      label: copy.products.flowLabels.input,
+      value: active.flow.input,
+      pillar: copy.intro.pillars[0]?.title,
+    },
+    {
+      label: copy.products.flowLabels.decision,
+      value: active.flow.decision,
+      pillar: copy.intro.pillars[1]?.title,
+    },
+    {
+      label: copy.products.flowLabels.value,
+      value: active.flow.value,
+      pillar: copy.intro.pillars[2]?.title,
+    },
   ];
 
   const capabilities = active.capabilities
