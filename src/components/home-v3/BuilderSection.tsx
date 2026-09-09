@@ -1,4 +1,4 @@
-import { ArrowRight, Zap, TerminalSquare, Network, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
