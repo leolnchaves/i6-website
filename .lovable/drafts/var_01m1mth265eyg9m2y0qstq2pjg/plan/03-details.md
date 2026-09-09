@@ -1,15 +1,19 @@
 ## Detalhes de execução
 
-Arquivos tocados: `src/pages/HomeTeste.tsx`, `src/components/home-v3/HeroSuite.tsx`, `src/components/home-v3/SolutionBands.tsx`, `src/components/home-v3/ClientProof.tsx`.
+Arquivos tocados: `src/components/home-v3/HeroSuite.tsx`, `src/components/home-v3/SolutionBands.tsx`, `src/components/home-v3/ClientProof.tsx`, `src/pages/HomeTeste.tsx`.
 
-**HomeTeste** — a primeira dobra passa a ser um único `flex flex-col md:h-[100svh]` com três filhos: hero (cresce), faixas das frentes e prova social (ambas com altura natural). O gap artificial entre faixas e prova social sai; a separação vira a régua superior de cada bloco. O hero recebe `justify-center` para o conteúdo respirar igualmente acima e abaixo em vez de grudar no header.
+**HeroSuite** — passa a ser `flex flex-col` com três camadas e padding vertical simétrico (`pt-24 pb-6`):
+1. Linha superior: badge à esquerda (mantendo o pill com borda e o texto atual) e as três provas à direita em `text-[10px] uppercase tracking-[0.16em]`, separadas por pontos terracota; empilha abaixo de `lg`.
+2. Camada central: grid de 12 colunas — título em `col-span-8` com `text-[3.2rem] xl:text-[3.6rem] leading-[0.95] tracking-[-0.04em]` (mantendo as quebras em quatro linhas e `decisão preditiva` em `text-primary`) e subtítulo em `max-w-xl` logo abaixo. A pilha de decisões vai em `col-span-4` com `-ml-16 xl:-ml-24` para sobrepor a coluna do título; cada cartão em `bg-card border-l-2 border-primary` com sombra suave e deslocamentos alternados (`translate-x-2 / translate-x-6 / translate-x-4`) que se anulam no hover.
+3. O carrossel atual é preservado: mesma lógica de `cursor`, `slots`, transição e pausa no hover, com `ROW`/`GAP` recalculados (aproximadamente `ROW 92` / `GAP 16`) e cartões contendo tag, frase e métrica em terracota. O cabeçalho "Próxima melhor decisão / agora" vira um rótulo discreto acima da pilha, alinhado à direita.
+4. Abaixo de `lg` a pilha volta a ficar em coluna cheia, sem sobreposição negativa.
 
-**HeroSuite** — `pt-32 pb-0` vira um padding vertical simétrico e menor (`pt-24 pb-8`), com o grid `lg:grid-cols-[1.05fr_0.95fr]` mantido e `items-start` preservado para o painel alinhar pelo topo do título. Badge ganha borda em terracota suave (`border-primary/20`) e texto no acento, como no protótipo. Subtítulo sobe para `text-base` com `leading-relaxed` e as três provas ficam no rodapé da coluna esquerda (`mt-auto`), alinhando-se à base do painel. Painel: `p-6`, cabeçalho com mais respiro e três cartões visíveis com `ROW`/`GAP` recalculados para caber na altura disponível (aproximadamente `ROW 104` / `GAP 12`), mantendo a rotação e o hover que pausa.
+**SolutionBands** — deixa de ser duas faixas de largura total e passa a ser a camada inferior lateral: `grid grid-cols-12` com Decision Suite em `col-span-3` (alinhada à esquerda) e Builder em `col-span-3` (alinhada à direita, `text-right`, com a seta antes do rótulo), ambas com `border-t border-border pt-4`, eyebrow, título curto, descrição em `text-[13px]` e "Saiba mais" com `ArrowDown`. Os destinos `#decision-suite` e `#builder-platform` não mudam. Abaixo de `md` as duas empilham à esquerda com os logos no fim.
 
-**SolutionBands** — a `<section>` perde `border-y` e passa a ter apenas `border-t`; fundo único `bg-card/60` nas duas metades (nenhum lado mais chamativo que o outro), divisor central `md:border-l md:border-border`, padding interno generoso (`px-10 py-6`) e hover suave para `bg-card`. O `Saiba mais` mantém destino e seta para baixo; o título ganha hover em terracota.
+**ClientProof** — perde as bordas e o fundo próprio; vira o miolo central da camada inferior (`col-span-6`), com rótulo centralizado e marquee de logos mantido, incluindo os fades laterais. O componente recebe uma prop opcional de variante para não afetar outros usos, se houver.
 
-**ClientProof** — mantém `border-t` (sem `border-b`), fundo areia levemente distinto, rótulo e marquee centralizados, altura estável (`py-5`) e os gradientes laterais de fade preservados.
+**HomeTeste** — a primeira dobra vira um único bloco `md:h-[100svh] flex flex-col`: `HeroSuite` cresce e a camada inferior (`SolutionBands` + `ClientProof` no mesmo grid) fecha a tela. Os gaps intermediários e o `border-y` atual saem.
 
-Sem mudanças em textos, hooks, rotas, âncoras (`#decision-suite`, `#builder-platform`) ou nas seções abaixo da dobra.
+Sem mudanças em textos, hooks, rotas, âncoras ou nas seções abaixo da dobra.
 
-**Validação** — typecheck e build; verificação visual em 1280×800 e 1440×900 nos três idiomas, medindo os três intervalos verticais e confirmando que a faixa de logos termina dentro da tela sem rolagem; mobile 390×844 empilhado. Sem release nem deploy.
+**Validação** — typecheck e build; verificação visual em 1280×800 e 1440×900 nos três idiomas, confirmando que a faixa de logos termina dentro da tela sem rolagem e que os cartões sobrepostos não cobrem o texto do título; mobile 390×844 empilhado. Sem release nem deploy.

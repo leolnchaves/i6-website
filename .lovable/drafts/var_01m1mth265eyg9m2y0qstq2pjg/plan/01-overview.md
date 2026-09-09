@@ -1,12 +1,11 @@
-# Primeira tela da home: composição em quatro zonas
+# Primeira tela da home: camadas assimétricas
 
-Direção escolhida: **Equilíbrio estrutural**. A primeira tela deixa de ser um empilhamento apertado e passa a ter quatro zonas com ritmo próprio, separadas por réguas finas em vez de blocos colados:
+Direção escolhida: **Camadas assimétricas**. A primeira tela deixa de ser "duas colunas + duas faixas + logos" e passa a ser uma composição em três camadas que se sobrepõem, com uma afirmação tipográfica dominante.
 
-1. **Zona da tese** — badge, título, subtítulo e as três provas à esquerda; painel de decisões à direita, alinhado pelo topo do título.
-2. **Régua** — linha fina de largura total que fecha a zona da tese.
-3. **Zona das duas frentes** — i6 Decision Suite e i6 Builder Platform lado a lado, cada uma com bastante respiro interno, divididas por uma linha vertical, com fundo levemente mais claro para se destacarem do fundo areia.
-4. **Faixa de prova social** — rótulo e logos, centralizados, fechando a tela.
+- **Faixa superior** — o badge "AI DECISION INTELLIGENCE" na borda esquerda e, na mesma linha, à direita, as três provas em letras pequenas e espaçadas. Elas saem de baixo do subtítulo e viram assinatura do topo.
+- **Camada central** — o título ocupa dois terços da largura em corpo bem maior, com "decisão preditiva" em terracota; o subtítulo fica logo abaixo. As decisões viram uma pilha de cartões brancos com filete terracota à esquerda, deslocados horizontalmente em degrau e invadindo a coluna do título, criando profundidade em vez de um painel fechado ao lado.
+- **Camada inferior** — as duas frentes descem para as margens: i6 Decision Suite à esquerda, i6 Builder Platform à direita (alinhada à direita), cada uma sob uma régua fina, com "Saiba mais" e a seta para baixo. No centro, entre elas, o rótulo e a faixa de logos.
 
-Nada de texto muda: título, subtítulo, provas, cartões de decisão, nomes e descrições das duas frentes, "Saiba mais" com seta para baixo e o rótulo dos logos ficam exatamente como estão hoje, nos três idiomas. O painel animado continua rodando as decisões e a faixa de logos continua deslizando.
+Assim as duas frentes deixam de competir com o painel: elas emolduram a prova social na base, e o olho vai do título para as decisões e depois para a escolha de caminho.
 
-O que muda é o espaço: os intervalos entre header → tese, tese → frentes e frentes → prova social ficam visualmente equivalentes, e o conjunto inteiro cabe na tela de um MacBook 13" (1280×800) sem rolagem.
+Nada de texto muda: título, subtítulo, provas, decisões (tag, frase e métrica), nomes e descrições das duas frentes, "Saiba mais" e o rótulo dos logos ficam exatamente como estão hoje, nos três idiomas. As decisões continuam rotativas e os logos continuam deslizando.
