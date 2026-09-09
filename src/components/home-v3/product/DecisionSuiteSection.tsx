@@ -29,7 +29,7 @@ const DecisionSuiteSection = () => {
   const capabilities = active.capabilities.split('·').map((capability) => capability.trim());
 
   return (
-    <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-12 md:py-14">
+    <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-10 md:py-12">
       {/* Abertura única */}
       <div className="max-w-3xl">
         <img
@@ -47,11 +47,11 @@ const DecisionSuiteSection = () => {
       </div>
 
       {/* Pilares em cartões subordinados */}
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-6 grid gap-3 md:grid-cols-3">
         {copy.intro.pillars.map((pillar) => (
           <article
             key={pillar.title}
-            className="rounded-2xl border border-border bg-secondary/50 p-4"
+            className="rounded-2xl border border-border bg-secondary/50 p-3.5"
           >
             <h3 className="text-sm font-semibold text-foreground">{pillar.title}</h3>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{pillar.body}</p>
@@ -60,7 +60,7 @@ const DecisionSuiteSection = () => {
       </div>
 
       {/* Explorador de decisões */}
-      <div className="mt-10 md:mt-12">
+      <div className="mt-8 md:mt-9">
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
@@ -112,7 +112,7 @@ const DecisionSuiteSection = () => {
 
           <article
             key={active.id}
-            className="sand-card !rounded-3xl flex flex-col justify-between p-6 motion-safe:animate-sand-rise md:p-8"
+            className="sand-card !rounded-3xl flex flex-col justify-between p-5 motion-safe:animate-sand-rise md:p-6"
           >
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
@@ -126,7 +126,7 @@ const DecisionSuiteSection = () => {
                 {active.pain}
               </p>
 
-              <ul className="mt-6 grid gap-y-2 gap-x-4 border-t border-border pt-5 sm:grid-cols-2">
+              <ul className="mt-5 grid gap-y-2 gap-x-4 border-t border-border pt-4 sm:grid-cols-2">
                 {capabilities.map((capability) => (
                   <li key={capability} className="flex items-center gap-2 text-xs text-foreground">
                     <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
@@ -135,7 +135,7 @@ const DecisionSuiteSection = () => {
                 ))}
               </ul>
 
-              <div className="mt-6 rounded-2xl bg-secondary p-4">
+              <div className="mt-5 rounded-2xl bg-secondary p-3">
                 <div className="grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
                   {flowSteps.map((step, index) => (
                     <div key={step.label} className="contents">
@@ -157,7 +157,7 @@ const DecisionSuiteSection = () => {
             </div>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href={SUITE_URL}
                 target="_blank"
