@@ -10,50 +10,58 @@
   <text x="22" y="24">header</text>
 
   <!-- faixa superior -->
-  <rect x="24" y="50" width="132" height="16" fill="none" stroke="hsl(var(--muted-foreground))" rx="3"/>
-  <text x="32" y="62" font-size="9">AI DECISION INTELLIGENCE</text>
-  <text x="300" y="62" font-size="9">MOTORES · MODELO FUNDACIONAL · XAI</text>
+  <rect x="24" y="48" width="136" height="16" fill="hsl(var(--foreground))" rx="2"/>
+  <text x="32" y="60" font-size="9" fill="hsl(var(--background))">AI DECISION INTELLIGENCE</text>
+  <circle cx="316" cy="56" r="2" fill="hsl(var(--accent))"/>
+  <text x="324" y="59" font-size="9">Motores</text>
+  <circle cx="392" cy="56" r="2" fill="hsl(var(--accent))"/>
+  <text x="400" y="59" font-size="9">Modelo fundacional</text>
+  <circle cx="512" cy="56" r="2" fill="hsl(var(--accent))"/>
+  <text x="520" y="59" font-size="9">XAI</text>
 
-  <!-- titulo dominante -->
-  <text x="24" y="106" class="lbl" font-size="18">A plataforma de</text>
-  <text x="24" y="132" class="lbl" font-size="18" fill="hsl(var(--accent))">decisão preditiva</text>
-  <text x="24" y="158" class="lbl" font-size="18">mais avançada da</text>
-  <text x="24" y="184" class="lbl" font-size="18">América Latina</text>
-  <rect x="24" y="200" width="250" height="7" class="bar" rx="4"/>
-  <rect x="24" y="214" width="210" height="7" class="bar" rx="4"/>
+  <!-- titulo (forma atual) -->
+  <text x="24" y="100" class="lbl" font-size="17">A plataforma de</text>
+  <text x="24" y="124" class="lbl" font-size="17" fill="hsl(var(--accent))">decisão preditiva</text>
+  <text x="24" y="148" class="lbl" font-size="17">mais avançada da</text>
+  <text x="24" y="172" class="lbl" font-size="17">América Latina</text>
+  <rect x="24" y="190" width="250" height="7" class="bar" rx="4"/>
+  <rect x="24" y="204" width="200" height="7" class="bar" rx="4"/>
 
-  <!-- pilha de decisões em degrau, invadindo a coluna do titulo -->
-  <g>
-    <rect x="352" y="96" width="256" height="52" fill="hsl(var(--card))" stroke="hsl(var(--border))" rx="6"/>
-    <rect x="352" y="96" width="3" height="52" fill="hsl(var(--accent))"/>
-    <text x="366" y="114" font-size="9">DISCOVERY</text>
-    <text x="366" y="132" font-size="11" fill="hsl(var(--accent))">+4,1 p.p. de margem no ticket</text>
-
-    <rect x="376" y="158" width="256" height="52" fill="hsl(var(--card))" stroke="hsl(var(--border))" rx="6"/>
-    <rect x="376" y="158" width="3" height="52" fill="hsl(var(--accent))"/>
-    <text x="390" y="176" font-size="9">ESPARSIDADE</text>
-    <text x="390" y="194" font-size="11" fill="hsl(var(--accent))">+18% de cobertura</text>
-
-    <rect x="364" y="220" width="256" height="52" fill="hsl(var(--card))" stroke="hsl(var(--border))" rx="6"/>
-    <rect x="364" y="220" width="3" height="52" fill="hsl(var(--accent))"/>
-    <text x="378" y="238" font-size="9">METAS</text>
-    <text x="378" y="256" font-size="11" fill="hsl(var(--accent))">+9% de atingimento</text>
+  <!-- pilha animada -->
+  <text x="616" y="86" font-size="9" text-anchor="end">PRÓXIMA MELHOR DECISÃO · AGORA</text>
+  <g opacity="0.55">
+    <rect x="368" y="94" width="248" height="46" fill="hsl(var(--card))" stroke="hsl(var(--border))" rx="6"/>
+    <rect x="368" y="94" width="3" height="46" fill="hsl(var(--accent))"/>
+    <text x="382" y="110" font-size="9">DISCOVERY  ↑ saindo em fade</text>
   </g>
+  <rect x="380" y="150" width="248" height="46" fill="hsl(var(--card))" stroke="hsl(var(--border))" rx="6"/>
+  <rect x="380" y="150" width="3" height="46" fill="hsl(var(--accent))"/>
+  <text x="394" y="166" font-size="9">ESPARSIDADE</text>
+  <text x="394" y="184" font-size="10" fill="hsl(var(--accent))">+18% de cobertura</text>
 
-  <!-- camada inferior: frentes nas margens + logos no centro -->
-  <line x1="24" y1="318" x2="176" y2="318" class="rail"/>
-  <text x="24" y="336" font-size="9">I6 DECISION SUITE</text>
-  <text x="24" y="354" class="lbl">Pronta para decidir</text>
-  <text x="24" y="374" fill="hsl(var(--accent))">Saiba mais ↓</text>
+  <rect x="372" y="206" width="248" height="46" fill="hsl(var(--card))" stroke="hsl(var(--border))" rx="6"/>
+  <rect x="372" y="206" width="3" height="46" fill="hsl(var(--accent))"/>
+  <text x="386" y="222" font-size="9">METAS  ↓ entrando pela base</text>
+  <text x="386" y="240" font-size="10" fill="hsl(var(--accent))">+9% de atingimento</text>
 
-  <line x1="464" y1="318" x2="616" y2="318" class="rail"/>
-  <text x="616" y="336" font-size="9" text-anchor="end">I6 BUILDER PLATFORM</text>
-  <text x="616" y="354" class="lbl" text-anchor="end">Diferenciar e escalar</text>
-  <text x="616" y="374" fill="hsl(var(--accent))" text-anchor="end">Saiba mais ↓</text>
+  <!-- camada inferior: duas colunas numeradas -->
+  <line x1="24" y1="286" x2="616" y2="286" class="rail"/>
+  <line x1="320" y1="286" x2="320" y2="364" class="rail"/>
 
-  <text x="320" y="336" font-size="9" text-anchor="middle">LÍDERES QUE TRANSFORMAM ANTECIPAÇÃO EM VANTAGEM</text>
-  <rect x="212" y="352" width="46" height="11" class="bar" rx="5"/>
-  <rect x="268" y="352" width="46" height="11" class="bar" rx="5"/>
-  <rect x="324" y="352" width="46" height="11" class="bar" rx="5"/>
-  <rect x="380" y="352" width="46" height="11" class="bar" rx="5"/>
+  <text x="36" y="326" font-size="30" font-weight="700" fill="hsl(var(--accent))" opacity="0.25">01</text>
+  <text x="92" y="312" class="lbl" font-size="16">i6 Decision Suite</text>
+  <text x="92" y="330" font-size="11">Inteligência pronta para decidir</text>
+  <text x="92" y="352" font-size="10" fill="hsl(var(--accent))">SAIBA MAIS ↓</text>
+
+  <text x="336" y="326" font-size="30" font-weight="700" fill="hsl(var(--accent))" opacity="0.25">02</text>
+  <text x="392" y="312" class="lbl" font-size="16">i6 Builder Platform</text>
+  <text x="392" y="330" font-size="11">Inteligência para diferenciar e escalar</text>
+  <text x="392" y="352" font-size="10" fill="hsl(var(--accent))">SAIBA MAIS ↓</text>
+
+  <line x1="24" y1="376" x2="616" y2="376" class="rail"/>
+  <text x="24" y="398" font-size="9">LÍDERES QUE TRANSFORMAM ANTECIPAÇÃO EM VANTAGEM</text>
+  <rect x="396" y="390" width="44" height="10" class="bar" rx="5"/>
+  <rect x="448" y="390" width="44" height="10" class="bar" rx="5"/>
+  <rect x="500" y="390" width="44" height="10" class="bar" rx="5"/>
+  <rect x="552" y="390" width="44" height="10" class="bar" rx="5"/>
 </svg>
