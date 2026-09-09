@@ -62,8 +62,8 @@ const BuilderSection = () => {
   const localized = useLocalizedPath();
 
   return (
-    <section id="builder-platform" className="scroll-mt-24 px-6 py-14 md:py-16">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#0B1224] p-8 text-white md:p-12 lg:p-14">
+    <section id="builder-platform" className="scroll-mt-24 px-6 py-10 md:py-12">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#0B1224] p-8 text-white md:p-10 lg:p-12">
         {/* Decoração: gradiente coral à direita + brilho difuso */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-[#F4845F]/5 to-transparent" aria-hidden />
         <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[#F4845F]/10 blur-[100px]" aria-hidden />
@@ -82,7 +82,7 @@ const BuilderSection = () => {
         </div>
 
         {/* Corpo: modos à esquerda, pilares à direita */}
-        <div className="relative z-10 mt-8 grid gap-6 lg:grid-cols-12 lg:items-center">
+        <div className="relative z-10 mt-7 grid gap-6 lg:grid-cols-12 lg:items-center">
           {/* Modos de uso */}
           <div className="flex flex-col gap-4 lg:col-span-5">
             {modes.map((mode, i) => (
@@ -137,7 +137,7 @@ const BuilderSection = () => {
         </div>
 
         {/* CTAs */}
-        <div className="relative z-10 mt-8 flex flex-wrap items-center gap-3">
+        <div className="relative z-10 mt-7 flex flex-wrap items-center gap-3">
           <Link
             to={localized('/i6-builders')}
             className="inline-flex items-center gap-2 rounded-2xl bg-[#F4845F] px-7 py-3.5 text-sm font-bold text-[#0B1224] transition-all hover:-translate-y-0.5 hover:bg-[#ff9675]"
