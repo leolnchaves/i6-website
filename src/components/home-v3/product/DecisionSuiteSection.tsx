@@ -64,7 +64,7 @@ const DecisionSuiteSection = () => {
 
       {/* Explorador de decisões */}
       <div className="mt-6 md:mt-8">
-        <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:items-stretch lg:gap-0">
+        <div className="grid items-start gap-5 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-stretch lg:gap-0">
           <div className="flex flex-col">
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
               {copy.products.eyebrow}
