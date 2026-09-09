@@ -69,7 +69,7 @@ const BlogHero = ({ article }: Props) => {
         {/* Coluna da imagem: 100% da própria coluna, encostando na borda */}
         <div className="relative">
           <Link to={href} className="group block overflow-hidden rounded-l-[2rem]">
-            <div className="relative h-[260px] w-full bg-secondary sm:h-[340px] lg:h-[420px]">
+            <div className="relative h-[260px] w-full bg-secondary sm:h-[340px] lg:h-[380px]">
               {cover ? (
                 <img
                   src={cover}

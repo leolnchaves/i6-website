@@ -14,7 +14,7 @@ const BlogIntro = ({ total }: Props) => {
 
   return (
     <section className="relative">
-      <div className="mx-auto max-w-7xl px-6 pt-24 pb-6 md:pt-28 md:pb-8">
+      <div className="mx-auto max-w-7xl px-6 pt-24 pb-6 md:pt-24 md:pb-6">
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-primary">
