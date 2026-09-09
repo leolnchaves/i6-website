@@ -2,12 +2,12 @@
 
 Arquivo único: `src/components/home-v3/product/DecisionSuiteSection.tsx`.
 
-- Seção: `py-20 md:py-28` → `py-12 md:py-14`.
-- Abertura: `max-w-3xl` mantido; logo + `h2` + descrição; remover a faixa atual de pilares em 3 colunas.
-- Pilares: faixa subordinada `mt-8 border-y border-border py-3 flex flex-wrap gap-x-8 gap-y-2`; cada item `flex items-center gap-2` com marcador `h-1.5 w-1.5 rounded-full bg-primary`, número `01/02/03` e título curto em `text-xs font-semibold uppercase tracking-wider text-muted-foreground`. Textos: títulos dos pilares atuais, sem corpo (o corpo longo é removido da faixa — o significado permanece nos títulos).
-- Explorador: `mt-8 grid gap-6 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]`; coluna da lista com eyebrow + título `text-xl` (descrição da suíte removida do cabeçalho do explorador para economizar altura — o texto é preservado se couber, senão omitido) + botões em coluna.
-- Botões de produto: `p-3`, nome `text-sm font-semibold` e `product.claim` sempre visível em `text-xs leading-snug text-muted-foreground line-clamp-1` (não só no ativo). Ativo: `border-primary/40 bg-card` + nome `text-primary`.
-- Painel: `sand-card p-6 md:p-7 flex flex-col`; topo em `grid lg:grid-cols-[1fr_minmax(0,240px)] gap-6`: headline + corpo à esquerda, dor como cartão lateral (`bg-secondary/60 rounded p-4`, rótulo pequeno em `text-primary`). Capacidades em `text-xs` com marcadores. Fluxo em `mt-auto pt-5 grid sm:grid-cols-[1fr_auto_1fr_auto_1fr]` com chevrons `aria-hidden`. Mantém `key={active.id}` e `motion-safe:animate-sand-rise`.
-- CTAs: `mt-8 flex flex-wrap justify-center gap-3`, mesmos destinos (`SUITE_URL` com `ArrowUpRight`, `localized('/contact')`).
-- Mobile: tudo empilha naturalmente; lista pode ir a 2 colunas abaixo de `lg` se necessário para não alongar.
-- Ao final: typecheck, build e verificação visual PT/EN/ES em 1280×800, 1440×900 e 390×844 — seção inteira sem scroll no desktop, sem overflow no mobile. Sem publicação.
+- Seção: padding vertical reduzido (`py-12 md:py-14`); container mantém `#decision-suite`.
+- Abertura: logo, `h2` e parágrafo mantêm exatamente classes de tipografia/cor atuais (grafite, sem `text-primary` em parte do título); só o `mb` diminui.
+- Pilares: `mt-8 grid gap-4 md:grid-cols-3`; cada pilar é um cartão `rounded-2xl border border-border bg-secondary/50 p-4` com `h3 text-sm font-semibold` e a **descrição completa** em `text-xs leading-relaxed text-muted-foreground` (nada truncado).
+- Explorador: `mt-8 grid gap-6 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]`; eyebrow PRODUTOS + título mantidos.
+- Itens de produto: `rounded-xl p-3 text-left border-l-4 border-transparent`, nome `text-sm font-semibold`, `product.claim` sempre visível em `text-xs text-muted-foreground`. Ativo: `border-l-primary bg-secondary` + leve sombra.
+- Painel: `rounded-3xl border border-border bg-card p-6 md:p-8 flex flex-col justify-between`; título, corpo, capacidades em `grid grid-cols-2 gap-y-2` com marcador terracota, fluxo Entrada/Decisão/Valor em faixa `rounded-2xl bg-secondary p-4` com setas `aria-hidden`. Mantém `key={active.id}` e a animação atual.
+- CTAs no rodapé do painel: `rounded-full`, mesmos destinos (`SUITE_URL` com `ArrowUpRight`, `localized('/contact')`).
+- Mobile: pilares empilham, lista vira 2 colunas se necessário, painel abaixo.
+- Ao final: typecheck, build e verificação visual PT/EN/ES em 1280×800, 1440×900 e 390×844 — seção completa sem scroll no desktop e sem overflow no mobile. Sem publicação.
