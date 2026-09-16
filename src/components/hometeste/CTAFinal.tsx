@@ -41,7 +41,7 @@ const CTAFinal = () => {
     <section className="theme-sand bg-background px-4 py-12 sm:px-6 md:py-20" aria-labelledby="success-stories-cta-title">
       <div className="container mx-auto max-w-6xl px-0">
         <div className="sand-glow relative overflow-hidden rounded-[2rem] border border-primary/15 bg-accent px-6 py-10 shadow-sm sm:px-10 md:rounded-[2.5rem] md:px-16 md:py-16">
-          <div className="relative z-10 max-w-3xl">
+          <div className="relative z-10">
             <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
               {copy.eyebrow}
             </p>
@@ -52,7 +52,7 @@ const CTAFinal = () => {
               {copy.description}
             </p>
 
-            <div className="mt-9 flex flex-col items-start gap-6 md:mt-10">
+            <div className="mt-9 flex flex-col items-start gap-6 md:mt-10 md:flex-row md:items-center md:gap-8">
               <Button asChild variant="outline" size="lg" className="group h-auto min-h-12 w-full whitespace-normal rounded-full border-primary/30 bg-transparent px-6 py-3 text-left font-semibold text-foreground hover:border-primary/50 hover:bg-background sm:w-auto sm:min-w-[17.5rem]">
                 <Link to={localized('/contact')}>
                   <span>{copy.contact}</span>
@@ -60,7 +60,7 @@ const CTAFinal = () => {
                 </Link>
               </Button>
 
-              <nav aria-label={copy.eyebrow} className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:gap-x-10">
+              <nav aria-label={copy.eyebrow} className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:gap-x-8 md:flex-nowrap">
                 <a
                   href={SUITE_URL}
                   target="_blank"
