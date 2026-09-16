@@ -1,0 +1,41 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: var(--font-sans); fill: var(--fg-primary); }
+    .lbl { font-size: 14px; font-weight: 480; }
+    .sm { font-size: 12px; fill: var(--fg-secondary); }
+    .mono { font-family: var(--font-mono); font-size: 12px; fill: var(--fg-secondary); }
+    .box { fill: none; stroke: var(--fg-secondary); stroke-width: 1; }
+    .wire { stroke: var(--fg-secondary); stroke-width: 1; fill: none; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 1 L6 4 L0 7" fill="none" stroke="var(--fg-secondary)"/>
+    </marker>
+  </defs>
+
+  <rect class="box" x="8" y="60" width="150" height="110" rx="8"/>
+  <text class="lbl" x="20" y="84">Formulário /community</text>
+  <text class="mono" x="20" y="106">reason: i6-community</text>
+  <text class="mono" x="20" y="124">source: i6-community</text>
+  <text class="mono" x="20" y="142">subscription: Interesse…</text>
+
+  <line class="wire" x1="160" y1="115" x2="238" y2="115" marker-end="url(#a)"/>
+
+  <rect class="box" x="240" y="60" width="150" height="110" rx="8" fill="var(--bg-accent-translucent)" stroke="var(--fg-accent)"/>
+  <text class="lbl" x="252" y="84" fill="var(--fg-accent)">Gravação na planilha</text>
+  <text class="mono" x="252" y="106" fill="var(--fg-accent)">subscription  ✓</text>
+  <text class="mono" x="252" y="124" fill="var(--fg-accent)">source  — sem coluna</text>
+  <text class="mono" x="252" y="142" fill="var(--fg-accent)">reason  — sem coluna</text>
+
+  <line class="wire" x1="392" y1="115" x2="470" y2="115" marker-end="url(#a)"/>
+
+  <rect class="box" x="472" y="60" width="160" height="110" rx="8"/>
+  <text class="lbl" x="484" y="84">i6 HUB</text>
+  <text class="sm" x="484" y="106">procura “i6-community”</text>
+  <text class="sm" x="484" y="124">não encontra</text>
+  <text class="sm" x="484" y="142">→ Leads Capturados</text>
+
+  <circle cx="256" cy="200" r="9" fill="var(--bg-accent-translucent)"/>
+  <text x="256" y="204" text-anchor="middle" font-size="11" fill="var(--fg-accent)">1</text>
+  <text class="sm" x="274" y="204">a perda acontece aqui, entre o site e a planilha — hipótese a confirmar</text>
+</svg>
