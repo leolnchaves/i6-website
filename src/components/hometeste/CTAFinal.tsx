@@ -1,56 +1,86 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
+
+const ctaCopy = {
+  pt: {
+    eyebrow: 'Próximo passo',
+    title: 'Qual será a próxima decisão que sua empresa vai antecipar?',
+    description: 'Escolha como avançar com a inteligência da infinity6',
+    contact: 'Falar com o time técnico',
+    suite: 'Conhecer o i6 Decision Suite',
+    builders: 'Construir com a i6 Builder Platform',
+  },
+  en: {
+    eyebrow: 'Next step',
+    title: 'What decision will your company anticipate next?',
+    description: 'Choose how to move forward with infinity6 intelligence',
+    contact: 'Talk to the technical team',
+    suite: 'Explore the i6 Decision Suite',
+    builders: 'Build with the i6 Builder Platform',
+  },
+  es: {
+    eyebrow: 'Próximo paso',
+    title: '¿Cuál será la próxima decisión que anticipará su empresa?',
+    description: 'Elija cómo avanzar con la inteligencia de infinity6',
+    contact: 'Hablar con el equipo técnico',
+    suite: 'Conocer i6 Decision Suite',
+    builders: 'Construir con i6 Builder Platform',
+  },
+} as const;
 
 const CTAFinal = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const isMobile = useIsMobile();
-
-  const copy = {
-    pt: {
-      line1: 'O mercado não espera.',
-      line2Start: 'Sua próxima decisão também ',
-      lineHighlight: 'não deveria.',
-      cta: isMobile ? 'Antecipe sua\npróxima decisão' : 'Antecipe sua próxima decisão',
-    },
-    en: {
-      line1: "The market doesn't wait.",
-      line2Start: 'Your next decision ',
-      lineHighlight: "shouldn't either.",
-      cta: isMobile ? 'Anticipate your\nnext decision' : 'Anticipate your next decision',
-    },
-    es: {
-      line1: 'El mercado no espera.',
-      line2Start: 'Su próxima decisión tampoco ',
-      lineHighlight: 'debería.',
-      cta: isMobile ? 'Anticipe su\npróxima decisión' : 'Anticipe su próxima decisión',
-    },
-  }[language] ?? {
-    line1: "The market doesn't wait.",
-    line2Start: 'Your next decision ',
-    lineHighlight: "shouldn't either.",
-    cta: isMobile ? 'Anticipate your\nnext decision' : 'Anticipate your next decision',
-  };
+  const copy = ctaCopy[language] ?? ctaCopy.en;
 
   return (
-    <section className="relative py-14 md:py-20 bg-gradient-to-br from-[#F4845F] via-[#E8764A] to-[#0B1224] overflow-hidden">
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug">
-          {copy.line1}<br />
-          <span className="md:whitespace-nowrap">
-            {copy.line2Start}<span className="text-[#0B1224] bg-white/90 px-2 py-0.5 rounded">{copy.lineHighlight}</span>
-          </span>
-        </p>
-        <Link
-          to={localized('/contact')}
-          className={`group inline-flex items-center gap-2 mt-10 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border border-white/50 animate-glow-white transition-all duration-500 ease-out hover:bg-white hover:text-[#0B1224] hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4),0_0_60px_rgba(255,255,255,0.15)] ${isMobile ? 'whitespace-pre-line text-center' : ''}`}
-        >
-          {copy.cta}
-          <ArrowRight size={18} className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1" />
-        </Link>
+    <section className="theme-sand bg-background px-4 py-12 sm:px-6 md:py-20" aria-labelledby="success-stories-cta-title">
+      <div className="container mx-auto max-w-6xl px-0">
+        <div className="sand-glow relative overflow-hidden rounded-[2rem] border border-primary/15 bg-accent px-6 py-10 shadow-sm sm:px-10 md:rounded-[2.5rem] md:px-16 md:py-16">
+          <div className="relative z-10 max-w-3xl">
+            <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+              {copy.eyebrow}
+            </p>
+            <h2 id="success-stories-cta-title" className="text-3xl font-bold leading-[1.12] text-foreground md:text-[2.75rem]">
+              {copy.title}
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              {copy.description}
+            </p>
+
+            <div className="mt-9 flex flex-col items-start gap-6 md:mt-10">
+              <Button asChild variant="outline" size="lg" className="group h-auto min-h-12 w-full whitespace-normal rounded-full border-primary/30 bg-transparent px-6 py-3 text-left font-semibold text-foreground hover:border-primary/50 hover:bg-background sm:w-auto sm:min-w-[17.5rem]">
+                <Link to={localized('/contact')}>
+                  <span>{copy.contact}</span>
+                  <ArrowRight aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </Button>
+
+              <nav aria-label={copy.eyebrow} className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:gap-x-10">
+                <a
+                  href={SUITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  {copy.suite}
+                  <ArrowRight aria-hidden="true" size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+                <Link
+                  to={localized('/i6-builders')}
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  {copy.builders}
+                  <ArrowRight aria-hidden="true" size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
