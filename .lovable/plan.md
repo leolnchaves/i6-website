@@ -1,55 +1,37 @@
-# Padronizar `source` e `reason` nos envios de lead
+# Corrigir o campo empresa nos formulários de conteúdo
 
-## Resultado da investigação sobre `first_touch_source`
+## O que está errado hoje
 
-Boa notícia: **isso já existe e já funciona** — nenhum código novo é necessário.
+Nos formulários de conteúdo — o de liberação (gate) e o que aparece dentro do artigo — o campo **empresa** é gravado com o **título do artigo/research**. Esses formulários só pedem nome e e-mail, então nunca houve empresa real ali. O comportamento existe desde 6 de agosto de 2026 e não foi introduzido pela padronização de origem/razão desta sessão.
 
-1. **Captura de UTM:** existe hoje em `src/lib/tracker.ts`. Na primeira visita o site lê as UTMs da URL (`utm_source`, `utm_medium`, `utm_campaign` etc.), o site de origem (referrer) e a página de entrada.
-2. **Persistência entre páginas:** já implementada. O primeiro acesso é gravado em armazenamento local (`i6_first_touch`) e **só é escrito uma vez** — se o lead voltar dias depois por uma página sem UTM, o valor original é preservado. O acesso mais recente é guardado em separado (`i6_last_touch`).
-3. **Campo no payload:** `first_touch_source` (junto com `first_touch_medium`, `first_touch_campaign`, `first_touch_referrer`, `first_touch_landing_page` e os equivalentes de `last_touch`) já é enviado hoje em **todos os formulários**, inclusive no Kiosk — todos usam a mesma função de contexto do lead. Quando não há UTM, o campo vai vazio, sem valor inventado.
+Contato, i6 Builders e Comunidade já gravam a empresa digitada pelo usuário e não mudam.
 
-**Conclusão:** o item de `first_touch_source` sai do escopo de implementação; ele já se comporta exatamente como pedido, inclusive no Kiosk. A validação de envio confirmará o valor chegando na planilha.
+## Investigação (concluída)
 
-## O que muda de fato
+1. UI do gate e do CTA de artigo: apenas nome e e-mail (mais o campo invisível anti-robô). Nunca teve empresa.
+2. O valor vem de uma atribuição direta `company: title` no envio — não é fallback, nem sobra de razão.
+3. Pré-existente desde a criação dos dois formulários (6/8/2026); a mudança desta sessão tocou só a razão.
+4. Contato / i6 Builders / Comunidade estão corretos. O Ebook do Kiosk tem o mesmo padrão, mas fica fora.
+5. Provavelmente todos os leads de conteúdo desde 6/8/2026 têm título no campo empresa. Identificáveis na planilha pelas linhas com razão "i6 Blog" ou "i6 Deep Research".
 
-Os formulários (contato, i6 Builders, comunidade e materiais ricos) passam a enviar:
+## Mudança
 
-- **`source`**: sempre `"i6-website"` (identificador fixo do canal site → HUB).
-- **`reason`**: a razão legível do contato — o que o cliente escolheu ou o item em que clicou.
+Enviar empresa **vazia** nos dois formulários de conteúdo. O título continua indo no corpo da mensagem (com slug, ID e URL), então nenhuma informação é perdida.
 
-O Kiosk/Ebook (/demo) fica **fora** da regra de `source`/`reason` — `src/components/kiosk/EbookCTA.tsx` não será tocado. O `insight_id` (+ slug e URL na mensagem) não muda.
+Fora de escopo: aparência dos formulários, validações, razão/origem, dados de UTM e jornada, identificador de conteúdo, e o Ebook do Kiosk.
 
-### Valores de `reason` por formulário
+## Detalhes técnicos
 
-| Formulário | `reason` enviado |
-|---|---|
-| Contato (/contact) | Rótulo em PT do assunto escolhido: "Vendas — i6 Decision Suite", "Parcerias", "Imprensa" ou "Outro" |
-| i6 Builders (/i6-builders) | "i6 Builders" |
-| Comunidade (/community) | "i6 Community" |
-| Gate de artigo do blog (/i6-blog) | "i6 Blog" |
-| Gate de research (i6 Intelligence) | "i6 Deep Research" |
-| CTA dentro de artigo do blog | "i6 Blog" |
-| CTA dentro de research | "i6 Deep Research" |
-| Ebook / Kiosk (/demo) | **Sem mudança — fora da regra** |
-
-Os rótulos são fixos em PT nos três idiomas — são chaves de triagem na planilha, não texto de UI.
-
-### Arquivos alterados
-
-1. **`src/lib/leadFormConfig.ts`** — `normalizeLeadFields` passa a gravar sempre `source = "i6-website"`, deixando de derivar esse valor do parâmetro de origem. A assinatura e o parâmetro de origem são mantidos como estão (investigação anterior confirmou que ele não alimenta analytics, eventos nem roteamento de e-mail).
-2. **`src/components/contact/ContactForm.tsx`** — `reason` vira "i6 Builders" / "i6 Community" nas variantes, e o rótulo em PT do assunto escolhido na variante padrão (mapa fixo das 4 opções), em vez do valor técnico. `subscription` continua igual.
-3. **`src/components/insights/LeadGateForm.tsx`** e **`ArticleCTAForm.tsx`** — `reason` vira "i6 Blog" (insights) ou "i6 Deep Research" (research).
-
-## O que não muda
-
-Aparência dos formulários, validações, UTMs e jornada já enviados, `insight_id`, campo `subscription`, assinatura da `normalizeLeadFields`, EbookCTA.
-
-## Antes de aplicar
-
-Mostro o diff de cada arquivo alterado para sua aprovação antes de aplicar.
+- `src/components/insights/LeadGateForm.tsx` (linha 143): `company: title` → `company: ''`.
+- `src/components/insights/ArticleCTAForm.tsx` (linha 119): `company: title` → `company: ''`.
+- `title` continua usado na montagem da mensagem e nas dependências do callback — sem variável órfã.
+- Não tocar em `src/components/kiosk/EbookCTA.tsx`, `src/lib/leadFormConfig.ts` nem em `src/lib/tracker.ts`.
 
 ## Validação
 
-- Build OK.
-- Envio de teste na prévia em pelo menos 3 fluxos (contato com assunto "Parcerias", comunidade e um gate de research), confirmando na planilha `source = "i6-website"`, `reason` com o rótulo esperado e `first_touch_source` correto — um envio com UTM na URL e um sem.
-- Se o HUB rejeitar algum valor novo de `reason`, paro e aviso antes de publicar.
+- Build sem erros.
+- Envio de teste na prévia em um gate de research e em um CTA de artigo do blog, confirmando na planilha: empresa vazia, razão com o rótulo esperado e origem "i6-website".
+
+## Limpeza dos leads antigos (opcional, fora desta mudança)
+
+A correção não altera as linhas já gravadas. Se quiser, depois eu indico como filtrar e limpar o campo empresa desses leads históricos na planilha.
