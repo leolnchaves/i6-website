@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 interface Props {
   content: OurAIContent['closing'];
@@ -37,7 +38,7 @@ const OurAIClosing = memo(({ content }: Props) => {
               <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
             <a
-              href="https://i6decision.ai"
+              href={SUITE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
