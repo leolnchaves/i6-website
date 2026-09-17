@@ -1,21 +1,25 @@
-# Padronizar `source` e `reason` em todos os envios de lead
+# Padronizar `source` e `reason` nos envios de lead
 
-## Objetivo
+## Resultado da investigação sobre `first_touch_source`
 
-Os formulários do site (contato, i6 Builders, comunidade e materiais ricos) passam a enviar:
+Boa notícia: **isso já existe e já funciona** — nenhum código novo é necessário.
 
-- **`source`**: sempre `"i6-website"` (valor fixo, igual para todo envio vindo do site).
+1. **Captura de UTM:** existe hoje em `src/lib/tracker.ts`. Na primeira visita o site lê as UTMs da URL (`utm_source`, `utm_medium`, `utm_campaign` etc.), o site de origem (referrer) e a página de entrada.
+2. **Persistência entre páginas:** já implementada. O primeiro acesso é gravado em armazenamento local (`i6_first_touch`) e **só é escrito uma vez** — se o lead voltar dias depois por uma página sem UTM, o valor original é preservado. O acesso mais recente é guardado em separado (`i6_last_touch`).
+3. **Campo no payload:** `first_touch_source` (junto com `first_touch_medium`, `first_touch_campaign`, `first_touch_referrer`, `first_touch_landing_page` e os equivalentes de `last_touch`) já é enviado hoje em **todos os formulários**, inclusive no Kiosk — todos usam a mesma função de contexto do lead. Quando não há UTM, o campo vai vazio, sem valor inventado.
+
+**Conclusão:** o item de `first_touch_source` sai do escopo de implementação; ele já se comporta exatamente como pedido, inclusive no Kiosk. A validação de envio confirmará o valor chegando na planilha.
+
+## O que muda de fato
+
+Os formulários (contato, i6 Builders, comunidade e materiais ricos) passam a enviar:
+
+- **`source`**: sempre `"i6-website"` (identificador fixo do canal site → HUB).
 - **`reason`**: a razão legível do contato — o que o cliente escolheu ou o item em que clicou.
 
-O Kiosk/Ebook (/demo) fica **fora** desta regra e continua exatamente como está. O `insight_id` (+ slug e URL no corpo da mensagem) não muda.
+O Kiosk/Ebook (/demo) fica **fora** da regra de `source`/`reason` — `src/components/kiosk/EbookCTA.tsx` não será tocado. O `insight_id` (+ slug e URL na mensagem) não muda.
 
-## Investigação prévia (já feita)
-
-Grep por `normalizeLeadFields` e `LeadSource` em `src/`: o parâmetro de origem é usado **apenas** como argumento da `normalizeLeadFields` nos 4 call-sites (ContactForm, LeadGateForm, ArticleCTAForm, EbookCTA) e no `reason` atual do ContactForm. Nenhum uso em analytics, nome de evento, roteamento de e-mail ou outra lógica downstream.
-
-**Decisão:** conforme sua instrução, o parâmetro de origem **não será removido** da assinatura — a função só deixa de usá-lo para derivar `source`.
-
-## Novos valores de `reason` por formulário
+### Valores de `reason` por formulário
 
 | Formulário | `reason` enviado |
 |---|---|
@@ -26,29 +30,26 @@ Grep por `normalizeLeadFields` e `LeadSource` em `src/`: o parâmetro de origem 
 | Gate de research (i6 Intelligence) | "i6 Deep Research" |
 | CTA dentro de artigo do blog | "i6 Blog" |
 | CTA dentro de research | "i6 Deep Research" |
-| Ebook / Kiosk (/demo) | **Sem mudança — excluído da regra** |
+| Ebook / Kiosk (/demo) | **Sem mudança — fora da regra** |
 
-Os rótulos de `reason` são fixos em PT nos três idiomas — são chaves de triagem na planilha, não texto de UI.
+Os rótulos são fixos em PT nos três idiomas — são chaves de triagem na planilha, não texto de UI.
 
-## O que muda no código
+### Arquivos alterados
 
-1. **`src/lib/leadFormConfig.ts`** — `normalizeLeadFields` passa a gravar sempre `source = "i6-website"`, ignorando o parâmetro de origem para esse fim. A assinatura e o parâmetro são mantidos (sem quebrar os call-sites).
-2. **`src/components/contact/ContactForm.tsx`** — `reason` passa a ser:
-   - variante `builders` → "i6 Builders"; variante `community` → "i6 Community";
-   - variante `default` → o rótulo em PT do assunto escolhido no select (mapa fixo das 4 opções), em vez do valor técnico (`sales_suite` etc.). O campo `subscription` continua levando o valor do assunto como hoje, sem mudança.
+1. **`src/lib/leadFormConfig.ts`** — `normalizeLeadFields` passa a gravar sempre `source = "i6-website"`, deixando de derivar esse valor do parâmetro de origem. A assinatura e o parâmetro de origem são mantidos como estão (investigação anterior confirmou que ele não alimenta analytics, eventos nem roteamento de e-mail).
+2. **`src/components/contact/ContactForm.tsx`** — `reason` vira "i6 Builders" / "i6 Community" nas variantes, e o rótulo em PT do assunto escolhido na variante padrão (mapa fixo das 4 opções), em vez do valor técnico. `subscription` continua igual.
 3. **`src/components/insights/LeadGateForm.tsx`** e **`ArticleCTAForm.tsx`** — `reason` vira "i6 Blog" (insights) ou "i6 Deep Research" (research).
-4. **`src/components/kiosk/EbookCTA.tsx`** — **não mexer**.
 
 ## O que não muda
 
-Aparência dos formulários, validações, UTMs/jornada já enviados, `insight_id`, campo `subscription`, assinatura da `normalizeLeadFields`.
+Aparência dos formulários, validações, UTMs e jornada já enviados, `insight_id`, campo `subscription`, assinatura da `normalizeLeadFields`, EbookCTA.
 
 ## Antes de aplicar
 
-Apresento o diff de cada arquivo para sua aprovação antes de aplicar, junto com o resultado do grep (acima). Não aplico automaticamente.
+Mostro o diff de cada arquivo alterado para sua aprovação antes de aplicar.
 
 ## Validação
 
 - Build OK.
-- Envio de teste na prévia em pelo menos 3 fluxos (contato com assunto "Parcerias", comunidade e um gate de research), confirmando na planilha que `source` chega como "i6-website" e `reason` com o rótulo esperado.
-- Se o HUB rejeitar algum valor novo de `reason` (validação de valores permitidos), paro e aviso antes de publicar.
+- Envio de teste na prévia em pelo menos 3 fluxos (contato com assunto "Parcerias", comunidade e um gate de research), confirmando na planilha `source = "i6-website"`, `reason` com o rótulo esperado e `first_touch_source` correto — um envio com UTM na URL e um sem.
+- Se o HUB rejeitar algum valor novo de `reason`, paro e aviso antes de publicar.
