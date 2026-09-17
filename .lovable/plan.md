@@ -59,3 +59,13 @@ Sem mudança de aparência, validações, campos de UTM/jornada, `insight_id` ou
 - Compilação sem erros.
 - Envio de teste na pré-visualização: eBook sob /i6-intelligence (esperado `reason = "i6 Deep Research"`, etiqueta de research, assunto `research:<slug>`, URL da mensagem em /i6-intelligence) e artigo sob /i6-blog (esperado `reason = "i6 Blog"`).
 - Conferir que a chave de desbloqueio gravada e o evento disparado continuam os mesmos de hoje para o mesmo conteúdo.
+
+## Verificação do link (basePath) — resultado
+
+**1. O que /insights/&lt;slug&gt; faz hoje:** a rota existe e resolve. Ela carrega a mesma página de artigo e, pelo tipo da peça, redireciona: artigo de blog → `/i6-blog/<slug>`; eBook → `/i6-intelligence/<slug>`; conteúdo de mídia permanece em `/insights/<slug>`. Ou seja, o link antigo **não dá 404** — chega ao conteúdo certo por redirecionamento. O único efeito colateral conhecido é o redirecionamento não preservar parâmetros de campanha (bug já identificado antes, fora deste escopo).
+
+**2. É histórico?** Sim. O `basePath` derivado do tipo existe desde a criação dos dois formulários (6/8/2026), antes de a seção /i6-blog existir; não foi introduzido nesta sessão. Nenhum código do site lê ou interpreta o texto da mensagem do lead — ele é gravado como texto na planilha. Não há automação no repositório dependente desse formato; se houver algum filtro manual/planilha do lado do HUB, isso está fora do que consigo inspecionar.
+
+**3. Volume afetado:** não é possível contar daqui — não tenho acesso à planilha. Dá para identificar filtrando as linhas cuja mensagem contém "/insights/" (e cruzando com as linhas de gate/CTA de conteúdo).
+
+**Conclusão prática:** o link não está quebrado, só desatualizado. Corrigir o `basePath` junto com a mudança de seção é seguro e de baixo risco; deixá-lo como está também não quebra nada.
