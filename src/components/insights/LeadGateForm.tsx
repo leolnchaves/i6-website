@@ -144,7 +144,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
             message,
             subscription: `${kind}:${slug}`,
             insight_id: id || '',
-            reason: origin,
+            reason: kind === 'research' ? 'i6 Deep Research' : 'i6 Blog',
             token: SHARED_FORM_TOKEN,
             // Anexa todos os campos de tracking planos (anonymous_id,
             // session_id, first/last touch, journey, language, user_agent).

@@ -41,6 +41,19 @@ const FIXED_SUBJECT: Record<Exclude<ContactFormVariant, 'default'>, string> = {
   builders: 'Interesse — i6 Builders',
 };
 
+/** Rótulos de triagem (campo `reason` da planilha). Fixos em PT nos 3 idiomas. */
+const SUBJECT_REASON_PT: Record<string, string> = {
+  sales_suite: 'Vendas — i6 Decision Suite',
+  partnerships: 'Parcerias',
+  press: 'Imprensa',
+  other: 'Outro',
+};
+
+const VARIANT_REASON: Record<Exclude<ContactFormVariant, 'default'>, string> = {
+  builders: 'i6 Builders',
+  community: 'i6 Community',
+};
+
 export interface ContactFormProps {
   /** Pré-preenchimento (ex.: landing /go/:token com dados do lead do HUB) */
   defaultValues?: Partial<Pick<FormData, 'name' | 'email' | 'company' | 'subject' | 'message'>>;
@@ -197,7 +210,7 @@ const ContactForm = memo(({
           company: data.company || '',
           message: enrichedMessage,
           subscription: fixedSubjectValue ?? data.subject,
-          reason: leadSource,
+          reason: isFixedSubject ? VARIANT_REASON[variant as Exclude<ContactFormVariant, 'default'>] : (SUBJECT_REASON_PT[data.subject] ?? ''),
           token: SHARED_FORM_TOKEN,
           ...getLeadContextFields(),
           ...(extraFields || {}),
