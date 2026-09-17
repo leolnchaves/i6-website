@@ -116,7 +116,7 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
           {
             name: data.name,
             email: data.email,
-            company: title,
+            company: '',
             message,
             subscription: kind === 'research' ? `research:${slug}` : `blog:${slug}`,
             insight_id: id || '',
