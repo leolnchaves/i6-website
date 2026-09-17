@@ -120,7 +120,7 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
             message,
             subscription: kind === 'research' ? `research:${slug}` : `blog:${slug}`,
             insight_id: id || '',
-            reason: origin,
+            reason: kind === 'research' ? 'i6 Deep Research' : 'i6 Blog',
             token: SHARED_FORM_TOKEN,
             ...getLeadContextFields(),
           },

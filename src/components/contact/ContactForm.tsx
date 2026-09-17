@@ -41,6 +41,19 @@ const FIXED_SUBJECT: Record<Exclude<ContactFormVariant, 'default'>, string> = {
   builders: 'Interesse — i6 Builders',
 };
 
+/** Rótulos de triagem (campo `reason` da planilha). Fixos em PT nos 3 idiomas. */
+const SUBJECT_REASON_PT: Record<string, string> = {
+  sales_suite: 'Vendas — i6 Decision Suite',
+  partnerships: 'Parcerias',
+  press: 'Imprensa',
+  other: 'Outro',
+};
+
+const VARIANT_REASON: Record<Exclude<ContactFormVariant, 'default'>, string> = {
+  builders: 'i6 Builders',
+  community: 'i6 Community',
+};
+
 export interface ContactFormProps {
   /** Pré-preenchimento (ex.: landing /go/:token com dados do lead do HUB) */
   defaultValues?: Partial<Pick<FormData, 'name' | 'email' | 'company' | 'subject' | 'message'>>;

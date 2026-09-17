@@ -87,7 +87,10 @@ export function normalizeLeadFields(
   Object.entries(fields).forEach(([k, v]) => {
     out[k] = v == null ? '' : String(v);
   });
-  out.source = source.slice(0, LEAD_SOURCE_MAX_LEN);
+  // source passa a ser o identificador fixo do canal site → HUB.
+  // O parâmetro `source` (LeadSource) é mantido na assinatura por
+  // compatibilidade com os call-sites, mas não alimenta mais este campo.
+  out.source = 'i6-website';
   REQUIRED_LEAD_FIELDS.forEach((k) => {
     if (typeof out[k] !== 'string') out[k] = '';
   });
