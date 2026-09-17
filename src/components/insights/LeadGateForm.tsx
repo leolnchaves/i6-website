@@ -140,7 +140,7 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
           {
             name: data.name,
             email: data.email,
-            company: title,
+            company: '',
             message,
             subscription: `${kind}:${slug}`,
             insight_id: id || '',
