@@ -5,6 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath, stripLangPrefix } from '@/utils/localizedPath';
 import logoHeader from '@/assets/images/logo-header.png';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 import LanguageMenu from './LanguageMenu';
 
 
@@ -77,7 +78,7 @@ const HeaderNovo = () => {
 
   const rightLinks = [{ to: localized('/success-stories'), label: t('header.successStories') }];
 
-  const decisionPlatform = { href: 'https://www.i6decision.ai', label: t('header.decisionPlatform') };
+  const decisionPlatform = { href: SUITE_URL, label: t('header.decisionPlatform') };
 
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 

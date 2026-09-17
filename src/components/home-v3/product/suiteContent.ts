@@ -37,7 +37,7 @@ export interface SuiteCopy {
   };
 }
 
-export const SUITE_URL = 'https://www.i6decision.ai';
+export const SUITE_URL = 'https://i6decision.ai';
 
 export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   pt: {

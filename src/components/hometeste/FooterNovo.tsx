@@ -5,6 +5,7 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIsMobile } from '@/hooks/use-mobile';
 import logoFooter from '@/assets/images/logo-footer.png';
 import { useCallback } from 'react';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 
 const FooterNovo = () => {
   const { t, language } = useLanguage();
@@ -49,7 +50,7 @@ const FooterNovo = () => {
         : '© 2025 Infinity6.ai. All rights reserved.';
 
   const navLinks: { to: string; label: string; external?: boolean }[] = [
-    { to: 'https://www.i6decision.ai', label: 'i6 Decision Suite', external: true },
+    { to: SUITE_URL, label: 'i6 Decision Suite', external: true },
     { to: localized('/our-ai'), label: t('header.solutions.proprietaryAi') },
     { to: localized('/success-stories'), label: t('header.successStories') },
     { to: localized('/contact'), label: t('header.contact') },
