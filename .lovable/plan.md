@@ -1,37 +1,61 @@
-# Corrigir o campo empresa nos formulários de conteúdo
+# Seção da URL como base do rótulo dos leads de conteúdo
 
-## O que está errado hoje
+## Relatório da investigação
 
-Nos formulários de conteúdo — o de liberação (gate) e o que aparece dentro do artigo — o campo **empresa** é gravado com o **título do artigo/research**. Esses formulários só pedem nome e e-mail, então nunca houve empresa real ali. O comportamento existe desde 6 de agosto de 2026 e não foi introduzido pela padronização de origem/razão desta sessão.
+**1. Rotas e componentes**
 
-Contato, i6 Builders e Comunidade já gravam a empresa digitada pelo usuário e não mudam.
+- `/{idioma}/i6-blog/:slug` → renderiza direto a página de artigo (`InsightArticle`).
+- `/{idioma}/i6-intelligence/:slug` → passa por um seletor (`IntelligenceOrInsightArticle`) que decide:
+  - é peça de research → página de research (`IntelligenceArticle`, sempre `kind="research"`);
+  - é eBook → **a mesma página de artigo do blog** (`InsightArticle`, sempre `kind="insight"`);
+  - é artigo antigo → redireciona para `/i6-blog/<slug>`;
+  - nada encontrado → volta para `/i6-intelligence`.
 
-## Investigação (concluída)
+Ou seja: existem duas rotas distintas, mas a página de artigo é compartilhada pelas duas seções — daí a incoerência atual.
 
-1. UI do gate e do CTA de artigo: apenas nome e e-mail (mais o campo invisível anti-robô). Nunca teve empresa.
-2. O valor vem de uma atribuição direta `company: title` no envio — não é fallback, nem sobra de razão.
-3. Pré-existente desde a criação dos dois formulários (6/8/2026); a mudança desta sessão tocou só a razão.
-4. Contato / i6 Builders / Comunidade estão corretos. O Ebook do Kiosk tem o mesmo padrão, mas fica fora.
-5. Provavelmente todos os leads de conteúdo desde 6/8/2026 têm título no campo empresa. Identificáveis na planilha pelas linhas com razão "i6 Blog" ou "i6 Deep Research".
+**2. Existe sinal confiável da seção no ponto do formulário?**
 
-## Mudança
+Sim, mas hoje não é usado. A página de artigo não recebe nenhuma prop de seção; o único sinal disponível é o `pathname` do router. `stripLangPrefix` remove só o prefixo de idioma (`/pt`, `/en`, `/es`) e não normaliza barra final — um caminho como `/pt/i6-blog/slug/` deixa segmento vazio no fim. Qualquer leitura de pathname precisa cortar barras nas duas pontas antes de comparar o primeiro segmento.
 
-Enviar empresa **vazia** nos dois formulários de conteúdo. O título continua indo no corpo da mensagem (com slug, ID e URL), então nenhuma informação é perdida.
+**3. Mecanismo proposto**
 
-Fora de escopo: aparência dos formulários, validações, razão/origem, dados de UTM e jornada, identificador de conteúdo, e o Ebook do Kiosk.
+Opção escolhida: **prop explícita `section` (`'i6-blog' | 'i6-intelligence'`) passada pela camada de rota**, com o seletor de `/i6-intelligence` sempre passando `'i6-intelligence'` e a rota de `/i6-blog` passando `'i6-blog'`.
 
-## Detalhes técnicos
+- Prós: determinístico, testável, sem dependência de formato de URL nem de barra final; ao adicionar uma seção nova, o erro aparece na compilação em vez de silenciosamente cair no valor padrão.
+- Contras: exige encadear a prop pela página de artigo até os dois formulários.
 
-- `src/components/insights/LeadGateForm.tsx` (linha 143): `company: title` → `company: ''`.
-- `src/components/insights/ArticleCTAForm.tsx` (linha 119): `company: title` → `company: ''`.
-- `title` continua usado na montagem da mensagem e nas dependências do callback — sem variável órfã.
-- Não tocar em `src/components/kiosk/EbookCTA.tsx`, `src/lib/leadFormConfig.ts` nem em `src/lib/tracker.ts`.
+Alternativa (ler pathname dentro do formulário): menos código, mas frágil — depende de normalização de barra/idioma, quebra em pré-visualizações com prefixo, e falha silenciosamente numa seção nova (cairia no rótulo padrão).
+
+**4. Pontos que passam a seguir a seção**
+
+Em `LeadGateForm` e `ArticleCTAForm`:
+
+- `reason` → "i6 Deep Research" em /i6-intelligence, "i6 Blog" em /i6-blog.
+- Rótulo da mensagem: a etiqueta (`[Lead Research]` / `[Lead Insights]`, e as versões `... CTA`) e o rótulo do ID (`Research:` / `Insight:`).
+- Campo de assunto: `research:<slug>` vs `insight:<slug>` (gate) e `research:<slug>` vs `blog:<slug>` (CTA) — mantendo cada string exatamente como hoje, só trocando o critério.
+- `basePath` usado para montar a URL do conteúdo na mensagem (`i6-intelligence` / `insights`) — este é o item extra não listado no pedido: hoje ele deriva de `kind`, então um eBook em /i6-intelligence grava uma URL `/insights/...` que não corresponde à página real. Passa a seguir a seção, usando `i6-blog` para a seção de blog (a URL atual `/insights/...` é a rota antiga).
+- O campo `Origem:` na mensagem e o parâmetro de origem interna continuam derivados de `kind` (não estão na lista de mudança).
+
+**5. Analytics e chave de desbloqueio**
+
+Confirmado: ambos continuam em `kind`, sem alteração.
+
+- Eventos disparados no envio (research desbloqueado / download de insight concluído; CTA de research / CTA de insight, incluindo as chaves `${kind}_id` e `${kind}_slug`) — intocados, série histórica preservada.
+- Chave de "já desbloqueou" (`i6_unlocked_research:` / `i6_unlocked_insight:` + slug + idioma) — intocada, ninguém revê o formulário.
+
+A prop `section` é nova e independente: nenhuma das duas leituras passa a consultá-la.
+
+## Mudanças a implementar
+
+1. `LeadGateForm` e `ArticleCTAForm`: nova prop obrigatória `section: 'i6-blog' | 'i6-intelligence'`; `reason`, etiqueta, rótulo do ID, campo de assunto e `basePath` passam a derivar dela; `kind` permanece para eventos, chave de desbloqueio, `Origem:` e origem interna.
+2. Página de research: passa `section="i6-intelligence"` nos dois formulários.
+3. Página de artigo (compartilhada): recebe a seção da camada de rota e repassa aos formulários.
+4. Rota `/i6-blog/:slug`: passa `i6-blog`. Seletor de `/i6-intelligence/:slug`: passa `i6-intelligence` (o caso de artigo antigo continua redirecionando para /i6-blog, então chega lá como blog).
+
+Sem mudança de aparência, validações, campos de UTM/jornada, `insight_id` ou endpoint.
 
 ## Validação
 
-- Build sem erros.
-- Envio de teste na prévia em um gate de research e em um CTA de artigo do blog, confirmando na planilha: empresa vazia, razão com o rótulo esperado e origem "i6-website".
-
-## Limpeza dos leads antigos (opcional, fora desta mudança)
-
-A correção não altera as linhas já gravadas. Se quiser, depois eu indico como filtrar e limpar o campo empresa desses leads históricos na planilha.
+- Compilação sem erros.
+- Envio de teste na pré-visualização: eBook sob /i6-intelligence (esperado `reason = "i6 Deep Research"`, etiqueta de research, assunto `research:<slug>`, URL da mensagem em /i6-intelligence) e artigo sob /i6-blog (esperado `reason = "i6 Blog"`).
+- Conferir que a chave de desbloqueio gravada e o evento disparado continuam os mesmos de hoje para o mesmo conteúdo.
