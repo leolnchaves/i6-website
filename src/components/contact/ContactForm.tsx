@@ -210,7 +210,7 @@ const ContactForm = memo(({
           company: data.company || '',
           message: enrichedMessage,
           subscription: fixedSubjectValue ?? data.subject,
-          reason: leadSource,
+          reason: isFixedSubject ? VARIANT_REASON[variant] : (SUBJECT_REASON_PT[data.subject] ?? ''),
           token: SHARED_FORM_TOKEN,
           ...getLeadContextFields(),
           ...(extraFields || {}),
