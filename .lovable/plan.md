@@ -69,3 +69,11 @@ Sem mudança de aparência, validações, campos de UTM/jornada, `insight_id` ou
 **3. Volume afetado:** não é possível contar daqui — não tenho acesso à planilha. Dá para identificar filtrando as linhas cuja mensagem contém "/insights/" (e cruzando com as linhas de gate/CTA de conteúdo).
 
 **Conclusão prática:** o link não está quebrado, só desatualizado. Corrigir o `basePath` junto com a mudança de seção é seguro e de baixo risco; deixá-lo como está também não quebra nada.
+
+## Rota antiga /insights/:slug — resultado da verificação
+
+**1. O formulário aparece lá hoje?** Não. Nessa rota, eBook redireciona para /i6-intelligence e artigo redireciona para /i6-blog antes de qualquer renderização; o que permanece são menções de mídia e posts sociais, que abrem o link externo e mostram apenas a mensagem "conteúdo hospedado em outro site". Nenhuma peça publicada tem o CTA dentro do artigo ativado.
+
+**2. Que conteúdo vive lá?** Somente "i6 on Media" e "i6 Social", todos com link externo. Um formulário só apareceria se uma menção de mídia fosse marcada como "exige cadastro" — hoje inexistente, e nesse caso seria conceitualmente uma terceira categoria (menção de imprensa), não "i6 Blog".
+
+**3. Decisão:** a prop `section` fica **obrigatória, sem valor padrão**. A rota `/insights/:slug` recebe `section="i6-blog"` de forma explícita, com comentário registrando que o formulário é inalcançável por esse caminho hoje. Nenhum rótulo novo é criado; se uma menção de mídia passar a exigir cadastro, cria-se um rótulo próprio na ocasião.
