@@ -42,7 +42,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   pt: {
     intro: {
       eyebrow: 'A suíte',
-      title: 'A decisão certa para cada momento do negócio.',
+      title: 'A decisão certa para cada momento do negócio',
       description:
         'Cada produto do i6 Decision Suite pega o dado do seu negócio, aplica inteligência especializada e devolve uma ação mensurável — não mais um indicador para interpretar.',
       pillars: [
@@ -159,7 +159,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   en: {
     intro: {
       eyebrow: 'The suite',
-      title: 'The right decision for every moment of the business.',
+      title: 'The right decision for every moment of the business',
       description:
         'Each product in the i6 Decision Suite takes the data from your business, applies specialized intelligence and returns a measurable action — not another indicator to interpret.',
       pillars: [
@@ -276,7 +276,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   es: {
     intro: {
       eyebrow: 'La suite',
-      title: 'La decisión correcta para cada momento del negocio.',
+      title: 'La decisión correcta para cada momento del negocio',
       description:
         'Cada producto del i6 Decision Suite toma el dato de su negocio, aplica inteligencia especializada y devuelve una acción medible — no un indicador más para interpretar.',
       pillars: [
