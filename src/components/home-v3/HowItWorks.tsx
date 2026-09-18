@@ -58,6 +58,12 @@ const copyByLang = {
       { title: 'Recomendação priorizada', desc: 'A melhor ação por objetivo, canal, cliente, SKU ou região, com o argumento pronto.' },
       { title: 'Ativação', desc: 'A decisão chega pronta à operação, dentro das ferramentas que o time já usa.' },
     ],
+    loop: {
+      label: 'Retroalimentação',
+      desc: 'Cada decisão executada volta como sinal, melhora o aprendizado dos modelos e escala os resultados.',
+      retrainLabel: 'Retreinamento contínuo',
+      compoundLabel: 'Resultados compostos',
+    },
   },
   en: {
     eyebrow: 'How we work',
@@ -72,6 +78,12 @@ const copyByLang = {
       { title: 'Prioritized recommendation', desc: 'The best action by objective, channel, customer, SKU or region, with the argument ready.' },
       { title: 'Activation', desc: 'The decision arrives ready for operations, inside the tools the team already uses.' },
     ],
+    loop: {
+      label: 'Feedback loop',
+      desc: 'Every executed decision comes back as a signal, improves model learning and scales the results.',
+      retrainLabel: 'Continuous retraining',
+      compoundLabel: 'Compounding results',
+    },
   },
   es: {
     eyebrow: 'Cómo trabajamos',
@@ -86,6 +98,12 @@ const copyByLang = {
       { title: 'Recomendación priorizada', desc: 'La mejor acción por objetivo, canal, cliente, SKU o región, con el argumento listo.' },
       { title: 'Activación', desc: 'La decisión llega lista a la operación, dentro de las herramientas que el equipo ya usa.' },
     ],
+    loop: {
+      label: 'Retroalimentación',
+      desc: 'Cada decisión ejecutada vuelve como señal, mejora el aprendizaje de los modelos y escala los resultados.',
+      retrainLabel: 'Reentrenamiento continuo',
+      compoundLabel: 'Resultados compuestos',
+    },
   },
 };
 
@@ -94,6 +112,67 @@ const Chip = ({ item }: { item: LogoItem }) => (
     <img src={item.src} alt="" loading="lazy" className="w-4 h-4 object-contain" />
     {item.name}
   </span>
+);
+
+// Trajeto do conduíte: sai da ponta direita (Ativação), contorna por baixo e
+// termina com uma seta apontando de volta para a primeira etapa.
+const LOOP_PATH = 'M 140,24 L 700,24 C 776,24 776,88 700,88 L 112,88';
+
+const LoopConduit = () => (
+  <svg
+    viewBox="0 0 800 112"
+    aria-hidden="true"
+    focusable="false"
+    className="w-full h-[76px] sm:h-[92px] overflow-visible"
+  >
+    <defs>
+      <linearGradient id="i6hw-loop-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="hsl(var(--primary))" />
+        <stop offset="100%" stopColor="hsl(var(--primary) / 0.45)" />
+      </linearGradient>
+      <filter id="i6hw-loop-glow" x="-20%" y="-60%" width="140%" height="220%">
+        <feGaussianBlur stdDeviation="3" result="i6hw-loop-blur" />
+        <feMerge>
+          <feMergeNode in="i6hw-loop-blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    {/* Trilha */}
+    <path d={LOOP_PATH} fill="none" stroke="hsl(var(--primary) / 0.12)" strokeWidth={22} strokeLinecap="round" />
+
+    {/* Fita base */}
+    <path d={LOOP_PATH} fill="none" stroke="url(#i6hw-loop-grad)" strokeWidth={8} strokeLinecap="round" opacity={0.45} />
+
+    {/* Sinal em viagem */}
+    <path
+      d={LOOP_PATH}
+      pathLength={900}
+      fill="none"
+      stroke="url(#i6hw-loop-grad)"
+      strokeWidth={8}
+      strokeLinecap="round"
+      strokeDasharray="110 790"
+      filter="url(#i6hw-loop-glow)"
+      className="animate-signal-travel"
+    />
+
+    {/* Seta de retorno */}
+    <path d="M 84,88 L 108,78 L 108,98 Z" fill="hsl(var(--primary))" />
+
+    {/* Barras de resultado composto */}
+    <g>
+      <rect x="372" y="64" width="6" height="8" rx="2" fill="hsl(var(--primary))" opacity="0.3" />
+      <rect x="386" y="58" width="6" height="14" rx="2" fill="hsl(var(--primary))" opacity="0.45" />
+      <rect x="400" y="50" width="6" height="22" rx="2" fill="hsl(var(--primary))" opacity="0.65" />
+      <rect x="414" y="40" width="6" height="32" rx="2" fill="hsl(var(--primary))" opacity="0.9" />
+    </g>
+
+    {/* Nós do circuito */}
+    <circle cx="620" cy="88" r="4.5" fill="hsl(var(--card))" stroke="hsl(var(--primary))" strokeWidth="2" />
+    <circle cx="200" cy="88" r="4.5" fill="hsl(var(--card))" stroke="hsl(var(--primary))" strokeWidth="2" />
+  </svg>
 );
 
 const HowItWorks = () => {
@@ -133,6 +212,27 @@ const HowItWorks = () => {
               <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-8 pt-7 border-t border-border">
+          <div className="grid gap-6 md:grid-cols-[minmax(0,270px)_minmax(0,1fr)] md:gap-10 md:items-center">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">{copy.loop.label}</p>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{copy.loop.desc}</p>
+            </div>
+            <div>
+              <LoopConduit />
+              <div className="hidden md:flex items-center justify-between mt-1 px-2">
+                <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden />
+                  {copy.loop.retrainLabel}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  {copy.loop.compoundLabel}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
