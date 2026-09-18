@@ -21,7 +21,7 @@
 ---
 
 ## Depoimento 3
-**Quote:** Time com alta capacidade técnica e excelente visão de negócio, desenvolvendo soluções criativas e eficazes.
+**Quote:** Produto de alta capacidade técnica e com excelentes resultados de negócio. Soluções criativas e eficazes.
 **Author:** Paulo Lima
 **Title:** Gerente de Novos Canais
 **Company:** Grupo EMS

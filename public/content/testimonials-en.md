@@ -21,7 +21,7 @@
 ---
 
 ## Testimonial 3
-**Quote:** High technical capacity team with excellent business vision, developing creative and effective solutions.
+**Quote:** A product of high technical capacity and with excellent business results. Creative and effective solutions.
 **Author:** Paulo Lima
 **Title:** New Channel Manager
 **Company:** Grupo EMS

@@ -21,7 +21,7 @@
 ---
 
 ## Testimonio 3
-**Quote:** Equipo con alta capacidad técnica y excelente visión de negocio, que desarrolla soluciones creativas y eficaces.
+**Quote:** Producto de alta capacidad técnica y con excelentes resultados de negocio. Soluciones creativas y eficaces.
 **Author:** Paulo Lima
 **Title:** Gerente de Nuevos Canales
 **Company:** Grupo EMS
