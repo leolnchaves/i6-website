@@ -6,7 +6,8 @@ import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
 const copyByLang = {
   pt: {
     eyebrow: 'Por que infinity6',
-    title: 'Todo mundo mostra o que aconteceu. Nós entregamos o que vai acontecer e o que fazer agora.',
+    titleLead: 'Todo mundo mostra o que aconteceu.',
+    titleRest: 'Nós entregamos o que vai acontecer e o que fazer agora.',
     intro:
       'Analytics tradicional explica o passado. Nossos motores proprietários calculam a próxima melhor decisão e a colocam na mão de quem executa.',
     cta: 'Conheça nossa IA proprietária',
@@ -35,7 +36,8 @@ const copyByLang = {
   },
   en: {
     eyebrow: 'Why infinity6',
-    title: 'Everyone shows what happened. We deliver what will happen and what to do now.',
+    titleLead: 'Everyone shows what happened.',
+    titleRest: 'We deliver what will happen and what to do now.',
     intro:
       'Traditional analytics explains the past. Our proprietary engines compute the next best decision and hand it to whoever executes.',
     cta: 'Explore our proprietary AI',
@@ -64,7 +66,8 @@ const copyByLang = {
   },
   es: {
     eyebrow: 'Por qué infinity6',
-    title: 'Todos muestran lo que pasó. Nosotros entregamos lo que va a pasar y qué hacer ahora.',
+    titleLead: 'Todos muestran lo que pasó.',
+    titleRest: 'Nosotros entregamos lo que va a pasar y qué hacer ahora.',
     intro:
       'El analytics tradicional explica el pasado. Nuestros motores propietarios calculan la próxima mejor decisión y la ponen en manos de quien ejecuta.',
     cta: 'Conoce nuestra IA propietaria',
