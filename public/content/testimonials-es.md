@@ -11,7 +11,7 @@
 ---
 
 ## Testimonio 2
-**Quote:** La asociación con infinity6 demuestra el poder de los datos como activo estratégico: IA avanzada y visión de negocio que se traducen en valor real para la empresa.
+**Quote:** La alianza con infinity6 demuestra el poder de los datos como activo estratégico: IA avanzada y visión de negocio que se traducen en valor real para la empresa.
 **Author:** Namir Bernardo
 **Title:** Gerente de Datos y Analítica
 **Company:** Unicred do Brasil
