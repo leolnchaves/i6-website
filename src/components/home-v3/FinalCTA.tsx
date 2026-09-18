@@ -7,20 +7,23 @@ import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 const copyByLang = {
   pt: {
     title: 'Seu concorrente vai perceber o movimento depois de você',
-    primary: 'Falar com especialista',
-    secondary: 'Conheça o i6 Decision Suite',
+    decision: 'Conheça o i6 Decision Suite',
+    builder: 'Construa com o i6 Builder',
+    specialist: 'Falar com especialista',
     note: 'CUSTO ZERO ATÉ O BACKTEST COMPROVAR O POTENCIAL DE RESULTADO',
   },
   en: {
     title: 'Your competitor will notice the move after you do',
-    primary: 'Talk to an expert',
-    secondary: 'Explore the i6 Decision Suite',
+    decision: 'Explore the i6 Decision Suite',
+    builder: 'Build with the i6 Builder',
+    specialist: 'Talk to an expert',
     note: 'ZERO COST UNTIL THE BACKTEST PROVES THE POTENTIAL RESULT',
   },
   es: {
     title: 'Tu competidor va a notar el movimiento después de ti',
-    primary: 'Hablar con un especialista',
-    secondary: 'Conoce el i6 Decision Suite',
+    decision: 'Conoce el i6 Decision Suite',
+    builder: 'Construye con el i6 Builder',
+    specialist: 'Hablar con un especialista',
     note: 'COSTO CERO HASTA QUE EL BACKTEST COMPRUEBE EL POTENCIAL DE RESULTADO',
   },
 };
@@ -38,22 +41,29 @@ const FinalCTA = () => {
           <h2 className="text-3xl md:text-[2.6rem] leading-[1.14] font-bold text-foreground">{copy.title}</h2>
 
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link
-              to={localized('/contact')}
-              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
-            >
-              {copy.primary}
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </Link>
             <a
               href={SUITE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 transition-all"
             >
-              {copy.secondary}
+              {copy.decision}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
+            <Link
+              to={localized('/i6-builders')}
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 transition-all"
+            >
+              {copy.builder}
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+            <Link
+              to={localized('/contact')}
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
+            >
+              {copy.specialist}
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
           <p className="mt-6 text-xs font-medium uppercase tracking-[0.16em] text-primary">{copy.note}</p>
