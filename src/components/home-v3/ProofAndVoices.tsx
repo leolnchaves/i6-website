@@ -11,7 +11,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/componen
 const copyByLang = {
   pt: {
     eyebrow: 'Antecipação em números',
-    title: 'Resultados reais, medidos em produção',
+    titleLead: 'Resultados reais,',
+    titleRest: 'medidos em produção',
     caption:
       'Dados anonimizados de clientes infinity6. Métricas medidas em produção após o deploy dos motores proprietários.',
     voicesTitle: 'Com a palavra: quem já está decidindo antes',
@@ -19,7 +20,8 @@ const copyByLang = {
   },
   en: {
     eyebrow: 'Anticipation in numbers',
-    title: 'Real results, measured in production',
+    titleLead: 'Real results,',
+    titleRest: 'measured in production',
     caption:
       'Anonymized data from infinity6 clients. Metrics measured in production after deploying the proprietary engines.',
     voicesTitle: 'In their words: those already deciding first',
@@ -27,7 +29,8 @@ const copyByLang = {
   },
   es: {
     eyebrow: 'Anticipación en números',
-    title: 'Resultados reales, medidos en producción',
+    titleLead: 'Resultados reales,',
+    titleRest: 'medidos en producción',
     caption:
       'Datos anonimizados de clientes infinity6. Métricas medidas en producción tras el despliegue de los motores propietarios.',
     voicesTitle: 'Con la palabra: quienes ya deciden antes',
@@ -57,7 +60,10 @@ const ProofAndVoices = memo(() => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">{copy.eyebrow}</p>
-            <h2 className="text-3xl md:text-[2.4rem] leading-[1.14] font-bold text-foreground">{copy.title}</h2>
+            <h2 className="text-3xl md:text-[2.4rem] leading-[1.14] font-bold text-foreground">
+              <span className="block sm:whitespace-nowrap">{copy.titleLead}</span>
+              <span className="block">{copy.titleRest}</span>
+            </h2>
           </div>
           <p className="text-xs text-muted-foreground max-w-sm leading-relaxed">{copy.caption}</p>
         </div>
