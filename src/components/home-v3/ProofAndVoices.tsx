@@ -58,14 +58,14 @@ const ProofAndVoices = memo(() => {
     <section className="border-y border-border bg-secondary/40 py-20 md:py-28">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl md:shrink-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">{copy.eyebrow}</p>
             <h2 className="text-3xl md:text-[2.4rem] leading-[1.14] font-bold text-foreground">
               <span className="block sm:whitespace-nowrap">{copy.titleLead}</span>
               <span className="block">{copy.titleRest}</span>
             </h2>
           </div>
-          <p className="text-xs text-muted-foreground max-w-sm leading-relaxed">{copy.caption}</p>
+          <p className="text-xs text-muted-foreground leading-relaxed md:shrink-0 md:whitespace-nowrap md:pb-1">{copy.caption}</p>
         </div>
 
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
