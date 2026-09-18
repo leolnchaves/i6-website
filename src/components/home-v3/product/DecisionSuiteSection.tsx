@@ -63,10 +63,6 @@ const DecisionSuiteSection = () => {
 
       {/* Explorador de decisões */}
       <div className="mt-5 md:mt-6">
-        <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-          {copy.products.description}
-        </p>
-
         <div className="mt-4 grid items-start gap-5 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-stretch lg:gap-0">
           <div className="flex flex-col lg:h-full">
             <div
