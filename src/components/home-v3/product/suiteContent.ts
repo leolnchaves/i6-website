@@ -90,7 +90,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           headline: 'Previsões que viram decisões de planejamento',
           body: 'Transforma histórico e sinais do negócio em previsões de demanda na granularidade necessária para planejar estoque, capacidade e metas. O produto acompanha a qualidade das previsões e evidencia onde a decisão precisa de atenção.',
           capabilities:
-            'Nível de confiança declarado por previsão (Gold/Silver/Bronze) · Identifica quando a própria previsão foge do padrão esperado · Trata o núcleo estável e a cauda longa esparsa de formas diferentes · Desce ao granular real — SKU por CPF / PDV — sem perder precisão: a acurácia passa de 85% em operações maduras · i6 Signal — camada conversacional preditiva: pergunte ao negócio em linguagem natural e saia com uma decisão, não com um relatório.',
+            'Nível de confiança declarado por previsão (Gold/Silver/Bronze) · Identifica quando a própria previsão foge do padrão esperado · Trata o núcleo estável e a cauda longa esparsa de formas diferentes · Desce ao granular real — SKU por CPF / PDV — sem perder precisão: a acurácia passa de 85% em operações maduras · i6 Signal — camada conversacional preditiva: pergunte sobre a previsão em linguagem natural e saia com uma decisão, não com um relatório',
           flow: {
             input: 'Histórico + calendário + sinais operacionais',
             decision: 'Forecast + seleção de modelo + acurácia',
@@ -208,7 +208,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           headline: 'Forecasts that become planning decisions',
           body: 'Turns history and business signals into demand forecasts at the granularity needed to plan inventory, capacity and targets. The product tracks forecast quality and highlights where a decision needs attention.',
           capabilities:
-            'Declared confidence level per forecast (Gold/Silver/Bronze) · Detects when the forecast itself drifts from the expected pattern · Handles the stable core and the sparse long tail in different ways · Goes down to real granularity — SKU per customer / store — without losing precision: accuracy passes 85% in mature operations · i6 Signal — predictive conversational layer: ask the business in natural language and come out with a decision, not a report.',
+            'Declared confidence level per forecast (Gold/Silver/Bronze) · Detects when the forecast itself drifts from the expected pattern · Handles the stable core and the sparse long tail in different ways · Goes down to real granularity — SKU per customer / store — without losing precision: accuracy passes 85% in mature operations · i6 Signal — predictive conversational layer: ask about the forecast in natural language and come out with a decision, not a report',
           flow: {
             input: 'History + calendar + operational signals',
             decision: 'Forecast + model selection + accuracy',
@@ -326,7 +326,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           headline: 'Pronósticos que se vuelven decisiones de planificación',
           body: 'Convierte histórico y señales del negocio en pronósticos de demanda con la granularidad necesaria para planificar inventario, capacidad y metas. El producto monitorea la calidad de los pronósticos y evidencia dónde la decisión necesita atención.',
           capabilities:
-            'Nivel de confianza declarado por pronóstico (Gold/Silver/Bronze) · Identifica cuando el propio pronóstico se desvía del patrón esperado · Trata el núcleo estable y la cola larga escasa de formas distintas · Baja al granular real — SKU por cliente / punto de venta — sin perder precisión: la exactitud supera el 85% en operaciones maduras · i6 Signal — capa conversacional predictiva: pregúntale al negocio en lenguaje natural y sal con una decisión, no con un informe.',
+            'Nivel de confianza declarado por pronóstico (Gold/Silver/Bronze) · Identifica cuando el propio pronóstico se desvía del patrón esperado · Trata el núcleo estable y la cola larga escasa de formas distintas · Baja al granular real — SKU por cliente / punto de venta — sin perder precisión: la exactitud supera el 85% en operaciones maduras · i6 Signal — capa conversacional predictiva: pregunte sobre el pronóstico en lenguaje natural y salga con una decisión, no con un informe',
           flow: {
             input: 'Histórico + calendario + señales operativas',
             decision: 'Forecast + selección de modelo + precisión',
