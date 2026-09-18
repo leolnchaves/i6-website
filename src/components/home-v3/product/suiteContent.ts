@@ -104,7 +104,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sem isso: o mix segue igual em lojas e canais que compram de formas completamente diferentes.',
           headline: 'O mix certo para cada contexto de demanda',
           body: 'Combina demanda, desempenho, estoque e restrições para recomendar o sortimento mais adequado por loja, canal ou contexto. Ajuda a decidir o que manter, incluir, retirar ou redistribuir.',
-          capabilities: 'Desempenho · Demanda · Recomendação de mix · Restrições · Cobertura',
+          capabilities:
+            'Mix ideal por loja considera necessidade, capacidade do canal e comportamento real — participação, margem e padrão de compra, não só o histórico de venda · Prioriza por margem ou por giro de estoque, conforme o objetivo comercial definido para aquele ciclo · Cada recomendação de sortimento vem com justificativa própria, por ponto de venda — não é uma lista genérica aplicada igual a todo mundo · Cobre sell-in e sell-out com a mesma inteligência, não dois modelos isolados por ponta da cadeia · i6 Signal — camada conversacional preditiva: pergunte sobre o comportamento em linguagem natural e saia com uma decisão, não com um relatório.',
           flow: {
             input: 'Demanda + catálogo + estoque + restrições',
             decision: 'Priorização e otimização do mix',
@@ -221,7 +222,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Without it: the mix stays the same across stores and channels that buy in completely different ways.',
           headline: 'The right mix for every demand context',
           body: 'Combines demand, performance, inventory and constraints to recommend the most suitable assortment per store, channel or context. It helps decide what to keep, add, remove or redistribute.',
-          capabilities: 'Performance · Demand · Mix recommendation · Constraints · Coverage',
+          capabilities:
+            'The ideal mix per store weighs need, channel capacity and real behavior — participation, margin and buying pattern, not just sales history · Prioritizes by margin or by inventory turnover, according to the commercial goal set for that cycle · Each assortment recommendation comes with its own justification per point of sale — not a generic list applied the same way to everyone · Covers sell-in and sell-out with the same intelligence, not two isolated models at each end of the chain · i6 Signal — predictive conversational layer: ask about behavior in natural language and come out with a decision, not a report.',
           flow: {
             input: 'Demand + catalog + inventory + constraints',
             decision: 'Mix prioritization and optimization',
@@ -338,7 +340,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sin esto: el mix se repite en tiendas y canales que compran de formas completamente distintas.',
           headline: 'El mix correcto para cada contexto de demanda',
           body: 'Combina demanda, desempeño, inventario y restricciones para recomendar el surtido más adecuado por tienda, canal o contexto. Ayuda a decidir qué mantener, incluir, retirar o redistribuir.',
-          capabilities: 'Desempeño · Demanda · Recomendación de mix · Restricciones · Cobertura',
+          capabilities:
+            'El mix ideal por tienda considera necesidad, capacidad del canal y comportamiento real — participación, margen y patrón de compra, no solo el histórico de ventas · Prioriza por margen o por rotación de inventario, según el objetivo comercial definido para ese ciclo · Cada recomendación de surtido viene con justificación propia, por punto de venta — no es una lista genérica aplicada igual a todos · Cubre sell-in y sell-out con la misma inteligencia, no dos modelos aislados por punta de la cadena · i6 Signal — capa conversacional predictiva: pregunte sobre el comportamiento en lenguaje natural y salga con una decisión, no con un informe.',
           flow: {
             input: 'Demanda + catálogo + inventario + restricciones',
             decision: 'Priorización y optimización del mix',
