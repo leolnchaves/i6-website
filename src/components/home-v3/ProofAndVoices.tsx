@@ -11,7 +11,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/componen
 const copyByLang = {
   pt: {
     eyebrow: 'Antecipação em números',
-    title: 'Resultados reais, medidos em produção',
+    titleLead: 'Resultados reais,',
+    titleRest: 'medidos em produção',
     caption:
       'Dados anonimizados de clientes infinity6. Métricas medidas em produção após o deploy dos motores proprietários.',
     voicesTitle: 'Com a palavra: quem já está decidindo antes',
