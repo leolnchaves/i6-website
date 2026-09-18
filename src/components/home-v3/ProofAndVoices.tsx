@@ -15,7 +15,7 @@ const copyByLang = {
     titleRest: 'medidos em produção',
     caption:
       'Dados anonimizados de clientes infinity6, medidos após o deploy dos motores proprietários.',
-    voicesTitle: 'Com a palavra: quem já está decidindo antes',
+    voicesTitle: 'Na voz de quem já decide antes',
     cta: 'Veja histórias de sucesso',
   },
   en: {
@@ -24,7 +24,7 @@ const copyByLang = {
     titleRest: 'measured in production',
     caption:
       'Anonymized data from infinity6 clients, measured after deploying the proprietary engines.',
-    voicesTitle: 'In their words: those already deciding first',
+    voicesTitle: 'In the voice of those who already decide first',
     cta: 'View success stories',
   },
   es: {
@@ -33,7 +33,7 @@ const copyByLang = {
     titleRest: 'medidos en producción',
     caption:
       'Datos anonimizados de clientes infinity6, medidos tras el despliegue de los motores propietarios.',
-    voicesTitle: 'Con la palabra: quienes ya deciden antes',
+    voicesTitle: 'En la voz de quienes ya deciden antes',
     cta: 'Ver casos de éxito',
   },
 };
