@@ -1,45 +1,57 @@
-# Desativar o acesso à /demo sem apagar nada
+# Conectar a aba selecionada ao quadro de detalhe nos extremos
 
-Relatório do que existe hoje (nada foi alterado).
+## Objetivo
 
-## 1. Rotas declaradas
+Quando o primeiro ou o último produto da aba está selecionado, a borda arredondada do quadro de detalhe deixa um pequeno vão onde o fundo da página aparece entre a aba e o quadro. Nos itens do meio isso não acontece.
 
-Em `src/App.tsx` (linhas 156-159), três entradas:
+Queremos fechar esse vão sem perder o arredondamento do quadro:
 
-| Caminho | O que renderiza |
-| --- | --- |
-| `/:lang/demo` | `Kiosk` (página do totem) |
-| `/demo` | `RootLangRedirect` (manda para `/pt/demo` ou `/en/demo`) |
-| `/demo-metrics/:token` | `KioskMetrics` (painel de métricas) |
+- Primeiro item selecionado → canto superior esquerdo do quadro fica reto
+- Último item selecionado → canto inferior esquerdo do quadro fica reto
+- Itens do meio → quadro continua totalmente arredondado, como hoje
 
-`src/pages/Kiosk.tsx` também se auto-normaliza: se o idioma na URL for inválido ou mudar, ele navega para `/pt/demo` ou `/<idioma>/demo`.
+O arredondamento dos outros três cantos e o visual no celular permanecem iguais.
 
-## 2. Ficam fora da estrutura de idioma?
+## Diagnóstico confirmado na prévia
 
-Sim. As três são declaradas no nível raiz, antes da rota genérica `/:lang/*`, portanto não passam pelo fluxo do site localizado nem pelo layout com cabeçalho/rodapé.
+Medido no desktop (1280px), na seção da i6 Decision Suite:
 
-## 3. `/demo-metrics/...` é parte do mesmo fluxo?
+- A aba selecionada encosta exatamente na borda esquerda do quadro (separação 0).
+- A aba do topo começa na mesma altura do topo do quadro; a aba de baixo termina na mesma altura da base do quadro.
+- O quadro tem arredondamento de 24px nos quatro cantos.
 
-Sim, mesmo fluxo. É o painel que lê os eventos gravados pela própria demo (mesma biblioteca de eventos e de leads pendentes do totem), protegido por um token fixo na URL. Hoje ele inclusive avisa que "a coleta de métricas está temporariamente desativada no /demo". Não é algo independente: se a demo sai do ar, o painel perde a função.
+Ou seja: nos extremos, a curva de 24px do canto esquerdo do quadro se afasta da borda da aba, e o fundo da página aparece nesse triângulo de poucos pixels. No meio, a aba encosta na parte reta da lateral do quadro, por isso não há vão.
 
-## 4. Links visíveis no site
+## O que será feito
 
-Nenhum. Não existe item de menu, rodapé, botão ou CTA apontando para `/demo` ou `/demo-metrics` em nenhuma página. As únicas referências são internas à própria demo (a normalização de idioma dentro dela) e o script de publicação, que gera arquivos estáticos para `demo`, `pt/demo`, `en/demo` e `demo-metrics/<token>` para o aparelho do totem não ver erro 404.
+Em `src/components/home-v3/product/DecisionSuiteSection.tsx`:
 
-Ou seja: desativar não quebra nenhum link público. Quem acessa hoje é o totem físico (URL fixa no aparelho) ou alguém com o endereço salvo.
+1. Descobrir a posição do produto selecionado na lista (primeiro, último ou do meio).
+2. Aplicar no quadro de detalhe, apenas na versão desktop, o arredondamento condicional:
+   - primeiro item → canto superior esquerdo reto
+   - último item → canto inferior esquerdo reto
+   - demais itens → nada muda
+3. Manter o arredondamento completo em celular e tablet, onde a aba fica acima do quadro e não há conexão entre eles.
 
-## 5. Forma mais simples de desativar (proposta)
+Nenhum texto muda. Nenhuma cor, sombra ou fonte muda. O componente e os arquivos de conteúdo continuam os mesmos.
 
-Trocar apenas o `element` das três rotas em `src/App.tsx` para o mesmo redirecionamento já usado pelas páginas descontinuadas (`HomeRedirect`, que leva à Home no idioma preferido preservando parâmetros da URL). Os arquivos e componentes da demo continuam intactos no repositório e os imports permanecem.
+### Como fica o critério
 
-Isso é suficiente para todas as sub-rotas, porque:
+```text
+índice 0 (Relevance)     -> canto superior esquerdo reto
+índice 5 (Targeting)     -> canto inferior esquerdo reto
+índices 1 a 4            -> quadro arredondado como hoje
+```
 
-- `/:lang/demo` e `/demo-metrics/:token` cobrem qualquer idioma e qualquer token;
-- não existe nenhuma sub-rota mais profunda de `/demo`; qualquer coisa como `/pt/demo/algo` já cai no fluxo normal de rota inexistente;
-- `Kiosk` deixa de ser montado, então a normalização interna de idioma nunca roda.
+O critério usa a posição real na lista, então continua correto se a ordem ou a quantidade de produtos mudar, e funciona igual em português, inglês e espanhol.
 
-Um ponto a decidir junto: os arquivos estáticos gerados no publish para `demo`, `pt/demo`, `en/demo` e `demo-metrics/<token>`. Mantê-los é inofensivo (o endereço carrega o site e o visitante é levado à Home), mas eu recomendo mantê-los por enquanto para o totem não exibir tela de erro.
+## Riscos e cuidado visual
 
-## Fora de escopo
+O canto reto no topo/base é a solução pedida e é discreta. Se depois você achar o canto "duro" demais, o ajuste natural é trocar por um arredondamento bem pequeno nesse canto em vez de reto — mudança de uma linha, sem impacto no resto.
 
-Nenhum arquivo ou componente da demo é apagado, renomeado ou alterado; nada de release/deploy sem você pedir.
+## Como vou validar
+
+- Capturar a seção no desktop com o primeiro, um do meio e o último produto selecionados, conferindo que o vão sumiu e que os demais cantos seguem arredondados.
+- Conferir nos três idiomas.
+- Conferir no celular (390px) que o quadro continua arredondado por completo.
+- Checar o log de build e o tipo do projeto para garantir que nada quebrou.
