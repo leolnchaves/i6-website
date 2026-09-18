@@ -121,7 +121,7 @@ const HowItWorks = () => {
 
       <div className="mt-10 relative rounded-[var(--radius)] border border-primary/25 bg-card/70 px-4 pt-9 pb-5">
         <span className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-[hsl(var(--background))] border border-primary/35 text-primary text-[10px] font-bold tracking-[0.22em] uppercase">
-          i6 Platform
+          i6 DECISION PLATFORM
         </span>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {copy.steps.map((step, i) => (
