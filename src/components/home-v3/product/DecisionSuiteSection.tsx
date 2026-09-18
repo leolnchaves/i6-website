@@ -114,18 +114,20 @@ const DecisionSuiteSection = () => {
 
           <article
             key={active.id}
-            className={`relative flex flex-col rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)] ${
+            className={`relative flex flex-col rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:justify-between lg:gap-6 lg:py-6 lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)] ${
               isFirstProduct ? 'lg:rounded-tl-none' : ''
             } ${isLastProduct ? 'lg:rounded-bl-none' : ''}`}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-              {active.name}
-            </p>
-            <h4 className="mt-1.5 text-lg font-semibold leading-snug text-foreground md:text-xl">
-              {active.headline}
-            </h4>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                {active.name}
+              </p>
+              <h4 className="mt-1.5 text-lg font-semibold leading-snug text-foreground md:text-xl">
+                {active.headline}
+              </h4>
+            </div>
 
-            <ul className="mt-3 grid gap-y-1.5 border-t border-border pt-2.5">
+            <ul className="mt-3 grid gap-y-1.5 border-t border-border pt-2.5 lg:mt-0 lg:flex-1 lg:content-center lg:gap-y-3 lg:border-t-0 lg:pt-0">
               {capabilities.map((capability) => (
                 <li key={capability} className="flex items-start gap-2 text-xs leading-snug text-foreground">
                   <span aria-hidden="true" className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
@@ -134,7 +136,7 @@ const DecisionSuiteSection = () => {
               ))}
             </ul>
 
-            <div className="mt-3 rounded-2xl bg-secondary p-2.5">
+            <div className="mt-3 rounded-2xl bg-secondary p-2.5 lg:mt-0 lg:p-3.5">
               <div className="grid items-stretch gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
                 {flowSteps.map((step, index) => (
                   <div key={step.label} className="contents">
