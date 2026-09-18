@@ -6,7 +6,8 @@ export type KpiCopy = Record<ContentLang, string> & { es?: string };
 
 export interface RealResultKPI {
   slug: string;
-  value: string;
+  /** Display value formatted for each language */
+  value: KpiCopy;
   /** Short label shown under the big number */
   label: KpiCopy;
   /** Sector / client tag in caption */
@@ -26,7 +27,7 @@ export interface RealResultKPI {
 export const realResults: RealResultKPI[] = [
   {
     slug: 'savings-pharma',
-    value: 'R$ 100M',
+    value: { pt: 'R$ 100M', en: 'BRL 100M', es: 'BRL 100M' },
     label: {
       pt: 'em savings ao antecipar ruptura, overstocking e incineração',
       en: 'in savings by anticipating stockouts, overstocking and incineration',
@@ -37,7 +38,7 @@ export const realResults: RealResultKPI[] = [
   },
   {
     slug: 'ticket-retail',
-    value: '+23%',
+    value: { pt: '+23%', en: '+23%', es: '+23%' },
     label: { pt: 'ticket médio por PDV', en: 'average ticket per POS' },
     source: { pt: 'Varejo', en: 'Retail' },
     numericValue: 23,
@@ -45,7 +46,7 @@ export const realResults: RealResultKPI[] = [
   },
   {
     slug: 'activation-retail',
-    value: '+36%',
+    value: { pt: '+36%', en: '+36%', es: '+36%' },
     label: { pt: 'positivação de produtos', en: 'product activation' },
     source: { pt: 'Varejo', en: 'Retail' },
     numericValue: 36,
@@ -53,7 +54,7 @@ export const realResults: RealResultKPI[] = [
   },
   {
     slug: 'crm-finance',
-    value: '−57%',
+    value: { pt: '−57%', en: '−57%', es: '−57%' },
     label: { pt: 'custo de CRM', en: 'CRM cost' },
     source: { pt: 'Financeiro', en: 'Financial services' },
     numericValue: -57,
@@ -61,7 +62,7 @@ export const realResults: RealResultKPI[] = [
   },
   {
     slug: 'conversion-finance',
-    value: '12x',
+    value: { pt: '12x', en: '12x', es: '12x' },
     label: { pt: 'mais conversão em campanhas', en: 'more conversion in campaigns' },
     source: { pt: 'Financeiro', en: 'Financial services' },
     numericValue: 12,
@@ -69,7 +70,7 @@ export const realResults: RealResultKPI[] = [
   },
   {
     slug: 'sales-finance',
-    value: '+7,8MM',
+    value: { pt: '+7,8MM', en: '+7.8MM', es: '+7,8MM' },
     label: {
       pt: 'vendas adicionais em 2 semanas',
       en: 'additional sales in 2 weeks',

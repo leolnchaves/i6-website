@@ -47,7 +47,7 @@ const RealResultsStrip = memo(({ title, compact, slugs }: Props) => {
               <span
                 className={`${compact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-bold text-[#F4845F] leading-none mb-2`}
               >
-                {kpi.value}
+                {pickLang(language, kpi.value)}
               </span>
               <span className="text-[11px] md:text-xs text-white/70 leading-snug">
                 {pickLang(language, kpi.label)}

@@ -30,7 +30,7 @@ const ProductionResults = memo(({ content }: Props) => {
         <dl className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
           {realResults.map((r) => (
             <div key={r.slug} className="bg-card p-7">
-              <dt className="text-3xl font-bold text-foreground">{r.value}</dt>
+              <dt className="text-3xl font-bold text-foreground">{pickLang(language, r.value)}</dt>
               <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLang(language, r.label)}</dd>
               <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
                 {content.sourceLabel} · {pickLang(language, r.source)}
