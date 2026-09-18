@@ -49,7 +49,7 @@ const copyByLang = {
     eyebrow: 'Como funcionamos',
     title: 'Do sinal bruto à decisão executada',
     intro:
-      'Sinais entram, decisões saem: priorizadas, explicadas e ativas dentro dos sistemas que sua operação já usa.',
+      'Capturamos os sinais do seu negócio, antecipamos o movimento, priorizamos a ação e devolvemos a decisão onde a operação já trabalha.',
     sourcesLabel: 'Capturamos de qualquer ecossistema',
     activationLabel: 'Ativamos em qualquer ecossistema',
     steps: [
@@ -63,7 +63,7 @@ const copyByLang = {
     eyebrow: 'How we work',
     title: 'From raw signal to executed decision',
     intro:
-      'Signals in, decisions out: prioritized, explained and active inside the systems your operation already uses.',
+      'We capture your business signals, anticipate the movement, prioritize the action and deliver the decision where operations already work.',
     sourcesLabel: 'We capture from any ecosystem',
     activationLabel: 'We activate in any ecosystem',
     steps: [
@@ -77,7 +77,7 @@ const copyByLang = {
     eyebrow: 'Cómo trabajamos',
     title: 'De la señal bruta a la decisión ejecutada',
     intro:
-      'Señales entran, decisiones salen: priorizadas, explicadas y activas dentro de los sistemas que su operación ya usa.',
+      'Captamos las señales de su negocio, anticipamos el movimiento, priorizamos la acción y devolvemos la decisión donde la operación ya trabaja.',
     sourcesLabel: 'Capturamos de cualquier ecosistema',
     activationLabel: 'Activamos en cualquier ecosistema',
     steps: [
