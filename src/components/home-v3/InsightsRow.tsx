@@ -2,13 +2,19 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
-import { useFeaturedInsights, type Insight } from '@/hooks/useInsights';
+import { useFeaturedInsights } from '@/hooks/useInsights';
 import { useFeaturedIntelligence } from '@/hooks/useIntelligence';
 
-type HomeInsight = Pick<
-  Insight,
-  'title' | 'slug' | 'type' | 'date' | 'language' | 'excerpt' | 'external_url' | 'gated'
->;
+type HomeInsight = {
+  title: string;
+  slug: string;
+  type?: string;
+  date: string;
+  language: 'pt' | 'en';
+  excerpt: string;
+  external_url?: string | null;
+  gated?: boolean;
+};
 
 type FeaturedColumn = {
   insight: HomeInsight;
@@ -20,7 +26,7 @@ const InsightCard = ({ insight, destination }: Pick<FeaturedColumn, 'insight' | 
   const localized = useLocalizedPath();
   const internalPath = `${destination}/${insight.slug}`;
   const isMedia = insight.type === 'i6 on Media' || insight.type === 'i6 Social';
-  const isExternal = isMedia && !insight.gated && !!insight.external_url;
+  const externalUrl = isMedia && !insight.gated ? insight.external_url : null;
 
   const inner = (
     <article className="sand-card sand-card-hover h-full p-6 flex flex-col">
@@ -28,15 +34,15 @@ const InsightCard = ({ insight, destination }: Pick<FeaturedColumn, 'insight' | 
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] px-2.5 py-1 rounded-full bg-accent text-accent-foreground">
           {insight.type}
         </span>
-        {isExternal && <ExternalLink size={14} className="text-muted-foreground" />}
+        {externalUrl && <ExternalLink size={14} className="text-muted-foreground" />}
       </div>
       <h3 className="text-lg font-semibold text-foreground mb-2 leading-snug">{insight.title}</h3>
       <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">{insight.excerpt}</p>
     </article>
   );
 
-  return isExternal ? (
-    <a href={insight.external_url!} target="_blank" rel="noopener noreferrer" className="h-full block">
+  return externalUrl ? (
+    <a href={externalUrl} target="_blank" rel="noopener noreferrer" className="h-full block">
       {inner}
     </a>
   ) : (
