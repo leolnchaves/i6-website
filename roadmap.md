@@ -6,6 +6,7 @@
 - [x] Home (destaques): "Varejo farma" → "Indústria farmacêutica" em PT/EN/ES; traduzir para espanhol todas as etiquetas de origem e os textos ainda em português (ticket médio por PDV, positivação de produtos); validar PT/EN/ES e mobile/desktop.
 - [x] Home (CTA final): incluir "Construa com o i6 Builder" apontando para /i6-builders, na ordem i6 Decision Suite → i6 Builder → Falar com especialista; validar PT/EN/ES e mobile/desktop.
 - [x] Home (insights): exibir o destaque mais recente de cada categoria e mover os links específicos para abaixo dos cards; omitir categorias sem destaque.
+- [x] Home (CTA final): "Teste o i6 Decision Suite grátis por 30 dias" como destaque laranja na linha de cima (com seta de link externo); Builder e Falar com especialista na linha de baixo, no estilo outlined; validar PT/EN/ES e mobile/desktop.
 
 ---
 
