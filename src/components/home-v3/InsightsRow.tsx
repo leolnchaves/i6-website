@@ -3,18 +3,22 @@ import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useFeaturedInsights, type Insight } from '@/hooks/useInsights';
+import { useFeaturedIntelligence } from '@/hooks/useIntelligence';
 
-const InsightCard = ({ insight }: { insight: Insight }) => {
+type HomeInsight = Pick<
+  Insight,
+  'title' | 'slug' | 'type' | 'date' | 'language' | 'excerpt' | 'external_url' | 'gated'
+>;
+
+type FeaturedColumn = {
+  insight: HomeInsight;
+  destination: '/insights' | '/i6-blog' | '/i6-intelligence';
+  moreLabel: string;
+};
+
+const InsightCard = ({ insight, destination }: Pick<FeaturedColumn, 'insight' | 'destination'>) => {
   const localized = useLocalizedPath();
-
-  let internalPath: string;
-  if (insight.type === 'i6 eBook') {
-    internalPath = `/i6-intelligence/${insight.slug}`;
-  } else if (insight.type === 'i6 Article') {
-    internalPath = `/i6-blog/${insight.slug}`;
-  } else {
-    internalPath = `/insights/${insight.slug}`;
-  }
+  const internalPath = `${destination}/${insight.slug}`;
   const isMedia = insight.type === 'i6 on Media' || insight.type === 'i6 Social';
   const isExternal = isMedia && !insight.gated && !!insight.external_url;
 
@@ -45,16 +49,58 @@ const InsightCard = ({ insight }: { insight: Insight }) => {
 const InsightsRow = () => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
-  const insights = useFeaturedInsights(3);
-
-  if (insights.length === 0) return null;
+  const featuredInsights = useFeaturedInsights();
+  const featuredIntelligence = useFeaturedIntelligence();
 
   const labels =
     language === 'pt'
-      ? { eyebrow: 'Inteligência aplicada', title: 'Últimos insights', all: 'Ver todos os insights' }
+      ? {
+          eyebrow: 'Inteligência aplicada',
+          title: 'Últimos insights',
+          media: 'Mais no i6 On Media',
+          blog: 'Mais no i6 Blog',
+          intelligence: 'Mais no i6 Deep Research',
+        }
       : language === 'es'
-        ? { eyebrow: 'Inteligencia aplicada', title: 'Últimos insights', all: 'Ver todos los insights' }
-        : { eyebrow: 'Applied intelligence', title: 'Latest insights', all: 'See all insights' };
+        ? {
+            eyebrow: 'Inteligencia aplicada',
+            title: 'Últimos insights',
+            media: 'Más en i6 On Media',
+            blog: 'Más en i6 Blog',
+            intelligence: 'Más en i6 Deep Research',
+          }
+        : {
+            eyebrow: 'Applied intelligence',
+            title: 'Latest insights',
+            media: 'More on i6 On Media',
+            blog: 'More on i6 Blog',
+            intelligence: 'More on i6 Deep Research',
+          };
+
+  const media = featuredInsights.find((item) =>
+    item.type === 'i6 on Media' || item.type === 'i6 Social'
+  );
+  const blog = featuredInsights.find((item) =>
+    item.type === 'i6 Article' || item.type === 'i6 Blog'
+  );
+  const intelligenceCandidates: HomeInsight[] = [
+    ...featuredIntelligence,
+    ...featuredInsights.filter((item) => item.type === 'i6 eBook'),
+  ].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const intelligence = intelligenceCandidates[0];
+
+  const columns: FeaturedColumn[] = [];
+  if (media) columns.push({ insight: media, destination: '/insights', moreLabel: labels.media });
+  if (blog) columns.push({ insight: blog, destination: '/i6-blog', moreLabel: labels.blog });
+  if (intelligence) {
+    columns.push({
+      insight: intelligence,
+      destination: '/i6-intelligence',
+      moreLabel: labels.intelligence,
+    });
+  }
+
+  if (columns.length === 0) return null;
 
   return (
     <section className="container mx-auto px-6 py-20 md:py-24">
@@ -67,17 +113,19 @@ const InsightsRow = () => {
             {labels.title}
           </h2>
         </div>
-        <Link
-          to={localized('/insights')}
-          className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
-        >
-          {labels.all}
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-        </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {insights.map((i) => (
-          <InsightCard key={`${i.slug}-${i.language}`} insight={i} />
+        {columns.map(({ insight, destination, moreLabel }) => (
+          <div key={`${destination}-${insight.slug}-${insight.language}`} className="flex flex-col gap-4">
+            <InsightCard insight={insight} destination={destination} />
+            <Link
+              to={localized(destination)}
+              className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-primary"
+            >
+              {moreLabel}
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         ))}
       </div>
     </section>

@@ -132,6 +132,18 @@ export const useIntelligence = (limit?: number) => {
   return items;
 };
 
+export const useFeaturedIntelligence = () => {
+  const { language: uiLanguage } = useLanguage();
+  const language = toContentLang(uiLanguage);
+  const [items, setItems] = useState<IntelligencePiece[]>([]);
+
+  useEffect(() => {
+    setItems(ALL.filter((i) => i.language === language && i.featured === true));
+  }, [language]);
+
+  return items;
+};
+
 export const useIntelligencePiece = (slug: string) => {
   const { language: uiLanguage } = useLanguage();
   const language = toContentLang(uiLanguage);
