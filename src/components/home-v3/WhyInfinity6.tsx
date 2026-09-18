@@ -82,7 +82,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explicabilidad orientada a la influencia',
-        desc: 'Cada recomendación sale con el argumento listo — para que el vendedor defienda la oferta, o para que el cliente entienda por qué esa es la decisión correcta.',
+        desc: 'Cada recomendación llega con el argumento listo: por qué el vendedor debe ofrecerlo, por qué el cliente debe aceptarlo.',
       },
       {
         icon: Plug,
