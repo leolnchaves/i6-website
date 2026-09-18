@@ -32,7 +32,7 @@ const FinalCTA = () => {
 
   return (
     <section className="container mx-auto px-6 pb-24">
-      <div className="relative overflow-hidden rounded-[calc(var(--radius)+8px)] border border-primary/25 bg-accent px-6 py-14 md:px-14 md:py-16 text-center">
+      <div className="relative overflow-hidden rounded-[calc(var(--radius)+8px)] border border-primary/25 bg-accent px-6 pt-14 pb-11 md:px-14 md:pt-16 md:pb-12 text-center">
         <div aria-hidden className="absolute inset-0 sand-glow" />
         <div className="relative max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-[2.6rem] leading-[1.14] font-bold text-foreground">{copy.title}</h2>
