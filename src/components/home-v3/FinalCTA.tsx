@@ -68,7 +68,6 @@ const FinalCTA = () => {
             </div>
           </div>
 
-          <p className="mt-6 text-xs font-medium uppercase tracking-[0.16em] text-primary">{copy.note}</p>
         </div>
       </div>
     </section>
