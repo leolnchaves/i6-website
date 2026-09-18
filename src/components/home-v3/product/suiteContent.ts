@@ -43,7 +43,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   pt: {
     intro: {
       eyebrow: 'A suíte',
-      title: 'Uma plataforma de decisão, não um conjunto de dashboards',
+      title: 'A decisão certa para cada momento do negócio.',
       description:
         'O i6 Decision Suite transforma dados de negócio em decisões aplicáveis, não apenas indicadores. Seus produtos compartilham contexto, governança e aprendizado para que cada decisão fique mais precisa à medida que a operação evolui.',
       pillars: [
@@ -162,7 +162,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   en: {
     intro: {
       eyebrow: 'The suite',
-      title: 'A decision platform, not a set of dashboards',
+      title: 'The right decision for every moment of the business.',
       description:
         'i6 Decision Suite turns business data into applicable decisions, not just indicators. Its products share context, governance and learning, so every decision gets sharper as the operation evolves.',
       pillars: [
@@ -281,7 +281,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
   es: {
     intro: {
       eyebrow: 'La suite',
-      title: 'Una plataforma de decisión, no un conjunto de dashboards',
+      title: 'La decisión correcta para cada momento del negocio.',
       description:
         'i6 Decision Suite convierte datos de negocio en decisiones aplicables, no solo en indicadores. Sus productos comparten contexto, gobernanza y aprendizaje para que cada decisión sea más precisa a medida que la operación evoluciona.',
       pillars: [
