@@ -80,7 +80,7 @@ const LegacySlugRedirect = ({ to }: { to: string }) => {
 const HomeRedirect = () => {
   const location = useLocation();
   const lang = isLang(location.pathname.split('/')[1]) ? location.pathname.split('/')[1] : detectPreferredLang();
-  return <Navigate to={`/${lang}`} replace />;
+  return <Navigate to={`/${lang}${location.search}${location.hash}`} replace />;
 };
 
 
@@ -91,8 +91,8 @@ const LocalizedRoutes = () => {
 
   if (!isLang(lang)) {
     const preferred = detectPreferredLang();
-    const rest = location.pathname.replace(/^\/[^/]+/, '');
-    return <Navigate to={`/${preferred}${rest}${location.search}${location.hash}`} replace />;
+    // O primeiro segmento não é um idioma: preserva o path completo original.
+    return <Navigate to={`/${preferred}${location.pathname}${location.search}${location.hash}`} replace />;
   }
 
 

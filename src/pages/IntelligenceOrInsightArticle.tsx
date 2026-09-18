@@ -1,4 +1,4 @@
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIntelligencePiece } from '@/hooks/useIntelligence';
@@ -21,15 +21,17 @@ const IntelligenceOrInsightArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const { language } = useLanguage();
   const localized = useLocalizedPath();
+  const location = useLocation();
+  const qs = `${location.search}${location.hash}`;
   const piece = useIntelligencePiece(slug || '');
   const insight = useInsight(slug || '');
 
   if (piece) {
     return <IntelligenceArticle />;
   }
-  // i6 Article moved to /i6-blog — preserve old links with a redirect.
+  // i6 Article moved to /i6-blog — preserve old links (and UTMs) with a redirect.
   if (insight && insight.type === 'i6 Article') {
-    return <Navigate to={localized(`/i6-blog/${insight.slug}`)} replace />;
+    return <Navigate to={`${localized(`/i6-blog/${insight.slug}`)}${qs}`} replace />;
   }
   if (insight && insight.type === 'i6 eBook') {
     return <InsightArticle section="i6-intelligence" />;

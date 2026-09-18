@@ -68,15 +68,16 @@ const InsightArticle = ({ section }: { section: LeadSection }) => {
   if (!insight) return <Navigate to={localized(backPath)} replace />;
 
   // Cross-listing redirects: i6 Article → /i6-blog, i6 eBook → /i6-intelligence,
-  // media types → /insights.
+  // media types → /insights. A query string (UTMs) e o hash seguem no destino.
+  const qs = `${location.search}${location.hash}`;
   if (isBlogType && !inBlog) {
-    return <Navigate to={localized(`/i6-blog/${insight.slug}`)} replace />;
+    return <Navigate to={`${localized(`/i6-blog/${insight.slug}`)}${qs}`} replace />;
   }
   if (isIntelType && !inIntel) {
-    return <Navigate to={localized(`/i6-intelligence/${insight.slug}`)} replace />;
+    return <Navigate to={`${localized(`/i6-intelligence/${insight.slug}`)}${qs}`} replace />;
   }
   if (!isBlogType && !isIntelType && (inIntel || inBlog)) {
-    return <Navigate to={localized(`/insights/${insight.slug}`)} replace />;
+    return <Navigate to={`${localized(`/insights/${insight.slug}`)}${qs}`} replace />;
   }
 
   if (insight.type !== 'i6 Article' && !insight.gated) {
