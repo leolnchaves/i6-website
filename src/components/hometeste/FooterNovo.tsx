@@ -95,6 +95,15 @@ const FooterNovo = () => {
               <a href="https://www.youtube.com/@infinity6ai" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors">
                 <Youtube size={22} />
               </a>
+              <span className="text-white/40 hover:text-[#F4845F] transition-colors" aria-hidden="true">
+                <Instagram size={22} />
+              </span>
+              <span className="text-white/40 hover:text-[#F4845F] transition-colors" aria-hidden="true">
+                <TikTokIcon size={22} />
+              </span>
+              <a href="https://huggingface.co/infinity6" target="_blank" rel="noopener noreferrer" aria-label="Hugging Face" className="text-white/40 hover:text-[#F4845F] transition-colors">
+                <HuggingFaceIcon size={22} />
+              </a>
             </div>
 
             <div className="flex gap-4 text-xs">
