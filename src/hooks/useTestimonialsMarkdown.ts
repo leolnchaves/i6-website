@@ -31,14 +31,23 @@ export const useTestimonialsMarkdown = (): UseTestimonialsMarkdownReturn => {
         setLoading(true);
         setError(null);
         
-        const fileName = `testimonials-${language}.md`;
-        const response = await fetch(`${import.meta.env.BASE_URL}content/${fileName}`);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch testimonials: ${response.statusText}`);
+        // Spanish content falls back to Portuguese unless a dedicated file exists.
+        const fileNames =
+          uiLanguage === 'es' ? ['testimonials-es.md', `testimonials-${language}.md`] : [`testimonials-${language}.md`];
+
+        let content = '';
+        for (const fileName of fileNames) {
+          const response = await fetch(`${import.meta.env.BASE_URL}content/${fileName}`);
+          if (response.ok) {
+            content = await response.text();
+            break;
+          }
         }
-        
-        const content = await response.text();
+
+        if (!content) {
+          throw new Error('Failed to fetch testimonials');
+        }
+
         const parsedTestimonials = parseMarkdownContent(content);
         setTestimonials(parsedTestimonials);
       } catch (err) {

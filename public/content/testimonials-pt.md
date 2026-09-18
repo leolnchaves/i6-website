@@ -1,7 +1,7 @@
 # Depoimentos
 
 ## Depoimento 1
-**Quote:** A EMS tem liderado a adoção de IA na indústria farmacêutica e a parceria com a infinity6 reforça esse protagonismo. Em poucas semanas, conseguimos transformar dados em ações inteligentes que geram impacto imediato e mensurável.
+**Quote:** A EMS tem liderado a adoção de IA na indústria farmacêutica e a parceria com a infinity6 reforça esse protagonismo. Em poucas semanas, a parceria com a infinity6 conseguiu transformar dados em ações inteligentes que geraram impacto imediato e mensurável.
 **Author:** Marcus Sanchez
 **Title:** Acionista EMS Farma
 **Company:** EMS Farma
