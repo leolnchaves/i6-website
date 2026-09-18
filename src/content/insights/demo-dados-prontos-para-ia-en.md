@@ -13,6 +13,8 @@ tags: ["Data", "Integration"]
 cover_image: /images/comunidade/mural-forecasting.jpg
 featured: false
 is_default: false
+cta_form: true
+cta_form_text: "Want to see this applied to **your data**? Leave your contact and our team replies with an initial assessment."
 ---
 > Demo content created to test the page layout. Figures and cases are fictional.
 

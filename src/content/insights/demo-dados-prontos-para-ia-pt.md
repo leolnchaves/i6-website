@@ -13,6 +13,8 @@ tags: ["Dados", "Integração"]
 cover_image: /images/comunidade/mural-forecasting.jpg
 featured: false
 is_default: false
+cta_form: true
+cta_form_text: "Quer ver isso aplicado aos **seus dados**? Deixe seu contato e nosso time responde com um diagnóstico inicial."
 ---
 > Conteúdo de demonstração criado para testar o layout da página. Números e casos são fictícios.
 
