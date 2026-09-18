@@ -10,21 +10,18 @@ const copyByLang = {
     decision: 'Teste o i6 Decision Suite grátis por 30 dias',
     builder: 'Construa com o i6 Builder',
     specialist: 'Falar com especialista',
-    note: 'CUSTO ZERO ATÉ O BACKTEST COMPROVAR O POTENCIAL DE RESULTADO',
   },
   en: {
     title: 'Your competitor will notice the move after you do',
     decision: 'Try the i6 Decision Suite free for 30 days',
     builder: 'Build with the i6 Builder',
     specialist: 'Talk to an expert',
-    note: 'ZERO COST UNTIL THE BACKTEST PROVES THE POTENTIAL RESULT',
   },
   es: {
     title: 'Tu competidor va a notar el movimiento después de ti',
     decision: 'Prueba el i6 Decision Suite gratis por 30 días',
     builder: 'Construye con el i6 Builder',
     specialist: 'Hablar con un especialista',
-    note: 'COSTO CERO HASTA QUE EL BACKTEST COMPRUEBE EL POTENCIAL DE RESULTADO',
   },
 };
 
