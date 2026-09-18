@@ -1,13 +1,16 @@
 import type { ContentLang } from '@/utils/localizedPath';
 import type { Language } from '@/types/language';
 
+/** Copy per language. Spanish falls back to Portuguese when absent. */
+export type KpiCopy = Record<ContentLang, string> & { es?: string };
+
 export interface RealResultKPI {
   slug: string;
   value: string;
   /** Short label shown under the big number */
-  label: Record<ContentLang, string>;
+  label: KpiCopy;
   /** Sector / client tag in caption */
-  source: Record<ContentLang, string>;
+  source: KpiCopy;
   /** Optional numeric for JSON-LD Statistic (when expressible) */
   numericValue?: number;
   unitText?: string;
