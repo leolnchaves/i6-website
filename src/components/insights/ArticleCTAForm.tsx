@@ -27,6 +27,8 @@ type FormData = z.infer<typeof schema>;
 
 interface ArticleCTAFormProps {
   kind: 'insight' | 'research';
+  /** Seção do site onde o formulário vive (/i6-blog vs /i6-intelligence). */
+  section: LeadSection;
   title: string;
   slug: string;
   id?: string;
