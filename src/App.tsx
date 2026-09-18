@@ -153,10 +153,11 @@ const App = () => {
                 <ScrollToTop />
                 <Routes>
 
-                  {/* Standalone demo / totem experience (no header/footer) */}
-                  <Route path="/:lang/demo" element={<Kiosk />} />
-                  <Route path="/demo" element={<RootLangRedirect />} />
-                  <Route path="/demo-metrics/:token" element={<KioskMetrics />} />
+                  {/* Demo/totem desativada temporariamente: acesso vai para a Home.
+                      Kiosk e KioskMetrics permanecem no repositório para reformulação futura. */}
+                  <Route path="/:lang/demo" element={<HomeRedirect />} />
+                  <Route path="/demo" element={<HomeRedirect />} />
+                  <Route path="/demo-metrics/:token" element={<HomeRedirect />} />
 
                   {/* Localized site */}
                   <Route path="/:lang/*" element={<LocalizedRoutes />} />
