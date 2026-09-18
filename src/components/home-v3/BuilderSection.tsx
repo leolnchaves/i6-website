@@ -11,7 +11,7 @@ const copyByLang = {
     description:
       'Engines de modelagem, SDKs e toolkits para times de tecnologia desenvolverem produtos de decisão orientada a dados — sem construir a fundação de IA do zero.',
     pillars: [
-      { title: 'Engines preditivos', body: 'Recomendação, previsão, propensão e precificação disponíveis como capacidade de produto' },
+      { title: 'Engines proprietários', body: 'Recomendação, previsão, propensão e precificação disponíveis como capacidade de produto' },
       { title: 'SDKs e API', body: 'Integração progressiva por módulo, no seu stack e no seu ritmo de release' },
       { title: 'Toolkits de modelagem', body: 'Capacidade de modelagens proprietárias para criar experiências que só o seu produto entrega' },
       { title: 'Governança e explicabilidade', body: 'Cada decisão rastreável, com explicabilidade nativa e controle de versão de modelo' },
@@ -25,7 +25,7 @@ const copyByLang = {
     description:
       'Modeling engines, SDKs and toolkits for technology teams to build data-driven decision products — without building the AI foundation from scratch.',
     pillars: [
-      { title: 'Predictive engines', body: 'Recommendation, forecasting, propensity and pricing available as product capability' },
+      { title: 'Proprietary engines', body: 'Recommendation, forecasting, propensity and pricing available as product capability' },
       { title: 'SDKs and API', body: 'Progressive module-by-module integration, in your stack and at your release pace' },
       { title: 'Modeling toolkits', body: 'Proprietary modeling capabilities to create experiences only your product delivers' },
       { title: 'Governance and explainability', body: 'Every decision traceable, with native explainability and model versioning' },
@@ -39,7 +39,7 @@ const copyByLang = {
     description:
       'Engines de modelado, SDKs y toolkits para que los equipos de tecnología desarrollen productos de decisión orientada a datos — sin construir la fundación de IA desde cero.',
     pillars: [
-      { title: 'Engines predictivos', body: 'Recomendación, pronóstico, propensión y precios disponibles como capacidad de producto' },
+      { title: 'Engines propietarios', body: 'Recomendación, pronóstico, propensión y precios disponibles como capacidad de producto' },
       { title: 'SDKs y API', body: 'Integración progresiva por módulo, en tu stack y a tu ritmo de release' },
       { title: 'Toolkits de modelado', body: 'Capacidad de modelados propietarios para crear experiencias que solo tu producto entrega' },
       { title: 'Gobernanza y explicabilidad', body: 'Cada decisión rastreable, con explicabilidad nativa y control de versión de modelo' },
