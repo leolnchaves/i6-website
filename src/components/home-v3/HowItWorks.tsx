@@ -50,7 +50,7 @@ const copyByLang = {
     title: 'Do sinal bruto à decisão executada',
     intro:
       'Uma camada de decisão acima do seu stack: capturamos os sinais, antecipamos o movimento, priorizamos a ação e devolvemos a decisão onde a operação já trabalha.',
-    sourcesLabel: 'Capturamos de qualquer ecossistema',
+    sourcesLabel: 'Capturamos de qualquer ecossistema (API)',
     activationLabel: 'Ativamos em qualquer ecossistema',
     steps: [
       { title: 'Captura de sinais', desc: 'Demanda, preço, estoque, comportamento e contexto de mercado.' },
@@ -70,7 +70,7 @@ const copyByLang = {
     title: 'From raw signal to executed decision',
     intro:
       'A decision layer above your stack: we capture the signals, anticipate the movement, prioritize the action and deliver the decision where operations already work.',
-    sourcesLabel: 'We capture from any ecosystem',
+    sourcesLabel: 'We capture from any ecosystem (API)',
     activationLabel: 'We activate in any ecosystem',
     steps: [
       { title: 'Signal capture', desc: 'Demand, price, inventory, behavior and market context.' },
@@ -90,7 +90,7 @@ const copyByLang = {
     title: 'De la señal bruta a la decisión ejecutada',
     intro:
       'Una capa de decisión por encima de su stack: capturamos las señales, anticipamos el movimiento, priorizamos la acción y devolvemos la decisión donde la operación ya trabaja.',
-    sourcesLabel: 'Capturamos de cualquier ecosistema',
+    sourcesLabel: 'Capturamos de cualquier ecosistema (API)',
     activationLabel: 'Activamos en cualquier ecosistema',
     steps: [
       { title: 'Captura de señales', desc: 'Demanda, precio, inventario, comportamiento y contexto de mercado.' },
