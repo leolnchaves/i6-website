@@ -133,7 +133,7 @@ export const builderCopy = {
         },
         {
           title: 'Novo Produto',
-          desc: 'Um produto novo é construído do zero sobre o Builder, usando engines, SDKs e toolkits como fundação técnica desde o primeiro dia',
+          desc: 'Um produto novo nasce sobre o Builder — engines, SDKs e toolkits como fundação técnica desde o primeiro dia.',
           points: ['Fundação preditiva pronta', 'Menos engenharia de plataforma', 'Foco total em experiência e domínio'],
         },
       ],
@@ -275,7 +275,7 @@ export const builderCopy = {
         },
         {
           title: 'New Product',
-          desc: 'A new product is built from scratch on top of the Builder, using engines, SDKs and toolkits as the technical foundation from day one',
+          desc: 'A new product is born on the Builder — engines, SDKs and toolkits as the technical foundation from day one.',
           points: ['Predictive foundation ready', 'Less platform engineering', 'Full focus on experience and domain'],
         },
       ],
@@ -417,7 +417,7 @@ export const builderCopy = {
         },
         {
           title: 'Nuevo Producto',
-          desc: 'Un producto nuevo se construye desde cero sobre el Builder, usando engines, SDKs y toolkits como fundación técnica desde el primer día',
+          desc: 'Un producto nuevo nace sobre el Builder — engines, SDKs y toolkits como fundación técnica desde el primer día.',
           points: ['Fundación predictiva lista', 'Menos ingeniería de plataforma', 'Foco total en experiencia y dominio'],
         },
       ],
