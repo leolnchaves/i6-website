@@ -51,7 +51,7 @@ const copyByLang = {
     intro:
       'Uma camada de decisão acima do seu stack: capturamos os sinais, antecipamos o movimento, priorizamos a ação e devolvemos a decisão onde a operação já trabalha.',
     sourcesLabel: 'Capturamos de qualquer ecossistema (API)',
-    activationLabel: 'Ativamos em qualquer ecossistema',
+    activationLabel: 'Ativamos em qualquer ecossistema (API)',
     steps: [
       { title: 'Captura de sinais', desc: 'Demanda, preço, estoque, comportamento e contexto de mercado.' },
       { title: 'Predição', desc: 'Motores proprietários antecipam demanda, risco, intenção, elasticidade e propensão.' },
@@ -71,7 +71,7 @@ const copyByLang = {
     intro:
       'A decision layer above your stack: we capture the signals, anticipate the movement, prioritize the action and deliver the decision where operations already work.',
     sourcesLabel: 'We capture from any ecosystem (API)',
-    activationLabel: 'We activate in any ecosystem',
+    activationLabel: 'We activate in any ecosystem (API)',
     steps: [
       { title: 'Signal capture', desc: 'Demand, price, inventory, behavior and market context.' },
       { title: 'Prediction', desc: 'Proprietary engines anticipate demand, risk, intent, elasticity and propensity.' },
@@ -91,7 +91,7 @@ const copyByLang = {
     intro:
       'Una capa de decisión por encima de su stack: capturamos las señales, anticipamos el movimiento, priorizamos la acción y devolvemos la decisión donde la operación ya trabaja.',
     sourcesLabel: 'Capturamos de cualquier ecosistema (API)',
-    activationLabel: 'Activamos en cualquier ecosistema',
+    activationLabel: 'Activamos en cualquier ecosistema (API)',
     steps: [
       { title: 'Captura de señales', desc: 'Demanda, precio, inventario, comportamiento y contexto de mercado.' },
       { title: 'Predicción', desc: 'Motores propietarios anticipan demanda, riesgo, intención, elasticidad y propensión.' },
