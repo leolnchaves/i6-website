@@ -35,4 +35,6 @@
 
 - [x] Bloco "Suporte à implementação" no fim das páginas /docs (PT/EN/ES)
 
-- [x] /docs: abas de método (:::tab) + mídia inline (@video/@download), 5 páginas "Começar" nos 3 idiomas
+- [x] Home: remover a linha de nota do card final de CTA (PT/EN/ES)
+<!-- APPEND-BELOW -->
+
