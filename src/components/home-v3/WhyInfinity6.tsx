@@ -24,7 +24,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explicabilidade orientada a influência',
-        desc: 'Cada recomendação sai com o argumento pronto — para o vendedor defender a oferta, ou para o cliente entender por que essa é a decisão certa.',
+        desc: 'Cada recomendação chega com o argumento pronto: por que o vendedor deve oferecer, por que o cliente deve aceitar.',
       },
       {
         icon: Plug,
@@ -53,7 +53,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explainability oriented toward influence',
-        desc: 'Every recommendation arrives with the argument ready — for the sales rep to defend the offer, or for the customer to understand why this is the right decision.',
+        desc: 'Every recommendation arrives with the argument ready: why the sales rep should offer it, why the customer should accept it.',
       },
       {
         icon: Plug,
@@ -82,7 +82,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explicabilidad orientada a la influencia',
-        desc: 'Cada recomendación sale con el argumento listo — para que el vendedor defienda la oferta, o para que el cliente entienda por qué esa es la decisión correcta.',
+        desc: 'Cada recomendación llega con el argumento listo: por qué el vendedor debe ofrecerlo, por qué el cliente debe aceptarlo.',
       },
       {
         icon: Plug,
