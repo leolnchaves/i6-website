@@ -54,7 +54,7 @@ const copyByLang = {
     activationLabel: 'Ativamos em qualquer ecossistema',
     steps: [
       { title: 'Captura de sinais', desc: 'Demanda, preço, estoque, comportamento e contexto de mercado.' },
-      { title: 'Predição', desc: 'Motores proprietários identificam risco, intenção, elasticidade e propensão.' },
+      { title: 'Predição', desc: 'Motores proprietários antecipam demanda, risco, intenção, elasticidade e propensão.' },
       { title: 'Recomendação priorizada', desc: 'A melhor ação por objetivo, canal, cliente, SKU ou região.' },
       { title: 'Ativação', desc: 'A decisão chega à operação dentro do ecossistema do cliente.' },
     ],
@@ -68,7 +68,7 @@ const copyByLang = {
     activationLabel: 'We activate in any ecosystem',
     steps: [
       { title: 'Signal capture', desc: 'Demand, price, inventory, behavior and market context.' },
-      { title: 'Prediction', desc: 'Proprietary engines identify risk, intent, elasticity and propensity.' },
+      { title: 'Prediction', desc: 'Proprietary engines anticipate demand, risk, intent, elasticity and propensity.' },
       { title: 'Prioritized recommendation', desc: 'The best action by objective, channel, customer, SKU or region.' },
       { title: 'Activation', desc: 'The decision reaches operations inside the client ecosystem.' },
     ],
@@ -82,7 +82,7 @@ const copyByLang = {
     activationLabel: 'Activamos en cualquier ecosistema',
     steps: [
       { title: 'Captura de señales', desc: 'Demanda, precio, inventario, comportamiento y contexto de mercado.' },
-      { title: 'Predicción', desc: 'Motores propietarios identifican riesgo, intención, elasticidad y propensión.' },
+      { title: 'Predicción', desc: 'Motores propietarios anticipan demanda, riesgo, intención, elasticidad y propensión.' },
       { title: 'Recomendación priorizada', desc: 'La mejor acción por objetivo, canal, cliente, SKU o región.' },
       { title: 'Activación', desc: 'La decisión llega a la operación dentro del ecosistema del cliente.' },
     ],
