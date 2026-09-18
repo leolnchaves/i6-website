@@ -106,6 +106,7 @@ const IntelligenceArticle = () => {
       {resendOpen && (
         <LeadGateForm
           kind="research"
+          section="i6-intelligence"
           mode="resend"
           title={piece.title}
           slug={piece.slug}
@@ -266,6 +267,7 @@ const IntelligenceArticle = () => {
         {isLocked ? (
           <LeadGateForm
             kind="research"
+            section="i6-intelligence"
             title={piece.title}
             slug={piece.slug}
             id={piece.id}
@@ -295,6 +297,7 @@ const IntelligenceArticle = () => {
             {piece.cta_form && piece.cta_form_text && (
               <ArticleCTAForm
                 kind="research"
+                section="i6-intelligence"
                 title={piece.title}
                 slug={piece.slug}
                 id={piece.id}

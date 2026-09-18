@@ -8,13 +8,13 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useInsight, resolveCoverImage } from '@/hooks/useInsights';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
-import LeadGateForm from '@/components/insights/LeadGateForm';
+import LeadGateForm, { type LeadSection } from '@/components/insights/LeadGateForm';
 import ArticleCTAForm from '@/components/insights/ArticleCTAForm';
 import { Button } from '@/components/ui/button';
 
 const BASE_URL = 'https://infinity6.ai';
 
-const InsightArticle = () => {
+const InsightArticle = ({ section }: { section: LeadSection }) => {
   const { slug } = useParams<{ slug: string }>();
   const { language } = useLanguage();
   const localized = useLocalizedPath();
@@ -186,6 +186,7 @@ const InsightArticle = () => {
         {isLocked ? (
           <LeadGateForm
             kind="insight"
+            section={section}
             title={insight.title}
             slug={insight.slug}
             id={insight.id}
@@ -213,6 +214,7 @@ const InsightArticle = () => {
             {insight.cta_form && insight.cta_form_text && (
               <ArticleCTAForm
                 kind="insight"
+                section={section}
                 title={insight.title}
                 slug={insight.slug}
                 id={insight.id}

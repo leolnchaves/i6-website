@@ -26,6 +26,8 @@ type FormData = z.infer<typeof schema>;
 
 export type LeadGateKind = 'insight' | 'research';
 export type LeadGateMode = 'gate' | 'resend';
+/** Seção da URL onde o formulário é exibido — define rótulos e link, não o tipo da peça. */
+export type LeadSection = 'i6-blog' | 'i6-intelligence';
 
 interface LeadGateFormProps {
   /**
@@ -35,6 +37,8 @@ interface LeadGateFormProps {
    *                sent by i6Hub via email and lead is registered.
    */
   kind: LeadGateKind;
+  /** Seção do site onde o formulário vive (/i6-blog vs /i6-intelligence). */
+  section: LeadSection;
   /**
    * - 'gate'   → initial lock (default). Research: onUnlock is called.
    * - 'resend' → user already unlocked; button re-triggers the same lead
@@ -48,7 +52,7 @@ interface LeadGateFormProps {
   onUnlock?: () => void;
 }
 
-const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
+const LeadGateForm = ({ kind, section, mode = 'gate', title, slug, id, pdfUrl, onUnlock }: LeadGateFormProps) => {
 
   const { language } = useLanguage();
   const localized = useLocalizedPath();
@@ -118,11 +122,11 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
       setSubmitting(true);
 
       try {
-        const basePath = kind === 'research' ? 'i6-intelligence' : 'insights';
-        const url = `https://infinity6.ai/${language}/${basePath}/${slug}`;
+        const url = `https://infinity6.ai/${language}/${section}/${slug}`;
         const ctx = getLeadContext();
-        const tag = kind === 'research' ? '[Lead Research]' : '[Lead Insights]';
-        const idLabel = kind === 'research' ? 'Research' : 'Insight';
+        const isResearchSection = section === 'i6-intelligence';
+        const tag = isResearchSection ? '[Lead Research]' : '[Lead Insights]';
+        const idLabel = isResearchSection ? 'Research' : 'Insight';
         const origin = kind === 'research' ? 'lead-gate-research' : 'lead-gate-insight';
         const message = [
           tag,
@@ -142,9 +146,9 @@ const LeadGateForm = ({ kind, mode = 'gate', title, slug, id, pdfUrl, onUnlock }
             email: data.email,
             company: '',
             message,
-            subscription: `${kind}:${slug}`,
+            subscription: isResearchSection ? `research:${slug}` : `blog:${slug}`,
             insight_id: id || '',
-            reason: kind === 'research' ? 'i6 Deep Research' : 'i6 Blog',
+            reason: isResearchSection ? 'i6 Deep Research' : 'i6 Blog',
             token: SHARED_FORM_TOKEN,
             // Anexa todos os campos de tracking planos (anonymous_id,
             // session_id, first/last touch, journey, language, user_agent).

@@ -32,7 +32,7 @@ const IntelligenceOrInsightArticle = () => {
     return <Navigate to={localized(`/i6-blog/${insight.slug}`)} replace />;
   }
   if (insight && insight.type === 'i6 eBook') {
-    return <InsightArticle />;
+    return <InsightArticle section="i6-intelligence" />;
   }
   // Avoid the no-op of returning Navigate when nothing matched yet during
   // initial render — useInsight / useIntelligencePiece are sync glob-based,
