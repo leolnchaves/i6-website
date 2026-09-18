@@ -1,79 +1,26 @@
-# Seção da URL como base do rótulo dos leads de conteúdo
+# Ativar o formulário de contato no fim de um artigo do i6 Blog
 
-## Relatório da investigação
+Objetivo: deixar um artigo de exemplo do i6 Blog com o convite de contato (nome + email) no final, para você testar o envio de um lead real.
 
-**1. Rotas e componentes**
+## O que muda
 
-- `/{idioma}/i6-blog/:slug` → renderiza direto a página de artigo (`InsightArticle`).
-- `/{idioma}/i6-intelligence/:slug` → passa por um seletor (`IntelligenceOrInsightArticle`) que decide:
-  - é peça de research → página de research (`IntelligenceArticle`, sempre `kind="research"`);
-  - é eBook → **a mesma página de artigo do blog** (`InsightArticle`, sempre `kind="insight"`);
-  - é artigo antigo → redireciona para `/i6-blog/<slug>`;
-  - nada encontrado → volta para `/i6-intelligence`.
+Artigo escolhido: "O que dados prontos para IA quer dizer na prática" (`/pt/i6-blog/demo-dados-prontos-para-ia`), nas versões português e inglês, para você testar nos dois idiomas.
 
-Ou seja: existem duas rotas distintas, mas a página de artigo é compartilhada pelas duas seções — daí a incoerência atual.
+No final do artigo passa a aparecer o bloco de convite com um texto curto e os campos Nome e Email, igual ao usado nos outros conteúdos.
 
-**2. Existe sinal confiável da seção no ponto do formulário?**
+Texto do convite (PT): "Quer ver isso aplicado aos **seus dados**? Deixe seu contato e nosso time responde com um diagnóstico inicial."
 
-Sim, mas hoje não é usado. A página de artigo não recebe nenhuma prop de seção; o único sinal disponível é o `pathname` do router. `stripLangPrefix` remove só o prefixo de idioma (`/pt`, `/en`, `/es`) e não normaliza barra final — um caminho como `/pt/i6-blog/slug/` deixa segmento vazio no fim. Qualquer leitura de pathname precisa cortar barras nas duas pontas antes de comparar o primeiro segmento.
+Texto do convite (EN): "Want to see this applied to **your data**? Leave your contact and our team replies with an initial assessment."
 
-**3. Mecanismo proposto**
+Nada mais do artigo muda: capa, texto, tags e o restante da página seguem iguais. Nenhum outro conteúdo do blog recebe o convite.
 
-Opção escolhida: **prop explícita `section` (`'i6-blog' | 'i6-intelligence'`) passada pela camada de rota**, com o seletor de `/i6-intelligence` sempre passando `'i6-intelligence'` e a rota de `/i6-blog` passando `'i6-blog'`.
+## Detalhes técnicos
 
-- Prós: determinístico, testável, sem dependência de formato de URL nem de barra final; ao adicionar uma seção nova, o erro aparece na compilação em vez de silenciosamente cair no valor padrão.
-- Contras: exige encadear a prop pela página de artigo até os dois formulários.
-
-Alternativa (ler pathname dentro do formulário): menos código, mas frágil — depende de normalização de barra/idioma, quebra em pré-visualizações com prefixo, e falha silenciosamente numa seção nova (cairia no rótulo padrão).
-
-**4. Pontos que passam a seguir a seção**
-
-Em `LeadGateForm` e `ArticleCTAForm`:
-
-- `reason` → "i6 Deep Research" em /i6-intelligence, "i6 Blog" em /i6-blog.
-- Rótulo da mensagem: a etiqueta (`[Lead Research]` / `[Lead Insights]`, e as versões `... CTA`) e o rótulo do ID (`Research:` / `Insight:`).
-- Campo de assunto: `research:<slug>` vs `insight:<slug>` (gate) e `research:<slug>` vs `blog:<slug>` (CTA) — mantendo cada string exatamente como hoje, só trocando o critério.
-- `basePath` usado para montar a URL do conteúdo na mensagem (`i6-intelligence` / `insights`) — este é o item extra não listado no pedido: hoje ele deriva de `kind`, então um eBook em /i6-intelligence grava uma URL `/insights/...` que não corresponde à página real. Passa a seguir a seção, usando `i6-blog` para a seção de blog (a URL atual `/insights/...` é a rota antiga).
-- O campo `Origem:` na mensagem e o parâmetro de origem interna continuam derivados de `kind` (não estão na lista de mudança).
-
-**5. Analytics e chave de desbloqueio**
-
-Confirmado: ambos continuam em `kind`, sem alteração.
-
-- Eventos disparados no envio (research desbloqueado / download de insight concluído; CTA de research / CTA de insight, incluindo as chaves `${kind}_id` e `${kind}_slug`) — intocados, série histórica preservada.
-- Chave de "já desbloqueou" (`i6_unlocked_research:` / `i6_unlocked_insight:` + slug + idioma) — intocada, ninguém revê o formulário.
-
-A prop `section` é nova e independente: nenhuma das duas leituras passa a consultá-la.
-
-## Mudanças a implementar
-
-1. `LeadGateForm` e `ArticleCTAForm`: nova prop obrigatória `section: 'i6-blog' | 'i6-intelligence'`; `reason`, etiqueta, rótulo do ID, campo de assunto e `basePath` passam a derivar dela; `kind` permanece para eventos, chave de desbloqueio, `Origem:` e origem interna.
-2. Página de research: passa `section="i6-intelligence"` nos dois formulários.
-3. Página de artigo (compartilhada): recebe a seção da camada de rota e repassa aos formulários.
-4. Rota `/i6-blog/:slug`: passa `i6-blog`. Seletor de `/i6-intelligence/:slug`: passa `i6-intelligence` (o caso de artigo antigo continua redirecionando para /i6-blog, então chega lá como blog).
-
-Sem mudança de aparência, validações, campos de UTM/jornada, `insight_id` ou endpoint.
+- Em `src/content/insights/demo-dados-prontos-para-ia-pt.md` e `-en.md`, adicionar ao front matter: `cta_form: true` e `cta_form_text: "..."`.
+- `useInsights.ts` já lê esses campos e `InsightArticle.tsx` já renderiza `ArticleCTAForm` quando ambos estão presentes; nenhuma mudança de código é necessária.
+- O envio usará `section="i6-blog"`, portanto: `source: i6-website`, `reason: i6 Blog`, `subscription: blog:demo-dados-prontos-para-ia`, `company` vazio, além dos campos de UTM/jornada.
 
 ## Validação
 
-- Compilação sem erros.
-- Envio de teste na pré-visualização: eBook sob /i6-intelligence (esperado `reason = "i6 Deep Research"`, etiqueta de research, assunto `research:<slug>`, URL da mensagem em /i6-intelligence) e artigo sob /i6-blog (esperado `reason = "i6 Blog"`).
-- Conferir que a chave de desbloqueio gravada e o evento disparado continuam os mesmos de hoje para o mesmo conteúdo.
-
-## Verificação do link (basePath) — resultado
-
-**1. O que /insights/&lt;slug&gt; faz hoje:** a rota existe e resolve. Ela carrega a mesma página de artigo e, pelo tipo da peça, redireciona: artigo de blog → `/i6-blog/<slug>`; eBook → `/i6-intelligence/<slug>`; conteúdo de mídia permanece em `/insights/<slug>`. Ou seja, o link antigo **não dá 404** — chega ao conteúdo certo por redirecionamento. O único efeito colateral conhecido é o redirecionamento não preservar parâmetros de campanha (bug já identificado antes, fora deste escopo).
-
-**2. É histórico?** Sim. O `basePath` derivado do tipo existe desde a criação dos dois formulários (6/8/2026), antes de a seção /i6-blog existir; não foi introduzido nesta sessão. Nenhum código do site lê ou interpreta o texto da mensagem do lead — ele é gravado como texto na planilha. Não há automação no repositório dependente desse formato; se houver algum filtro manual/planilha do lado do HUB, isso está fora do que consigo inspecionar.
-
-**3. Volume afetado:** não é possível contar daqui — não tenho acesso à planilha. Dá para identificar filtrando as linhas cuja mensagem contém "/insights/" (e cruzando com as linhas de gate/CTA de conteúdo).
-
-**Conclusão prática:** o link não está quebrado, só desatualizado. Corrigir o `basePath` junto com a mudança de seção é seguro e de baixo risco; deixá-lo como está também não quebra nada.
-
-## Rota antiga /insights/:slug — resultado da verificação
-
-**1. O formulário aparece lá hoje?** Não. Nessa rota, eBook redireciona para /i6-intelligence e artigo redireciona para /i6-blog antes de qualquer renderização; o que permanece são menções de mídia e posts sociais, que abrem o link externo e mostram apenas a mensagem "conteúdo hospedado em outro site". Nenhuma peça publicada tem o CTA dentro do artigo ativado.
-
-**2. Que conteúdo vive lá?** Somente "i6 on Media" e "i6 Social", todos com link externo. Um formulário só apareceria se uma menção de mídia fosse marcada como "exige cadastro" — hoje inexistente, e nesse caso seria conceitualmente uma terceira categoria (menção de imprensa), não "i6 Blog".
-
-**3. Decisão:** a prop `section` fica **obrigatória, sem valor padrão**. A rota `/insights/:slug` recebe `section="i6-blog"` de forma explícita, com comentário registrando que o formulário é inalcançável por esse caminho hoje. Nenhum rótulo novo é criado; se uma menção de mídia passar a exigir cadastro, cria-se um rótulo próprio na ocasião.
+- Build limpo.
+- Teste na prévia: abrir o artigo em PT, enviar o formulário e conferir os campos enviados (source, reason, subscription, empresa vazia).
