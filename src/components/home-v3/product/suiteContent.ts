@@ -29,7 +29,7 @@ export interface SuiteCopy {
   products: {
     eyebrow: string;
     title: string;
-    flowLabels: { input: string; decision: string; value: string };
+    selectorLabel: string;
     cta: string;
     items: SuiteProduct[];
   };
