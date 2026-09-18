@@ -13,7 +13,7 @@ const copyByLang = {
     builder: {
       label: 'i6 Builder Platform',
       title: 'Inteligência para diferenciar e escalar',
-      body: 'A mesma capacidade de modelagem, exposta como plataforma para o seu time construir sobre ela',
+      body: 'A mesma capacidade de modelagem, exposta como plataforma para o seu time construir sobre ela.',
       cta: 'Saiba mais',
     },
   },
@@ -27,7 +27,7 @@ const copyByLang = {
     builder: {
       label: 'i6 Builder Platform',
       title: 'Intelligence to differentiate and scale',
-      body: 'The same modeling capability, exposed as a platform for your team to build on',
+      body: 'The same modeling capability, exposed as a platform for your team to build on.',
       cta: 'Learn more',
     },
   },
@@ -41,7 +41,7 @@ const copyByLang = {
     builder: {
       label: 'i6 Builder Platform',
       title: 'Inteligencia para diferenciar y escalar',
-      body: 'La misma capacidad de modelado, expuesta como plataforma para que tu equipo construya sobre ella',
+      body: 'La misma capacidad de modelado, expuesta como plataforma para que tu equipo construya sobre ella.',
       cta: 'Saber más',
     },
   },
