@@ -6,6 +6,11 @@ A seção hoje termina em "04 Ativação" e passa a impressão de fluxo linear e
 Vamos deixar explícito que o ciclo se realimenta — cada decisão executada vira sinal de
 treino — sem adicionar um quinto card ao painel.
 
+Depois de comparar três tratamentos lado a lado, o escolhido é o mais discreto: um trilho
+pontilhado com um pequeno marcador coral na ponta que volta para a primeira etapa, e a
+frase logo abaixo. Sem arco grande, sem pílula colorida, sem mudança no painel existente.
+
+
 ## O que muda
 
 Dentro do painel existente do i6 Decision Platform (o mesmo que hoje guarda os 4 passos),
