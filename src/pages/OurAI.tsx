@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
-import { toContentLang } from '@/utils/localizedPath';
+import { pickLang, toContentLang } from '@/utils/localizedPath';
 import { ourAIContent } from '@/data/staticData/ourAIContent';
 import { realResults } from '@/data/staticData/realResults';
 
@@ -80,16 +80,16 @@ const OurAI = memo(() => {
       .map((r) => ({
         '@context': 'https://schema.org',
         '@type': 'Observation',
-        name: r.label[cl],
+        name: pickLang(language, r.label),
         observationAbout: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
         variableMeasured: {
           '@type': 'PropertyValue',
-          name: r.label[cl],
+          name: pickLang(language, r.label),
           ...(r.unitText ? { unitText: r.unitText } : {}),
         },
         measuredValue: r.numericValue,
         ...(r.unitText ? { unitText: r.unitText } : {}),
-        description: `${c.results.sourceLabel}: ${r.source[cl]}`,
+        description: `${c.results.sourceLabel}: ${pickLang(language, r.source)}`,
       }));
 
     return {
