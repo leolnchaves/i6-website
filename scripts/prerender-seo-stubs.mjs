@@ -254,14 +254,14 @@ for (const lang of ['en', 'pt']) {
 
       // Real-results KPIs (mirror src/data/staticData/realResults.ts)
       const kpis = lang === 'pt' ? [
-        { value: 'R$ 100M', label: 'em perdas evitadas por incineração em um ano', source: 'Varejo farma' },
+        { value: 'R$ 100M', label: 'em perdas evitadas por incineração em um ano', source: 'Indústria farmacêutica' },
         { value: '+23%', label: 'ticket médio por PDV', source: 'Varejo' },
         { value: '+36%', label: 'positivação de produtos', source: 'Varejo' },
         { value: '−57%', label: 'custo de mensageria, com disparos direcionados', source: 'Financeiro' },
         { value: '12x', label: 'mais conversão em campanhas do que a segmentação tradicional', source: 'Financeiro' },
         { value: '+2,6%', label: 'mais vendas que a curadoria humana de looks', source: 'Fashion' },
       ] : [
-        { value: 'R$ 100M', label: 'in losses avoided from incineration in one year', source: 'Pharma retail' },
+        { value: 'R$ 100M', label: 'in losses avoided from incineration in one year', source: 'Pharmaceutical industry' },
         { value: '+23%', label: 'average ticket per POS', source: 'Retail' },
         { value: '+36%', label: 'product activation', source: 'Retail' },
         { value: '−57%', label: 'messaging cost, with targeted sends', source: 'Financial services' },
