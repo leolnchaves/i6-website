@@ -231,15 +231,15 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        <div className="mt-8 pt-7 border-t border-border">
-          <div className="grid gap-6 md:grid-cols-[minmax(0,270px)_minmax(0,1fr)] md:gap-10 md:items-center">
+        <div className="mt-6 pt-5 border-t border-border">
+          <div className="grid gap-4 md:grid-cols-[minmax(0,270px)_minmax(0,1fr)] md:gap-8 md:items-center">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">{copy.loop.label}</p>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{copy.loop.desc}</p>
             </div>
             <div>
               <LoopConduit />
-              <div className="hidden md:flex items-center justify-between mt-1 px-2">
+              <div className="hidden md:flex items-center justify-between mt-0.5 px-0">
                 <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden />
                   {copy.loop.retrainLabel}
