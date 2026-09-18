@@ -53,7 +53,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explainability oriented toward influence',
-        desc: 'Every recommendation arrives with the argument ready — for the sales rep to defend the offer, or for the customer to understand why this is the right decision.',
+        desc: 'Every recommendation arrives with the argument ready: why the sales rep should offer it, why the customer should accept it.',
       },
       {
         icon: Plug,
