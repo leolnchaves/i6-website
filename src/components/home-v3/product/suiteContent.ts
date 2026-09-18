@@ -119,7 +119,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sem isso: metas e esforço comercial seguem o histórico, não o potencial real de cada carteira.',
           headline: 'Metas e prioridades comerciais baseadas em potencial',
           body: 'Conecta histórico, previsão e potencial comercial para distribuir metas e prioridades com mais precisão. O planejamento deixa de depender apenas do histórico e passa a refletir onde está a próxima oportunidade.',
-          capabilities: 'Histórico comercial · Forecast · Potencial · Metas preditivas · Priorização',
+          capabilities:
+            'Desdobra a meta comercial por vendedor, região e SKU — granular até o ponto de venda, não um número repartido igual pra todo mundo · A meta não é extrapolação do histórico: incorpora tendência e crescimento real de mercado por SKU · Recomenda quanto investir em cada alavanca comercial pra sustentar o crescimento projetado · Erro medido e rastreável por unidade de negócio e setor — a precisão não fica escondida atrás de uma média geral · i6 Signal — camada conversacional preditiva: pergunte sobre a meta em linguagem natural e saia com uma decisão, não com um relatório.',
           flow: {
             input: 'Histórico + forecast + potencial',
             decision: 'Metas e prioridades',
@@ -239,7 +240,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Without it: targets and sales effort follow history, not the real potential of each portfolio.',
           headline: 'Commercial targets and priorities based on potential',
           body: 'Connects history, forecast and commercial potential to distribute targets and priorities with more precision. Planning stops relying only on history and starts reflecting where the next opportunity is.',
-          capabilities: 'Commercial history · Forecast · Potential · Predictive targets · Prioritization',
+          capabilities:
+            'The commercial target unfolds per seller, region and SKU — granular down to the point of sale, not one number split evenly across everyone · The target is not an extrapolation of history: it incorporates trend and real market growth per SKU · Recommends how much to invest in each commercial lever to sustain projected growth · Error measured and traceable per business unit and sector — accuracy does not hide behind a general average · i6 Signal — predictive conversational layer: ask about the target in natural language and come out with a decision, not a report.',
           flow: {
             input: 'History + forecast + potential',
             decision: 'Targets and priorities',
@@ -359,7 +361,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sin esto: metas y esfuerzo comercial siguen el histórico, no el potencial real de cada cartera.',
           headline: 'Metas y prioridades comerciales basadas en potencial',
           body: 'Conecta histórico, pronóstico y potencial comercial para distribuir metas y prioridades con más precisión. La planificación deja de depender solo del histórico y pasa a reflejar dónde está la próxima oportunidad.',
-          capabilities: 'Histórico comercial · Forecast · Potencial · Metas predictivas · Priorización',
+          capabilities:
+            'La meta comercial se despliega por vendedor, región y SKU — granular hasta el punto de venta, no un número repartido igual para todos · La meta no es extrapolación del histórico: incorpora tendencia y crecimiento real de mercado por SKU · Recomienda cuánto invertir en cada palanca comercial para sostener el crecimiento proyectado · Error medido y rastreable por unidad de negocio y sector — la precisión no queda escondida detrás de un promedio general · i6 Signal — capa conversacional predictiva: pregunte sobre la meta en lenguaje natural y salga con una decisión, no con un informe.',
           flow: {
             input: 'Histórico + forecast + potencial',
             decision: 'Metas y prioridades',
