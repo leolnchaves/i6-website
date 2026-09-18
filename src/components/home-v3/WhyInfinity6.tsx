@@ -24,7 +24,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explicabilidade orientada a influência',
-        desc: 'Explicabilidade em linguagem de negócio. O time entende o driver da recomendação antes de aprovar a ação.',
+        desc: 'Cada recomendação sai com o argumento pronto — para o vendedor defender a oferta, ou para o cliente entender por que essa é a decisão certa.',
       },
       {
         icon: Plug,
@@ -53,7 +53,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explainability oriented toward influence',
-        desc: 'Explainability in business language. Teams understand the driver behind each recommendation before acting.',
+        desc: 'Every recommendation arrives with the argument ready — for the sales rep to defend the offer, or for the customer to understand why this is the right decision.',
       },
       {
         icon: Plug,
@@ -82,7 +82,7 @@ const copyByLang = {
       {
         icon: Eye,
         title: 'Explicabilidad orientada a la influencia',
-        desc: 'Explicabilidad en lenguaje de negocio. El equipo entiende el driver de la recomendación antes de aprobar la acción.',
+        desc: 'Cada recomendación sale con el argumento listo — para que el vendedor defienda la oferta, o para que el cliente entienda por qué esa es la decisión correcta.',
       },
       {
         icon: Plug,
