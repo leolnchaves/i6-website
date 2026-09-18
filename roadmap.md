@@ -37,3 +37,5 @@
 
 - [x] Home: remover a linha de nota do card final de CTA (PT/EN/ES)
 
+
+- [x] Rodapé: ícones de Instagram, TikTok e Hugging Face (só Hugging Face com link)
