@@ -27,7 +27,7 @@ const copyByLang = {
     pillars: [
       { title: 'Proprietary engines', body: 'Recommendation, forecasting, propensity and pricing available as product capability' },
       { title: 'SDKs and API', body: 'Progressive module-by-module integration, in your stack and at your release pace' },
-      { title: 'Modeling toolkits', body: 'Proprietary modeling capabilities to create experiences only your product delivers' },
+      { title: 'Modeling toolkits', body: 'Ability to model on the proprietary infinity6 base, without inheriting the limitations of a generic model' },
       { title: 'Governance and explainability', body: 'Every decision traceable, with native explainability and model versioning' },
     ],
     ctaPrimary: 'Build with i6 Builder',
