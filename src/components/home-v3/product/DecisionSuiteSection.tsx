@@ -44,7 +44,7 @@ const DecisionSuiteSection = () => {
   const capabilities = active.capabilities
     .split('·')
     .map((capability) => capability.trim())
-    .slice(0, 4);
+    .slice(0, 5);
 
   return (
     <section id="decision-suite" className="scroll-mt-24 container mx-auto px-6 py-8 md:py-10">
