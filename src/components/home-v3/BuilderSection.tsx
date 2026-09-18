@@ -41,7 +41,7 @@ const copyByLang = {
     pillars: [
       { title: 'Engines propietarios', body: 'Recomendación, pronóstico, propensión y precios disponibles como capacidad de producto' },
       { title: 'SDKs y API', body: 'Integración progresiva por módulo, en tu stack y a tu ritmo de release' },
-      { title: 'Toolkits de modelado', body: 'Capacidad de modelados propietarios para crear experiencias que solo tu producto entrega' },
+      { title: 'Toolkits de modelado', body: 'Capacidad de modelar sobre la base propietaria de infinity6, sin heredar las limitaciones de un modelo genérico' },
       { title: 'Gobernanza y explicabilidad', body: 'Cada decisión rastreable, con explicabilidad nativa y control de versión de modelo' },
     ],
     ctaPrimary: 'Construir con el i6 Builder',
