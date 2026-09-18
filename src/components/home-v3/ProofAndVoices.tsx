@@ -72,9 +72,9 @@ const ProofAndVoices = memo(() => {
           {realResults.map((kpi) => (
             <li key={kpi.slug} className="sand-card sand-card-hover p-4 flex flex-col">
               <span className="text-2xl md:text-[1.75rem] font-bold text-primary leading-none mb-2">{kpi.value}</span>
-              <span className="text-[11px] md:text-xs text-foreground/75 leading-snug">{kpi.label[language === 'en' ? 'en' : 'pt']}</span>
+              <span className="text-[11px] md:text-xs text-foreground/75 leading-snug">{pickLang(language, kpi.label)}</span>
               <span className="text-[10px] text-muted-foreground mt-2 uppercase tracking-wider">
-                {kpi.source[language === 'en' ? 'en' : 'pt']}
+                {pickLang(language, kpi.source)}
               </span>
             </li>
           ))}

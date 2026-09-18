@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { pickLang } from '@/utils/localizedPath';
 import { realResults } from '@/data/staticData/realResults';
 
 interface Props {
@@ -49,10 +50,10 @@ const RealResultsStrip = memo(({ title, compact, slugs }: Props) => {
                 {kpi.value}
               </span>
               <span className="text-[11px] md:text-xs text-white/70 leading-snug">
-                {kpi.label[language]}
+                {pickLang(language, kpi.label)}
               </span>
               <span className="text-[10px] text-white/35 mt-2 uppercase tracking-wider">
-                {kpi.source[language]}
+                {pickLang(language, kpi.source)}
               </span>
             </li>
           ))}

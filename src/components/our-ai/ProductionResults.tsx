@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { toContentLang } from '@/utils/localizedPath';
+import { pickLang } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { realResults } from '@/data/staticData/realResults';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
@@ -15,7 +15,6 @@ interface Props {
  */
 const ProductionResults = memo(({ content }: Props) => {
   const { language } = useLanguage();
-  const cl = toContentLang(language);
 
   return (
     <section className="bg-secondary/60 py-16 md:py-24">
@@ -32,9 +31,9 @@ const ProductionResults = memo(({ content }: Props) => {
           {realResults.map((r) => (
             <div key={r.slug} className="bg-card p-7">
               <dt className="text-3xl font-bold text-foreground">{r.value}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.label[cl]}</dd>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLang(language, r.label)}</dd>
               <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-                {content.sourceLabel} · {r.source[cl]}
+                {content.sourceLabel} · {pickLang(language, r.source)}
               </p>
             </div>
           ))}

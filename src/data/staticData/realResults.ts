@@ -1,13 +1,16 @@
 import type { ContentLang } from '@/utils/localizedPath';
 import type { Language } from '@/types/language';
 
+/** Copy per language. Spanish falls back to Portuguese when absent. */
+export type KpiCopy = Record<ContentLang, string> & { es?: string };
+
 export interface RealResultKPI {
   slug: string;
   value: string;
   /** Short label shown under the big number */
-  label: Record<ContentLang, string>;
+  label: KpiCopy;
   /** Sector / client tag in caption */
-  source: Record<ContentLang, string>;
+  source: KpiCopy;
   /** Optional numeric for JSON-LD Statistic (when expressible) */
   numericValue?: number;
   unitText?: string;
@@ -65,14 +68,15 @@ export const realResults: RealResultKPI[] = [
     unitText: 'multiplier',
   },
   {
-    slug: 'sales-fashion',
-    value: '+2,6%',
+    slug: 'sales-finance',
+    value: '+7,8MM',
     label: {
-      pt: 'mais vendas que a curadoria humana de looks',
-      en: 'more sales than human look curation',
+      pt: 'vendas adicionais em 2 semanas',
+      en: 'additional sales in 2 weeks',
+      es: 'ventas adicionales en 2 semanas',
     },
-    source: { pt: 'Fashion', en: 'Fashion' },
-    numericValue: 2.6,
-    unitText: 'percent',
+    source: { pt: 'Financeiro', en: 'Financial services', es: 'Financiero' },
+    numericValue: 7.8,
+    unitText: 'million',
   },
 ];
