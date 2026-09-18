@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath, pickLang } from '@/utils/localizedPath';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
@@ -52,6 +52,7 @@ const FinalCTA = () => {
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 transition-all"
             >
               {copy.secondary}
+              <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
 
