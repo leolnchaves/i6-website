@@ -53,7 +53,7 @@ const DecisionSuiteSection = () => {
           className="mb-3 h-6 w-auto sm:h-7"
           draggable={false}
         />
-        <h2 className="text-2xl font-bold leading-[1.12] text-foreground md:text-[2.25rem]">
+        <h2 className="text-2xl font-bold leading-[1.12] text-foreground md:whitespace-nowrap md:text-[clamp(1.5rem,2.6vw,2.25rem)]">
           {copy.intro.title}
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-base">
