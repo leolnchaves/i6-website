@@ -29,8 +29,9 @@ export const realResults: RealResultKPI[] = [
     slug: 'savings-pharma',
     value: { pt: 'R$ 100 mi', en: 'BRL 100 mi', es: 'BRL 100 mi' },
     label: {
-      pt: 'em savings ao antecipar ruptura, overstocking e incineração',
-      en: 'in savings by anticipating stockouts, overstocking and incineration',
+      pt: 'em perdas evitadas por incineração em um ano',
+      en: 'in losses avoided from incineration in one year',
+      es: 'en pérdidas evitadas por incineración en un año',
     },
     source: { pt: 'Varejo farma', en: 'Pharma retail' },
     numericValue: 100,
