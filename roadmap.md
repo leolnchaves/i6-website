@@ -36,5 +36,4 @@
 - [x] Bloco "Suporte à implementação" no fim das páginas /docs (PT/EN/ES)
 
 - [x] Home: remover a linha de nota do card final de CTA (PT/EN/ES)
-<!-- APPEND-BELOW -->
 
