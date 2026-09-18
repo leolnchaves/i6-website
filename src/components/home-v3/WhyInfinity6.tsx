@@ -23,7 +23,7 @@ const copyByLang = {
       },
       {
         icon: Eye,
-        title: 'XAI for Business',
+        title: 'Explicabilidade orientada a influência',
         desc: 'Explicabilidade em linguagem de negócio. O time entende o driver da recomendação antes de aprovar a ação.',
       },
       {
@@ -52,7 +52,7 @@ const copyByLang = {
       },
       {
         icon: Eye,
-        title: 'XAI for Business',
+        title: 'Explainability oriented toward influence',
         desc: 'Explainability in business language. Teams understand the driver behind each recommendation before acting.',
       },
       {
@@ -81,7 +81,7 @@ const copyByLang = {
       },
       {
         icon: Eye,
-        title: 'XAI for Business',
+        title: 'Explicabilidad orientada a la influencia',
         desc: 'Explicabilidad en lenguaje de negocio. El equipo entiende el driver de la recomendación antes de aprobar la acción.',
       },
       {
