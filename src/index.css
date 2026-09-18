@@ -897,19 +897,6 @@ html {
 }
 .animate-decision-fade { animation: decision-fade .6s ease both; }
 
-/* Conduíte de retroalimentação do painel i6 Decision Platform:
-   um trecho de sinal percorre o trajeto e retorna à primeira etapa.
-   O path usa pathLength=900, então a corrida de -900 fecha o ciclo sem salto. */
-@keyframes signal-travel {
-  from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: -900; }
-}
-.animate-signal-travel { animation: signal-travel 7s linear infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-signal-travel { animation: none !important; }
-}
-
 
 
 

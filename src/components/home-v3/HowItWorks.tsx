@@ -114,84 +114,6 @@ const Chip = ({ item }: { item: LogoItem }) => (
   </span>
 );
 
-// Trajeto do conduíte: sai da ponta direita (Ativação), contorna por baixo e
-// termina com uma seta apontando de volta para a primeira etapa.
-const LOOP_PATH = 'M 140,18 L 700,18 C 776,18 776,60 700,60 L 30,60';
-
-const LoopConduit = () => (
-  <svg
-    viewBox="0 0 800 76"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-    focusable="false"
-    className="w-full h-[48px] sm:h-[58px] overflow-visible"
-  >
-    <defs>
-      <linearGradient id="i6hw-loop-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="hsl(var(--primary))" />
-        <stop offset="100%" stopColor="hsl(var(--primary) / 0.45)" />
-      </linearGradient>
-      <filter id="i6hw-loop-glow" x="-20%" y="-60%" width="140%" height="220%">
-        <feGaussianBlur stdDeviation="3" result="i6hw-loop-blur" />
-        <feMerge>
-          <feMergeNode in="i6hw-loop-blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-
-    {/* Trilha */}
-    <path
-      d={LOOP_PATH}
-      fill="none"
-      stroke="hsl(var(--primary) / 0.12)"
-      strokeWidth={22}
-      strokeLinecap="round"
-      vectorEffect="non-scaling-stroke"
-    />
-
-    {/* Fita base */}
-    <path
-      d={LOOP_PATH}
-      fill="none"
-      stroke="url(#i6hw-loop-grad)"
-      strokeWidth={8}
-      strokeLinecap="round"
-      opacity={0.45}
-      vectorEffect="non-scaling-stroke"
-    />
-
-    {/* Sinal em viagem */}
-    <path
-      d={LOOP_PATH}
-      pathLength={900}
-      fill="none"
-      stroke="url(#i6hw-loop-grad)"
-      strokeWidth={8}
-      strokeLinecap="round"
-      strokeDasharray="110 790"
-      filter="url(#i6hw-loop-glow)"
-      vectorEffect="non-scaling-stroke"
-      className="animate-signal-travel"
-    />
-
-    {/* Seta de retorno */}
-    <path d="M 2,60 L 26,52 L 26,68 Z" fill="hsl(var(--primary))" />
-
-    {/* Barras de resultado composto */}
-    <g>
-      <rect x="372" y="40" width="6" height="8" rx="2" fill="hsl(var(--primary))" opacity="0.3" />
-      <rect x="386" y="34" width="6" height="14" rx="2" fill="hsl(var(--primary))" opacity="0.45" />
-      <rect x="400" y="28" width="6" height="20" rx="2" fill="hsl(var(--primary))" opacity="0.65" />
-      <rect x="414" y="22" width="6" height="26" rx="2" fill="hsl(var(--primary))" opacity="0.9" />
-    </g>
-
-    {/* Nós do circuito */}
-    <circle cx="620" cy="60" r="4.5" fill="hsl(var(--card))" stroke="hsl(var(--primary))" strokeWidth="2" />
-    <circle cx="200" cy="60" r="4.5" fill="hsl(var(--card))" stroke="hsl(var(--primary))" strokeWidth="2" />
-  </svg>
-);
-
 const HowItWorks = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, copyByLang);
@@ -232,23 +154,18 @@ const HowItWorks = () => {
         </div>
 
         <div className="mt-6 pt-5 border-t border-border">
-          <div className="grid gap-4 md:grid-cols-[minmax(0,270px)_minmax(0,1fr)] md:gap-8 md:items-center">
-            <div>
+          <div className="flex flex-col items-center text-center gap-3 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] md:gap-8 md:items-center">
+            <span className="flex items-center justify-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden />
+              {copy.loop.retrainLabel}
+            </span>
+            <div className="text-center">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">{copy.loop.label}</p>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{copy.loop.desc}</p>
             </div>
-            <div>
-              <LoopConduit />
-              <div className="hidden md:flex items-center justify-between mt-0.5 px-0">
-                <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden />
-                  {copy.loop.retrainLabel}
-                </span>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                  {copy.loop.compoundLabel}
-                </span>
-              </div>
-            </div>
+            <span className="flex items-center justify-center text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              {copy.loop.compoundLabel}
+            </span>
           </div>
         </div>
       </div>
