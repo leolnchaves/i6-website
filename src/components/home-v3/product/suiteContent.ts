@@ -29,8 +29,6 @@ export interface SuiteCopy {
   products: {
     eyebrow: string;
     title: string;
-    description: string;
-    selectorLabel: string;
     flowLabels: { input: string; decision: string; value: string };
     cta: string;
     items: SuiteProduct[];
@@ -45,7 +43,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       eyebrow: 'A suíte',
       title: 'A decisão certa para cada momento do negócio.',
       description:
-        'O i6 Decision Suite transforma dados de negócio em decisões aplicáveis, não apenas indicadores. Seus produtos compartilham contexto, governança e aprendizado para que cada decisão fique mais precisa à medida que a operação evolui.',
+        'Cada produto do i6 Decision Suite pega o dado do seu negócio, aplica inteligência especializada e devolve uma ação mensurável — não mais um indicador para interpretar.',
       pillars: [
         {
           title: 'Dados prontos para decisão',
@@ -64,8 +62,6 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
     products: {
       eyebrow: 'Produtos',
       title: 'Seis decisões críticas, uma suíte',
-      description:
-        'Escolha a decisão que quer melhorar. Cada produto recebe os dados necessários, aplica inteligência especializada e devolve uma ação mensurável para o negócio.',
       selectorLabel: 'Selecione um produto da suíte',
       flowLabels: { input: 'Entrada', decision: 'Decisão', value: 'Valor' },
       cta: 'Conheça o i6 Decision Suite',
@@ -164,7 +160,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       eyebrow: 'The suite',
       title: 'The right decision for every moment of the business.',
       description:
-        'i6 Decision Suite turns business data into applicable decisions, not just indicators. Its products share context, governance and learning, so every decision gets sharper as the operation evolves.',
+        'Each product in the i6 Decision Suite takes the data from your business, applies specialized intelligence and returns a measurable action — not another indicator to interpret.',
       pillars: [
         {
           title: 'Data ready for decisions',
@@ -183,8 +179,6 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
     products: {
       eyebrow: 'Products',
       title: 'Six critical decisions, one suite',
-      description:
-        'Pick the decision you want to improve. Each product receives the required data, applies specialized intelligence and returns a measurable action for the business.',
       selectorLabel: 'Select a product from the suite',
       flowLabels: { input: 'Input', decision: 'Decision', value: 'Value' },
       cta: 'Explore i6 Decision Suite',
@@ -283,7 +277,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       eyebrow: 'La suite',
       title: 'La decisión correcta para cada momento del negocio.',
       description:
-        'i6 Decision Suite convierte datos de negocio en decisiones aplicables, no solo en indicadores. Sus productos comparten contexto, gobernanza y aprendizaje para que cada decisión sea más precisa a medida que la operación evoluciona.',
+        'Cada producto del i6 Decision Suite toma el dato de su negocio, aplica inteligencia especializada y devuelve una acción medible — no un indicador más para interpretar.',
       pillars: [
         {
           title: 'Datos listos para decidir',
@@ -302,8 +296,6 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
     products: {
       eyebrow: 'Productos',
       title: 'Seis decisiones críticas, una suite',
-      description:
-        'Elige la decisión que quieres mejorar. Cada producto recibe los datos necesarios, aplica inteligencia especializada y devuelve una acción medible para el negocio.',
       selectorLabel: 'Selecciona un producto de la suite',
       flowLabels: { input: 'Entrada', decision: 'Decisión', value: 'Valor' },
       cta: 'Conoce el i6 Decision Suite',
