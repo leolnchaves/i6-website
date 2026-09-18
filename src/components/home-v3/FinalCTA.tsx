@@ -41,22 +41,29 @@ const FinalCTA = () => {
           <h2 className="text-3xl md:text-[2.6rem] leading-[1.14] font-bold text-foreground">{copy.title}</h2>
 
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link
-              to={localized('/contact')}
-              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
-            >
-              {copy.primary}
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </Link>
             <a
               href={SUITE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 transition-all"
             >
-              {copy.secondary}
+              {copy.decision}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
+            <Link
+              to={localized('/i6-builders')}
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] border border-border bg-card text-sm font-semibold text-foreground hover:border-primary/40 transition-all"
+            >
+              {copy.builder}
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+            <Link
+              to={localized('/contact')}
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-[var(--radius)] bg-primary text-primary-foreground text-sm font-semibold shadow-[var(--sand-shadow-lift)] hover:brightness-[1.06] transition-all"
+            >
+              {copy.specialist}
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
           <p className="mt-6 text-xs font-medium uppercase tracking-[0.16em] text-primary">{copy.note}</p>
