@@ -72,9 +72,9 @@ export const realResults: RealResultKPI[] = [
     slug: 'sales-finance',
     value: { pt: '+7,8MM', en: '+7.8MM', es: '+7,8MM' },
     label: {
-      pt: 'vendas adicionais em 2 semanas',
-      en: 'additional sales in 2 weeks',
-      es: 'ventas adicionales en 2 semanas',
+      pt: 'receita adicional em 2 semanas',
+      en: 'additional revenue in 2 weeks',
+      es: 'ingresos adicionales en 2 semanas',
     },
     source: { pt: 'Financeiro', en: 'Financial services', es: 'Financiero' },
     numericValue: 7.8,
