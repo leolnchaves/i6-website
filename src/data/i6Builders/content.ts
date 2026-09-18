@@ -128,7 +128,7 @@ export const builderCopy = {
       modes: [
         {
           title: 'Embedded (OEM)',
-          desc: 'As capacidades do Builder são incorporadas a um produto que já existe e já tem base instalada, ampliando o que ele entrega sem reescrever a solução',
+          desc: 'As capacidades do Builder são incorporadas a um produto que já existe e já tem base instalada, ampliando o que ele entrega sem reescrever a solução.',
           points: ['Integração progressiva por módulo', 'Sua marca, sua experiência', 'Capacidade mantida e evoluída pela infinity6'],
         },
         {
@@ -270,7 +270,7 @@ export const builderCopy = {
       modes: [
         {
           title: 'Embedded (OEM)',
-          desc: 'Builder capabilities are embedded into a product that already exists and already has an installed base, extending what it delivers without rewriting the solution',
+          desc: 'Builder capabilities are embedded into a product that already exists and already has an installed base, extending what it delivers without rewriting the solution.',
           points: ['Progressive module-by-module integration', 'Your brand, your experience', 'Capability maintained and evolved by infinity6'],
         },
         {
@@ -412,7 +412,7 @@ export const builderCopy = {
       modes: [
         {
           title: 'Embedded (OEM)',
-          desc: 'Las capacidades del Builder se incorporan a un producto que ya existe y ya tiene base instalada, ampliando lo que entrega sin reescribir la solución',
+          desc: 'Las capacidades del Builder se incorporan a un producto que ya existe y ya tiene base instalada, ampliando lo que entrega sin reescribir la solución.',
           points: ['Integración progresiva por módulo', 'Tu marca, tu experiencia', 'Capacidad mantenida y evolucionada por infinity6'],
         },
         {
