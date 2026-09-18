@@ -7,7 +7,7 @@ const copyByLang = {
     suite: {
       label: 'i6 Decision Suite',
       title: 'Inteligência pronta para decidir',
-      body: 'Produto pronto para uso que captura sinais, converte em decisões e entrega resultados acelerados direto no seu ecossistema',
+      body: 'Produto pronto para uso: capta sinal do seu negócio, decide e entrega a ação direto no seu ecossistema.',
       cta: 'Saiba mais',
     },
     builder: {
@@ -21,7 +21,7 @@ const copyByLang = {
     suite: {
       label: 'i6 Decision Suite',
       title: 'Intelligence ready to decide',
-      body: 'Ready-to-use product that captures signals, turns them into decisions and delivers accelerated results directly in your ecosystem',
+      body: 'Ready-to-use product: it captures the signal from your business, decides, and delivers the action straight into your ecosystem.',
       cta: 'Learn more',
     },
     builder: {
@@ -35,7 +35,7 @@ const copyByLang = {
     suite: {
       label: 'i6 Decision Suite',
       title: 'Inteligencia lista para decidir',
-      body: 'Producto listo para usar que captura señales, las convierte en decisiones y entrega resultados acelerados directamente en tu ecosistema',
+      body: 'Producto listo para usar: capta la señal de tu negocio, decide y entrega la acción directo en tu ecosistema.',
       cta: 'Saber más',
     },
     builder: {
