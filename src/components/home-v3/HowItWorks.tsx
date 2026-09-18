@@ -56,7 +56,7 @@ const copyByLang = {
       { title: 'Captura de sinais', desc: 'Demanda, preço, estoque, comportamento e contexto de mercado.' },
       { title: 'Predição', desc: 'Motores proprietários antecipam demanda, risco, intenção, elasticidade e propensão.' },
       { title: 'Recomendação priorizada', desc: 'A melhor ação por objetivo, canal, cliente, SKU ou região, com o argumento pronto.' },
-      { title: 'Ativação', desc: 'A decisão chega à operação dentro do ecossistema do cliente.' },
+      { title: 'Ativação', desc: 'A decisão chega pronta à operação, dentro das ferramentas que o time já usa.' },
     ],
   },
   en: {
@@ -70,7 +70,7 @@ const copyByLang = {
       { title: 'Signal capture', desc: 'Demand, price, inventory, behavior and market context.' },
       { title: 'Prediction', desc: 'Proprietary engines anticipate demand, risk, intent, elasticity and propensity.' },
       { title: 'Prioritized recommendation', desc: 'The best action by objective, channel, customer, SKU or region, with the argument ready.' },
-      { title: 'Activation', desc: 'The decision reaches operations inside the client ecosystem.' },
+      { title: 'Activation', desc: 'The decision arrives ready for operations, inside the tools the team already uses.' },
     ],
   },
   es: {
@@ -84,7 +84,7 @@ const copyByLang = {
       { title: 'Captura de señales', desc: 'Demanda, precio, inventario, comportamiento y contexto de mercado.' },
       { title: 'Predicción', desc: 'Motores propietarios anticipan demanda, riesgo, intención, elasticidad y propensión.' },
       { title: 'Recomendación priorizada', desc: 'La mejor acción por objetivo, canal, cliente, SKU o región, con el argumento listo.' },
-      { title: 'Activación', desc: 'La decisión llega a la operación dentro del ecosistema del cliente.' },
+      { title: 'Activación', desc: 'La decisión llega lista a la operación, dentro de las herramientas que el equipo ya usa.' },
     ],
   },
 };
