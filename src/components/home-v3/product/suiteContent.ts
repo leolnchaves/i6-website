@@ -75,7 +75,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           headline: 'Recomendações que conectam intenção a resultado',
           body: 'Combina catálogo, comportamento e contexto para decidir o que recomendar em cada interação. As recomendações são consumidas pelos canais de execução, enquanto o produto acompanha cobertura, qualidade, resposta e oportunidades de melhoria.',
           capabilities:
-            'Ingestão e validação · Live Events · Recomendações · Integrações · Coverage & Qualidade · Insights de Negócio',
+            'Resultado medido em receita atribuída, ticket médio e cobertura de catálogo — não só acurácia de modelo · Modelo dinâmico, não estático: refina a cada interação e nunca aponta oportunidade sem evidência · Nada fica armazenado além do necessário, e dado de cliente pode vir anonimizado sem perder precisão · Entra em produção por API, sem exigir histórico do catálogo',
           flow: {
             input: 'Catálogo + comportamento + contexto',
             decision: 'Ranking e recomendação',
@@ -192,7 +192,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           headline: 'Recommendations that connect intent to outcome',
           body: 'Combines catalog, behavior and context to decide what to recommend in every interaction. Recommendations are consumed by execution channels while the product tracks coverage, quality, response and improvement opportunities.',
           capabilities:
-            'Ingestion & validation · Live Events · Recommendations · Integrations · Coverage & Quality · Business Insights',
+            'Results measured in attributed revenue, average ticket and catalog coverage — not just model accuracy · A dynamic model, not a static one: it refines with every interaction and never flags an opportunity without evidence · Nothing is stored beyond what is needed, and customer data can stay anonymized without losing precision · Goes live through an API, with no catalog history required',
           flow: {
             input: 'Catalog + behavior + context',
             decision: 'Ranking and recommendation',
@@ -309,7 +309,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           headline: 'Recomendaciones que conectan intención con resultado',
           body: 'Combina catálogo, comportamiento y contexto para decidir qué recomendar en cada interacción. Las recomendaciones se consumen en los canales de ejecución, mientras el producto monitorea cobertura, calidad, respuesta y oportunidades de mejora.',
           capabilities:
-            'Ingesta y validación · Live Events · Recomendaciones · Integraciones · Cobertura y Calidad · Insights de Negocio',
+            'Resultado medido en ingresos atribuidos, ticket promedio y cobertura de catálogo — no solo precisión del modelo · Modelo dinámico, no estático: se refina en cada interacción y nunca señala una oportunidad sin evidencia · Nada se almacena más allá de lo necesario, y los datos de clientes pueden llegar anonimizados sin perder precisión · Entra en producción por API, sin exigir histórico del catálogo',
           flow: {
             input: 'Catálogo + comportamiento + contexto',
             decision: 'Ranking y recomendación',

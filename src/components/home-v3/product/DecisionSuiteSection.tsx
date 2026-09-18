@@ -120,10 +120,10 @@ const DecisionSuiteSection = () => {
               {active.headline}
             </h4>
 
-            <ul className="mt-3 grid gap-y-1.5 gap-x-4 border-t border-border pt-2.5 sm:grid-cols-2">
+            <ul className="mt-3 grid gap-y-1.5 border-t border-border pt-2.5">
               {capabilities.map((capability) => (
-                <li key={capability} className="flex items-center gap-2 text-xs text-foreground">
-                  <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                <li key={capability} className="flex items-start gap-2 text-xs leading-snug text-foreground">
+                  <span aria-hidden="true" className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                   {capability}
                 </li>
               ))}
