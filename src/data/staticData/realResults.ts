@@ -56,7 +56,11 @@ export const realResults: RealResultKPI[] = [
   {
     slug: 'crm-finance',
     value: { pt: '−57%', en: '−57%', es: '−57%' },
-    label: { pt: 'custo de CRM', en: 'CRM cost' },
+    label: {
+      pt: 'custo de mensageria, com disparos direcionados',
+      en: 'messaging cost, with targeted sends',
+      es: 'costo de mensajería, con envíos dirigidos',
+    },
     source: { pt: 'Financeiro', en: 'Financial services' },
     numericValue: -57,
     unitText: 'percent',
