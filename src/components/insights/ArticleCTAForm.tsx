@@ -16,6 +16,7 @@ import { useLocalizedPath } from '@/utils/localizedPath';
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD, normalizeLeadFields } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
 import { TRACKER_EVENTS } from '@/lib/tracker-events';
+import type { LeadSection } from '@/components/insights/LeadGateForm';
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -40,7 +41,7 @@ interface ArticleCTAFormProps {
  * i6 Research. Reuses the same Apps Script endpoint and tracking pipeline
  * as LeadGateForm, but presented as an inline CTA rather than a content lock.
  */
-const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps) => {
+const ArticleCTAForm = ({ kind, section, title, slug, id, ctaText }: ArticleCTAFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
   const { toast } = useToast();
@@ -96,11 +97,11 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
       setSubmitting(true);
 
       try {
-        const basePath = kind === 'research' ? 'i6-intelligence' : 'insights';
-        const url = `https://infinity6.ai/${language}/${basePath}/${slug}`;
+        const url = `https://infinity6.ai/${language}/${section}/${slug}`;
         const ctx = getLeadContext();
-        const tag = kind === 'research' ? '[Lead Research CTA]' : '[Lead Insights CTA]';
-        const idLabel = kind === 'research' ? 'Research' : 'Insight';
+        const isResearchSection = section === 'i6-intelligence';
+        const tag = isResearchSection ? '[Lead Research CTA]' : '[Lead Insights CTA]';
+        const idLabel = isResearchSection ? 'Research' : 'Insight';
         const origin = kind === 'research' ? 'article-cta-research' : 'article-cta-insight';
         const message = [
           tag,
@@ -120,9 +121,9 @@ const ArticleCTAForm = ({ kind, title, slug, id, ctaText }: ArticleCTAFormProps)
             email: data.email,
             company: '',
             message,
-            subscription: kind === 'research' ? `research:${slug}` : `blog:${slug}`,
+            subscription: isResearchSection ? `research:${slug}` : `blog:${slug}`,
             insight_id: id || '',
-            reason: kind === 'research' ? 'i6 Deep Research' : 'i6 Blog',
+            reason: isResearchSection ? 'i6 Deep Research' : 'i6 Blog',
             token: SHARED_FORM_TOKEN,
             ...getLeadContextFields(),
           },
