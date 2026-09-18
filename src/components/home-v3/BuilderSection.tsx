@@ -13,7 +13,7 @@ const copyByLang = {
     pillars: [
       { title: 'Engines proprietários', body: 'Recomendação, previsão, propensão e precificação disponíveis como capacidade de produto' },
       { title: 'SDKs e API', body: 'Integração progressiva por módulo, no seu stack e no seu ritmo de release' },
-      { title: 'Toolkits de modelagem', body: 'Capacidade de modelagens proprietárias para criar experiências que só o seu produto entrega' },
+      { title: 'Toolkits de modelagem', body: 'Capacidade de modelar sobre a base proprietária da infinity6, sem herdar as limitações de um modelo genérico' },
       { title: 'Governança e explicabilidade', body: 'Cada decisão rastreável, com explicabilidade nativa e controle de versão de modelo' },
     ],
     ctaPrimary: 'Construir com o i6 Builder',
@@ -27,7 +27,7 @@ const copyByLang = {
     pillars: [
       { title: 'Proprietary engines', body: 'Recommendation, forecasting, propensity and pricing available as product capability' },
       { title: 'SDKs and API', body: 'Progressive module-by-module integration, in your stack and at your release pace' },
-      { title: 'Modeling toolkits', body: 'Proprietary modeling capabilities to create experiences only your product delivers' },
+      { title: 'Modeling toolkits', body: 'Ability to model on the proprietary infinity6 base, without inheriting the limitations of a generic model' },
       { title: 'Governance and explainability', body: 'Every decision traceable, with native explainability and model versioning' },
     ],
     ctaPrimary: 'Build with i6 Builder',
@@ -41,7 +41,7 @@ const copyByLang = {
     pillars: [
       { title: 'Engines propietarios', body: 'Recomendación, pronóstico, propensión y precios disponibles como capacidad de producto' },
       { title: 'SDKs y API', body: 'Integración progresiva por módulo, en tu stack y a tu ritmo de release' },
-      { title: 'Toolkits de modelado', body: 'Capacidad de modelados propietarios para crear experiencias que solo tu producto entrega' },
+      { title: 'Toolkits de modelado', body: 'Capacidad de modelar sobre la base propietaria de infinity6, sin heredar las limitaciones de un modelo genérico' },
       { title: 'Gobernanza y explicabilidad', body: 'Cada decisión rastreable, con explicabilidad nativa y control de versión de modelo' },
     ],
     ctaPrimary: 'Construir con el i6 Builder',
