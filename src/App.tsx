@@ -111,11 +111,13 @@ const LocalizedRoutes = () => {
         <Route path="ethics-policy" element={<EthicsPolicy />} />
         <Route path="cookie-settings" element={<Navigate to="../?cookies=open" replace />} />
         <Route path="insights" element={<Insights />} />
-        <Route path="insights/:slug" element={<InsightArticle />} />
+        {/* Rota antiga de mídia: só "i6 on Media"/"i6 Social" com link externo —
+            gate e CTA são inalcançáveis aqui; a seção é declarada por completude. */}
+        <Route path="insights/:slug" element={<InsightArticle section="i6-blog" />} />
         <Route path="i6-intelligence" element={<Intelligence />} />
         <Route path="i6-intelligence/:slug" element={<IntelligenceOrInsightArticle />} />
         <Route path="i6-blog" element={<Blog />} />
-        <Route path="i6-blog/:slug" element={<InsightArticle />} />
+        <Route path="i6-blog/:slug" element={<InsightArticle section="i6-blog" />} />
         <Route path="i6-builders" element={<I6Builders />} />
         <Route path="community" element={<Comunidade />} />
         {/* URL antiga em português: redireciona para o slug em inglês. */}
