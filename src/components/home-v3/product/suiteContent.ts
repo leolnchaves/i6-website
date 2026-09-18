@@ -148,7 +148,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sem isso: campanhas amplas e caras falam com quem nunca ia responder.',
           headline: 'Propensão para decidir quem ativar e quando',
           body: 'Transforma comportamento e histórico de resposta em scores de propensão para priorizar audiências antes da ativação. As decisões seguem para os canais de execução e retornam com os eventos de resposta para alimentar o próximo ciclo.',
-          capabilities: 'Eventos · Propensão · Ranking de audiência · Integrações · Medição de resposta',
+          capabilities:
+            'Pontua propensão por combinação cliente-produto — não por segmento amplo e genérico · Aprende a ordem natural de adoção entre produtos, evitando oferta fora de sequência que aumenta a rejeição · Aponta quando a propensão sobe, não só quem tem propensão — timing pesa tanto quanto o perfil · Precisão validada em backtest real, estável entre produtos diferentes — não é um modelo afinado pra um tipo de oferta só · i6 Signal — camada conversacional preditiva: pergunte sobre a propensão em linguagem natural e saia com uma decisão, não com um relatório.',
           flow: {
             input: 'Comportamento + histórico de campanhas',
             decision: 'Propensão + ranking',
@@ -267,7 +268,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Without it: broad, expensive campaigns talk to people who were never going to respond.',
           headline: 'Propensity to decide who to activate and when',
           body: 'Turns behavior and response history into propensity scores to prioritize audiences before activation. Decisions flow to execution channels and return with response events to feed the next cycle.',
-          capabilities: 'Events · Propensity · Audience ranking · Integrations · Response measurement',
+          capabilities:
+            'Scores propensity per customer-product combination — not per broad, generic segment · Learns the natural adoption order across products, avoiding out-of-sequence offers that drive up rejection · Flags when propensity rises, not only who has it — timing weighs as much as profile · Accuracy validated in real backtests, stable across different products — not a model tuned for one offer type only · i6 Signal — predictive conversational layer: ask about propensity in natural language and come out with a decision, not a report.',
           flow: {
             input: 'Behavior + campaign history',
             decision: 'Propensity + ranking',
@@ -386,7 +388,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sin esto: campañas amplias y costosas hablan con quien nunca iba a responder.',
           headline: 'Propensión para decidir a quién activar y cuándo',
           body: 'Convierte comportamiento e histórico de respuesta en scores de propensión para priorizar audiencias antes de la activación. Las decisiones van a los canales de ejecución y regresan con los eventos de respuesta para alimentar el próximo ciclo.',
-          capabilities: 'Eventos · Propensión · Ranking de audiencia · Integraciones · Medición de respuesta',
+          capabilities:
+            'Puntúa propensión por combinación cliente-producto — no por segmento amplio y genérico · Aprende el orden natural de adopción entre productos, evitando ofertas fuera de secuencia que aumentan el rechazo · Señala cuándo la propensión sube, no solo quién la tiene — el timing pesa tanto como el perfil · Precisión validada en backtest real, estable entre productos distintos — no es un modelo afinado para un solo tipo de oferta · i6 Signal — capa conversacional predictiva: pregunte sobre la propensión en lenguaje natural y salga con una decisión, no con un informe.',
           flow: {
             input: 'Comportamiento + histórico de campañas',
             decision: 'Propensión + ranking',
