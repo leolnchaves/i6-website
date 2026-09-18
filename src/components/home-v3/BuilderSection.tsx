@@ -9,7 +9,7 @@ const copyByLang = {
     eyebrow: 'i6 Builder Platform',
     title: 'Construa sobre a inteligência da infinity6',
     description:
-      'Engines preditivos, SDKs e toolkits para times de tecnologia embutirem capacidade de decisão dentro do próprio produto — sem construir a fundação de IA do zero',
+      'Engines de modelagem, SDKs e toolkits para times de tecnologia desenvolverem produtos de decisão orientada a dados — sem construir a fundação de IA do zero.',
     pillars: [
       { title: 'Engines preditivos', body: 'Recomendação, previsão, propensão e precificação disponíveis como capacidade de produto' },
       { title: 'SDKs e API', body: 'Integração progressiva por módulo, no seu stack e no seu ritmo de release' },
@@ -23,7 +23,7 @@ const copyByLang = {
     eyebrow: 'i6 Builder Platform',
     title: 'Build on infinity6 intelligence',
     description:
-      'Predictive engines, SDKs and toolkits for technology teams to embed decision capability inside their own product — without building the AI foundation from scratch',
+      'Modeling engines, SDKs and toolkits for technology teams to build data-driven decision products — without building the AI foundation from scratch.',
     pillars: [
       { title: 'Predictive engines', body: 'Recommendation, forecasting, propensity and pricing available as product capability' },
       { title: 'SDKs and API', body: 'Progressive module-by-module integration, in your stack and at your release pace' },
@@ -37,7 +37,7 @@ const copyByLang = {
     eyebrow: 'i6 Builder Platform',
     title: 'Construye sobre la inteligencia de infinity6',
     description:
-      'Engines predictivos, SDKs y toolkits para que los equipos de tecnología integren capacidad de decisión dentro de su propio producto — sin construir la fundación de IA desde cero',
+      'Engines de modelado, SDKs y toolkits para que los equipos de tecnología desarrollen productos de decisión orientada a datos — sin construir la fundación de IA desde cero.',
     pillars: [
       { title: 'Engines predictivos', body: 'Recomendación, pronóstico, propensión y precios disponibles como capacidad de producto' },
       { title: 'SDKs y API', body: 'Integración progresiva por módulo, en tu stack y a tu ritmo de release' },
