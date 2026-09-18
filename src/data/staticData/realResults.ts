@@ -6,7 +6,8 @@ export type KpiCopy = Record<ContentLang, string> & { es?: string };
 
 export interface RealResultKPI {
   slug: string;
-  value: string;
+  /** Display value formatted for each language */
+  value: KpiCopy;
   /** Short label shown under the big number */
   label: KpiCopy;
   /** Sector / client tag in caption */
@@ -26,50 +27,51 @@ export interface RealResultKPI {
 export const realResults: RealResultKPI[] = [
   {
     slug: 'savings-pharma',
-    value: 'R$ 100M',
+    value: { pt: 'R$ 100M', en: 'BRL 100M', es: 'BRL 100M' },
     label: {
       pt: 'em savings ao antecipar ruptura, overstocking e incineração',
       en: 'in savings by anticipating stockouts, overstocking and incineration',
+      es: 'en ahorros al anticipar quiebres, sobrestock e incineración',
     },
-    source: { pt: 'Varejo farma', en: 'Pharma retail' },
+    source: { pt: 'Varejo farma', en: 'Pharma retail', es: 'Retail farma' },
     numericValue: 100,
     unitText: 'BRL million',
   },
   {
     slug: 'ticket-retail',
-    value: '+23%',
-    label: { pt: 'ticket médio por PDV', en: 'average ticket per POS' },
-    source: { pt: 'Varejo', en: 'Retail' },
+    value: { pt: '+23%', en: '+23%', es: '+23%' },
+    label: { pt: 'ticket médio por PDV', en: 'average ticket per POS', es: 'ticket promedio por punto de venta' },
+    source: { pt: 'Varejo', en: 'Retail', es: 'Retail' },
     numericValue: 23,
     unitText: 'percent',
   },
   {
     slug: 'activation-retail',
-    value: '+36%',
-    label: { pt: 'positivação de produtos', en: 'product activation' },
-    source: { pt: 'Varejo', en: 'Retail' },
+    value: { pt: '+36%', en: '+36%', es: '+36%' },
+    label: { pt: 'positivação de produtos', en: 'product activation', es: 'positivación de productos' },
+    source: { pt: 'Varejo', en: 'Retail', es: 'Retail' },
     numericValue: 36,
     unitText: 'percent',
   },
   {
     slug: 'crm-finance',
-    value: '−57%',
-    label: { pt: 'custo de CRM', en: 'CRM cost' },
-    source: { pt: 'Financeiro', en: 'Financial services' },
+    value: { pt: '−57%', en: '−57%', es: '−57%' },
+    label: { pt: 'custo de CRM', en: 'CRM cost', es: 'costo de CRM' },
+    source: { pt: 'Financeiro', en: 'Financial services', es: 'Servicios financieros' },
     numericValue: -57,
     unitText: 'percent',
   },
   {
     slug: 'conversion-finance',
-    value: '12x',
-    label: { pt: 'mais conversão em campanhas', en: 'more conversion in campaigns' },
-    source: { pt: 'Financeiro', en: 'Financial services' },
+    value: { pt: '12x', en: '12x', es: '12x' },
+    label: { pt: 'mais conversão em campanhas', en: 'more conversion in campaigns', es: 'más conversión en campañas' },
+    source: { pt: 'Financeiro', en: 'Financial services', es: 'Servicios financieros' },
     numericValue: 12,
     unitText: 'multiplier',
   },
   {
     slug: 'sales-finance',
-    value: '+7,8MM',
+    value: { pt: '+7,8MM', en: '+7.8MM', es: '+7,8MM' },
     label: {
       pt: 'vendas adicionais em 2 semanas',
       en: 'additional sales in 2 weeks',
