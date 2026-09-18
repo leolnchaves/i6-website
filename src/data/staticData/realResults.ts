@@ -68,14 +68,15 @@ export const realResults: RealResultKPI[] = [
     unitText: 'multiplier',
   },
   {
-    slug: 'sales-fashion',
-    value: '+2,6%',
+    slug: 'sales-finance',
+    value: '+7,8MM',
     label: {
-      pt: 'mais vendas que a curadoria humana de looks',
-      en: 'more sales than human look curation',
+      pt: 'vendas adicionais em 2 semanas',
+      en: 'additional sales in 2 weeks',
+      es: 'ventas adicionales en 2 semanas',
     },
-    source: { pt: 'Fashion', en: 'Fashion' },
-    numericValue: 2.6,
-    unitText: 'percent',
+    source: { pt: 'Financeiro', en: 'Financial services', es: 'Financiero' },
+    numericValue: 7.8,
+    unitText: 'million',
   },
 ];
