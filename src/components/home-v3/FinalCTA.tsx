@@ -7,20 +7,23 @@ import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 const copyByLang = {
   pt: {
     title: 'Seu concorrente vai perceber o movimento depois de você',
-    primary: 'Falar com especialista',
-    secondary: 'Conheça o i6 Decision Suite',
+    decision: 'Conheça o i6 Decision Suite',
+    builder: 'Construa com o i6 Builder',
+    specialist: 'Falar com especialista',
     note: 'CUSTO ZERO ATÉ O BACKTEST COMPROVAR O POTENCIAL DE RESULTADO',
   },
   en: {
     title: 'Your competitor will notice the move after you do',
-    primary: 'Talk to an expert',
-    secondary: 'Explore the i6 Decision Suite',
+    decision: 'Explore the i6 Decision Suite',
+    builder: 'Build with the i6 Builder',
+    specialist: 'Talk to an expert',
     note: 'ZERO COST UNTIL THE BACKTEST PROVES THE POTENTIAL RESULT',
   },
   es: {
     title: 'Tu competidor va a notar el movimiento después de ti',
-    primary: 'Hablar con un especialista',
-    secondary: 'Conoce el i6 Decision Suite',
+    decision: 'Conoce el i6 Decision Suite',
+    builder: 'Construye con el i6 Builder',
+    specialist: 'Hablar con un especialista',
     note: 'COSTO CERO HASTA QUE EL BACKTEST COMPRUEBE EL POTENCIAL DE RESULTADO',
   },
 };
