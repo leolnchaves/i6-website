@@ -4,6 +4,7 @@
 - [x] Home: diversificar a hero entre i6 Decision Suite e i6 Builder Platform, manter contato e logos na primeira tela, adicionar “Saiba mais” e quadro comparativo após os logos; validar PT/EN/ES e desktop/mobile.
 - [x] Remover código morto de success-stories: excluir `src/components/success-stories/optimized/LazyComponents.tsx` e a pasta `optimized/` se ficar vazia; validar typecheck, build e /pt/success-stories.
 - [x] Home (destaques): "Varejo farma" → "Indústria farmacêutica" em PT/EN/ES; traduzir para espanhol todas as etiquetas de origem e os textos ainda em português (ticket médio por PDV, positivação de produtos); validar PT/EN/ES e mobile/desktop.
+- [x] Home (CTA final): incluir "Construa com o i6 Builder" apontando para /i6-builders, na ordem i6 Decision Suite → i6 Builder → Falar com especialista; validar PT/EN/ES e mobile/desktop.
 
 ---
 
