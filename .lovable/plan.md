@@ -1,42 +1,45 @@
-# Links sem idioma na URL: o que acontece hoje (relatório)
+# Desativar o acesso à /demo sem apagar nada
 
-Testei os links reais na prévia. O resultado confirma que **todo** link sem idioma perde a página de destino, não só os de Insights.
+Relatório do que existe hoje (nada foi alterado).
 
-| Link acessado | Onde cai hoje | Deveria cair em |
-| --- | --- | --- |
-| /insights/demo-dados-prontos-para-ia | /en/demo-dados-prontos-para-ia (não existe) | /en/insights/demo-dados-prontos-para-ia |
-| /insights | /en (home) | /en/insights |
-| /i6-blog/&lt;slug&gt; | /en/&lt;slug&gt; (não existe) | /en/i6-blog/&lt;slug&gt; |
-| /i6-intelligence/&lt;slug&gt; | /en/&lt;slug&gt; (não existe) | /en/i6-intelligence/&lt;slug&gt; |
-| /solutions/x | /en/x (não existe) | /en (rota descontinuada) |
-| /docs | /en (home) | /en/docs |
+## 1. Rotas declaradas
 
-A etiqueta de campanha (?utm_source=...) **foi preservada** em todos esses casos.
+Em `src/App.tsx` (linhas 156-159), três entradas:
 
-## Respostas aos 5 pontos
+| Caminho | O que renderiza |
+| --- | --- |
+| `/:lang/demo` | `Kiosk` (página do totem) |
+| `/demo` | `RootLangRedirect` (manda para `/pt/demo` ou `/en/demo`) |
+| `/demo-metrics/:token` | `KioskMetrics` (painel de métricas) |
 
-**1. Onde vive a lógica**
-Em `src/App.tsx` há dois mecanismos: `RootLangRedirect` (correto, monta `/idioma + caminho completo`) e a validação dentro de `LocalizedRoutes` (quebrada). Não funciona nem para rotas simples: `/docs` e `/insights` também caem na home.
+`src/pages/Kiosk.tsx` também se auto-normaliza: se o idioma na URL for inválido ou mudar, ele navega para `/pt/demo` ou `/<idioma>/demo`.
 
-**2. Por que /insights/&lt;slug&gt; virou /en/&lt;slug&gt;**
-Sim — é exatamente a causa que você suspeitou. A rota `/:lang/*` captura qualquer endereço, então "insights" é lido como se fosse o código de idioma. Ao perceber que não é um idioma válido, a lógica **remove o primeiro segmento** e o substitui por "en", jogando "insights" no lixo. O redirecionamento correto (`RootLangRedirect`) nunca é alcançado, porque a rota genérica casa primeiro.
+## 2. Ficam fora da estrutura de idioma?
 
-**3. Alcance do problema**
-Geral, não específico de Insights: vale para qualquer endereço sem idioma, com ou sem slug (confirmado na tabela acima). Só escapam os endereços declarados explicitamente antes (`/demo`, `/demo-metrics/...`).
+Sim. As três são declaradas no nível raiz, antes da rota genérica `/:lang/*`, portanto não passam pelo fluxo do site localizado nem pelo layout com cabeçalho/rodapé.
 
-**4. Correção recomendada (não aplicada)**
-Deixar de tratar o primeiro segmento como idioma por posição e passar a **verificar** se ele é um idioma conhecido antes de qualquer corte: se for, segue para o site no idioma; se não for, monta o destino como `/idioma-preferido + caminho completo original`, com qualquer profundidade de path. Isso conserta de uma vez Insights, blog, research, docs e futuras rotas, sem exceções por rota.
+## 3. `/demo-metrics/...` é parte do mesmo fluxo?
 
-**5. Etiqueta de campanha (UTM)**
-São dois pontos de falha independentes. Este redirecionamento de idioma já preserva a etiqueta. A perda que apuramos antes acontece **depois**, nos redirecionamentos internos de `/insights/<slug>` para `/i6-blog` ou `/i6-intelligence`, que não repassam a query. Consertar o idioma não conserta aquele; são dois reparos separados.
+Sim, mesmo fluxo. É o painel que lê os eventos gravados pela própria demo (mesma biblioteca de eventos e de leads pendentes do totem), protegido por um token fixo na URL. Hoje ele inclusive avisa que "a coleta de métricas está temporariamente desativada no /demo". Não é algo independente: se a demo sai do ar, o painel perde a função.
 
-## Detalhes técnicos
+## 4. Links visíveis no site
 
-- `src/App.tsx`: a rota `<Route path="/:lang/*" element={<LocalizedRoutes />} />` precede `<Route path="*" element={<RootLangRedirect />} />`, tornando o catch-all inalcançável.
-- `LocalizedRoutes` faz `location.pathname.replace(/^\/[^/]+/, '')` quando `isLang(lang)` é falso — isso descarta o primeiro segmento real.
-- Correção proposta: em `LocalizedRoutes`, quando `lang` não é idioma válido, redirecionar para `/${detectPreferredLang()}${location.pathname}${search}${hash}` (path completo, sem `replace`), mantendo `RootLangRedirect` para `/`.
-- Segundo reparo (independente): incluir `location.search`/`hash` nos `<Navigate>` de `src/pages/InsightArticle.tsx` (linhas 72-80).
+Nenhum. Não existe item de menu, rodapé, botão ou CTA apontando para `/demo` ou `/demo-metrics` em nenhuma página. As únicas referências são internas à própria demo (a normalização de idioma dentro dela) e o script de publicação, que gera arquivos estáticos para `demo`, `pt/demo`, `en/demo` e `demo-metrics/<token>` para o aparelho do totem não ver erro 404.
 
-## Escopo desta entrega
+Ou seja: desativar não quebra nenhum link público. Quem acessa hoje é o totem físico (URL fixa no aparelho) ou alguém com o endereço salvo.
 
-Este documento é só o relatório solicitado. Nenhuma alteração de código foi feita e nenhuma release foi publicada.
+## 5. Forma mais simples de desativar (proposta)
+
+Trocar apenas o `element` das três rotas em `src/App.tsx` para o mesmo redirecionamento já usado pelas páginas descontinuadas (`HomeRedirect`, que leva à Home no idioma preferido preservando parâmetros da URL). Os arquivos e componentes da demo continuam intactos no repositório e os imports permanecem.
+
+Isso é suficiente para todas as sub-rotas, porque:
+
+- `/:lang/demo` e `/demo-metrics/:token` cobrem qualquer idioma e qualquer token;
+- não existe nenhuma sub-rota mais profunda de `/demo`; qualquer coisa como `/pt/demo/algo` já cai no fluxo normal de rota inexistente;
+- `Kiosk` deixa de ser montado, então a normalização interna de idioma nunca roda.
+
+Um ponto a decidir junto: os arquivos estáticos gerados no publish para `demo`, `pt/demo`, `en/demo` e `demo-metrics/<token>`. Mantê-los é inofensivo (o endereço carrega o site e o visitante é levado à Home), mas eu recomendo mantê-los por enquanto para o totem não exibir tela de erro.
+
+## Fora de escopo
+
+Nenhum arquivo ou componente da demo é apagado, renomeado ou alterado; nada de release/deploy sem você pedir.
