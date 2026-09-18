@@ -27,7 +27,7 @@ export interface RealResultKPI {
 export const realResults: RealResultKPI[] = [
   {
     slug: 'savings-pharma',
-    value: { pt: 'R$ 100M', en: 'BRL 100M', es: 'BRL 100M' },
+    value: { pt: 'R$ 100 mi', en: 'BRL 100 mi', es: 'BRL 100 mi' },
     label: {
       pt: 'em savings ao antecipar ruptura, overstocking e incineração',
       en: 'in savings by anticipating stockouts, overstocking and incineration',
@@ -70,7 +70,7 @@ export const realResults: RealResultKPI[] = [
   },
   {
     slug: 'sales-finance',
-    value: { pt: '+7,8MM', en: '+7.8MM', es: '+7,8MM' },
+    value: { pt: '+7,8 mi', en: '+7.8 mi', es: '+7,8 mi' },
     label: {
       pt: 'receita adicional em 2 semanas',
       en: 'additional revenue in 2 weeks',
