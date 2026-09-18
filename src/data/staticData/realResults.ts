@@ -68,7 +68,11 @@ export const realResults: RealResultKPI[] = [
   {
     slug: 'conversion-finance',
     value: { pt: '12x', en: '12x', es: '12x' },
-    label: { pt: 'mais conversão em campanhas', en: 'more conversion in campaigns' },
+    label: {
+      pt: 'mais conversão em campanhas do que a segmentação tradicional',
+      en: 'more conversion in campaigns than traditional segmentation',
+      es: 'más conversión en campañas que la segmentación tradicional',
+    },
     source: { pt: 'Financeiro', en: 'Financial services' },
     numericValue: 12,
     unitText: 'multiplier',
