@@ -1,7 +1,7 @@
 # Testimonials
 
 ## Testimonial 1
-**Quote:** EMS has been leading the adoption of AI in the pharmaceutical industry and the partnership with infinity6 reinforces this leadership. In just a few weeks, we were able to turn data into intelligent actions that generate immediate and measurable impact.
+**Quote:** EMS has been leading the adoption of AI in the pharmaceutical industry and the partnership with infinity6 reinforces this leadership. In just a few weeks, the partnership with infinity6 was able to turn data into intelligent actions that generated immediate and measurable impact.
 **Author:** Marcus Sanchez
 **Title:** EMS Farma Shareholder
 **Company:** EMS Farma
