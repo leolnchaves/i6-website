@@ -19,6 +19,9 @@ const DecisionSuiteSection = () => {
   const localized = useLocalizedPath();
   const [activeId, setActiveId] = useState(copy.products.items[0].id);
   const active = copy.products.items.find((product) => product.id === activeId) ?? copy.products.items[0];
+  const activeIndex = copy.products.items.findIndex((product) => product.id === active.id);
+  const isFirstProduct = activeIndex === 0;
+  const isLastProduct = activeIndex === copy.products.items.length - 1;
 
   const flowSteps = [
     {
@@ -111,7 +114,9 @@ const DecisionSuiteSection = () => {
 
           <article
             key={active.id}
-            className="relative flex flex-col rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)]"
+            className={`relative flex flex-col rounded-3xl bg-card p-4 shadow-[var(--sand-shadow-soft)] motion-safe:animate-sand-rise md:p-5 lg:z-10 lg:h-full lg:shadow-[20px_20px_60px_-10px_rgba(74,68,63,0.08)] ${
+              isFirstProduct ? 'lg:rounded-tl-none' : ''
+            } ${isLastProduct ? 'lg:rounded-bl-none' : ''}`}
           >
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
               {active.name}
