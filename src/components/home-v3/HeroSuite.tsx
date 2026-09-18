@@ -193,14 +193,10 @@ const HeroSuite = () => {
             className="animate-sand-rise relative lg:col-span-5 lg:-ml-8 xl:-ml-16"
             style={{ animationDelay: '.2s' }}
           >
-            <div className="mb-3 flex items-center justify-between gap-4 lg:justify-end">
+            <div className="mb-3 flex items-center justify-end gap-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                 {copy.panelTitle}
               </p>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                {copy.panelNow}
-              </span>
             </div>
 
             <div
