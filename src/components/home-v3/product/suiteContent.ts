@@ -133,7 +133,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sem isso: preço é tabela e reação ao concorrente, não alavanca governada de margem, giro e conversão.',
           headline: 'Preço orientado por elasticidade, margem e demanda',
           body: 'Analisa a resposta histórica a preço, demanda, margem e contexto para recomendar preços dentro das regras do negócio. A decisão deixa de ser apenas reativa e passa a considerar impacto econômico esperado.',
-          capabilities: 'Histórico de preços · Elasticidade · Margem · Guardrails · Recomendação',
+          capabilities:
+            'Serve três objetivos diferentes com o mesmo motor — capturar margem por SKU, acelerar giro sem destruir margem, ou maximizar conversão por sessão · A cadência muda com o objetivo: revisão mensal por SKU, semanal por loja, ou em tempo real por sessão · Nunca ignora a restrição do negócio: margem mínima, estoque e política comercial entram na decisão, não só elasticidade e demanda · Preço deixa de ser reativo: em vez de reagir tarde ao mercado, antecipa antes que a margem já tenha ido embora · i6 Signal — camada conversacional preditiva: pergunte sobre o preço em linguagem natural e saia com uma decisão, não com um relatório.',
           flow: {
             input: 'Preço + demanda + margem + contexto',
             decision: 'Elasticidade e preço recomendado',
@@ -251,7 +252,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Without it: price is a table and a reaction to competitors, not a governed lever of margin, turnover and conversion.',
           headline: 'Pricing driven by elasticity, margin and demand',
           body: 'Analyzes historical price response, demand, margin and context to recommend prices within business rules. The decision stops being purely reactive and starts considering expected economic impact.',
-          capabilities: 'Price history · Elasticity · Margin · Guardrails · Recommendation',
+          capabilities:
+            'Serves three different goals with the same engine — capture margin per SKU, speed up turnover without destroying margin, or maximize conversion per session · The cadence changes with the goal: monthly review per SKU, weekly per store, or real time per session · It never ignores business constraints: minimum margin, stock and commercial policy enter the decision, not just elasticity and demand · Price stops being reactive: instead of reacting late to the market, it anticipates before the margin is already gone · i6 Signal — predictive conversational layer: ask about price in natural language and walk away with a decision, not a report.',
           flow: {
             input: 'Price + demand + margin + context',
             decision: 'Elasticity and recommended price',
@@ -369,7 +371,8 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
           pain: 'Sin esto: el precio es tabla y reacción al competidor, no una palanca gobernada de margen, rotación y conversión.',
           headline: 'Precio orientado por elasticidad, margen y demanda',
           body: 'Analiza la respuesta histórica al precio, la demanda, el margen y el contexto para recomendar precios dentro de las reglas del negocio. La decisión deja de ser solo reactiva y pasa a considerar el impacto económico esperado.',
-          capabilities: 'Histórico de precios · Elasticidad · Margen · Guardrails · Recomendación',
+          capabilities:
+            'Sirve a tres objetivos diferentes con el mismo motor — capturar margen por SKU, acelerar la rotación sin destruir margen o maximizar la conversión por sesión · La cadencia cambia según el objetivo: revisión mensual por SKU, semanal por tienda o en tiempo real por sesión · Nunca ignora la restricción del negocio: margen mínima, inventario y política comercial entran en la decisión, no solo elasticidad y demanda · El precio deja de ser reactivo: en lugar de reaccionar tarde al mercado, anticipa antes de que el margen ya se haya ido · i6 Signal — capa conversacional predictiva: pregunte sobre el precio en lenguaje natural y salga con una decisión, no con un informe.',
           flow: {
             input: 'Precio + demanda + margen + contexto',
             decision: 'Elasticidad y precio recomendado',
