@@ -105,8 +105,8 @@ const WhyInfinity6 = () => {
     <section className="container mx-auto px-6 py-20 md:py-28">
       <div className="max-w-3xl">
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-4">{copy.eyebrow}</p>
-        <h2 className="text-3xl md:text-[2.6rem] leading-[1.12] font-bold text-foreground">
-          <span className="block">{copy.titleLead}</span>
+        <h2 className="text-3xl md:text-[2.3rem] leading-[1.12] font-bold text-foreground">
+          <span className="block sm:whitespace-nowrap">{copy.titleLead}</span>
           <span className="block">{copy.titleRest}</span>
         </h2>
         <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{copy.intro}</p>
