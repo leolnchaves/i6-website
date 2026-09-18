@@ -13,7 +13,7 @@ const copyByLang = {
     items: [
       {
         icon: Brain,
-        title: 'Motores proprietários, não wrappers',
+        title: 'Motor proprietário, não emprestado',
         desc: 'i6 Previsio, i6 RecSys e i6 ElasticPrice foram construídos por nós, treinados em operação real da América Latina.',
       },
       {
@@ -42,7 +42,7 @@ const copyByLang = {
     items: [
       {
         icon: Brain,
-        title: 'Proprietary engines, not wrappers',
+        title: 'Proprietary engine, not a borrowed one',
         desc: 'i6 Previsio, i6 RecSys and i6 ElasticPrice were built by us, trained on real Latin American operations.',
       },
       {
@@ -71,7 +71,7 @@ const copyByLang = {
     items: [
       {
         icon: Brain,
-        title: 'Motores propietarios, no wrappers',
+        title: 'Motor propietario, no prestado',
         desc: 'i6 Previsio, i6 RecSys e i6 ElasticPrice fueron construidos por nosotros, entrenados con operación real de América Latina.',
       },
       {
