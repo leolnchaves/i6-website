@@ -11,7 +11,10 @@ const EnginesTrio = memo(({ content }: Props) => (
     <div className="max-w-3xl">
       <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">{content.eyebrow}</p>
       <h2 className="mt-4 text-3xl md:text-[2.6rem] font-bold leading-[1.12] text-foreground">{content.title}</h2>
-      <p className="mt-5 text-base md:text-lg leading-relaxed text-muted-foreground">{content.lead}</p>
+      <p className="mt-5 text-base md:text-lg leading-relaxed text-muted-foreground">
+        <span className="block">{content.lead[0]}</span>
+        <span className="block">{content.lead[1]}</span>
+      </p>
     </div>
 
     <div className="mt-12 grid gap-6 md:grid-cols-3">
