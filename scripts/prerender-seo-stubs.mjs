@@ -21,6 +21,7 @@ import {
   researchData,
 } from './lib/jsonld-people-research.mjs';
 import {
+  isNonIndexableSlug,
   languagesForRoute,
 } from './lib/seo-route-config.mjs';
 
@@ -247,9 +248,33 @@ let count = 0;
 const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
-  { name: 'i6Previsio', anchor: 'i6previsio', description: { pt: 'Motor proprietário de previsão de demanda com modelos adaptativos e demand sensing em tempo real', en: 'Proprietary demand forecasting engine with adaptive models and real-time demand sensing' } },
-  { name: 'i6RecSys', anchor: 'i6recsys', description: { pt: 'Motor proprietário de recomendação, otimização de mix e score de propensão de compra para anônimos', en: 'Proprietary engine for recommendation, mix optimization and anonymous purchase propensity scoring' } },
-  { name: 'i6ElasticPrice', anchor: 'i6elasticprice', description: { pt: 'Motor proprietário de elasticidade e precificação dinâmica por SKU, canal e ciclo de vida', en: 'Proprietary elasticity and dynamic pricing engine by SKU, channel and lifecycle' } },
+  {
+    name: 'i6 Previsio',
+    anchor: 'i6previsio',
+    description: {
+      pt: 'Estima a demanda por SKU, canal e janela temporal e mede a incerteza de cada previsão.',
+      en: 'Estimates demand by SKU, channel and time window and measures the uncertainty of each forecast.',
+      es: 'Estima la demanda por SKU, canal y ventana temporal y mide la incertidumbre de cada previsión.',
+    },
+  },
+  {
+    name: 'i6 RecSys',
+    anchor: 'i6recsys',
+    description: {
+      pt: 'Ranqueamento comportamental que combina histórico, contexto e restrição operacional na mesma função de decisão.',
+      en: 'Behavioral ranking that combines history, context and operational constraints in a single decision function.',
+      es: 'Ranking conductual que combina historial, contexto y restricciones operativas en una misma función de decisión.',
+    },
+  },
+  {
+    name: 'i6 ElasticPrice',
+    anchor: 'i6elasticprice',
+    description: {
+      pt: 'Estimação contínua de elasticidade por SKU, canal e ciclo de vida, substituindo curvas estáticas por aprendizado online.',
+      en: 'Continuous elasticity estimation by SKU, channel and lifecycle, replacing static curves with online learning.',
+      es: 'Estimación continua de elasticidad por SKU, canal y ciclo de vida, que sustituye las curvas estáticas por aprendizaje online.',
+    },
+  },
 ];
 
 for (const lang of ['en', 'pt', 'es']) {
@@ -284,7 +309,6 @@ for (const lang of ['en', 'pt', 'es']) {
         { slug: 'propensao-conversao', term: 'Propensão de conversão', def: 'Score preditivo da probabilidade de conclusão de compra em um contexto específico.' },
         { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', def: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida.' },
         { slug: 'aderencia-contextual', term: 'Aderência contextual', def: 'Grau em que uma recomendação combina histórico comportamental com o contexto atual.' },
-        { slug: 'ruptura-gondola', term: 'Ruptura de gôndola', def: 'Indisponibilidade de SKU no PDV com demanda real. Custa 4%–12% do faturamento líquido no varejo farma.' },
         { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine) base do i6-RecSys-Base.g1.' },
         { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
         { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
@@ -294,7 +318,6 @@ for (const lang of ['en', 'pt', 'es']) {
         { slug: 'conversion-propensity', term: 'Conversion propensity', def: 'Predictive score for the probability of completing a purchase in a specific context.' },
         { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', def: 'Continuous price-sensitivity learning by SKU, channel and lifecycle.' },
         { slug: 'contextual-adherence', term: 'Contextual adherence', def: 'How well a recommendation combines behavioral history with current context.' },
-        { slug: 'shelf-stockout', term: 'Shelf stockout', def: 'SKU unavailability at POS when real demand exists. Costs 4%–12% of net revenue in pharma retail.' },
         { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning (Finn, Abbeel & Levine). Foundation of i6-RecSys-Base.g1.' },
         { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
         { slug: 'active-learning', term: 'Active Learning', def: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
@@ -354,13 +377,31 @@ for (const lang of ['en', 'pt', 'es']) {
         '@graph': [
           ...PRODUCTS.map(p => ({
             '@type': 'SoftwareApplication',
+            '@id': `${BASE_URL}/#${p.anchor}`,
             name: p.name,
             applicationCategory: 'BusinessApplication',
             operatingSystem: 'Cloud',
-            description: p.description[tl],
+            description: p.description[lang],
             url: `${BASE_URL}/${lang}/our-ai#${p.anchor}`,
-            creator: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+            creator: { '@id': `${BASE_URL}/#organization` },
+            provider: { '@id': `${BASE_URL}/#organization` },
           })),
+          {
+            '@type': 'TechArticle',
+            '@id': `${BASE_URL}/${lang}/our-ai#article`,
+            headline: meta.title,
+            description: meta.description,
+            url: `${BASE_URL}/${lang}/our-ai`,
+            inLanguage: HTML_LANG[lang],
+            author: [
+              { '@id': `${BASE_URL}/#organization` },
+              { '@id': `${BASE_URL}/#everton-gago` },
+              { '@id': `${BASE_URL}/#leonardo-chaves` },
+            ],
+            publisher: { '@id': `${BASE_URL}/#organization` },
+            about: PRODUCTS.map(p => ({ '@id': `${BASE_URL}/#${p.anchor}` })),
+            mainEntityOfPage: `${BASE_URL}/${lang}/our-ai`,
+          },
           definedTermSet,
           ...observations,
         ],
@@ -432,7 +473,7 @@ if (existsSync(INSIGHTS_DIR)) {
     const { data: fm } = parseFrontmatter(raw);
     if (!fm.title || !fm.language || !fm.slug || !fm.type || !fm.date) continue;
     const segment = INSIGHT_ROUTE[fm.type];
-    if (!segment) continue;
+    if (!segment || isNonIndexableSlug(fm.slug)) continue;
     const lang = fm.language;
     if (lang !== 'en' && lang !== 'pt') continue;
 
@@ -540,7 +581,7 @@ if (existsSync(INTELLIGENCE_DIR)) {
   for (const file of files) {
     const raw = readFileSync(join(INTELLIGENCE_DIR, file), 'utf8');
     const { data: fm, content } = parseFrontmatter(raw);
-    if (!fm.title || !fm.language || !fm.slug || !fm.date) continue;
+    if (!fm.title || !fm.language || !fm.slug || !fm.date || isNonIndexableSlug(fm.slug)) continue;
     const lang = fm.language;
     const path = `/${lang}/i6-intelligence/${fm.slug}`;
     const title = `${fm.title} | i6 Intelligence`;
@@ -591,12 +632,3 @@ if (existsSync(INTELLIGENCE_DIR)) {
 
 
 console.log(`✅ Prerendered ${count} SEO stubs into dist/`);
-
-// ---- Demo routes: real 200 files (Fully Kiosk shows an error page on HTTP 404) ----
-const KIOSK_METRICS_TOKEN = 'i6k-x3f8n2vqp7wm4jt-metrics';
-for (const p of ['demo', 'pt/demo', 'en/demo', `demo-metrics/${KIOSK_METRICS_TOKEN}`]) {
-  const out = join(DIST, p, 'index.html');
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, template, 'utf8');
-  console.log(`✅ Demo route file: ${p}/index.html`);
-}

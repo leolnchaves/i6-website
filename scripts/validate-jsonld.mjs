@@ -18,6 +18,7 @@ import {
   ES_TRANSLATED_ROUTES,
   NON_INDEXABLE_DOC_ROUTES,
   SAMPLE_DOC_ROUTES,
+  isNonIndexableRoute,
   localizedRoutePath,
 } from './lib/seo-route-config.mjs';
 
@@ -89,6 +90,34 @@ const allHtmlFiles = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap(
   return entry.isDirectory() ? allHtmlFiles(path) : (entry.name.endsWith('.html') ? [path] : []);
 });
 
+const routeFromDistFile = (file) => {
+  const relative = file.slice(DIST.length + 1).replace(/\\/g, '/');
+  if (relative === 'index.html') return '';
+  if (relative.endsWith('/index.html')) return relative.slice(0, -'/index.html'.length);
+  return relative.replace(/\.html$/, '');
+};
+
+for (const file of allHtmlFiles(DIST)) {
+  const route = routeFromDistFile(file);
+  if (isNonIndexableRoute(route)) {
+    errors.push(`/${route}: stub proibido para rota de demonstração`);
+  }
+}
+
+for (const match of sitemap.matchAll(/<loc>(https:\/\/infinity6\.ai\/[^<]*)<\/loc>/g)) {
+  const route = new URL(match[1]).pathname.replace(/^\/+|\/+$/g, '');
+  if (isNonIndexableRoute(route)) {
+    errors.push(`sitemap: URL proibida para rota de demonstração ${match[1]}`);
+  }
+}
+
+const llms = readFileSync(resolve('public/llms.txt'), 'utf8');
+for (const match of llms.matchAll(/https:\/\/infinity6\.ai\/([^\s)]+)/g)) {
+  if (isNonIndexableRoute(match[1])) {
+    errors.push(`llms.txt: URL proibida para rota de demonstração ${match[0]}`);
+  }
+}
+
 for (const file of allHtmlFiles(DIST)) {
   const html = readFileSync(file, 'utf8');
   const canonical = html.match(/<link\s+rel="canonical"\s+href="https:\/\/infinity6\.ai\/(pt|en|es)([^"#?]*)"/i);
@@ -152,6 +181,33 @@ for (const page of pages) {
       errors.push(`${page.label}: bloco ${i + 1} não é JSON válido — ${e.message}`);
     }
   });
+
+  if (page.label.endsWith('/our-ai')) {
+    const typedNodes = [];
+    walk(parsed, (node) => {
+      if (node['@type'] === 'TechArticle' || node['@type'] === 'SoftwareApplication') {
+        typedNodes.push(node);
+      }
+    });
+    const techArticles = typedNodes.filter((node) => node['@type'] === 'TechArticle');
+    const applications = typedNodes.filter((node) => node['@type'] === 'SoftwareApplication');
+    const requiredApplicationIds = [
+      'https://infinity6.ai/#i6previsio',
+      'https://infinity6.ai/#i6recsys',
+      'https://infinity6.ai/#i6elasticprice',
+    ];
+    if (techArticles.length !== 1) {
+      errors.push(`${page.label}: esperado 1 TechArticle estático; encontrados ${techArticles.length}`);
+    }
+    if (applications.length !== 3) {
+      errors.push(`${page.label}: esperados 3 SoftwareApplication estáticos; encontrados ${applications.length}`);
+    }
+    for (const id of requiredApplicationIds) {
+      if (!applications.some((node) => node['@id'] === id)) {
+        errors.push(`${page.label}: SoftwareApplication obrigatório ausente ${id}`);
+      }
+    }
+  }
 
   walk(parsed, (node) => {
     const keys = Object.keys(node);
