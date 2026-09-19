@@ -141,10 +141,11 @@ const seo = {
     en: { title: 'i6 Intelligence | infinity6', description: 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.' },
     es: { title: 'i6 Intelligence | infinity6', description: 'Inteligencia aplicada para decisiones de demanda, margen, inventario, mix y propensión en retail, industria, servicios financieros y farma.' },
   },
+  // Mesma fonte de seoData.ts (src/data/ourAIMeta.json): title/description/og/twitter.
   'our-ai': {
-    pt: { title: 'A camada de inteligência da infinity6 | Motores proprietários', description: 'Três motores proprietários (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre um modelo fundacional, com incerteza medida e explicação rastreável.' },
-    en: { title: 'infinity6 intelligence layer | Proprietary engines', description: 'Three proprietary engines (i6 Previsio, i6 RecSys, i6 ElasticPrice) on a shared foundation model, with measured uncertainty and traceable explanations.' },
-    es: { title: 'La capa de inteligencia de infinity6 | Motores propietarios', description: 'Tres motores propietarios (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre un modelo fundacional compartido, con incertidumbre medida y explicación trazable.' },
+    pt: { title: OUR_AI_META.pt.title, description: OUR_AI_META.pt.description },
+    en: { title: OUR_AI_META.en.title, description: OUR_AI_META.en.description },
+    es: { title: OUR_AI_META.es.title, description: OUR_AI_META.es.description },
   },
   // Documentação · Pesquisa: lista completa de palestras e artigos (visível em /{idioma}/docs/pesquisa).
   'docs/pesquisa': {
@@ -324,7 +325,7 @@ const PRODUCTS = [
     description: {
       pt: 'Ranqueamento comportamental que combina histórico, contexto e restrição operacional na mesma função de decisão.',
       en: 'Behavioral ranking that combines history, context and operational constraints in a single decision function.',
-      es: 'Ranking conductual que combina historial, contexto y restricciones operativas en una misma función de decisión.',
+      es: 'Ranking conductual que combina histórico, contexto y restricción operativa en una única función de decisión.',
     },
   },
   {
@@ -333,7 +334,7 @@ const PRODUCTS = [
     description: {
       pt: 'Estimação contínua de elasticidade por SKU, canal e ciclo de vida, substituindo curvas estáticas por aprendizado online.',
       en: 'Continuous elasticity estimation by SKU, channel and lifecycle, replacing static curves with online learning.',
-      es: 'Estimación continua de elasticidad por SKU, canal y ciclo de vida, que sustituye las curvas estáticas por aprendizaje online.',
+      es: 'Estimación continua de elasticidad por SKU, canal y ciclo de vida, sustituyendo curvas estáticas por aprendizaje en línea.',
     },
   },
 ];
@@ -375,10 +376,16 @@ for (const lang of ['en', 'pt', 'es']) {
         source: kpi.source[lang] ?? kpi.source.pt,
       }));
 
+      // Corpo de /our-ai sai 100% no idioma da rota (inclusive ES).
+      const bh = BODY_HEADINGS[lang] ?? BODY_HEADINGS.pt;
+      const agLang = OUR_AI_AG[lang] ?? OUR_AI_AG.pt;
       const glossaryHtml = `<h2 id="glossario">${GLOSSARY_HEADING[lang] ?? GLOSSARY_HEADING.pt}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
-      const kpisHtml = `<h2>${tl === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
+      const kpisHtml = `<h2>${bh.proof}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
+      // Camada de abstração + Governança: mesmos textos visíveis na página.
+      const abstractionHtml = `<h2 id="camada-abstracao">${agLang.headings.abstraction}</h2><p>${agLang.builder.lead}</p><ul>${agLang.builder.bullets.map(b => `<li><strong>${b.title}</strong> — ${b.text}</li>`).join('')}</ul>`;
+      const governanceHtml = `<h2 id="governanca">${agLang.headings.governance}</h2><p>${agLang.security.title}. ${agLang.security.lead}</p><ul>${agLang.security.pillars.map(p => `<li><strong>${p.title}</strong> — ${p.description}</li>`).join('')}</ul>`;
 
-      body = `<p>${ourAILead}</p><h2>${tl === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[tl]}</li>`).join('')}</ul>${kpisHtml}${glossaryHtml}`;
+      body = `<p>${ourAILead}</p><h2>${bh.engines}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[lang] ?? p.description.pt}</li>`).join('')}</ul>${abstractionHtml}${governanceHtml}${kpisHtml}${glossaryHtml}`;
 
       const definedTermSet = {
         '@type': 'DefinedTermSet',
@@ -403,7 +410,7 @@ for (const lang of ['en', 'pt', 'es']) {
           name: k.label,
         },
         measuredValue: k.value,
-        description: `${tl === 'pt' ? 'Setor' : 'Sector'}: ${k.source}`,
+        description: `${bh.sector}: ${k.source}`,
       }));
 
       jsonLd = {
