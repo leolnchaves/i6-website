@@ -241,7 +241,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.',
       pillars: [
         { title: 'Anonimização na origem', description: 'O modelo nunca vê dado identificável: a anonimização acontece antes do treinamento, em todos os modelos' },
-        { title: 'Arquitetura segura', description: 'Autenticação multinível e controle de acesso baseado em rotas' },
+        { title: 'Segurança em camadas', description: 'Autenticação multinível e controle de acesso baseado em rotas' },
         { title: 'Ambiente isolado', description: 'Ambientes seguros e isolados protegem dados e modelos contra acesso não autorizado' },
         { title: 'Pronto para escalar', description: 'Solução 100% em nuvem, com escalonamento automático de recursos' },
       ],
@@ -437,7 +437,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
       pillars: [
         { title: 'Anonymization at source', description: 'The model never sees identifiable data: anonymization happens before training, in every model' },
-        { title: 'Secure architecture', description: 'Multi-level authentication and route-based access control' },
+        { title: 'Layered security', description: 'Multi-level authentication and route-based access control' },
         { title: 'Isolated environment', description: 'Secure, isolated environments protect your data and models from unauthorized access' },
         { title: 'Ready to scale', description: '100% cloud-native solution with automatic resource scaling' },
       ],
@@ -633,7 +633,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.',
       pillars: [
         { title: 'Anonimización en el origen', description: 'El modelo nunca ve dato identificable: la anonimización ocurre antes del entrenamiento, en todos los modelos' },
-        { title: 'Arquitectura segura', description: 'Autenticación multinivel y control de acceso basado en rutas' },
+        { title: 'Seguridad en capas', description: 'Autenticación multinivel y control de acceso basado en rutas' },
         { title: 'Entorno aislado', description: 'Entornos seguros y aislados protegen datos y modelos contra accesos no autorizados' },
         { title: 'Listo para escalar', description: 'Solución 100% en la nube, con escalado automático de recursos' },
       ],
