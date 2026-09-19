@@ -211,7 +211,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     reasoning: {
       eyebrow: 'Método',
-      title: 'Como a inteligência raciocina',
+      title: 'Como a inteligência decide',
       lead: 'Duas propriedades definem a qualidade de uma decisão preditiva: a saída não pode colapsar no óbvio, e cada decisão precisa ser auditável até os sinais que a produziram.',
       parts: [
         {
@@ -424,7 +424,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     reasoning: {
       eyebrow: 'Method',
-      title: 'How the intelligence reasons',
+      title: 'How the intelligence decides',
       lead: 'Two properties define the quality of a predictive decision: the output must not collapse into the obvious, and every decision must be auditable back to the signals that produced it.',
       parts: [
         {
@@ -637,7 +637,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     reasoning: {
       eyebrow: 'Método',
-      title: 'Cómo razona la inteligencia',
+      title: 'Cómo decide la inteligencia',
       lead: 'Dos propiedades definen la calidad de una decisión predictiva: la salida no puede colapsar en lo obvio, y cada decisión debe ser auditable hasta las señales que la produjeron.',
       parts: [
         {
