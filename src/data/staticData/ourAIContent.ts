@@ -440,7 +440,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'Privacy and security by design',
       lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
       pillars: [
-        { title: 'Anonymization at source', description: 'Anonymization happens before training, in every model, and the decision to send identified or anonymized data is always the client’s.' },
+        { title: 'Anonymization at source', description: "Anonymization happens before training, in every model, and the decision to send identified or anonymized data is always the client's." },
         { title: 'Centralized authentication', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface.' },
         { title: 'Isolated environment', description: 'Data and models for each client stay in an isolated environment, with no cross access.' },
         { title: 'Scales with the same control', description: 'Automatic resource scaling on Google Cloud, with the same isolation and access controls at any volume.' },
