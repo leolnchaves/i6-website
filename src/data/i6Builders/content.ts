@@ -30,10 +30,10 @@ export const builderCopy = {
       ],
     },
     what: {
-      eyebrow: 'O que é o i6 Builder',
+      eyebrow: 'O que é a i6 Builder',
       title: 'Capacidade de modelagem como plataforma, não como projeto',
       body: [
-        'O i6 Builder expõe as capacidades de modelagem da infinity6 como blocos de construção: engines treinados, interfaces programáveis e ferramentas de avaliação, prontos para serem compostos dentro de um produto de terceiros',
+        'A i6 Builder expõe as capacidades de modelagem da infinity6 como blocos de construção: engines treinados, interfaces programáveis e ferramentas de avaliação, prontos para serem compostos dentro de um produto de terceiros',
         'Em vez de reconstruir pipelines de dados, treinamento, validação e explicabilidade, o time de tecnologia consome capacidade pronta e concentra o esforço no que diferencia o próprio produto',
       ],
       pillars: [
@@ -122,25 +122,25 @@ export const builderCopy = {
       intro: 'Combinações pré-configuradas de múltiplos engines, com parametrização e métricas típicas de cada domínio, para encurtar o caminho entre integração e primeiro resultado',
     },
     persona: {
-      eyebrow: 'Como você constrói com o i6 Builder',
+      eyebrow: 'Como você constrói com a i6 Builder',
       title: 'Feito para o Tech Builder',
       intro: 'Times de tecnologia que constroem software e querem capacidade de decisão dentro do próprio produto, com dois caminhos de entrega',
       modes: [
         {
           title: 'Embedded (OEM)',
-          desc: 'As capacidades do Builder são incorporadas a um produto que já existe e já tem base instalada, ampliando o que ele entrega sem reescrever a solução.',
+          desc: 'As capacidades da Builder são incorporadas a um produto que já existe e já tem base instalada, ampliando o que ele entrega sem reescrever a solução.',
           points: ['Integração progressiva por módulo', 'Sua marca, sua experiência', 'Capacidade mantida e evoluída pela infinity6'],
         },
         {
           title: 'Novo Produto',
-          desc: 'Um produto novo nasce sobre o Builder — engines, SDKs e toolkits como fundação técnica desde o primeiro dia.',
+          desc: 'Um produto novo nasce sobre a Builder — engines, SDKs e toolkits como fundação técnica desde o primeiro dia.',
           points: ['Fundação preditiva pronta', 'Menos engenharia de plataforma', 'Foco total em experiência e domínio'],
         },
       ],
     },
     cases: {
       eyebrow: 'Cases de parceiros',
-      title: 'Como outros times entregaram sobre o Builder',
+      title: 'Como outros times entregaram sobre a Builder',
       exampleNote: 'Cases abaixo são fictícios, usados para validação de layout',
     },
     finalCta: {
@@ -314,7 +314,7 @@ export const builderCopy = {
       ],
     },
     what: {
-      eyebrow: 'Qué es el i6 Builder',
+      eyebrow: 'Qué es la i6 Builder',
       title: 'Capacidad de modelado como plataforma, no como proyecto',
       body: [
         'El i6 Builder expone las capacidades de modelado de infinity6 como bloques de construcción: engines entrenados, interfaces programables y herramientas de evaluación, listos para componerse dentro de un producto de terceros',
@@ -406,25 +406,25 @@ export const builderCopy = {
       intro: 'Combinaciones preconfiguradas de múltiples engines, con la parametrización y las métricas típicas de cada dominio, para acortar el camino entre integración y primer resultado',
     },
     persona: {
-      eyebrow: 'Cómo construyes con el i6 Builder',
+      eyebrow: 'Cómo construyes con la i6 Builder',
       title: 'Hecho para el Tech Builder',
       intro: 'Equipos de tecnología que construyen software y quieren capacidad de decisión dentro de su propio producto, con dos caminos de entrega',
       modes: [
         {
           title: 'Embedded (OEM)',
-          desc: 'Las capacidades del Builder se incorporan a un producto que ya existe y ya tiene base instalada, ampliando lo que entrega sin reescribir la solución.',
+          desc: 'Las capacidades de la Builder se incorporan a un producto que ya existe y ya tiene base instalada, ampliando lo que entrega sin reescribir la solución.',
           points: ['Integración progresiva por módulo', 'Tu marca, tu experiencia', 'Capacidad mantenida y evolucionada por infinity6'],
         },
         {
           title: 'Nuevo Producto',
-          desc: 'Un producto nuevo nace sobre el Builder — engines, SDKs y toolkits como fundación técnica desde el primer día.',
+          desc: 'Un producto nuevo nace sobre la Builder — engines, SDKs y toolkits como fundación técnica desde el primer día.',
           points: ['Fundación predictiva lista', 'Menos ingeniería de plataforma', 'Foco total en experiencia y dominio'],
         },
       ],
     },
     cases: {
       eyebrow: 'Cases de partners',
-      title: 'Cómo otros equipos entregaron sobre el Builder',
+      title: 'Cómo otros equipos entregaron sobre la Builder',
       exampleNote: 'Los cases abajo son ficticios, usados para validación de layout',
     },
     finalCta: {

@@ -113,7 +113,7 @@ const ContactForm = memo(({
       messagePlaceholderCommunity: "Conte um pouco sobre você...",
       messageDescriptionDefault: "Descreva seu objetivo, desafio ou dúvida. Quanto mais contexto, melhor podemos direcionar sua conversa.",
       messageDescriptionCommunity: "Conte um pouco do seu histórico, por que você quer fazer parte da comunidade e o que espera encontrar aqui.",
-      messageDescriptionBuilders: "Descreva sua empresa, o produto que já tem ou pretende construir usando os modelos do i6 Builder, e um panorama rápido da capacidade técnica do time. Conte também o que espera alcançar aplicando os modelos da Infinity6 no seu produto.",
+      messageDescriptionBuilders: "Descreva sua empresa, o produto que já tem ou pretende construir usando os modelos da i6 Builder, e um panorama rápido da capacidade técnica do time. Conte também o que espera alcançar aplicando os modelos da Infinity6 no seu produto.",
       sendButton: "Enviar Mensagem",
       sending: "Enviando...",
       successMessage: "Mensagem enviada com sucesso! Entraremos em contato em breve.",
