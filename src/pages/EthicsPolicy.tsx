@@ -252,31 +252,8 @@ export const EthicsPolicyBody = () => {
   );
 
   return (
-    <div className="relative overflow-hidden">
-      <SEOHead page="ethicsPolicy" />
-      
-      {/* Hero */}
-      <section className="w-full flex items-center justify-center pt-28 pb-24 relative bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/15 via-70% to-[#0B1224]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight">
-              {currentContent.title}
-            </h1>
-            <p className="text-base sm:text-lg text-white/60 mb-2 leading-relaxed">
-              {currentContent.subtitle}
-            </p>
-            <p className="text-sm text-white/40">
-              {currentContent.lastUpdated}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Content */}
-      <div className="relative bg-[#0B1224]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="max-w-4xl mx-auto space-y-8">
-            {renderSection(currentContent.sections.foundation.title, currentContent.sections.foundation.text)}
+    <div className="max-w-4xl mx-auto space-y-8">
+      {renderSection(currentContent.sections.foundation.title, currentContent.sections.foundation.text)}
 
             <section className="border-b border-white/10 pb-8">
               <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.development.title}</h2>
