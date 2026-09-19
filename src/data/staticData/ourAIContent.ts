@@ -237,7 +237,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     security: {
       eyebrow: 'Governança',
-      title: 'Segurança e conformidade por design',
+      title: 'Privacidade e segurança por design',
       lead: 'Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.',
       pillars: [
         { title: 'Anonimização na origem', description: 'Dados sensíveis são anonimizados antes de qualquer treinamento — pré-requisito de segurança para todos os modelos' },
@@ -433,7 +433,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     security: {
       eyebrow: 'Governance',
-      title: 'Security and compliance by design',
+      title: 'Privacy and security by design',
       lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
       pillars: [
         { title: 'Anonymization at source', description: 'Sensitive data is anonymized before any training — a security prerequisite for every model' },
@@ -629,7 +629,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     security: {
       eyebrow: 'Gobernanza',
-      title: 'Seguridad y cumplimiento por diseño',
+      title: 'Privacidad y seguridad por diseño',
       lead: 'Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.',
       pillars: [
         { title: 'Anonimización en el origen', description: 'Los datos sensibles se anonimizan antes de cualquier entrenamiento — requisito de seguridad para todos los modelos' },
