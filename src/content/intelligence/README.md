@@ -6,8 +6,9 @@ varrido em tempo de build por:
 
 - `src/hooks/useIntelligence.ts` — runtime React (índice + página de artigo)
 - `scripts/prerender-seo-stubs.mjs` — pré-render de stubs estáticos (SEO/GEO)
-- `public/sitemap.xml` — entradas dinâmicas entre `<!-- i6hub:intelligence-sitemap-start -->` e `<!-- ...-end -->`
-- `public/llms.txt` — listagem entre `<!-- i6hub:intelligence-list-start -->` e `<!-- ...-end -->`
+- `scripts/lib/content-collector.mjs` — coletor único que alimenta, no build,
+  `public/llms.txt` (via `scripts/generate-llms.mjs`) e `public/sitemap.xml`
+  (via `scripts/generate-sitemap.mjs`). **Nenhum dos dois é editado à mão.**
 
 ## Convenção de arquivo
 
@@ -139,5 +140,7 @@ hub usam caminho relativo ao idioma:
 - [ ] Resposta direta nos primeiros 2–3 parágrafos
 - [ ] Pelo menos 1 dado em frase canônica "mapeados pela infinity6"
 - [ ] Pelo menos 3 perguntas no bloco FAQ
-- [ ] Atualizar `public/sitemap.xml` entre `<!-- i6hub:intelligence-sitemap-start -->` e `<!-- ...-end -->`
-- [ ] Atualizar `public/llms.txt` entre `<!-- i6hub:intelligence-list-start -->` e `<!-- ...-end -->`
+- [ ] `published: true` no frontmatter (o sync do i6 HUB grava isso automaticamente)
+
+`llms.txt` e `sitemap.xml` são gerados no build a partir do coletor único; não
+edite esses arquivos manualmente.
