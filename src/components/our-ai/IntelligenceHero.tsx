@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 import { useLocalizedPath } from '@/utils/localizedPath';
@@ -101,7 +101,15 @@ const IntelligenceHero = memo(({ content }: Props) => {
         </h1>
         <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">{content.lead}</p>
 
-        <div ref={wrapRef} className="relative mt-12">
+        {/* Linha vertical da plataforma: hairline coral contínua, do box de cima até a base,
+            com o nome a 90° e "respiro" (fundo da página cobre a linha atrás do texto). */}
+        <div className="mt-12 flex items-stretch">
+          <div aria-hidden className="relative mr-5 hidden w-px shrink-0 bg-primary/60 md:mr-7 lg:block">
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-180 bg-background px-1.5 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary [writing-mode:vertical-rl]">
+              i6 Decision Platform
+            </span>
+          </div>
+        <div ref={wrapRef} className="relative min-w-0 flex-1">
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 hidden md:block h-full w-full overflow-visible"
