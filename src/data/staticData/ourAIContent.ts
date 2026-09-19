@@ -145,7 +145,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           id: 'i6elasticprice',
           name: 'i6 ElasticPrice',
-          tagline: 'Precificação dinâmica',
+          tagline: 'Precificação adaptativa',
           description: 'Estimação contínua de elasticidade por SKU, canal e ciclo de vida, substituindo curvas estáticas por aprendizado online.',
           points: [
             'Elasticidade recalculada a cada ciclo de dado',
@@ -345,7 +345,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           id: 'i6elasticprice',
           name: 'i6 ElasticPrice',
-          tagline: 'Dynamic pricing',
+          tagline: 'Adaptive pricing',
           description: 'Continuous elasticity estimation per SKU, channel and lifecycle, replacing static curves with online learning.',
           points: [
             'Elasticity recomputed on every data cycle',
@@ -545,7 +545,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           id: 'i6elasticprice',
           name: 'i6 ElasticPrice',
-          tagline: 'Precios dinámicos',
+          tagline: 'Precificación adaptativa',
           description: 'Estimación continua de elasticidad por SKU, canal y ciclo de vida, sustituyendo curvas estáticas por aprendizaje en línea.',
           points: [
             'Elasticidad recalculada en cada ciclo de datos',
