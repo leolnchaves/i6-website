@@ -9,7 +9,7 @@
  * usam a data do frontmatter quando houver.
  */
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
   isNonIndexableRoute,
@@ -49,7 +49,7 @@ const alternateTags = (route, langs) => [
 
 const urlBlock = ({ lang, route, changefreq, priority, lastmod, langs }) => {
   const loc = `${BASE_URL}${localizedRoutePath(lang, route)}`;
-  const finalLastmod = previousLastmod.get(loc) || lastmod;
+  const finalLastmod = lastmod;
   return [
     '  <url>',
     `    <loc>${loc}</loc>`,
