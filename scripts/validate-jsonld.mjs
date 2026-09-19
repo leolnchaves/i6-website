@@ -14,7 +14,10 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import {
+  DOCS_ROOT_ROUTE,
   ES_TRANSLATED_ROUTES,
+  NON_INDEXABLE_DOC_ROUTES,
+  SAMPLE_DOC_ROUTES,
   localizedRoutePath,
 } from './lib/seo-route-config.mjs';
 
@@ -24,7 +27,7 @@ const errors = [];
 
 const research = JSON.parse(readFileSync(resolve('src/data/research.json'), 'utf8'));
 
-const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 const stubFile = (lang, route) => {
   if (route === '') return join(DIST, lang, 'index.html');
   return join(DIST, lang, `${route}.html`);
@@ -58,6 +61,21 @@ for (const route of staticRoutes) {
 }
 
 const sitemap = readFileSync(resolve('public/sitemap.xml'), 'utf8');
+
+for (const route of NON_INDEXABLE_DOC_ROUTES) {
+  for (const lang of ['pt', 'en', 'es']) {
+    const file = stubFile(lang, route);
+    const url = `https://infinity6.ai${localizedRoutePath(lang, route)}`;
+    const reason = route === DOCS_ROOT_ROUTE ? 'raiz de docs de exemplo' : 'documento com sample: true';
+    if (existsSync(file)) errors.push(`${localizedRoutePath(lang, route)}: stub proibido (${reason})`);
+    if (sitemap.includes(`<loc>${url}</loc>`)) errors.push(`sitemap: URL proibida (${reason}) ${url}`);
+  }
+}
+
+if (SAMPLE_DOC_ROUTES.length === 0) {
+  errors.push('docs: nenhum frontmatter sample: true foi detectado; verifique a leitura do conteúdo');
+}
+
 for (const route of staticRoutes) {
   const esUrl = `https://infinity6.ai${localizedRoutePath('es', route)}`;
   const hasEsUrl = sitemap.includes(`<loc>${esUrl}</loc>`);

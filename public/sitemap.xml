@@ -234,21 +234,6 @@
   <url><loc>https://infinity6.ai/en/community</loc><changefreq>monthly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/community"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/community"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/community"/></url>
   <url><loc>https://infinity6.ai/pt/community</loc><changefreq>monthly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/community"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/community"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/community"/></url>
 
-  <!-- Documentação -->
-  <url><loc>https://infinity6.ai/en/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/>
-  </url>
-  <url><loc>https://infinity6.ai/pt/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/>
-  </url>
-
-
   <!-- Rotas com tradução real em espanhol -->
   <url>
     <loc>https://infinity6.ai/es</loc>
@@ -294,15 +279,6 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-builders"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/i6-builders"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-builders"/>
-  </url>
-  <url>
-    <loc>https://infinity6.ai/es/docs</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/>
   </url>
   <url>
     <loc>https://infinity6.ai/en/docs/pesquisa</loc>
