@@ -44,7 +44,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       eyebrow: 'A suíte',
       title: 'A decisão certa para cada momento do negócio',
       description:
-        'Cada produto do i6 Decision Suite pega o dado do seu negócio, aplica inteligência especializada e devolve uma ação mensurável — não mais um indicador para interpretar.',
+        'Cada produto da i6 Decision Suite pega o dado do seu negócio, aplica inteligência especializada e devolve uma ação mensurável — não mais um indicador para interpretar.',
       pillars: [
         {
           title: 'Dados prontos para decisão',
@@ -65,7 +65,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       title: 'Seis decisões críticas, uma suíte',
       selectorLabel: 'Selecione um produto da suíte',
       flowLabels: { input: 'Entrada', decision: 'Decisão', value: 'Valor' },
-      cta: 'Conheça o i6 Decision Suite',
+      cta: 'Conheça a i6 Decision Suite',
       items: [
         {
           id: 'relevance',
@@ -286,7 +286,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       eyebrow: 'La suite',
       title: 'La decisión correcta para cada momento del negocio',
       description:
-        'Cada producto del i6 Decision Suite toma el dato de su negocio, aplica inteligencia especializada y devuelve una acción medible — no un indicador más para interpretar.',
+        'Cada producto de la i6 Decision Suite toma el dato de su negocio, aplica inteligencia especializada y devuelve una acción medible — no un indicador más para interpretar.',
       pillars: [
         {
           title: 'Datos listos para decidir',
@@ -307,7 +307,7 @@ export const suiteCopy: { pt: SuiteCopy; en: SuiteCopy; es: SuiteCopy } = {
       title: 'Seis decisiones críticas, una suite',
       selectorLabel: 'Selecciona un producto de la suite',
       flowLabels: { input: 'Entrada', decision: 'Decisión', value: 'Valor' },
-      cta: 'Conoce el i6 Decision Suite',
+      cta: 'Conoce la i6 Decision Suite',
       items: [
         {
           id: 'relevance',
