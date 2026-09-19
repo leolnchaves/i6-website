@@ -201,7 +201,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      mixTitle: 'Diversidade dos dados de treino',
+      mixTitle: 'Composição dos dados de treino (2026)',
       mix: [
         { value: '15%', label: 'comportamento em produtos financeiros' },
         { value: '45%', label: 'e-commerce' },
@@ -414,7 +414,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      mixTitle: 'Training data diversity',
+      mixTitle: 'Training data composition (2026)',
       mix: [
         { value: '15%', label: 'financial product behavior' },
         { value: '45%', label: 'e-commerce' },
@@ -627,7 +627,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      mixTitle: 'Diversidad de los datos de entrenamiento',
+      mixTitle: 'Composición de los datos de entrenamiento (2026)',
       mix: [
         { value: '15%', label: 'comportamiento en productos financieros' },
         { value: '45%', label: 'e-commerce' },
