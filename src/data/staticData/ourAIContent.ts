@@ -71,6 +71,7 @@ export interface OurAIContent {
     lead: string;
     highlights: { badge: string; title: string; venue: string; url: string }[];
     cta: string;
+    founder: { label: string; url: string };
   };
   glossary: {
     eyebrow: string;
@@ -277,6 +278,10 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         },
       ],
       cta: 'Ver toda a produção técnica',
+      founder: {
+        label: 'Veja o perfil acadêmico de Everton Gago, fundador da infinity6',
+        url: 'https://www.linkedin.com/in/everton-gago/',
+      },
     },
     glossary: {
       eyebrow: 'Vocabulário',
@@ -489,6 +494,10 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         },
       ],
       cta: 'See all technical production',
+      founder: {
+        label: 'See the academic profile of Everton Gago, founder of infinity6',
+        url: 'https://www.linkedin.com/in/everton-gago/',
+      },
     },
     glossary: {
       eyebrow: 'Vocabulary',
@@ -701,6 +710,10 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         },
       ],
       cta: 'Ver toda la producción técnica',
+      founder: {
+        label: 'Mira el perfil académico de Everton Gago, fundador de infinity6',
+        url: 'https://www.linkedin.com/in/everton-gago/',
+      },
     },
     glossary: {
       eyebrow: 'Vocabulario',
