@@ -52,7 +52,6 @@ export interface OurAIContent {
     title: string;
     lead: string;
     parts: { index: string; title: string; description: string; points: string[] }[];
-    note: string;
   };
   security: {
     eyebrow: string;
@@ -235,7 +234,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      note: 'Nenhum modelo entra em produção sem explicabilidade e sem medição de deriva ao longo do tempo.',
     },
     security: {
       eyebrow: 'Governança',
@@ -448,7 +446,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      note: 'No model reaches production without explainability and without drift measurement over time.',
     },
     security: {
       eyebrow: 'Governance',
@@ -661,7 +658,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      note: 'Ningún modelo entra en producción sin explicabilidad y sin medición de deriva a lo largo del tiempo.',
     },
     security: {
       eyebrow: 'Gobernanza',
