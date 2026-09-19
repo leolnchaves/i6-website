@@ -66,6 +66,7 @@ export interface OurAIContent {
     title: string;
     lead: string;
     sourceLabel: string;
+    ctaLink: string;
   };
   science: {
     eyebrow: string;
@@ -255,6 +256,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'Resultados reais em produção',
       lead: 'Números medidos em operação de clientes, após o deploy dos motores proprietários. Os dados são anonimizados; o setor indica a procedência de cada resultado.',
       sourceLabel: 'Setor',
+      ctaLink: 'Veja em detalhes as histórias de sucesso',
     },
     science: {
       eyebrow: 'Base científica',
@@ -453,6 +455,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'Real results in production',
       lead: 'Numbers measured in client operations, after the proprietary engines go live. The data is anonymized; the sector shows the provenance of each result.',
       sourceLabel: 'Sector',
+      ctaLink: 'See the success stories in detail',
     },
     science: {
       eyebrow: 'Scientific foundations',
@@ -651,6 +654,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'Resultados reales en producción',
       lead: 'Números medidos en operaciones de clientes, tras el despliegue de los motores propietarios. Los datos se anonimizan; el sector indica la procedencia de cada resultado.',
       sourceLabel: 'Sector',
+      ctaLink: 'Mira en detalle las historias de éxito',
     },
     science: {
       eyebrow: 'Base científica',
