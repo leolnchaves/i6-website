@@ -1,9 +1,18 @@
 import type { Language } from '@/types/language';
 import ourAIGlossary from '@/data/ourAIGlossary.json';
+import ourAIAbstractionGovernance from '@/data/ourAIAbstractionGovernance.json';
 
 /** Fonte única do glossário condensado: mesma lista usada pelos stubs estáticos. */
 type GlossaryTerm = { slug: string; term: string; definition: string };
 const glossaryTerms = ourAIGlossary as Record<Language, GlossaryTerm[]>;
+
+/** Fonte única de Camada de abstração + Governança: mesma usada pelos stubs estáticos. */
+type AbstractionGovernance = {
+  builder: { lead: string; bullets: { title: string; text: string }[] };
+  security: { title: string; lead: string; pillars: { title: string; description: string }[] };
+  headings: { abstraction: string; governance: string };
+};
+const ag = ourAIAbstractionGovernance as Record<Language, AbstractionGovernance>;
 
 export interface EngineDef {
   id: 'i6previsio' | 'i6recsys' | 'i6elasticprice';
