@@ -101,7 +101,7 @@ const fail = (file, message) => {
 function readMarkdownDir(dir) {
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
-    .filter((f) => f.endsWith('.md'))
+    .filter((f) => f.endsWith('.md') && f.toUpperCase() !== 'README.MD')
     .sort()
     .map((file) => ({ file, raw: readFileSync(join(dir, file), 'utf8') }));
 }
