@@ -115,23 +115,23 @@ infinity6 publishes applied predictive intelligence in its editorial hubs: i6 On
 
 ### i6 Intelligence — deep research
 
-- [Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico (PT)](https://infinity6.ai/pt/i6-intelligence/ruptura-gondola-ia-preditiva): Ruptura de gôndola no varejo farma custa de 4% a 12% do faturamento. IA preditiva combina previsão de demanda, política de estoque e alocação por PDV para reduzir falta sem inflar capital de giro.
-- [How to reduce shelf stockouts with predictive AI in pharma retail (EN)](https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva): Shelf stockouts in pharma retail cost between 4% and 12% of net revenue. Predictive AI links demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts without inflating working capital.
+- [Como reduzir ruptura de gôndola com IA preditiva no varejo farmacêutico (PT)](https://infinity6.ai/pt/i6-intelligence/ruptura-gondola-ia-preditiva) — 2026-06-12: IA preditiva combina previsão de demanda, política de estoque e alocação por PDV para reduzir falta sem inflar capital de giro.
+- [How to reduce shelf stockouts with predictive AI in pharma retail (EN)](https://infinity6.ai/en/i6-intelligence/ruptura-gondola-ia-preditiva) — 2026-06-12: Predictive AI links demand forecasting, dynamic inventory policy and store-level allocation to cut stockouts without inflating working capital.
 
 ### Success stories
 
-- [Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas (PT)](https://infinity6.ai/pt/success-stories/demand-forecast-accuracy): Um dos principais players de beleza do país, reconhecido por seu modelo de vendas diretas em larga escala e lançamentos frequentes de produtos via catálogos.
-- [Assortment Precision: Driving Sales Through Optimized Forecasting (EN)](https://infinity6.ai/en/success-stories/assortment-precision-sales-growth): One of the largest food conglomerates in the world, operating in more than 150 countries and leading multiple categories across Latin America.
-- [Demand Forecast Accuracy: Elevating Production And Sales Planning (EN)](https://infinity6.ai/en/success-stories/demand-forecast-accuracy): A leading beauty company recognized for its large-scale direct sales model and frequent catalog-based product launches.
-- [Elevando o Engajamento do Cliente: Acelerando Vendas Online (PT)](https://infinity6.ai/pt/success-stories/customer-engagement-online-sales): Com mais de 140 anos de história, a empresa se consolidou como um dos maiores varejistas de moda da região.
-- [Enhancing Customer Engagement: Accelerating Online Sales (EN)](https://infinity6.ai/en/success-stories/customer-engagement-online-sales): With more than 140 years of history, the company has become one of the region’s largest fashion retailers.
-- [Excelência em Marketplace: Impulsionando Resultados para Farmácias (PT)](https://infinity6.ai/pt/success-stories/marketplace-excellence-pharmacy): Uma das maiores farmacêuticas do Brasil, também é um player estratégico no mercado global.
-- [High-Precision Sales Forecasting: Optimizing Results And Operations (EN)](https://infinity6.ai/en/success-stories/sales-forecast-precision): One of Brazil’s largest pharmaceutical companies and a global reference in its segment.
-- [Marketplace Excellence: Driving Performance Across The Pharmacy Ecosystem (EN)](https://infinity6.ai/en/success-stories/marketplace-excellence-pharmacy): One of Brazil’s largest pharmaceutical companies and a strategic global player.
-- [Maximizando Cross-Sell com Propensão de Compra Inteligente (PT)](https://infinity6.ai/pt/success-stories/cross-sell-propensity-intelligence): Uma das instituições financeiras mais relevantes do país, com forte presença no mercado nacional e internacional.
-- [Maximizing Cross-Sell Through Intelligent Propensity Modeling (EN)](https://infinity6.ai/en/success-stories/cross-sell-propensity-intelligence): One of the country’s most relevant financial institutions with strong national presence.
-- [Precisão no Sortimento: Aumento de Vendas com Previsões Otimizadas (PT)](https://infinity6.ai/pt/success-stories/assortment-precision-sales-growth): Um dos maiores conglomerados de alimentos do planeta, presente em mais de 150 países e líder em várias categorias na América Latina.
-- [Previsão de Vendas Precisa: Otimizando Resultados e Operações (PT)](https://infinity6.ai/pt/success-stories/sales-forecast-precision): Uma das maiores farmacêuticas do Brasil e referência global.
+- [Acurácia de Previsão de Demanda: Elevando Produção e Planejamento de Vendas (PT)](https://infinity6.ai/pt/success-stories/demand-forecast-accuracy)
+- [Assortment Precision: Driving Sales Through Optimized Forecasting (EN)](https://infinity6.ai/en/success-stories/assortment-precision-sales-growth)
+- [Demand Forecast Accuracy: Elevating Production And Sales Planning (EN)](https://infinity6.ai/en/success-stories/demand-forecast-accuracy)
+- [Elevando o Engajamento do Cliente: Acelerando Vendas Online (PT)](https://infinity6.ai/pt/success-stories/customer-engagement-online-sales)
+- [Enhancing Customer Engagement: Accelerating Online Sales (EN)](https://infinity6.ai/en/success-stories/customer-engagement-online-sales)
+- [Excelência em Marketplace: Impulsionando Resultados para Farmácias (PT)](https://infinity6.ai/pt/success-stories/marketplace-excellence-pharmacy)
+- [High-Precision Sales Forecasting: Optimizing Results And Operations (EN)](https://infinity6.ai/en/success-stories/sales-forecast-precision)
+- [Marketplace Excellence: Driving Performance Across The Pharmacy Ecosystem (EN)](https://infinity6.ai/en/success-stories/marketplace-excellence-pharmacy)
+- [Maximizando Cross-Sell com Propensão de Compra Inteligente (PT)](https://infinity6.ai/pt/success-stories/cross-sell-propensity-intelligence)
+- [Maximizing Cross-Sell Through Intelligent Propensity Modeling (EN)](https://infinity6.ai/en/success-stories/cross-sell-propensity-intelligence)
+- [Precisão no Sortimento: Aumento de Vendas com Previsões Otimizadas (PT)](https://infinity6.ai/pt/success-stories/assortment-precision-sales-growth)
+- [Previsão de Vendas Precisa: Otimizando Resultados e Operações (PT)](https://infinity6.ai/pt/success-stories/sales-forecast-precision)
 
 ## Optional
 
