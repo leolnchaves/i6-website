@@ -145,7 +145,7 @@ export const seoData: SEODataMap = {
   },
   'our-ai': {
     pt: {
-      title: 'A camada de inteligência da infinity6 | IA proprietária',
+      title: 'A camada de inteligência da infinity6 | Motores proprietários',
       description: 'Os motores proprietários i6 Previsio, i6 RecSys e i6 ElasticPrice, o modelo fundacional i6-RecSys-Base.g1 e o rigor científico por trás de cada decisão preditiva.',
       keywords: [
         'IA proprietária brasileira',
@@ -161,7 +161,7 @@ export const seoData: SEODataMap = {
       ],
     },
     en: {
-      title: 'The infinity6 intelligence layer | Proprietary AI',
+      title: 'infinity6 intelligence layer | Proprietary engines',
       description: 'The proprietary i6 Previsio, i6 RecSys and i6 ElasticPrice engines, the i6-RecSys-Base.g1 foundation model and the scientific rigor behind every predictive decision.',
       keywords: [
         'proprietary AI engines',
