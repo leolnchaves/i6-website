@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath, stripLangPrefix } from '@/utils/localizedPath';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import logoHeader from '@/assets/images/logo-header.png';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
