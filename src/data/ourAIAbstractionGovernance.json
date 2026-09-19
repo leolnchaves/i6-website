@@ -1,0 +1,65 @@
+{
+  "pt": {
+    "builder": {
+      "lead": "Os motores chegam a você por duas vias: prontos, na i6 Decision Suite, ou de forma programável, na i6 Builder Platform — SDK, API e toolkits — para que times técnicos e parceiros construam suas próprias aplicações sobre a mesma inteligência.",
+      "bullets": [
+        { "title": "SDK", "text": "Bibliotecas para treinar, adaptar e servir modelos derivados do modelo fundacional." },
+        { "title": "API", "text": "Endpoints de previsão, ranqueamento e elasticidade com contrato estável e versionado." },
+        { "title": "Toolkits", "text": "Blocos prontos de avaliação, monitoramento de deriva e explicabilidade." }
+      ]
+    },
+    "security": {
+      "title": "Privacidade e segurança por design",
+      "lead": "Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.",
+      "pillars": [
+        { "title": "Anonimização na origem", "description": "A anonimização acontece antes do treinamento, em todos os modelos, e a decisão de enviar dados identificados ou anonimizados é sempre do cliente." },
+        { "title": "Autenticação centralizada", "description": "Autenticação 100% na plataforma e controle de acesso por perfil. Os produtos não têm backend nem banco de dados próprios, o que reduz a superfície de ataque." },
+        { "title": "Ambiente isolado", "description": "Dados e modelos de cada cliente ficam em ambiente isolado, sem acesso cruzado." },
+        { "title": "Escala com o mesmo controle", "description": "Escalonamento automático de recursos na Google Cloud, com os mesmos controles de isolamento e acesso em qualquer volume." }
+      ]
+    },
+    "headings": { "abstraction": "Camada de abstração", "governance": "Governança" }
+  },
+  "en": {
+    "builder": {
+      "lead": "The engines reach you two ways: ready to use, in the i6 Decision Suite, or programmatically, in the i6 Builder Platform — SDK, API and toolkits — so technical teams and partners can build their own applications on the same intelligence.",
+      "bullets": [
+        { "title": "SDK", "text": "Libraries to train, adapt and serve models derived from the foundation model." },
+        { "title": "API", "text": "Forecasting, ranking and elasticity endpoints with a stable, versioned contract." },
+        { "title": "Toolkits", "text": "Ready-made blocks for evaluation, drift monitoring and explainability." }
+      ]
+    },
+    "security": {
+      "title": "Privacy and security by design",
+      "lead": "Privacy and isolation are architectural prerequisites, not layers added later.",
+      "pillars": [
+        { "title": "Anonymization at source", "description": "Anonymization happens before training, in every model, and the decision to send identified or anonymized data is always the client's." },
+        { "title": "Centralized authentication", "description": "Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface." },
+        { "title": "Isolated environment", "description": "Data and models for each client stay in an isolated environment, with no cross access." },
+        { "title": "Scales with the same control", "description": "Automatic resource scaling on Google Cloud, with the same isolation and access controls at any volume." }
+      ]
+    },
+    "headings": { "abstraction": "Abstraction layer", "governance": "Governance" }
+  },
+  "es": {
+    "builder": {
+      "lead": "Los motores llegan a ti por dos vías: listos, en la i6 Decision Suite, o de forma programable, en la i6 Builder Platform — SDK, API y toolkits — para que equipos técnicos y aliados construyan sus propias aplicaciones sobre la misma inteligencia.",
+      "bullets": [
+        { "title": "SDK", "text": "Bibliotecas para entrenar, adaptar y servir modelos derivados del modelo fundacional." },
+        { "title": "API", "text": "Endpoints de previsión, ranking y elasticidad con contrato estable y versionado." },
+        { "title": "Toolkits", "text": "Bloques listos de evaluación, monitoreo de deriva y explicabilidad." }
+      ]
+    },
+    "security": {
+      "title": "Privacidad y seguridad por diseño",
+      "lead": "Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.",
+      "pillars": [
+        { "title": "Anonimización en el origen", "description": "La anonimización ocurre antes del entrenamiento, en todos los modelos, y la decisión de enviar datos identificados o anonimizados es siempre del cliente." },
+        { "title": "Autenticación centralizada", "description": "Autenticación 100% en la plataforma y control de acceso por perfil. Los productos no tienen backend ni base de datos propios, lo que reduce la superficie de ataque." },
+        { "title": "Entorno aislado", "description": "Los datos y modelos de cada cliente quedan en un entorno aislado, sin acceso cruzado." },
+        { "title": "Escala con el mismo control", "description": "Escalonamiento automático de recursos en Google Cloud, con los mismos controles de aislamiento y acceso en cualquier volumen." }
+      ]
+    },
+    "headings": { "abstraction": "Capa de abstracción", "governance": "Gobernanza" }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "pt": {
+    "title": "A camada de inteligência da infinity6 | Motores proprietários",
+    "description": "A camada de inteligência da i6 Decision Platform: três motores proprietários e o modelo fundacional i6-RecSys-Base.g1, com incerteza medida e explicação rastreável.",
+    "keywords": [
+      "IA proprietária brasileira",
+      "camada de inteligência",
+      "modelo fundacional",
+      "i6-RecSys-Base.g1",
+      "previsão de demanda com IA",
+      "motor de recomendação",
+      "precificação dinâmica",
+      "MAML",
+      "Active Learning",
+      "IA explicável"
+    ]
+  },
+  "en": {
+    "title": "infinity6 intelligence layer | Proprietary engines",
+    "description": "The intelligence layer of the i6 Decision Platform: three proprietary engines and the i6-RecSys-Base.g1 foundation model, with measured uncertainty and traceable explanations.",
+    "keywords": [
+      "proprietary AI engines",
+      "intelligence layer",
+      "foundation model",
+      "i6-RecSys-Base.g1",
+      "predictive demand forecasting",
+      "recommendation engine",
+      "dynamic pricing AI",
+      "MAML",
+      "Active Learning",
+      "explainable AI"
+    ]
+  },
+  "es": {
+    "title": "La capa de inteligencia de infinity6 | Motores propietarios",
+    "description": "La capa de inteligencia de la i6 Decision Platform: tres motores propietarios y el modelo fundacional i6-RecSys-Base.g1, con incertidumbre medida y explicación trazable.",
+    "keywords": [
+      "IA propietaria",
+      "capa de inteligencia",
+      "modelo fundacional",
+      "i6-RecSys-Base.g1",
+      "previsión de demanda con IA",
+      "motor de recomendación",
+      "pricing dinámico",
+      "MAML",
+      "Active Learning",
+      "IA explicable"
+    ]
+  }
+}
