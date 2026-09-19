@@ -29,6 +29,16 @@ import { collectContent } from './lib/content-collector.mjs';
 
 // Fonte única do glossário condensado de /our-ai (mesmo JSON que a página usa).
 const OUR_AI_GLOSSARY = JSON.parse(readFileSync(resolve('src/data/ourAIGlossary.json'), 'utf8'));
+// Fonte única de Camada de abstração + Governança (mesmo JSON que a página usa).
+const OUR_AI_AG = JSON.parse(readFileSync(resolve('src/data/ourAIAbstractionGovernance.json'), 'utf8'));
+// Fonte única de title/description/keywords de /our-ai (mesmo JSON que seoData.ts usa).
+const OUR_AI_META = JSON.parse(readFileSync(resolve('src/data/ourAIMeta.json'), 'utf8'));
+// Títulos do corpo auxiliar por idioma (nada além do que a página mostra).
+const BODY_HEADINGS = {
+  pt: { engines: 'Motores proprietários', proof: 'Provas em números', sector: 'Setor' },
+  en: { engines: 'Proprietary engines', proof: 'Proof in numbers', sector: 'Sector' },
+  es: { engines: 'Motores propietarios', proof: 'Pruebas en números', sector: 'Sector' },
+};
 
 const GLOSSARY_SET_NAME = {
   pt: 'Glossário GEO — termos da infinity6',
