@@ -1,58 +1,120 @@
 {
-  "//": "Fonte única da produção científica e técnica. Dados neutros de idioma: títulos, anos, eventos e links NÃO são traduzidos. Lido pelo site (src/data/research.ts) e pelo gerador de JSON-LD estático (scripts/prerender-seo-stubs.mjs).",
+  "//": "Fonte única da produção científica e técnica. Dados neutros de idioma: títulos, anos, eventos e links NÃO são traduzidos. Lido pelo site (src/data/research.ts) e pelo gerador de JSON-LD estático (scripts/lib/jsonld-people-research.mjs). showOnOurAI = itens da seção 04 de /our-ai (só publicações revisadas por pares).",
   "articles": [
     {
       "slug": "artigo-lnbip-2013",
+      "kind": "chapter",
+      "showOnOurAI": true,
+      "venueShort": "SPRINGER LNBIP",
+      "linkLabel": "springer",
       "title": "Knowledge Discovery: Data Mining by Self-organizing Maps",
       "datePublished": "2013",
       "inLanguage": "en",
       "pagination": "185-200",
       "publisher": "Springer",
+      "doi": "10.1007/978-3-642-36608-6_12",
+      "authors": [
+        "Everton Luiz de Almeida Gago Júnior",
+        "Gean Davis Breda",
+        "Eduardo Zanoni Marques",
+        "Leonardo de Souza Mendes"
+      ],
+      "reference": "Web Information Systems and Technologies (WEBIST 2012), Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer, 2013",
       "isPartOf": {
         "type": "PublicationVolume",
         "name": "Web Information Systems and Technologies",
         "volumeNumber": "140",
         "series": "Lecture Notes in Business Information Processing"
       },
-      "url": "https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12",
-      "sameAs": [
-        "https://doi.org/10.1007/978-3-642-36608-6_12",
-        "https://www.academia.edu/24631415/Knowledge_Discovery_Data_Mining_by_Self_organizing_Maps"
-      ]
+      "url": "https://doi.org/10.1007/978-3-642-36608-6_12"
     },
     {
       "slug": "artigo-webist-2012",
+      "kind": "conference",
+      "showOnOurAI": true,
+      "venueShort": "WEBIST",
+      "linkLabel": "paper",
       "title": "Self-Organizing Maps — An Approach Applied to the Electronic Government",
       "datePublished": "2012",
       "inLanguage": "en",
+      "pagination": "461-470",
+      "publisher": "SCITEPRESS",
+      "doi": "10.5220/0003904104610470",
+      "authors": [
+        "Everton Luiz de Almeida Gago Júnior",
+        "Gean Davis Breda",
+        "Eduardo Zanoni Marques",
+        "Leonardo de Souza Mendes"
+      ],
+      "reference": "Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012), pp. 461–470, SCITEPRESS, ISBN 978-989-8565-08-2",
       "isPartOf": {
-        "type": "Periodical",
-        "name": "Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)"
+        "type": "Book",
+        "name": "Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)",
+        "isbn": "978-989-8565-08-2",
+        "publisher": "SCITEPRESS"
       },
-      "url": "https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government"
+      "url": "https://doi.org/10.5220/0003904104610470"
     },
     {
       "slug": "artigo-lncs-2010",
-      "title": "Development of a Business Intelligence Environment for e-Gov using Open Source Technologies",
+      "kind": "conference",
+      "showOnOurAI": true,
+      "venueShort": "DAWAK",
+      "linkLabel": "paper",
+      "title": "Development of a Business Intelligence Environment for e-Gov Using Open Source Technologies",
       "datePublished": "2010",
       "inLanguage": "en",
+      "pagination": "203-214",
       "publisher": "Springer",
+      "doi": "10.1007/978-3-642-15105-7_16",
+      "authors": [
+        "Eduardo Zanoni Marques",
+        "Rodrigo Sanches Miani",
+        "Everton Luiz de Almeida Gago Júnior",
+        "Leonardo de Souza Mendes"
+      ],
+      "reference": "Data Warehousing and Knowledge Discovery (DaWaK 2010), Lecture Notes in Computer Science, vol. 6263, pp. 203–214, Springer, 2010",
       "isPartOf": {
-        "type": "BookSeries",
-        "name": "Lecture Notes in Computer Science"
+        "type": "PublicationVolume",
+        "name": "Data Warehousing and Knowledge Discovery",
+        "volumeNumber": "6263",
+        "series": "Lecture Notes in Computer Science"
       },
-      "pagination": null,
-      "volumeNumber": null,
-      "url": "https://www.academia.edu/24631504/Development_of_a_Business_Intelligence_Environment_for_e_Gov_Using_Open_Source_Technologies"
+      "url": "https://doi.org/10.1007/978-3-642-15105-7_16"
     },
     {
       "slug": "artigo-mapas-pt",
+      "kind": "thesis",
+      "showOnOurAI": false,
+      "venueShort": "UNICAMP",
+      "linkLabel": "paper",
       "title": "Mapas auto-organizáveis aplicados em governo eletrônico",
-      "datePublished": null,
+      "datePublished": "2012",
       "inLanguage": "pt-BR",
+      "doi": "10.47749/T/UNICAMP.2012.862558",
+      "authors": ["Everton Luiz de Almeida Gago Júnior"],
+      "advisor": "Leonardo de Souza Mendes",
+      "institution": "Universidade Estadual de Campinas (UNICAMP)",
+      "department": "Faculdade de Engenharia Elétrica e de Computação",
+      "inSupportOf": "Master's degree in Electrical Engineering",
+      "referenceByLang": {
+        "pt": "Dissertação de mestrado em Engenharia Elétrica, Universidade Estadual de Campinas (UNICAMP), Faculdade de Engenharia Elétrica e de Computação, 2012 — orientador: Leonardo de Souza Mendes",
+        "en": "Master's thesis in Electrical Engineering, University of Campinas (UNICAMP), School of Electrical and Computer Engineering, 2012 — advisor: Leonardo de Souza Mendes",
+        "es": "Tesis de maestría en Ingeniería Eléctrica, Universidad Estatal de Campinas (UNICAMP), Facultad de Ingeniería Eléctrica y de Computación, 2012 — director: Leonardo de Souza Mendes"
+      },
       "url": "https://www.academia.edu/122408570/Mapas_auto_organiz%C3%A1veis_aplicados_em_governo_eletr%C3%B4nico"
     }
   ],
+  "kindLabels": {
+    "pt": { "chapter": "CAPÍTULO", "conference": "CONFERÊNCIA", "thesis": "DISSERTAÇÃO DE MESTRADO" },
+    "en": { "chapter": "CHAPTER", "conference": "CONFERENCE", "thesis": "MASTER'S THESIS" },
+    "es": { "chapter": "CAPÍTULO", "conference": "CONFERENCIA", "thesis": "TESIS DE MAESTRÍA" }
+  },
+  "linkLabels": {
+    "pt": { "springer": "Ler no Springer", "paper": "Ver artigo" },
+    "en": { "springer": "Read on Springer", "paper": "View paper" },
+    "es": { "springer": "Leer en Springer", "paper": "Ver artículo" }
+  },
   "talks": [
     {
       "slug": "palestra-ciencia-de-dados",
