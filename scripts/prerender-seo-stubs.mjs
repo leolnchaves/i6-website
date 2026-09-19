@@ -142,6 +142,12 @@ const seo = {
     en: { title: 'Research — technical output | infinity6', description: 'Technical talks and papers published by the infinity6 team at conferences and in open repositories, complementing the formal peer-reviewed output.' },
     es: { title: 'Investigación — producción técnica | infinity6', description: 'Charlas técnicas y artículos publicados por el equipo de infinity6 en conferencias y repositorios abiertos, complementando la producción formal revisada por pares.' },
   },
+  // Documentação · Glossário: vocabulário técnico completo (visível em /{idioma}/docs/glossario).
+  'docs/glossario': {
+    pt: { title: 'Glossário — vocabulário técnico da inteligência i6 | infinity6', description: 'Vocabulário técnico completo da inteligência i6: algoritmos, métricas de decisão e termos de operação usados na documentação e nas páginas de produto.' },
+    en: { title: 'Glossary — technical vocabulary of the i6 intelligence | infinity6', description: 'Full technical vocabulary of the i6 intelligence: algorithms, decision metrics and operational terms used across the documentation and the product pages.' },
+    es: { title: 'Glosario — vocabulario técnico de la inteligencia i6 | infinity6', description: 'Vocabulario técnico completo de la inteligencia i6: algoritmos, métricas de decisión y términos de operación usados en la documentación y en las páginas de producto.' },
+  },
   'i6-builders': {
     pt: { title: 'i6 Builder Platform — Engines, SDKs e APIs de modelagem', description: 'Plataforma de modelagem da infinity6 para times de tecnologia: engines preditivos, SDKs, APIs e toolkits para construir produtos próprios de decisão orientada a dados.' },
     en: { title: 'i6 Builder Platform — Modeling engines, SDKs and APIs', description: 'The infinity6 modeling platform for technology teams: predictive engines, SDKs, APIs and toolkits to build your own data-driven decision products.' },
@@ -290,7 +296,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'docs/glossario', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
   {
@@ -424,6 +430,36 @@ for (const lang of ['en', 'pt', 'es']) {
           ...observations,
         ],
       };
+    }
+
+    if (route === 'docs/glossario') {
+      // Glossário completo: o DefinedTermSet acompanha exatamente os títulos h2
+      // do markdown, com as mesmas âncoras que a página real gera.
+      const mdFile = resolve(`src/content/docs/glossario-${lang}.md`);
+      if (existsSync(mdFile)) {
+        const md = readFileSync(mdFile, 'utf8');
+        body = mdToHtml(md);
+        const headings = markdownHeadings(md);
+        const setId = `${BASE_URL}/${lang}/docs/glossario#glossario-completo`;
+        extraJsonLd.push({
+          '@context': 'https://schema.org',
+          '@graph': [{
+            '@type': 'DefinedTermSet',
+            '@id': setId,
+            name: DOCS_GLOSSARY_SET_NAME[lang] ?? DOCS_GLOSSARY_SET_NAME.pt,
+            inLanguage: HTML_LANG[lang],
+            url: `${BASE_URL}/${lang}/docs/glossario`,
+            hasDefinedTerm: headings.map((h) => ({
+              '@type': 'DefinedTerm',
+              '@id': `${BASE_URL}/${lang}/docs/glossario#${h.id}`,
+              name: h.text,
+              description: markdownSectionLead(md, h.text),
+              inDefinedTermSet: setId,
+              url: `${BASE_URL}/${lang}/docs/glossario#${h.id}`,
+            })),
+          }],
+        });
+      }
     }
 
     if (route === 'docs/pesquisa') {
