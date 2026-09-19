@@ -106,6 +106,9 @@ jobs:
       - name: Prerender SEO stubs (per-route title, description, canonical, h1)
         run: node scripts/prerender-seo-stubs.mjs
 
+      - name: Validate static JSON-LD (fails the build on any violation)
+        run: node scripts/validate-jsonld.mjs
+
 
 
       - name: Upload artifact

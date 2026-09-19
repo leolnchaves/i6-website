@@ -14,6 +14,13 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
+import {
+  buildResearchNodes,
+  localizeGlobalGraph,
+  serializeLd,
+  researchData,
+} from './lib/jsonld-people-research.mjs';
+
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
@@ -27,34 +34,48 @@ const seo = {
   home: {
     pt: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.' },
     en: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.' },
+    es: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decide antes que el mercado. Plataforma de IA aplicada que convierte decisiones anticipadas en crecimiento de ingresos, protección de margen y aceleración de resultados.' },
   },
   'success-stories': {
     pt: { title: 'Cases de Sucesso com IA | infinity6', description: 'Veja como empresas aumentaram receita, protegeram margem e reduziram rupturas com inteligência preditiva da infinity6.' },
     en: { title: 'AI Success Stories | infinity6', description: 'See how companies grew revenue, protected margins and reduced stockouts with infinity6 predictive intelligence.' },
+    es: { title: 'Casos de éxito con IA | infinity6', description: 'Mira cómo las empresas aumentaron ingresos, protegieron margen y redujeron quiebres de stock con la inteligencia predictiva de infinity6.' },
   },
   contact: {
     pt: { title: 'Fale Conosco | infinity6', description: 'Agende uma conversa estratégica. Colocamos IA preditiva em produção em 4-12 semanas com impacto financeiro mensurável.' },
     en: { title: 'Contact Us | infinity6', description: 'Schedule a strategic conversation. We deploy predictive AI into production in 4-12 weeks with measurable financial impact.' },
+    es: { title: 'Contáctanos | infinity6', description: 'Agenda una conversación estratégica. Ponemos IA predictiva en producción en 4-12 semanas con impacto financiero medible.' },
   },
   'privacy-policy': {
     pt: { title: 'Política de Privacidade | infinity6', description: 'Saiba como a infinity6 protege e gerencia seus dados pessoais com transparência e segurança.' },
     en: { title: 'Privacy Policy | infinity6', description: 'Learn how infinity6 protects and manages your personal data with transparency and security.' },
+    es: { title: 'Política de Privacidad | infinity6', description: 'Conoce cómo infinity6 protege y gestiona tus datos personales con transparencia y seguridad.' },
   },
   'ethics-policy': {
     pt: { title: 'Política de Ética em IA | infinity6', description: 'Nosso compromisso com IA ética, transparente e responsável em todas as soluções.' },
     en: { title: 'AI Ethics Policy | infinity6', description: 'Our commitment to ethical, transparent and responsible AI across all solutions.' },
+    es: { title: 'Política de Ética en IA | infinity6', description: 'Nuestro compromiso con una IA ética, transparente y responsable en todas las soluciones.' },
   },
   insights: {
     pt: { title: 'Insights de IA Preditiva | infinity6', description: 'Artigos e análises sobre previsão de demanda, forecast de vendas, pricing dinâmico e crescimento de receita com IA.' },
     en: { title: 'Predictive AI Insights | infinity6', description: 'Articles and analysis on demand forecasting, dynamic pricing, recommendation engines and revenue growth with AI.' },
+    es: { title: 'Insights de IA Predictiva | infinity6', description: 'Artículos y análisis sobre previsión de demanda, pricing dinámico, motores de recomendación y crecimiento de ingresos con IA.' },
   },
   'i6-intelligence': {
     pt: { title: 'i6 Intelligence | infinity6', description: 'Inteligência aplicada para decisões de demanda, margem, estoque, mix e propensão para os setores de varejo, indústria, financeiro e farma.' },
     en: { title: 'i6 Intelligence | infinity6', description: 'Applied intelligence for decisions on demand, margin, inventory, mix and propensity across retail, industry, financial services and pharma.' },
+    es: { title: 'i6 Intelligence | infinity6', description: 'Inteligencia aplicada para decisiones de demanda, margen, inventario, mix y propensión en retail, industria, servicios financieros y farma.' },
   },
   'our-ai': {
     pt: { title: 'Proprietary AI — Motores de IA da infinity6', description: 'Conheça os motores proprietários da infinity6: i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. IA aplicada que aprende comportamento, antecipa decisão e prescreve ação.' },
     en: { title: 'Proprietary AI — infinity6 AI Engines', description: 'Meet infinity6 proprietary engines: i6 RecSys, i6 Previsio, i6 ElasticPrice and i6 Signal. Applied AI that learns behavior, anticipates decisions and prescribes action.' },
+    es: { title: 'Proprietary AI — Motores de IA de infinity6', description: 'Conoce los motores propios de infinity6: i6 RecSys, i6 Previsio e i6 ElasticPrice. IA aplicada que aprende comportamiento, anticipa la decisión y prescribe la acción.' },
+  },
+  // Documentação · Pesquisa: lista completa de palestras e artigos (visível em /{idioma}/docs/pesquisa).
+  'docs/pesquisa': {
+    pt: { title: 'Pesquisa — produção técnica | infinity6', description: 'Palestras técnicas e artigos publicados pelo time da infinity6 em conferências e repositórios abertos, complementando a produção formal revisada por pares.' },
+    en: { title: 'Research — technical output | infinity6', description: 'Technical talks and papers published by the infinity6 team at conferences and in open repositories, complementing the formal peer-reviewed output.' },
+    es: { title: 'Investigación — producción técnica | infinity6', description: 'Charlas técnicas y artículos publicados por el equipo de infinity6 en conferencias y repositorios abiertos, complementando la producción formal revisada por pares.' },
   },
 };
 
@@ -117,18 +138,27 @@ function mdToHtml(md) {
 const escapeHtml = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
-function buildStub(template, { lang, path, title, description, h1, body, image, jsonLd }) {
+const HTML_LANG = { pt: 'pt-BR', en: 'en', es: 'es' };
+const OG_LOCALE = { pt: 'pt_BR', en: 'en_US', es: 'es_ES' };
+const HREFLANG = { pt: 'pt-BR', en: 'en', es: 'es' };
+
+function buildStub(
+  template,
+  { lang, path, title, description, h1, body, image, jsonLd, extraJsonLd = [], altLangs = ['en', 'pt'] },
+) {
   const canonical = `${BASE_URL}${path}`;
-  const enUrl = `${BASE_URL}${path.replace(/^\/pt/, '/en')}`;
-  const ptUrl = `${BASE_URL}${path.replace(/^\/en/, '/pt')}`;
+  const localized = (target) => `${BASE_URL}${path.replace(/^\/(pt|en|es)(?=\/|$)/, `/${target}`)}`;
   const ogImage = image
     ? (image.startsWith('http') ? image : `${BASE_URL}${image.split('?')[0]}`)
     : OG_IMAGE;
 
   let html = template;
 
+  // Nós Person do grafo global vêm em português no index.html: localiza por rota.
+  html = localizeGlobalGraph(html, lang);
+
   // <html lang>
-  html = html.replace(/<html\s+lang="[^"]*"/i, `<html lang="${lang === 'pt' ? 'pt-BR' : 'en'}"`);
+  html = html.replace(/<html\s+lang="[^"]*"/i, `<html lang="${HTML_LANG[lang]}"`);
 
   // <title>
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
@@ -150,20 +180,21 @@ function buildStub(template, { lang, path, title, description, h1, body, image, 
   );
 
   // Inject per-route head tags right before </head>
+  // hreflang só para idiomas que têm stub real desta rota (nada de URL /es que caia em fallback).
   const headTags = [
     `<link rel="canonical" href="${canonical}" />`,
-    `<link rel="alternate" hreflang="en" href="${enUrl}" />`,
-    `<link rel="alternate" hreflang="pt-BR" href="${ptUrl}" />`,
-    `<link rel="alternate" hreflang="x-default" href="${enUrl}" />`,
+    ...altLangs.map((l) => `<link rel="alternate" hreflang="${HREFLANG[l]}" href="${localized(l)}" />`),
+    `<link rel="alternate" hreflang="x-default" href="${localized('en')}" />`,
     `<meta property="og:title" content="${escapeHtml(title)}" />`,
     `<meta property="og:description" content="${escapeHtml(description)}" />`,
     `<meta property="og:url" content="${canonical}" />`,
     `<meta property="og:type" content="${jsonLd ? 'article' : 'website'}" />`,
-    `<meta property="og:locale" content="${lang === 'pt' ? 'pt_BR' : 'en_US'}" />`,
+    `<meta property="og:locale" content="${OG_LOCALE[lang]}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeHtml(title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(description)}" />`,
-    jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : '',
+    jsonLd ? `<script type="application/ld+json">${serializeLd(jsonLd)}</script>` : '',
+    ...extraJsonLd.map((block) => `<script type="application/ld+json">${serializeLd(block)}</script>`),
   ].filter(Boolean).join('\n    ');
 
   html = html.replace('</head>', `    ${headTags}\n  </head>`);
@@ -191,7 +222,7 @@ function writeStub(routePath, html) {
   // routePath like "/pt/success-stories" or "/pt"
   const clean = routePath.replace(/^\//, '');
   let outPath;
-  if (clean === 'en' || clean === 'pt') {
+  if (clean === 'en' || clean === 'pt' || clean === 'es') {
     outPath = join(DIST, clean, 'index.html');
   } else {
     outPath = join(DIST, `${clean}.html`);
@@ -205,7 +236,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence', 'docs/pesquisa'];
 
 const PRODUCTS = [
   { name: 'i6Signal', anchor: 'i6signal', description: { pt: 'Camada conversacional preditiva sobre os motores i6Previsio, i6RecSys e i6ElasticPrice', en: 'Predictive conversational layer over the i6Previsio, i6RecSys and i6ElasticPrice engines' } },
@@ -214,7 +245,13 @@ const PRODUCTS = [
   { name: 'i6ElasticPrice', anchor: 'i6elasticprice', description: { pt: 'Motor proprietário de elasticidade e precificação dinâmica por SKU, canal e ciclo de vida', en: 'Proprietary elasticity and dynamic pricing engine by SKU, channel and lifecycle' } },
 ];
 
-for (const lang of ['en', 'pt']) {
+// Idiomas com rota real no router (src/App.tsx aceita en, pt e es em todas
+// as rotas estáticas abaixo, incluindo docs/:slug).
+const STATIC_LANGS = ['en', 'pt', 'es'];
+
+for (const lang of STATIC_LANGS) {
+  // Corpo auxiliar para crawlers: só existe em pt/en; es usa o texto em pt.
+  const tl = lang === 'en' ? 'en' : 'pt';
   for (const route of staticRoutes) {
     const key = route === '' ? 'home' : route;
     const meta = seo[key]?.[lang];
@@ -222,13 +259,19 @@ for (const lang of ['en', 'pt']) {
     const path = route === '' ? `/${lang}` : `/${lang}/${route}`;
     let body = '';
     let jsonLd;
+    const extraJsonLd = [];
     if (route === 'our-ai') {
-      const ourAILead = lang === 'pt'
+      // Só os 3 itens visíveis na Base científica desta página — mesmos @id de docs/pesquisa.
+      extraJsonLd.push({
+        '@context': 'https://schema.org',
+        '@graph': buildResearchNodes(lang, ['palestra-ifood', 'artigo-lnbip-2013', 'artigo-webist-2012']),
+      });
+      const ourAILead = tl === 'pt'
         ? 'A infinity6 opera quatro motores proprietários de IA aplicada: i6 RecSys (recomendação), i6 Previsio (previsão de demanda), i6 ElasticPrice (precificação dinâmica) e i6 Signal (camada conversacional preditiva). O modelo fundacional i6-RecSys-Base.g1 combina MAML, Active Learning e Topological Loss, com pré-treino em 20 bi de registros de bases públicas/adquiridas (15% bancário, 45% e-commerce, 20% telecom, 20% atacado/varejo).'
         : 'infinity6 operates four proprietary applied AI engines: i6 RecSys (recommendation), i6 Previsio (demand forecasting), i6 ElasticPrice (dynamic pricing) and i6 Signal (predictive conversational layer). The foundation model i6-RecSys-Base.g1 combines MAML, Active Learning and Topological Loss, pre-trained on 20B records from public/acquired sources (15% banking, 45% e-commerce, 20% telecom, 20% wholesale/retail).';
 
       // Glossary terms (mirror src/data/staticData/ourAIContent.ts)
-      const glossary = lang === 'pt' ? [
+      const glossary = tl === 'pt' ? [
         { slug: 'predicao-comportamental', term: 'Predição comportamental', def: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais para antecipar a próxima ação relevante.' },
         { slug: 'propensao-conversao', term: 'Propensão de conversão', def: 'Score preditivo da probabilidade de conclusão de compra em um contexto específico.' },
         { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', def: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida.' },
@@ -253,7 +296,7 @@ for (const lang of ['en', 'pt']) {
       ];
 
       // Real-results KPIs (mirror src/data/staticData/realResults.ts)
-      const kpis = lang === 'pt' ? [
+      const kpis = tl === 'pt' ? [
         { value: 'R$ 100M', label: 'em perdas evitadas por incineração em um ano', source: 'Indústria farmacêutica' },
         { value: '+23%', label: 'ticket médio por PDV', source: 'Varejo' },
         { value: '+36%', label: 'positivação de produtos', source: 'Varejo' },
@@ -269,16 +312,16 @@ for (const lang of ['en', 'pt']) {
         { value: '+2.6%', label: 'more sales than human look curation', source: 'Fashion' },
       ];
 
-      const glossaryHtml = `<h2 id="glossario">${lang === 'pt' ? 'Glossário GEO' : 'GEO Glossary'}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
-      const kpisHtml = `<h2>${lang === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
+      const glossaryHtml = `<h2 id="glossario">${tl === 'pt' ? 'Glossário GEO' : 'GEO Glossary'}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
+      const kpisHtml = `<h2>${tl === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
 
-      body = `<p>${ourAILead}</p><h2>${lang === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[lang]}</li>`).join('')}</ul>${kpisHtml}${glossaryHtml}`;
+      body = `<p>${ourAILead}</p><h2>${tl === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[tl]}</li>`).join('')}</ul>${kpisHtml}${glossaryHtml}`;
 
       const definedTermSet = {
         '@type': 'DefinedTermSet',
         '@id': `${BASE_URL}/${lang}/our-ai#glossario`,
-        name: lang === 'pt' ? 'Glossário GEO — termos da infinity6' : 'GEO Glossary — infinity6 terms',
-        inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
+        name: tl === 'pt' ? 'Glossário GEO — termos da infinity6' : 'GEO Glossary — infinity6 terms',
+        inLanguage: tl === 'pt' ? 'pt-BR' : 'en',
         hasDefinedTerm: glossary.map(g => ({
           '@type': 'DefinedTerm',
           '@id': `${BASE_URL}/${lang}/our-ai#glossario-${g.slug}`,
@@ -297,7 +340,7 @@ for (const lang of ['en', 'pt']) {
           name: k.label,
         },
         measuredValue: k.value,
-        description: `${lang === 'pt' ? 'Setor' : 'Sector'}: ${k.source}`,
+        description: `${tl === 'pt' ? 'Setor' : 'Sector'}: ${k.source}`,
       }));
 
       jsonLd = {
@@ -308,7 +351,7 @@ for (const lang of ['en', 'pt']) {
             name: p.name,
             applicationCategory: 'BusinessApplication',
             operatingSystem: 'Cloud',
-            description: p.description[lang],
+            description: p.description[tl],
             url: `${BASE_URL}/${lang}/our-ai#${p.anchor}`,
             creator: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
           })),
@@ -316,6 +359,17 @@ for (const lang of ['en', 'pt']) {
           ...observations,
         ],
       };
+    }
+
+    if (route === 'docs/pesquisa') {
+      // Lista completa e visível de palestras e artigos: o JSON-LD acompanha
+      // exatamente src/data/research.json, mesma fonte da lista em markdown.
+      const mdFile = resolve(`src/content/docs/pesquisa-${lang}.md`);
+      if (existsSync(mdFile)) body = mdToHtml(readFileSync(mdFile, 'utf8'));
+      extraJsonLd.push({
+        '@context': 'https://schema.org',
+        '@graph': buildResearchNodes(lang),
+      });
     }
 
     const html = buildStub(template, {
@@ -326,6 +380,8 @@ for (const lang of ['en', 'pt']) {
       h1: meta.title.split(' | ')[0].split(' – ')[0],
       body: body || undefined,
       jsonLd,
+      extraJsonLd,
+      altLangs: STATIC_LANGS,
     });
     writeStub(path, html);
     count++;

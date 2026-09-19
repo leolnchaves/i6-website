@@ -35,7 +35,11 @@ const OurAI = memo(() => {
       url,
       image: `${BASE_URL}/favicon.ico`,
       inLanguage,
-      author: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+      author: [
+        { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
+        { '@id': `${BASE_URL}/#everton-gago` },
+        { '@id': `${BASE_URL}/#leonardo-chaves` },
+      ],
       publisher: { '@type': 'Organization', name: 'infinity6', url: BASE_URL },
       about: c.engines.items.map((e) => e.name),
       keywords: [

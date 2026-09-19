@@ -44,3 +44,17 @@
 - [x] Rodapé: link "Fale Conosco" acima do e-mail, apontando para /contact
 - [x] Políticas (privacidade/ética) em painel lateral direito com tema areia; páginas /privacy-policy e /ethics-policy mantidas
 - [x] Cabeçalho sempre navy (padrão) em todas as páginas — removida a lista de páginas claras e o vigia de rolagem
+
+---
+
+# Roadmap — Dados estruturados (JSON-LD)
+
+- [x] `src/data/research.json` + `research.ts` e `founders.json` + `founders.ts` como fonte única
+- [x] Grafo global: `@id` na Organization/WebSite, `founder` por referência, 2 Person no grafo (Henrique intocado)
+- [x] Persons localizados por rota (pt/en/es) no gerador estático
+- [x] `/our-ai`: 3 itens visíveis com os mesmos `@id`; `/docs/pesquisa`: 4 artigos + 9 palestras
+- [x] Stubs e hreflang em espanhol para as rotas reais do router
+- [x] Bloco B: rótulo "InfoQ Brasil · <evento>" em pesquisa-{pt,en,es}.md (origem i6 HUB precisa da mesma correção)
+- [x] `scripts/validate-jsonld.mjs` roda no deploy e falha o build
+- [ ] PLACEHOLDERs abertos: Scholar/ORCID e prêmios do Everton, volume/páginas do artigo LNCS 2010, fotos em `public/team/`, decisão sobre Henrique
+- [ ] Consolidação de um nó por produto com `@id` (prompt separado)
