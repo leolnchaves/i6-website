@@ -437,7 +437,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
       pillars: [
         { title: 'Anonymization at source', description: 'The model never sees identifiable data: anonymization happens before training, in every model' },
-        { title: 'Layered security', description: 'Multi-level authentication and route-based access control' },
+        { title: 'Layered security', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface' },
         { title: 'Isolated environment', description: 'Secure, isolated environments protect your data and models from unauthorized access' },
         { title: 'Ready to scale', description: '100% cloud-native solution with automatic resource scaling' },
       ],
