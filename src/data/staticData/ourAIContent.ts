@@ -175,7 +175,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Modelo fundacional',
       label: 'Modelo fundacional',
       name: 'i6-RecSys-Base.g1',
-      description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptável com poucas amostras, com memória externa para aprender novas tarefas rapidamente.',
+      description: 'A base compartilhada pelos três motores: meta-aprendizado, aprendizado ativo e perda topológica para se adaptar a novas tarefas com poucas amostras.',
       architectureTitle: 'Arquitetura',
       architecture: [
         { term: 'MAML', detail: 'Meta-aprendizado que deixa o modelo pronto para se adaptar a uma nova tarefa com poucas amostras do cliente.' },
@@ -378,7 +378,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Foundation model',
       label: 'Foundation model',
       name: 'i6-RecSys-Base.g1',
-      description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptable from few samples, with external memory to learn new tasks fast.',
+      description: 'The base shared by all three engines: meta-learning, active learning and topological loss to adapt to new tasks from few samples.',
       architectureTitle: 'Architecture',
       architecture: [
         { term: 'MAML', detail: 'Meta-learning that leaves the model ready to adapt to a new task from a handful of client samples.' },
@@ -581,7 +581,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Modelo fundacional',
       label: 'Modelo fundacional',
       name: 'i6-RecSys-Base.g1',
-      description: 'MAML + Active Learning + Topological Loss Foundation Model — adaptable con pocas muestras, con memoria externa para aprender nuevas tareas rápidamente.',
+      description: 'La base compartida por los tres motores: meta-aprendizaje, aprendizaje activo y pérdida topológica para adaptarse a nuevas tareas con pocas muestras.',
       architectureTitle: 'Arquitectura',
       architecture: [
         { term: 'MAML', detail: 'Meta-aprendizaje que deja el modelo listo para adaptarse a una nueva tarea con pocas muestras del cliente.' },
