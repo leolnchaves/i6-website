@@ -253,7 +253,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     results: {
       eyebrow: 'Evidência',
       title: 'Resultados reais em produção',
-      lead: 'Números medidos em operação de clientes. O setor aparece como procedência da evidência — é o que torna o número verificável.',
+      lead: 'Números medidos em operação de clientes, após o deploy dos motores proprietários. Os dados são anonimizados; o setor indica a procedência de cada resultado.',
       sourceLabel: 'Setor',
     },
     science: {
@@ -451,7 +451,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     results: {
       eyebrow: 'Evidence',
       title: 'Real results in production',
-      lead: 'Numbers measured in client operations. The sector appears as the provenance of the evidence — it is what makes the number verifiable.',
+      lead: 'Numbers measured in client operations, after the proprietary engines go live. The data is anonymized; the sector shows the provenance of each result.',
       sourceLabel: 'Sector',
     },
     science: {
@@ -649,7 +649,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     results: {
       eyebrow: 'Evidencia',
       title: 'Resultados reales en producción',
-      lead: 'Números medidos en operaciones de clientes. El sector aparece como procedencia de la evidencia: es lo que hace verificable el número.',
+      lead: 'Números medidos en operaciones de clientes, tras el despliegue de los motores propietarios. Los datos se anonimizan; el sector indica la procedencia de cada resultado.',
       sourceLabel: 'Sector',
     },
     science: {
