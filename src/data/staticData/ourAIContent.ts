@@ -110,7 +110,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       credentials: [
         { value: '3', label: 'motores proprietários' },
-        { value: '20GB', label: 'escala de treino fundacional' },
+        { value: '20 bi registros', label: 'escala de treino fundacional' },
         { value: '50', label: 'bases públicas/adquiridas de pré-treinamento' },
         { value: '5', label: 'publicações revisadas por pares' },
         { value: '9', label: 'palestras & conferências técnicas' },
@@ -313,7 +313,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       credentials: [
         { value: '3', label: 'proprietary engines' },
-        { value: '20GB', label: 'foundation training scale' },
+        { value: '20B records', label: 'foundation training scale' },
         { value: '50', label: 'public/acquired pre-training datasets' },
         { value: '5', label: 'peer-reviewed publications' },
         { value: '9', label: 'technical talks & conferences' },
@@ -516,7 +516,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       credentials: [
         { value: '3', label: 'motores propios' },
-        { value: '20GB', label: 'escala de entrenamiento fundacional' },
+        { value: '20 mil millones de registros', label: 'escala de entrenamiento fundacional' },
         { value: '50', label: 'bases públicas/adquiridas de preentrenamiento' },
         { value: '5', label: 'publicaciones revisadas por pares' },
         { value: '9', label: 'charlas y conferencias técnicas' },
