@@ -65,7 +65,7 @@
   },
   {
     "slug": "sales-finance",
-    "value": { "pt": "+7,8 mi", "en": "+7.8 mi", "es": "+7,8 mi" },
+    "value": { "pt": "+R$ 7,8 mi", "en": "+BRL 7.8 mi", "es": "+BRL 7,8 mi" },
     "label": {
       "pt": "receita adicional em 2 semanas",
       "en": "additional revenue in 2 weeks",

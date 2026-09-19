@@ -182,17 +182,23 @@ const isSiteManaged = async (abs) => {
 };
 
 const existingMd = await fs.readdir(MD_DIR);
+const mdCandidates = existingMd.filter((n) => n.endsWith('.md') && n.toLowerCase() !== 'readme.md');
+
+// Calculado ANTES da limpeza: estes arquivos são do repositório, sobrevivem ao wipe
+// e nunca podem ser sobrescritos por um item do feed com o mesmo nome de arquivo.
+const protectedFiles = new Set();
+for (const n of mdCandidates) {
+  if (await isSiteManaged(path.join(MD_DIR, n))) protectedFiles.add(n);
+}
+
 await Promise.all(
-  existingMd
-    .filter((n) => n.endsWith('.md') && n.toLowerCase() !== 'readme.md')
-    .map(async (n) => {
-      const abs = path.join(MD_DIR, n);
-      if (await isSiteManaged(abs)) {
-        console.log(`· keep (site_managed): ${n}`);
-        return;
-      }
-      await fs.rm(abs, { force: true });
-    }),
+  mdCandidates.map(async (n) => {
+    if (protectedFiles.has(n)) {
+      console.log(`· keep (protegido): ${n}`);
+      return;
+    }
+    await fs.rm(path.join(MD_DIR, n), { force: true });
+  }),
 );
 
 
@@ -605,6 +611,10 @@ for (const it of items) {
     coverLocal: coverOut?.localPath ?? coverFallback ?? null,
     logoLocal:  logoOut?.localPath  ?? logoFallback  ?? null,
   });
+  if (protectedFiles.has(fileName)) {
+    console.warn(`· skip (protegido): ${fileName}`);
+    continue;
+  }
   await fs.writeFile(path.join(MD_DIR, fileName), md);
 }
 
