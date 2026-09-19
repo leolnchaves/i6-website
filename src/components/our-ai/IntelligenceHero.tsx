@@ -20,6 +20,7 @@ const prefersReducedMotion = () =>
  * verticais independentes — geometria sempre medida do DOM.
  */
 const IntelligenceHero = memo(({ content }: Props) => {
+  const localizedPath = useLocalizedPath();
   const topLayers = content.layers.filter((l) => !l.current);
   const baseLayer = content.layers.find((l) => l.current);
 
