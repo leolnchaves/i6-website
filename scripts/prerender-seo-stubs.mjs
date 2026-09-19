@@ -30,6 +30,18 @@ import { collectContent } from './lib/content-collector.mjs';
 // Fonte única do glossário condensado de /our-ai (mesmo JSON que a página usa).
 const OUR_AI_GLOSSARY = JSON.parse(readFileSync(resolve('src/data/ourAIGlossary.json'), 'utf8'));
 
+const GLOSSARY_SET_NAME = {
+  pt: 'Glossário GEO — termos da infinity6',
+  en: 'GEO Glossary — infinity6 terms',
+  es: 'Glosario GEO — términos de infinity6',
+};
+const GLOSSARY_HEADING = { pt: 'Glossário GEO', en: 'GEO Glossary', es: 'Glosario GEO' };
+const DOCS_GLOSSARY_SET_NAME = {
+  pt: 'Glossário completo da inteligência i6',
+  en: 'Full glossary of the i6 intelligence',
+  es: 'Glosario completo de la inteligencia i6',
+};
+
 /** Mesma regra de src/utils/headingSlug.ts: âncora do título renderizado. */
 const slugifyHeading = (text) => String(text)
   .normalize('NFD')
