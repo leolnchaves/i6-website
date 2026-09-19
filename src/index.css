@@ -909,3 +909,21 @@ html {
     transition-duration: .001ms !important;
   }
 }
+
+/* Políticas (privacidade/ética) em superfície clara: converte o texto originalmente
+   escrito para o fundo escuro em tipografia areia/coral, na página e no painel lateral. */
+.policy-surface { color: #5D5D5D; }
+.policy-surface [class*="text-white"] { color: #5D5D5D; }
+.policy-surface h1,
+.policy-surface h2,
+.policy-surface h3,
+.policy-surface strong,
+.policy-surface td[class*="font-medium"],
+.policy-surface th { color: #2D2D2D; }
+.policy-surface h2 { font-size: 1.125rem; line-height: 1.6rem; }
+.policy-surface h3 { font-size: 1rem; }
+.policy-surface [class*="border-white"] { border-color: rgba(244, 132, 95, 0.18); }
+.policy-surface [class*="bg-white/5"] { background-color: rgba(255, 255, 255, 0.6); }
+.policy-surface table { background-color: rgba(255, 255, 255, 0.5); font-size: 0.8125rem; }
+.policy-surface thead th { background-color: #F4845F; color: #fff; }
+.policy-surface thead th[class*="border-white"] { border-color: rgba(255, 255, 255, 0.25); }
