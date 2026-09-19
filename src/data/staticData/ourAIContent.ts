@@ -1,4 +1,9 @@
 import type { Language } from '@/types/language';
+import ourAIGlossary from '@/data/ourAIGlossary.json';
+
+/** Fonte única do glossário condensado: mesma lista usada pelos stubs estáticos. */
+type GlossaryTerm = { slug: string; term: string; definition: string };
+const glossaryTerms = ourAIGlossary as Record<Language, GlossaryTerm[]>;
 
 export interface EngineDef {
   id: 'i6previsio' | 'i6recsys' | 'i6elasticprice';
@@ -272,14 +277,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Vocabulário',
       title: 'Os conceitos por trás da inteligência',
       lead: 'Definições curtas dos termos técnicos que sustentam os motores e o modelo fundacional.',
-      terms: [
-        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional proprietário da infinity6, base compartilhada pelos três motores. Combina MAML, Active Learning, Topological Loss e External Memory e se adapta com poucas amostras por cliente.' },
-        { slug: 'predicao-comportamental', term: 'Predição comportamental', definition: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais — não declarados — para antecipar a próxima ação relevante.' },
-        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', definition: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida — substitui curvas estáticas por aprendizado online.' },
-      ],
+      terms: glossaryTerms.pt,
       cta: 'Glossário completo na documentação',
     },
     closing: {
