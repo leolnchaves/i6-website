@@ -24,6 +24,7 @@ import {
   isNonIndexableSlug,
   languagesForRoute,
 } from './lib/seo-route-config.mjs';
+import { collectContent } from './lib/content-collector.mjs';
 
 
 const BASE_URL = 'https://infinity6.ai';
@@ -71,9 +72,9 @@ const seo = {
     es: { title: 'i6 Intelligence | infinity6', description: 'Inteligencia aplicada para decisiones de demanda, margen, inventario, mix y propensión en retail, industria, servicios financieros y farma.' },
   },
   'our-ai': {
-    pt: { title: 'Proprietary AI — Motores de IA da infinity6', description: 'Três motores proprietários (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre um modelo fundacional, com incerteza medida e explicação rastreável.' },
-    en: { title: 'Proprietary AI — infinity6 AI Engines', description: 'Three proprietary engines (i6 Previsio, i6 RecSys, i6 ElasticPrice) on a shared foundation model, with measured uncertainty and traceable explanations.' },
-    es: { title: 'Proprietary AI — Motores de IA de infinity6', description: 'Tres motores propietarios (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre un modelo fundacional compartido, con incertidumbre medida y explicación trazable.' },
+    pt: { title: 'A camada de inteligência da infinity6 | Motores proprietários', description: 'Três motores proprietários (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre um modelo fundacional, com incerteza medida e explicação rastreável.' },
+    en: { title: 'infinity6 intelligence layer | Proprietary engines', description: 'Three proprietary engines (i6 Previsio, i6 RecSys, i6 ElasticPrice) on a shared foundation model, with measured uncertainty and traceable explanations.' },
+    es: { title: 'La capa de inteligencia de infinity6 | Motores propietarios', description: 'Tres motores propietarios (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre un modelo fundacional compartido, con incertidumbre medida y explicación trazable.' },
   },
   // Documentação · Pesquisa: lista completa de palestras e artigos (visível em /{idioma}/docs/pesquisa).
   'docs/pesquisa': {
@@ -436,107 +437,12 @@ for (const lang of ['en', 'pt', 'es']) {
 }
 
 
-// ---- Insights (i6 Article / i6 eBook / i6 on Media / i6 Social) ----
-// Driven by markdown in src/content/insights/ (synced from i6Hub in CI).
-// Route mapping matches the React router:
-//   i6 Article  -> /{lang}/i6-blog/{slug}
-//   i6 eBook    -> /{lang}/i6-intelligence/{slug}
-//   i6 on Media -> /{lang}/insights/{slug}
-//   i6 Social   -> /{lang}/insights/{slug}
-const INSIGHT_ROUTE = {
-  'i6 Article': 'i6-blog',
-  'i6 eBook': 'i6-intelligence',
-  'i6 on Media': 'insights',
-  'i6 Social': 'insights',
-};
+// ---- Conteúdo editorial (coletor único) ----
+// Insights (i6 Article / i6 eBook / i6 on Media / i6 Social), success stories e
+// i6 Intelligence vêm todos de scripts/lib/content-collector.mjs, a mesma fonte
+// usada por llms.txt e sitemap.xml. Itens excluídos (draft, published:false,
+// sample, hidden, slugs demo-*) nunca chegam aqui.
 
-// Strip common markdown syntax from excerpts so they don't leak into <meta> tags.
-function excerptToPlain(raw) {
-  if (!raw) return '';
-  return String(raw)
-    .replace(/\\r\\n|\\n|\\r/g, ' ')
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/`([^`]*)`/g, '$1')
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/(\*\*|__)(.*?)\1/g, '$2')
-    .replace(/(\*|_)(.*?)\1/g, '$2')
-    .replace(/~~(.*?)~~/g, '$1')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-if (existsSync(INSIGHTS_DIR)) {
-  const files = readdirSync(INSIGHTS_DIR).filter((f) => f.endsWith('.md'));
-  for (const file of files) {
-    const raw = readFileSync(join(INSIGHTS_DIR, file), 'utf8');
-    const { data: fm } = parseFrontmatter(raw);
-    if (!fm.title || !fm.language || !fm.slug || !fm.type || !fm.date) continue;
-    const segment = INSIGHT_ROUTE[fm.type];
-    if (!segment || isNonIndexableSlug(fm.slug)) continue;
-    const lang = fm.language;
-    if (lang !== 'en' && lang !== 'pt') continue;
-
-    const path = `/${lang}/${segment}/${fm.slug}`;
-    const title = `${fm.title} | infinity6`;
-    const description = excerptToPlain(fm.excerpt || '');
-    const cover = fm.cover_image ? String(fm.cover_image) : undefined;
-
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: fm.title,
-      description,
-      datePublished: fm.date,
-      inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
-      author: { '@type': 'Organization', name: 'infinity6' },
-      publisher: { '@type': 'Organization', name: 'infinity6', logo: { '@type': 'ImageObject', url: OG_IMAGE } },
-      mainEntityOfPage: `${BASE_URL}${path}`,
-      ...(cover ? { image: cover.startsWith('http') ? cover : `${BASE_URL}${cover.startsWith('/') ? '' : '/'}${cover}` } : {}),
-    };
-    const html = buildStub(template, {
-      lang, path, title, description, h1: fm.title,
-      image: cover,
-      jsonLd,
-    });
-    writeStub(path, html);
-    count++;
-  }
-}
-
-// Success story articles — driven by markdown
-for (const lang of ['en', 'pt']) {
-  const stories = loadStories(lang);
-  for (const story of stories) {
-    const path = `/${lang}/success-stories/${story.slug}`;
-    const description = story.description || story.challenge || story.quote || '';
-    const title = `${story.title} | infinity6`;
-    const body = [
-      story.client ? `<p><strong>${escapeHtml(story.client)}</strong> · ${escapeHtml(story.segment || '')}</p>` : '',
-      story.challenge ? `<h2>${lang === 'pt' ? 'Desafio' : 'Challenge'}</h2><p>${escapeHtml(story.challenge)}</p>` : '',
-      story.quote ? `<blockquote>${escapeHtml(story.quote)}</blockquote>` : '',
-    ].filter(Boolean).join('');
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: story.title,
-      description,
-      author: { '@type': 'Organization', name: 'infinity6' },
-      publisher: { '@type': 'Organization', name: 'infinity6', logo: { '@type': 'ImageObject', url: OG_IMAGE } },
-      mainEntityOfPage: `${BASE_URL}${path}`,
-      about: story.client,
-      articleSection: story.segment,
-      ...(story.image ? { image: story.image.startsWith('http') ? story.image : `${BASE_URL}${story.image}` } : {}),
-    };
-    const html = buildStub(template, {
-      lang, path, title, description, h1: story.title, body, image: story.image, jsonLd,
-    });
-    writeStub(path, html);
-    count++;
-  }
-}
-
-// ---- i6 Intelligence articles — driven by markdown in src/content/intelligence/ ----
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { data: {}, content: raw };
@@ -576,39 +482,69 @@ function extractFAQ(content) {
   return pairs;
 }
 
-if (existsSync(INTELLIGENCE_DIR)) {
-  const files = readdirSync(INTELLIGENCE_DIR).filter((f) => f.endsWith('.md'));
-  for (const file of files) {
-    const raw = readFileSync(join(INTELLIGENCE_DIR, file), 'utf8');
-    const { data: fm, content } = parseFrontmatter(raw);
-    if (!fm.title || !fm.language || !fm.slug || !fm.date || isNonIndexableSlug(fm.slug)) continue;
-    const lang = fm.language;
-    const path = `/${lang}/i6-intelligence/${fm.slug}`;
-    const title = `${fm.title} | i6 Intelligence`;
-    const description = fm.excerpt || '';
-    const faq = extractFAQ(content);
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: fm.title,
-      description,
-      datePublished: fm.date,
-      inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
-      author: { '@type': 'Organization', name: 'infinity6' },
-      publisher: { '@type': 'Organization', name: 'infinity6', logo: { '@type': 'ImageObject', url: OG_IMAGE } },
-      mainEntityOfPage: `${BASE_URL}${path}`,
-      isPartOf: { '@type': 'CreativeWork', name: 'i6 Intelligence' },
-      ...(fm.cover_image ? { image: String(fm.cover_image).startsWith('http') ? fm.cover_image : `${BASE_URL}${fm.cover_image}` } : {}),
-    };
-    const html = buildStub(template, {
-      lang, path, title, description, h1: fm.title,
-      image: fm.cover_image || undefined,
-      jsonLd,
-    });
-    writeStub(path, html);
-    count++;
+const absoluteImage = (image) => {
+  if (!image) return undefined;
+  const value = String(image);
+  return value.startsWith('http') ? value : `${BASE_URL}${value.startsWith('/') ? '' : '/'}${value}`;
+};
 
-    // FAQPage as a separate JSON-LD block (appended into <head>)
+const publisherNode = {
+  '@type': 'Organization',
+  name: 'infinity6',
+  logo: { '@type': 'ImageObject', url: OG_IMAGE },
+};
+
+for (const item of collectContent()) {
+  if (item.kind === 'doc') continue; // docs/pesquisa já é rota estática acima
+  const { lang, path, slug, title: rawTitle, summary } = item;
+  const image = absoluteImage(item.image);
+
+  const title = item.kind === 'intelligence'
+    ? `${rawTitle} | i6 Intelligence`
+    : `${rawTitle} | infinity6`;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: rawTitle,
+    description: summary,
+    ...(item.date ? { datePublished: item.date } : {}),
+    inLanguage: lang === 'pt' ? 'pt-BR' : lang === 'es' ? 'es' : 'en',
+    author: { '@type': 'Organization', name: 'infinity6' },
+    publisher: publisherNode,
+    mainEntityOfPage: `${BASE_URL}${path}`,
+    ...(item.kind === 'intelligence' ? { isPartOf: { '@type': 'CreativeWork', name: 'i6 Intelligence' } } : {}),
+    ...(item.kind === 'story' && item.story?.client ? { about: item.story.client } : {}),
+    ...(item.kind === 'story' && item.story?.segment ? { articleSection: item.story.segment } : {}),
+    ...(image ? { image } : {}),
+  };
+
+  let body;
+  if (item.kind === 'story') {
+    const story = item.story || {};
+    body = [
+      story.client ? `<p><strong>${escapeHtml(String(story.client))}</strong> · ${escapeHtml(String(story.segment || ''))}</p>` : '',
+      story.challenge ? `<h2>${lang === 'pt' ? 'Desafio' : 'Challenge'}</h2><p>${escapeHtml(String(story.challenge))}</p>` : '',
+      story.quote ? `<blockquote>${escapeHtml(String(story.quote))}</blockquote>` : '',
+    ].filter(Boolean).join('');
+  }
+
+  const html = buildStub(template, {
+    lang,
+    path,
+    title,
+    description: summary,
+    h1: rawTitle,
+    body: body || undefined,
+    image: item.image || undefined,
+    jsonLd,
+  });
+  writeStub(path, html);
+  count++;
+
+  // FAQPage como bloco JSON-LD extra (apenas deep research com seção de FAQ)
+  if (item.kind === 'intelligence' && item.body) {
+    const faq = extractFAQ(item.body);
     if (faq.length > 0) {
       const faqLd = {
         '@context': 'https://schema.org',
@@ -619,7 +555,6 @@ if (existsSync(INTELLIGENCE_DIR)) {
           acceptedAnswer: { '@type': 'Answer', text: f.a },
         })),
       };
-      // Re-read the just-written file and inject the FAQ script before </head>
       const outFile = join(DIST, `${path.replace(/^\//, '')}.html`);
       if (existsSync(outFile)) {
         let written = readFileSync(outFile, 'utf8');
@@ -629,6 +564,5 @@ if (existsSync(INTELLIGENCE_DIR)) {
     }
   }
 }
-
 
 console.log(`✅ Prerendered ${count} SEO stubs into dist/`);
