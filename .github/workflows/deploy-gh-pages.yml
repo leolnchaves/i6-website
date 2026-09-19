@@ -45,10 +45,10 @@ jobs:
           I6HUB_FEED_URL_RESEARCH: ${{ secrets.I6HUB_FEED_URL_RESEARCH }}
           I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
 
-      - name: Sync landings from i6Hub CMS
-        run: node scripts/sync-content-from-i6hub.mjs --type=landings
+      - name: Sync docs from i6Hub CMS
+        run: node scripts/sync-content-from-i6hub.mjs --type=docs
         env:
-          I6HUB_FEED_URL_LANDINGS: ${{ secrets.I6HUB_FEED_URL_LANDINGS }}
+          I6HUB_FEED_URL_DOCS: ${{ secrets.I6HUB_FEED_URL_DOCS }}
           I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
 
       - name: Sync stories from i6Hub CMS
@@ -57,6 +57,8 @@ jobs:
           I6HUB_FEED_URL_STORIES: ${{ secrets.I6HUB_FEED_URL_STORIES }}
           I6HUB_SYNC_TOKEN: ${{ secrets.I6HUB_SYNC_TOKEN }}
 
+      # Ordem: syncs do HUB -> generate-llms -> generate-sitemap -> vite build
+      # (os dois geradores rodam dentro de `npm run build`) -> prerender -> validate.
       - name: Build
         run: npm run build
         env:

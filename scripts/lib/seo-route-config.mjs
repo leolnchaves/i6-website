@@ -16,6 +16,9 @@ export const SAMPLE_DOC_ROUTES = existsSync(DOCS_CONTENT_DIR)
     .map((slug) => `docs/${slug}`))]
   : [];
 
+// Páginas de documentação gerenciadas pelo site que podem ser indexadas.
+export const INDEXABLE_DOC_SLUGS = ['pesquisa'];
+
 export const NON_INDEXABLE_DOC_ROUTES = [DOCS_ROOT_ROUTE, ...SAMPLE_DOC_ROUTES];
 
 // Política única para conteúdos editoriais de demonstração e acessos desativados.
