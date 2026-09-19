@@ -165,9 +165,14 @@ const FooterNovo = () => {
           {/* Contact */}
           <div>
             <h3 className="text-sm font-semibold mb-4 text-white/60 uppercase tracking-wider">{t('footer.contact')}</h3>
-            <a href="mailto:decida@infinity6.ai" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm hover:underline">
-              decida@infinity6.ai
-            </a>
+            <div className="flex flex-col gap-2">
+              <Link to={localized('/contact')} onClick={() => handleNav(localized('/contact'))} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                {t('footer.faleConosco')}
+              </Link>
+              <a href="mailto:decida@infinity6.ai" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm hover:underline">
+                decida@infinity6.ai
+              </a>
+            </div>
           </div>
         </div>
 
