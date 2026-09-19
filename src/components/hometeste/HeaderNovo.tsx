@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath, stripLangPrefix } from '@/utils/localizedPath';
+import { useLocalizedPath } from '@/utils/localizedPath';
 import logoHeader from '@/assets/images/logo-header.png';
 import { getPublicAssetUrl } from '@/utils/assetUtils';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
@@ -19,18 +19,11 @@ const HeaderNovo = () => {
   const { language, setLanguage, t } = useLanguage();
   const localized = useLocalizedPath();
   const location = useLocation();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [researchOpen, setResearchOpen] = useState(false);
   const [partnersOpen, setPartnersOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
   const partnersRef = useRef<HTMLLIElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -82,30 +75,11 @@ const HeaderNovo = () => {
 
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 
-
-  // Páginas de tema claro (home, /i6-builders, /community, /docs): o header
-  // precisa manter o fundo navy sólido para os links brancos permanecerem
-  // legíveis. A checagem usa o path normalizado (sem prefixo de idioma e sem
-  // barra final), então /community e /community/ são equivalentes.
-  const normalizedPath = stripLangPrefix(location.pathname).replace(/\/$/, '') || '/';
-  // Atenção: /success-stories entra por comparação EXATA. As rotas de detalhe
-  // (/success-stories/<slug>) ficam fora, mantendo o header transparente no
-  // topo para não cobrir a capa em tela cheia.
-  const isLightPage =
-    ['/', '/i6-builders', '/community', '/contact', '/i6-blog', '/insights', '/i6-intelligence', '/our-ai', '/success-stories'].includes(normalizedPath) ||
-    normalizedPath === '/docs' ||
-    normalizedPath.startsWith('/docs/');
-
-
-
-
+  // O cabeçalho usa sempre o fundo navy padrão, em todas as páginas, para os
+  // links brancos permanecerem legíveis sobre qualquer tema (navy ou areia).
   return (
     <>
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || isLightPage ? 'bg-[#0B1224]/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B1224]/90 backdrop-blur-md shadow-lg">
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
         <Link to={localized('/')} className="shrink-0">
           <img src={logoHeader} alt="infinity6 logo" className="h-12 w-auto brightness-0 invert" />
