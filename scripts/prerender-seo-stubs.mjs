@@ -21,7 +21,6 @@ import {
   researchData,
 } from './lib/jsonld-people-research.mjs';
 import {
-  ES_TRANSLATED_ROUTES,
   languagesForRoute,
 } from './lib/seo-route-config.mjs';
 

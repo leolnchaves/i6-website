@@ -11,7 +11,7 @@
  *  e) `image` só é emitida se o arquivo existir em public/.
  */
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import {
   ES_TRANSLATED_ROUTES,
@@ -64,6 +64,33 @@ for (const route of staticRoutes) {
   const shouldHaveEs = ES_TRANSLATED_ROUTES.includes(route);
   if (shouldHaveEs && !hasEsUrl) errors.push(`sitemap: URL ES obrigatória ausente ${esUrl}`);
   if (!shouldHaveEs && hasEsUrl) errors.push(`sitemap: URL ES proibida ${esUrl}`);
+}
+
+const allHtmlFiles = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+  const path = join(dir, entry.name);
+  return entry.isDirectory() ? allHtmlFiles(path) : (entry.name.endsWith('.html') ? [path] : []);
+});
+
+for (const file of allHtmlFiles(DIST)) {
+  const html = readFileSync(file, 'utf8');
+  const canonical = html.match(/<link\s+rel="canonical"\s+href="https:\/\/infinity6\.ai\/(pt|en|es)([^"#?]*)"/i);
+  if (!canonical) continue;
+  const [, lang, suffix] = canonical;
+  const route = suffix.replace(/^\/+|\/+$/g, '');
+  const hasEsAlternate = /<link\s+rel="alternate"\s+hreflang="es"/i.test(html);
+  if (lang === 'es' && !ES_TRANSLATED_ROUTES.includes(route)) {
+    errors.push(`${localizedRoutePath('es', route)}: stub ES detectado fora da lista única`);
+  }
+  if (hasEsAlternate && !ES_TRANSLATED_ROUTES.includes(route)) {
+    errors.push(`${localizedRoutePath(lang, route)}: hreflang ES detectado fora da lista única`);
+  }
+}
+
+for (const match of sitemap.matchAll(/<loc>https:\/\/infinity6\.ai\/es(?:\/([^<]*))?<\/loc>/g)) {
+  const route = (match[1] ?? '').replace(/^\/+|\/+$/g, '');
+  if (!ES_TRANSLATED_ROUTES.includes(route)) {
+    errors.push(`sitemap: URL ES detectada fora da lista única ${localizedRoutePath('es', route)}`);
+  }
 }
 
 const pages = [];
