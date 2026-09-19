@@ -50,17 +50,25 @@ const slugifyHeading = (text) => String(text)
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
 
+/** Fábrica de ids ciente de repetição, igual a createHeadingIdFactory(). */
+const headingIdFactory = () => {
+  const seen = {};
+  return (text) => {
+    const base = slugifyHeading(text) || 'section';
+    seen[base] = (seen[base] ?? 0) + 1;
+    return seen[base] === 1 ? base : `${base}-${seen[base]}`;
+  };
+};
+
 /** Títulos h2 de um markdown, com o id que a página real gera. */
 const markdownHeadings = (md) => {
-  const seen = {};
+  const nextId = headingIdFactory();
   const out = [];
   for (const line of md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').split(/\r?\n/)) {
     const match = line.match(/^##\s+(.+?)\s*#*\s*$/);
     if (!match) continue;
     const text = match[1].replace(/(\*\*|__|\*|_|`)/g, '').trim();
-    const base = slugifyHeading(text) || 'section';
-    seen[base] = (seen[base] ?? 0) + 1;
-    out.push({ text, id: seen[base] === 1 ? base : `${base}-${seen[base]}` });
+    out.push({ text, id: nextId(text) });
   }
   return out;
 };
