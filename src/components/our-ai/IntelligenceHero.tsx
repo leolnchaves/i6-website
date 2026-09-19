@@ -1,5 +1,9 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
+import { useLocalizedPath } from '@/utils/localizedPath';
 
 interface Props {
   content: OurAIContent['hero'];
