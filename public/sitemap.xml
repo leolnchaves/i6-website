@@ -303,6 +303,33 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/success-stories/sales-forecast-precision"/>
   </url>
   <url>
+    <loc>https://infinity6.ai/en/docs/glossario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs/glossario"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/es/docs/glossario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs/glossario"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/docs/glossario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs/glossario"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs/glossario"/>
+  </url>
+  <url>
     <loc>https://infinity6.ai/en/docs/pesquisa</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
