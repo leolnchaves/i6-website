@@ -1,7 +1,7 @@
 [
   {
     "slug": "savings-pharma",
-    "value": { "pt": "R$ 100 mi", "en": "BRL 100 mi", "es": "BRL 100 mi" },
+    "value": { "pt": "R$ 100 mi", "en": "BRL 100 million", "es": "BRL 100 millones" },
     "label": {
       "pt": "em perdas evitadas por incineração em um ano",
       "en": "in losses avoided from incineration in one year",
@@ -65,7 +65,7 @@
   },
   {
     "slug": "sales-finance",
-    "value": { "pt": "+R$ 7,8 mi", "en": "+BRL 7.8 mi", "es": "+BRL 7,8 mi" },
+    "value": { "pt": "+R$ 7,8 mi", "en": "+BRL 7.8 million", "es": "+BRL 7,8 millones" },
     "label": {
       "pt": "receita adicional em 2 semanas",
       "en": "additional revenue in 2 weeks",

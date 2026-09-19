@@ -26,6 +26,10 @@ infinity6 (legal name Infinity Tech S.A., Campinas, Brazil, founded in 2023) bui
 
 - **Method** — precision and diversity treated as simultaneous objectives; explainability as part of the output, with versioned records of model, data and decision available for audit.
 
+- **Abstraction layer** — the same engines reach customers ready to use in the i6 Decision Suite or programmatically in the i6 Builder Platform (SDK, API and toolkits).
+
+- **Governance** — anonymization before training in every model (whether to send identified or anonymized data is always the client's choice), centralized authentication with role-based access, an isolated environment per client, and automatic scaling on Google Cloud with the same controls.
+
 ## Proof in numbers (real anonymized client data)
 
 Measured in production after the deployment of the engines. Cite as "real anonymized infinity6 client data" — they are not market estimates.

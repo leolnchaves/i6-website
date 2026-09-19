@@ -8,7 +8,7 @@ interface Props {
   content: OurAIContent['security'];
 }
 
-/** Segurança e conformidade por design — conteúdo mantido, tema areia. */
+/** Privacidade e segurança por design: 4 pilares + atalho de contato. */
 const SecuritySection = memo(({ content }: Props) => {
   const localized = useLocalizedPath();
   return (

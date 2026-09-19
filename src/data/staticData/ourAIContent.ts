@@ -1,9 +1,18 @@
 import type { Language } from '@/types/language';
 import ourAIGlossary from '@/data/ourAIGlossary.json';
+import ourAIAbstractionGovernance from '@/data/ourAIAbstractionGovernance.json';
 
 /** Fonte única do glossário condensado: mesma lista usada pelos stubs estáticos. */
 type GlossaryTerm = { slug: string; term: string; definition: string };
 const glossaryTerms = ourAIGlossary as Record<Language, GlossaryTerm[]>;
+
+/** Fonte única de Camada de abstração + Governança: mesma usada pelos stubs estáticos. */
+type AbstractionGovernance = {
+  builder: { lead: string; bullets: { title: string; text: string }[] };
+  security: { title: string; lead: string; pillars: { title: string; description: string }[] };
+  headings: { abstraction: string; governance: string };
+};
+const ag = ourAIAbstractionGovernance as Record<Language, AbstractionGovernance>;
 
 export interface EngineDef {
   id: 'i6previsio' | 'i6recsys' | 'i6elasticprice';
@@ -171,19 +180,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     builder: {
       eyebrow: 'Camada de abstração',
       title: 'i6 Builder Platform',
-      lead: 'Os motores chegam a você por duas vias: prontos, na i6 Decision Suite, ou de forma programável, na i6 Builder Platform — SDK, API e toolkits — para que times técnicos e parceiros construam suas próprias aplicações sobre a mesma inteligência.',
-      bullets: [
-        { title: 'SDK', text: 'Bibliotecas para treinar, adaptar e servir modelos derivados do modelo fundacional.' },
-        { title: 'API', text: 'Endpoints de previsão, ranqueamento e elasticidade com contrato estável e versionado.' },
-        { title: 'Toolkits', text: 'Blocos prontos de avaliação, monitoramento de deriva e explicabilidade.' },
-      ],
+      lead: ag.pt.builder.lead,
+      bullets: ag.pt.builder.bullets,
       cta: 'Construa com a i6 Builder Platform',
     },
     foundation: {
       eyebrow: 'Modelo fundacional',
       label: 'Modelo fundacional',
       name: 'i6-RecSys-Base.g1',
-      description: 'A base compartilhada pelos três motores: meta-aprendizado, aprendizado ativo e perda topológica para se adaptar a novas tarefas com poucas amostras.',
+      description: 'A base compartilhada pelos três motores: meta-aprendizado, aprendizado ativo, perda topológica e memória externa para se adaptar a novas tarefas com poucas amostras.',
       architectureTitle: 'Arquitetura',
       architecture: [
         { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-aprendizado que deixa o modelo pronto para se adaptar a uma nova tarefa com poucas amostras do cliente.' },
@@ -245,14 +250,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     security: {
       eyebrow: 'Governança',
-      title: 'Privacidade e segurança por design',
-      lead: 'Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.',
-      pillars: [
-        { title: 'Anonimização na origem', description: 'A anonimização acontece antes do treinamento, em todos os modelos, e a decisão de enviar dados identificados ou anonimizados é sempre do cliente.' },
-        { title: 'Autenticação centralizada', description: 'Autenticação 100% na plataforma e controle de acesso por perfil. Os produtos não têm backend nem banco de dados próprios, o que reduz a superfície de ataque.' },
-        { title: 'Ambiente isolado', description: 'Dados e modelos de cada cliente ficam em ambiente isolado, sem acesso cruzado.' },
-        { title: 'Escala com o mesmo controle', description: 'Escalonamento automático de recursos na Google Cloud, com os mesmos controles de isolamento e acesso em qualquer volume.' },
-      ],
+      title: ag.pt.security.title,
+      lead: ag.pt.security.lead,
+      pillars: ag.pt.security.pillars,
       ctaQuestion: 'Sua área de segurança ou risco precisa de mais detalhes?',
       ctaLink: 'Fale com nosso time',
     },
@@ -363,19 +363,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     builder: {
       eyebrow: 'Abstraction layer',
       title: 'i6 Builder Platform',
-      lead: 'The engines reach you two ways: ready to use, in the i6 Decision Suite, or programmatically, in the i6 Builder Platform — SDK, API and toolkits — so technical teams and partners can build their own applications on the same intelligence.',
-      bullets: [
-        { title: 'SDK', text: 'Libraries to train, adapt and serve models derived from the foundation model.' },
-        { title: 'API', text: 'Forecasting, ranking and elasticity endpoints with a stable, versioned contract.' },
-        { title: 'Toolkits', text: 'Ready-made blocks for evaluation, drift monitoring and explainability.' },
-      ],
+      lead: ag.en.builder.lead,
+      bullets: ag.en.builder.bullets,
       cta: 'Build with the i6 Builder Platform',
     },
     foundation: {
       eyebrow: 'Foundation model',
       label: 'Foundation model',
       name: 'i6-RecSys-Base.g1',
-      description: 'The base shared by all three engines: meta-learning, active learning and topological loss to adapt to new tasks from few samples.',
+      description: 'The base shared by all three engines: meta-learning, active learning, topological loss and external memory to adapt to new tasks from few samples.',
       architectureTitle: 'Architecture',
       architecture: [
         { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-learning that leaves the model ready to adapt to a new task from a handful of client samples.' },
@@ -437,14 +433,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     security: {
       eyebrow: 'Governance',
-      title: 'Privacy and security by design',
-      lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
-      pillars: [
-        { title: 'Anonymization at source', description: "Anonymization happens before training, in every model, and the decision to send identified or anonymized data is always the client's." },
-        { title: 'Centralized authentication', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface.' },
-        { title: 'Isolated environment', description: 'Data and models for each client stay in an isolated environment, with no cross access.' },
-        { title: 'Scales with the same control', description: 'Automatic resource scaling on Google Cloud, with the same isolation and access controls at any volume.' },
-      ],
+      title: ag.en.security.title,
+      lead: ag.en.security.lead,
+      pillars: ag.en.security.pillars,
       ctaQuestion: 'Does your security or risk team need more details?',
       ctaLink: 'Talk to our team',
     },
@@ -555,19 +546,15 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     builder: {
       eyebrow: 'Capa de abstracción',
       title: 'i6 Builder Platform',
-      lead: 'Los motores llegan a ti por dos vías: listos, en la i6 Decision Suite, o de forma programable, en la i6 Builder Platform — SDK, API y toolkits — para que equipos técnicos y aliados construyan sus propias aplicaciones sobre la misma inteligencia.',
-      bullets: [
-        { title: 'SDK', text: 'Bibliotecas para entrenar, adaptar y servir modelos derivados del modelo fundacional.' },
-        { title: 'API', text: 'Endpoints de previsión, ranking y elasticidad con contrato estable y versionado.' },
-        { title: 'Toolkits', text: 'Bloques listos de evaluación, monitoreo de deriva y explicabilidad.' },
-      ],
+      lead: ag.es.builder.lead,
+      bullets: ag.es.builder.bullets,
       cta: 'Construye con la i6 Builder Platform',
     },
     foundation: {
       eyebrow: 'Modelo fundacional',
       label: 'Modelo fundacional',
       name: 'i6-RecSys-Base.g1',
-      description: 'La base compartida por los tres motores: meta-aprendizaje, aprendizaje activo y pérdida topológica para adaptarse a nuevas tareas con pocas muestras.',
+      description: 'La base compartida por los tres motores: meta-aprendizaje, aprendizaje activo, pérdida topológica y memoria externa para adaptarse a nuevas tareas con pocas muestras.',
       architectureTitle: 'Arquitectura',
       architecture: [
         { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-aprendizaje que deja el modelo listo para adaptarse a una nueva tarea con pocas muestras del cliente.' },
@@ -580,14 +567,14 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           year: '2025',
           items: [
-            { value: '1,45 bi', label: 'registros transaccionales' },
+            { value: '1,45 mil millones', label: 'registros transaccionales' },
             { value: '12', label: 'bases públicas/adquiridas' },
           ],
         },
         {
           year: '2026',
           items: [
-            { value: '20 bi', label: 'registros transaccionales' },
+            { value: '20 mil millones', label: 'registros transaccionales' },
             { value: '50', label: 'bases públicas/adquiridas' },
           ],
         },
@@ -629,14 +616,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     security: {
       eyebrow: 'Gobernanza',
-      title: 'Privacidad y seguridad por diseño',
-      lead: 'Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.',
-      pillars: [
-        { title: 'Anonimización en el origen', description: 'La anonimización ocurre antes del entrenamiento, en todos los modelos, y la decisión de enviar datos identificados o anonimizados es siempre del cliente.' },
-        { title: 'Autenticación centralizada', description: 'Autenticación 100% en la plataforma y control de acceso por perfil. Los productos no tienen backend ni base de datos propios, lo que reduce la superficie de ataque.' },
-        { title: 'Entorno aislado', description: 'Los datos y modelos de cada cliente quedan en un entorno aislado, sin acceso cruzado.' },
-        { title: 'Escala con el mismo control', description: 'Escalonamiento automático de recursos en Google Cloud, con los mismos controles de aislamiento y acceso en cualquier volumen.' },
-      ],
+      title: ag.es.security.title,
+      lead: ag.es.security.lead,
+      pillars: ag.es.security.pillars,
       ctaQuestion: '¿Tu área de seguridad o riesgo necesita más detalles?',
       ctaLink: 'Habla con nuestro equipo',
     },
