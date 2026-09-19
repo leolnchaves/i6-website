@@ -270,7 +270,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     glossary: {
       eyebrow: 'Vocabulário',
-      title: 'Termos usados nesta página',
+      title: 'Os conceitos por trás da inteligência',
       lead: 'Definições curtas do que é necessário para ler o restante desta página.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
@@ -469,7 +469,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     glossary: {
       eyebrow: 'Vocabulary',
-      title: 'Terms used on this page',
+      title: 'The concepts behind the intelligence',
       lead: 'Short definitions of what you need to read the rest of this page.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algorithm (Finn, Abbeel & Levine, 2017) that trains models to adapt quickly to new tasks from few samples — the basis of i6-RecSys-Base.g1.' },
@@ -668,7 +668,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     glossary: {
       eyebrow: 'Vocabulario',
-      title: 'Términos usados en esta página',
+      title: 'Los conceptos detrás de la inteligencia',
       lead: 'Definiciones breves de lo necesario para leer el resto de esta página.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que entrena modelos para adaptarse rápidamente a nuevas tareas con pocas muestras — base del i6-RecSys-Base.g1.' },
