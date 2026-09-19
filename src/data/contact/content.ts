@@ -11,6 +11,23 @@ export const TEAM_ANCHOR = '#fale-com-o-time';
 /** E-mail exclusivo desta página (suporte@ é de /docs e /i6-builders). */
 export const CONTACT_EMAIL = 'decida@infinity6.ai';
 
+/**
+ * Atalhos de pré-preenchimento do formulário de contato via `?intent=<id>`.
+ * Cada intent define o assunto (chave fixa, igual ao select do formulário) e a
+ * mensagem inicial nos três idiomas. O id também vai no payload como `intent`.
+ * `subject` usa os valores do select ('other' = "Outro", motivo interno inalterado).
+ */
+export const CONTACT_INTENTS = {
+  security: {
+    subject: 'other',
+    message: {
+      pt: 'Olá! Cheguei pela seção de Governança e gostaria de mais detalhes sobre as camadas de segurança e privacidade da plataforma.',
+      en: "Hi! I came from the Governance section and would like more details about the platform's security and privacy layers.",
+      es: '¡Hola! Llegué desde la sección de Gobernanza y me gustaría más detalles sobre las capas de seguridad y privacidad de la plataforma.',
+    },
+  },
+} as const;
+
 export interface ContactFaq {
   id: number;
   question: string;

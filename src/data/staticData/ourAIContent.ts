@@ -57,6 +57,8 @@ export interface OurAIContent {
     eyebrow: string;
     title: string;
     lead: string;
+    ctaQuestion: string;
+    ctaLink: string;
     pillars: { title: string; description: string }[];
   };
   results: {
@@ -245,6 +247,8 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'Ambiente isolado', description: 'Dados e modelos de cada cliente ficam em ambiente isolado, sem acesso cruzado' },
         { title: 'Escala com o mesmo controle', description: 'Escalonamento automático de recursos na Google Cloud, com os mesmos controles de isolamento e acesso em qualquer volume' },
       ],
+      ctaQuestion: 'Sua área de segurança ou risco precisa de mais detalhes?',
+      ctaLink: 'Fale com nosso time',
     },
     results: {
       eyebrow: 'Evidência',
@@ -441,6 +445,8 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'Isolated environment', description: 'Data and models for each client stay in an isolated environment, with no cross access' },
         { title: 'Scales with the same control', description: 'Automatic resource scaling on Google Cloud, with the same isolation and access controls at any volume' },
       ],
+      ctaQuestion: 'Does your security or risk team need more details?',
+      ctaLink: 'Talk to our team',
     },
     results: {
       eyebrow: 'Evidence',
@@ -637,6 +643,8 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'Entorno aislado', description: 'Los datos y modelos de cada cliente quedan en un entorno aislado, sin acceso cruzado' },
         { title: 'Escala con el mismo control', description: 'Escalonamiento automático de recursos en Google Cloud, con los mismos controles de aislamiento y acceso en cualquier volumen' },
       ],
+      ctaQuestion: '¿Tu área de seguridad o riesgo necesita más detalles?',
+      ctaLink: 'Habla con nuestro equipo',
     },
     results: {
       eyebrow: 'Evidencia',

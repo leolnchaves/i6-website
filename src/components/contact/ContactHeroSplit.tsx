@@ -1,8 +1,10 @@
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ContactForm from '@/components/contact/ContactForm';
 import ContactTriage from '@/components/contact/ContactTriage';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLang } from '@/utils/localizedPath';
-import { contactCopy, CONTACT_EMAIL } from '@/data/contact/content';
+import { contactCopy, CONTACT_EMAIL, CONTACT_INTENTS } from '@/data/contact/content';
 
 /**
  * Abertura de /contact: headline editorial + triagem à esquerda,
@@ -13,6 +15,22 @@ const ContactHeroSplit = () => {
   const { language } = useLanguage();
   const copy = pickLang(language, contactCopy).hero;
   const [before, after] = copy.title.split(copy.highlight);
+
+  // Atalhos de pré-preenchimento via ?intent=<id> (hoje: "security", vindo do
+  // CTA de Governança em /our-ai). Intent desconhecido é ignorado.
+  const [searchParams] = useSearchParams();
+  const intentId = searchParams.get('intent') ?? '';
+  const intent = intentId in CONTACT_INTENTS ? CONTACT_INTENTS[intentId as keyof typeof CONTACT_INTENTS] : undefined;
+  // Objeto memoizado: sem referência estável, cada render recriaria as props e
+  // poderia reaplicar o prefill por cima do que o usuário já digitou.
+  const intentProps = useMemo(() => {
+    if (!intent) return {};
+    return {
+      prefill: { subject: intent.subject, message: pickLang(language, intent.message) },
+      // Campo extra no payload do lead — presente só quando veio de um atalho.
+      extraFields: { intent: intentId },
+    };
+  }, [intent, intentId, language]);
 
   return (
     <section className="relative overflow-hidden pt-28 pb-16 md:pb-24">
@@ -39,7 +57,7 @@ const ContactHeroSplit = () => {
 
           {/* Formulário */}
           <div id="contact-form" className="scroll-mt-28">
-            <ContactForm />
+            <ContactForm {...intentProps} />
 
             <p className="mt-4 text-sm text-muted-foreground">
               {copy.directPrefix}{' '}
