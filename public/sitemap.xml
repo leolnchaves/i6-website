@@ -10,6 +10,7 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en"/>
   </url>
   <url>
@@ -19,6 +20,7 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en"/>
   </url>
 
@@ -35,6 +37,7 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/our-ai"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/our-ai"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/our-ai"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/our-ai"/>
   </url>
   <url>
@@ -44,6 +47,7 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/our-ai"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/our-ai"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/our-ai"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/our-ai"/>
   </url>
 
@@ -89,6 +93,7 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/contact"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/contact"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/contact"/>
   </url>
   <url>
@@ -98,6 +103,7 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/contact"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/contact"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/contact"/>
   </url>
 
@@ -229,8 +235,111 @@
   <url><loc>https://infinity6.ai/pt/community</loc><changefreq>monthly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/community"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/community"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/community"/></url>
 
   <!-- Documentação -->
-  <url><loc>https://infinity6.ai/en/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/></url>
-  <url><loc>https://infinity6.ai/pt/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/><xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/><xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/></url>
+  <url><loc>https://infinity6.ai/en/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/>
+  </url>
+  <url><loc>https://infinity6.ai/pt/docs</loc><changefreq>weekly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/>
+  </url>
+
+
+  <!-- Rotas com tradução real em espanhol -->
+  <url>
+    <loc>https://infinity6.ai/es</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/es/our-ai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/our-ai"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/our-ai"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/our-ai"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/our-ai"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/en/i6-builders</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-builders"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/i6-builders</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-builders"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/es/i6-builders</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/i6-builders"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/i6-builders"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/es/docs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/en/docs/pesquisa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs/pesquisa"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/pt/docs/pesquisa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs/pesquisa"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/es/docs/pesquisa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/docs/pesquisa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/docs/pesquisa"/>
+  </url>
+  <url>
+    <loc>https://infinity6.ai/es/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://infinity6.ai/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://infinity6.ai/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://infinity6.ai/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://infinity6.ai/en/contact"/>
+  </url>
 
 </urlset>
 
