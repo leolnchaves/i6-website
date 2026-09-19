@@ -19,7 +19,6 @@ const HeaderNovo = () => {
   const { language, setLanguage, t } = useLanguage();
   const localized = useLocalizedPath();
   const location = useLocation();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [researchOpen, setResearchOpen] = useState(false);
   const [partnersOpen, setPartnersOpen] = useState(false);
