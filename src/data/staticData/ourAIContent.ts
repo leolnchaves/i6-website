@@ -154,7 +154,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      note: 'Arquitetura híbrida, operação sobre dados anonimizados e ajuste fino do equilíbrio entre metas concorrentes.',
+      note: 'Em comum aos três: arquitetura híbrida, operação sobre dados anonimizados e equilíbrio ajustável entre metas concorrentes, como precisão e diversidade, margem e posicionamento.',
     },
     builder: {
       eyebrow: 'Camada de abstração',
@@ -354,7 +354,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      note: 'Hybrid architecture, operation on anonymized data and fine-tuned balance across competing goals.',
+      note: 'Shared by all three: hybrid architecture, operation on anonymized data and an adjustable balance across competing goals, such as accuracy and diversity, margin and positioning.',
     },
     builder: {
       eyebrow: 'Abstraction layer',
@@ -554,7 +554,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           ],
         },
       ],
-      note: 'Arquitectura híbrida, operación sobre datos anonimizados y ajuste fino del equilibrio entre metas en competencia.',
+      note: 'En común a los tres: arquitectura híbrida, operación sobre datos anonimizados y equilibrio ajustable entre metas en competencia, como precisión y diversidad, margen y posicionamiento.',
     },
     builder: {
       eyebrow: 'Capa de abstracción',
