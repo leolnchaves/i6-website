@@ -12,7 +12,7 @@
  * The React app still hydrates normally on top of it.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import {
   buildResearchNodes,
@@ -29,9 +29,6 @@ import { collectContent } from './lib/content-collector.mjs';
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
-const PUBLIC_CONTENT = resolve('public/content');
-const INTELLIGENCE_DIR = resolve('src/content/intelligence');
-const INSIGHTS_DIR = resolve('src/content/insights');
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
@@ -88,34 +85,6 @@ const seo = {
     es: { title: 'i6 Builder Platform — Motores, SDK y API de modelado', description: 'La plataforma de modelado de infinity6 para equipos de tecnología: motores predictivos, SDK, API y herramientas para crear productos propios de decisión basada en datos.' },
   },
 };
-
-// ---- Parse success stories markdown (mirrors useSuccessStoriesMarkdown.ts) ----
-function parseStories(content) {
-  const stories = [];
-  const sections = content.split('---').map((s) => s.trim()).filter(Boolean);
-  for (const section of sections) {
-    const lines = section.split('\n').map((l) => l.trim()).filter(Boolean);
-    const story = {};
-    for (const line of lines) {
-      if (line.startsWith('## ')) story.title = line.substring(3).trim();
-      else if (line.startsWith('**Slug:**')) story.slug = line.substring(9).trim();
-      else if (line.startsWith('**Image:**')) story.image = line.substring(10).trim();
-      else if (line.startsWith('**Segment:**')) story.segment = line.substring(12).trim();
-      else if (line.startsWith('**Client:**')) story.client = line.substring(11).trim();
-      else if (line.startsWith('**Description:**')) story.description = line.substring(16).trim();
-      else if (line.startsWith('**Challenge:**')) story.challenge = line.substring(14).trim();
-      else if (line.startsWith('**Quote:**')) story.quote = line.substring(10).trim();
-    }
-    if (story.title && story.slug) stories.push(story);
-  }
-  return stories;
-}
-
-function loadStories(lang) {
-  const file = join(PUBLIC_CONTENT, `page-success-stories-${lang}.md`);
-  if (!existsSync(file)) return [];
-  return parseStories(readFileSync(file, 'utf8'));
-}
 
 // ---- Minimal markdown → HTML for SEO injection ----
 // Handles: H2/H3, **bold**, bullet lists, paragraphs. Strips YAML frontmatter.
@@ -496,7 +465,7 @@ const publisherNode = {
 
 for (const item of collectContent()) {
   if (item.kind === 'doc') continue; // docs/pesquisa já é rota estática acima
-  const { lang, path, slug, title: rawTitle, summary } = item;
+  const { lang, path, title: rawTitle, summary } = item;
   const image = absoluteImage(item.image);
 
   const title = item.kind === 'intelligence'
