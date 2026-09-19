@@ -89,7 +89,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     hero: {
       eyebrow: 'infinity6 · a camada de inteligência',
       title: 'A inteligência que sustenta tudo o que entregamos',
-      lead: 'Esta página não é sobre produto nem sobre como construir com a nossa IA. É sobre a camada mais profunda: os motores proprietários, o modelo fundacional que os alimenta e o rigor científico por trás de cada decisão que eles produzem.',
+      lead: 'Sob o i6 Decision Suite e o i6 Builder Platform, motores proprietários, modelos fundacionais e métodos científicos sustentam cada decisão.',
       layers: [
         { name: 'i6 Decision Suite', role: 'O que a inteligência resolve no negócio' },
         { name: 'i6 Builder Platform', role: 'Como se constrói sobre a inteligência' },
@@ -274,7 +274,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     hero: {
       eyebrow: 'infinity6 · the intelligence layer',
       title: 'The intelligence beneath everything we ship',
-      lead: 'This page is not about a product, nor about how to build with our AI. It is about the deepest layer: the proprietary engines, the foundation model that feeds them, and the scientific rigor behind every decision they produce.',
+      lead: 'Beneath the i6 Decision Suite and the i6 Builder Platform, proprietary engines, foundation models and scientific methods sustain every decision.',
       layers: [
         { name: 'i6 Decision Suite', role: 'What the intelligence solves for the business' },
         { name: 'i6 Builder Platform', role: 'How you build on top of the intelligence' },
@@ -459,7 +459,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     hero: {
       eyebrow: 'infinity6 · la capa de inteligencia',
       title: 'La inteligencia que sostiene todo lo que entregamos',
-      lead: 'Esta página no trata de un producto ni de cómo construir con nuestra IA. Trata de la capa más profunda: los motores propios, el modelo fundacional que los alimenta y el rigor científico detrás de cada decisión que producen.',
+      lead: 'Bajo el i6 Decision Suite y la i6 Builder Platform, motores propios, modelos fundacionales y métodos científicos sostienen cada decisión.',
       layers: [
         { name: 'i6 Decision Suite', role: 'Lo que la inteligencia resuelve en el negocio' },
         { name: 'i6 Builder Platform', role: 'Cómo se construye sobre la inteligencia' },
