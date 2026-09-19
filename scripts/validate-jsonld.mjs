@@ -13,12 +13,58 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import {
+  ES_TRANSLATED_ROUTES,
+  localizedRoutePath,
+} from './lib/seo-route-config.mjs';
 
 const DIST = resolve('dist');
 const PUBLIC_DIR = resolve('public');
 const errors = [];
 
 const research = JSON.parse(readFileSync(resolve('src/data/research.json'), 'utf8'));
+
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const stubFile = (lang, route) => {
+  if (route === '') return join(DIST, lang, 'index.html');
+  return join(DIST, lang, `${route}.html`);
+};
+
+for (const route of staticRoutes) {
+  const esFile = stubFile('es', route);
+  const shouldHaveEs = ES_TRANSLATED_ROUTES.includes(route);
+  if (shouldHaveEs && !existsSync(esFile)) {
+    errors.push(`${localizedRoutePath('es', route)}: stub ES obrigatório ausente`);
+  }
+  if (!shouldHaveEs && existsSync(esFile)) {
+    errors.push(`${localizedRoutePath('es', route)}: stub ES proibido para rota sem tradução real`);
+  }
+
+  for (const lang of ['pt', 'en']) {
+    const file = stubFile(lang, route);
+    if (!existsSync(file)) continue;
+    const html = readFileSync(file, 'utf8');
+    const hasEsAlternate = /<link\s+rel="alternate"\s+hreflang="es"/i.test(html);
+    if (shouldHaveEs && !hasEsAlternate) {
+      errors.push(`${localizedRoutePath(lang, route)}: hreflang ES obrigatório ausente`);
+    }
+    if (!shouldHaveEs && hasEsAlternate) {
+      errors.push(`${localizedRoutePath(lang, route)}: hreflang ES proibido para rota sem tradução real`);
+    }
+    if (!/<link\s+rel="alternate"\s+hreflang="x-default"\s+href="https:\/\/infinity6\.ai\/en(?:\/|\")/i.test(html)) {
+      errors.push(`${localizedRoutePath(lang, route)}: x-default deve apontar para EN`);
+    }
+  }
+}
+
+const sitemap = readFileSync(resolve('public/sitemap.xml'), 'utf8');
+for (const route of staticRoutes) {
+  const esUrl = `https://infinity6.ai${localizedRoutePath('es', route)}`;
+  const hasEsUrl = sitemap.includes(`<loc>${esUrl}</loc>`);
+  const shouldHaveEs = ES_TRANSLATED_ROUTES.includes(route);
+  if (shouldHaveEs && !hasEsUrl) errors.push(`sitemap: URL ES obrigatória ausente ${esUrl}`);
+  if (!shouldHaveEs && hasEsUrl) errors.push(`sitemap: URL ES proibida ${esUrl}`);
+}
 
 const pages = [];
 for (const lang of ['pt', 'en', 'es']) {

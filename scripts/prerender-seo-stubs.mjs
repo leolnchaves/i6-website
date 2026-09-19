@@ -20,6 +20,10 @@ import {
   serializeLd,
   researchData,
 } from './lib/jsonld-people-research.mjs';
+import {
+  ES_TRANSLATED_ROUTES,
+  languagesForRoute,
+} from './lib/seo-route-config.mjs';
 
 
 const BASE_URL = 'https://infinity6.ai';
@@ -76,6 +80,16 @@ const seo = {
     pt: { title: 'Pesquisa — produção técnica | infinity6', description: 'Palestras técnicas e artigos publicados pelo time da infinity6 em conferências e repositórios abertos, complementando a produção formal revisada por pares.' },
     en: { title: 'Research — technical output | infinity6', description: 'Technical talks and papers published by the infinity6 team at conferences and in open repositories, complementing the formal peer-reviewed output.' },
     es: { title: 'Investigación — producción técnica | infinity6', description: 'Charlas técnicas y artículos publicados por el equipo de infinity6 en conferencias y repositorios abiertos, complementando la producción formal revisada por pares.' },
+  },
+  'i6-builders': {
+    pt: { title: 'i6 Builder Platform — Engines, SDKs e APIs de modelagem', description: 'Plataforma de modelagem da infinity6 para times de tecnologia: engines preditivos, SDKs, APIs e toolkits para construir produtos próprios de decisão orientada a dados.' },
+    en: { title: 'i6 Builder Platform — Modeling engines, SDKs and APIs', description: 'The infinity6 modeling platform for technology teams: predictive engines, SDKs, APIs and toolkits to build your own data-driven decision products.' },
+    es: { title: 'i6 Builder Platform — Motores, SDK y API de modelado', description: 'La plataforma de modelado de infinity6 para equipos de tecnología: motores predictivos, SDK, API y herramientas para crear productos propios de decisión basada en datos.' },
+  },
+  docs: {
+    pt: { title: 'Documentação i6 — engines, SDKs e APIs de modelagem', description: 'Referência técnica da infinity6 para integração com engines, SDKs e APIs.' },
+    en: { title: 'i6 documentation — modeling engines, SDKs and APIs', description: 'infinity6 technical reference for integrating engines, SDKs and APIs.' },
+    es: { title: 'Documentación i6 — motores, SDK y API de modelado', description: 'Referencia técnica de infinity6 para integrar motores, SDK y API.' },
   },
 };
 
@@ -236,7 +250,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence', 'docs/pesquisa'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
   { name: 'i6Previsio', anchor: 'i6previsio', description: { pt: 'Motor proprietário de previsão de demanda com modelos adaptativos e demand sensing em tempo real', en: 'Proprietary demand forecasting engine with adaptive models and real-time demand sensing' } },
@@ -244,14 +258,12 @@ const PRODUCTS = [
   { name: 'i6ElasticPrice', anchor: 'i6elasticprice', description: { pt: 'Motor proprietário de elasticidade e precificação dinâmica por SKU, canal e ciclo de vida', en: 'Proprietary elasticity and dynamic pricing engine by SKU, channel and lifecycle' } },
 ];
 
-// Idiomas com rota real no router (src/App.tsx aceita en, pt e es em todas
-// as rotas estáticas abaixo, incluindo docs/:slug).
-const STATIC_LANGS = ['en', 'pt', 'es'];
-
-for (const lang of STATIC_LANGS) {
+for (const lang of ['en', 'pt', 'es']) {
   // Corpo auxiliar para crawlers: só existe em pt/en; es usa o texto em pt.
   const tl = lang === 'en' ? 'en' : 'pt';
   for (const route of staticRoutes) {
+    const routeLangs = languagesForRoute(route);
+    if (!routeLangs.includes(lang)) continue;
     const key = route === '' ? 'home' : route;
     const meta = seo[key]?.[lang];
     if (!meta) continue;
@@ -381,7 +393,7 @@ for (const lang of STATIC_LANGS) {
       body: body || undefined,
       jsonLd,
       extraJsonLd,
-      altLangs: STATIC_LANGS,
+      altLangs: routeLangs,
     });
     writeStub(path, html);
     count++;

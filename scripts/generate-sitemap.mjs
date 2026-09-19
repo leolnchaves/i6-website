@@ -11,8 +11,6 @@ import {
 const BASE_URL = 'https://infinity6.ai';
 const SITEMAP_PATH = resolve('public/sitemap.xml');
 const source = readFileSync(SITEMAP_PATH, 'utf8');
-const urlBlocks = [...source.matchAll(/\s*<url>[\s\S]*?<\/url>/g)].map((match) => match[0].trim());
-const blockSpans = [...source.matchAll(/\s*<url>[\s\S]*?<\/url>/g)];
 
 const routeFromUrl = (value) => {
   const pathname = new URL(value).pathname.replace(/\/$/, '');
@@ -50,35 +48,31 @@ ${alternateTags(route)}
   </url>`;
 
 const seen = new Map();
-const normalizedBlocks = [];
-
-for (const originalBlock of urlBlocks) {
-  const location = blockLocation(originalBlock);
-  if (!location) {
-    normalizedBlocks.push(originalBlock);
-    continue;
-  }
+let output = source.replace(/\s*<url>[\s\S]*?<\/url>/g, (originalBlock) => {
+  const leading = originalBlock.match(/^\s*/)?.[0] ?? '';
+  const block = originalBlock.trim();
+  const location = blockLocation(block);
+  if (!location) return originalBlock;
   const route = routeFromUrl(location);
   const lang = languageFromUrl(location);
-  if (lang === 'es' && !ES_TRANSLATED_ROUTES.includes(route)) continue;
+  if (lang === 'es' && !ES_TRANSLATED_ROUTES.includes(route)) return '';
 
-  const block = ES_TRANSLATED_ROUTES.includes(route)
-    ? normalizeAlternates(originalBlock, route)
-    : stripSpanishAlternate(originalBlock);
-  normalizedBlocks.push(block);
   if (lang) seen.set(`${lang}:${route}`, true);
-}
+  const normalized = ES_TRANSLATED_ROUTES.includes(route)
+    ? normalizeAlternates(block, route)
+    : stripSpanishAlternate(block);
+  return `${leading}${normalized}`;
+});
 
+const additions = [];
 for (const route of ES_TRANSLATED_ROUTES) {
   for (const lang of languagesForRoute(route)) {
-    if (!seen.has(`${lang}:${route}`)) normalizedBlocks.push(createBlock(lang, route));
+    if (!seen.has(`${lang}:${route}`)) additions.push(createBlock(lang, route));
   }
 }
 
-const firstStart = blockSpans[0]?.index;
-const last = blockSpans.at(-1);
-if (firstStart === undefined || !last) throw new Error('sitemap.xml não contém blocos <url>');
-const lastEnd = (last.index ?? 0) + last[0].length;
-const output = `${source.slice(0, firstStart)}\n${normalizedBlocks.join('\n')}\n${source.slice(lastEnd)}`;
+if (additions.length) {
+  output = output.replace('</urlset>', `\n  <!-- Rotas com tradução real em espanhol -->\n${additions.join('\n')}\n\n</urlset>`);
+}
 writeFileSync(SITEMAP_PATH, output, 'utf8');
 console.log(`✅ Sitemap sincronizado com ${ES_TRANSLATED_ROUTES.length} rotas traduzidas em ES`);
