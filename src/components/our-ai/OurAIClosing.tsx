@@ -17,9 +17,12 @@ const OurAIClosing = memo(({ content }: Props) => {
     <section className="container mx-auto px-6 pb-24 pt-8">
       <div className="relative overflow-hidden rounded-[calc(var(--radius)+8px)] border border-primary/25 bg-accent px-6 py-14 md:px-14 md:py-16">
         <div aria-hidden className="absolute inset-0 sand-glow" />
-        <div className="relative max-w-3xl">
+        <div className="relative">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">{content.eyebrow}</p>
-          <h2 className="mt-4 text-3xl md:text-[2.4rem] font-bold leading-[1.14] text-foreground">{content.title}</h2>
+          <h2 className="mt-4 text-3xl font-bold leading-[1.14] text-foreground lg:whitespace-nowrap lg:text-[clamp(1.6rem,3.3vw,2.4rem)]">
+            {content.title}
+          </h2>
+          <div className="max-w-3xl">
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">{content.lead}</p>
 
           <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
