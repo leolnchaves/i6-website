@@ -316,26 +316,9 @@ for (const lang of ['en', 'pt', 'es']) {
       };
       const ourAILead = OUR_AI_LEAD[lang] ?? OUR_AI_LEAD.pt;
 
-      // Glossary terms (mirror src/data/staticData/ourAIContent.ts)
-      const glossary = tl === 'pt' ? [
-        { slug: 'predicao-comportamental', term: 'Predição comportamental', def: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais para antecipar a próxima ação relevante.' },
-        { slug: 'propensao-conversao', term: 'Propensão de conversão', def: 'Score preditivo da probabilidade de conclusão de compra em um contexto específico.' },
-        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', def: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida.' },
-        { slug: 'aderencia-contextual', term: 'Aderência contextual', def: 'Grau em que uma recomendação combina histórico comportamental com o contexto atual.' },
-        { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine) base do i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
-        { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'Modelo fundacional proprietário da infinity6, base compartilhada pelos três motores. Combina MAML, Active Learning, Topological Loss e External Memory, treinado em 20 bi de registros.' },
-      ] : [
-        { slug: 'behavioral-prediction', term: 'Behavioral prediction', def: 'Modeling that learns real customer/channel/product behavior from transactional data to anticipate the next relevant action.' },
-        { slug: 'conversion-propensity', term: 'Conversion propensity', def: 'Predictive score for the probability of completing a purchase in a specific context.' },
-        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', def: 'Continuous price-sensitivity learning by SKU, channel and lifecycle.' },
-        { slug: 'contextual-adherence', term: 'Contextual adherence', def: 'How well a recommendation combines behavioral history with current context.' },
-        { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning (Finn, Abbeel & Levine). Foundation of i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
-        { slug: 'active-learning', term: 'Active Learning', def: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'infinity6 proprietary foundation model shared by the three engines. Combines MAML, Active Learning, Topological Loss and External Memory, trained on 20B records.' },
-      ];
+      // Glossário: fonte única src/data/ourAIGlossary.json (o mesmo que a página renderiza).
+      const glossary = (OUR_AI_GLOSSARY[lang] ?? OUR_AI_GLOSSARY.pt)
+        .map((g) => ({ slug: g.slug, term: g.term, def: g.definition }));
 
       // Real-results KPIs — fonte única: src/data/realResults.json (mesmos cards da Home).
       const kpis = REAL_RESULTS.map((kpi) => ({
