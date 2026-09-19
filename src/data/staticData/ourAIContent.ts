@@ -180,7 +180,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       architecture: [
         { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-aprendizado que deixa o modelo pronto para se adaptar a uma nova tarefa com poucas amostras do cliente.' },
         { term: 'Active Learning', detail: 'O próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
-        { term: 'Topological Loss', detail: 'Preserva as relações topológicas do espaço latente, o que estabiliza embeddings e melhora generalização em poucos shots.' },
+        { term: 'Topological Loss', detail: 'Preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
         { term: 'External Memory', detail: 'Memória externa que guarda e recupera padrões de tarefas já vistas, permitindo aprender novas tarefas rapidamente sem retreinar o modelo inteiro.' },
       ],
       statsTitle: 'Escala de treino',
@@ -383,7 +383,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       architecture: [
         { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-learning that leaves the model ready to adapt to a new task from a handful of client samples.' },
         { term: 'Active Learning', detail: 'The model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
-        { term: 'Topological Loss', detail: 'Preserves topological relations in the latent space, stabilizing embeddings and improving few-shot generalization.' },
+        { term: 'Topological Loss', detail: 'Preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
         { term: 'External Memory', detail: 'External memory that stores and retrieves patterns from tasks already seen, allowing new tasks to be learned quickly without retraining the whole model.' },
       ],
       statsTitle: 'Training scale',
@@ -586,7 +586,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       architecture: [
         { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-aprendizaje que deja el modelo listo para adaptarse a una nueva tarea con pocas muestras del cliente.' },
         { term: 'Active Learning', detail: 'El propio modelo elige qué muestras vale la pena etiquetar, acelerando el aprendizaje y reduciendo el costo de etiquetado.' },
-        { term: 'Topological Loss', detail: 'Preserva las relaciones topológicas del espacio latente, lo que estabiliza embeddings y mejora la generalización con pocas muestras.' },
+        { term: 'Topological Loss', detail: 'Preserva las relaciones topológicas del espacio latente, lo que estabiliza los embeddings y mejora la generalización con pocas muestras.' },
         { term: 'External Memory', detail: 'Memoria externa que guarda y recupera patrones de tareas ya vistas, permitiendo aprender nuevas tareas rápidamente sin reentrenar todo el modelo.' },
       ],
       statsTitle: 'Escala de entrenamiento',
