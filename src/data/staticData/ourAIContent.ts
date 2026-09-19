@@ -178,7 +178,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       description: 'A base compartilhada pelos três motores: meta-aprendizado, aprendizado ativo e perda topológica para se adaptar a novas tarefas com poucas amostras.',
       architectureTitle: 'Arquitetura',
       architecture: [
-        { term: 'MAML', detail: 'Meta-aprendizado que deixa o modelo pronto para se adaptar a uma nova tarefa com poucas amostras do cliente.' },
+        { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-aprendizado que deixa o modelo pronto para se adaptar a uma nova tarefa com poucas amostras do cliente.' },
         { term: 'Active Learning', detail: 'O próprio modelo escolhe quais amostras valem rotulagem, acelerando o aprendizado e reduzindo custo de anotação.' },
         { term: 'Topological Loss', detail: 'Preserva as relações topológicas do espaço latente, o que estabiliza embeddings e melhora generalização em poucos shots.' },
         { term: 'External Memory', detail: 'Memória externa que guarda e recupera padrões de tarefas já vistas, permitindo aprender novas tarefas rapidamente sem retreinar o modelo inteiro.' },
@@ -381,7 +381,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       description: 'The base shared by all three engines: meta-learning, active learning and topological loss to adapt to new tasks from few samples.',
       architectureTitle: 'Architecture',
       architecture: [
-        { term: 'MAML', detail: 'Meta-learning that leaves the model ready to adapt to a new task from a handful of client samples.' },
+        { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-learning that leaves the model ready to adapt to a new task from a handful of client samples.' },
         { term: 'Active Learning', detail: 'The model itself picks which samples deserve labeling, accelerating learning and cutting annotation cost.' },
         { term: 'Topological Loss', detail: 'Preserves topological relations in the latent space, stabilizing embeddings and improving few-shot generalization.' },
         { term: 'External Memory', detail: 'External memory that stores and retrieves patterns from tasks already seen, allowing new tasks to be learned quickly without retraining the whole model.' },
@@ -584,7 +584,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       description: 'La base compartida por los tres motores: meta-aprendizaje, aprendizaje activo y pérdida topológica para adaptarse a nuevas tareas con pocas muestras.',
       architectureTitle: 'Arquitectura',
       architecture: [
-        { term: 'MAML', detail: 'Meta-aprendizaje que deja el modelo listo para adaptarse a una nueva tarea con pocas muestras del cliente.' },
+        { term: 'MAML (Model-Agnostic Meta-Learning)', detail: 'Meta-aprendizaje que deja el modelo listo para adaptarse a una nueva tarea con pocas muestras del cliente.' },
         { term: 'Active Learning', detail: 'El propio modelo elige qué muestras merecen etiquetado, acelerando el aprendizaje y reduciendo el costo de anotación.' },
         { term: 'Topological Loss', detail: 'Preserva las relaciones topológicas del espacio latente, lo que estabiliza embeddings y mejora la generalización con pocas muestras.' },
         { term: 'External Memory', detail: 'Memoria externa que guarda y recupera patrones de tareas ya vistas, permitiendo aprender nuevas tareas rápidamente sin reentrenar todo el modelo.' },
