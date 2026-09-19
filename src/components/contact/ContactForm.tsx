@@ -56,7 +56,7 @@ const VARIANT_REASON: Record<Exclude<ContactFormVariant, 'default'>, string> = {
 
 export interface ContactFormProps {
   /** Valores iniciais (ex.: go-landing já chega com nome/e-mail/empresa). */
-  defaultValues?: Partial<FormData>;
+  defaultValues?: Partial<Pick<FormData, 'name' | 'email' | 'company' | 'subject' | 'message'>>;
   /**
    * Pré-preenchimento aplicado UMA vez ao montar (ex.: atalho ?intent=security
    * vindo de /our-ai). Diferente de defaultValues: o reset() pós-envio volta aos
