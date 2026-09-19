@@ -335,8 +335,8 @@ for (const lang of ['en', 'pt', 'es']) {
       const definedTermSet = {
         '@type': 'DefinedTermSet',
         '@id': `${BASE_URL}/${lang}/our-ai#glossario`,
-        name: tl === 'pt' ? 'Glossário GEO — termos da infinity6' : 'GEO Glossary — infinity6 terms',
-        inLanguage: tl === 'pt' ? 'pt-BR' : 'en',
+        name: GLOSSARY_SET_NAME[lang] ?? GLOSSARY_SET_NAME.pt,
+        inLanguage: HTML_LANG[lang],
         hasDefinedTerm: glossary.map(g => ({
           '@type': 'DefinedTerm',
           '@id': `${BASE_URL}/${lang}/our-ai#glossario-${g.slug}`,
