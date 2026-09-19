@@ -229,7 +229,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Explicabilidade como parte da saída',
           description: 'A explicação não é um relatório posterior: cada decisão carrega o peso dos sinais que a determinaram, o que permite auditoria, contestação e correção.',
           points: [
-            'Atribuição de contribuição por variável em cada decisão individual',
+            'Contribuição de cada variável em cada decisão individual',
             'Sinais rastreáveis: comportamento, propensão, estoque, margem, demanda, elasticidade e similaridade',
             'Registro versionado de modelo, dado e decisão para auditoria posterior',
           ],
@@ -442,7 +442,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Explainability as part of the output',
           description: 'Explanation is not a report written afterwards: every decision carries the weight of the signals that determined it, enabling audit, challenge and correction.',
           points: [
-            'Per-variable contribution attribution on every individual decision',
+            'Contribution of each variable in every individual decision',
             'Traceable signals: behavior, propensity, inventory, margin, demand, elasticity and similarity',
             'Versioned record of model, data and decision for later audit',
           ],
@@ -655,7 +655,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Explicabilidad como parte de la salida',
           description: 'La explicación no es un informe posterior: cada decisión carga el peso de las señales que la determinaron, lo que permite auditoría, cuestionamiento y corrección.',
           points: [
-            'Atribución de contribución por variable en cada decisión individual',
+            'Contribución de cada variable en cada decisión individual',
             'Señales rastreables: comportamiento, propensión, inventario, margen, demanda, elasticidad y similitud',
             'Registro versionado de modelo, dato y decisión para auditoría posterior',
           ],
