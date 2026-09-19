@@ -257,7 +257,6 @@ for (const page of pages) {
 
 // ---- Paridade coletor × llms.txt × sitemap.xml × stubs ----
 // Todo item elegível aparece nos três artefatos; nenhum item excluído aparece em algum deles.
-const llms = readFileSync(resolve('public/llms.txt'), 'utf8');
 const collected = collectContent();
 
 for (const item of collected) {
@@ -268,7 +267,7 @@ for (const item of collected) {
   if (!sitemap.includes(`<loc>${item.url}</loc>`)) {
     errors.push(`sitemap: item publicado ausente ${item.url}`);
   }
-  if (item.kind !== 'doc' && item.kind !== 'insight' && !llms.includes(item.url)) {
+  if (item.kind !== 'doc' && !llms.includes(item.url)) {
     errors.push(`llms.txt: item publicado ausente ${item.url}`);
   }
 }
