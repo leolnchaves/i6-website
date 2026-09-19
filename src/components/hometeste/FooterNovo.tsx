@@ -6,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import logoFooter from '@/assets/images/logo-footer.png';
 import { useCallback } from 'react';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
+import { usePolicyDrawer } from '@/components/policy/PolicyDrawer';
 
 type SocialIconProps = { size?: number };
 
@@ -27,6 +28,7 @@ const FooterNovo = () => {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
   const localized = useLocalizedPath();
+  const { openPolicy } = usePolicyDrawer();
   const isMobile = useIsMobile();
 
   const handleNav = useCallback(
