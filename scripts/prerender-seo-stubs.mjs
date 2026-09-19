@@ -263,10 +263,10 @@ for (const lang of ['en', 'pt', 'es']) {
     let jsonLd;
     const extraJsonLd = [];
     if (route === 'our-ai') {
-      // Só os 3 itens visíveis na Base científica desta página — mesmos @id de docs/pesquisa.
+      // Mesmo filtro (showOnOurAI) da seção 04 — mesmos @id de docs/pesquisa.
       extraJsonLd.push({
         '@context': 'https://schema.org',
-        '@graph': buildResearchNodes(lang, ['palestra-ifood', 'artigo-lnbip-2013', 'artigo-webist-2012']),
+        '@graph': buildOurAIResearchNodes(lang),
       });
       const OUR_AI_LEAD = {
         pt: 'A infinity6 opera três motores proprietários de IA aplicada: i6 RecSys (recomendação contextual), i6 Previsio (previsão de demanda granular) e i6 ElasticPrice (precificação adaptativa). Os três partem do modelo fundacional i6-RecSys-Base.g1, que combina MAML, Active Learning, Topological Loss e External Memory, treinado em 20 bi de registros transacionais e 50 bases públicas ou adquiridas (45% e-commerce, 20% telecom, 20% atacado e varejo, 15% produtos financeiros).',

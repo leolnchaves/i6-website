@@ -68,33 +68,56 @@ export function buildPersonNodes(lang) {
 
 const EVERTON = { '@id': `${BASE_URL}/#everton-gago` };
 
+/** ScholarlyArticle para capítulo/conferência; Thesis para a dissertação. */
+const KIND_TYPE = { chapter: 'ScholarlyArticle', conference: 'ScholarlyArticle', thesis: 'Thesis' };
+
+/** Autores na ordem da publicação; Everton entra por referência ao Person. */
+const authorNodes = (a) =>
+  (a.authors || []).map((name) => (/Gago/.test(name) ? EVERTON : { '@type': 'Person', name }));
+
 function articleNode(a) {
-  const isPartOf = a.isPartOf
-    ? a.isPartOf.type === 'PublicationVolume'
+  const part = a.isPartOf;
+  const isPartOf = part
+    ? part.type === 'PublicationVolume'
       ? prune({
           '@type': 'PublicationVolume',
-          name: a.isPartOf.name,
-          volumeNumber: a.isPartOf.volumeNumber,
-          isPartOf: a.isPartOf.series
-            ? { '@type': 'BookSeries', name: a.isPartOf.series }
-            : undefined,
+          name: part.name,
+          volumeNumber: part.volumeNumber,
+          isPartOf: part.series ? { '@type': 'BookSeries', name: part.series } : undefined,
         })
-      : prune({ '@type': a.isPartOf.type, name: a.isPartOf.name })
+      : part.type === 'Book'
+        ? prune({
+            '@type': 'Book',
+            name: part.name,
+            isbn: part.isbn,
+            publisher: part.publisher
+              ? { '@type': 'Organization', name: part.publisher }
+              : undefined,
+          })
+        : prune({ '@type': part.type, name: part.name })
     : undefined;
 
+  const authors = authorNodes(a);
+
   return prune({
-    '@type': 'ScholarlyArticle',
+    '@type': KIND_TYPE[a.kind] || 'ScholarlyArticle',
     '@id': `${BASE_URL}/#${a.slug}`,
     name: a.title,
     headline: a.title,
-    author: EVERTON,
+    author: authors.length ? authors : EVERTON,
     datePublished: a.datePublished,
     inLanguage: a.inLanguage,
     pagination: a.pagination,
+    identifier: a.doi
+      ? { '@type': 'PropertyValue', propertyID: 'DOI', value: a.doi }
+      : undefined,
+    inSupportOf: a.inSupportOf,
+    sourceOrganization: a.institution
+      ? prune({ '@type': 'CollegeOrUniversity', name: a.institution, department: a.department })
+      : undefined,
     publisher: a.publisher ? { '@type': 'Organization', name: a.publisher } : undefined,
     isPartOf,
     url: a.url,
-    sameAs: a.sameAs,
   });
 }
 
