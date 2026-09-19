@@ -243,7 +243,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'Anonimização na origem', description: 'O modelo nunca vê dado identificável: a anonimização acontece antes do treinamento, em todos os modelos' },
         { title: 'Segurança em camadas', description: 'Autenticação 100% na plataforma e controle de acesso por perfil. Os produtos não têm backend nem banco de dados próprios, o que reduz a superfície de ataque' },
         { title: 'Ambiente isolado', description: 'Dados e modelos de cada cliente ficam em ambiente isolado, sem acesso cruzado' },
-        { title: 'Pronto para escalar', description: 'Solução 100% em nuvem, com escalonamento automático de recursos' },
+        { title: 'Escala com o mesmo controle', description: 'Solução 100% em nuvem, com escalonamento automático de recursos' },
       ],
     },
     results: {
@@ -439,7 +439,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'Anonymization at source', description: 'The model never sees identifiable data: anonymization happens before training, in every model' },
         { title: 'Layered security', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface' },
         { title: 'Isolated environment', description: 'Data and models for each client stay in an isolated environment, with no cross access' },
-        { title: 'Ready to scale', description: '100% cloud-native solution with automatic resource scaling' },
+        { title: 'Scales with the same control', description: '100% cloud-native solution with automatic resource scaling' },
       ],
     },
     results: {
@@ -635,7 +635,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'Anonimización en el origen', description: 'El modelo nunca ve dato identificable: la anonimización ocurre antes del entrenamiento, en todos los modelos' },
         { title: 'Seguridad en capas', description: 'Autenticación 100% en la plataforma y control de acceso por perfil. Los productos no tienen backend ni base de datos propios, lo que reduce la superficie de ataque' },
         { title: 'Entorno aislado', description: 'Los datos y modelos de cada cliente quedan en un entorno aislado, sin acceso cruzado' },
-        { title: 'Listo para escalar', description: 'Solución 100% en la nube, con escalado automático de recursos' },
+        { title: 'Escala con el mismo control', description: 'Solución 100% en la nube, con escalado automático de recursos' },
       ],
     },
     results: {
