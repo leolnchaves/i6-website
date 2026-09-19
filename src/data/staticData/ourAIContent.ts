@@ -258,7 +258,13 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Os motores nasceram de uma linha de pesquisa conduzida pelo fundador da infinity6 e pela área de P&D: de mapas auto-organizáveis a clustering não supervisionado e descoberta de padrões sem regras prévias.',
       highlights: [
         {
-          badge: 'SPRINGER · LNBIP · 2013',
+          badge: 'PALESTRA · QCON SÃO PAULO · 2018',
+          title: 'Recomendação de conteúdo na escala do iFood',
+          venue: 'InfoQ Brasil · QCon',
+          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
+        },
+        {
+          badge: 'PUBLICAÇÃO · SPRINGER LNBIP · 2013',
           title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
           venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
           url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
@@ -268,12 +274,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
           venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
           url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
-        },
-        {
-          badge: 'PALESTRA · InfoQ · QCon',
-          title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon',
-          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
       ],
       cta: 'Ver toda a produção técnica',
@@ -470,7 +470,13 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'The engines were born from a research line led by the founder of infinity6 and our R&D team: from self-organizing maps to unsupervised clustering and rule-free pattern discovery.',
       highlights: [
         {
-          badge: 'SPRINGER · LNBIP · 2013',
+          badge: 'TALK · QCON SÃO PAULO · 2018',
+          title: 'Content recommendation at iFood scale',
+          venue: 'InfoQ Brasil · QCon',
+          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
+        },
+        {
+          badge: 'PUBLICATION · SPRINGER LNBIP · 2013',
           title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
           venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
           url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
@@ -480,12 +486,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
           venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
           url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
-        },
-        {
-          badge: 'TALK · InfoQ · QCon',
-          title: 'Content recommendation at iFood scale',
-          venue: 'InfoQ Brasil · QCon',
-          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
       ],
       cta: 'See all technical production',
@@ -682,7 +682,13 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Los motores nacieron de una línea de investigación conducida por el fundador de infinity6 y el área de I+D: de mapas autoorganizados a clustering no supervisado y descubrimiento de patrones sin reglas previas.',
       highlights: [
         {
-          badge: 'SPRINGER · LNBIP · 2013',
+          badge: 'CHARLA · QCON SÃO PAULO · 2018',
+          title: 'Recomendación de contenido a la escala de iFood',
+          venue: 'InfoQ Brasil · QCon',
+          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
+        },
+        {
+          badge: 'PUBLICACIÓN · SPRINGER LNBIP · 2013',
           title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
           venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
           url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
@@ -692,12 +698,6 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
           venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
           url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
-        },
-        {
-          badge: 'CHARLA · InfoQ · QCon',
-          title: 'Recomendación de contenido a la escala de iFood',
-          venue: 'InfoQ Brasil · QCon',
-          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
       ],
       cta: 'Ver toda la producción técnica',
