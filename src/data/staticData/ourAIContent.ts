@@ -219,7 +219,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Precisão e diversidade, juntas',
           description: 'Um modelo que só repete o histórico é preciso e inútil. O treinamento aplica um ajuste que mantém a precisão comportamental enquanto abre o espaço de saída para alternativas ainda não exploradas.',
           points: [
-            'Precisão e diversidade tratadas como objetivos simultâneos, não como troca',
+            'Precisão e diversidade tratadas como objetivos simultâneos, não como concessão',
             'Sinais raros preservados em vez de suprimidos pela frequência',
             'Mesmo nível de relevância mantido também para perfis anônimos',
           ],
@@ -432,7 +432,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Precision and diversity, together',
           description: 'A model that merely repeats history is accurate and useless. Training applies a tuning step that keeps behavioral precision while opening the output space to alternatives not yet explored.',
           points: [
-            'Precision and diversity as simultaneous objectives, not a trade-off',
+            'Precision and diversity as simultaneous objectives, not a concession',
             'Rare signals preserved instead of suppressed by frequency',
             'Same relevance level maintained for anonymous profiles as well',
           ],
@@ -645,7 +645,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           title: 'Precisión y diversidad, juntas',
           description: 'Un modelo que solo repite el histórico es preciso e inútil. El entrenamiento aplica un ajuste que mantiene la precisión conductual mientras abre el espacio de salida a alternativas aún no exploradas.',
           points: [
-            'Precisión y diversidad como objetivos simultáneos, no como intercambio',
+            'Precisión y diversidad como objetivos simultáneos, no como concesión',
             'Señales raras preservadas en lugar de suprimidas por la frecuencia',
             'Mismo nivel de relevancia también para perfiles anónimos',
           ],
