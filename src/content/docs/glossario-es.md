@@ -33,7 +33,7 @@ Las restricciones de margen y posicionamiento entran como límites del modelo, a
 
 Modelo fundacional propio de infinity6, base de los engines de previsión, recomendación y precificación. Combina tres elementos de arquitectura: MAML, para adaptación rápida con pocas muestras; Active Learning, para elegir el dato más informativo; y Topological Loss, para preservar la estructura de las relaciones aprendidas.
 
-Fue preentrenado en 1.450 millones de registros multisectoriales, por lo que adaptarlo a un cliente específico exige mucho menos dato propio que entrenar un modelo desde cero.
+Fue preentrenado en 20 mil millones de registros multisectoriales, por lo que adaptarlo a un cliente específico exige mucho menos dato propio que entrenar un modelo desde cero.
 
 ## MAML
 
