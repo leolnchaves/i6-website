@@ -279,7 +279,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       cta: 'Ver toda a produção técnica',
       founder: {
-        label: 'Veja o perfil acadêmico de Everton Gago, fundador da infinity6',
+        label: 'Veja o perfil acadêmico de Everton Gago, co-fundador & COO da infinity6',
         url: 'https://www.linkedin.com/in/everton-gago/',
       },
     },
@@ -495,7 +495,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       cta: 'See all technical production',
       founder: {
-        label: 'See the academic profile of Everton Gago, founder of infinity6',
+        label: 'See the academic profile of Everton Gago, co-founder & COO of infinity6',
         url: 'https://www.linkedin.com/in/everton-gago/',
       },
     },
@@ -711,7 +711,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       cta: 'Ver toda la producción técnica',
       founder: {
-        label: 'Mira el perfil académico de Everton Gago, fundador de infinity6',
+        label: 'Mira el perfil académico de Everton Gago, cofundador & COO de infinity6',
         url: 'https://www.linkedin.com/in/everton-gago/',
       },
     },
