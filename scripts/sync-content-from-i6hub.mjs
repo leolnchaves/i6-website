@@ -611,6 +611,10 @@ for (const it of items) {
     coverLocal: coverOut?.localPath ?? coverFallback ?? null,
     logoLocal:  logoOut?.localPath  ?? logoFallback  ?? null,
   });
+  if (protectedFiles.has(fileName)) {
+    console.warn(`· skip (protegido): ${fileName}`);
+    continue;
+  }
   await fs.writeFile(path.join(MD_DIR, fileName), md);
 }
 
