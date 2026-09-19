@@ -241,7 +241,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.',
       pillars: [
         { title: 'Anonimização na origem', description: 'O modelo nunca vê dado identificável: a anonimização acontece antes do treinamento, em todos os modelos' },
-        { title: 'Segurança em camadas', description: 'Autenticação multinível e controle de acesso baseado em rotas' },
+        { title: 'Segurança em camadas', description: 'Autenticação 100% na plataforma e controle de acesso por perfil. Os produtos não têm backend nem banco de dados próprios, o que reduz a superfície de ataque' },
         { title: 'Ambiente isolado', description: 'Ambientes seguros e isolados protegem dados e modelos contra acesso não autorizado' },
         { title: 'Pronto para escalar', description: 'Solução 100% em nuvem, com escalonamento automático de recursos' },
       ],
