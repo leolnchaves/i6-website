@@ -28,8 +28,9 @@ const PUBLIC_DIR = resolve('public');
 const errors = [];
 
 const research = JSON.parse(readFileSync(resolve('src/data/research.json'), 'utf8'));
+const ourAIGlossary = JSON.parse(readFileSync(resolve('src/data/ourAIGlossary.json'), 'utf8'));
 
-const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'docs/glossario', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 const stubFile = (lang, route) => {
   if (route === '') return join(DIST, lang, 'index.html');
   return join(DIST, lang, `${route}.html`);
@@ -146,6 +147,7 @@ for (const lang of ['pt', 'en', 'es']) {
   pages.push({ lang, label: `/${lang}`, file: join(DIST, lang, 'index.html') });
   pages.push({ lang, label: `/${lang}/our-ai`, file: join(DIST, lang, 'our-ai.html') });
   pages.push({ lang, label: `/${lang}/docs/pesquisa`, file: join(DIST, lang, 'docs', 'pesquisa.html') });
+  pages.push({ lang, label: `/${lang}/docs/glossario`, file: join(DIST, lang, 'docs', 'glossario.html') });
 }
 
 const extractBlocks = (html) =>
@@ -207,6 +209,30 @@ for (const page of pages) {
       if (!applications.some((node) => node['@id'] === id)) {
         errors.push(`${page.label}: SoftwareApplication obrigatório ausente ${id}`);
       }
+    }
+  }
+
+  // (f) Glossário: todo DefinedTerm precisa de âncora correspondente no #seo-prerender
+  //     da mesma página; em /our-ai a contagem tem de igualar a do JSON de origem.
+  const definedTerms = [];
+  walk(parsed, (node) => {
+    if (node['@type'] === 'DefinedTerm') definedTerms.push(node);
+  });
+  const prerendered = html.match(/<div id="seo-prerender"[\s\S]*?<\/div>/i)?.[0] ?? html;
+  for (const term of definedTerms) {
+    const anchor = String(term['@id'] || '').split('#')[1];
+    if (!anchor) {
+      errors.push(`${page.label}: DefinedTerm sem âncora no @id (${term.name})`);
+      continue;
+    }
+    if (!prerendered.includes(`id="${anchor}"`)) {
+      errors.push(`${page.label}: DefinedTerm "${term.name}" sem âncora #${anchor} no HTML pré-renderizado`);
+    }
+  }
+  if (page.label.endsWith('/our-ai')) {
+    const expected = (ourAIGlossary[page.lang] ?? []).length;
+    if (definedTerms.length !== expected) {
+      errors.push(`${page.label}: ${definedTerms.length} DefinedTerm no JSON-LD; esperados ${expected} (src/data/ourAIGlossary.json)`);
     }
   }
 

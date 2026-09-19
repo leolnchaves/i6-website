@@ -17,7 +17,7 @@ export const SAMPLE_DOC_ROUTES = existsSync(DOCS_CONTENT_DIR)
   : [];
 
 // Páginas de documentação gerenciadas pelo site que podem ser indexadas.
-export const INDEXABLE_DOC_SLUGS = ['pesquisa'];
+export const INDEXABLE_DOC_SLUGS = ['pesquisa', 'glossario'];
 
 export const NON_INDEXABLE_DOC_ROUTES = [DOCS_ROOT_ROUTE, ...SAMPLE_DOC_ROUTES];
 
@@ -43,6 +43,7 @@ export const ES_TRANSLATED_ROUTES = [
   'our-ai',
   'i6-builders',
   'docs/pesquisa',
+  'docs/glossario',
   'contact',
 ];
 

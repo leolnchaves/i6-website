@@ -1,4 +1,9 @@
 import type { Language } from '@/types/language';
+import ourAIGlossary from '@/data/ourAIGlossary.json';
+
+/** Fonte única do glossário condensado: mesma lista usada pelos stubs estáticos. */
+type GlossaryTerm = { slug: string; term: string; definition: string };
+const glossaryTerms = ourAIGlossary as Record<Language, GlossaryTerm[]>;
 
 export interface EngineDef {
   id: 'i6previsio' | 'i6recsys' | 'i6elasticprice';
@@ -272,14 +277,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Vocabulário',
       title: 'Os conceitos por trás da inteligência',
       lead: 'Definições curtas dos termos técnicos que sustentam os motores e o modelo fundacional.',
-      terms: [
-        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional proprietário da infinity6, base compartilhada pelos três motores. Combina MAML, Active Learning, Topological Loss e External Memory e se adapta com poucas amostras por cliente.' },
-        { slug: 'predicao-comportamental', term: 'Predição comportamental', definition: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais — não declarados — para antecipar a próxima ação relevante.' },
-        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', definition: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida — substitui curvas estáticas por aprendizado online.' },
-      ],
+      terms: glossaryTerms.pt,
       cta: 'Glossário completo na documentação',
     },
     closing: {
@@ -471,14 +469,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Vocabulary',
       title: 'The concepts behind the intelligence',
       lead: 'Short definitions of the technical terms behind the engines and the foundation model.',
-      terms: [
-        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algorithm (Finn, Abbeel & Levine, 2017) that trains models to adapt quickly to new tasks from few samples — the basis of i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'infinity6 proprietary foundation model, the shared base of the three engines. It combines MAML, Active Learning, Topological Loss and External Memory, and adapts from few client samples.' },
-        { slug: 'behavioral-prediction', term: 'Behavioral prediction', definition: 'Modeling that learns the real behavior of a customer, channel or product from transactional data — not declared preferences — to anticipate the next relevant action.' },
-        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', definition: 'Price sensitivity of demand computed continuously by SKU, channel and lifecycle — replacing static curves with online learning.' },
-      ],
+      terms: glossaryTerms.en,
       cta: 'Full glossary in the documentation',
     },
     closing: {
@@ -670,14 +661,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       eyebrow: 'Vocabulario',
       title: 'Los conceptos detrás de la inteligencia',
       lead: 'Definiciones breves de los términos técnicos que sustentan los motores y el modelo fundacional.',
-      terms: [
-        { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que entrena modelos para adaptarse rápidamente a nuevas tareas con pocas muestras — base del i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Estrategia en la que el propio modelo elige qué muestras vale la pena etiquetar, acelerando el aprendizaje y reduciendo el costo de etiquetado.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Función de pérdida que preserva las relaciones topológicas del espacio latente, lo que estabiliza los embeddings y mejora la generalización con pocas muestras.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional propio de infinity6, base compartida por los tres motores. Combina MAML, Active Learning, Topological Loss y External Memory y se adapta con pocas muestras por cliente.' },
-        { slug: 'prediccion-conductual', term: 'Predicción conductual', definition: 'Modelado que aprende el comportamiento real del cliente, canal o producto a partir de datos transaccionales — no declarados — para anticipar la próxima acción relevante.' },
-        { slug: 'elasticidad-dinamica', term: 'Elasticidad dinámica', definition: 'Sensibilidad de la demanda al precio calculada de forma continua por SKU, canal y ciclo de vida — sustituye curvas estáticas por aprendizaje en línea.' },
-      ],
+      terms: glossaryTerms.es,
       cta: 'Glosario completo en la documentación',
     },
     closing: {

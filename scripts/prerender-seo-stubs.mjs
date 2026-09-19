@@ -27,6 +27,66 @@ import {
 } from './lib/seo-route-config.mjs';
 import { collectContent } from './lib/content-collector.mjs';
 
+// Fonte única do glossário condensado de /our-ai (mesmo JSON que a página usa).
+const OUR_AI_GLOSSARY = JSON.parse(readFileSync(resolve('src/data/ourAIGlossary.json'), 'utf8'));
+
+const GLOSSARY_SET_NAME = {
+  pt: 'Glossário GEO — termos da infinity6',
+  en: 'GEO Glossary — infinity6 terms',
+  es: 'Glosario GEO — términos de infinity6',
+};
+const GLOSSARY_HEADING = { pt: 'Glossário GEO', en: 'GEO Glossary', es: 'Glosario GEO' };
+const DOCS_GLOSSARY_SET_NAME = {
+  pt: 'Glossário completo da inteligência i6',
+  en: 'Full glossary of the i6 intelligence',
+  es: 'Glosario completo de la inteligencia i6',
+};
+
+/** Mesma regra de src/utils/headingSlug.ts: âncora do título renderizado. */
+const slugifyHeading = (text) => String(text)
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+
+/** Fábrica de ids ciente de repetição, igual a createHeadingIdFactory(). */
+const headingIdFactory = () => {
+  const seen = {};
+  return (text) => {
+    const base = slugifyHeading(text) || 'section';
+    seen[base] = (seen[base] ?? 0) + 1;
+    return seen[base] === 1 ? base : `${base}-${seen[base]}`;
+  };
+};
+
+/** Títulos h2 de um markdown, com o id que a página real gera. */
+const markdownHeadings = (md) => {
+  const nextId = headingIdFactory();
+  const out = [];
+  for (const line of md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').split(/\r?\n/)) {
+    const match = line.match(/^##\s+(.+?)\s*#*\s*$/);
+    if (!match) continue;
+    const text = match[1].replace(/(\*\*|__|\*|_|`)/g, '').trim();
+    out.push({ text, id: nextId(text) });
+  }
+  return out;
+};
+
+/** Primeiro parágrafo depois de cada h2 — definição curta para o DefinedTerm. */
+const markdownSectionLead = (md, heading) => {
+  const body = md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+  const lines = body.split(/\r?\n/);
+  const start = lines.findIndex((l) => l.trim().replace(/^##\s+/, '') === heading && /^##\s+/.test(l.trim()));
+  if (start === -1) return '';
+  for (let i = start + 1; i < lines.length; i += 1) {
+    const line = lines[i].trim();
+    if (/^##\s+/.test(line)) break;
+    if (line) return line.replace(/(\*\*|__|`)/g, '');
+  }
+  return '';
+};
+
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
@@ -82,6 +142,12 @@ const seo = {
     en: { title: 'Research — technical output | infinity6', description: 'Technical talks and papers published by the infinity6 team at conferences and in open repositories, complementing the formal peer-reviewed output.' },
     es: { title: 'Investigación — producción técnica | infinity6', description: 'Charlas técnicas y artículos publicados por el equipo de infinity6 en conferencias y repositorios abiertos, complementando la producción formal revisada por pares.' },
   },
+  // Documentação · Glossário: vocabulário técnico completo (visível em /{idioma}/docs/glossario).
+  'docs/glossario': {
+    pt: { title: 'Glossário — vocabulário técnico da inteligência i6 | infinity6', description: 'Vocabulário técnico completo da inteligência i6: algoritmos, métricas de decisão e termos de operação usados na documentação e nas páginas de produto.' },
+    en: { title: 'Glossary — technical vocabulary of the i6 intelligence | infinity6', description: 'Full technical vocabulary of the i6 intelligence: algorithms, decision metrics and operational terms used across the documentation and the product pages.' },
+    es: { title: 'Glosario — vocabulario técnico de la inteligencia i6 | infinity6', description: 'Vocabulario técnico completo de la inteligencia i6: algoritmos, métricas de decisión y términos de operación usados en la documentación y en las páginas de producto.' },
+  },
   'i6-builders': {
     pt: { title: 'i6 Builder Platform — Engines, SDKs e APIs de modelagem', description: 'Plataforma de modelagem da infinity6 para times de tecnologia: engines preditivos, SDKs, APIs e toolkits para construir produtos próprios de decisão orientada a dados.' },
     en: { title: 'i6 Builder Platform — Modeling engines, SDKs and APIs', description: 'The infinity6 modeling platform for technology teams: predictive engines, SDKs, APIs and toolkits to build your own data-driven decision products.' },
@@ -97,6 +163,7 @@ function mdToHtml(md) {
   const out = [];
   let para = [];
   let list = [];
+  const nextHeadingId = headingIdFactory();
   const flushPara = () => { if (para.length) { out.push(`<p>${para.join(' ')}</p>`); para = []; } };
   const flushList = () => { if (list.length) { out.push(`<ul>${list.map(i => `<li>${i}</li>`).join('')}</ul>`); list = []; } };
   const inline = (s) => s
@@ -105,8 +172,19 @@ function mdToHtml(md) {
   for (const raw of lines) {
     const line = raw.trim();
     if (!line) { flushPara(); flushList(); continue; }
-    if (line.startsWith('## ')) { flushPara(); flushList(); out.push(`<h2>${inline(line.slice(3).trim())}</h2>`); continue; }
-    if (line.startsWith('### ')) { flushPara(); flushList(); out.push(`<h3>${inline(line.slice(4).trim())}</h3>`); continue; }
+    if (line.startsWith('## ')) {
+      flushPara(); flushList();
+      const text = line.slice(3).trim();
+      // Mesma âncora que a página real gera (src/utils/headingSlug.ts).
+      out.push(`<h2 id="${nextHeadingId(text.replace(/(\*\*|__|`)/g, ''))}">${inline(text)}</h2>`);
+      continue;
+    }
+    if (line.startsWith('### ')) {
+      flushPara(); flushList();
+      const text = line.slice(4).trim();
+      out.push(`<h3 id="${nextHeadingId(text.replace(/(\*\*|__|`)/g, ''))}">${inline(text)}</h3>`);
+      continue;
+    }
     if (line.startsWith('- ')) { flushPara(); list.push(inline(line.slice(2).trim())); continue; }
     flushList(); para.push(inline(line));
   }
@@ -218,7 +296,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'docs/glossario', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
   {
@@ -276,26 +354,9 @@ for (const lang of ['en', 'pt', 'es']) {
       };
       const ourAILead = OUR_AI_LEAD[lang] ?? OUR_AI_LEAD.pt;
 
-      // Glossary terms (mirror src/data/staticData/ourAIContent.ts)
-      const glossary = tl === 'pt' ? [
-        { slug: 'predicao-comportamental', term: 'Predição comportamental', def: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais para antecipar a próxima ação relevante.' },
-        { slug: 'propensao-conversao', term: 'Propensão de conversão', def: 'Score preditivo da probabilidade de conclusão de compra em um contexto específico.' },
-        { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', def: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida.' },
-        { slug: 'aderencia-contextual', term: 'Aderência contextual', def: 'Grau em que uma recomendação combina histórico comportamental com o contexto atual.' },
-        { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine) base do i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
-        { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'Modelo fundacional proprietário da infinity6, base compartilhada pelos três motores. Combina MAML, Active Learning, Topological Loss e External Memory, treinado em 20 bi de registros.' },
-      ] : [
-        { slug: 'behavioral-prediction', term: 'Behavioral prediction', def: 'Modeling that learns real customer/channel/product behavior from transactional data to anticipate the next relevant action.' },
-        { slug: 'conversion-propensity', term: 'Conversion propensity', def: 'Predictive score for the probability of completing a purchase in a specific context.' },
-        { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', def: 'Continuous price-sensitivity learning by SKU, channel and lifecycle.' },
-        { slug: 'contextual-adherence', term: 'Contextual adherence', def: 'How well a recommendation combines behavioral history with current context.' },
-        { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning (Finn, Abbeel & Levine). Foundation of i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
-        { slug: 'active-learning', term: 'Active Learning', def: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
-        { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'infinity6 proprietary foundation model shared by the three engines. Combines MAML, Active Learning, Topological Loss and External Memory, trained on 20B records.' },
-      ];
+      // Glossário: fonte única src/data/ourAIGlossary.json (o mesmo que a página renderiza).
+      const glossary = (OUR_AI_GLOSSARY[lang] ?? OUR_AI_GLOSSARY.pt)
+        .map((g) => ({ slug: g.slug, term: g.term, def: g.definition }));
 
       // Real-results KPIs — fonte única: src/data/realResults.json (mesmos cards da Home).
       const kpis = REAL_RESULTS.map((kpi) => ({
@@ -304,7 +365,7 @@ for (const lang of ['en', 'pt', 'es']) {
         source: kpi.source[lang] ?? kpi.source.pt,
       }));
 
-      const glossaryHtml = `<h2 id="glossario">${tl === 'pt' ? 'Glossário GEO' : 'GEO Glossary'}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
+      const glossaryHtml = `<h2 id="glossario">${GLOSSARY_HEADING[lang] ?? GLOSSARY_HEADING.pt}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
       const kpisHtml = `<h2>${tl === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
 
       body = `<p>${ourAILead}</p><h2>${tl === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[tl]}</li>`).join('')}</ul>${kpisHtml}${glossaryHtml}`;
@@ -312,8 +373,8 @@ for (const lang of ['en', 'pt', 'es']) {
       const definedTermSet = {
         '@type': 'DefinedTermSet',
         '@id': `${BASE_URL}/${lang}/our-ai#glossario`,
-        name: tl === 'pt' ? 'Glossário GEO — termos da infinity6' : 'GEO Glossary — infinity6 terms',
-        inLanguage: tl === 'pt' ? 'pt-BR' : 'en',
+        name: GLOSSARY_SET_NAME[lang] ?? GLOSSARY_SET_NAME.pt,
+        inLanguage: HTML_LANG[lang],
         hasDefinedTerm: glossary.map(g => ({
           '@type': 'DefinedTerm',
           '@id': `${BASE_URL}/${lang}/our-ai#glossario-${g.slug}`,
@@ -369,6 +430,36 @@ for (const lang of ['en', 'pt', 'es']) {
           ...observations,
         ],
       };
+    }
+
+    if (route === 'docs/glossario') {
+      // Glossário completo: o DefinedTermSet acompanha exatamente os títulos h2
+      // do markdown, com as mesmas âncoras que a página real gera.
+      const mdFile = resolve(`src/content/docs/glossario-${lang}.md`);
+      if (existsSync(mdFile)) {
+        const md = readFileSync(mdFile, 'utf8');
+        body = mdToHtml(md);
+        const headings = markdownHeadings(md);
+        const setId = `${BASE_URL}/${lang}/docs/glossario#glossario-completo`;
+        extraJsonLd.push({
+          '@context': 'https://schema.org',
+          '@graph': [{
+            '@type': 'DefinedTermSet',
+            '@id': setId,
+            name: DOCS_GLOSSARY_SET_NAME[lang] ?? DOCS_GLOSSARY_SET_NAME.pt,
+            inLanguage: HTML_LANG[lang],
+            url: `${BASE_URL}/${lang}/docs/glossario`,
+            hasDefinedTerm: headings.map((h) => ({
+              '@type': 'DefinedTerm',
+              '@id': `${BASE_URL}/${lang}/docs/glossario#${h.id}`,
+              name: h.text,
+              description: markdownSectionLead(md, h.text),
+              inDefinedTermSet: setId,
+              url: `${BASE_URL}/${lang}/docs/glossario#${h.id}`,
+            })),
+          }],
+        });
+      }
     }
 
     if (route === 'docs/pesquisa') {
