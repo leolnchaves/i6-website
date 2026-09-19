@@ -18,6 +18,13 @@ import OurAIClosing from '@/components/our-ai/OurAIClosing';
 
 const BASE_URL = 'https://infinity6.ai';
 
+// Descrição canônica da página para dados estruturados (alinhada aos 3 motores atuais).
+const TECH_ARTICLE_DESCRIPTION: Record<string, string> = {
+  pt: 'Três motores proprietários (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre um modelo fundacional, com incerteza medida e explicação rastreável.',
+  en: 'Three proprietary engines (i6 Previsio, i6 RecSys, i6 ElasticPrice) on a shared foundation model, with measured uncertainty and traceable explanations.',
+  es: 'Tres motores propietarios (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre un modelo fundacional compartido, con incertidumbre medida y explicación trazable.',
+};
+
 const OurAI = memo(() => {
   const { language } = useLanguage();
   const c = ourAIContent[language];
@@ -31,7 +38,7 @@ const OurAI = memo(() => {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
       headline: c.hero.title,
-      description: c.hero.lead,
+      description: TECH_ARTICLE_DESCRIPTION[language] ?? TECH_ARTICLE_DESCRIPTION.pt,
       url,
       image: `${BASE_URL}/favicon.ico`,
       inLanguage,
