@@ -94,7 +94,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     hero: {
       eyebrow: 'infinity6 · a camada de inteligência',
       title: 'A inteligência que sustenta tudo o que entregamos',
-      lead: 'Sob o i6 Decision Suite e o i6 Builder Platform, motores proprietários, modelos fundacionais e métodos científicos sustentam cada decisão.',
+      lead: 'Sob a i6 Decision Suite e a i6 Builder Platform, motores proprietários, modelos fundacionais e métodos científicos sustentam cada decisão.',
       layers: [
         { name: 'i6 Decision Suite', role: 'Decisões prontas, do problema de negócio ao resultado.' },
         { name: 'i6 Builder Platform', role: 'SDK e API para construir seus próprios produtos.' },
@@ -486,7 +486,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     hero: {
       eyebrow: 'infinity6 · la capa de inteligencia',
       title: 'La inteligencia que sostiene todo lo que entregamos',
-      lead: 'Bajo el i6 Decision Suite y la i6 Builder Platform, motores propios, modelos fundacionales y métodos científicos sostienen cada decisión.',
+      lead: 'Bajo la i6 Decision Suite y la i6 Builder Platform, motores propios, modelos fundacionales y métodos científicos sostienen cada decisión.',
       layers: [
         { name: 'i6 Decision Suite', role: 'Decisiones listas, del problema de negocio al resultado.' },
         { name: 'i6 Builder Platform', role: 'SDK y API para construir tus propios productos.' },

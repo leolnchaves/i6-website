@@ -16,7 +16,7 @@ const copyByLang = {
       { title: 'Toolkits de modelagem', body: 'Capacidade de modelar sobre a base proprietária da infinity6, sem herdar as limitações de um modelo genérico' },
       { title: 'Governança e explicabilidade', body: 'Cada decisão rastreável, com explicabilidade nativa e controle de versão de modelo' },
     ],
-    ctaPrimary: 'Construir com o i6 Builder',
+    ctaPrimary: 'Construir com a i6 Builder',
     ctaSecondary: 'Falar com especialista',
   },
   en: {
@@ -44,7 +44,7 @@ const copyByLang = {
       { title: 'Toolkits de modelado', body: 'Capacidad de modelar sobre la base propietaria de infinity6, sin heredar las limitaciones de un modelo genérico' },
       { title: 'Gobernanza y explicabilidad', body: 'Cada decisión rastreable, con explicabilidad nativa y control de versión de modelo' },
     ],
-    ctaPrimary: 'Construir con el i6 Builder',
+    ctaPrimary: 'Construir con la i6 Builder',
     ctaSecondary: 'Hablar con un especialista',
   },
 };

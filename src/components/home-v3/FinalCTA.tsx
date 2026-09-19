@@ -7,8 +7,8 @@ import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 const copyByLang = {
   pt: {
     title: 'Seu concorrente vai perceber o movimento depois de você',
-    decision: 'Teste o i6 Decision Suite grátis por 30 dias',
-    builder: 'Construa com o i6 Builder',
+    decision: 'Teste a i6 Decision Suite grátis por 30 dias',
+    builder: 'Construa com a i6 Builder',
     specialist: 'Falar com especialista',
   },
   en: {
@@ -19,8 +19,8 @@ const copyByLang = {
   },
   es: {
     title: 'Tu competidor va a notar el movimiento después de ti',
-    decision: 'Prueba el i6 Decision Suite gratis por 30 días',
-    builder: 'Construye con el i6 Builder',
+    decision: 'Prueba la i6 Decision Suite gratis por 30 días',
+    builder: 'Construye con la i6 Builder',
     specialist: 'Hablar con un especialista',
   },
 };
