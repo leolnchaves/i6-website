@@ -75,15 +75,11 @@ const HeaderNovo = () => {
 
   const contactLink = { to: localized('/contact'), label: t('header.contact') };
 
-
   // O cabeçalho usa sempre o fundo navy padrão, em todas as páginas, para os
   // links brancos permanecerem legíveis sobre qualquer tema (navy ou areia).
   return (
     <>
-    <header
-      className="fixed top-0 left-0 right-0 z-50 bg-[#0B1224]/90 backdrop-blur-md shadow-lg"
-
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B1224]/90 backdrop-blur-md shadow-lg">
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
         <Link to={localized('/')} className="shrink-0">
           <img src={logoHeader} alt="infinity6 logo" className="h-12 w-auto brightness-0 invert" />
