@@ -29,6 +29,8 @@ import { collectContent } from './lib/content-collector.mjs';
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
+// Fonte única dos cards de prova da Home — nenhum valor é duplicado neste script.
+const REAL_RESULTS = JSON.parse(readFileSync(resolve('src/data/realResults.json'), 'utf8'));
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
