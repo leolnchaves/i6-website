@@ -351,6 +351,8 @@ function fmInsights(it, { coverLocal }) {
     `slug: ${it.slug}`,
     `language: ${it.language}`,
     `type: ${it.type ?? ''}`,
+    // Persistido no arquivo: o estado de publicação deixa de depender só da presença do arquivo.
+    `published: ${it.published !== false}`,
     it.cluster ? `cluster: ${yaml(it.cluster)}` : null,
     `featured: ${!!it.featured}`,
     `gated: ${!!it.gated}`,
@@ -383,6 +385,8 @@ function fmResearch(it, { coverLocal }) {
     `slug: ${it.slug}`,
     `language: ${it.language}`,
     `type: ${it.type ?? 'i6 Research'}`,
+    // Persistido no arquivo: o estado de publicação deixa de depender só da presença do arquivo.
+    `published: ${it.published !== false}`,
     it.date ? `date: ${it.date}` : null,
     it.sector ? `sector: ${it.sector}` : null,
     it.theme ? `theme: ${it.theme}` : null,
