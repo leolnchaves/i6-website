@@ -1,5 +1,9 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
+import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
+import { useLocalizedPath } from '@/utils/localizedPath';
 
 interface Props {
   content: OurAIContent['hero'];
@@ -16,6 +20,7 @@ const prefersReducedMotion = () =>
  * verticais independentes — geometria sempre medida do DOM.
  */
 const IntelligenceHero = memo(({ content }: Props) => {
+  const localizedPath = useLocalizedPath();
   const topLayers = content.layers.filter((l) => !l.current);
   const baseLayer = content.layers.find((l) => l.current);
 
@@ -126,18 +131,46 @@ const IntelligenceHero = memo(({ content }: Props) => {
           <style>{'@keyframes i6-draw{from{stroke-dashoffset:var(--i6-len,600)}to{stroke-dashoffset:0}}'}</style>
 
           <ul className="grid gap-4 md:grid-cols-2">
-            {topLayers.map((layer, i) => (
-              <li
-                key={layer.name}
-                ref={(el) => {
-                  topRefs.current[i] = el;
-                }}
-                className="rounded-[var(--radius)] border border-border bg-card p-6"
-              >
-                <p className="text-sm font-semibold text-foreground">{layer.name}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{layer.role}</p>
-              </li>
-            ))}
+            {topLayers.map((layer, i) => {
+              const isExternal = i === 0;
+              const cardBody = (
+                <>
+                  <p className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                    {layer.name}
+                    {isExternal ? (
+                      <ArrowUpRight aria-hidden className="h-3.5 w-3.5 text-primary" />
+                    ) : (
+                      <ArrowRight aria-hidden className="h-3.5 w-3.5 text-primary" />
+                    )}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{layer.role}</p>
+                </>
+              );
+              return (
+                <li
+                  key={layer.name}
+                  ref={(el) => {
+                    topRefs.current[i] = el;
+                  }}
+                  className="rounded-[var(--radius)] border border-border bg-card transition-colors hover:border-primary/50"
+                >
+                  {isExternal ? (
+                    <a
+                      href={SUITE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-full rounded-[var(--radius)] p-6"
+                    >
+                      {cardBody}
+                    </a>
+                  ) : (
+                    <Link to={localizedPath('/i6-builders')} className="block h-full rounded-[var(--radius)] p-6">
+                      {cardBody}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
           {baseLayer && (
