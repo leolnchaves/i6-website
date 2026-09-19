@@ -254,7 +254,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     science: {
       eyebrow: 'Base científica',
-      title: 'Pesquisa própria desde 2010',
+      title: 'Pesquisa própria há mais de uma década',
       lead: 'Os motores nascem de uma linha de pesquisa conduzida pelo founder da infinity6 e pela área de P&D — de mapas auto-organizáveis a clustering não supervisionado e descoberta de padrões sem regras prévias.',
       highlights: [
         {
@@ -466,7 +466,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     science: {
       eyebrow: 'Scientific foundations',
-      title: 'In-house research since 2010',
+      title: 'In-house research for more than a decade',
       lead: 'The engines come out of a research line led by the founder of infinity6 and our R&D team — from self-organizing maps to unsupervised clustering and rule-free pattern discovery.',
       highlights: [
         {
@@ -678,7 +678,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     science: {
       eyebrow: 'Base científica',
-      title: 'Investigación propia desde 2010',
+      title: 'Investigación propia durante más de una década',
       lead: 'Los motores nacen de una línea de investigación conducida por el founder de infinity6 y el área de I+D — de mapas autoorganizados a clustering no supervisado y descubrimiento de patrones sin reglas previas.',
       highlights: [
         {
