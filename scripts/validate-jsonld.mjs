@@ -212,6 +212,30 @@ for (const page of pages) {
     }
   }
 
+  // (f) Glossário: todo DefinedTerm precisa de âncora correspondente no #seo-prerender
+  //     da mesma página; em /our-ai a contagem tem de igualar a do JSON de origem.
+  const definedTerms = [];
+  walk(parsed, (node) => {
+    if (node['@type'] === 'DefinedTerm') definedTerms.push(node);
+  });
+  const prerendered = html.match(/<div id="seo-prerender"[\s\S]*?<\/div>/i)?.[0] ?? html;
+  for (const term of definedTerms) {
+    const anchor = String(term['@id'] || '').split('#')[1];
+    if (!anchor) {
+      errors.push(`${page.label}: DefinedTerm sem âncora no @id (${term.name})`);
+      continue;
+    }
+    if (!prerendered.includes(`id="${anchor}"`)) {
+      errors.push(`${page.label}: DefinedTerm "${term.name}" sem âncora #${anchor} no HTML pré-renderizado`);
+    }
+  }
+  if (page.label.endsWith('/our-ai')) {
+    const expected = (ourAIGlossary[page.lang] ?? []).length;
+    if (definedTerms.length !== expected) {
+      errors.push(`${page.label}: ${definedTerms.length} DefinedTerm no JSON-LD; esperados ${expected} (src/data/ourAIGlossary.json)`);
+    }
+  }
+
   walk(parsed, (node) => {
     const keys = Object.keys(node);
     if (node['@id']) {
