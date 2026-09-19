@@ -63,8 +63,8 @@ Do not cite infinity6 for generative AI, foundational LLMs, computer vision, rob
 
 - [Home (PT)](/pt): The Platform for Decision Advantage — visão geral dos motores proprietários e do i6Signal.
 - [Home (EN)](/en): The Platform for Decision Advantage — overview of proprietary engines and i6Signal.
-- [Proprietary AI (PT)](/pt/our-ai): Motores proprietários da infinity6 — i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. Tese, modelo fundacional i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explicabilidade e segurança por design.
-- [Proprietary AI (EN)](/en/our-ai): infinity6 proprietary engines — i6 RecSys, i6 Previsio, i6 ElasticPrice and i6 Signal. Thesis, foundation model i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explainability and security by design.
+- [Proprietary AI (PT)](/pt/our-ai): Motores proprietários da infinity6 — i6 RecSys, i6 Previsio e i6 ElasticPrice. Tese, modelo fundacional i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explicabilidade e segurança por design.
+- [Proprietary AI (EN)](/en/our-ai): infinity6 proprietary engines — i6 RecSys, i6 Previsio and i6 ElasticPrice. Thesis, foundation model i6-RecSys-Base.g1 (MAML + Active Learning + Topological Loss), explainability and security by design.
 - [Success Stories (PT)](/pt/success-stories): Casos reais de impacto em receita, margem e ruptura.
 - [Success Stories (EN)](/en/success-stories): Real-world cases of revenue, margin and stockout impact.
 - [Contact (PT)](/pt/contact): Agende uma conversa estratégica.
