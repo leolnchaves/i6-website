@@ -69,7 +69,6 @@ export interface OurAIContent {
     eyebrow: string;
     title: string;
     lead: string;
-    highlights: { badge: string; title: string; venue: string; url: string }[];
     cta: string;
     founder: { label: string; url: string };
   };
