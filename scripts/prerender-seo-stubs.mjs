@@ -157,6 +157,7 @@ function mdToHtml(md) {
   const out = [];
   let para = [];
   let list = [];
+  const nextHeadingId = headingIdFactory();
   const flushPara = () => { if (para.length) { out.push(`<p>${para.join(' ')}</p>`); para = []; } };
   const flushList = () => { if (list.length) { out.push(`<ul>${list.map(i => `<li>${i}</li>`).join('')}</ul>`); list = []; } };
   const inline = (s) => s
