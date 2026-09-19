@@ -366,6 +366,7 @@ export const enTranslations = {
   'footer.description': 'Transforming businesses with cutting-edge AI solutions. Unlock infinite possibilities with our innovative technology.',
   'footer.quickLinks': 'Quick Links',
   'footer.contact': 'Contact',
+  'footer.faleConosco': 'Contact Us',
   'footer.copyright': '© 2024 Infinity6.ai. All rights reserved.',
   'footer.privacy': 'Privacy Policy',
   'footer.ethics': 'Ethics Policy',

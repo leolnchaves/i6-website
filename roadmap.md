@@ -40,3 +40,5 @@
 
 - [x] Rodapé: ícones de Instagram, TikTok e Hugging Face (só Hugging Face com link)
 - [x] Rodapé: seta de link externo no link "i6 Decision Suite" (e demais links externos)
+
+- [x] Rodapé: link "Fale Conosco" acima do e-mail, apontando para /contact

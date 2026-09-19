@@ -127,6 +127,7 @@ export const esTranslations = {
   'footer.description': 'Transformamos negocios con soluciones de IA de vanguardia.',
   'footer.quickLinks': 'Enlaces rápidos',
   'footer.contact': 'Contacto',
+  'footer.faleConosco': 'Contáctanos',
   'footer.copyright': '© 2025 Infinity6.ai. Todos los derechos reservados.',
   'footer.privacy': 'Política de Privacidad',
   'footer.ethics': 'Política de Ética',

@@ -366,6 +366,7 @@ export const ptTranslations = {
   'footer.description': 'Transformando negócios com soluções de IA de ponta. Desbloqueie possibilidades infinitas com nossa tecnologia inovadora.',
   'footer.quickLinks': 'Links Rápidos',
   'footer.contact': 'Contato',
+  'footer.faleConosco': 'Fale Conosco',
   'footer.copyright': '© 2024 Infinity6.ai. Todos os direitos reservados.',
   'footer.privacy': 'Política de Privacidade',
   'footer.ethics': 'Política de Ética',
