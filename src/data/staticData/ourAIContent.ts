@@ -286,7 +286,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Conversamos com times técnicos sobre arquitetura, avaliação de modelo e integração.',
       primary: 'Falar com o time técnico',
       secondary: 'Construa com a i6 Builder Platform',
-      tertiary: 'Contratar a Decision Suite',
+      tertiary: 'Conheça a i6 Decision Suite',
     },
   },
 
@@ -478,7 +478,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'We talk to technical teams about architecture, model evaluation and integration.',
       primary: 'Talk to the technical team',
       secondary: 'Build with the i6 Builder Platform',
-      tertiary: 'Get the Decision Suite',
+      tertiary: 'Explore the i6 Decision Suite',
     },
   },
 
@@ -670,7 +670,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Hablamos con equipos técnicos sobre arquitectura, evaluación de modelos e integración.',
       primary: 'Hablar con el equipo técnico',
       secondary: 'Construye con la i6 Builder Platform',
-      tertiary: 'Contratar la Decision Suite',
+      tertiary: 'Conoce la i6 Decision Suite',
     },
   },
 };
