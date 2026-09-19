@@ -55,7 +55,6 @@ const VARIANT_REASON: Record<Exclude<ContactFormVariant, 'default'>, string> = {
 };
 
 export interface ContactFormProps {
-  /** Pré-preenchimento (ex.: landing /go/:token com dados do lead do HUB) */
   /** Valores iniciais (ex.: go-landing já chega com nome/e-mail/empresa). */
   defaultValues?: Partial<FormData>;
   /**
