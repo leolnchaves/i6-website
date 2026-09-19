@@ -22,30 +22,30 @@ const OurAIClosing = memo(({ content }: Props) => {
           <h2 className="mt-4 text-3xl md:text-[2.4rem] font-bold leading-[1.14] text-foreground">{content.title}</h2>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">{content.lead}</p>
 
-          <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-10">
-            <Link
-              to={localized('/contact')}
-              className="group inline-flex items-center gap-2 rounded-full border border-primary/50 px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:bg-primary/10"
-            >
-              {content.primary}
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
-            </Link>
-            <Link
-              to={localized('/i6-builders')}
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
-            >
-              {content.secondary}
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
-            </Link>
+          <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
             <a
               href={SUITE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
+              className="group inline-flex items-center gap-2 rounded-full border border-primary/50 px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:bg-primary/10"
             >
               {content.tertiary}
               <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
+            <Link
+              to={localized('/i6-builders')}
+              className="group inline-flex items-center gap-2 rounded-full border border-primary/50 px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:bg-primary/10"
+            >
+              {content.secondary}
+              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+            </Link>
+            <Link
+              to={localized('/contact')}
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            >
+              {content.primary}
+              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+            </Link>
 
           </div>
         </div>
