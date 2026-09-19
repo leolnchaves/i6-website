@@ -26,6 +26,14 @@ export const CONTACT_INTENTS = {
       es: '¡Hola! Llegué desde la sección de Gobernanza y me gustaría más detalles sobre las capas de seguridad y privacidad de la plataforma.',
     },
   },
+  technical: {
+    subject: 'other',
+    message: {
+      pt: 'Olá! Gostaria de conversar com o time técnico sobre arquitetura, avaliação de modelo e integração.',
+      en: "Hi! I'd like to talk with the technical team about architecture, model evaluation and integration.",
+      es: '¡Hola! Me gustaría conversar con el equipo técnico sobre arquitectura, evaluación de modelos e integración.',
+    },
+  },
 } as const;
 
 export interface ContactFaq {

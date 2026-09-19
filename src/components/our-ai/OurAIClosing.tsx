@@ -40,7 +40,7 @@ const OurAIClosing = memo(({ content }: Props) => {
               <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
             <Link
-              to={localized('/contact')}
+              to={`${localized('/contact')}?intent=technical#contact-form`}
               className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
             >
               {content.primary}
