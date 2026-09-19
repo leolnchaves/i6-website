@@ -27,6 +27,46 @@ import {
 } from './lib/seo-route-config.mjs';
 import { collectContent } from './lib/content-collector.mjs';
 
+// Fonte única do glossário condensado de /our-ai (mesmo JSON que a página usa).
+const OUR_AI_GLOSSARY = JSON.parse(readFileSync(resolve('src/data/ourAIGlossary.json'), 'utf8'));
+
+/** Mesma regra de src/utils/headingSlug.ts: âncora do título renderizado. */
+const slugifyHeading = (text) => String(text)
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+
+/** Títulos h2 de um markdown, com o id que a página real gera. */
+const markdownHeadings = (md) => {
+  const seen = {};
+  const out = [];
+  for (const line of md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').split(/\r?\n/)) {
+    const match = line.match(/^##\s+(.+?)\s*#*\s*$/);
+    if (!match) continue;
+    const text = match[1].replace(/(\*\*|__|\*|_|`)/g, '').trim();
+    const base = slugifyHeading(text) || 'section';
+    seen[base] = (seen[base] ?? 0) + 1;
+    out.push({ text, id: seen[base] === 1 ? base : `${base}-${seen[base]}` });
+  }
+  return out;
+};
+
+/** Primeiro parágrafo depois de cada h2 — definição curta para o DefinedTerm. */
+const markdownSectionLead = (md, heading) => {
+  const body = md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+  const lines = body.split(/\r?\n/);
+  const start = lines.findIndex((l) => l.trim().replace(/^##\s+/, '') === heading && /^##\s+/.test(l.trim()));
+  if (start === -1) return '';
+  for (let i = start + 1; i < lines.length; i += 1) {
+    const line = lines[i].trim();
+    if (/^##\s+/.test(line)) break;
+    if (line) return line.replace(/(\*\*|__|`)/g, '');
+  }
+  return '';
+};
+
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
