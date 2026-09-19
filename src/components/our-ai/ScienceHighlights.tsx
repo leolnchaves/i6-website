@@ -27,7 +27,7 @@ const ScienceHighlights = memo(({ content }: Props) => {
               href={h.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group grid gap-2 py-6 transition-colors hover:bg-secondary/50 md:grid-cols-[13rem_1fr] md:gap-10"
+              className="group grid gap-2 py-6 transition-colors hover:bg-secondary/50 md:grid-cols-[17.5rem_1fr] md:gap-10"
             >
               <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-foreground">
                 {h.badge}
