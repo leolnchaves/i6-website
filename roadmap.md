@@ -42,3 +42,4 @@
 - [x] Rodapé: seta de link externo no link "i6 Decision Suite" (e demais links externos)
 
 - [x] Rodapé: link "Fale Conosco" acima do e-mail, apontando para /contact
+- [x] Políticas (privacidade/ética) em painel lateral direito com tema areia; páginas /privacy-policy e /ethics-policy mantidas

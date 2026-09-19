@@ -1,12 +1,9 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
+import { toContentLang } from '@/utils/localizedPath';
 
-const EthicsPolicy = () => {
-  useScrollAnimation();
-  const { language } = useLanguage();
-
-  const content = {
+export const ethicsContent = {
     en: {
       title: "Ethics Policy",
       subtitle: "Our commitment to ethical AI and responsible business practices.",
@@ -223,11 +220,14 @@ const EthicsPolicy = () => {
         }
       }
     }
-  };
+} as const;
 
-  const currentContent = content[language];
+/** Corpo da Política de Ética, reutilizado pela página e pelo painel lateral. */
+export const EthicsPolicyBody = () => {
+  const { language } = useLanguage();
+  const currentContent = ethicsContent[toContentLang(language)];
 
-  const renderSection = (title: string, text: string, items?: string[]) => (
+  const renderSection = (title: string, text: string, items?: readonly string[]) => (
     <section className="border-b border-white/10 pb-8">
       <h2 className="text-2xl font-bold text-white mb-4">{title}</h2>
       <p className="text-white/70 mb-4">{text}</p>
@@ -241,7 +241,7 @@ const EthicsPolicy = () => {
     </section>
   );
 
-  const renderSubSection = (title: string, text: string, items: string[]) => (
+  const renderSubSection = (title: string, text: string, items: readonly string[]) => (
     <>
       <h3 className="text-lg font-semibold text-white/80 mb-2">{title}</h3>
       <p className="text-white/70 mb-4">{text}</p>
@@ -252,31 +252,8 @@ const EthicsPolicy = () => {
   );
 
   return (
-    <div className="relative overflow-hidden">
-      <SEOHead page="ethicsPolicy" />
-      
-      {/* Hero */}
-      <section className="w-full flex items-center justify-center pt-28 pb-24 relative bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/15 via-70% to-[#0B1224]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight">
-              {currentContent.title}
-            </h1>
-            <p className="text-base sm:text-lg text-white/60 mb-2 leading-relaxed">
-              {currentContent.subtitle}
-            </p>
-            <p className="text-sm text-white/40">
-              {currentContent.lastUpdated}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Content */}
-      <div className="relative bg-[#0B1224]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="max-w-4xl mx-auto space-y-8">
-            {renderSection(currentContent.sections.foundation.title, currentContent.sections.foundation.text)}
+    <div className="max-w-4xl mx-auto space-y-8">
+      {renderSection(currentContent.sections.foundation.title, currentContent.sections.foundation.text)}
 
             <section className="border-b border-white/10 pb-8">
               <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.development.title}</h2>
@@ -296,18 +273,33 @@ const EthicsPolicy = () => {
             {renderSection(currentContent.sections.improvement.title, currentContent.sections.improvement.text, currentContent.sections.improvement.items)}
             {renderSection(currentContent.sections.compliance.title, currentContent.sections.compliance.text, currentContent.sections.compliance.items)}
 
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
-              <p className="text-white/70 mb-4">{currentContent.sections.contact.text}</p>
-              <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                
-                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
-                
-                
-              </div>
-            </section>
-          </div>
+      <section>
+        <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
+        <p className="text-white/70 mb-4">{currentContent.sections.contact.text}</p>
+        <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
+          <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
         </div>
+      </section>
+    </div>
+  );
+};
+
+const EthicsPolicy = () => {
+  useScrollAnimation();
+  const { language } = useLanguage();
+  const hero = ethicsContent[toContentLang(language)];
+
+  return (
+    <div className="relative overflow-hidden bg-[#FAF7F2]">
+      <SEOHead page="ethicsPolicy" />
+
+      <div className="policy-surface container mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+        <div className="max-w-4xl mx-auto mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#2D2D2D] mb-3 leading-tight">{hero.title}</h1>
+          <p className="text-base text-[#5D5D5D] mb-2 leading-relaxed">{hero.subtitle}</p>
+          <p className="text-xs uppercase tracking-widest text-[#8A8A8A]">{hero.lastUpdated}</p>
+        </div>
+        <EthicsPolicyBody />
       </div>
     </div>
   );

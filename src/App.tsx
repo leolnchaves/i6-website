@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { PolicyDrawerProvider } from "@/components/policy/PolicyDrawer";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { detectPreferredLang, isLang } from "./utils/localizedPath";
 
@@ -148,6 +149,7 @@ const App = () => {
           <BrowserRouter basename={import.meta.env.BASE_URL}>
             <LanguageProvider>
               <TooltipProvider>
+                <PolicyDrawerProvider>
                 <Toaster />
                 <Sonner />
                 <ScrollToTop />
@@ -167,6 +169,7 @@ const App = () => {
                   <Route path="*" element={<RootLangRedirect />} />
                 </Routes>
                 <DebugPanel />
+                </PolicyDrawerProvider>
               </TooltipProvider>
             </LanguageProvider>
           </BrowserRouter>

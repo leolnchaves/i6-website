@@ -2,25 +2,27 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
 import PrivacyPolicyPT from '@/components/privacy/PrivacyPolicyPT';
+import { toContentLang } from '@/utils/localizedPath';
 
-const PrivacyPolicy = () => {
-  useScrollAnimation();
+/** Cabeçalho da política (usado na página e no painel lateral). */
+export const privacyHero = {
+  en: {
+    title: "Privacy Policy",
+    subtitle: "Your privacy is our priority. Learn how we protect and handle your data.",
+    lastUpdated: "Last updated: June 2026",
+  },
+  pt: {
+    title: "Política de Privacidade",
+    subtitle: "Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.",
+    lastUpdated: "Última atualização: Junho 2026",
+  },
+} as const;
+
+/** Corpo da Política de Privacidade, reutilizado pela página e pelo drawer. */
+export const PrivacyPolicyBody = () => {
   const { language } = useLanguage();
 
-  const heroContent = {
-    en: {
-      title: "Privacy Policy",
-      subtitle: "Your privacy is our priority. Learn how we protect and handle your data.",
-      lastUpdated: "Last updated: June 2026",
-    },
-    pt: {
-      title: "Política de Privacidade",
-      subtitle: "Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.",
-      lastUpdated: "Última atualização: Junho 2026",
-    },
-  };
 
-  const currentHero = heroContent[language];
 
   // EN content (unchanged)
   const enSections = {
@@ -188,32 +190,25 @@ const PrivacyPolicy = () => {
     </div>
   );
 
-  return (
-    <div className="relative overflow-hidden">
-      <SEOHead page="privacyPolicy" />
-      
-      {/* Hero */}
-      <section className="w-full flex items-center justify-center pt-28 pb-24 relative bg-gradient-to-b from-[#F4845F]/30 via-[#F4845F]/15 via-70% to-[#0B1224]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight">
-              {currentHero.title}
-            </h1>
-            <p className="text-base sm:text-lg text-white/60 mb-2 leading-relaxed">
-              {currentHero.subtitle}
-            </p>
-            <p className="text-sm text-white/40">
-              {currentHero.lastUpdated}
-            </p>
-          </div>
-        </div>
-      </section>
+  return toContentLang(language) === 'pt' ? <PrivacyPolicyPT /> : renderENContent();
+};
 
-      {/* Content */}
-      <div className="relative bg-[#0B1224]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {language === 'pt' ? <PrivacyPolicyPT /> : renderENContent()}
+const PrivacyPolicy = () => {
+  useScrollAnimation();
+  const { language } = useLanguage();
+  const hero = privacyHero[toContentLang(language)];
+
+  return (
+    <div className="relative overflow-hidden bg-[#FAF7F2]">
+      <SEOHead page="privacyPolicy" />
+
+      <div className="policy-surface container mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+        <div className="max-w-4xl mx-auto mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#2D2D2D] mb-3 leading-tight">{hero.title}</h1>
+          <p className="text-base text-[#5D5D5D] mb-2 leading-relaxed">{hero.subtitle}</p>
+          <p className="text-xs uppercase tracking-widest text-[#8A8A8A]">{hero.lastUpdated}</p>
         </div>
+        <PrivacyPolicyBody />
       </div>
     </div>
   );

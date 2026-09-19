@@ -6,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import logoFooter from '@/assets/images/logo-footer.png';
 import { useCallback } from 'react';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
+import { usePolicyDrawer } from '@/components/policy/PolicyDrawer';
 
 type SocialIconProps = { size?: number };
 
@@ -27,6 +28,7 @@ const FooterNovo = () => {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
   const localized = useLocalizedPath();
+  const { openPolicy } = usePolicyDrawer();
   const isMobile = useIsMobile();
 
   const handleNav = useCallback(
@@ -107,13 +109,14 @@ const FooterNovo = () => {
             </div>
 
             <div className="flex gap-4 text-xs">
-              <Link to={localized('/privacy-policy')} onClick={() => handleNav(localized('/privacy-policy'))} className="text-white/30 hover:text-[#F4845F] transition-colors">
+              <button type="button" onClick={() => openPolicy('privacy')} className="text-white/30 hover:text-[#F4845F] transition-colors">
                 {t('footer.privacy')}
-              </Link>
-              <Link to={localized('/ethics-policy')} onClick={() => handleNav(localized('/ethics-policy'))} className="text-white/30 hover:text-[#F4845F] transition-colors">
+              </button>
+              <button type="button" onClick={() => openPolicy('ethics')} className="text-white/30 hover:text-[#F4845F] transition-colors">
                 {t('footer.ethics')}
-              </Link>
+              </button>
             </div>
+
             <p className="text-white/30 text-xs mt-3">{copyright}</p>
           </div>
 

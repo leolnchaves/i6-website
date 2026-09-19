@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { usePolicyDrawer } from '@/components/policy/PolicyDrawer';
 import { CookieConsent } from '@/types/cookies';
 import { useEffect, useState } from 'react';
 
@@ -20,7 +19,7 @@ const CookieBanner = () => {
     consent,
   } = useCookieConsent();
   const { language } = useLanguage();
-  const localized = useLocalizedPath();
+  const { openPolicy } = usePolicyDrawer();
 
   const [local, setLocal] = useState<CookieConsent>(consent);
   useEffect(() => setLocal(consent), [consent]);
@@ -118,9 +117,9 @@ const CookieBanner = () => {
             <p className="text-white/70 text-xs leading-relaxed mb-3">{t.body}</p>
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 text-xs">
-              <Link to={localized('/privacy-policy')} className="text-[#F4845F] hover:underline">
+              <button type="button" onClick={() => openPolicy('privacy')} className="text-[#F4845F] hover:underline">
                 {t.privacy}
-              </Link>
+              </button>
               <button
                 type="button"
                 onClick={() => setBannerExpanded(true)}
@@ -211,12 +210,13 @@ const CookieBanner = () => {
                   {t.onlyEssential}
                 </Button>
               </div>
-              <Link
-                to={localized('/privacy-policy')}
+              <button
+                type="button"
+                onClick={() => openPolicy('privacy')}
                 className="text-[#F4845F] hover:underline text-[11px] text-center mt-1"
               >
                 {t.privacy}
-              </Link>
+              </button>
             </div>
           </>
         )}
