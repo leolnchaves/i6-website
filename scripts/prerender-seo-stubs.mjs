@@ -157,8 +157,19 @@ function mdToHtml(md) {
   for (const raw of lines) {
     const line = raw.trim();
     if (!line) { flushPara(); flushList(); continue; }
-    if (line.startsWith('## ')) { flushPara(); flushList(); out.push(`<h2>${inline(line.slice(3).trim())}</h2>`); continue; }
-    if (line.startsWith('### ')) { flushPara(); flushList(); out.push(`<h3>${inline(line.slice(4).trim())}</h3>`); continue; }
+    if (line.startsWith('## ')) {
+      flushPara(); flushList();
+      const text = line.slice(3).trim();
+      // Mesma âncora que a página real gera (src/utils/headingSlug.ts).
+      out.push(`<h2 id="${nextHeadingId(text.replace(/(\*\*|__|`)/g, ''))}">${inline(text)}</h2>`);
+      continue;
+    }
+    if (line.startsWith('### ')) {
+      flushPara(); flushList();
+      const text = line.slice(4).trim();
+      out.push(`<h3 id="${nextHeadingId(text.replace(/(\*\*|__|`)/g, ''))}">${inline(text)}</h3>`);
+      continue;
+    }
     if (line.startsWith('- ')) { flushPara(); list.push(inline(line.slice(2).trim())); continue; }
     flushList(); para.push(inline(line));
   }
@@ -339,7 +350,7 @@ for (const lang of ['en', 'pt', 'es']) {
         source: kpi.source[lang] ?? kpi.source.pt,
       }));
 
-      const glossaryHtml = `<h2 id="glossario">${tl === 'pt' ? 'Glossário GEO' : 'GEO Glossary'}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
+      const glossaryHtml = `<h2 id="glossario">${GLOSSARY_HEADING[lang] ?? GLOSSARY_HEADING.pt}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
       const kpisHtml = `<h2>${tl === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
 
       body = `<p>${ourAILead}</p><h2>${tl === 'pt' ? 'Motores proprietários' : 'Proprietary engines'}</h2><ul>${PRODUCTS.map(p => `<li id="${p.anchor}"><strong>${p.name}</strong> — ${p.description[tl]}</li>`).join('')}</ul>${kpisHtml}${glossaryHtml}`;
