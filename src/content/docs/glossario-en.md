@@ -31,7 +31,7 @@ That is why the i6 engines treat context and constraint as part of the decision 
 
 ## Conversion propensity
 
-Estimated probability that a person, in a specific context, performs the action of interest — buy, subscribe, renew, respond to an offer. It is a calibrated output: when the model says 30%, roughly 30% of the cases in that band should convert, which makes the number usable for cut-off and prioritisation decisions.
+Estimated probability that a person, in a specific context, performs the action of interest — buy, subscribe, renew, respond to an offer. It is a calibrated output: for example, a 30% propensity means that, out of every 100 cases in that band, roughly 30 should convert, which makes the number usable for cut-off and prioritisation decisions.
 
 Used to rank commercial effort and decide who receives which offer, instead of applying the same approach to the whole base.
 
@@ -43,9 +43,7 @@ Margin and positioning constraints enter as model bounds, so the suggested price
 
 ## i6-RecSys-Base.g1
 
-infinity6's proprietary foundation model, the basis for the forecasting, recommendation and pricing engines. It combines three architectural elements: MAML, for fast adaptation from few samples; Active Learning, to select the most informative data; and Topological Loss, to preserve the structure of the learned relationships.
-
-It was pre-trained on 20B cross-sector records, which means adapting it to a specific client requires far less proprietary data than training a model from scratch.
+infinity6 proprietary foundation model, the shared base of the three engines. It combines MAML, Active Learning, Topological Loss and External Memory, and adapts from few client samples.
 
 ## MAML
 

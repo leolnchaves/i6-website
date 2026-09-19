@@ -31,9 +31,7 @@ Restrições de margem e de posicionamento entram como limites do modelo, então
 
 ## i6-RecSys-Base.g1
 
-Modelo fundacional proprietário da infinity6, que serve de base para os motores de previsão, recomendação e precificação. Combina três elementos de arquitetura: MAML, para adaptação rápida com poucas amostras; Active Learning, para escolher o dado que mais informa; e Topological Loss, para preservar a estrutura das relações aprendidas.
-
-Foi pré-treinado em 20 bi de registros de múltiplos setores, o que permite que a adaptação a um cliente específico exija um volume de dado próprio muito menor do que treinar um modelo do zero.
+Modelo fundacional proprietário da infinity6, base compartilhada pelos três motores. Combina MAML, Active Learning, Topological Loss e External Memory e se adapta com poucas amostras por cliente.
 
 ## MAML
 
@@ -49,7 +47,7 @@ Vale tanto para usuários identificados quanto anônimos, porque o comportamento
 
 ## Propensão de conversão
 
-Probabilidade estimada de que uma pessoa, em um contexto específico, execute a ação de interesse — comprar, contratar, renovar, responder a uma oferta. É uma saída calibrada: quando o modelo indica 30%, aproximadamente 30% dos casos daquela faixa devem converter, o que permite usar o número em decisão de corte e priorização.
+Probabilidade estimada de que uma pessoa, em um contexto específico, execute a ação de interesse — comprar, contratar, renovar, responder a uma oferta. É uma saída calibrada: por exemplo, uma propensão de 30% indica que, de cada 100 casos daquela faixa, cerca de 30 devem converter, o que permite usar o número em decisão de corte e priorização.
 
 Usada para ordenar esforço comercial e escolher quem recebe qual oferta, em vez de aplicar a mesma abordagem a toda a base.
 
