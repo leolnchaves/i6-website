@@ -1,0 +1,104 @@
+{
+  "//": "Fonte única dos fundadores para JSON-LD. Campos por idioma com fallback PT. Valores null são PLACEHOLDER e são OMITIDOS do JSON-LD.",
+  "founders": [
+    {
+      "id": "leonardo-chaves",
+      "name": "Leonardo Chaves",
+      "alternateName": "Leonardo Luiz Novaes Chaves",
+      "jobTitle": {
+        "pt": "Founder & CEO",
+        "en": "Founder & CEO",
+        "es": "Founder & CEO"
+      },
+      "description": {
+        "pt": "Fundador e CEO da infinity6, responsável pela estratégia da plataforma, dos builders e das aplicações first-party. Executivo de estratégia, produtos e plataformas digitais e modelos de negócio, com carreira na CI&T e na Capgemini.",
+        "en": "Founder and CEO of infinity6, responsible for the strategy behind the platform, the builders and the first-party applications. Executive in strategy, digital products and platforms and business models, with a career at CI&T and Capgemini.",
+        "es": "Fundador y CEO de infinity6, responsable de la estrategia de la plataforma, de los builders y de las aplicaciones first-party. Ejecutivo de estrategia, productos y plataformas digitales y modelos de negocio, con trayectoria en CI&T y Capgemini."
+      },
+      "sameAs": ["https://www.linkedin.com/in/llnchaves/"],
+      "alumniOf": ["University of Cambridge", "Harvard Extension School"],
+      "image": null,
+      "imageCandidate": "/team/leonardo-chaves.jpg",
+      "knowsAbout": {
+        "pt": [
+          "Estratégia de plataformas digitais",
+          "Modelos de negócio",
+          "Gestão de produtos digitais",
+          "Transformação de negócios",
+          "Empreendedorismo",
+          "E-commerce"
+        ],
+        "en": [
+          "Digital platform strategy",
+          "Business models",
+          "Digital product management",
+          "Business transformation",
+          "Entrepreneurship",
+          "E-commerce"
+        ],
+        "es": [
+          "Estrategia de plataformas digitales",
+          "Modelos de negocio",
+          "Gestión de productos digitales",
+          "Transformación de negocios",
+          "Emprendimiento",
+          "E-commerce"
+        ]
+      }
+    },
+    {
+      "id": "everton-gago",
+      "name": "Everton Gago",
+      "alternateName": "Everton Luiz de Almeida Gago Junior",
+      "jobTitle": {
+        "pt": "Cofundador e COO",
+        "en": "Co-founder and COO",
+        "es": "Cofundador y COO"
+      },
+      "description": {
+        "pt": "Cofundador e COO da infinity6. Pesquisador e matemático, com doutorado e mestrado em Engenharia Elétrica e dois pós-doutorados, em matemática pura e em física, todos pela UNICAMP, e publicações científicas internacionais.",
+        "en": "Co-founder and COO of infinity6. Researcher and mathematician with a PhD and a master's degree in Electrical Engineering and postdoctoral work in pure mathematics and in physics, all at UNICAMP, with international scientific publications.",
+        "es": "Cofundador y COO de infinity6. Investigador y matemático, con doctorado y maestría en Ingeniería Eléctrica y estudios posdoctorales en matemática pura y en física, todos en la UNICAMP, y publicaciones científicas internacionales."
+      },
+      "sameAs": ["https://www.linkedin.com/in/everton-gago/"],
+      "scholar": null,
+      "orcid": null,
+      "award": null,
+      "alumniOf": ["Universidade Estadual de Campinas"],
+      "image": null,
+      "imageCandidate": "/team/everton-gago.jpg",
+      "knowsAbout": {
+        "pt": [
+          "Inteligência artificial",
+          "Aprendizado de máquina",
+          "Matemática pura",
+          "Física",
+          "Mineração de dados",
+          "Mapas auto-organizáveis",
+          "Sistemas de recomendação",
+          "Governança de IA"
+        ],
+        "en": [
+          "Artificial intelligence",
+          "Machine learning",
+          "Pure mathematics",
+          "Physics",
+          "Data mining",
+          "Self-organizing maps",
+          "Recommender systems",
+          "AI governance"
+        ],
+        "es": [
+          "Inteligencia artificial",
+          "Aprendizaje automático",
+          "Matemática pura",
+          "Física",
+          "Minería de datos",
+          "Mapas autoorganizados",
+          "Sistemas de recomendación",
+          "Gobernanza de la IA"
+        ]
+      }
+    }
+  ]
+}

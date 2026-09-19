@@ -1,0 +1,128 @@
+{
+  "//": "Fonte única da produção científica e técnica. Dados neutros de idioma: títulos, anos, eventos e links NÃO são traduzidos. Lido pelo site (src/data/research.ts) e pelo gerador de JSON-LD estático (scripts/prerender-seo-stubs.mjs).",
+  "articles": [
+    {
+      "slug": "artigo-lnbip-2013",
+      "title": "Knowledge Discovery: Data Mining by Self-organizing Maps",
+      "datePublished": "2013",
+      "inLanguage": "en",
+      "pagination": "185-200",
+      "publisher": "Springer",
+      "isPartOf": {
+        "type": "PublicationVolume",
+        "name": "Web Information Systems and Technologies",
+        "volumeNumber": "140",
+        "series": "Lecture Notes in Business Information Processing"
+      },
+      "url": "https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12",
+      "sameAs": [
+        "https://doi.org/10.1007/978-3-642-36608-6_12",
+        "https://www.academia.edu/24631415/Knowledge_Discovery_Data_Mining_by_Self_organizing_Maps"
+      ]
+    },
+    {
+      "slug": "artigo-webist-2012",
+      "title": "Self-Organizing Maps — An Approach Applied to the Electronic Government",
+      "datePublished": "2012",
+      "inLanguage": "en",
+      "isPartOf": {
+        "type": "Periodical",
+        "name": "Proceedings of the 8th International Conference on Web Information Systems and Technologies (WEBIST 2012)"
+      },
+      "url": "https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government"
+    },
+    {
+      "slug": "artigo-lncs-2010",
+      "title": "Development of a Business Intelligence Environment for e-Gov using Open Source Technologies",
+      "datePublished": "2010",
+      "inLanguage": "en",
+      "publisher": "Springer",
+      "isPartOf": {
+        "type": "BookSeries",
+        "name": "Lecture Notes in Computer Science"
+      },
+      "pagination": null,
+      "volumeNumber": null,
+      "url": "https://www.academia.edu/24631504/Development_of_a_Business_Intelligence_Environment_for_e_Gov_Using_Open_Source_Technologies"
+    },
+    {
+      "slug": "artigo-mapas-pt",
+      "title": "Mapas auto-organizáveis aplicados em governo eletrônico",
+      "datePublished": null,
+      "inLanguage": "pt-BR",
+      "url": "https://www.academia.edu/122408570/Mapas_auto_organiz%C3%A1veis_aplicados_em_governo_eletr%C3%B4nico"
+    }
+  ],
+  "talks": [
+    {
+      "slug": "palestra-ciencia-de-dados",
+      "title": "Ciência de dados para alinhar produto",
+      "datePublished": "2020-06-18",
+      "event": "DevCamp 2019",
+      "url": "https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/"
+    },
+    {
+      "slug": "palestra-ifood",
+      "title": "Recomendação de conteúdo na escala do iFood",
+      "datePublished": "2018-08-29",
+      "event": "QCon São Paulo 2018",
+      "url": "https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/"
+    },
+    {
+      "slug": "palestra-ml-genesis",
+      "title": "Machine Learning — do gênesis ao apocalipse",
+      "datePublished": "2017-12-26",
+      "event": "DevCamp 2017",
+      "coAuthors": ["Robson Tesini"],
+      "url": "https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/"
+    },
+    {
+      "slug": "palestra-redes-neurais",
+      "title": "Classificação de padrões: uma abordagem prática com redes neurais artificiais",
+      "datePublished": "2017-07-04",
+      "event": "QCon São Paulo 2017",
+      "url": "https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/"
+    },
+    {
+      "slug": "palestra-classificacao-documentos",
+      "title": "Classificação de documentos baseada em inteligência artificial",
+      "datePublished": "2016-09-27",
+      "event": "DevCamp",
+      "url": "https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/"
+    },
+    {
+      "slug": "palestra-mahout",
+      "title": "Machine Learning em Java com Apache Mahout",
+      "datePublished": "2016-03-14",
+      "event": "QCon Rio 2015",
+      "url": "https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/"
+    },
+    {
+      "slug": "palestra-postgres",
+      "title": "Postgres como Big SQL",
+      "datePublished": "2016-02-03",
+      "event": "PGDay Campinas 2015",
+      "url": "https://www.infoq.com/br/presentations/postgres-bigsql/"
+    },
+    {
+      "slug": "palestra-weka",
+      "title": "Mineração de dados com Weka API",
+      "datePublished": "2014-08-21",
+      "event": "DevCamp 2014",
+      "url": "https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/"
+    },
+    {
+      "slug": "palestra-ml-mineracao",
+      "title": "Machine Learning e mineração de dados",
+      "datePublished": "2013-11-07",
+      "event": "QCon São Paulo 2013",
+      "url": "https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/"
+    }
+  ],
+  "genre": {
+    "pt": "Palestra técnica",
+    "en": "Technical talk",
+    "es": "Charla técnica"
+  },
+  "talkPublisher": "InfoQ Brasil"
+}

@@ -48,13 +48,17 @@
       gtag('js', new Date());
       gtag('config', 'G-781CHFGQ38', { send_page_view: false });
     </script>
-    <!-- JSON-LD Organization + WebSite -->
+    <!-- JSON-LD Organization + WebSite + Person (fundadores).
+         Os nós Person abaixo estão em português (fallback). O gerador estático
+         scripts/prerender-seo-stubs.mjs reescreve jobTitle/description/knowsAbout
+         por idioma em cada rota /en e /es a partir de src/data/founders.json. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Organization",
+          "@id": "https://infinity6.ai/#organization",
           "name": "infinity6",
           "legalName": "Infinity Tech S.A.",
           "alternateName": ["infinity6.ai", "i6"],
@@ -64,16 +68,8 @@
           "foundingDate": "2023-10-20",
           "numberOfEmployees": { "@type": "QuantitativeValue", "value": 13 },
           "founder": [
-            {
-              "@type": "Person",
-              "name": "Leonardo Luiz Novaes Chaves",
-              "sameAs": "https://www.linkedin.com/in/llnchaves/"
-            },
-            {
-              "@type": "Person",
-              "name": "Everton Luiz de Almeida Gago Junior",
-              "sameAs": "https://www.linkedin.com/in/everton-gago/"
-            },
+            { "@id": "https://infinity6.ai/#leonardo-chaves" },
+            { "@id": "https://infinity6.ai/#everton-gago" },
             {
               "@type": "Person",
               "name": "Henrique dos Reis Meirelles",
@@ -138,10 +134,58 @@
         },
         {
           "@type": "WebSite",
+          "@id": "https://infinity6.ai/#website",
           "name": "infinity6",
           "url": "https://infinity6.ai",
-          "inLanguage": ["pt-BR", "en"],
-          "publisher": { "@type": "Organization", "name": "infinity6" }
+          "inLanguage": ["pt-BR", "en", "es"],
+          "publisher": { "@id": "https://infinity6.ai/#organization" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://infinity6.ai/#leonardo-chaves",
+          "name": "Leonardo Chaves",
+          "alternateName": "Leonardo Luiz Novaes Chaves",
+          "jobTitle": "Founder & CEO",
+          "description": "Fundador e CEO da infinity6, responsável pela estratégia da plataforma, dos builders e das aplicações first-party. Executivo de estratégia, produtos e plataformas digitais e modelos de negócio, com carreira na CI&T e na Capgemini.",
+          "url": "https://infinity6.ai/pt/our-ai",
+          "worksFor": { "@id": "https://infinity6.ai/#organization" },
+          "sameAs": ["https://www.linkedin.com/in/llnchaves/"],
+          "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "University of Cambridge" },
+            { "@type": "CollegeOrUniversity", "name": "Harvard Extension School" }
+          ],
+          "knowsAbout": [
+            "Estratégia de plataformas digitais",
+            "Modelos de negócio",
+            "Gestão de produtos digitais",
+            "Transformação de negócios",
+            "Empreendedorismo",
+            "E-commerce"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://infinity6.ai/#everton-gago",
+          "name": "Everton Gago",
+          "alternateName": "Everton Luiz de Almeida Gago Junior",
+          "jobTitle": "Cofundador e COO",
+          "description": "Cofundador e COO da infinity6. Pesquisador e matemático, com doutorado e mestrado em Engenharia Elétrica e dois pós-doutorados, em matemática pura e em física, todos pela UNICAMP, e publicações científicas internacionais.",
+          "url": "https://infinity6.ai/pt/our-ai",
+          "worksFor": { "@id": "https://infinity6.ai/#organization" },
+          "sameAs": ["https://www.linkedin.com/in/everton-gago/"],
+          "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Universidade Estadual de Campinas" }
+          ],
+          "knowsAbout": [
+            "Inteligência artificial",
+            "Aprendizado de máquina",
+            "Matemática pura",
+            "Física",
+            "Mineração de dados",
+            "Mapas auto-organizáveis",
+            "Sistemas de recomendação",
+            "Governança de IA"
+          ]
         }
       ]
     }

@@ -13,15 +13,18 @@ As publicações formais revisadas por pares estão reunidas em [i6 Deep Researc
 
 ## Palestras técnicas
 
-- [Ciência de dados para alinhar produto](https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/) — InfoQ Brasil · QCon
-- [Recomendação de conteúdo na escala do iFood](https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/) — InfoQ Brasil · QCon
-- [Machine Learning — do gênesis ao apocalipse](https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/) — InfoQ Brasil · QCon
-- [Classificação de padrões: uma abordagem prática com redes neurais artificiais](https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/) — InfoQ Brasil · QCon
-- [Machine Learning em Java com Apache Mahout](https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/) — InfoQ Brasil · QCon
-- [Classificação de documentos baseada em inteligência artificial](https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/) — InfoQ Brasil · QCon
-- [Postgres como Big SQL](https://www.infoq.com/br/presentations/postgres-bigsql/) — InfoQ Brasil · QCon
-- [Mineração de dados com Weka API](https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/) — InfoQ Brasil · QCon
-- [Machine Learning e mineração de dados](https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/) — InfoQ Brasil · QCon
+<!-- Rótulo das palestras = "InfoQ Brasil · <evento>", conforme src/data/research.json.
+     ATENÇÃO: este arquivo é site_managed e a origem é o i6 HUB — a mesma correção
+     precisa ser aplicada lá, senão um sync futuro sobrescreve com "· QCon". -->
+- [Ciência de dados para alinhar produto](https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/) — InfoQ Brasil · DevCamp 2019
+- [Recomendação de conteúdo na escala do iFood](https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/) — InfoQ Brasil · QCon São Paulo 2018
+- [Machine Learning — do gênesis ao apocalipse](https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/) — InfoQ Brasil · DevCamp 2017
+- [Classificação de padrões: uma abordagem prática com redes neurais artificiais](https://www.infoq.com/br/presentations/classificacao-de-padroes-uma-abordagem-pratica-com-redes-neurais-artificiais/) — InfoQ Brasil · QCon São Paulo 2017
+- [Machine Learning em Java com Apache Mahout](https://www.infoq.com/br/presentations/machine-learning-em-java-com-apache-mahout/) — InfoQ Brasil · QCon Rio 2015
+- [Classificação de documentos baseada em inteligência artificial](https://www.infoq.com/br/presentations/classificacao-de-documentos-baseada-em-inteligencia-artificial/) — InfoQ Brasil · DevCamp
+- [Postgres como Big SQL](https://www.infoq.com/br/presentations/postgres-bigsql/) — InfoQ Brasil · PGDay Campinas 2015
+- [Mineração de dados com Weka API](https://www.infoq.com/br/presentations/mineracao-de-dados-weka-api/) — InfoQ Brasil · DevCamp 2014
+- [Machine Learning e mineração de dados](https://www.infoq.com/br/presentations/machine-learning-mineracao-dados/) — InfoQ Brasil · QCon São Paulo 2013
 
 ## Artigos
 
