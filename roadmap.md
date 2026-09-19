@@ -43,3 +43,4 @@
 
 - [x] Rodapé: link "Fale Conosco" acima do e-mail, apontando para /contact
 - [x] Políticas (privacidade/ética) em painel lateral direito com tema areia; páginas /privacy-policy e /ethics-policy mantidas
+- [x] Cabeçalho sempre navy (padrão) em todas as páginas — removida a lista de páginas claras e o vigia de rolagem
