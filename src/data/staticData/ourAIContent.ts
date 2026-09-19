@@ -633,7 +633,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.',
       pillars: [
         { title: 'Anonimización en el origen', description: 'El modelo nunca ve dato identificable: la anonimización ocurre antes del entrenamiento, en todos los modelos' },
-        { title: 'Seguridad en capas', description: 'Autenticación multinivel y control de acceso basado en rutas' },
+        { title: 'Seguridad en capas', description: 'Autenticación 100% en la plataforma y control de acceso por perfil. Los productos no tienen backend ni base de datos propios, lo que reduce la superficie de ataque' },
         { title: 'Entorno aislado', description: 'Entornos seguros y aislados protegen datos y modelos contra accesos no autorizados' },
         { title: 'Listo para escalar', description: 'Solución 100% en la nube, con escalado automático de recursos' },
       ],
