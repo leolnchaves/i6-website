@@ -2,25 +2,27 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
 import PrivacyPolicyPT from '@/components/privacy/PrivacyPolicyPT';
+import { toContentLang } from '@/utils/localizedPath';
 
-const PrivacyPolicy = () => {
-  useScrollAnimation();
+/** Cabeçalho da política (usado na página e no painel lateral). */
+export const privacyHero = {
+  en: {
+    title: "Privacy Policy",
+    subtitle: "Your privacy is our priority. Learn how we protect and handle your data.",
+    lastUpdated: "Last updated: June 2026",
+  },
+  pt: {
+    title: "Política de Privacidade",
+    subtitle: "Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.",
+    lastUpdated: "Última atualização: Junho 2026",
+  },
+} as const;
+
+/** Corpo da Política de Privacidade, reutilizado pela página e pelo drawer. */
+export const PrivacyPolicyBody = () => {
   const { language } = useLanguage();
 
-  const heroContent = {
-    en: {
-      title: "Privacy Policy",
-      subtitle: "Your privacy is our priority. Learn how we protect and handle your data.",
-      lastUpdated: "Last updated: June 2026",
-    },
-    pt: {
-      title: "Política de Privacidade",
-      subtitle: "Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.",
-      lastUpdated: "Última atualização: Junho 2026",
-    },
-  };
 
-  const currentHero = heroContent[language];
 
   // EN content (unchanged)
   const enSections = {
