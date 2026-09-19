@@ -307,6 +307,20 @@ if (/\/(?:pt|en|es)\/(?:i6-blog|insights|i6-intelligence)\/demo-/.test(llms + si
   errors.push('conteúdo demo-* encontrado em llms.txt ou sitemap.xml');
 }
 
+// ---- Todo URL do sitemap precisa ter HTML correspondente em dist ----
+const missingStubs = [];
+for (const match of sitemap.matchAll(/<loc>(https:\/\/infinity6\.ai\/[^<]*)<\/loc>/g)) {
+  const route = new URL(match[1]).pathname.replace(/^\/+|\/+$/g, '');
+  const candidates = route === ''
+    ? [join(DIST, 'index.html')]
+    : [join(DIST, `${route}.html`), join(DIST, route, 'index.html')];
+  if (!candidates.some((file) => existsSync(file))) missingStubs.push(match[1]);
+}
+if (missingStubs.length) {
+  errors.push(`sitemap: URLs sem HTML correspondente em dist (${missingStubs.length}):`);
+  missingStubs.forEach((url) => errors.push(`  · ${url}`));
+}
+
 if (errors.length) {
   console.error('❌ Validação de JSON-LD falhou:');
   errors.forEach((e) => console.error('  - ' + e));

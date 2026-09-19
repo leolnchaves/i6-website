@@ -9,7 +9,7 @@
  * usam a data do frontmatter quando houver.
  */
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
   isNonIndexableRoute,
@@ -28,25 +28,16 @@ const STATIC_ROUTES = [
   { route: 'i6-builders', changefreq: 'monthly', priority: '0.9' },
   { route: 'success-stories', changefreq: 'monthly', priority: '0.8' },
   { route: 'insights', changefreq: 'weekly', priority: '0.8' },
-  { route: 'i6-blog', changefreq: 'weekly', priority: '0.8' },
+  // i6-blog e community ficam fora do sitemap por enquanto: não têm stub estático.
   { route: 'i6-intelligence', changefreq: 'weekly', priority: '0.8' },
-  { route: 'community', changefreq: 'monthly', priority: '0.6' },
   { route: 'contact', changefreq: 'monthly', priority: '0.7' },
   { route: 'privacy-policy', changefreq: 'yearly', priority: '0.3' },
   { route: 'ethics-policy', changefreq: 'yearly', priority: '0.3' },
 ];
 
-// lastmod já publicados — preservados por URL.
-const previousLastmod = new Map();
-if (existsSync(SITEMAP_PATH)) {
-  const previous = readFileSync(SITEMAP_PATH, 'utf8');
-  const blocks = previous.match(/<url>[\s\S]*?<\/url>/g) || [];
-  for (const block of blocks) {
-    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1];
-    const lastmod = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
-    if (loc && lastmod) previousLastmod.set(loc, lastmod);
-  }
-}
+// lastmod só existe quando há data real: a data do frontmatter do conteúdo.
+// Páginas fixas não têm data de publicação própria e saem sem <lastmod>;
+// a data do build NUNCA é usada como lastmod.
 
 const hreflangOf = (lang) => (lang === 'pt' ? 'pt-BR' : lang);
 
@@ -58,7 +49,7 @@ const alternateTags = (route, langs) => [
 
 const urlBlock = ({ lang, route, changefreq, priority, lastmod, langs }) => {
   const loc = `${BASE_URL}${localizedRoutePath(lang, route)}`;
-  const finalLastmod = previousLastmod.get(loc) || lastmod;
+  const finalLastmod = lastmod;
   return [
     '  <url>',
     `    <loc>${loc}</loc>`,

@@ -29,11 +29,30 @@ const SECTIONS = [
 
 const items = collectContent();
 
+/**
+ * Resumo neutro: descarta qualquer frase com número (estatística vinda do corpo
+ * do artigo) e devolve só a primeira frase descritiva restante.
+ */
+const neutralSummary = (summary = '') => {
+  const sentences = String(summary)
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .filter((s) => !/\d/.test(s) && !/%/.test(s));
+  return sentences[0] || '';
+};
+
+// Cases não levam resumo: o descritivo combina setor, porte e região e pode
+// identificar o cliente, que é sempre anonimizado.
+const TYPES_WITHOUT_SUMMARY = new Set(['Success Story']);
+
 const line = (item) => {
   const label = `${item.title} (${LANG_LABEL[item.lang] || item.lang.toUpperCase()})`;
-  return item.summary
-    ? `- [${label}](${item.url}): ${item.summary}`
-    : `- [${label}](${item.url})`;
+  const date = item.date ? ` — ${item.date}` : '';
+  const summary = TYPES_WITHOUT_SUMMARY.has(item.type) ? '' : neutralSummary(item.summary);
+  return summary
+    ? `- [${label}](${item.url})${date}: ${summary}`
+    : `- [${label}](${item.url})${date}`;
 };
 
 const sortItems = (list) =>

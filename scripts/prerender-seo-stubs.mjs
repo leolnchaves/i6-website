@@ -29,6 +29,8 @@ import { collectContent } from './lib/content-collector.mjs';
 
 const BASE_URL = 'https://infinity6.ai';
 const DIST = resolve('dist');
+// Fonte única dos cards de prova da Home — nenhum valor é duplicado neste script.
+const REAL_RESULTS = JSON.parse(readFileSync(resolve('src/data/realResults.json'), 'utf8'));
 const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b75.png`;
 
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
@@ -294,22 +296,12 @@ for (const lang of ['en', 'pt', 'es']) {
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss), 20B records.' },
       ];
 
-      // Real-results KPIs (mirror src/data/staticData/realResults.ts)
-      const kpis = tl === 'pt' ? [
-        { value: 'R$ 100M', label: 'em perdas evitadas por incineração em um ano', source: 'Indústria farmacêutica' },
-        { value: '+23%', label: 'ticket médio por PDV', source: 'Varejo' },
-        { value: '+36%', label: 'positivação de produtos', source: 'Varejo' },
-        { value: '−57%', label: 'custo de mensageria, com disparos direcionados', source: 'Financeiro' },
-        { value: '12x', label: 'mais conversão em campanhas do que a segmentação tradicional', source: 'Financeiro' },
-        { value: '+2,6%', label: 'mais vendas que a curadoria humana de looks', source: 'Fashion' },
-      ] : [
-        { value: 'R$ 100M', label: 'in losses avoided from incineration in one year', source: 'Pharmaceutical industry' },
-        { value: '+23%', label: 'average ticket per POS', source: 'Retail' },
-        { value: '+36%', label: 'product activation', source: 'Retail' },
-        { value: '−57%', label: 'messaging cost, with targeted sends', source: 'Financial services' },
-        { value: '12x', label: 'more conversion in campaigns than traditional segmentation', source: 'Financial services' },
-        { value: '+2.6%', label: 'more sales than human look curation', source: 'Fashion' },
-      ];
+      // Real-results KPIs — fonte única: src/data/realResults.json (mesmos cards da Home).
+      const kpis = REAL_RESULTS.map((kpi) => ({
+        value: kpi.value[lang] ?? kpi.value.pt,
+        label: kpi.label[lang] ?? kpi.label.pt,
+        source: kpi.source[lang] ?? kpi.source.pt,
+      }));
 
       const glossaryHtml = `<h2 id="glossario">${tl === 'pt' ? 'Glossário GEO' : 'GEO Glossary'}</h2><dl>${glossary.map(g => `<dt id="glossario-${g.slug}"><strong>${g.term}</strong></dt><dd>${g.def}</dd>`).join('')}</dl>`;
       const kpisHtml = `<h2>${tl === 'pt' ? 'Provas em números' : 'Proof in numbers'}</h2><ul>${kpis.map(k => `<li><strong>${k.value}</strong> ${k.label} — <em>${k.source}</em></li>`).join('')}</ul>`;
