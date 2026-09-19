@@ -124,7 +124,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           id: 'i6previsio',
           name: 'i6 Previsio',
           tagline: 'Previsão de demanda granular',
-          description: 'Previsão por SKU, canal e janela temporal, com intervalo de confiança e decomposição de sazonalidade.',
+          description: 'Estima a demanda por SKU, canal e janela temporal e mede a incerteza de cada previsão.',
           points: [
             'Granularidade até SKU × ponto de venda × dia',
             'Decomposição de tendência, sazonalidade e evento',
@@ -324,7 +324,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           id: 'i6previsio',
           name: 'i6 Previsio',
           tagline: 'Granular demand forecasting',
-          description: 'Forecasts per SKU, channel and time window, with confidence intervals and seasonality decomposition.',
+          description: 'Estimates demand by SKU, channel and time window and measures the uncertainty of each forecast.',
           points: [
             'Granularity down to SKU × point of sale × day',
             'Decomposition of trend, seasonality and event',
@@ -524,7 +524,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           id: 'i6previsio',
           name: 'i6 Previsio',
           tagline: 'Previsión de demanda granular',
-          description: 'Previsión por SKU, canal y ventana temporal, con intervalo de confianza y descomposición de estacionalidad.',
+          description: 'Estima la demanda por SKU, canal y ventana temporal y mide la incertidumbre de cada previsión.',
           points: [
             'Granularidad hasta SKU × punto de venta × día',
             'Descomposición de tendencia, estacionalidad y evento',
