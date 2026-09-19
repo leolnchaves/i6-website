@@ -499,6 +499,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { name: 'i6 Builder Platform', role: 'SDK y API para construir tus propios productos' },
         { name: 'La inteligencia', role: 'Motores, modelo fundacional y método científico', current: true },
       ],
+      indexLinks: [
+        { label: 'Motores', anchor: '#motores' },
+        { label: 'Modelo Fundacional', anchor: '#modelo-fundacional' },
+        { label: 'Método', anchor: '#metodo' },
+        { label: 'Base Científica', anchor: '#base-cientifica' },
+        { label: 'Capa de Abstracción', anchor: '#camada-abstracao' },
+        { label: 'Gobernanza', anchor: '#governanca' },
+      ],
+      credentials: [
+        { value: '3', label: 'motores propios' },
+        { value: '20GB', label: 'escala de entrenamiento fundacional' },
+        { value: '50', label: 'bases públicas/adquiridas de preentrenamiento' },
+        { value: '5', label: 'publicaciones revisadas por pares' },
+        { value: '9', label: 'charlas y conferencias técnicas' },
+      ],
     },
     engines: {
       eyebrow: 'Núcleo predictivo',
