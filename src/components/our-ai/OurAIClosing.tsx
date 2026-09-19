@@ -51,6 +51,7 @@ const OurAIClosing = memo(({ content }: Props) => {
             </Link>
 
           </div>
+          </div>
         </div>
       </div>
     </section>
