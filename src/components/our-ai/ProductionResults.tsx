@@ -1,5 +1,7 @@
 import { memo } from 'react';
-import { pickLang } from '@/utils/localizedPath';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { pickLang, useLocalizedPath } from '@/utils/localizedPath';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { realResults } from '@/data/staticData/realResults';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
@@ -15,6 +17,7 @@ interface Props {
  */
 const ProductionResults = memo(({ content }: Props) => {
   const { language } = useLanguage();
+  const localized = useLocalizedPath();
 
   return (
     <section className="bg-secondary/60 py-16 md:py-24">
@@ -38,6 +41,15 @@ const ProductionResults = memo(({ content }: Props) => {
             </div>
           ))}
         </dl>
+
+        {/* Atalho da Evidência → cases de sucesso */}
+        <Link
+          to={localized('/success-stories')}
+          className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+        >
+          {content.ctaLink}
+          <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+        </Link>
 
       </div>
     </section>
