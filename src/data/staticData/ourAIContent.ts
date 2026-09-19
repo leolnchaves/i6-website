@@ -438,7 +438,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       pillars: [
         { title: 'Anonymization at source', description: 'The model never sees identifiable data: anonymization happens before training, in every model' },
         { title: 'Layered security', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface' },
-        { title: 'Isolated environment', description: 'Each client's data and models stay in an isolated environment, with no cross access' },
+        { title: 'Isolated environment', description: 'Data and models for each client stay in an isolated environment, with no cross access' },
         { title: 'Ready to scale', description: '100% cloud-native solution with automatic resource scaling' },
       ],
     },
