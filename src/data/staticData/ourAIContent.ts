@@ -169,7 +169,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'API', text: 'Endpoints de previsão, ranqueamento e elasticidade com contrato estável e versionado.' },
         { title: 'Toolkits', text: 'Blocos prontos de avaliação, monitoramento de deriva e explicabilidade.' },
       ],
-      cta: 'Conhecer a i6 Builder Platform',
+      cta: 'Construa com a i6 Builder Platform',
     },
     foundation: {
       eyebrow: 'Modelo fundacional',
@@ -365,7 +365,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'API', text: 'Forecasting, ranking and elasticity endpoints with a stable, versioned contract.' },
         { title: 'Toolkits', text: 'Ready-made blocks for evaluation, drift monitoring and explainability.' },
       ],
-      cta: 'Explore the i6 Builder Platform',
+      cta: 'Build with the i6 Builder Platform',
     },
     foundation: {
       eyebrow: 'Foundation model',
@@ -561,7 +561,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { title: 'API', text: 'Endpoints de previsión, ranking y elasticidad con contrato estable y versionado.' },
         { title: 'Toolkits', text: 'Bloques listos de evaluación, monitoreo de deriva y explicabilidad.' },
       ],
-      cta: 'Conocer la i6 Builder Platform',
+      cta: 'Construye con la i6 Builder Platform',
     },
     foundation: {
       eyebrow: 'Modelo fundacional',
