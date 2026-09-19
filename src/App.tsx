@@ -26,8 +26,6 @@ import Intelligence from "./pages/Intelligence";
 import IntelligenceOrInsightArticle from "./pages/IntelligenceOrInsightArticle";
 import Blog from "./pages/Blog";
 import OurAI from "./pages/OurAI";
-import Kiosk from "./pages/Kiosk";
-import KioskMetrics from "./pages/KioskMetrics";
 import GoLanding from "./pages/GoLanding";
 import I6Builders from "./pages/I6Builders";
 import Comunidade from "./pages/Comunidade";

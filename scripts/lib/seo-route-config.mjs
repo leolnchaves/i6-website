@@ -18,6 +18,21 @@ export const SAMPLE_DOC_ROUTES = existsSync(DOCS_CONTENT_DIR)
 
 export const NON_INDEXABLE_DOC_ROUTES = [DOCS_ROOT_ROUTE, ...SAMPLE_DOC_ROUTES];
 
+// Política única para conteúdos editoriais de demonstração e acessos desativados.
+export const NON_INDEXABLE_SLUG_PATTERNS = [/^demo-/];
+export const DISABLED_PUBLIC_ROUTE_PATTERNS = [/^demo$/, /^demo-metrics(?:\/|$)/];
+
+export const isNonIndexableSlug = (slug = '') =>
+  NON_INDEXABLE_SLUG_PATTERNS.some((pattern) => pattern.test(String(slug)));
+
+export const isNonIndexableRoute = (route = '') => {
+  const cleanRoute = String(route)
+    .replace(/^\/+|\/+$/g, '')
+    .replace(/^(?:pt|en|es)\//, '');
+  return DISABLED_PUBLIC_ROUTE_PATTERNS.some((pattern) => pattern.test(cleanRoute))
+    || cleanRoute.split('/').some(isNonIndexableSlug);
+};
+
 // Rotas cujo conteúdo foi confirmado como traduzido de verdade para espanhol.
 // Use '' para a home localizada (/{lang}).
 export const ES_TRANSLATED_ROUTES = [
