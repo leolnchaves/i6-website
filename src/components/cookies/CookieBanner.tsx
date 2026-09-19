@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocalizedPath } from '@/utils/localizedPath';
+import { usePolicyDrawer } from '@/components/policy/PolicyDrawer';
 import { CookieConsent } from '@/types/cookies';
 import { useEffect, useState } from 'react';
 
@@ -20,7 +19,7 @@ const CookieBanner = () => {
     consent,
   } = useCookieConsent();
   const { language } = useLanguage();
-  const localized = useLocalizedPath();
+  const { openPolicy } = usePolicyDrawer();
 
   const [local, setLocal] = useState<CookieConsent>(consent);
   useEffect(() => setLocal(consent), [consent]);

@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
+import { usePolicyDrawer } from '@/components/policy/PolicyDrawer';
 
 import { APPS_SCRIPT_URL, SHARED_FORM_TOKEN, HONEYPOT_FIELD, normalizeLeadFields } from '@/lib/leadFormConfig';
 import { getLeadContext, getLeadContextFields, formatLeadContextForMessage, trackEvent } from '@/lib/tracker';
@@ -44,6 +45,7 @@ interface ArticleCTAFormProps {
 const ArticleCTAForm = ({ kind, section, title, slug, id, ctaText }: ArticleCTAFormProps) => {
   const { language } = useLanguage();
   const localized = useLocalizedPath();
+  const { openPolicy } = usePolicyDrawer();
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
