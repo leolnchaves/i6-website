@@ -28,8 +28,9 @@ const PUBLIC_DIR = resolve('public');
 const errors = [];
 
 const research = JSON.parse(readFileSync(resolve('src/data/research.json'), 'utf8'));
+const ourAIGlossary = JSON.parse(readFileSync(resolve('src/data/ourAIGlossary.json'), 'utf8'));
 
-const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'docs/glossario', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 const stubFile = (lang, route) => {
   if (route === '') return join(DIST, lang, 'index.html');
   return join(DIST, lang, `${route}.html`);
@@ -146,6 +147,7 @@ for (const lang of ['pt', 'en', 'es']) {
   pages.push({ lang, label: `/${lang}`, file: join(DIST, lang, 'index.html') });
   pages.push({ lang, label: `/${lang}/our-ai`, file: join(DIST, lang, 'our-ai.html') });
   pages.push({ lang, label: `/${lang}/docs/pesquisa`, file: join(DIST, lang, 'docs', 'pesquisa.html') });
+  pages.push({ lang, label: `/${lang}/docs/glossario`, file: join(DIST, lang, 'docs', 'glossario.html') });
 }
 
 const extractBlocks = (html) =>
