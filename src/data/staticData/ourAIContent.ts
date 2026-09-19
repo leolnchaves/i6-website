@@ -134,7 +134,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           id: 'i6recsys',
           name: 'i6 RecSys',
-          tagline: 'Recomendação de alto desempenho',
+          tagline: 'Recomendação contextual',
           description: 'Ranqueamento comportamental que combina histórico, contexto e restrição operacional na mesma função de decisão.',
           points: [
             'Aprende comportamento transacional, não preferência declarada',
@@ -334,7 +334,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           id: 'i6recsys',
           name: 'i6 RecSys',
-          tagline: 'High-performance recommendation',
+          tagline: 'Contextual recommendation',
           description: 'Behavioral ranking that combines history, context and operational constraint in a single decision function.',
           points: [
             'Learns transactional behavior, not declared preference',
@@ -534,7 +534,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           id: 'i6recsys',
           name: 'i6 RecSys',
-          tagline: 'Recomendación de alto desempeño',
+          tagline: 'Recomendación contextual',
           description: 'Ranking conductual que combina histórico, contexto y restricción operativa en una única función de decisión.',
           points: [
             'Aprende comportamiento transaccional, no preferencia declarada',
