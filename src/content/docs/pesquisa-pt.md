@@ -13,9 +13,7 @@ As publicações formais revisadas por pares estão reunidas em [i6 Deep Researc
 
 ## Palestras técnicas
 
-<!-- Rótulo das palestras = "InfoQ Brasil · <evento>", conforme src/data/research.json.
-     ATENÇÃO: este arquivo é site_managed e a origem é o i6 HUB — a mesma correção
-     precisa ser aplicada lá, senão um sync futuro sobrescreve com "· QCon". -->
+<!-- Rótulo das palestras = "InfoQ Brasil · <evento>", conforme src/data/research.json. -->
 - [Ciência de dados para alinhar produto](https://www.infoq.com/br/presentations/ciencia-de-dados-alinhar-produto/) — InfoQ Brasil · DevCamp 2019
 - [Recomendação de conteúdo na escala do iFood](https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/) — InfoQ Brasil · QCon São Paulo 2018
 - [Machine Learning — do gênesis ao apocalipse](https://www.infoq.com/br/presentations/machine-learning-genesis-ao-apocalipse/) — InfoQ Brasil · DevCamp 2017
