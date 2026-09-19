@@ -16,6 +16,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import {
   buildResearchNodes,
+  buildOurAIResearchNodes,
   localizeGlobalGraph,
   serializeLd,
   researchData,

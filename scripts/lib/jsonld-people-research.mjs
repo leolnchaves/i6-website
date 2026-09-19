@@ -140,6 +140,10 @@ function talkNode(t, lang) {
  * Nós de produção. `slugs` restringe a seleção (usado em /our-ai, onde só
  * 3 itens são visíveis) — os @id são os mesmos em qualquer página.
  */
+export function buildOurAIResearchNodes(lang) {
+  return research.articles.filter((a) => a.showOnOurAI).map(articleNode);
+}
+
 export function buildResearchNodes(lang, slugs) {
   const wanted = (item) => !slugs || slugs.includes(item.slug);
   return [
