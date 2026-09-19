@@ -56,7 +56,14 @@ const VARIANT_REASON: Record<Exclude<ContactFormVariant, 'default'>, string> = {
 
 export interface ContactFormProps {
   /** Pré-preenchimento (ex.: landing /go/:token com dados do lead do HUB) */
-  defaultValues?: Partial<Pick<FormData, 'name' | 'email' | 'company' | 'subject' | 'message'>>;
+  /** Valores iniciais (ex.: go-landing já chega com nome/e-mail/empresa). */
+  defaultValues?: Partial<FormData>;
+  /**
+   * Pré-preenchimento aplicado UMA vez ao montar (ex.: atalho ?intent=security
+   * vindo de /our-ai). Diferente de defaultValues: o reset() pós-envio volta aos
+   * defaultValues, então com prefill o formulário continua limpando os campos.
+   */
+  prefill?: Partial<Pick<FormData, 'subject' | 'message'>>;
   /** Origem do lead enviada ao HUB. Default: contact-form */
   leadSource?: LeadSource;
   /** Campos extras no payload (ex.: outreach_send_id) */
@@ -73,6 +80,7 @@ export interface ContactFormProps {
 
 const ContactForm = memo(({
   defaultValues,
+  prefill,
   leadSource = 'contact-form',
   extraFields,
   hideCompany = false,
@@ -176,6 +184,15 @@ const ContactForm = memo(({
   useEffect(() => {
     if (fixedSubjectValue) setValue('subject', fixedSubjectValue);
   }, [fixedSubjectValue, setValue]);
+
+  // Aplica o prefill do atalho (?intent=...) apenas uma vez no mount. O objeto
+  // chega memoizado do pai; deps vazias garantem que edições do usuário não
+  // sejam sobrescritas e que o reset() pós-envio continue limpando os campos.
+  useEffect(() => {
+    if (prefill?.subject) setValue('subject', prefill.subject);
+    if (prefill?.message) setValue('message', prefill.message);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmit = useCallback(async (data: FormData) => {
     // Honeypot: silently drop bot submissions
