@@ -203,10 +203,10 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       mixTitle: 'Composição dos dados de treino (2026)',
       mix: [
-        { value: '15%', label: 'comportamento em produtos financeiros' },
-        { value: '45%', label: 'e-commerce' },
-        { value: '20%', label: 'telecom' },
-        { value: '20%', label: 'atacado / varejo' },
+        { value: '15%', label: 'Produtos financeiros' },
+        { value: '45%', label: 'E-commerce' },
+        { value: '20%', label: 'Telecom' },
+        { value: '20%', label: 'Atacado / varejo' },
       ],
     },
     reasoning: {
@@ -416,10 +416,10 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       mixTitle: 'Training data composition (2026)',
       mix: [
-        { value: '15%', label: 'financial product behavior' },
-        { value: '45%', label: 'e-commerce' },
-        { value: '20%', label: 'telecom' },
-        { value: '20%', label: 'wholesale / retail' },
+        { value: '15%', label: 'Financial products' },
+        { value: '45%', label: 'E-commerce' },
+        { value: '20%', label: 'Telecom' },
+        { value: '20%', label: 'Wholesale / retail' },
       ],
     },
     reasoning: {
@@ -629,10 +629,10 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       ],
       mixTitle: 'Composición de los datos de entrenamiento (2026)',
       mix: [
-        { value: '15%', label: 'comportamiento en productos financieros' },
-        { value: '45%', label: 'e-commerce' },
-        { value: '20%', label: 'telecom' },
-        { value: '20%', label: 'mayorista / retail' },
+        { value: '15%', label: 'Productos financieros' },
+        { value: '45%', label: 'E-commerce' },
+        { value: '20%', label: 'Telecom' },
+        { value: '20%', label: 'Mayorista / retail' },
       ],
     },
     reasoning: {
