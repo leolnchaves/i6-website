@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
@@ -44,7 +44,7 @@ const OurAIClosing = memo(({ content }: Props) => {
               className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
             >
               {content.tertiary}
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+              <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
 
           </div>
