@@ -118,7 +118,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     engines: {
       eyebrow: 'Núcleo preditivo',
       title: 'Três motores proprietários',
-      lead: 'Cada motor resolve uma classe própria de decisão e é treinado sobre o mesmo modelo fundacional. Não geram texto — geram previsão calibrada, com incerteza medida e explicação rastreável.',
+      lead: 'Cada motor resolve uma classe própria de decisão, sobre a mesma base fundacional. Não geram texto: geram decisões calibradas, com incerteza medida e explicação rastreável.',
       items: [
         {
           id: 'i6previsio',
@@ -318,7 +318,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     engines: {
       eyebrow: 'Predictive core',
       title: 'Three proprietary engines',
-      lead: 'Each engine solves its own class of decision and is trained on the same foundation model. They do not generate text — they generate calibrated prediction, with measured uncertainty and traceable explanation.',
+      lead: 'Each engine solves its own class of decision, on the same foundation base. They do not generate text: they generate calibrated decisions, with measured uncertainty and traceable explanation.',
       items: [
         {
           id: 'i6previsio',
@@ -518,7 +518,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     engines: {
       eyebrow: 'Núcleo predictivo',
       title: 'Tres motores propios',
-      lead: 'Cada motor resuelve su propia clase de decisión y se entrena sobre el mismo modelo fundacional. No generan texto: generan predicción calibrada, con incertidumbre medida y explicación rastreable.',
+      lead: 'Cada motor resuelve su propia clase de decisión, sobre la misma base fundacional. No generan texto: generan decisiones calibradas, con incertidumbre medida y explicación rastreable.',
       items: [
         {
           id: 'i6previsio',
