@@ -103,13 +103,25 @@ const OurAI = memo(() => {
       <SEOHead page="our-ai" jsonLd={jsonLd} />
       <div className="theme-sand">
         <IntelligenceHero content={c.hero} />
-        <EnginesTrio content={c.engines} />
-        <FoundationModel content={c.foundation} />
-        <ReasoningSection content={c.reasoning} />
-        <SecuritySection content={c.security} />
-        <BuilderBridge content={c.builder} />
+        <div id="motores" className="scroll-mt-24">
+          <EnginesTrio content={c.engines} />
+        </div>
+        <div id="modelo-fundacional" className="scroll-mt-24">
+          <FoundationModel content={c.foundation} />
+        </div>
+        <div id="metodo" className="scroll-mt-24">
+          <ReasoningSection content={c.reasoning} />
+        </div>
+        <div id="base-cientifica" className="scroll-mt-24">
+          <ScienceHighlights content={c.science} />
+        </div>
+        <div id="camada-abstracao" className="scroll-mt-24">
+          <BuilderBridge content={c.builder} />
+        </div>
+        <div id="governanca" className="scroll-mt-24">
+          <SecuritySection content={c.security} />
+        </div>
         <ProductionResults content={c.results} />
-        <ScienceHighlights content={c.science} />
         <GlossaryCondensed content={c.glossary} />
         <OurAIClosing content={c.closing} />
 

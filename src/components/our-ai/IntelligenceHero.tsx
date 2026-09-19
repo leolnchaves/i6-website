@@ -219,10 +219,10 @@ const IntelligenceHero = memo(({ content }: Props) => {
                 <dl className="flex flex-wrap gap-x-10 gap-y-4">
                   {content.credentials.map((kpi) => (
                     <div key={kpi.label} className="flex flex-col">
-                      <dd className="order-2 text-[9px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                      <dt className="order-2 text-[9px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
                         {kpi.label}
-                      </dd>
-                      <dt className="order-1 font-mono text-sm font-semibold text-accent-foreground">{kpi.value}</dt>
+                      </dt>
+                      <dd className="order-1 font-mono text-sm font-semibold text-accent-foreground">{kpi.value}</dd>
                     </div>
                   ))}
                 </dl>
