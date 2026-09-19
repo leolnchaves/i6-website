@@ -1,10 +1,12 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
+import { toContentLang } from '@/utils/localizedPath';
 
-const EthicsPolicy = () => {
-  useScrollAnimation();
+/** Corpo da Política de Ética, reutilizado pela página e pelo painel lateral. */
+export const EthicsPolicyBody = () => {
   const { language } = useLanguage();
+
 
   const content = {
     en: {
