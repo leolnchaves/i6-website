@@ -254,31 +254,11 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     science: {
       eyebrow: 'Base científica',
-      title: 'Pesquisa própria há mais de uma década',
-      lead: 'Os motores nasceram de uma linha de pesquisa conduzida pelo fundador da infinity6 e pela área de P&D: de mapas auto-organizáveis a clustering não supervisionado e descoberta de padrões sem regras prévias.',
-      highlights: [
-        {
-          badge: 'PALESTRA · QCON SÃO PAULO · 2018',
-          title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon SP 2018',
-          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
-        },
-        {
-          badge: 'PUBLICAÇÃO · SPRINGER LNBIP · 2013',
-          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
-          url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
-        },
-        {
-          badge: 'CONFERÊNCIA · WEBIST · 2012',
-          title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
-          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
-          url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
-        },
-      ],
-      cta: 'Ver toda a produção técnica',
+      title: 'Pesquisa acadêmica na origem do time',
+      lead: 'Publicações revisadas por pares de Everton Gago, cofundador e COO da infinity6, em mineração de dados, mapas auto-organizáveis e inteligência de negócios',
+      cta: 'Ver todas as publicações e palestras',
       founder: {
-        label: 'Veja o perfil acadêmico de Everton Gago, co-fundador & COO da infinity6',
+        label: 'Veja o perfil acadêmico de Everton Gago, cofundador & COO da infinity6',
         url: 'https://unicamp.academia.edu/EvertonGago',
       },
     },
@@ -470,29 +450,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     science: {
       eyebrow: 'Scientific foundations',
-      title: 'In-house research for more than a decade',
-      lead: 'The engines were born from a research line led by the founder of infinity6 and our R&D team: from self-organizing maps to unsupervised clustering and rule-free pattern discovery.',
-      highlights: [
-        {
-          badge: 'TALK · QCON SÃO PAULO · 2018',
-          title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon SP 2018',
-          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
-        },
-        {
-          badge: 'PUBLICATION · SPRINGER LNBIP · 2013',
-          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
-          url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
-        },
-        {
-          badge: 'CONFERENCE · WEBIST · 2012',
-          title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
-          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
-          url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
-        },
-      ],
-      cta: 'See all technical production',
+      title: "Academic research at the team's origin",
+      lead: 'Peer-reviewed publications by Everton Gago, co-founder and COO of infinity6, in data mining, self-organizing maps and business intelligence',
+      cta: 'See all publications and talks',
       founder: {
         label: 'See the academic profile of Everton Gago, co-founder & COO of infinity6',
         url: 'https://unicamp.academia.edu/EvertonGago',
@@ -686,29 +646,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     },
     science: {
       eyebrow: 'Base científica',
-      title: 'Investigación propia durante más de una década',
-      lead: 'Los motores nacieron de una línea de investigación conducida por el fundador de infinity6 y el área de I+D: de mapas autoorganizados a clustering no supervisado y descubrimiento de patrones sin reglas previas.',
-      highlights: [
-        {
-          badge: 'CHARLA · QCON SÃO PAULO · 2018',
-          title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon SP 2018',
-          url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
-        },
-        {
-          badge: 'PUBLICACIÓN · SPRINGER LNBIP · 2013',
-          title: 'Knowledge Discovery: Data Mining by Self-organizing Maps',
-          venue: 'Web Information Systems and Technologies — Lecture Notes in Business Information Processing, vol. 140, pp. 185–200, Springer',
-          url: 'https://link.springer.com/chapter/10.1007/978-3-642-36608-6_12',
-        },
-        {
-          badge: 'CONFERENCIA · WEBIST · 2012',
-          title: 'Self-Organizing Maps — An Approach Applied to the Electronic Government',
-          venue: 'Proceedings of the 8th International Conference on Web Information Systems and Technologies',
-          url: 'https://www.academia.edu/122408553/SELF_ORGANIZING_MAPS_An_Approach_Applied_to_the_Electronic_Government',
-        },
-      ],
-      cta: 'Ver toda la producción técnica',
+      title: 'Investigación académica en el origen del equipo',
+      lead: 'Publicaciones con revisión por pares de Everton Gago, cofundador y COO de infinity6, en minería de datos, mapas autoorganizados e inteligencia de negocios',
+      cta: 'Ver todas las publicaciones y charlas',
       founder: {
         label: 'Mira el perfil académico de Everton Gago, cofundador & COO de infinity6',
         url: 'https://unicamp.academia.edu/EvertonGago',
