@@ -32,9 +32,9 @@ const OG_IMAGE = `${BASE_URL}/lovable-uploads/0fce52e4-a161-4d37-b3e4-f23f093b9b
 // ---- Static page SEO (mirrors src/data/staticData/seoData.ts) ----
 const seo = {
   home: {
-    pt: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.' },
-    en: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.' },
-    es: { title: 'infinity6 – The Platform for Decision Advantage', description: 'Decide antes que el mercado. Plataforma de IA aplicada que convierte decisiones anticipadas en crecimiento de ingresos, protección de margen y aceleración de resultados.' },
+    pt: { title: 'infinity6 – i6 Decision Platform', description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.' },
+    en: { title: 'infinity6 – i6 Decision Platform', description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.' },
+    es: { title: 'infinity6 – i6 Decision Platform', description: 'Decide antes que el mercado. Plataforma de IA aplicada que convierte decisiones anticipadas en crecimiento de ingresos, protección de margen y aceleración de resultados.' },
   },
   'success-stories': {
     pt: { title: 'Cases de Sucesso com IA | infinity6', description: 'Veja como empresas aumentaram receita, protegeram margem e reduziram rupturas com inteligência preditiva da infinity6.' },

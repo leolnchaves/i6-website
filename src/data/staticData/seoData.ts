@@ -13,7 +13,7 @@ type SEODataMap = Record<string, Record<ContentLang, PageSEO> & { es?: PageSEO }
 export const seoData: SEODataMap = {
   home: {
     pt: {
-      title: 'infinity6 – The Platform for Decision Advantage',
+      title: 'infinity6 – i6 Decision Platform',
       description: 'Decida antes do mercado. Plataforma de IA aplicada que transforma decisões antecipadas em crescimento de receita, proteção de margem e aceleração de resultados.',
       keywords: [
         'plataforma de decisão',
@@ -27,10 +27,10 @@ export const seoData: SEODataMap = {
       ],
     },
     en: {
-      title: 'infinity6 – The Platform for Decision Advantage',
+      title: 'infinity6 – i6 Decision Platform',
       description: 'Decide before the market. Applied-AI platform that turns anticipated decisions into revenue growth, margin protection and faster results.',
       keywords: [
-        'decision advantage platform',
+        'i6 Decision Platform',
         'applied AI',
         'decision intelligence',
         'predictive intelligence',
