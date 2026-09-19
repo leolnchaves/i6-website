@@ -137,9 +137,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           tagline: 'Recomendação contextual',
           description: 'Ranqueamento comportamental que combina histórico, contexto e restrição operacional na mesma função de decisão.',
           points: [
-            'Aprende comportamento transacional, não preferência declarada',
-            'Opera com identificado e anônimo no mesmo espaço latente',
+            'Aprende comportamento transacional, identificado ou anônimo, no mesmo espaço latente',
             'Balanceamento explícito entre precisão e diversidade',
+            'Cada recomendação sai com os fatores que a motivaram e o argumento pronto',
           ],
         },
         {
@@ -337,9 +337,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           tagline: 'Contextual recommendation',
           description: 'Behavioral ranking that combines history, context and operational constraint in a single decision function.',
           points: [
-            'Learns transactional behavior, not declared preference',
-            'Handles known and anonymous users in the same latent space',
+            'Learns transactional behavior, identified or anonymous, in the same latent space',
             'Explicit balance between precision and diversity',
+            'Each recommendation comes with the factors behind it and the argument ready to use',
           ],
         },
         {
@@ -537,9 +537,9 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           tagline: 'Recomendación contextual',
           description: 'Ranking conductual que combina histórico, contexto y restricción operativa en una única función de decisión.',
           points: [
-            'Aprende comportamiento transaccional, no preferencia declarada',
-            'Opera con usuarios identificados y anónimos en el mismo espacio latente',
+            'Aprende comportamiento transaccional, identificado o anónimo, en el mismo espacio latente',
             'Equilibrio explícito entre precisión y diversidad',
+            'Cada recomendación sale con los factores que la motivaron y el argumento listo',
           ],
         },
         {
