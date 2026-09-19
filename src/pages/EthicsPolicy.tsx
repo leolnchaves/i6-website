@@ -273,18 +273,33 @@ export const EthicsPolicyBody = () => {
             {renderSection(currentContent.sections.improvement.title, currentContent.sections.improvement.text, currentContent.sections.improvement.items)}
             {renderSection(currentContent.sections.compliance.title, currentContent.sections.compliance.text, currentContent.sections.compliance.items)}
 
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
-              <p className="text-white/70 mb-4">{currentContent.sections.contact.text}</p>
-              <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                
-                <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
-                
-                
-              </div>
-            </section>
-          </div>
+      <section>
+        <h2 className="text-2xl font-bold text-white mb-4">{currentContent.sections.contact.title}</h2>
+        <p className="text-white/70 mb-4">{currentContent.sections.contact.text}</p>
+        <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
+          <p className="text-white/70 mb-2"><strong className="text-white">{currentContent.sections.contact.email}</strong> ethics@infinity6.ai</p>
         </div>
+      </section>
+    </div>
+  );
+};
+
+const EthicsPolicy = () => {
+  useScrollAnimation();
+  const { language } = useLanguage();
+  const hero = ethicsContent[toContentLang(language)];
+
+  return (
+    <div className="relative overflow-hidden bg-[#FAF7F2]">
+      <SEOHead page="ethicsPolicy" />
+
+      <div className="policy-surface container mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+        <div className="max-w-4xl mx-auto mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#2D2D2D] mb-3 leading-tight">{hero.title}</h1>
+          <p className="text-base text-[#5D5D5D] mb-2 leading-relaxed">{hero.subtitle}</p>
+          <p className="text-xs uppercase tracking-widest text-[#8A8A8A]">{hero.lastUpdated}</p>
+        </div>
+        <EthicsPolicyBody />
       </div>
     </div>
   );
