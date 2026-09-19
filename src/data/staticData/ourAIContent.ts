@@ -14,6 +14,10 @@ export interface OurAIContent {
     title: string;
     lead: string;
     layers: { name: string; role: string; current?: boolean }[];
+    /** Mini-índice do cartão base: âncoras para as seções da própria página. */
+    indexLinks: { label: string; anchor: string }[];
+    /** Faixa de credenciais (KPIs reais) no rodapé do cartão base. */
+    credentials: { value: string; label: string }[];
   };
   engines: {
     eyebrow: string;
@@ -94,6 +98,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { name: 'i6 Decision Suite', role: 'Decisões prontas, do problema de negócio ao resultado' },
         { name: 'i6 Builder Platform', role: 'SDK e API para construir seus próprios produtos' },
         { name: 'A inteligência', role: 'Motores, modelo fundacional e método científico', current: true },
+      ],
+      indexLinks: [
+        { label: 'Motores', anchor: '#motores' },
+        { label: 'Modelo Fundacional', anchor: '#modelo-fundacional' },
+        { label: 'Método', anchor: '#metodo' },
+        { label: 'Base Científica', anchor: '#base-cientifica' },
+        { label: 'Camada de Abstração', anchor: '#camada-abstracao' },
+        { label: 'Governança', anchor: '#governanca' },
+      ],
+      credentials: [
+        { value: '3', label: 'motores proprietários' },
+        { value: '20GB', label: 'escala de treino fundacional' },
+        { value: '50', label: 'bases públicas/adquiridas de pré-treinamento' },
+        { value: '5', label: 'publicações revisadas por pares' },
+        { value: '9', label: 'palestras & conferências técnicas' },
       ],
     },
     engines: {
@@ -280,6 +299,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { name: 'i6 Builder Platform', role: 'SDK and API to build your own products' },
         { name: 'The intelligence', role: 'Engines, foundation model and scientific method', current: true },
       ],
+      indexLinks: [
+        { label: 'Engines', anchor: '#motores' },
+        { label: 'Foundation Model', anchor: '#modelo-fundacional' },
+        { label: 'Method', anchor: '#metodo' },
+        { label: 'Scientific Base', anchor: '#base-cientifica' },
+        { label: 'Abstraction Layer', anchor: '#camada-abstracao' },
+        { label: 'Governance', anchor: '#governanca' },
+      ],
+      credentials: [
+        { value: '3', label: 'proprietary engines' },
+        { value: '20GB', label: 'foundation training scale' },
+        { value: '50', label: 'public/acquired pre-training datasets' },
+        { value: '5', label: 'peer-reviewed publications' },
+        { value: '9', label: 'technical talks & conferences' },
+      ],
     },
     engines: {
       eyebrow: 'Predictive core',
@@ -464,6 +498,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { name: 'i6 Decision Suite', role: 'Decisiones listas, del problema de negocio al resultado' },
         { name: 'i6 Builder Platform', role: 'SDK y API para construir tus propios productos' },
         { name: 'La inteligencia', role: 'Motores, modelo fundacional y método científico', current: true },
+      ],
+      indexLinks: [
+        { label: 'Motores', anchor: '#motores' },
+        { label: 'Modelo Fundacional', anchor: '#modelo-fundacional' },
+        { label: 'Método', anchor: '#metodo' },
+        { label: 'Base Científica', anchor: '#base-cientifica' },
+        { label: 'Capa de Abstracción', anchor: '#camada-abstracao' },
+        { label: 'Gobernanza', anchor: '#governanca' },
+      ],
+      credentials: [
+        { value: '3', label: 'motores propios' },
+        { value: '20GB', label: 'escala de entrenamiento fundacional' },
+        { value: '50', label: 'bases públicas/adquiridas de preentrenamiento' },
+        { value: '5', label: 'publicaciones revisadas por pares' },
+        { value: '9', label: 'charlas y conferencias técnicas' },
       ],
     },
     engines: {

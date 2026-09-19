@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { OurAIContent } from '@/data/staticData/ourAIContent';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 import { useLocalizedPath } from '@/utils/localizedPath';
@@ -101,7 +101,15 @@ const IntelligenceHero = memo(({ content }: Props) => {
         </h1>
         <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">{content.lead}</p>
 
-        <div ref={wrapRef} className="relative mt-12">
+        {/* Linha vertical da plataforma: hairline coral contínua, do box de cima até a base,
+            com o nome a 90° e "respiro" (fundo da página cobre a linha atrás do texto). */}
+        <div className="mt-12 flex items-stretch">
+          <div aria-hidden className="relative mr-5 hidden w-px shrink-0 bg-primary/60 md:mr-7 lg:block">
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-180 bg-background px-1.5 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary [writing-mode:vertical-rl]">
+              i6 Decision Platform
+            </span>
+          </div>
+        <div ref={wrapRef} className="relative min-w-0 flex-1">
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 hidden md:block h-full w-full overflow-visible"
@@ -176,12 +184,52 @@ const IntelligenceHero = memo(({ content }: Props) => {
           {baseLayer && (
             <div
               ref={baseRef}
-              className="mt-16 rounded-[var(--radius)] border border-border bg-accent p-6 shadow-[inset_0_10px_16px_-12px_hsl(var(--foreground)/0.18)]"
+              className="mt-16 overflow-hidden rounded-[var(--radius)] border border-border bg-accent shadow-[inset_0_10px_16px_-12px_hsl(var(--foreground)/0.18)]"
             >
-              <p className="text-sm font-semibold text-accent-foreground">{baseLayer.name}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{baseLayer.role}</p>
+              <div className="p-6 md:p-8">
+                <p className="text-sm font-semibold text-accent-foreground">{baseLayer.name}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{baseLayer.role}</p>
+
+                {/* Mini-índice numerado: cada item é âncora para uma seção da própria página. */}
+                <ul className="mt-8 grid grid-cols-1 gap-x-10 md:grid-cols-2 lg:grid-cols-3">
+                  {content.indexLinks.map((link, i) => (
+                    <li key={link.anchor}>
+                      <a
+                        href={link.anchor}
+                        className="group flex items-center gap-3 border-b border-border py-2.5 transition-colors hover:border-primary"
+                      >
+                        <span className="font-mono text-[10px] font-medium text-primary">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="flex-1 text-sm text-muted-foreground transition-colors group-hover:text-accent-foreground">
+                          {link.label}
+                        </span>
+                        <ArrowDown
+                          aria-hidden
+                          className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50 transition-colors group-hover:text-primary"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Faixa de credenciais: números reais, mesma família visual do restante do site. */}
+              <div className="border-t border-border bg-foreground/[0.04] px-6 py-4 md:px-8">
+                <dl className="flex flex-wrap gap-x-10 gap-y-4">
+                  {content.credentials.map((kpi) => (
+                    <div key={kpi.label} className="flex flex-col">
+                      <dt className="order-2 text-[9px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                        {kpi.label}
+                      </dt>
+                      <dd className="order-1 font-mono text-sm font-semibold text-accent-foreground">{kpi.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </div>
           )}
+        </div>
         </div>
       </div>
     </section>
