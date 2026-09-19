@@ -37,6 +37,7 @@ const ReasoningSection = memo(({ content }: Props) => (
           </article>
         ))}
       </div>
+    </div>
   </section>
 ));
 
