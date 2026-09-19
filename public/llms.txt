@@ -105,10 +105,9 @@ Pages exist in the languages indicated; replace /pt in the URL with /en or /es f
 
 ## Editorial hubs
 
-infinity6 publishes applied predictive intelligence in its editorial hubs: i6 On Media, i6 Blog and i6 Intelligence.
+infinity6 publishes applied predictive intelligence in its editorial hubs: i6 On Media and i6 Intelligence.
 
 - [i6 On Media](https://infinity6.ai/pt/insights) (PT · EN)
-- [i6 Blog](https://infinity6.ai/pt/i6-blog) (PT · EN)
 - [i6 Intelligence](https://infinity6.ai/pt/i6-intelligence) (PT · EN)
 
 ## Published content (generated at build time)
