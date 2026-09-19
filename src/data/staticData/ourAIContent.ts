@@ -97,7 +97,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       layers: [
         { name: 'i6 Decision Suite', role: 'Decisões prontas, do problema de negócio ao resultado' },
         { name: 'i6 Builder Platform', role: 'SDK e API para construir seus próprios produtos' },
-        { name: 'A inteligência', role: 'Motores, modelo fundacional e método científico', current: true },
+        { name: 'A inteligência', role: 'Pilares de profundidade técnica, do motor à governança.', current: true },
       ],
       indexLinks: [
         { label: 'Motores', anchor: '#motores' },
@@ -297,7 +297,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       layers: [
         { name: 'i6 Decision Suite', role: 'Decisions ready, from business problem to result' },
         { name: 'i6 Builder Platform', role: 'SDK and API to build your own products' },
-        { name: 'The intelligence', role: 'Engines, foundation model and scientific method', current: true },
+        { name: 'The intelligence', role: 'Pillars of technical depth, from engine to governance.', current: true },
       ],
       indexLinks: [
         { label: 'Engines', anchor: '#motores' },
@@ -497,7 +497,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       layers: [
         { name: 'i6 Decision Suite', role: 'Decisiones listas, del problema de negocio al resultado' },
         { name: 'i6 Builder Platform', role: 'SDK y API para construir tus propios productos' },
-        { name: 'La inteligencia', role: 'Motores, modelo fundacional y método científico', current: true },
+        { name: 'La inteligencia', role: 'Pilares de profundidad técnica, del motor a la gobernanza.', current: true },
       ],
       indexLinks: [
         { label: 'Motores', anchor: '#motores' },
