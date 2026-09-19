@@ -163,7 +163,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     builder: {
       eyebrow: 'Camada de abstração',
       title: 'i6 Builder Platform',
-      lead: 'Os motores desta página não são consumidos diretamente. A i6 Builder Platform é a camada que os expõe de forma programável — SDK, API e toolkits — para que times técnicos construam suas próprias aplicações sobre a mesma inteligência.',
+      lead: 'Os motores chegam a você por duas vias: prontos, na i6 Decision Suite, ou de forma programável, na i6 Builder Platform — SDK, API e toolkits — para que times técnicos e parceiros construam suas próprias aplicações sobre a mesma inteligência.',
       bullets: [
         { title: 'SDK', text: 'Bibliotecas para treinar, adaptar e servir modelos derivados do modelo fundacional.' },
         { title: 'API', text: 'Endpoints de previsão, ranqueamento e elasticidade com contrato estável e versionado.' },
@@ -359,7 +359,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     builder: {
       eyebrow: 'Abstraction layer',
       title: 'i6 Builder Platform',
-      lead: 'The engines on this page are not consumed directly. The i6 Builder Platform is the layer that exposes them programmatically — SDK, API and toolkits — so technical teams can build their own applications on the same intelligence.',
+      lead: 'The engines reach you two ways: ready to use, in the i6 Decision Suite, or programmatically, in the i6 Builder Platform — SDK, API and toolkits — so technical teams and partners can build their own applications on the same intelligence.',
       bullets: [
         { title: 'SDK', text: 'Libraries to train, adapt and serve models derived from the foundation model.' },
         { title: 'API', text: 'Forecasting, ranking and elasticity endpoints with a stable, versioned contract.' },
@@ -555,7 +555,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     builder: {
       eyebrow: 'Capa de abstracción',
       title: 'i6 Builder Platform',
-      lead: 'Los motores de esta página no se consumen de forma directa. La i6 Builder Platform es la capa que los expone de forma programable — SDK, API y toolkits — para que los equipos técnicos construyan sus propias aplicaciones sobre la misma inteligencia.',
+      lead: 'Los motores llegan a ti por dos vías: listos, en la i6 Decision Suite, o de forma programable, en la i6 Builder Platform — SDK, API y toolkits — para que equipos técnicos y aliados construyan sus propias aplicaciones sobre la misma inteligencia.',
       bullets: [
         { title: 'SDK', text: 'Bibliotecas para entrenar, adaptar y servir modelos derivados del modelo fundacional.' },
         { title: 'API', text: 'Endpoints de previsión, ranking y elasticidad con contrato estable y versionado.' },
