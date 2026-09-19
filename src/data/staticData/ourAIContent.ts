@@ -255,7 +255,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     science: {
       eyebrow: 'Base científica',
       title: 'Pesquisa própria há mais de uma década',
-      lead: 'Os motores nascem de uma linha de pesquisa conduzida pelo founder da infinity6 e pela área de P&D — de mapas auto-organizáveis a clustering não supervisionado e descoberta de padrões sem regras prévias.',
+      lead: 'Os motores nasceram de uma linha de pesquisa conduzida pelo fundador da infinity6 e pela área de P&D: de mapas auto-organizáveis a clustering não supervisionado e descoberta de padrões sem regras prévias.',
       highlights: [
         {
           badge: 'SPRINGER · LNBIP · 2013',
@@ -467,7 +467,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     science: {
       eyebrow: 'Scientific foundations',
       title: 'In-house research for more than a decade',
-      lead: 'The engines come out of a research line led by the founder of infinity6 and our R&D team — from self-organizing maps to unsupervised clustering and rule-free pattern discovery.',
+      lead: 'The engines were born from a research line led by the founder of infinity6 and our R&D team: from self-organizing maps to unsupervised clustering and rule-free pattern discovery.',
       highlights: [
         {
           badge: 'SPRINGER · LNBIP · 2013',
@@ -679,7 +679,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     science: {
       eyebrow: 'Base científica',
       title: 'Investigación propia durante más de una década',
-      lead: 'Los motores nacen de una línea de investigación conducida por el founder de infinity6 y el área de I+D — de mapas autoorganizados a clustering no supervisado y descubrimiento de patrones sin reglas previas.',
+      lead: 'Los motores nacieron de una línea de investigación conducida por el fundador de infinity6 y el área de I+D: de mapas autoorganizados a clustering no supervisado y descubrimiento de patrones sin reglas previas.',
       highlights: [
         {
           badge: 'SPRINGER · LNBIP · 2013',
