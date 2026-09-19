@@ -217,7 +217,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           index: '01',
           title: 'Precisão e diversidade, juntas',
-          description: 'Um modelo que só repete o histórico é preciso e inútil. O treinamento aplica um ajuste fino que mantém a precisão comportamental enquanto abre o espaço de saída para alternativas ainda não exploradas.',
+          description: 'Um modelo que só repete o histórico é preciso e inútil. O treinamento aplica um ajuste que mantém a precisão comportamental enquanto abre o espaço de saída para alternativas ainda não exploradas.',
           points: [
             'Precisão e diversidade tratadas como objetivos simultâneos, não como troca',
             'Sinais raros preservados em vez de suprimidos pela frequência',
@@ -430,7 +430,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           index: '01',
           title: 'Precision and diversity, together',
-          description: 'A model that merely repeats history is accurate and useless. Training applies a fine-tuning step that keeps behavioral precision while opening the output space to alternatives not yet explored.',
+          description: 'A model that merely repeats history is accurate and useless. Training applies a tuning step that keeps behavioral precision while opening the output space to alternatives not yet explored.',
           points: [
             'Precision and diversity as simultaneous objectives, not a trade-off',
             'Rare signals preserved instead of suppressed by frequency',
@@ -643,7 +643,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           index: '01',
           title: 'Precisión y diversidad, juntas',
-          description: 'Un modelo que solo repite el histórico es preciso e inútil. El entrenamiento aplica un ajuste fino que mantiene la precisión conductual mientras abre el espacio de salida a alternativas aún no exploradas.',
+          description: 'Un modelo que solo repite el histórico es preciso e inútil. El entrenamiento aplica un ajuste que mantiene la precisión conductual mientras abre el espacio de salida a alternativas aún no exploradas.',
           points: [
             'Precisión y diversidad como objetivos simultáneos, no como intercambio',
             'Señales raras preservadas en lugar de suprimidas por la frecuencia',
