@@ -1,7 +1,7 @@
 # Roadmap
 
-- [ ] Varredura ampliada PT/ES (src/, public/, scripts/, src/content, index.html, llms.base.txt) por artigo masculino antes de i6 Decision Suite / i6 Builder Platform / i6 Builder / Decision Suite / Builder Platform
-- [ ] Aplicar as 7 correções aprovadas + novas ocorrências encontradas (feminino)
-- [ ] Listar sem alterar: ocorrências ambíguas e componentes legados não montados (hometeste, Kiosk)
-- [ ] Mostrar diff completo
-- [ ] rg final com os mesmos padrões + build + validate
+- [x] Varredura ampliada PT/ES por artigo masculino antes dos nomes dos produtos
+- [x] 7 correções aprovadas + 11 novas ocorrências corrigidas (feminino)
+- [x] Listados sem alterar: comentários de código, "i6 Builder Summit" (nome próprio), hometeste/CTAFinal (legado não montado)
+- [x] Diff completo apresentado
+- [x] rg final limpo + build OK + prerender 39 stubs + validate ✅ (9 páginas)
