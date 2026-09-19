@@ -1,19 +1,29 @@
-# Cabeçalho padrão nas páginas de políticas
+# Cabeçalho padrão navy em todas as páginas
 
-## Problema
+## O que aconteceu
 
-Com o novo visual claro (fundo areia) das páginas /privacy-policy e /ethics-policy, o cabeçalho do site fica transparente no topo — e como o texto do menu é branco, ele fica ilegível sobre o fundo claro (visível no print enviado).
+As páginas de privacidade e ética ganharam o fundo claro (areia), mas o cabeçalho do site só fica navy em uma lista fixa de endereços. Como as duas não estavam na lista, ele ficou transparente e o menu branco ficou ilegível sobre o areia.
 
-O cabeçalho já tem uma lista de "páginas claras" (`isLightPage` em `src/components/hometeste/HeaderNovo.tsx`, linha 94) que força o fundo navy com leve transparência e desfoque — o mesmo padrão das demais páginas claras do site (contato, blog, insights etc.). As duas rotas de políticas ainda não estão nessa lista.
+Em vez de só acrescentar as duas à lista, o cabeçalho passa a ser sempre o padrão navy — como você pediu, já que nenhuma página precisa dele claro.
 
 ## O que será feito
 
-1. Em `src/components/hometeste/HeaderNovo.tsx`, adicionar `/privacy-policy` e `/ethics-policy` à lista `isLightPage` (comparação por caminho sem prefixo de idioma, então já vale para /pt, /en e /es).
-2. Resultado: nas páginas de políticas, o cabeçalho fica com o fundo navy sólido desde o topo — idêntico ao das demais páginas claras — com o menu branco legível.
-3. O painel lateral (drawer) não muda: ele se sobrepõe ao cabeçalho e já tem o visual areia/coral aprovado.
+1. Em `src/components/hometeste/HeaderNovo.tsx`, o cabeçalho sempre usa o fundo navy com leve transparência, desfoque e sombra (o mesmo visual de hoje quando a página está rolada).
+2. Remover a lista de endereços que hoje decide quando o cabeçalho escurece, junto com o código que vigia a rolagem só para esse efeito — o cabeçalho deixa de depender de qualquer lista.
+3. Nenhuma página precisa ser incluída manualmente; as políticas e qualquer página futura já nascem com o cabeçalho padrão.
+4. O painel lateral (drawer) das políticas não muda: continua areia/coral, por cima do cabeçalho.
+5. Nenhum texto é alterado.
+
+## Efeito colateral bom
+
+A tela de endereço inexistente também tem fundo claro e hoje mostra o menu branco ilegível — com o cabeçalho sempre navy ela fica legível também.
+
+## Detalhe para você decidir
+
+Nos casos de sucesso individuais, a foto de capa ocupa o topo inteiro da tela e hoje o cabeçalho é invisível sobre ela. Com o cabeçalho sempre navy, a faixa do menu aparece no topo da foto (a foto continua aparecendo inteira logo abaixo). É o preço de ter o menu sempre legível; se preferir a capa limpa nesses casos, me avise que mantenho o transparente só ali.
 
 ## Validação
 
-- Playwright: abrir /pt/privacy-policy e /pt/ethics-policy, conferir o cabeçalho navy legível no desktop e no celular, sem rolagem lateral.
-- Conferir que o drawer continua abrindo normalmente pelo rodapé.
-- `bunx tsgo --noEmit` e checagem do build.
+- Conferir no navegador: /pt/privacy-policy, /pt/ethics-policy, /pt, /pt/contact, um caso de sucesso, /pt/docs e um endereço errado — o menu navy legível em todos, no computador e no celular, sem rolagem lateral.
+- Conferir que o painel continua abrindo pelo rodapé, fechando no X, no Esc e clicando fora.
+- Checagem de tipos e do build.
