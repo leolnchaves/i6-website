@@ -20,7 +20,9 @@ const ContactHeroSplit = () => {
   // CTA de Governança em /our-ai). Intent desconhecido é ignorado.
   const [searchParams] = useSearchParams();
   const intentId = searchParams.get('intent') ?? '';
-  const intent = intentId in CONTACT_INTENTS ? CONTACT_INTENTS[intentId as keyof typeof CONTACT_INTENTS] : undefined;
+  const intent = Object.prototype.hasOwnProperty.call(CONTACT_INTENTS, intentId)
+    ? CONTACT_INTENTS[intentId as keyof typeof CONTACT_INTENTS]
+    : undefined;
   // Objeto memoizado: sem referência estável, cada render recriaria as props e
   // poderia reaplicar o prefill por cima do que o usuário já digitou.
   const intentProps = useMemo(() => {
