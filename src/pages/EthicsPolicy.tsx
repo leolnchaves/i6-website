@@ -220,9 +220,12 @@ export const ethicsContent = {
         }
       }
     }
-  };
+} as const;
 
-  const currentContent = content[language];
+/** Corpo da Política de Ética, reutilizado pela página e pelo painel lateral. */
+export const EthicsPolicyBody = () => {
+  const { language } = useLanguage();
+  const currentContent = ethicsContent[toContentLang(language)];
 
   const renderSection = (title: string, text: string, items?: string[]) => (
     <section className="border-b border-white/10 pb-8">
