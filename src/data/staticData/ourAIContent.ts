@@ -283,7 +283,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     closing: {
       eyebrow: 'Próximo passo',
       title: 'Quer avaliar a inteligência em profundidade?',
-      lead: 'Conversamos com times técnicos sobre arquitetura, avaliação de modelo e integração — sem intermediação comercial.',
+      lead: 'Conversamos com times técnicos sobre arquitetura, avaliação de modelo e integração.',
       primary: 'Falar com o time técnico',
       secondary: 'Construir sobre a i6 Builder Platform',
       tertiary: 'Contratar a Decision Suite',
@@ -475,7 +475,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     closing: {
       eyebrow: 'Next step',
       title: 'Want to assess the intelligence in depth?',
-      lead: 'We talk to technical teams about architecture, model evaluation and integration — with no commercial layer in between.',
+      lead: 'We talk to technical teams about architecture, model evaluation and integration.',
       primary: 'Talk to the technical team',
       secondary: 'Build on the i6 Builder Platform',
       tertiary: 'Get the Decision Suite',
@@ -667,7 +667,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     closing: {
       eyebrow: 'Siguiente paso',
       title: '¿Quieres evaluar la inteligencia en profundidad?',
-      lead: 'Hablamos con equipos técnicos sobre arquitectura, evaluación de modelos e integración — sin intermediación comercial.',
+      lead: 'Hablamos con equipos técnicos sobre arquitectura, evaluación de modelos e integración.',
       primary: 'Hablar con el equipo técnico',
       secondary: 'Construir sobre la i6 Builder Platform',
       tertiary: 'Contratar la Decision Suite',
