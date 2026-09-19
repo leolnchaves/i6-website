@@ -14,10 +14,13 @@ const ScienceHighlights = memo(({ content }: Props) => {
 
   return (
     <section className="container mx-auto px-6 py-16 md:py-24">
-      <div className="max-w-3xl">
+      <div className="max-w-4xl">
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">{content.eyebrow}</p>
-        <h2 className="mt-4 text-3xl md:text-[2.4rem] font-bold leading-[1.14] text-foreground">{content.title}</h2>
-        <p className="mt-5 text-base md:text-lg leading-relaxed text-muted-foreground">{content.lead}</p>
+        {/* O título ocupa uma linha só no desktop: a fonte acompanha a largura da tela e o texto não quebra. */}
+        <h2 className="mt-4 text-3xl md:text-[clamp(1.55rem,3.35vw,2.4rem)] font-bold leading-[1.14] text-foreground md:whitespace-nowrap">
+          {content.title}
+        </h2>
+        <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-muted-foreground">{content.lead}</p>
       </div>
 
       <ul className="mt-12 border-t border-border">
