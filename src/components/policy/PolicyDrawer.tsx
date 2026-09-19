@@ -20,7 +20,7 @@ const PolicyDrawerContext = createContext<PolicyDrawerContextValue>({
 
 export const usePolicyDrawer = () => useContext(PolicyDrawerContext);
 
-const PolicyDrawerPanel = ({ kind, onClose }: { kind: PolicyKind; onClose: () => void }) => {
+const PolicyDrawerPanel = ({ kind }: { kind: PolicyKind }) => {
   const { language } = useLanguage();
   const contentLang = toContentLang(language);
   const head = kind === 'privacy' ? privacyHero[contentLang] : ethicsContent[contentLang];
@@ -70,7 +70,7 @@ export const PolicyDrawerProvider = ({ children }: { children: ReactNode }) => {
     <PolicyDrawerContext.Provider value={value}>
       {children}
       <Dialog.Root open={kind !== null} onOpenChange={(open) => !open && closePolicy()}>
-        {kind && <PolicyDrawerPanel kind={kind} onClose={closePolicy} />}
+        {kind && <PolicyDrawerPanel kind={kind} />}
       </Dialog.Root>
     </PolicyDrawerContext.Provider>
   );
