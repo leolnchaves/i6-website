@@ -265,9 +265,12 @@ for (const lang of STATIC_LANGS) {
         '@context': 'https://schema.org',
         '@graph': buildResearchNodes(lang, ['palestra-ifood', 'artigo-lnbip-2013', 'artigo-webist-2012']),
       });
-      const ourAILead = tl === 'pt'
-        ? 'A infinity6 opera quatro motores proprietários de IA aplicada: i6 RecSys (recomendação), i6 Previsio (previsão de demanda), i6 ElasticPrice (precificação dinâmica) e i6 Signal (camada conversacional preditiva). O modelo fundacional i6-RecSys-Base.g1 combina MAML, Active Learning e Topological Loss, com pré-treino em 20 bi de registros de bases públicas/adquiridas (15% bancário, 45% e-commerce, 20% telecom, 20% atacado/varejo).'
-        : 'infinity6 operates four proprietary applied AI engines: i6 RecSys (recommendation), i6 Previsio (demand forecasting), i6 ElasticPrice (dynamic pricing) and i6 Signal (predictive conversational layer). The foundation model i6-RecSys-Base.g1 combines MAML, Active Learning and Topological Loss, pre-trained on 20B records from public/acquired sources (15% banking, 45% e-commerce, 20% telecom, 20% wholesale/retail).';
+      const OUR_AI_LEAD = {
+        pt: 'A infinity6 opera três motores proprietários de IA aplicada: i6 RecSys (recomendação contextual), i6 Previsio (previsão de demanda granular) e i6 ElasticPrice (precificação adaptativa). Os três partem do modelo fundacional i6-RecSys-Base.g1, que combina MAML, Active Learning, Topological Loss e External Memory, treinado em 20 bi de registros transacionais e 50 bases públicas ou adquiridas (45% e-commerce, 20% telecom, 20% atacado e varejo, 15% produtos financeiros).',
+        en: 'infinity6 operates three proprietary applied AI engines: i6 RecSys (contextual recommendation), i6 Previsio (granular demand forecasting) and i6 ElasticPrice (adaptive pricing). All three run on the foundation model i6-RecSys-Base.g1, which combines MAML, Active Learning, Topological Loss and External Memory, trained on 20 billion transactional records and 50 public or acquired datasets (45% e-commerce, 20% telecom, 20% wholesale and retail, 15% financial products).',
+        es: 'infinity6 opera tres motores propietarios de IA aplicada: i6 RecSys (recomendación contextual), i6 Previsio (previsión de demanda granular) e i6 ElasticPrice (precificación adaptativa). Los tres parten del modelo fundacional i6-RecSys-Base.g1, que combina MAML, Active Learning, Topological Loss y External Memory, entrenado con 20 mil millones de registros transaccionales y 50 bases públicas o adquiridas (45% e-commerce, 20% telecomunicaciones, 20% mayorista y minorista, 15% productos financieros).',
+      };
+      const ourAILead = OUR_AI_LEAD[lang] ?? OUR_AI_LEAD.pt;
 
       // Glossary terms (mirror src/data/staticData/ourAIContent.ts)
       const glossary = tl === 'pt' ? [
