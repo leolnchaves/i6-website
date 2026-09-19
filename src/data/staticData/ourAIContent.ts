@@ -275,8 +275,8 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Definições curtas do que é necessário para ler o restante desta página.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o modelo seleciona ativamente quais amostras rotular para acelerar aprendizado e reduzir custo de anotação.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva relações topológicas entre exemplos no espaço latente, melhorando generalização em poucos shots e estabilidade do embedding.' },
+        { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional proprietário da infinity6 (MAML + Active Learning + Topological Loss) pré-treinado em 1,45 bilhão de registros multissetoriais, adaptável com poucas amostras por cliente.' },
         { slug: 'predicao-comportamental', term: 'Predição comportamental', definition: 'Modelagem que aprende o comportamento real do cliente, canal ou produto a partir de dados transacionais — não declarados — para antecipar a próxima ação relevante.' },
         { slug: 'elasticidade-dinamica', term: 'Elasticidade dinâmica', definition: 'Sensibilidade de demanda a preço calculada continuamente por SKU, canal e ciclo de vida — substitui curvas estáticas por aprendizado online.' },
@@ -478,8 +478,8 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Short definitions of what you need to read the rest of this page.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algorithm (Finn, Abbeel & Levine, 2017) that trains models to adapt quickly to new tasks from few samples — the basis of i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Strategy where the model actively selects which samples to label, accelerating learning and reducing annotation cost.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Loss function that preserves topological relationships between examples in the latent space, improving few-shot generalization and embedding stability.' },
+        { slug: 'active-learning', term: 'Active Learning', definition: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss) pre-trained on 1.45 billion cross-sector records, adaptable from few client samples.' },
         { slug: 'behavioral-prediction', term: 'Behavioral prediction', definition: 'Modeling that learns the real behavior of a customer, channel or product from transactional data — not declared preferences — to anticipate the next relevant action.' },
         { slug: 'dynamic-elasticity', term: 'Dynamic elasticity', definition: 'Price sensitivity of demand computed continuously by SKU, channel and lifecycle — replacing static curves with online learning.' },
@@ -681,8 +681,8 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Definiciones breves de lo necesario para leer el resto de esta página.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que entrena modelos para adaptarse rápidamente a nuevas tareas con pocas muestras — base del i6-RecSys-Base.g1.' },
-        { slug: 'active-learning', term: 'Active Learning', definition: 'Estrategia en la que el modelo selecciona activamente qué muestras etiquetar para acelerar el aprendizaje y reducir el costo de anotación.' },
-        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Función de pérdida que preserva relaciones topológicas entre ejemplos en el espacio latente, mejorando la generalización con pocas muestras y la estabilidad del embedding.' },
+        { slug: 'active-learning', term: 'Active Learning', definition: 'Estrategia en la que el propio modelo elige qué muestras vale la pena etiquetar, acelerando el aprendizaje y reduciendo el costo de etiquetado.' },
+        { slug: 'topological-loss', term: 'Topological Loss', definition: 'Función de pérdida que preserva las relaciones topológicas del espacio latente, lo que estabiliza los embeddings y mejora la generalización con pocas muestras.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', definition: 'Modelo fundacional propio de infinity6 (MAML + Active Learning + Topological Loss) preentrenado en 1.450 millones de registros multisectoriales, adaptable con pocas muestras por cliente.' },
         { slug: 'prediccion-conductual', term: 'Predicción conductual', definition: 'Modelado que aprende el comportamiento real del cliente, canal o producto a partir de datos transaccionales — no declarados — para anticipar la próxima acción relevante.' },
         { slug: 'elasticidad-dinamica', term: 'Elasticidad dinámica', definition: 'Sensibilidad de la demanda al precio calculada de forma continua por SKU, canal y ciclo de vida — sustituye curvas estáticas por aprendizaje en línea.' },

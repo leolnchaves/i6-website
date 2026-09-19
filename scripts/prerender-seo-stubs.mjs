@@ -235,8 +235,8 @@ for (const lang of ['en', 'pt']) {
         { slug: 'aderencia-contextual', term: 'Aderência contextual', def: 'Grau em que uma recomendação combina histórico comportamental com o contexto atual.' },
         { slug: 'ruptura-gondola', term: 'Ruptura de gôndola', def: 'Indisponibilidade de SKU no PDV com demanda real. Custa 4%–12% do faturamento líquido no varejo farma.' },
         { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine) base do i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva relações topológicas no espaço latente para melhorar generalização few-shot.' },
-        { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o modelo seleciona ativamente amostras para rotular, acelerando aprendizado.' },
+        { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
+        { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'Modelo fundacional proprietário da infinity6 (MAML + Active Learning + Topological Loss), 1,45 bilhão de registros.' },
         { slug: 'i6signal', term: 'i6 Signal', def: 'Camada conversacional preditiva sobre os motores i6 Previsio, i6 RecSys e i6 ElasticPrice.' },
       ] : [
@@ -246,8 +246,8 @@ for (const lang of ['en', 'pt']) {
         { slug: 'contextual-adherence', term: 'Contextual adherence', def: 'How well a recommendation combines behavioral history with current context.' },
         { slug: 'shelf-stockout', term: 'Shelf stockout', def: 'SKU unavailability at POS when real demand exists. Costs 4%–12% of net revenue in pharma retail.' },
         { slug: 'maml', term: 'MAML', def: 'Model-Agnostic Meta-Learning (Finn, Abbeel & Levine). Foundation of i6-RecSys-Base.g1.' },
-        { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss preserving topological relationships in the latent space for better few-shot generalization.' },
-        { slug: 'active-learning', term: 'Active Learning', def: 'Strategy where the model selects which samples to label, accelerating learning.' },
+        { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
+        { slug: 'active-learning', term: 'Active Learning', def: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss), 1.45B records.' },
         { slug: 'i6signal', term: 'i6 Signal', def: 'Predictive conversational layer over i6 Previsio, i6 RecSys and i6 ElasticPrice engines.' },
       ];
