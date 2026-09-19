@@ -91,7 +91,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'A inteligência que sustenta tudo o que entregamos',
       lead: 'Sob o i6 Decision Suite e o i6 Builder Platform, motores proprietários, modelos fundacionais e métodos científicos sustentam cada decisão.',
       layers: [
-        { name: 'i6 Decision Suite', role: 'O que a inteligência resolve no negócio' },
+        { name: 'i6 Decision Suite', role: 'Decisões prontas, do problema de negócio ao resultado' },
         { name: 'i6 Builder Platform', role: 'Como se constrói sobre a inteligência' },
         { name: 'A inteligência', role: 'Motores, modelo fundacional e método científico', current: true },
       ],
@@ -276,7 +276,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'The intelligence beneath everything we ship',
       lead: 'Beneath the i6 Decision Suite and the i6 Builder Platform, proprietary engines, foundation models and scientific methods sustain every decision.',
       layers: [
-        { name: 'i6 Decision Suite', role: 'What the intelligence solves for the business' },
+        { name: 'i6 Decision Suite', role: 'Decisions ready, from business problem to result' },
         { name: 'i6 Builder Platform', role: 'How you build on top of the intelligence' },
         { name: 'The intelligence', role: 'Engines, foundation model and scientific method', current: true },
       ],
@@ -461,7 +461,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       title: 'La inteligencia que sostiene todo lo que entregamos',
       lead: 'Bajo el i6 Decision Suite y la i6 Builder Platform, motores propios, modelos fundacionales y métodos científicos sostienen cada decisión.',
       layers: [
-        { name: 'i6 Decision Suite', role: 'Lo que la inteligencia resuelve en el negocio' },
+        { name: 'i6 Decision Suite', role: 'Decisiones listas, del problema de negocio al resultado' },
         { name: 'i6 Builder Platform', role: 'Cómo se construye sobre la inteligencia' },
         { name: 'La inteligencia', role: 'Motores, modelo fundacional y método científico', current: true },
       ],
