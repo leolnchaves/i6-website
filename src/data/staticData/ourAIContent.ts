@@ -476,7 +476,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       highlights: [
         {
           badge: 'TALK · QCON SÃO PAULO · 2018',
-          title: 'Content recommendation at iFood scale',
+          title: 'Recomendação de conteúdo na escala do iFood',
           venue: 'InfoQ Brasil · QCon',
           url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
@@ -692,7 +692,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       highlights: [
         {
           badge: 'CHARLA · QCON SÃO PAULO · 2018',
-          title: 'Recomendación de contenido a la escala de iFood',
+          title: 'Recomendação de conteúdo na escala do iFood',
           venue: 'InfoQ Brasil · QCon',
           url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },

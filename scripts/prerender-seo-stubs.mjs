@@ -239,7 +239,6 @@ let count = 0;
 const staticRoutes = ['', 'our-ai', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence', 'docs/pesquisa'];
 
 const PRODUCTS = [
-  { name: 'i6Signal', anchor: 'i6signal', description: { pt: 'Camada conversacional preditiva sobre os motores i6Previsio, i6RecSys e i6ElasticPrice', en: 'Predictive conversational layer over the i6Previsio, i6RecSys and i6ElasticPrice engines' } },
   { name: 'i6Previsio', anchor: 'i6previsio', description: { pt: 'Motor proprietário de previsão de demanda com modelos adaptativos e demand sensing em tempo real', en: 'Proprietary demand forecasting engine with adaptive models and real-time demand sensing' } },
   { name: 'i6RecSys', anchor: 'i6recsys', description: { pt: 'Motor proprietário de recomendação, otimização de mix e score de propensão de compra para anônimos', en: 'Proprietary engine for recommendation, mix optimization and anonymous purchase propensity scoring' } },
   { name: 'i6ElasticPrice', anchor: 'i6elasticprice', description: { pt: 'Motor proprietário de elasticidade e precificação dinâmica por SKU, canal e ciclo de vida', en: 'Proprietary elasticity and dynamic pricing engine by SKU, channel and lifecycle' } },
@@ -281,7 +280,6 @@ for (const lang of STATIC_LANGS) {
         { slug: 'topological-loss', term: 'Topological Loss', def: 'Função de perda que preserva as relações topológicas do espaço latente, o que estabiliza os embeddings e melhora a generalização com poucos exemplos.' },
         { slug: 'active-learning', term: 'Active Learning', def: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'Modelo fundacional proprietário da infinity6 (MAML + Active Learning + Topological Loss), 20 bi de registros.' },
-        { slug: 'i6signal', term: 'i6 Signal', def: 'Camada conversacional preditiva sobre os motores i6 Previsio, i6 RecSys e i6 ElasticPrice.' },
       ] : [
         { slug: 'behavioral-prediction', term: 'Behavioral prediction', def: 'Modeling that learns real customer/channel/product behavior from transactional data to anticipate the next relevant action.' },
         { slug: 'conversion-propensity', term: 'Conversion propensity', def: 'Predictive score for the probability of completing a purchase in a specific context.' },
@@ -292,7 +290,6 @@ for (const lang of STATIC_LANGS) {
         { slug: 'topological-loss', term: 'Topological Loss', def: 'Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples.' },
         { slug: 'active-learning', term: 'Active Learning', def: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
         { slug: 'i6-recsys-base-g1', term: 'i6-RecSys-Base.g1', def: 'infinity6 proprietary foundation model (MAML + Active Learning + Topological Loss), 20B records.' },
-        { slug: 'i6signal', term: 'i6 Signal', def: 'Predictive conversational layer over i6 Previsio, i6 RecSys and i6 ElasticPrice engines.' },
       ];
 
       // Real-results KPIs (mirror src/data/staticData/realResults.ts)
