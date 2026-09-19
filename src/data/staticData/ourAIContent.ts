@@ -261,7 +261,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           badge: 'PALESTRA · QCON SÃO PAULO · 2018',
           title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon',
+          venue: 'InfoQ Brasil · QCon SP 2018',
           url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
         {
@@ -477,7 +477,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           badge: 'TALK · QCON SÃO PAULO · 2018',
           title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon',
+          venue: 'InfoQ Brasil · QCon SP 2018',
           url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
         {
@@ -693,7 +693,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         {
           badge: 'CHARLA · QCON SÃO PAULO · 2018',
           title: 'Recomendação de conteúdo na escala do iFood',
-          venue: 'InfoQ Brasil · QCon',
+          venue: 'InfoQ Brasil · QCon SP 2018',
           url: 'https://www.infoq.com/br/presentations/recomendacao-de-conteudo-na-escala-do-ifood/',
         },
         {

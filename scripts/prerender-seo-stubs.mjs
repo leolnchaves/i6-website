@@ -67,9 +67,9 @@ const seo = {
     es: { title: 'i6 Intelligence | infinity6', description: 'Inteligencia aplicada para decisiones de demanda, margen, inventario, mix y propensión en retail, industria, servicios financieros y farma.' },
   },
   'our-ai': {
-    pt: { title: 'Proprietary AI — Motores de IA da infinity6', description: 'Conheça os motores proprietários da infinity6: i6 RecSys, i6 Previsio, i6 ElasticPrice e i6 Signal. IA aplicada que aprende comportamento, antecipa decisão e prescreve ação.' },
-    en: { title: 'Proprietary AI — infinity6 AI Engines', description: 'Meet infinity6 proprietary engines: i6 RecSys, i6 Previsio, i6 ElasticPrice and i6 Signal. Applied AI that learns behavior, anticipates decisions and prescribes action.' },
-    es: { title: 'Proprietary AI — Motores de IA de infinity6', description: 'Conoce los motores propios de infinity6: i6 RecSys, i6 Previsio e i6 ElasticPrice. IA aplicada que aprende comportamiento, anticipa la decisión y prescribe la acción.' },
+    pt: { title: 'Proprietary AI — Motores de IA da infinity6', description: 'Três motores proprietários (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre um modelo fundacional, com incerteza medida e explicação rastreável.' },
+    en: { title: 'Proprietary AI — infinity6 AI Engines', description: 'Three proprietary engines (i6 Previsio, i6 RecSys, i6 ElasticPrice) on a shared foundation model, with measured uncertainty and traceable explanations.' },
+    es: { title: 'Proprietary AI — Motores de IA de infinity6', description: 'Tres motores propietarios (i6 Previsio, i6 RecSys, i6 ElasticPrice) sobre un modelo fundacional compartido, con incertidumbre medida y explicación trazable.' },
   },
   // Documentação · Pesquisa: lista completa de palestras e artigos (visível em /{idioma}/docs/pesquisa).
   'docs/pesquisa': {
