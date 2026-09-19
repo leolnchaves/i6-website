@@ -271,7 +271,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     glossary: {
       eyebrow: 'Vocabulário',
       title: 'Os conceitos por trás da inteligência',
-      lead: 'Definições curtas do que é necessário para ler o restante desta página.',
+      lead: 'Definições curtas dos termos técnicos que sustentam os motores e o modelo fundacional.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que treina modelos para se adaptarem rapidamente a novas tarefas com poucas amostras — base do i6-RecSys-Base.g1.' },
         { slug: 'active-learning', term: 'Active Learning', definition: 'Estratégia em que o próprio modelo escolhe quais amostras valem a pena rotular, acelerando o aprendizado e reduzindo o custo de rotulagem.' },
@@ -470,7 +470,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     glossary: {
       eyebrow: 'Vocabulary',
       title: 'The concepts behind the intelligence',
-      lead: 'Short definitions of what you need to read the rest of this page.',
+      lead: 'Short definitions of the technical terms behind the engines and the foundation model.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algorithm (Finn, Abbeel & Levine, 2017) that trains models to adapt quickly to new tasks from few samples — the basis of i6-RecSys-Base.g1.' },
         { slug: 'active-learning', term: 'Active Learning', definition: 'Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost.' },
@@ -669,7 +669,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
     glossary: {
       eyebrow: 'Vocabulario',
       title: 'Los conceptos detrás de la inteligencia',
-      lead: 'Definiciones breves de lo necesario para leer el resto de esta página.',
+      lead: 'Definiciones breves de los términos técnicos que sustentan los motores y el modelo fundacional.',
       terms: [
         { slug: 'maml', term: 'MAML', definition: 'Model-Agnostic Meta-Learning. Algoritmo (Finn, Abbeel & Levine, 2017) que entrena modelos para adaptarse rápidamente a nuevas tareas con pocas muestras — base del i6-RecSys-Base.g1.' },
         { slug: 'active-learning', term: 'Active Learning', definition: 'Estrategia en la que el propio modelo elige qué muestras vale la pena etiquetar, acelerando el aprendizaje y reduciendo el costo de etiquetado.' },
