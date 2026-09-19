@@ -45,7 +45,7 @@ Margin and positioning constraints enter as model bounds, so the suggested price
 
 infinity6's proprietary foundation model, the basis for the forecasting, recommendation and pricing engines. It combines three architectural elements: MAML, for fast adaptation from few samples; Active Learning, to select the most informative data; and Topological Loss, to preserve the structure of the learned relationships.
 
-It was pre-trained on 1.45 billion cross-sector records, which means adapting it to a specific client requires far less proprietary data than training a model from scratch.
+It was pre-trained on 20B cross-sector records, which means adapting it to a specific client requires far less proprietary data than training a model from scratch.
 
 ## MAML
 

@@ -33,7 +33,7 @@ Restrições de margem e de posicionamento entram como limites do modelo, então
 
 Modelo fundacional proprietário da infinity6, que serve de base para os motores de previsão, recomendação e precificação. Combina três elementos de arquitetura: MAML, para adaptação rápida com poucas amostras; Active Learning, para escolher o dado que mais informa; e Topological Loss, para preservar a estrutura das relações aprendidas.
 
-Foi pré-treinado em 1,45 bilhão de registros de múltiplos setores, o que permite que a adaptação a um cliente específico exija um volume de dado próprio muito menor do que treinar um modelo do zero.
+Foi pré-treinado em 20 bi de registros de múltiplos setores, o que permite que a adaptação a um cliente específico exija um volume de dado próprio muito menor do que treinar um modelo do zero.
 
 ## MAML
 
