@@ -13,6 +13,7 @@
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { collectContent } from './lib/content-collector.mjs';
 import {
   DOCS_ROOT_ROUTE,
   ES_TRANSLATED_ROUTES,
@@ -252,6 +253,59 @@ for (const page of pages) {
       // ano deve aparecer na página quando o dataset o tem e o rótulo o exibe
     }
   }
+}
+
+// ---- Paridade coletor × llms.txt × sitemap.xml × stubs ----
+// Todo item elegível aparece nos três artefatos; nenhum item excluído aparece em algum deles.
+const llms = readFileSync(resolve('public/llms.txt'), 'utf8');
+const collected = collectContent();
+
+for (const item of collected) {
+  const file = join(DIST, `${item.path.replace(/^\//, '')}.html`);
+  if (item.kind !== 'doc' && !existsSync(file)) {
+    errors.push(`${item.path}: item publicado sem stub estático (${item.sourceFile})`);
+  }
+  if (!sitemap.includes(`<loc>${item.url}</loc>`)) {
+    errors.push(`sitemap: item publicado ausente ${item.url}`);
+  }
+  if (item.kind !== 'doc' && item.kind !== 'insight' && !llms.includes(item.url)) {
+    errors.push(`llms.txt: item publicado ausente ${item.url}`);
+  }
+}
+
+const eligibleUrls = new Set(collected.map((item) => item.url));
+const editorialSegments = ['i6-blog', 'insights', 'i6-intelligence', 'success-stories'];
+const collectDistRoutes = (dir, prefix = '') => {
+  if (!existsSync(dir)) return [];
+  const out = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) out.push(...collectDistRoutes(join(dir, entry.name), `${prefix}/${entry.name}`));
+    else if (entry.name.endsWith('.html')) out.push(`${prefix}/${entry.name.replace(/\.html$/, '')}`);
+  }
+  return out;
+};
+
+for (const routePath of collectDistRoutes(DIST)) {
+  const parts = routePath.split('/').filter(Boolean);
+  if (parts.length !== 3) continue;
+  const [lang, segment] = parts;
+  if (!['pt', 'en', 'es'].includes(lang) || !editorialSegments.includes(segment)) continue;
+  const url = `https://infinity6.ai${routePath}`;
+  if (!eligibleUrls.has(url)) {
+    errors.push(`${routePath}: stub de item NÃO elegível (excluído pelo coletor)`);
+  }
+}
+
+for (const match of sitemap.matchAll(/<loc>(https:\/\/infinity6\.ai\/(?:pt|en|es)\/(?:i6-blog|insights|i6-intelligence|success-stories)\/[^<]+)<\/loc>/g)) {
+  if (!eligibleUrls.has(match[1])) errors.push(`sitemap: URL de item NÃO elegível ${match[1]}`);
+}
+
+for (const match of llms.matchAll(/https:\/\/infinity6\.ai\/(?:pt|en|es)\/(?:i6-blog|insights|i6-intelligence|success-stories)\/[a-z0-9-]+/g)) {
+  if (!eligibleUrls.has(match[0])) errors.push(`llms.txt: URL de item NÃO elegível ${match[0]}`);
+}
+
+if (/\/(?:pt|en|es)\/(?:i6-blog|insights|i6-intelligence)\/demo-/.test(llms + sitemap)) {
+  errors.push('conteúdo demo-* encontrado em llms.txt ou sitemap.xml');
 }
 
 if (errors.length) {
