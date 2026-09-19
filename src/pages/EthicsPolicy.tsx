@@ -3,12 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import SEOHead from '@/components/common/SEOHead';
 import { toContentLang } from '@/utils/localizedPath';
 
-/** Corpo da Política de Ética, reutilizado pela página e pelo painel lateral. */
-export const EthicsPolicyBody = () => {
-  const { language } = useLanguage();
-
-
-  const content = {
+export const ethicsContent = {
     en: {
       title: "Ethics Policy",
       subtitle: "Our commitment to ethical AI and responsible business practices.",
