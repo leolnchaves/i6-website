@@ -255,6 +255,54 @@ for (const page of pages) {
   }
 }
 
+// ---- Produção científica: DOI/pagination, tipo correto e paridade com showOnOurAI ----
+const thesisIds = new Set(
+  research.articles.filter((a) => a.kind === 'thesis').map((a) => `https://infinity6.ai/#${a.slug}`),
+);
+const ourAiArticleIds = research.articles
+  .filter((a) => a.showOnOurAI)
+  .map((a) => `https://infinity6.ai/#${a.slug}`)
+  .sort();
+
+for (const page of pages) {
+  if (!existsSync(page.file)) continue;
+  const html = readFileSync(page.file, 'utf8');
+  const parsed = [];
+  for (const raw of extractBlocks(html)) {
+    try {
+      parsed.push(JSON.parse(raw));
+    } catch {
+      // erro de parse já reportado acima
+    }
+  }
+  const scholarly = [];
+  const theses = [];
+  walk(parsed, (node) => {
+    if (node['@type'] === 'ScholarlyArticle') scholarly.push(node);
+    if (node['@type'] === 'Thesis') theses.push(node);
+  });
+  for (const node of scholarly) {
+    if (thesisIds.has(node['@id'])) {
+      errors.push(`${page.label}: dissertação emitida como ScholarlyArticle (${node['@id']})`);
+    }
+    if (!node.identifier?.value) errors.push(`${page.label}: ScholarlyArticle sem DOI (${node['@id']})`);
+    if (!node.pagination) errors.push(`${page.label}: ScholarlyArticle sem pagination (${node['@id']})`);
+  }
+  for (const node of theses) {
+    if (!thesisIds.has(node['@id'])) {
+      errors.push(`${page.label}: nó Thesis que não é a dissertação (${node['@id']})`);
+    }
+  }
+  if (page.label.endsWith('/our-ai')) {
+    const got = scholarly.map((n) => n['@id']).sort();
+    if (JSON.stringify(got) !== JSON.stringify(ourAiArticleIds)) {
+      errors.push(
+        `${page.label}: ScholarlyArticle do JSON-LD ≠ itens showOnOurAI (${got.join(', ') || 'nenhum'})`,
+      );
+    }
+  }
+}
+
 // ---- Paridade coletor × llms.txt × sitemap.xml × stubs ----
 // Todo item elegível aparece nos três artefatos; nenhum item excluído aparece em algum deles.
 const collected = collectContent();
