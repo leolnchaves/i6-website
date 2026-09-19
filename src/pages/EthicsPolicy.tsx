@@ -227,7 +227,7 @@ export const EthicsPolicyBody = () => {
   const { language } = useLanguage();
   const currentContent = ethicsContent[toContentLang(language)];
 
-  const renderSection = (title: string, text: string, items?: string[]) => (
+  const renderSection = (title: string, text: string, items?: readonly string[]) => (
     <section className="border-b border-white/10 pb-8">
       <h2 className="text-2xl font-bold text-white mb-4">{title}</h2>
       <p className="text-white/70 mb-4">{text}</p>
@@ -241,7 +241,7 @@ export const EthicsPolicyBody = () => {
     </section>
   );
 
-  const renderSubSection = (title: string, text: string, items: string[]) => (
+  const renderSubSection = (title: string, text: string, items: readonly string[]) => (
     <>
       <h3 className="text-lg font-semibold text-white/80 mb-2">{title}</h3>
       <p className="text-white/70 mb-4">{text}</p>
