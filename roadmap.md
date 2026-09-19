@@ -1,5 +1,5 @@
-- [ ] Auditar llms.txt, rotas ES, prerender, sitemap e validações
-- [ ] Ajustar llms.txt preservando bloco i6 HUB
-- [ ] Criar lista única de rotas ES e aplicá-la ao prerender, sitemap e validações
-- [ ] Validar build, SEO e JSON-LD
-- [ ] Reportar rotas ES antes/depois e diff aplicado
+- [x] Auditar llms.txt, rotas ES, prerender, sitemap e validações
+- [x] Ajustar llms.txt preservando bloco i6 HUB
+- [x] Criar lista única de rotas ES e aplicá-la ao prerender, sitemap e validações
+- [x] Validar build, SEO e JSON-LD
+- [x] Reportar rotas ES antes/depois e diff aplicado
