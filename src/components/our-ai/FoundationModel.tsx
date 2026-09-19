@@ -35,12 +35,22 @@ const FoundationModel = memo(({ content }: Props) => (
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground">{content.statsTitle}</h3>
           <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border">
-            {content.stats.map((s) => (
-              <div key={s.label} className="bg-card p-5">
-                <p className="text-2xl font-bold text-foreground">{s.value}</p>
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{s.label}</p>
+            {content.statYears.map((g) => (
+              <div
+                key={g.year}
+                className="bg-primary/10 px-5 py-2 text-center font-mono text-xs font-semibold uppercase tracking-[0.24em] text-primary"
+              >
+                {g.year}
               </div>
             ))}
+            {content.statYears[0].items.map((_, i) =>
+              content.statYears.map((g) => (
+                <div key={`${g.year}-${i}`} className="bg-card p-4">
+                  <p className="text-2xl font-bold text-foreground">{g.items[i].value}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{g.items[i].label}</p>
+                </div>
+              )),
+            )}
           </div>
         </div>
 

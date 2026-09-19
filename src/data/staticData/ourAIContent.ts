@@ -42,7 +42,8 @@ export interface OurAIContent {
     architectureTitle: string;
     architecture: { term: string; detail: string }[];
     statsTitle: string;
-    stats: { value: string; label: string }[];
+    /** Escala de treino agrupada por ano: o ano vira linha de destaque e sai dos textos. */
+    statYears: { year: string; items: { value: string; label: string }[] }[];
     mixTitle: string;
     mix: { value: string; label: string }[];
   };
@@ -184,11 +185,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { term: 'External Memory', detail: 'Memória externa que guarda e recupera padrões de tarefas já vistas, permitindo aprender novas tarefas rapidamente sem retreinar o modelo inteiro.' },
       ],
       statsTitle: 'Escala de treino',
-      stats: [
-        { value: '1,45B', label: 'registros (2025)' },
-        { value: '20B', label: 'registros (2026)' },
-        { value: '12', label: 'bases públicas/adquiridas (2025)' },
-        { value: '~50', label: 'bases públicas/adquiridas (2026)' },
+      statYears: [
+        {
+          year: '2025',
+          items: [
+            { value: '1,45 bi', label: 'registros transacionais' },
+            { value: '12', label: 'bases públicas/adquiridas' },
+          ],
+        },
+        {
+          year: '2026',
+          items: [
+            { value: '20 bi', label: 'registros transacionais' },
+            { value: '50', label: 'bases públicas/adquiridas' },
+          ],
+        },
       ],
       mixTitle: 'Diversidade dos dados de treino',
       mix: [
@@ -387,11 +398,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { term: 'External Memory', detail: 'External memory that stores and retrieves patterns from tasks already seen, allowing new tasks to be learned quickly without retraining the whole model.' },
       ],
       statsTitle: 'Training scale',
-      stats: [
-        { value: '1.45B', label: 'records (2025)' },
-        { value: '20B', label: 'records (2026)' },
-        { value: '12', label: 'public/acquired sources (2025)' },
-        { value: '~50', label: 'public/acquired sources (2026)' },
+      statYears: [
+        {
+          year: '2025',
+          items: [
+            { value: '1.45B', label: 'transactional records' },
+            { value: '12', label: 'public/acquired sources' },
+          ],
+        },
+        {
+          year: '2026',
+          items: [
+            { value: '20B', label: 'transactional records' },
+            { value: '50', label: 'public/acquired sources' },
+          ],
+        },
       ],
       mixTitle: 'Training data diversity',
       mix: [
@@ -590,11 +611,21 @@ export const ourAIContent: Record<Language, OurAIContent> = {
         { term: 'External Memory', detail: 'Memoria externa que guarda y recupera patrones de tareas ya vistas, permitiendo aprender nuevas tareas rápidamente sin reentrenar todo el modelo.' },
       ],
       statsTitle: 'Escala de entrenamiento',
-      stats: [
-        { value: '1,45B', label: 'registros (2025)' },
-        { value: '20B', label: 'registros (2026)' },
-        { value: '12', label: 'bases públicas/adquiridas (2025)' },
-        { value: '~50', label: 'bases públicas/adquiridas (2026)' },
+      statYears: [
+        {
+          year: '2025',
+          items: [
+            { value: '1,45 bi', label: 'registros transaccionales' },
+            { value: '12', label: 'bases públicas/adquiridas' },
+          ],
+        },
+        {
+          year: '2026',
+          items: [
+            { value: '20 bi', label: 'registros transaccionales' },
+            { value: '50', label: 'bases públicas/adquiridas' },
+          ],
+        },
       ],
       mixTitle: 'Diversidad de los datos de entrenamiento',
       mix: [
