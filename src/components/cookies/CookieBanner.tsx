@@ -118,9 +118,9 @@ const CookieBanner = () => {
             <p className="text-white/70 text-xs leading-relaxed mb-3">{t.body}</p>
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 text-xs">
-              <Link to={localized('/privacy-policy')} className="text-[#F4845F] hover:underline">
+              <button type="button" onClick={() => openPolicy('privacy')} className="text-[#F4845F] hover:underline">
                 {t.privacy}
-              </Link>
+              </button>
               <button
                 type="button"
                 onClick={() => setBannerExpanded(true)}
@@ -211,12 +211,13 @@ const CookieBanner = () => {
                   {t.onlyEssential}
                 </Button>
               </div>
-              <Link
-                to={localized('/privacy-policy')}
+              <button
+                type="button"
+                onClick={() => openPolicy('privacy')}
                 className="text-[#F4845F] hover:underline text-[11px] text-center mt-1"
               >
                 {t.privacy}
-              </Link>
+              </button>
             </div>
           </>
         )}

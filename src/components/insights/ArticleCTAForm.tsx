@@ -247,9 +247,9 @@ const ArticleCTAForm = ({ kind, section, title, slug, id, ctaText }: ArticleCTAF
 
         <p className="text-xs text-white/50 text-center">
           {t.privacy}{' '}
-          <Link to={localized('/privacy-policy')} className="text-[#F4845F] hover:underline">
+          <button type="button" onClick={() => openPolicy('privacy')} className="text-[#F4845F] hover:underline">
             {t.privacyLink}
-          </Link>
+          </button>
         </p>
       </form>
     </div>
