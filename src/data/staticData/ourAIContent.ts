@@ -231,7 +231,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           points: [
             'Contribuição de cada variável em cada decisão individual',
             'Sinais rastreáveis: comportamento, propensão, estoque, margem, demanda, elasticidade e similaridade',
-            'Registro versionado de modelo, dado e decisão para auditoria posterior',
+            'Registro versionado de modelo, dado e decisão, disponível para auditoria',
           ],
         },
       ],
@@ -444,7 +444,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           points: [
             'Contribution of each variable in every individual decision',
             'Traceable signals: behavior, propensity, inventory, margin, demand, elasticity and similarity',
-            'Versioned record of model, data and decision for later audit',
+            'Versioned record of model, data and decision, available for audit',
           ],
         },
       ],
@@ -657,7 +657,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
           points: [
             'Contribución de cada variable en cada decisión individual',
             'Señales rastreables: comportamiento, propensión, inventario, margen, demanda, elasticidad y similitud',
-            'Registro versionado de modelo, dato y decisión para auditoría posterior',
+            'Registro versionado de modelo, dato y decisión, disponible para auditoría',
           ],
         },
       ],
