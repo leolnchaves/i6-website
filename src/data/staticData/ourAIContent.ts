@@ -243,7 +243,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacidade e isolamento são pré-requisitos de arquitetura, não camadas adicionadas depois.',
       pillars: [
         { title: 'Anonimização na origem', description: 'O modelo nunca vê dado identificável: a anonimização acontece antes do treinamento, em todos os modelos' },
-        { title: 'Segurança em camadas', description: 'Autenticação 100% na plataforma e controle de acesso por perfil. Os produtos não têm backend nem banco de dados próprios, o que reduz a superfície de ataque' },
+        { title: 'Autenticação centralizada', description: 'Autenticação 100% na plataforma e controle de acesso por perfil. Os produtos não têm backend nem banco de dados próprios, o que reduz a superfície de ataque' },
         { title: 'Ambiente isolado', description: 'Dados e modelos de cada cliente ficam em ambiente isolado, sem acesso cruzado' },
         { title: 'Escala com o mesmo controle', description: 'Escalonamento automático de recursos na Google Cloud, com os mesmos controles de isolamento e acesso em qualquer volume' },
       ],
@@ -441,7 +441,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacy and isolation are architectural prerequisites, not layers added later.',
       pillars: [
         { title: 'Anonymization at source', description: 'The model never sees identifiable data: anonymization happens before training, in every model' },
-        { title: 'Layered security', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface' },
+        { title: 'Centralized authentication', description: 'Authentication runs entirely on the platform, with role-based access control. The products have no backend or database of their own, which reduces the attack surface' },
         { title: 'Isolated environment', description: 'Data and models for each client stay in an isolated environment, with no cross access' },
         { title: 'Scales with the same control', description: 'Automatic resource scaling on Google Cloud, with the same isolation and access controls at any volume' },
       ],
@@ -639,7 +639,7 @@ export const ourAIContent: Record<Language, OurAIContent> = {
       lead: 'Privacidad y aislamiento son requisitos de arquitectura, no capas añadidas después.',
       pillars: [
         { title: 'Anonimización en el origen', description: 'El modelo nunca ve dato identificable: la anonimización ocurre antes del entrenamiento, en todos los modelos' },
-        { title: 'Seguridad en capas', description: 'Autenticación 100% en la plataforma y control de acceso por perfil. Los productos no tienen backend ni base de datos propios, lo que reduce la superficie de ataque' },
+        { title: 'Autenticación centralizada', description: 'Autenticación 100% en la plataforma y control de acceso por perfil. Los productos no tienen backend ni base de datos propios, lo que reduce la superficie de ataque' },
         { title: 'Entorno aislado', description: 'Los datos y modelos de cada cliente quedan en un entorno aislado, sin acceso cruzado' },
         { title: 'Escala con el mismo control', description: 'Escalonamiento automático de recursos en Google Cloud, con los mismos controles de aislamiento y acceso en cualquier volumen' },
       ],
