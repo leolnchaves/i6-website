@@ -19,14 +19,14 @@
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { isNonIndexableSlug } from './seo-route-config.mjs';
+import { INDEXABLE_DOC_SLUGS, isNonIndexableSlug } from './seo-route-config.mjs';
 
 export const BASE_URL = 'https://infinity6.ai';
 
 const INSIGHTS_DIR = resolve('src/content/insights');
 const INTELLIGENCE_DIR = resolve('src/content/intelligence');
 const DOCS_DIR = resolve('src/content/docs');
-const PUBLIC_CONTENT = resolve('public/content');
+const STORIES_DIR = resolve('src/content/stories');
 
 // Tipo de insight -> segmento de rota (espelha o router React)
 const INSIGHT_ROUTE = {
@@ -162,47 +162,29 @@ function collectIntelligence() {
   return items;
 }
 
-// Success stories vivem em public/content/page-success-stories-{lang}.md
-function parseStories(content) {
-  const stories = [];
-  for (const section of content.split('---').map((s) => s.trim()).filter(Boolean)) {
-    const story = {};
-    for (const line of section.split('\n').map((l) => l.trim()).filter(Boolean)) {
-      if (line.startsWith('## ')) story.title = line.substring(3).trim();
-      else if (line.startsWith('**Slug:**')) story.slug = line.substring(9).trim();
-      else if (line.startsWith('**Image:**')) story.image = line.substring(10).trim();
-      else if (line.startsWith('**Segment:**')) story.segment = line.substring(12).trim();
-      else if (line.startsWith('**Client:**')) story.client = line.substring(11).trim();
-      else if (line.startsWith('**Description:**')) story.description = line.substring(16).trim();
-      else if (line.startsWith('**Challenge:**')) story.challenge = line.substring(14).trim();
-      else if (line.startsWith('**Quote:**')) story.quote = line.substring(10).trim();
-    }
-    if (story.title && story.slug) stories.push(story);
-  }
-  return stories;
-}
-
 function collectStories() {
   const items = [];
-  for (const lang of ['en', 'pt']) {
-    const file = join(PUBLIC_CONTENT, `page-success-stories-${lang}.md`);
-    if (!existsSync(file)) continue;
-    for (const story of parseStories(readFileSync(file, 'utf8'))) {
-      if (isNonIndexableSlug(story.slug)) continue;
-      items.push({
-        kind: 'story',
-        type: 'Success Story',
-        segment: 'success-stories',
-        lang,
-        slug: story.slug,
-        title: story.title,
-        summary: toOneLine(story.description || story.challenge || story.quote),
-        date: undefined,
-        image: story.image,
-        story,
-        sourceFile: `page-success-stories-${lang}.md`,
-      });
-    }
+  for (const { file, raw } of readMarkdownDir(STORIES_DIR)) {
+    const { data: fm } = parseFrontmatter(raw);
+    if (isExcluded(fm)) continue;
+    if (!fm.slug) fail(file, 'campo obrigatório ausente: slug');
+    if (!fm.title) fail(file, 'campo obrigatório ausente: title');
+    if (!fm.language) fail(file, 'campo obrigatório ausente: language');
+    const lang = String(fm.language);
+    if (!['en', 'pt', 'es'].includes(lang)) fail(file, `language inválido: ${lang}`);
+    items.push({
+      kind: 'story',
+      type: 'Success Story',
+      segment: 'success-stories',
+      lang,
+      slug: String(fm.slug),
+      title: String(fm.title),
+      summary: toOneLine(fm.description || fm.challenge || fm.quote),
+      date: fm.date ? String(fm.date) : undefined,
+      image: fm.image ? String(fm.image) : undefined,
+      story: fm,
+      sourceFile: file,
+    });
   }
   return items;
 }
@@ -214,6 +196,7 @@ function collectDocs() {
     const { data: fm } = parseFrontmatter(raw);
     if (isExcluded(fm)) continue;
     if (!fm.slug) fail(file, 'campo obrigatório ausente: slug');
+    if (!INDEXABLE_DOC_SLUGS.includes(String(fm.slug))) continue;
     if (!fm.title) fail(file, 'campo obrigatório ausente: title');
     if (!fm.language) fail(file, 'campo obrigatório ausente: language');
     const lang = String(fm.language);
