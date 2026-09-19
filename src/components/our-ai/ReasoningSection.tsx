@@ -37,9 +37,6 @@ const ReasoningSection = memo(({ content }: Props) => (
           </article>
         ))}
       </div>
-
-      <p className="mt-8 max-w-2xl text-sm leading-relaxed text-[hsl(36_20%_82%/0.7)]">{content.note}</p>
-    </div>
   </section>
 ));
 
