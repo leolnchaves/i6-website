@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalizedPath } from '@/utils/localizedPath';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -124,8 +124,9 @@ const FooterNovo = () => {
               {navLinks.map((l) => (
                 <li key={l.to}>
                   {l.external ? (
-                    <a href={l.to} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                    <a href={l.to} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-white/40 hover:text-[#F4845F] transition-colors text-sm">
                       {l.label}
+                      <ArrowUpRight size={14} aria-hidden="true" />
                     </a>
                   ) : (
                     <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
@@ -146,8 +147,9 @@ const FooterNovo = () => {
               {partnersLinks.map((l) => (
                 <li key={l.to}>
                   {l.external ? (
-                    <a href={l.to} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
+                    <a href={l.to} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-white/40 hover:text-[#F4845F] transition-colors text-sm">
                       {l.label}
+                      <ArrowUpRight size={14} aria-hidden="true" />
                     </a>
                   ) : (
                     <Link to={l.to} onClick={() => handleNav(l.to)} className="text-white/40 hover:text-[#F4845F] transition-colors text-sm">
