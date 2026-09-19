@@ -25,6 +25,8 @@ const SECTIONS = [
   { type: 'i6 on Media', heading: 'i6 On Media' },
   { type: 'i6 Social', heading: 'i6 Social' },
   { type: 'Success Story', heading: 'Success stories' },
+  // Documentação gerenciada pelo site (pesquisa, glossário), nos idiomas com tradução real.
+  { type: 'Docs', heading: 'Documentation' },
 ];
 
 const items = collectContent();

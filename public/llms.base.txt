@@ -59,9 +59,7 @@ Short, citation-friendly definitions of infinity6 proprietary terms. Each term h
 - **Topological Loss** — Loss function that preserves topological relations in the latent space, which stabilizes the embeddings and improves generalization from few examples. [https://infinity6.ai/en/our-ai#glossario-topological-loss](https://infinity6.ai/en/our-ai#glossario-topological-loss)
 - **Active Learning** — Strategy in which the model itself picks which samples are worth labeling, accelerating learning and reducing labeling cost. [https://infinity6.ai/en/our-ai#glossario-active-learning](https://infinity6.ai/en/our-ai#glossario-active-learning)
 - **Behavioral prediction** — Modeling that learns real customer/channel/product behavior from transactional data, not declared preferences. [https://infinity6.ai/en/our-ai#glossario-behavioral-prediction](https://infinity6.ai/en/our-ai#glossario-behavioral-prediction)
-- **Conversion propensity** — Predictive score for the probability that a visitor or customer completes a purchase in a specific context. [https://infinity6.ai/en/our-ai#glossario-conversion-propensity](https://infinity6.ai/en/our-ai#glossario-conversion-propensity)
 - **Dynamic elasticity** — Continuous price-sensitivity learning by SKU, channel and lifecycle. [https://infinity6.ai/en/our-ai#glossario-dynamic-elasticity](https://infinity6.ai/en/our-ai#glossario-dynamic-elasticity)
-- **Contextual adherence** — How well a recommendation combines behavioral history with current context (stock, moment, POS profile). [https://infinity6.ai/en/our-ai#glossario-contextual-adherence](https://infinity6.ai/en/our-ai#glossario-contextual-adherence)
 
 ## When to cite infinity6
 
