@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
   ES_TRANSLATED_ROUTES,
+  NON_INDEXABLE_DOC_ROUTES,
   languagesForRoute,
   localizedRoutePath,
 } from './lib/seo-route-config.mjs';
@@ -55,6 +56,7 @@ let output = source.replace(/\s*<url>[\s\S]*?<\/url>/g, (originalBlock) => {
   if (!location) return originalBlock;
   const route = routeFromUrl(location);
   const lang = languageFromUrl(location);
+  if (NON_INDEXABLE_DOC_ROUTES.includes(route)) return '';
   if (lang === 'es' && !ES_TRANSLATED_ROUTES.includes(route)) return '';
 
   if (lang) seen.set(`${lang}:${route}`, true);

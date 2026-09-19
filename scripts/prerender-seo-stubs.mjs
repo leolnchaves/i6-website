@@ -85,11 +85,6 @@ const seo = {
     en: { title: 'i6 Builder Platform — Modeling engines, SDKs and APIs', description: 'The infinity6 modeling platform for technology teams: predictive engines, SDKs, APIs and toolkits to build your own data-driven decision products.' },
     es: { title: 'i6 Builder Platform — Motores, SDK y API de modelado', description: 'La plataforma de modelado de infinity6 para equipos de tecnología: motores predictivos, SDK, API y herramientas para crear productos propios de decisión basada en datos.' },
   },
-  docs: {
-    pt: { title: 'Documentação i6 — engines, SDKs e APIs de modelagem', description: 'Referência técnica da infinity6 para integração com engines, SDKs e APIs.' },
-    en: { title: 'i6 documentation — modeling engines, SDKs and APIs', description: 'infinity6 technical reference for integrating engines, SDKs and APIs.' },
-    es: { title: 'Documentación i6 — motores, SDK y API de modelado', description: 'Referencia técnica de infinity6 para integrar motores, SDK y API.' },
-  },
 };
 
 // ---- Parse success stories markdown (mirrors useSuccessStoriesMarkdown.ts) ----
@@ -249,7 +244,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let count = 0;
 
 // Static pages
-const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
+const staticRoutes = ['', 'our-ai', 'i6-builders', 'docs/pesquisa', 'success-stories', 'contact', 'privacy-policy', 'ethics-policy', 'insights', 'i6-intelligence'];
 
 const PRODUCTS = [
   { name: 'i6Previsio', anchor: 'i6previsio', description: { pt: 'Motor proprietário de previsão de demanda com modelos adaptativos e demand sensing em tempo real', en: 'Proprietary demand forecasting engine with adaptive models and real-time demand sensing' } },
