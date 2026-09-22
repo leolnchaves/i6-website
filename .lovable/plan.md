@@ -1,22 +1,153 @@
-# Reconstrução do banner de cookies — diff proposto (nada aplicado)
+# Cookies: store compartilhado, opt-in estrito, rodapé e limpeza
 
-## Localização atual (respondendo antes do diff)
+## Ponto importante antes de tudo (verificado agora no código)
 
-- Componente visual do banner: `src/components/cookies/CookieBanner.tsx` (estado compacto + estado expandido no mesmo arquivo), montado por `src/components/cookies/CookieConsentManager.tsx`, que por sua vez é montado em `src/components/DarkLayout.tsx:22`.
-- Textos: **inline no próprio componente**, num objeto `t` com três ramos (`pt` / `es` / fallback `en`) — não há chaves de cookies em `src/data/translations/*`. O mesmo padrão inline existe em `src/components/cookies/CookieDetailsModal.tsx`.
-- Rodapé: `src/components/hometeste/FooterNovo.tsx` (linhas 111–118 têm os links de Política de Privacidade e Código de Ética).
-- Observação importante descoberta agora: `useCookieConsent` mantém estado **local por instância** (cada componente que chama o hook tem seu próprio `showBanner`). Por isso o link do rodapé não conseguiria abrir o banner hoje. O diff adiciona um pequeno store compartilhado no módulo do hook (sem biblioteca nova, sem provider novo).
+`src/components/cookies/CookieBanner.tsx` **ainda está na versão antiga**, não na reconstruída: os textos são "Aceitar adicionais" / "Rejeitar adicionais", o título é só "Cookies", e não existem os três botões aprovados (Aceitar todos · Personalizar · Apenas essenciais) nem as categorias com badge "Sempre ativo". `CookieConsentManager.tsx` está correto (só repassa `consent.analytics`).
+
+Consequência prática: os itens do seu checklist que dependem de clicar em "Aceitar todos" e "Apenas essenciais" não têm esses botões hoje. Os 5 itens abaixo estão descritos exatamente como você pediu; incluí ao final um **item 6 opcional** com a atualização do banner para o Estado A/B aprovado. Diga se entra ou fica fora.
 
 ---
 
-## 1) `src/types/cookies.ts` — default de consentimento
+## 1) `src/hooks/useCookieConsent.ts` — store compartilhado + expiração 365 dias
+
+Hoje cada chamada do hook tem seu próprio `useState`, então o `CookieConsentManager` (que alimenta GA4 e o beacon) não é notificado quando o banner salva. Novo mecanismo, API pública idêntica:
+
+```ts
+import { useState, useEffect, useCallback } from 'react';
+import { CookieConsent, defaultCookieConsent } from '@/types/cookies';
+
+const COOKIE_CONSENT_KEY = 'cookie_consent';
+const COOKIE_CONSENT_VERSION = '2.0';
+const TTL_DAYS = 365;
+
+type StoredConsent = {
+  consent: CookieConsent;
+  version: string;
+  timestamp: string;
+  expiresAt?: string;
+};
+
+type ConsentState = {
+  consent: CookieConsent;
+  showBanner: boolean;
+  bannerExpanded: boolean;
+};
+
+// Leitura SÍNCRONA na inicialização do módulo (não em useEffect):
+// nenhum render acontece com o default quando já existe escolha válida.
+// Registro antigo sem `expiresAt` continua válido indefinidamente.
+const readStored = (): CookieConsent | null => {
+  try {
+    const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as StoredConsent;
+    if (parsed.version !== COOKIE_CONSENT_VERSION) return null;
+    if (parsed.expiresAt && new Date(parsed.expiresAt).getTime() < Date.now()) return null;
+    return parsed.consent;
+  } catch {
+    return null;
+  }
+};
+
+const initial = readStored();
+
+// ---- Estado de módulo: fonte única compartilhada por todas as instâncias ----
+let state: ConsentState = {
+  consent: initial ?? defaultCookieConsent,
+  showBanner: initial === null,
+  bannerExpanded: false,
+};
+
+const listeners = new Set<(s: ConsentState) => void>();
+
+const setState = (partial: Partial<ConsentState>) => {
+  state = { ...state, ...partial };
+  listeners.forEach((listener) => listener(state));
+};
+
+// Deep-link de compatibilidade: ?cookies=open abre direto no Estado B.
+try {
+  if (new URLSearchParams(window.location.search).get('cookies') === 'open') {
+    state = { ...state, showBanner: true, bannerExpanded: true };
+  }
+} catch {
+  /* noop */
+}
+
+export const useCookieConsent = () => {
+  const [local, setLocalState] = useState<ConsentState>(state);
+
+  useEffect(() => {
+    setLocalState(state);           // (a) reforça o valor atual do store no mount
+    return listenersSubscribe(setLocalState); // (b) inscrição + cleanup no unmount
+  }, []);
+
+  const saveConsent = useCallback((newConsent: CookieConsent) => {
+    const now = Date.now();
+    const data: StoredConsent = {
+      consent: newConsent,
+      version: COOKIE_CONSENT_VERSION,
+      timestamp: new Date(now).toISOString(),
+      expiresAt: new Date(now + TTL_DAYS * 86400000).toISOString(),
+    };
+    try {
+      localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(data));
+    } catch (error) {
+      console.error('Error saving consent:', error);
+    }
+    setState({ consent: newConsent, showBanner: false, bannerExpanded: false });
+  }, []);
+
+  const acceptAll = useCallback(
+    () => saveConsent({ essential: true, analytics: true, marketing: true, preferences: true }),
+    [saveConsent]
+  );
+  const acceptAdditional = acceptAll-equivalente (mesma lógica de hoje);
+  const continueEssential = useCallback(
+    () => saveConsent({ essential: true, analytics: true, marketing: false, preferences: false }),
+    [saveConsent]
+  );
+  const rejectAll = useCallback(
+    () => saveConsent({ essential: true, analytics: false, marketing: false, preferences: false }),
+    [saveConsent]
+  );
+  const updateConsent = useCallback((category: keyof CookieConsent, value: boolean) => {
+    if (category === 'essential') return;
+    setState({ consent: { ...state.consent, [category]: value } });
+  }, []);
+  const resetConsent = useCallback(() => {
+    try { localStorage.removeItem(COOKIE_CONSENT_KEY); } catch { /* noop */ }
+    setState({ consent: defaultCookieConsent, showBanner: true });
+  }, []);
+  const openPreferences = useCallback(
+    () => setState({ showBanner: true, bannerExpanded: true }),
+    []
+  );
+
+  return {
+    consent: local.consent,
+    showBanner: local.showBanner,
+    bannerExpanded: local.bannerExpanded,
+    saveConsent, acceptAll, acceptAdditional, continueEssential, rejectAll,
+    updateConsent, resetConsent,
+    setShowBanner: (v: boolean) => setState({ showBanner: v }),
+    setBannerExpanded: (v: boolean) => setState({ bannerExpanded: v }),
+    openPreferences,
+  };
+};
+```
+
+`listenersSubscribe` é a função auxiliar de nível de módulo que adiciona o listener ao `Set` e devolve `() => listeners.delete(listener)` — esse retorno é o cleanup do `useEffect`, então cada montagem inscreve exatamente um listener e o remove no unmount: **sem vazamento** entre montagens de banner, rodapé e manager. Lógica de negócio de cada ação idêntica à de hoje; muda só o mecanismo de estado.
+
+## 2) `src/types/cookies.ts` — opt-in estrito
 
 ```diff
 -// Soft opt-in: analytics (GA4) ativo por padrão.
 -// O tracker próprio anônimo de primeira parte é essencial (legítimo interesse)
 -// e não pode ser desativado por toggle — apenas limpando o localStorage.
-+// Opt-in explícito: nada de analytics/marketing/preferências antes do clique.
-+// Só `essential` nasce ativo (funcionamento, idioma, CSRF, gravação da escolha).
++// Opt-in estrito: analytics (GA4) começa DESLIGADO e só liga após escolha
++// explícita do visitante no banner. O tracker anônimo de primeira parte
++// permanece essencial (legítimo interesse).
  export const defaultCookieConsent: CookieConsent = {
    essential: true,
 -  analytics: true,
@@ -26,177 +157,61 @@
  };
 ```
 
-Também nas descrições de `cookieCategories` (mesmo arquivo): `essential` deixa de citar rastreamento de campanha; `analytics` passa a citar GA4 + medição de campanhas (i6 HUB).
-
-**Confirmação pedida:** nenhum outro ponto do código reintroduz `analytics: true` como default. Os únicos literais `analytics: true` ficam em `acceptAll`/`acceptAdditional` (ações explícitas do visitante) dentro de `useCookieConsent.ts`. `index.html` já inicializa o Consent Mode do GA4 com `analytics_storage: 'denied'`, então com esse default o GA4 passa a não gravar `_ga` nem enviar hit antes do aceite.
-
-## 2) `src/hooks/useCookieConsent.ts` — store compartilhado, expiração, ações
-
-### Código completo do store (item 1 da sua pergunta)
-
-```ts
-const COOKIE_CONSENT_KEY = 'cookie_consent';
-const COOKIE_CONSENT_VERSION = '2.0';
-const TTL_DAYS = 365;
-
-type Stored = {
-  consent: CookieConsent;
-  version: string;
-  timestamp: string;
-  ttl_days?: number;
-  expires_at?: string;
-};
-
-type ConsentState = {
-  consent: CookieConsent;
-  showBanner: boolean;
-  bannerExpanded: boolean;
-};
-
-// Lê o registro salvo, tratando expirado como inexistente.
-// Registros antigos (sem expires_at) seguem válidos.
-const readStored = (): CookieConsent | null => {
-  try {
-    const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Stored;
-    if (parsed.version !== COOKIE_CONSENT_VERSION) return null;
-    if (parsed.expires_at && new Date(parsed.expires_at).getTime() < Date.now()) return null;
-    return parsed.consent;
-  } catch {
-    return null;
-  }
-};
-
-// ---- Estado de módulo (fonte única, criado uma vez por carga de página) ----
-const saved = readStored();
-let state: ConsentState = {
-  consent: saved ?? defaultCookieConsent,
-  showBanner: saved === null,
-  bannerExpanded: false,
-};
-
-const listeners = new Set<(s: ConsentState) => void>();
-
-const setState = (patch: Partial<ConsentState>) => {
-  state = { ...state, ...patch };
-  listeners.forEach((l) => l(state));
-};
-
-const subscribe = (listener: (s: ConsentState) => void) => {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
-};
-
-export const useCookieConsent = () => {
-  // Leitura inicial SÍNCRONA: nenhum render acontece com o default
-  // quando já existe escolha salva e válida.
-  const [local, setLocalState] = useState<ConsentState>(state);
-
-  useEffect(() => {
-    // Sincroniza com o estado de módulo que pode ter mudado entre o
-    // initializer e a montagem, e inscreve esta instância.
-    setLocalState(state);
-    return subscribe(setLocalState); // cleanup remove o listener no unmount
-  }, []);
-
-  // ... ações (saveConsent, acceptAll, essentialOnly, openPreferences ...)
-  // todas chamam setState(...), nunca setLocalState direto.
-};
-```
-
-**Sem vazamento de listener:** `subscribe` devolve a própria função de remoção, e esse retorno é o cleanup do `useEffect` — cada montagem adiciona exatamente um listener ao `Set` e o remove no unmount. Banner, rodapé (`FooterNovo`) e `CookieConsentManager` podem montar/desmontar em qualquer ordem e quantas vezes quiserem; o `Set` volta ao tamanho anterior. Como é um `Set` (não array), uma eventual dupla inscrição da mesma função também não duplicaria a entrada.
-
-- Leitura (inicializador síncrono) passa a checar validade:
+E na descrição da categoria `analytics`:
 
 ```diff
--        if (parsed.version === COOKIE_CONSENT_VERSION) return parsed.consent as CookieConsent;
-+        const expired = parsed.expires_at && new Date(parsed.expires_at).getTime() < Date.now();
-+        if (!expired && parsed.version === COOKIE_CONSENT_VERSION) {
-+          return parsed.consent as CookieConsent;
-+        }
+-      'Envio anônimo para Google Analytics 4 (terceira parte): tipo de dispositivo, navegador, país aproximado. Você pode desativar a qualquer momento.',
++      'Envio anônimo para Google Analytics 4 (terceira parte): tipo de dispositivo, navegador, país aproximado. Começa desligado e só é ativado com a sua autorização; você pode desativar a qualquer momento.',
 ```
 
-  (registros antigos sem `expires_at` continuam válidos). O efeito de mount usa a mesma checagem: expirado ⇒ `showBanner = true`.
-- Gravação:
+## 3) `src/hooks/useTracker.ts` — reset da chave de dedupe
 
 ```diff
-     const consentData = {
-       consent: newConsent,
-       version: COOKIE_CONSENT_VERSION,
-       timestamp: new Date().toISOString(),
-+      ttl_days: 365,
-+      expires_at: new Date(Date.now() + 365 * 864e5).toISOString(),
-     };
-```
-
-- Ações expostas: `acceptAll`, `essentialOnly` (novo nome para o "Apenas essenciais" = `{essential:true, analytics:false, marketing:false, preferences:false}`), `saveConsent`, `openPreferences`, `setBannerExpanded`. `acceptAdditional` / `continueEssential` permanecem exportados (usados por `CookieDetailsModal.tsx`) mas deixam de aparecer no banner.
-
-## 3) `src/components/cookies/CookieBanner.tsx` — reescrita
-
-Estado A (compacto): título `Cookies e privacidade` / `Cookies and privacy` / `Cookies y privacidad`; mensagem aprovada; três botões na mesma linha, na ordem **Aceitar todos** (coral, outline glow do design system) · **Personalizar** (outline branco/15) · **Apenas essenciais** (outline branco/15, mesmo peso visual); link para a Política de Privacidade via `usePolicyDrawer().openPolicy('privacy')`.
-
-Estado B (Personalizar): quatro linhas com switch — Essenciais desabilitado com badge `Sempre ativo` / `Always active` / `Siempre activas`, e badge `Opcional` / `Optional` / `Opcional` nas outras três; descrições do item 5; botões **Salvar escolhas** (primário), **Aceitar todos**, **Apenas essenciais**, e `← Voltar`.
-
-Textos (PT / EN / ES), sem ponto final em títulos:
-
-| | PT | EN | ES |
-|---|---|---|---|
-| Mensagem | Utilizamos cookies essenciais para o funcionamento do site. Com sua permissão, também coletamos dados anônimos de navegação e campanha para aprimorar nossos serviços e medir desempenho. | We use essential cookies for core site functionality. With your permission, we also collect anonymous browsing and campaign metrics to improve our services and measure performance. | Utilizamos cookies esenciales para el funcionamiento del sitio. Con tu permiso, también recopilamos métricas anónimas de navegación y campaña para mejorar nuestros servicios y medir el rendimiento. |
-| Essenciais | Funcionamento básico, segurança e preferências de idioma. Sempre ativos | Core operation, security, and language preferences. Always active | Funcionamiento básico, seguridad y preferencias de idioma. Siempre activas |
-| Análise e desempenho | Google Analytics e medição anônima de campanhas (i6 HUB) para entender a audiência | Google Analytics and anonymous campaign measurement (i6 HUB) to understand our audience | Google Analytics y medición anónima de campañas (i6 HUB) para comprender la audiencia |
-| Marketing | Comunicação direcionada e mensuração de anúncios futuros | Targeted communication and future advertising measurement | Comunicación dirigida y medición de anuncios futuros |
-| Preferências | Preferências estendidas de navegação, sem uso ativo hoje | Extended browsing preferences, not in active use today | Preferencias extendidas de navegación, sin uso activo hoy |
-
-## 4) `src/hooks/useTracker.ts` — dedupe
-
-```diff
-     const beaconKey = location.pathname + location.search;
+   useEffect(() => {
+     setThirdPartyAnalyticsConsent(analyticsConsent);
++    // Sem consentimento, esquece a última chave: um novo aceite na MESMA
++    // página volta a disparar o beacon, sem exigir troca de rota.
 +    if (!analyticsConsent) {
 +      lastBeaconKey.current = null;
 +    }
-     if (analyticsConsent && lastBeaconKey.current !== beaconKey) {
+   }, [analyticsConsent]);
 ```
 
-## 5) `src/components/hometeste/FooterNovo.tsx` — ponto permanente de revisão
-
-Terceiro botão ao lado de Privacidade e Ética (linha ~117), usando `openPreferences()` do hook:
+## 4) `src/components/hometeste/FooterNovo.tsx`
 
 ```diff
-       <button type="button" onClick={() => openPolicy('ethics')} ...>
++import { useCookieConsent } from '@/hooks/useCookieConsent';
+...
+   const { openPolicy } = usePolicyDrawer();
++  const { openPreferences } = useCookieConsent();
+...
+     <div className="flex gap-4 text-xs">
+-      <button type="button" onClick={() => openPolicy('privacy')} className="text-white/30 hover:text-[#F4845F] transition-colors">
++      <button type="button" onClick={() => openPolicy('privacy')} className="text-white/60 hover:text-[#F4845F] transition-colors">
+         {t('footer.privacy')}
+       </button>
+-      <button type="button" onClick={() => openPolicy('ethics')} className="text-white/30 hover:text-[#F4845F] transition-colors">
++      <button type="button" onClick={() => openPolicy('ethics')} className="text-white/60 hover:text-[#F4845F] transition-colors">
          {t('footer.ethics')}
        </button>
-+      <button type="button" onClick={openPreferences} className="text-white/30 hover:text-[#F4845F] transition-colors">
++      <button type="button" onClick={openPreferences} className="text-white/60 hover:text-[#F4845F] transition-colors">
 +        {language === 'pt' ? 'Preferências de cookies' : language === 'es' ? 'Preferencias de cookies' : 'Cookie preferences'}
 +      </button>
+     </div>
+ 
+     <p className="text-white/30 text-xs mt-3">{copyright}</p>
 ```
 
-`openPreferences` abre o banner já no Estado B com os switches refletindo a escolha salva.
+Contraste sobre o fundo real `bg-[#0B1224]` (linha 85): `white/30` = 2,70:1 (reprova) → `white/60` = 7,13:1 (aprova). Copyright segue em `/30`, como pedido.
 
-## 6) `CookieDetailsModal.tsx` e `CookieSettingsButton.tsx` — remoção (item 2)
+## 5) Remoção de código morto
 
-Busca em todo o `src`: `CookieDetailsModal` só aparece dentro do próprio arquivo (declaração + interface) — **nenhum componente importa ou renderiza**. O mesmo vale para `CookieSettingsButton` (botão flutuante "Cookies" no canto inferior esquerdo), também órfão e cuja função passa a ser exercida pelo link do rodapé.
+`rm src/components/cookies/CookieDetailsModal.tsx` e `rm src/components/cookies/CookieSettingsButton.tsx` — busca em todo o `src` confirma zero imports (só as próprias declarações). Nenhum import morto a limpar.
 
-Diff: `rm src/components/cookies/CookieDetailsModal.tsx` e `rm src/components/cookies/CookieSettingsButton.tsx`. Não há import morto a limpar (já não havia nenhum). Se preferir manter o botão flutuante, diga e eu o mantenho atualizado com os novos textos em vez de removê-lo.
+## 6) Opcional — atualizar `CookieBanner.tsx` para o Estado A/B aprovado
 
-## 7) Contraste do link no rodapé (item 3)
-
-Fundo real do rodapé: `bg-[#0B1224]` (`FooterNovo.tsx:85`). Razões calculadas (WCAG 2.1, texto pequeno exige 4,5:1):
-
-| Cor | Razão | Resultado |
-|---|---|---|
-| `text-white/30` (atual dos links de política/ética) | **2,70:1** | reprova |
-| `text-white/50` | 5,28:1 | aprova |
-| `text-white/60` | 7,13:1 | aprova |
-
-Uso `text-white/60` no novo link, mantendo `hover:text-[#F4845F]`. Como Política de Privacidade e Código de Ética estão hoje em `/30` (2,70:1, também reprovado) e ficariam visivelmente mais apagados ao lado do novo link, proponho subir os três para `/60` na mesma linha — confirme se quer isso ou se prefiro mexer só no link novo.
-
-## 8) Não alterado
-
-`useGoogleAnalytics.ts`, `campaignBeacon.ts` (lógica interna), sitemap, llms.txt, JSON-LD, `/our-ai`.
+Só se você confirmar: título "Cookies e privacidade / Cookies and privacy / Cookies y privacidad", mensagem aprovada, três botões de mesmo nível hierárquico (Aceitar todos coral · Personalizar · Apenas essenciais), e o painel Personalizar com switch por categoria, badge "Sempre ativo" nos essenciais e os botões Salvar escolhas / Aceitar todos / Apenas essenciais / Voltar — nos três idiomas.
 
 ## Verificação após aplicar
 
-Aba limpa sem interagir (zero `_ga`/hit/beacon) · Aceitar todos dispara GA4 + beacon na hora com `visitor_id == i6_aid` · Apenas essenciais silencioso · ativar Análise no painel após "Apenas essenciais" redispara o beacon · `expires_at` no passado reabre o banner · registro antigo sem `expires_at` segue válido · link do rodapé abre o Estado B · PT/EN/ES · build e validate verdes, sem diff em sitemap/llms/JSON-LD.
+Aba limpa sem interagir (zero `_ga`, zero hit GA, zero beacon) · Aceitar todos dispara GA4 e beacon na hora, sem reload, `visitor_id == i6_aid` · Apenas essenciais silencioso · ativar Análise no painel após "Apenas essenciais" na mesma página redispara o beacon · `expiresAt` no passado reabre o banner · registro antigo sem `expiresAt` segue válido · link do rodapé abre o Estado B com a escolha salva · PT/EN/ES · build e validate verdes, sem mudança em sitemap, llms.txt ou JSON-LD.
