@@ -97,37 +97,13 @@ export const useCookieConsent = () => {
     saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
   }, [saveConsent]);
 
-  const acceptAdditional = useCallback(() => {
-    saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
-  }, [saveConsent]);
-
-  const continueEssential = useCallback(() => {
-    saveConsent({ essential: true, analytics: true, marketing: false, preferences: false });
-  }, [saveConsent]);
-
   const rejectAll = useCallback(() => {
     saveConsent({ essential: true, analytics: false, marketing: false, preferences: false });
   }, [saveConsent]);
-
-  const updateConsent = useCallback((category: keyof CookieConsent, value: boolean) => {
-    if (category === 'essential') return;
-    setState({ consent: { ...state.consent, [category]: value } });
-  }, []);
-
-  const resetConsent = useCallback(() => {
-    try {
-      localStorage.removeItem(COOKIE_CONSENT_KEY);
-    } catch (error) {
-      console.error('Error resetting consent:', error);
-    }
-    setState({ consent: defaultCookieConsent, showBanner: true });
-  }, []);
-
   const openPreferences = useCallback(() => {
     setState({ showBanner: true, bannerExpanded: true });
   }, []);
 
-  const setShowBanner = useCallback((value: boolean) => setState({ showBanner: value }), []);
   const setBannerExpanded = useCallback((value: boolean) => setState({ bannerExpanded: value }), []);
 
   return {
@@ -136,13 +112,9 @@ export const useCookieConsent = () => {
     bannerExpanded: localState.bannerExpanded,
     saveConsent,
     acceptAll,
-    acceptAdditional,
-    continueEssential,
     rejectAll,
-    updateConsent,
-    resetConsent,
-    setShowBanner,
     setBannerExpanded,
     openPreferences,
   };
+
 };

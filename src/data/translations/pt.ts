@@ -385,31 +385,5 @@ export const ptTranslations = {
   'notFound.title': '404',
   'notFound.subtitle': 'Ops! Página não encontrada',
   'notFound.backHome': 'Voltar ao Início',
-
-  // Cookie Consent
-  'cookies.banner.title': 'Configurações de Cookies',
-  'cookies.banner.description': 'Usamos cookies para melhorar sua experiência e analisar o uso do site. Você pode personalizar suas preferências a qualquer momento.',
-  'cookies.banner.acceptAll': 'Aceitar Todos',
-  'cookies.banner.rejectAll': 'Rejeitar Todos',
-  'cookies.banner.customize': 'Personalizar',
-  'cookies.banner.compliance': 'Em conformidade com LGPD e GDPR',
-  
-  'cookies.modal.title': 'Configurações de Cookies',
-  'cookies.modal.description': 'Gerencie suas preferências de cookies. Você pode alterar essas configurações a qualquer momento.',
-  'cookies.modal.required': 'Obrigatório',
-  'cookies.modal.cookiesUsed': 'Cookies utilizados',
-  'cookies.modal.privacyTitle': 'Informações sobre Privacidade',
-  'cookies.modal.privacyDescription': 'Respeitamos sua privacidade e estamos em conformidade com as leis LGPD (Brasil) e GDPR (Europa). Seus dados são processados de forma segura e transparente. Você pode alterar suas preferências ou retirar seu consentimento a qualquer momento.',
-  'cookies.modal.rejectAll': 'Rejeitar Todos',
-  'cookies.modal.savePreferences': 'Salvar Preferências',
-  'cookies.modal.acceptAll': 'Aceitar Todos',
-  
-  'cookies.categories.essential.name': 'Essenciais',
-  'cookies.categories.essential.description': 'Cookies necessários para o funcionamento básico do site. Não podem ser desabilitados.',
-  'cookies.categories.analytics.name': 'Análise',
-  'cookies.categories.analytics.description': 'Cookies que nos ajudam a entender como os visitantes interagem com o site.',
-  'cookies.categories.marketing.name': 'Marketing',
-  'cookies.categories.marketing.description': 'Cookies usados para entregar anúncios relevantes e campanhas de marketing.',
-  'cookies.categories.preferences.name': 'Preferências',
-  'cookies.categories.preferences.description': 'Cookies que lembram suas escolhas e personalizam sua experiência.',
 };
+
