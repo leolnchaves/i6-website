@@ -69,7 +69,7 @@ const safeUuid = () =>
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
-const readJSON = <T>(key: string): T | null => {
+export const readJSON = <T>(key: string): T | null => {
   if (!isBrowser()) return null;
   try {
     const raw = localStorage.getItem(key);
@@ -97,7 +97,7 @@ const writeString = (key: string, value: string) => {
   }
 };
 
-const parseUtms = (search: string): UtmRecord => {
+export const parseUtms = (search: string): UtmRecord => {
   const params = new URLSearchParams(search);
   const out: UtmRecord = {};
   for (const k of UTM_KEYS) {

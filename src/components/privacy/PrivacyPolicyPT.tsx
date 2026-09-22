@@ -196,6 +196,9 @@ const PrivacyPolicyPT = () => {
         <p className="text-white/70 mb-2">
           <strong className="text-white">Cookies adicionais (marketing/preferências):</strong> só são ativados após consentimento explícito no banner de cookies. Você pode revisar e alterar suas escolhas a qualquer momento em "Preferências de cookies".
         </p>
+        <p className="text-white/70 mb-2">
+          <strong className="text-white">Medição de campanhas (i6 HUB):</strong> quando você aceita a categoria "Análise" no banner de cookies, cada página visitada é registrada de forma anônima (identificador do visitante, endereço da página e parâmetros de campanha) em um serviço próprio da infinity6, o i6 HUB, para medir o desempenho das nossas campanhas. Sem esse aceite, nenhum envio é feito.
+        </p>
         <p className="text-white/70">
           <strong className="text-white">Seus direitos:</strong> desativar analytics em "Preferências de cookies", limpar o storage do navegador ou solicitar exclusão via <a href="mailto:security@infinity6.ai" className="text-[#F4845F] hover:underline">security@infinity6.ai</a>.
         </p>
