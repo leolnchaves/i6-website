@@ -32,8 +32,84 @@ Também nas descrições de `cookieCategories` (mesmo arquivo): `essential` deix
 
 ## 2) `src/hooks/useCookieConsent.ts` — store compartilhado, expiração, ações
 
-- Store no módulo: `consentState` + `Set<listener>`; o hook sincroniza via `useState` + `useEffect(subscribe)`. Assim banner, rodapé e manager veem o mesmo `showBanner`/`bannerExpanded`/`consent`.
-- Leitura (inicializador síncrono, já existente) passa a checar validade:
+### Código completo do store (item 1 da sua pergunta)
+
+```ts
+const COOKIE_CONSENT_KEY = 'cookie_consent';
+const COOKIE_CONSENT_VERSION = '2.0';
+const TTL_DAYS = 365;
+
+type Stored = {
+  consent: CookieConsent;
+  version: string;
+  timestamp: string;
+  ttl_days?: number;
+  expires_at?: string;
+};
+
+type ConsentState = {
+  consent: CookieConsent;
+  showBanner: boolean;
+  bannerExpanded: boolean;
+};
+
+// Lê o registro salvo, tratando expirado como inexistente.
+// Registros antigos (sem expires_at) seguem válidos.
+const readStored = (): CookieConsent | null => {
+  try {
+    const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Stored;
+    if (parsed.version !== COOKIE_CONSENT_VERSION) return null;
+    if (parsed.expires_at && new Date(parsed.expires_at).getTime() < Date.now()) return null;
+    return parsed.consent;
+  } catch {
+    return null;
+  }
+};
+
+// ---- Estado de módulo (fonte única, criado uma vez por carga de página) ----
+const saved = readStored();
+let state: ConsentState = {
+  consent: saved ?? defaultCookieConsent,
+  showBanner: saved === null,
+  bannerExpanded: false,
+};
+
+const listeners = new Set<(s: ConsentState) => void>();
+
+const setState = (patch: Partial<ConsentState>) => {
+  state = { ...state, ...patch };
+  listeners.forEach((l) => l(state));
+};
+
+const subscribe = (listener: (s: ConsentState) => void) => {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+};
+
+export const useCookieConsent = () => {
+  // Leitura inicial SÍNCRONA: nenhum render acontece com o default
+  // quando já existe escolha salva e válida.
+  const [local, setLocalState] = useState<ConsentState>(state);
+
+  useEffect(() => {
+    // Sincroniza com o estado de módulo que pode ter mudado entre o
+    // initializer e a montagem, e inscreve esta instância.
+    setLocalState(state);
+    return subscribe(setLocalState); // cleanup remove o listener no unmount
+  }, []);
+
+  // ... ações (saveConsent, acceptAll, essentialOnly, openPreferences ...)
+  // todas chamam setState(...), nunca setLocalState direto.
+};
+```
+
+**Sem vazamento de listener:** `subscribe` devolve a própria função de remoção, e esse retorno é o cleanup do `useEffect` — cada montagem adiciona exatamente um listener ao `Set` e o remove no unmount. Banner, rodapé (`FooterNovo`) e `CookieConsentManager` podem montar/desmontar em qualquer ordem e quantas vezes quiserem; o `Set` volta ao tamanho anterior. Como é um `Set` (não array), uma eventual dupla inscrição da mesma função também não duplicaria a entrada.
+
+- Leitura (inicializador síncrono) passa a checar validade:
 
 ```diff
 -        if (parsed.version === COOKIE_CONSENT_VERSION) return parsed.consent as CookieConsent;
@@ -99,7 +175,25 @@ Terceiro botão ao lado de Privacidade e Ética (linha ~117), usando `openPrefer
 
 `openPreferences` abre o banner já no Estado B com os switches refletindo a escolha salva.
 
-## 6) Não alterado
+## 6) `CookieDetailsModal.tsx` e `CookieSettingsButton.tsx` — remoção (item 2)
+
+Busca em todo o `src`: `CookieDetailsModal` só aparece dentro do próprio arquivo (declaração + interface) — **nenhum componente importa ou renderiza**. O mesmo vale para `CookieSettingsButton` (botão flutuante "Cookies" no canto inferior esquerdo), também órfão e cuja função passa a ser exercida pelo link do rodapé.
+
+Diff: `rm src/components/cookies/CookieDetailsModal.tsx` e `rm src/components/cookies/CookieSettingsButton.tsx`. Não há import morto a limpar (já não havia nenhum). Se preferir manter o botão flutuante, diga e eu o mantenho atualizado com os novos textos em vez de removê-lo.
+
+## 7) Contraste do link no rodapé (item 3)
+
+Fundo real do rodapé: `bg-[#0B1224]` (`FooterNovo.tsx:85`). Razões calculadas (WCAG 2.1, texto pequeno exige 4,5:1):
+
+| Cor | Razão | Resultado |
+|---|---|---|
+| `text-white/30` (atual dos links de política/ética) | **2,70:1** | reprova |
+| `text-white/50` | 5,28:1 | aprova |
+| `text-white/60` | 7,13:1 | aprova |
+
+Uso `text-white/60` no novo link, mantendo `hover:text-[#F4845F]`. Como Política de Privacidade e Código de Ética estão hoje em `/30` (2,70:1, também reprovado) e ficariam visivelmente mais apagados ao lado do novo link, proponho subir os três para `/60` na mesma linha — confirme se quer isso ou se prefiro mexer só no link novo.
+
+## 8) Não alterado
 
 `useGoogleAnalytics.ts`, `campaignBeacon.ts` (lógica interna), sitemap, llms.txt, JSON-LD, `/our-ai`.
 
