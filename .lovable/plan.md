@@ -1,169 +1,108 @@
-# Beacon de campanha no site infinity6 (diff CORRIGIDO — nada aplicado)
+# Reconstrução do banner de cookies — diff proposto (nada aplicado)
 
-Enviar as visitas do site para o endpoint `track-campaign-landing` do i6 HUB, reaproveitando o identificador anônimo e o primeiro/último toque existentes. O beacon só dispara com a categoria "Análise" aceita no banner; os itens do beacon **não** entram na lista de essenciais. Ajuste visual do banner fica para tarefa futura.
+## Localização atual (respondendo antes do diff)
 
-## Correções desta rodada (itens 1–5)
+- Componente visual do banner: `src/components/cookies/CookieBanner.tsx` (estado compacto + estado expandido no mesmo arquivo), montado por `src/components/cookies/CookieConsentManager.tsx`, que por sua vez é montado em `src/components/DarkLayout.tsx:22`.
+- Textos: **inline no próprio componente**, num objeto `t` com três ramos (`pt` / `es` / fallback `en`) — não há chaves de cookies em `src/data/translations/*`. O mesmo padrão inline existe em `src/components/cookies/CookieDetailsModal.tsx`.
+- Rodapé: `src/components/hometeste/FooterNovo.tsx` (linhas 111–118 têm os links de Política de Privacidade e Código de Ética).
+- Observação importante descoberta agora: `useCookieConsent` mantém estado **local por instância** (cada componente que chama o hook tem seu próprio `showBanner`). Por isso o link do rodapé não conseguiria abrir o banner hoje. O diff adiciona um pequeno store compartilhado no módulo do hook (sem biblioteca nova, sem provider novo).
 
-1. **UUID inválido aborta o envio** — `sendLandingBeacon` retorna antes do fetch se `getAnonymousId()` não existir ou não passar no UUID_RE. Nunca envia `visitor_id` vazio.
-2. **Nome real da função** — `tracker.ts` exporta `parseUtms(search: string)` (tracker.ts:100). O diff abaixo já usa o nome correto, compilável.
-3. **Dedupe por pathname + search** — uma nova passagem pela mesma página com UTM diferente dispara o beacon de novo.
-4. **Verificação ao vivo das chaves (feita, 16:45 UTC):**
-   - `i6_first_touch` = `{"utm_source":"beaconcheck","utm_medium":"cpc","utm_campaign":"test2","landing_page":"/pt/contact?utm_source=beaconcheck&utm_campaign=test2&utm_medium=cpc","ts":"2026-09-22T16:45:14.321Z"}`
-   - `i6_last_touch` = `{"utm_term":"kw1","utm_content":"ad1","ts":"2026-09-22T16:45:16.481Z"}`
-   - Confirmado: as chaves são **planas** (`FirstTouch`/`LastTouch` estendem `UtmRecord` por interseção — tracker.ts:34-43), então `touch.utm_source` casa com o tipo `Utms` do beacon sem mapeamento. Bônus: `parseUtms` já trunca cada valor a 200 caracteres; o beacon re-aplica o clamp por segurança.
-5. **Linha exata de renderização** incluída no diff da política EN abaixo.
+---
 
-## Diff corrigido completo (não aplicado)
-
-### `src/lib/campaignBeacon.ts` — NOVO
-
-```ts
-/**
- * Beacon de visita para o i6 HUB (track-campaign-landing).
- *
- * Dispara SOMENTE com consent da categoria "Análise" — mesmo gate de
- * qualquer rastreamento não essencial do site. Reaproveita i6_aid e os
- * toques de src/lib/tracker.ts; nunca cria um segundo identificador.
- */
-
-import { getAnonymousId, parseUtms, readJSON, type FirstTouch, type LastTouch } from '@/lib/tracker';
-
-export const CAMPAIGN_BEACON_URL =
-  'https://nknsoorwqvlyxfptnfzr.supabase.co/functions/v1/track-campaign-landing';
-
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i;
-const GO_TOKEN_RE = /^(\/(?:pt|en|es))?\/go\/[^/]+$/;
-
-type UtmKey = 'utm_source' | 'utm_medium' | 'utm_campaign' | 'utm_term' | 'utm_content';
-const UTM_KEYS: UtmKey[] = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-
-const maskPath = (pathname: string): string => {
-  const m = pathname.match(GO_TOKEN_RE);
-  return m ? `${m[1] ?? ''}/go/:token` : pathname;
-};
-
-/** Pathname sem o prefixo de idioma, para guards de rota sensível. */
-const stripLangPrefix = (pathname: string): string =>
-  pathname.replace(/^\/(pt|en|es)(?=\/|$)/, '') || '/';
-
-const clamp = (v: string, max: number) => v.slice(0, max);
-
-/**
- * Envia a visita ao i6 HUB. Corpo estrito: visitor_id, page_url,
- * utm_* (opcionais) e user_agent (opcional) — nenhum campo a mais.
- * Sem visitor_id válido, aborta sem chamar a rede.
- * Silencioso: nunca lança, nunca bloqueia a navegação.
- */
-export const sendLandingBeacon = async (pathname: string, search: string): Promise<void> => {
-  if (typeof window === 'undefined') return;
-  if (stripLangPrefix(pathname).startsWith('/demo-metrics')) return;
-
-  const visitorId = getAnonymousId();
-  if (!visitorId || !UUID_RE.test(visitorId)) return;
-
-  // UTMs: URL atual primeiro (passagem de rota em curso), depois último
-  // toque e primeiro toque — todos já persistidos por tracker.ts.
-  const fromUrl = parseUtms(search);
-  const last = readJSON<LastTouch>('i6_last_touch') ?? {};
-  const first = readJSON<FirstTouch>('i6_first_touch') ?? {};
-
-  const body: Record<string, string> = {
-    visitor_id: visitorId,
-    page_url: window.location.origin + maskPath(pathname),
-  };
-
-  for (const key of UTM_KEYS) {
-    const value = fromUrl[key] ?? last[key] ?? first[key];
-    if (value) body[key] = clamp(value, 200);
-  }
-  if (navigator.userAgent) body.user_agent = clamp(navigator.userAgent, 500);
-
-  try {
-    await fetch(CAMPAIGN_BEACON_URL, {
-      method: 'POST',
-      keepalive: true,
-      mode: 'cors',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-  } catch {
-    /* rede/CORS: silencioso por design */
-  }
-};
-```
-
-### `src/lib/tracker.ts` — exportar dois helpers existentes (sem mudança de comportamento)
+## 1) `src/types/cookies.ts` — default de consentimento
 
 ```diff
--const readJSON = <T>(key: string): T | null => {
-+export const readJSON = <T>(key: string): T | null => {
-```
-```diff
--const parseUtms = (search: string): UtmRecord => {
-+export const parseUtms = (search: string): UtmRecord => {
+-// Soft opt-in: analytics (GA4) ativo por padrão.
+-// O tracker próprio anônimo de primeira parte é essencial (legítimo interesse)
+-// e não pode ser desativado por toggle — apenas limpando o localStorage.
++// Opt-in explícito: nada de analytics/marketing/preferências antes do clique.
++// Só `essential` nasce ativo (funcionamento, idioma, CSRF, gravação da escolha).
+ export const defaultCookieConsent: CookieConsent = {
+   essential: true,
+-  analytics: true,
++  analytics: false,
+   marketing: false,
+   preferences: false,
+ };
 ```
 
-### `src/hooks/useTracker.ts` — gancho na rota, gateado por consent, dedupe por pathname+search
+Também nas descrições de `cookieCategories` (mesmo arquivo): `essential` deixa de citar rastreamento de campanha; `analytics` passa a citar GA4 + medição de campanhas (i6 HUB).
+
+**Confirmação pedida:** nenhum outro ponto do código reintroduz `analytics: true` como default. Os únicos literais `analytics: true` ficam em `acceptAll`/`acceptAdditional` (ações explícitas do visitante) dentro de `useCookieConsent.ts`. `index.html` já inicializa o Consent Mode do GA4 com `analytics_storage: 'denied'`, então com esse default o GA4 passa a não gravar `_ga` nem enviar hit antes do aceite.
+
+## 2) `src/hooks/useCookieConsent.ts` — store compartilhado, expiração, ações
+
+- Store no módulo: `consentState` + `Set<listener>`; o hook sincroniza via `useState` + `useEffect(subscribe)`. Assim banner, rodapé e manager veem o mesmo `showBanner`/`bannerExpanded`/`consent`.
+- Leitura (inicializador síncrono, já existente) passa a checar validade:
 
 ```diff
-+import { useRef } from 'react';
- import { useLocation } from 'react-router-dom';
- import { recordPageView, ... } from '@/lib/tracker'; // imports atuais preservados
-+import { sendLandingBeacon } from '@/lib/campaignBeacon';
- 
- export const useTracker = (analyticsConsent: boolean) => {
-   const location = useLocation();
-+  const lastBeaconKey = useRef<string | null>(null);
- 
-   useEffect(() => {
-     recordPageView(location.pathname + location.search, document.title);
-+    // Beacon ao i6 HUB: só com "Análise" aceita; dispara de novo se os
-+    // UTMs (search) mudarem na mesma página.
-+    const beaconKey = location.pathname + location.search;
-+    if (analyticsConsent && lastBeaconKey.current !== beaconKey) {
-+      lastBeaconKey.current = beaconKey;
-+      void sendLandingBeacon(location.pathname, location.search);
+-        if (parsed.version === COOKIE_CONSENT_VERSION) return parsed.consent as CookieConsent;
++        const expired = parsed.expires_at && new Date(parsed.expires_at).getTime() < Date.now();
++        if (!expired && parsed.version === COOKIE_CONSENT_VERSION) {
++          return parsed.consent as CookieConsent;
++        }
+```
+
+  (registros antigos sem `expires_at` continuam válidos). O efeito de mount usa a mesma checagem: expirado ⇒ `showBanner = true`.
+- Gravação:
+
+```diff
+     const consentData = {
+       consent: newConsent,
+       version: COOKIE_CONSENT_VERSION,
+       timestamp: new Date().toISOString(),
++      ttl_days: 365,
++      expires_at: new Date(Date.now() + 365 * 864e5).toISOString(),
+     };
+```
+
+- Ações expostas: `acceptAll`, `essentialOnly` (novo nome para o "Apenas essenciais" = `{essential:true, analytics:false, marketing:false, preferences:false}`), `saveConsent`, `openPreferences`, `setBannerExpanded`. `acceptAdditional` / `continueEssential` permanecem exportados (usados por `CookieDetailsModal.tsx`) mas deixam de aparecer no banner.
+
+## 3) `src/components/cookies/CookieBanner.tsx` — reescrita
+
+Estado A (compacto): título `Cookies e privacidade` / `Cookies and privacy` / `Cookies y privacidad`; mensagem aprovada; três botões na mesma linha, na ordem **Aceitar todos** (coral, outline glow do design system) · **Personalizar** (outline branco/15) · **Apenas essenciais** (outline branco/15, mesmo peso visual); link para a Política de Privacidade via `usePolicyDrawer().openPolicy('privacy')`.
+
+Estado B (Personalizar): quatro linhas com switch — Essenciais desabilitado com badge `Sempre ativo` / `Always active` / `Siempre activas`, e badge `Opcional` / `Optional` / `Opcional` nas outras três; descrições do item 5; botões **Salvar escolhas** (primário), **Aceitar todos**, **Apenas essenciais**, e `← Voltar`.
+
+Textos (PT / EN / ES), sem ponto final em títulos:
+
+| | PT | EN | ES |
+|---|---|---|---|
+| Mensagem | Utilizamos cookies essenciais para o funcionamento do site. Com sua permissão, também coletamos dados anônimos de navegação e campanha para aprimorar nossos serviços e medir desempenho. | We use essential cookies for core site functionality. With your permission, we also collect anonymous browsing and campaign metrics to improve our services and measure performance. | Utilizamos cookies esenciales para el funcionamiento del sitio. Con tu permiso, también recopilamos métricas anónimas de navegación y campaña para mejorar nuestros servicios y medir el rendimiento. |
+| Essenciais | Funcionamento básico, segurança e preferências de idioma. Sempre ativos | Core operation, security, and language preferences. Always active | Funcionamiento básico, seguridad y preferencias de idioma. Siempre activas |
+| Análise e desempenho | Google Analytics e medição anônima de campanhas (i6 HUB) para entender a audiência | Google Analytics and anonymous campaign measurement (i6 HUB) to understand our audience | Google Analytics y medición anónima de campañas (i6 HUB) para comprender la audiencia |
+| Marketing | Comunicação direcionada e mensuração de anúncios futuros | Targeted communication and future advertising measurement | Comunicación dirigida y medición de anuncios futuros |
+| Preferências | Preferências estendidas de navegação, sem uso ativo hoje | Extended browsing preferences, not in active use today | Preferencias extendidas de navegación, sin uso activo hoy |
+
+## 4) `src/hooks/useTracker.ts` — dedupe
+
+```diff
+     const beaconKey = location.pathname + location.search;
++    if (!analyticsConsent) {
++      lastBeaconKey.current = null;
 +    }
-   }, [location.pathname, location.search]);
+     if (analyticsConsent && lastBeaconKey.current !== beaconKey) {
 ```
 
-### `src/components/privacy/PrivacyPolicyPT.tsx` — seção 10, após o parágrafo "Cookies adicionais" (L196-198)
+## 5) `src/components/hometeste/FooterNovo.tsx` — ponto permanente de revisão
+
+Terceiro botão ao lado de Privacidade e Ética (linha ~117), usando `openPreferences()` do hook:
 
 ```diff
-         <p className="text-white/70 mb-2">
-           <strong className="text-white">Cookies adicionais (marketing/preferências):</strong> só são ativados após consentimento explícito no banner de cookies. Você pode revisar e alterar suas escolhas a qualquer momento em "Preferências de cookies".
-         </p>
-+        <p className="text-white/70 mb-2">
-+          <strong className="text-white">Medição de campanhas (i6 HUB):</strong> quando você aceita a categoria "Análise" no banner de cookies, cada página visitada é registrada de forma anônima (identificador do visitante, endereço da página e parâmetros de campanha) em um serviço próprio da infinity6, o i6 HUB, para medir o desempenho das nossas campanhas. Sem esse aceite, nenhum envio é feito.
-+        </p>
+       <button type="button" onClick={() => openPolicy('ethics')} ...>
+         {t('footer.ethics')}
+       </button>
++      <button type="button" onClick={openPreferences} className="text-white/30 hover:text-[#F4845F] transition-colors">
++        {language === 'pt' ? 'Preferências de cookies' : language === 'es' ? 'Preferencias de cookies' : 'Cookie preferences'}
++      </button>
 ```
 
-### `src/pages/PrivacyPolicy.tsx` — bloco EN
+`openPreferences` abre o banner já no Estado B com os switches refletindo a escolha salva.
 
-Texto (após `additional`, L110):
-```diff
-       additional: "Additional cookies (marketing/preferences): only activated after explicit consent in the cookie banner. You can review and change your choices at any time in \"Cookie preferences\".",
-+      campaign: "Campaign measurement (i6 HUB): when you accept the \"Analytics\" category in the cookie banner, each page you visit is recorded anonymously (visitor identifier, page address and campaign parameters) in an infinity6-owned service, the i6 HUB, to measure campaign performance. Without that consent, nothing is sent.",
-```
+## 6) Não alterado
 
-Linha exata de renderização em `renderENContent` (após L175):
-```diff
-         <p className="text-white/70 mb-2">{enSections.cookies.additional}</p>
-+        <p className="text-white/70 mb-2">{enSections.cookies.campaign}</p>
-         <p className="text-white/70">{enSections.cookies.rights}</p>
-```
-
-### O que NÃO muda
-
-- Banner: nenhuma alteração visual nem na lista de essenciais (`i6_first_touch`, `i6_pages`, `i6_events` **não** entram como essenciais).
-- Formulários: payload intacto (contato, gates, Ebook).
-- `tracker.ts`: só dois `export`, nenhuma mudança de comportamento.
-
-## Pendências do lado do endpoint
-
-- `verify_jwt = false` no `track-campaign-landing` (POST sem token precisa responder 2xx).
-- CORS confirmado para `https://infinity6.ai` (preflight real: allow-origin, allow-methods POST/OPTIONS, allow-headers com content-type). Origin do preview não está liberado — no preview o envio falha silenciosamente; para testar lá, adicionar o origin no endpoint.
+`useGoogleAnalytics.ts`, `campaignBeacon.ts` (lógica interna), sitemap, llms.txt, JSON-LD, `/our-ai`.
 
 ## Verificação após aplicar
 
-Build, depois Playwright: aceitar "Análise" e confirmar POST ao endpoint com corpo estrito (visitor_id == i6_aid, page_url sem query, UTMs); recusar e confirmar ausência total de chamadas; mesma página com UTM novo dispara de novo; máscara em `/pt/go/xyz`; ausência de disparo em `/pt/demo-metrics/xyz`.
+Aba limpa sem interagir (zero `_ga`/hit/beacon) · Aceitar todos dispara GA4 + beacon na hora com `visitor_id == i6_aid` · Apenas essenciais silencioso · ativar Análise no painel após "Apenas essenciais" redispara o beacon · `expires_at` no passado reabre o banner · registro antigo sem `expires_at` segue válido · link do rodapé abre o Estado B · PT/EN/ES · build e validate verdes, sem diff em sitemap/llms/JSON-LD.
