@@ -114,35 +114,35 @@ const CookieBanner = () => {
             <h3 className="text-white text-sm font-semibold mb-2">{t.title}</h3>
             <p className="text-white/70 text-xs leading-relaxed mb-3">{t.body}</p>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 text-xs">
-              <button type="button" onClick={() => openPolicy('privacy')} className="text-[#F4845F] hover:underline">
-                {t.privacy}
-              </button>
+            <div className="flex flex-col sm:flex-row gap-2 mb-3">
+              <Button
+                onClick={rejectAll}
+                variant="outline"
+                size="sm"
+                className="flex-1 border-white/15 bg-transparent text-white/80 hover:bg-white/5 hover:text-white"
+              >
+                {t.onlyEssential}
+              </Button>
+              <Button
+                onClick={acceptAll}
+                size="sm"
+                className="flex-1 bg-[#F4845F] hover:bg-[#F4845F]/90 text-white font-semibold border border-[#F4845F]/50 shadow-[0_0_20px_rgba(244,132,95,0.3)]"
+              >
+                {t.ok}
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 text-[11px]">
               <button
                 type="button"
                 onClick={() => setBannerExpanded(true)}
                 className="text-white/60 hover:text-white/90 hover:underline"
               >
-                {t.preferences}
+                {t.customize}
               </button>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Button
-                onClick={continueEssential}
-                variant="outline"
-                size="sm"
-                className="flex-1 border-white/15 bg-transparent text-white/80 hover:bg-white/5 hover:text-white"
-              >
-                {t.continueEssential}
-              </Button>
-              <Button
-                onClick={acceptAdditional}
-                size="sm"
-                className="flex-1 bg-[#F4845F] hover:bg-[#F4845F]/90 text-white font-semibold border border-[#F4845F]/50 shadow-[0_0_20px_rgba(244,132,95,0.3)]"
-              >
-                {t.acceptAdditional}
-              </Button>
+              <button type="button" onClick={() => openPolicy('privacy')} className="text-[#F4845F] hover:underline">
+                {t.privacy}
+              </button>
             </div>
           </>
         ) : (
@@ -168,7 +168,14 @@ const CookieBanner = () => {
                   className="flex items-start justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3"
                 >
                   <div className="flex-1 min-w-0">
-                    <div className="text-white text-xs font-semibold mb-0.5">{row.label}</div>
+                    <div className="flex items-center gap-2 text-white text-xs font-semibold mb-0.5">
+                      {row.label}
+                      {row.locked && (
+                        <span className="text-[10px] uppercase tracking-wide text-white/50 border border-white/15 rounded-full px-2 py-0.5">
+                          {t.alwaysActive}
+                        </span>
+                      )}
+                    </div>
                     <div className="text-white/60 text-[11px] leading-relaxed">{row.desc}</div>
                   </div>
                   <Switch
