@@ -3,51 +3,85 @@ import { CookieConsent, defaultCookieConsent } from '@/types/cookies';
 
 const COOKIE_CONSENT_KEY = 'cookie_consent';
 const COOKIE_CONSENT_VERSION = '2.0';
+const CONSENT_TTL_MS = 365 * 24 * 60 * 60 * 1000; // 365 dias
+
+interface StoredConsent {
+  consent: CookieConsent;
+  version: string;
+  timestamp: string;
+  expiresAt?: string;
+}
+
+interface ConsentState {
+  consent: CookieConsent;
+  showBanner: boolean;
+  bannerExpanded: boolean;
+}
+
+const readStoredConsent = (): { consent: CookieConsent; valid: boolean } => {
+  try {
+    const saved = localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (!saved) return { consent: defaultCookieConsent, valid: false };
+    const parsed = JSON.parse(saved) as StoredConsent;
+    if (parsed.version !== COOKIE_CONSENT_VERSION) {
+      return { consent: defaultCookieConsent, valid: false };
+    }
+    if (parsed.expiresAt && new Date(parsed.expiresAt).getTime() < Date.now()) {
+      return { consent: defaultCookieConsent, valid: false };
+    }
+    return { consent: parsed.consent, valid: true };
+  } catch {
+    return { consent: defaultCookieConsent, valid: false };
+  }
+};
+
+const initial = readStoredConsent();
+
+let state: ConsentState = {
+  consent: initial.consent,
+  showBanner: !initial.valid,
+  bannerExpanded: false,
+};
+
+const listeners = new Set<() => void>();
+
+const setState = (partial: Partial<ConsentState>) => {
+  state = { ...state, ...partial };
+  listeners.forEach((listener) => listener());
+};
+
+const persist = (consent: CookieConsent) => {
+  const now = Date.now();
+  const stored: StoredConsent = {
+    consent,
+    version: COOKIE_CONSENT_VERSION,
+    timestamp: new Date(now).toISOString(),
+    expiresAt: new Date(now + CONSENT_TTL_MS).toISOString(),
+  };
+  try {
+    localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(stored));
+  } catch (error) {
+    console.error('Error saving consent:', error);
+  }
+};
 
 export const useCookieConsent = () => {
-  // Consentimento lido de forma SÍNCRONA no primeiro render: rastreamentos
-  // gateados por consent (GA4, beacon i6 HUB) nunca disparam com o default
-  // antes de carregar a escolha salva de um visitante que já decidiu.
-  const [consent, setConsent] = useState<CookieConsent>(() => {
-    try {
-      const saved = localStorage.getItem(COOKIE_CONSENT_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.version === COOKIE_CONSENT_VERSION) return parsed.consent as CookieConsent;
-      }
-    } catch {
-      /* storage bloqueado */
-    }
-    return defaultCookieConsent;
-  });
-  const [showBanner, setShowBanner] = useState(false);
-  const [bannerExpanded, setBannerExpanded] = useState(false);
+  const [localState, setLocalState] = useState<ConsentState>(state);
 
-  // Load consent from localStorage on mount
   useEffect(() => {
-    const savedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
-    if (savedConsent) {
-      try {
-        const parsed = JSON.parse(savedConsent);
-        if (parsed.version === COOKIE_CONSENT_VERSION) {
-          setConsent(parsed.consent);
-          setShowBanner(false);
-        } else {
-          setShowBanner(true);
-        }
-      } catch {
-        setShowBanner(true);
-      }
-    } else {
-      setShowBanner(true);
-    }
+    setLocalState(state);
+    const listener = () => setLocalState(state);
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }, []);
 
-    // Open expanded banner if URL has ?cookies=open (deep-link from old route)
+  useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       if (params.get('cookies') === 'open') {
-        setShowBanner(true);
-        setBannerExpanded(true);
+        setState({ showBanner: true, bannerExpanded: true });
       }
     } catch {
       /* noop */
@@ -55,31 +89,18 @@ export const useCookieConsent = () => {
   }, []);
 
   const saveConsent = useCallback((newConsent: CookieConsent) => {
-    const consentData = {
-      consent: newConsent,
-      version: COOKIE_CONSENT_VERSION,
-      timestamp: new Date().toISOString(),
-    };
-    try {
-      localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(consentData));
-      setConsent(newConsent);
-      setShowBanner(false);
-      setBannerExpanded(false);
-    } catch (error) {
-      console.error('Error saving consent:', error);
-    }
+    persist(newConsent);
+    setState({ consent: newConsent, showBanner: false, bannerExpanded: false });
   }, []);
 
   const acceptAll = useCallback(() => {
     saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
   }, [saveConsent]);
 
-  // Soft opt-in: aceita os adicionais (marketing + preferências) além do baseline.
   const acceptAdditional = useCallback(() => {
     saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
   }, [saveConsent]);
 
-  // Rejeita os adicionais: mantém essenciais + analytics anônimos (legítimo interesse).
   const continueEssential = useCallback(() => {
     saveConsent({ essential: true, analytics: true, marketing: false, preferences: false });
   }, [saveConsent]);
@@ -90,28 +111,29 @@ export const useCookieConsent = () => {
 
   const updateConsent = useCallback((category: keyof CookieConsent, value: boolean) => {
     if (category === 'essential') return;
-    setConsent((prev) => ({ ...prev, [category]: value }));
+    setState({ consent: { ...state.consent, [category]: value } });
   }, []);
 
   const resetConsent = useCallback(() => {
     try {
       localStorage.removeItem(COOKIE_CONSENT_KEY);
-      setConsent(defaultCookieConsent);
-      setShowBanner(true);
     } catch (error) {
       console.error('Error resetting consent:', error);
     }
+    setState({ consent: defaultCookieConsent, showBanner: true });
   }, []);
 
   const openPreferences = useCallback(() => {
-    setShowBanner(true);
-    setBannerExpanded(true);
+    setState({ showBanner: true, bannerExpanded: true });
   }, []);
 
+  const setShowBanner = useCallback((value: boolean) => setState({ showBanner: value }), []);
+  const setBannerExpanded = useCallback((value: boolean) => setState({ bannerExpanded: value }), []);
+
   return {
-    consent,
-    showBanner,
-    bannerExpanded,
+    consent: localState.consent,
+    showBanner: localState.showBanner,
+    bannerExpanded: localState.bannerExpanded,
     saveConsent,
     acceptAll,
     acceptAdditional,
