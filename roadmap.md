@@ -25,6 +25,6 @@
 
 ## Execução do beacon (aprovado)
 - [x] Aplicar campaignBeacon.ts / tracker.ts exports / useTracker.ts / políticas PT+EN
-- [ ] Build
+- [x] Build
 - [x] Playwright: 7 verificações passaram (2 bugs corrigidos no caminho: regex UUID, leitura síncrona do consent)
 - [x] Build, prerender e validate-jsonld OK; sitemap/llms regenerados sem diff de conteúdo
