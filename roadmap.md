@@ -22,3 +22,9 @@
 - [x] generate-llms: seção gerada "Documentation" (pesquisa + glossário)
 - [x] validate: DefinedTerm exige âncora no HTML e contagem igual à do JSON em /our-ai
 - [ ] Pendente de decisão do usuário: alinhar os .md do glossário (i6-RecSys-Base.g1 sem External Memory e com "20 bi de registros")
+
+## Execução do beacon (aprovado)
+- [x] Aplicar campaignBeacon.ts / tracker.ts exports / useTracker.ts / políticas PT+EN
+- [ ] Build
+- [ ] Playwright: 7 verificações (consent on/off, dedupe por search, máscara /go, guard /demo-metrics, sem localStorage)
+- [ ] Confirmar validate-jsonld, sitemap e llms.txt inalterados
