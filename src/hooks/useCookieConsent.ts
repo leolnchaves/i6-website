@@ -5,7 +5,21 @@ const COOKIE_CONSENT_KEY = 'cookie_consent';
 const COOKIE_CONSENT_VERSION = '2.0';
 
 export const useCookieConsent = () => {
-  const [consent, setConsent] = useState<CookieConsent>(defaultCookieConsent);
+  // Consentimento lido de forma SÍNCRONA no primeiro render: rastreamentos
+  // gateados por consent (GA4, beacon i6 HUB) nunca disparam com o default
+  // antes de carregar a escolha salva de um visitante que já decidiu.
+  const [consent, setConsent] = useState<CookieConsent>(() => {
+    try {
+      const saved = localStorage.getItem(COOKIE_CONSENT_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.version === COOKIE_CONSENT_VERSION) return parsed.consent as CookieConsent;
+      }
+    } catch {
+      /* storage bloqueado */
+    }
+    return defaultCookieConsent;
+  });
   const [showBanner, setShowBanner] = useState(false);
   const [bannerExpanded, setBannerExpanded] = useState(false);
 
