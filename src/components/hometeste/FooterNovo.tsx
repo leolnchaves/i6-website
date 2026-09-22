@@ -7,6 +7,7 @@ import logoFooter from '@/assets/images/logo-footer.png';
 import { useCallback } from 'react';
 import { SUITE_URL } from '@/components/home-v3/product/suiteContent';
 import { usePolicyDrawer } from '@/components/policy/PolicyDrawer';
+import { useCookieConsent } from '@/hooks/useCookieConsent';
 
 type SocialIconProps = { size?: number };
 
@@ -29,6 +30,7 @@ const FooterNovo = () => {
   const navigate = useNavigate();
   const localized = useLocalizedPath();
   const { openPolicy } = usePolicyDrawer();
+  const { openPreferences } = useCookieConsent();
   const isMobile = useIsMobile();
 
   const handleNav = useCallback(
@@ -109,11 +111,14 @@ const FooterNovo = () => {
             </div>
 
             <div className="flex gap-4 text-xs">
-              <button type="button" onClick={() => openPolicy('privacy')} className="text-white/30 hover:text-[#F4845F] transition-colors">
+              <button type="button" onClick={() => openPolicy('privacy')} className="text-white/60 hover:text-[#F4845F] transition-colors">
                 {t('footer.privacy')}
               </button>
-              <button type="button" onClick={() => openPolicy('ethics')} className="text-white/30 hover:text-[#F4845F] transition-colors">
+              <button type="button" onClick={() => openPolicy('ethics')} className="text-white/60 hover:text-[#F4845F] transition-colors">
                 {t('footer.ethics')}
+              </button>
+              <button type="button" onClick={openPreferences} className="text-white/60 hover:text-[#F4845F] transition-colors">
+                {language === 'pt' ? 'Preferências de cookies' : language === 'es' ? 'Preferencias de cookies' : 'Cookie preferences'}
               </button>
             </div>
 

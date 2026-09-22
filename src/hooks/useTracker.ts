@@ -21,6 +21,11 @@ export const useTracker = (analyticsConsent: boolean) => {
 
   useEffect(() => {
     setThirdPartyAnalyticsConsent(analyticsConsent);
+    if (!analyticsConsent) {
+      // Reseta a dedupe key: uma reativação futura na mesma página
+      // volta a disparar o beacon.
+      lastBeaconKey.current = null;
+    }
   }, [analyticsConsent]);
 
   useEffect(() => {

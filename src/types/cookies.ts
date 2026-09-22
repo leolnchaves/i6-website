@@ -15,12 +15,12 @@ export interface CookieCategoryInfo {
   cookies: string[];
 }
 
-// Soft opt-in: analytics (GA4) ativo por padrão.
+// Strict opt-in: nenhuma categoria não-essencial fica ativa até o visitante decidir.
 // O tracker próprio anônimo de primeira parte é essencial (legítimo interesse)
 // e não pode ser desativado por toggle — apenas limpando o localStorage.
 export const defaultCookieConsent: CookieConsent = {
   essential: true,
-  analytics: true,
+  analytics: false,
   marketing: false,
   preferences: false,
 };
@@ -38,7 +38,7 @@ export const cookieCategories: CookieCategoryInfo[] = [
     id: 'analytics',
     name: 'Análise (GA4)',
     description:
-      'Envio anônimo para Google Analytics 4 (terceira parte): tipo de dispositivo, navegador, país aproximado. Você pode desativar a qualquer momento.',
+      'Envio anônimo para Google Analytics 4 (terceira parte): tipo de dispositivo, navegador, país aproximado. Começa desligado e só é ativado com a sua autorização; você pode desativar a qualquer momento.',
     required: false,
     cookies: ['_ga', '_ga_*'],
   },
