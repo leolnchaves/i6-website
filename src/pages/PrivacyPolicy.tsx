@@ -108,6 +108,7 @@ export const PrivacyPolicyBody = () => {
       ],
       usage: "How we use it: measure performance, improve UX, and when you choose to fill out a form, attach this anonymous history to your contact to enrich the conversation.",
       additional: "Additional cookies (marketing/preferences): only activated after explicit consent in the cookie banner. You can review and change your choices at any time in \"Cookie preferences\".",
+      campaign: "Campaign measurement (i6 HUB): when you accept the \"Analytics\" category in the cookie banner, each page you visit is recorded anonymously (visitor identifier, page address and campaign parameters) in an infinity6-owned service, the i6 HUB, to measure campaign performance. Without that consent, nothing is sent.",
       rights: "Your rights: disable analytics in \"Cookie preferences\", clear your browser storage, or request deletion via security@infinity6.ai.",
     },
     changes: {
@@ -173,6 +174,7 @@ export const PrivacyPolicyBody = () => {
         </ul>
         <p className="text-white/70 mb-2">{enSections.cookies.usage}</p>
         <p className="text-white/70 mb-2">{enSections.cookies.additional}</p>
+        <p className="text-white/70 mb-2">{enSections.cookies.campaign}</p>
         <p className="text-white/70">{enSections.cookies.rights}</p>
       </section>
 
