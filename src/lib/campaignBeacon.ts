@@ -11,7 +11,7 @@ import { getAnonymousId, parseUtms, readJSON, type FirstTouch, type LastTouch } 
 export const CAMPAIGN_BEACON_URL =
   'https://nknsoorwqvlyxfptnfzr.supabase.co/functions/v1/track-campaign-landing';
 
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const GO_TOKEN_RE = /^(\/(?:pt|en|es))?\/go\/[^/]+$/;
 
 type UtmKey = 'utm_source' | 'utm_medium' | 'utm_campaign' | 'utm_term' | 'utm_content';
