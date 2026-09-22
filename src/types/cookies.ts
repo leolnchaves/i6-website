@@ -7,13 +7,6 @@ export interface CookieConsent {
   preferences: boolean;
 }
 
-export interface CookieCategoryInfo {
-  id: CookieCategory;
-  name: string;
-  description: string;
-  required: boolean;
-  cookies: string[];
-}
 
 // Strict opt-in: nenhuma categoria não-essencial fica ativa até o visitante decidir.
 // O tracker próprio anônimo de primeira parte é essencial (legítimo interesse)

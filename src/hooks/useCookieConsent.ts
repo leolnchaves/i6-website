@@ -97,22 +97,10 @@ export const useCookieConsent = () => {
     saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
   }, [saveConsent]);
 
-  const acceptAdditional = useCallback(() => {
-    saveConsent({ essential: true, analytics: true, marketing: true, preferences: true });
-  }, [saveConsent]);
-
-  const continueEssential = useCallback(() => {
-    saveConsent({ essential: true, analytics: true, marketing: false, preferences: false });
-  }, [saveConsent]);
-
   const rejectAll = useCallback(() => {
     saveConsent({ essential: true, analytics: false, marketing: false, preferences: false });
   }, [saveConsent]);
 
-  const updateConsent = useCallback((category: keyof CookieConsent, value: boolean) => {
-    if (category === 'essential') return;
-    setState({ consent: { ...state.consent, [category]: value } });
-  }, []);
 
   const resetConsent = useCallback(() => {
     try {
